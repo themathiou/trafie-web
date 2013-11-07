@@ -1,5 +1,12 @@
 {
-  "name": "application-name",
+  "name": "trafie",
+  "description": "trafie : like track and field",
+  "homepage": "http://www.trafie.com",
+  "author": {
+    "name": "mathioudakis_balasis",
+    "email": "trafie.app@gmail.com",
+    "url": "http://www.trafie.com"
+  },
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -7,6 +14,8 @@
   },
   "dependencies": {
     "express": "3.4.1",
-    "jade": "*"
+    "jade": "*",
+    "less-middleware": "*",
+    "mongoose":"*"
   }
 }
