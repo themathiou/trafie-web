@@ -81,6 +81,7 @@ trafie.get('/login', function( req, res ) {
 	res.render('login', { title: 'login' });
 } );
 
+//------------------------------------------------------------create server
 http.createServer(trafie).listen(trafie.get('port'), function(){
   console.log('Express server listening on port ' + trafie.get('port'));
 });
