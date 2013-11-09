@@ -9,6 +9,7 @@ var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
 var mongoose = require('mongoose');
+var crypto = require('crypto');
 
 var trafie = express();
 
@@ -46,39 +47,69 @@ if ('development' == trafie.get('env')) {
   trafie.use(express.errorHandler());
 }
 
-trafie.get('/', routes.index);
-trafie.get('/users', user.list);
+//------------------------------------------------------------ Profile
+//trafie.get('/', routes.index);
+trafie.get('/', function( req, res ){
+  var first_name, last_name;
 
-//------------------------------------------------------------registration GET
+  User.findOne({ last_name: 'Chicherova' }, 'first_name last_name', function (err, user) {
+    if (err) return handleError(err);
+    var data = {first_name: user.first_name, last_name: user.last_name};
+    res.render('profile', data);
+  });
+
+});
+
+//------------------------------------------------------------ Registration
 trafie.get('/register', function( req, res ) {
   res.render('register', { title: 'trafie' });
-} );
+});
 
-//------------------------------------------------------------registration POST
-trafie.post('/register', function( req, res ) {    
+trafie.post('/register', function( req, res ) {
+  var sha512_hash = crypto.createHash('sha512');
+  sha512_hash.update(req.body.password);
+  var password = sha512_hash.digest('hex');
+
   var new_user = {
     first_name : req.body.first_name,
     last_name : req.body.last_name,
     email : req.body.email,
-    password : req.body.password,
+    password : password,
     repeat_password : req.body.repeat_password,
     gender : req.body.gender
   };
   
-  var poc = new User(new_user);
+  var user = new User(new_user);
   
-  poc.save(function (err, poc) {
+  user.save(function (err, user) {
     if (err) console.log('error!');
   });
   
-  res.redirect('/login');
+  res.redirect('/');
 });
 
-//------------------------------------------------------------something beautiful
+//------------------------------------------------------------ Login
 trafie.get('/login', function( req, res ) {
-  res.render('login', { title: 'login' });
-} );
+  res.render('login');
+});
 
+trafie.post('/login', function( req, res ) {
+  var email = req.body.email;
+  var sha512_hash = crypto.createHash('sha512');
+  sha512_hash.update(req.body.password);
+  var password = sha512_hash.digest('hex');
+
+  User.findOne({ email: email, password: password }, '_id', function (err, user) {
+      if (err) return handleError(err);
+      if(user != null) {
+        console.log(user._id);
+      }
+      else {
+        res.render('login');
+      }
+    });
+});
+//------------------------------------------------------------ Server creation
 http.createServer(trafie).listen(trafie.get('port'), function(){
   console.log('Express server listening on port ' + trafie.get('port'));
 });

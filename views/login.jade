@@ -1,5 +1,18 @@
-extends layout
+extends welcome_layout
 
 block content
-  h1= title
-  p Login to #{title}
+
+	div#welcome_container
+		div#header
+			div#welcome_logo
+		div.forms
+			form#register.welcome_form(method="post", action="/login")
+				h3 Login
+				label(for="email_input") Email: 
+				input#email_input(name="email", type="text")
+				br
+				label(for="password_input") Password: 
+				input#password_input(name="password", type="password")
+				br
+				div.row
+					input(type="submit", value="Login")
