@@ -17,11 +17,11 @@ mongoose.connect('mongodb://localhost/trafiejs');
 var db = mongoose.connection;
 
 var userSchema = mongoose.Schema({
-    first_name : String,
-	last_name : String,
-	email : String,
-	password : String,
-	gender : String
+  first_name : String,
+  last_name : String,
+  email : String,
+  password : String,
+  gender : String
 });
 
 var User = mongoose.model('user', userSchema);
@@ -51,34 +51,32 @@ trafie.get('/users', user.list);
 
 //------------------------------------------------------------registration GET
 trafie.get('/register', function( req, res ) {
-	res.render('register', { title: 'trafie' });
+  res.render('register', { title: 'trafie' });
 } );
 
 //------------------------------------------------------------registration POST
-trafie.post('/register', function( req, res ) {
-
-
-	var new_user = {
-		first_name : req.body.first_name,
-		last_name : req.body.last_name,
-		email : req.body.email,
-		password : req.body.password,
-		repeat_password : req.body.repeat_password,
-		gender : req.body.gender
-	};
-
-	var poc = new User(new_user);
-
-	poc.save(function (err, poc) {
-	  if (err) console.log('error!');
-	});
-
-	res.redirect('/login');
+trafie.post('/register', function( req, res ) {    
+  var new_user = {
+    first_name : req.body.first_name,
+    last_name : req.body.last_name,
+    email : req.body.email,
+    password : req.body.password,
+    repeat_password : req.body.repeat_password,
+    gender : req.body.gender
+  };
+  
+  var poc = new User(new_user);
+  
+  poc.save(function (err, poc) {
+    if (err) console.log('error!');
+  });
+  
+  res.redirect('/login');
 });
 
 //------------------------------------------------------------something beautiful
 trafie.get('/login', function( req, res ) {
-	res.render('login', { title: 'login' });
+  res.render('login', { title: 'login' });
 } );
 
 http.createServer(trafie).listen(trafie.get('port'), function(){
