@@ -11,24 +11,17 @@ var path = require('path');
 var mongoose = require('mongoose');
 var crypto = require('crypto');
 
+//------------------------------------------------------------ initialize express
 var trafie = express();
 
-//------------------------------------------------------------mongodb connection
+//------------------------------------------------------------ mongodb connection
 mongoose.connect('mongodb://localhost/trafiejs');
 var db = mongoose.connection;
 
-var userSchema = mongoose.Schema({
-  first_name : String,
-  last_name : String,
-  email : String,
-  password : String,
-  gender : String
-});
+//------------------------------------------------------------ Models
+var User = require('./models/user.js');
 
-var User = mongoose.model('user', userSchema);
-
-
-//------------------------------------------------------------all environments
+//------------------------------------------------------------ all environments
 trafie.set('port', process.env.PORT || 3000);
 trafie.set('views', path.join(__dirname, 'views'));
 trafie.set('view engine', 'jade');
@@ -37,12 +30,12 @@ trafie.use(express.logger('dev'));
 trafie.use(express.bodyParser());
 trafie.use(express.methodOverride());
 trafie.use(express.cookieParser('your secret here'));
-trafie.use(express.session());
+trafie.use(express.session({secret: '23tR@Ck@nDF!3lD_s3cur3535s!0n504'}));
 trafie.use(trafie.router);
 trafie.use(require('less-middleware')({ src: path.join(__dirname, 'public') }));
 trafie.use(express.static(path.join(__dirname, 'public')));
 
-//------------------------------------------------------------development only
+//------------------------------------------------------------ development only
 if ('development' == trafie.get('env')) {
   trafie.use(express.errorHandler());
 }
@@ -52,11 +45,16 @@ if ('development' == trafie.get('env')) {
 trafie.get('/', function( req, res ){
   var first_name, last_name;
 
-  User.findOne({ last_name: 'Chicherova' }, 'first_name last_name', function (err, user) {
-    if (err) return handleError(err);
-    var data = {first_name: user.first_name, last_name: user.last_name};
-    res.render('profile', data);
-  });
+  var user_id = req.session.user_id;
+
+  if(!user_id){
+	  res.redirect('/login');
+  }
+  else{
+  	User.get(user_id, function (err, user) {
+	  console.log(user);
+	});
+  }
 
 });
 
@@ -103,6 +101,7 @@ trafie.post('/login', function( req, res ) {
       if (err) return handleError(err);
       if(user != null) {
         //console.log(user._id);
+        req.session.user_id = user._id;
         res.redirect('/');
       }
       else {
