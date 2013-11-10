@@ -78,13 +78,13 @@ trafie.post('/register', function( req, res ) {
     repeat_password : req.body.repeat_password,
     gender : req.body.gender
   };
-  
+
   var user = new User(new_user);
-  
+
   user.save(function (err, user) {
     if (err) console.log('error!');
   });
-  
+
   res.redirect('/');
 });
 
@@ -102,7 +102,8 @@ trafie.post('/login', function( req, res ) {
   User.findOne({ email: email, password: password }, '_id', function (err, user) {
       if (err) return handleError(err);
       if(user != null) {
-        console.log(user._id);
+        //console.log(user._id);
+        res.redirect('/');
       }
       else {
         res.render('login');
