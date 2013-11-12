@@ -64,7 +64,7 @@ trafie.use(trafie.router);
 trafie.use(require('less-middleware')({ src: path.join(__dirname, 'public') }));
 trafie.use(express.static(path.join(__dirname, 'public')));
 
-//------------------------------------------------------------ development only
+// Development Only
 if ('development' == trafie.get('env')) {
   trafie.use(express.errorHandler());
 }
