@@ -6,9 +6,9 @@
  ##         ##                                         ##          ''                    ##
  ##     ###########   /#  ,cc,,    ,xo#####\ ##   ###########    /#;`    ,xo#####\       ##
  ##        ##         ##,##^^^+   j#^     ^#\#,       ##         ##     j#^     ^#)      ##
- ##       /#,        /##]^       /#         #D       /#,        /#;    /#^       #D      ##
- ##       ##         ##         (#         `#/       ##         ##    (#,,;yxx###/'      ##
- ##      /#,        /#/         #/         #]`      /#,        /#"    #/^"               ##
+ ##       j#,        /##]^       /#         #D       /#,        /#;    /#^       #D      ##
+ ##       ##         ##         j#         `#/       ##         ##    j#,,;yxx###/'      ##
+ ##      j#,        /#/         #/         #]`      /#,        /#"    #/^"               ##
  ##      ##         ##         |#,        ##D       ##         ##    |#,                 ##
  ##     ##, __     /#           \#,     #/|#       ##;        ##,     \#,      ,p        ##
  ##     `%##^^    /#/            ^\#####^ |#      /#,        /#,       ^\####^>*         ##
@@ -107,26 +107,43 @@ trafie.get( '/register', function( req, res ) {
  * Register - POST
  */
 trafie.post( '/register', function( req, res ) {
-  var sha512_hash = crypto.createHash('sha512');
-  sha512_hash.update(req.body.password);
-  var password = sha512_hash.digest('hex');
+  var register_error = [];
+  var password = '';
+
+  if(req.body.password == '') {
+    register_error.push('Password is required');
+  }
+  else if(req.body.password != req.body.repeat_password) {
+    register_error.push('Passwords do not match');
+  } 
+  else {
+    var sha512_hash = crypto.createHash('sha512');
+    sha512_hash.update('23tR@Ck@nDF!3lD04' + req.body.password);
+    password = sha512_hash.digest('hex');
+  }
 
   var new_user = {
     first_name : req.body.first_name,
     last_name : req.body.last_name,
     email : req.body.email,
     password : password,
-    repeat_password : req.body.repeat_password,
     gender : req.body.gender
   };
 
   var user = new User( new_user );
 
-  user.save(function ( err, user ) {
-    if (err) console.log('error!');
-  });
 
-  res.redirect('/');
+  user.save(function ( err, user ) {
+    if (err || register_error.length) {
+      if(err.errors.first_name) register_error.push(err.errors.first_name.type);
+      if(err.errors.last_name) register_error.push(err.errors.last_name.type);
+      if(err.errors.email) register_error.push(err.errors.email.type);
+      if(err.errors.gender) register_error.push(err.errors.gender.type);
+      console.log(register_error);
+    }
+    req.session.user_id = user._id;
+    res.redirect('/');
+  });
 });
 
 
@@ -151,15 +168,14 @@ trafie.post('/login', function( req, res ) {
   var password = sha512_hash.digest('hex');
 
   User.findOne({ 'email': email, 'password': password }, '_id', function ( err, user ) {
-      if (err) return handleError(err);
-      if( user != null ) {
-        //console.log(user._id);
-        req.session.user_id = user._id;
-        res.redirect('/');
-      } else {
-        res.render('login');
-      }
-    });
+    if (err) return handleError(err);
+    if( user != null ) {
+      req.session.user_id = user._id;
+      res.redirect('/');
+    } else {
+      res.render('login');
+    }
+  });
 });
 
 
