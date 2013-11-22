@@ -1,7 +1,23 @@
 doctype 5
 html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body
-    block content
+head
+	title= title
+link(rel='stylesheet', href='/stylesheets/style.css')
+script(type='text/javascript', src='/javascripts/jquery-2.0.3.min.js')
+script(type='text/javascript', src='/javascripts/script.js')
+
+body
+	div#mainmenu_container
+		div#mainmenu
+			div
+			a.logo(href="/")
+			ul.dropdown
+				li
+					a(href="/") Home
+				li
+					a(href="/statistics") Statistics
+				li
+					a(href="/settings") Settings
+				li
+					a(href="/login") Logout
+block content

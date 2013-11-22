@@ -1,0 +1,130 @@
+extends layout
+block content
+	div#main_content
+		h4.left= title
+
+		form.settings_form(method="post")
+			h4 Profile Settings
+			div.row
+				label(for="first_name") First Name :
+				input#first_name(type="text"  name="first_name" value="")
+			div.row
+				label(for="last_name") Last Name :
+				input#last_name(type="text" name="last_name" value="")
+			div.row
+				label(for="nickname") Nickname :
+				input#nickname(type="text" name="nickname" value="")
+			div.row
+				label(for="primary_discipline") Primary Discipline :
+				select#primary_discipline(name="primary_discipline")
+					option(value="")
+					option(value="100m") 100m
+					option(value="200m") 200m
+					option(value="400m") 400m
+					option(value="800m") 800m
+					option(value="1500m") 1500m
+					option(value="3000m") 3000m
+					option(value="60m_hurdles") 60m_hurdles
+					option(value="100m_hurdles") 100m_hurdles
+					option(value="110m_hurdles") 110m_hurdles
+					option(value="400m_hurdles") 400m_hurdles
+					option(value="3000m_steeple") 3000m_steeple
+					option(value="4x100m_relay") 4x100m_relay
+					option(value="4x400m_relay") 4x400m_relay
+					option(value="high_jump") high_jump
+					option(value="long_jump") long_jump
+					option(value="triple_jump") triple_jump
+					option(value="pole_vault") pole_vault
+					option(value="shot_put") shot_put
+					option(value="discus") discus
+					option(value="hammer") hammer
+					option(value="javelin") javelin
+					option(value="pentathlon") pentathlon
+					option(value="heptathlon") heptathlon
+					option(value="decathlon") decathlon
+			div.row
+				label(for="secondary_discipline") Secondary Discipline :
+				select#secondary_discipline(name="secondary_discipline")
+					option(value="")
+					option(value="100m") 100m
+					option(value="200m") 200m
+					option(value="400m") 400m
+					option(value="800m") 800m
+					option(value="1500m") 1500m
+					option(value="3000m") 3000m
+					option(value="60m_hurdles") 60m_hurdles
+					option(value="100m_hurdles") 100m_hurdles
+					option(value="110m_hurdles") 110m_hurdles
+					option(value="400m_hurdles") 400m_hurdles
+					option(value="3000m_steeple") 3000m_steeple
+					option(value="4x100m_relay") 4x100m_relay
+					option(value="4x400m_relay") 4x400m_relay
+					option(value="high_jump") high_jump
+					option(value="long_jump") long_jump
+					option(value="triple_jump") triple_jump
+					option(value="pole_vault") pole_vault
+					option(value="shot_put") shot_put
+					option(value="discus") discus
+					option(value="hammer") hammer
+					option(value="javelin") javelin
+					option(value="pentathlon") pentathlon
+					option(value="heptathlon") heptathlon
+					option(value="decathlon") decathlon
+			div.row
+			label(for="country") Country :
+			select#country(name="country")
+				option(value="") Select your country
+				option(value="af") af
+				option(value="ax") ax
+				option(value="al") al
+				option(value="dz") dz
+				option(value="as") as
+				option(value="ad") ad
+				option(value="ao") ao
+
+			div.row
+				label(for="major_accomplishments") Major Accomplishments:
+				textarea#major_accomplishments(name="major_accomplishments" placeholder="i.e World Champion @ Peru 2004")
+
+			div.row
+				input(type="submit" name="profile_settings" value="Save")
+
+
+		form.settings_form(method="post")
+			div.row
+			h4 General Settings
+			div.row
+			label(for="select_language") Choose language :
+			select#select_language(name="select_language")
+				option(value="eng" selected) English
+				option(value="gre") Greek
+				option(value="rus") Russian
+			div.row
+			label(for="select_unit_system") Choose unit system :
+			select#select_unit_system(name="select_unit_system")
+				option(value="metric" selected)
+				option(value="imperial")
+			div.row
+			label(for="select_date_format") Date Format :
+			select#select_date_format(name="select_date_format")
+				option(value="d/m/Y" selected)
+				option(value="m/d/Y")
+
+			div.row
+			input(type="submit" name="general_settings" value="Save")
+
+		form.settings_form(method="post")
+			div.row
+			h4 Change Password
+			div.row
+			label(for="old_password") Old Password :
+			input#old_password(type="password" name="old_password")
+			div.row
+			label(for="new_password") New Password :
+			input#new_password(type="password" name="password")
+			div.row
+			label(for="repeat_new_password") Repeat New :
+			input#repeat_new_password(type="password" name="repeat_password")
+
+			div.row
+			input(type="submit" name="password_change" value="Save")
