@@ -31,6 +31,7 @@ var http = require('http');
 var path = require('path');
 var mongoose = require('mongoose');
 var crypto = require('crypto');
+var nodemailer = require("nodemailer");
 
 // Initialize express
 var trafie = express();
@@ -100,21 +101,26 @@ trafie.get('/', function( req, res ){
  * Register - GET
  */
 trafie.get( '/register', function( req, res ) {
-  res.render( 'register', { title: 'trafie' });
+  res.render( 'register', { title: 'trafie', errors: [] });
 });
 
 /**
  * Register - POST
  */
 trafie.post( '/register', function( req, res ) {
-  var register_error = [];
+  var register_errors = [];
+  register_errors['first_name'] = '';
+  register_errors['last_name'] = '';
+  register_errors['email'] = '';
+  register_errors['repeat_password'] = '';
+  register_errors['password'] = '';
   var password = '';
 
   if(req.body.password == '') {
-    register_error.push('Password is required');
+    register_errors['password'] = 'Password is required';
   }
   else if(req.body.password != req.body.repeat_password) {
-    register_error.push('Passwords do not match');
+    register_errors['repeat_password'] = 'Passwords do not match';
   }
   else {
     var sha512_hash = crypto.createHash('sha512');
@@ -134,15 +140,36 @@ trafie.post( '/register', function( req, res ) {
 
 
   user.save(function ( err, user ) {
-    if (err || register_error.length) {
-      if(err.errors.first_name) register_error.push(err.errors.first_name.type);
-      if(err.errors.last_name) register_error.push(err.errors.last_name.type);
-      if(err.errors.email) register_error.push(err.errors.email.type);
-      if(err.errors.gender) register_error.push(err.errors.gender.type);
-      console.log(register_error);
+    if ( err || register_errors.length ) {
+      console.log(err.errors);
+      for( field in err.errors ) {
+        if( err.errors[field].type == 'required' ) {
+          register_errors[field] = 'Required';
+        }
+        else if( err.errors[field].type == 'invalid' ) {
+          register_errors[field] = 'Invalid';
+        }
+        else if( err.errors[field].type == 'duplicate' ) {
+          register_errors[field] = 'Email already exists';
+        }
+      }
+
+      res.render( 'register', { title: 'trafie', errors: register_errors });
+    } else {
+
+      console.log('Sending Mail');
+      transport.sendMail(message, function(error){
+          if(error){
+              console.log('Error occured');
+              console.log(error.message);
+              return;
+          }
+          console.log('Message sent successfully!');
+          
+          req.session.user_id = user._id;
+          res.redirect('/');
+      });
     }
-    req.session.user_id = user._id;
-    res.redirect('/');
   });
 });
 
@@ -164,7 +191,7 @@ trafie.get('/login', function( req, res ) {
 trafie.post('/login', function( req, res ) {
   var email = req.body.email;
   var sha512_hash = crypto.createHash('sha512');
-  sha512_hash.update(req.body.password);
+  sha512_hash.update('23tR@Ck@nDF!3lD04' + req.body.password);
   var password = sha512_hash.digest('hex');
 
   User.findOne({ 'email': email, 'password': password }, '_id', function ( err, user ) {
@@ -177,6 +204,19 @@ trafie.post('/login', function( req, res ) {
     }
   });
 });
+
+/*******************************************************************************************************************************
+ * LOGOUT                                                                                                                      *
+ ******************************************************************************************************************************/
+
+/**
+ * Logout - GET
+ */
+trafie.get('/logout', function( req, res ) {
+  req.session.destroy();
+  res.redirect('/');
+});
+
 
 /*******************************************************************************************************************************
  * SETTINGS                                                                                                                   *
@@ -200,6 +240,46 @@ trafie.get( '/statistics', function( req, res ) {
   res.render( 'statistics', { title: 'trafie - Statistics' });
 });
 
+/*******************************************************************************************************************************
+ * SERVER                                                                                                                      *
+ ******************************************************************************************************************************/
+
+// Create a SMTP transport object
+var transport = nodemailer.createTransport("SMTP", {
+        //service: 'Gmail', // use well known service.
+                            // If you are using @gmail.com address, then you don't
+                            // even have to define the service name
+        auth: {
+            user: "trafie.app@gmail.com",
+            pass: "tr@f!etr@f!e"
+        }
+    });
+
+console.log('SMTP Configured');
+
+// Message object
+var message = {
+
+    // sender info
+    from: 'trafie <trafie.app@gmail.com>',
+
+    // Comma separated list of recipients
+    to: '"Mathiou" <tmathioudakis@gmail.com>',
+
+    // Subject of the message
+    subject: 'Θα κλάψω ✔', //
+
+    headers: {
+        'X-Laziness-level': 1000
+    },
+
+    // plaintext body
+    text: 'Hello to myself!',
+
+    // HTML body
+    html:'<p><b>Hello</b> to myself <img src="cid:note@node"/></p>'+
+         '<p>Here\'s a nyan cat for you as an embedded attachment:<br/><img src="cid:nyan@node"/></p>'
+};
 
 /*******************************************************************************************************************************
  * SERVER                                                                                                                      *
