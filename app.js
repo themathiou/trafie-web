@@ -72,6 +72,32 @@ if ('development' == trafie.get('env')) {
 
 
 /*******************************************************************************************************************************
+ * EMAIL                                                                                                                       *
+ ******************************************************************************************************************************/
+
+// Create a SMTP transport object
+var transport = nodemailer.createTransport("SMTP", {
+        //service: 'Gmail', // use well known service.
+                            // If you are using @gmail.com address, then you don't
+                            // even have to define the service name
+        auth: {
+            user: "trafie.app@gmail.com",
+            pass: "tr@f!etr@f!e"
+        }
+    });
+
+console.log('SMTP Configured');
+
+// Message object
+var message = {
+    from: 'trafie <trafie.app@gmail.com>',
+    headers: {
+        'X-Laziness-level': 1000
+    }
+};
+
+
+/*******************************************************************************************************************************
  * PROFILE                                                                                                                     *
  ******************************************************************************************************************************/
 
@@ -141,7 +167,6 @@ trafie.post( '/register', function( req, res ) {
 
   user.save(function ( err, user ) {
     if ( err || register_errors.length ) {
-      console.log(err.errors);
       for( field in err.errors ) {
         if( err.errors[field].type == 'required' ) {
           register_errors[field] = 'Required';
@@ -158,17 +183,22 @@ trafie.post( '/register', function( req, res ) {
     } else {
 
       console.log('Sending Mail');
+
+      message.to = new_user.email;
+      message.subject = 'Welcome to trafie ✔';
+      message.html = '<h2>Hello ' + new_user.first_name + ' ' + new_user.last_name + '</h2>' + 
+           '<p>You have successfully registered to trafie.</p><br><p>The <b><i>trafie</i></b> team</p>';
+
       transport.sendMail(message, function(error){
           if(error){
               console.log('Error occured');
-              console.log(error.message);
               return;
           }
           console.log('Message sent successfully!');
-          
-          req.session.user_id = user._id;
-          res.redirect('/');
       });
+      
+      req.session.user_id = user._id;
+      res.redirect('/');
     }
   });
 });
@@ -205,6 +235,7 @@ trafie.post('/login', function( req, res ) {
   });
 });
 
+
 /*******************************************************************************************************************************
  * LOGOUT                                                                                                                      *
  ******************************************************************************************************************************/
@@ -229,6 +260,7 @@ trafie.get( '/settings', function( req, res ) {
   res.render( 'settings', { title: 'trafie - Settings' });
 });
 
+
 /*******************************************************************************************************************************
  * STATISTICS                                                                                                                   *
  ******************************************************************************************************************************/
@@ -240,46 +272,6 @@ trafie.get( '/statistics', function( req, res ) {
   res.render( 'statistics', { title: 'trafie - Statistics' });
 });
 
-/*******************************************************************************************************************************
- * SERVER                                                                                                                      *
- ******************************************************************************************************************************/
-
-// Create a SMTP transport object
-var transport = nodemailer.createTransport("SMTP", {
-        //service: 'Gmail', // use well known service.
-                            // If you are using @gmail.com address, then you don't
-                            // even have to define the service name
-        auth: {
-            user: "trafie.app@gmail.com",
-            pass: "tr@f!etr@f!e"
-        }
-    });
-
-console.log('SMTP Configured');
-
-// Message object
-var message = {
-
-    // sender info
-    from: 'trafie <trafie.app@gmail.com>',
-
-    // Comma separated list of recipients
-    to: '"Mathiou" <tmathioudakis@gmail.com>',
-
-    // Subject of the message
-    subject: 'Θα κλάψω ✔', //
-
-    headers: {
-        'X-Laziness-level': 1000
-    },
-
-    // plaintext body
-    text: 'Hello to myself!',
-
-    // HTML body
-    html:'<p><b>Hello</b> to myself <img src="cid:note@node"/></p>'+
-         '<p>Here\'s a nyan cat for you as an embedded attachment:<br/><img src="cid:nyan@node"/></p>'
-};
 
 /*******************************************************************************************************************************
  * SERVER                                                                                                                      *
