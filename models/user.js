@@ -8,28 +8,27 @@ var userSchema = mongoose.Schema({
   email : { type: String, required: true, unique: true, index: true },
   password : { type: String, required: true },
   settings : {
-                date_format : { type: String, required: true, default: 'd/m/Y' },
+                date_format : { type: String, required: true, default: 'Y/m/d' },
                 language : { type: String, required: true, default: 'eng' },
                 time_zone : { type: String, required: true, default: 'Europe/Helsinki' },
                 unit_system : { type: String, required: true, default: 'metric' }
               },
-  valid : { type: Boolean, required: true }
+  valid : { type: Boolean, required: true, default: false }
 });
-
-var User = mongoose.model('User', userSchema);
 
 /**
  * Input validations
  */
+userSchema.methods.validate = function( user, cb ) {
+  User.findOne({ 'email': user.email }, 'email', function ( err, db_user ) {
+    var results = [];
+    results['email_valid'] =   /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test( user.email );
+    results['email_unique'] = ( db_user == null );
+    
+    cb( results );
+  });
+}
 
-User.schema.path('email').validate(function (value) {
-  return /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test(value);
-}, 'invalid');
-
-User.schema.path('email').validate(function (value, cb) {
-	User.findOne({ 'email': value }, 'email', function ( err, user ) {
-  	  cb( user == null );
-  	});
-}, 'duplicate');
+var User = mongoose.model('User', userSchema);
 
 module.exports = User;

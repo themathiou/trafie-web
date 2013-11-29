@@ -5,10 +5,10 @@ var db = mongoose.connection;
 
 /**
  * Define User SCHEMA
- * @param type string (valid input is ['verification', 'reset'])
+ * @param type string (valid input is ['verify', 'reset'])
  */ 
 var userHashSchema = mongoose.Schema({
-  user_id : { type: String, required: true, index: true },
+  user_id : { type: String, required: true, index: true, unique: true },
   hash : { type: String, required: true },
   type : { type: String, required: true }
 });

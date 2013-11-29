@@ -29,6 +29,7 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
+var url = require('url') ;
 var mongoose = require('mongoose');
 var crypto = require('crypto');
 var nodemailer = require("nodemailer");
@@ -46,6 +47,7 @@ var db = mongoose.connection;
  ******************************************************************************************************************************/
 
 var User = require('./models/user.js');
+var Profile = require('./models/profile.js');
 
 
 /*******************************************************************************************************************************
@@ -155,16 +157,24 @@ trafie.post( '/register', function( req, res ) {
   }
 
   var new_user = {
-    first_name : req.body.first_name,
-    last_name : req.body.last_name,
     email : req.body.email,
     password : password,
-    gender : req.body.gender
+    valid : false
   };
 
+  var new_profile = {
+    first_name : req.body.first_name,
+    last_name : req.body.last_name,
+    gender : req.body.gender == 'male'
+  }
+
   var user = new User( new_user );
+  var profile = new Profile( new_profile );
 
-
+  var user_errors = user.validate( user );
+  var profile_errors = profile.validate( profile );
+  console.log( user_errors );
+  return;
   user.save(function ( err, user ) {
     if ( err || register_errors.length ) {
       for( field in err.errors ) {
@@ -181,17 +191,29 @@ trafie.post( '/register', function( req, res ) {
 
       res.render( 'register', { title: 'trafie', errors: register_errors });
     } else {
+      var sha512_hash = crypto.createHash('sha512');
+      sha512_hash.update('233m@!lh@5h04' + user._id);
 
-      console.log('Sending Mail');
+      var email_hash = sha512_hash.digest('hex');
 
+      var new_hash = {
+        user_id : user._id,
+        type : 'verify',
+        hash : email_hash
+      };
+
+      var hash = new User_hash( new_hash );
+      
       message.to = new_user.email;
       message.subject = 'Welcome to trafie ✔';
       message.html = '<h2>Hello ' + new_user.first_name + ' ' + new_user.last_name + '</h2>' +
-           '<p>You have successfully registered to trafie.</p><br><p>The <b><i>trafie</i></b> team</p>';
+           '<p>You have successfully registered to trafie.</p><br><p>The <b><i>trafie</i></b> team</p><br>' + 
+           'Follow the link to verify your email:<br>' + 
+           '<a href="' + req.headers.host + '/validate/' + email_hash + '">This is the link</a>';
 
       transport.sendMail(message, function(error){
           if(error){
-              console.log('Error occured');
+              console.log('Error occured: ' + error);
               return;
           }
           console.log('Message sent successfully!');

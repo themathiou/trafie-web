@@ -9,30 +9,28 @@ var profileSchema = mongoose.Schema({
   first_name : { type: String, required: true },
   last_name : { type: String, required: true },
   gender : { type: Boolean, required: true },
-  country : { type: String },
-  major_accomplishments : { type: String },
-  nickname : { type: String, index: true },
+  country : { type: String, default: '' },
+  major_accomplishments : { type: String, default: '' },
+  nickname : { type: String, index: true, default: '' },
   disciplines : [
-                  0: { type: String },
-                  1: { type: String }
+                  { type: String, default: '' },
+                  { type: String, default: '' }
                 ]
 });
-
-var Profile = mongoose.model('Profile', profileSchema);
 
 /**
  * Input validations
  */
-Profile.schema.path('first_name').validate(function (value) {
-  return /^[a-zA-Z ']+$/.test(value);
-}, 'invalid');
+profileSchema.methods.validate = function( profile ) {
+  var results = [];
+  results['first_name_valid'] =  /^[a-zA-Z ']+$/.test( profile.first_name );
+  results['last_name_valid'] =  /^[a-zA-Z ']+$/.test( profile.last_name );
+  results['gender_valid'] =  profile.gender === true || profile.gender === false;
 
-Profile.schema.path('last_name').validate(function (value) {
-  return /^[a-zA-Z ']+$/.test(value);
-}, 'invalid');
+  return results;
+}
 
-Profile.schema.path('gender').validate(function (value) {
-  return /male|female/i.test(value);
-}, 'invalid');
+var Profile = mongoose.model('Profile', profileSchema);
+
 
 module.exports = Profile;
