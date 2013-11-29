@@ -165,7 +165,7 @@ trafie.post( '/register', function( req, res ) {
               return;
           }
           console.log('Message sent successfully!');
-          
+
           req.session.user_id = user._id;
           res.redirect('/');
       });
