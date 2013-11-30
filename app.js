@@ -33,6 +33,7 @@ var url = require('url') ;
 var mongoose = require('mongoose');
 var crypto = require('crypto');
 var nodemailer = require("nodemailer");
+var q = require('q');
 
 // Initialize express
 var trafie = express();
@@ -168,13 +169,31 @@ trafie.post( '/register', function( req, res ) {
     gender : req.body.gender == 'male'
   }
 
+/*var user = new User( new_user );
+  var promise = User.findOne({ 'email': req.body.email }, 'first_name last_name', function ( err, user ) {
+      return user;
+    }).then(function(user){
+      return user;
+    });*/
+
+ var test = function(err){
+    var d = q.defer();
+    User.findOne({ 'email': 'geobal87@yahoo.gr' }, 'email', function ( err, user ) {
+        d.resolve(user);
+    });
+    console.log(d.promise);
+    return d.promise;
+  };
+  var promise = test().then(function(user){ return user; });
+  //var promise = sum( 1, 2 );
+  res.send(promise);
+
   var user = new User( new_user );
   var profile = new Profile( new_profile );
 
   var user_errors = user.validate( user );
   var profile_errors = profile.validate( profile );
-  console.log( user_errors );
-  return;
+
   user.save(function ( err, user ) {
     if ( err || register_errors.length ) {
       for( field in err.errors ) {

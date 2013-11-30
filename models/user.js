@@ -25,7 +25,7 @@ userSchema.methods.validate = function( user, cb ) {
     results['email_valid'] =   /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test( user.email );
     results['email_unique'] = ( db_user == null );
     
-    cb( results );
+    return results;
   });
 }
 
