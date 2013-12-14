@@ -2,6 +2,7 @@
 
 var mongoose = require('mongoose');
 var db = mongoose.connection;
+var q = require('q');
 
 //Define User SCHEMA
 // Gender: 1 = male, 0 = female
@@ -22,12 +23,15 @@ var profileSchema = mongoose.Schema({
  * Input validations
  */
 profileSchema.methods.validate = function( profile ) {
+
+  var d = q.defer();
   var results = [];
   results['first_name_valid'] =  /^[a-zA-Z ']+$/.test( profile.first_name );
   results['last_name_valid'] =  /^[a-zA-Z ']+$/.test( profile.last_name );
   results['gender_valid'] =  profile.gender === true || profile.gender === false;
 
-  return results;
+   d.resolve(results);
+   return d.promise;
 }
 
 var Profile = mongoose.model('Profile', profileSchema);

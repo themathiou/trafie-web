@@ -145,6 +145,9 @@ trafie.post( '/register', function( req, res ) {
   register_errors['password'] = '';
   var password = '';
 
+
+
+  //Checking password and matching
   if(req.body.password == '') {
     register_errors['password'] = 'Password is required';
   }
@@ -152,10 +155,7 @@ trafie.post( '/register', function( req, res ) {
     register_errors['repeat_password'] = 'Passwords do not match';
   }
   else {
-    var sha512_hash = crypto.createHash('sha512');
-    sha512_hash.update('23tR@Ck@nDF!3lD04' + req.body.password);
-    password = sha512_hash.digest('hex');
-  }
+     }
 
   var new_user = {
     email : req.body.email,
@@ -169,31 +169,19 @@ trafie.post( '/register', function( req, res ) {
     gender : req.body.gender == 'male'
   }
 
-/*var user = new User( new_user );
-  var promise = User.findOne({ 'email': req.body.email }, 'first_name last_name', function ( err, user ) {
-      return user;
-    }).then(function(user){
-      return user;
-    });*/
-
- var test = function(err){
-    var d = q.defer();
-    User.findOne({ 'email': 'geobal87@yahoo.gr' }, 'email', function ( err, user ) {
-        d.resolve(user);
-    });
-    console.log(d.promise);
-    return d.promise;
-  };
-  var promise = test().then(function(user){ return user; });
-  //var promise = sum( 1, 2 );
-  res.send(promise);
-
   var user = new User( new_user );
   var profile = new Profile( new_profile );
 
   var user_errors = user.validate( user );
-  var profile_errors = profile.validate( profile );
 
+
+  /* we need user.validate > profile.validate > user.save; */
+
+  var profile_errors = profile.validate( profile );
+  //res.send(profile_errors);
+  return;
+
+  console.log(user_errors + '  --  ' +profile_errors);
   user.save(function ( err, user ) {
     if ( err || register_errors.length ) {
       for( field in err.errors ) {
@@ -222,12 +210,12 @@ trafie.post( '/register', function( req, res ) {
       };
 
       var hash = new User_hash( new_hash );
-      
+
       message.to = new_user.email;
       message.subject = 'Welcome to trafie ✔';
       message.html = '<h2>Hello ' + new_user.first_name + ' ' + new_user.last_name + '</h2>' +
-           '<p>You have successfully registered to trafie.</p><br><p>The <b><i>trafie</i></b> team</p><br>' + 
-           'Follow the link to verify your email:<br>' + 
+           '<p>You have successfully registered to trafie.</p><br><p>The <b><i>trafie</i></b> team</p><br>' +
+           'Follow the link to verify your email:<br>' +
            '<a href="' + req.headers.host + '/validate/' + email_hash + '">This is the link</a>';
 
       transport.sendMail(message, function(error){
