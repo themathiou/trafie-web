@@ -11,19 +11,46 @@ var userSchema = mongoose.Schema({
   email : { type: String, required: true, unique: true, index: true },
   password : { type: String, required: true },
   settings : {
-                date_format : { type: String, required: true, default: 'Y/m/d' },
-                language : { type: String, required: true, default: 'eng' },
-                time_zone : { type: String, required: true, default: 'Europe/Helsinki' },
-                unit_system : { type: String, required: true, default: 'metric' }
-              },
+	                dateFormat : { type: String, required: true, default: 'Y/m/d' },
+	                language : { type: String, required: true, default: 'eng' },
+	                timeZone : { type: String, required: true, default: 'Europe/Helsinki' },
+	                unitSystem : { type: String, required: true, default: 'metric' }
+	          },
   valid : { type: Boolean, required: true, default: false }
 });
+
+/**
+* Find user by element
+* @param json where({email:someone@trafie.com})
+* @param String select
+*/
+userSchema.findOne = function(where,select){
+	var d = q.defer();
+	User.findOne(where, select, function ( err, user ) {
+	    d.resolve(user);
+	});
+	return d.promise;
+};
+
+
+/**
+* Encrypt password using sha512_hash
+* @param String password
+*/
+userSchema.encryptPassword = function (password) {
+	var sha512Hash = crypto.createHash('sha512');
+	sha512Hash.update('23tR@Ck@nDF!3lD04' + password);
+
+	//return encrypted password
+	return sha512Hash.digest('hex');
+}
 
 /**
  * Input validations
  */
 
 //Validate the user's input data
+/*
 userSchema.methods.validateUserInput = function(user_data) {
 
 	var ragister_errors=[];
@@ -55,25 +82,11 @@ userSchema.methods.validateUserInput = function(user_data) {
 
 	return register_errors;
 }
+*/
 
-//Encrypt Password
-userSchema.methods.encryptPassword = function (password) {
-	var sha512_hash = crypto.createHash('sha512');
-	sha512_hash.update('23tR@Ck@nDF!3lD04' + password);
-	//return encrypted password
-	return sha512_hash.digest('hex');
-}
 
-//Find user by element
-// i.e data = {email:someone@trafie.com}
-userSchema.methods.findOneUser = function(data){
-	var d = q.defer();
-	User.findOne(data, function ( err, user ) {
-	    d.resolve(user);
-	});
-	console.log('findOne');
-	return d.promise;
-};
+
+
 
 
 

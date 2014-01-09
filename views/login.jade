@@ -8,10 +8,11 @@ block content
 		div.forms
 			form#register.welcome_form(method="post", action="/login")
 				h3 Login
-				label(for="email_input") Email: 
+				p= error
+				label(for="email_input") Email:
 				input#email_input(name="email", type="text")
 				br
-				label(for="password_input") Password: 
+				label(for="password_input") Password:
 				input#password_input(name="password", type="password")
 				br
 				div.row

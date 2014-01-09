@@ -167,7 +167,7 @@ trafie.post( '/register', function( req, res ) {
     first_name : req.body.first_name,
     last_name : req.body.last_name,
     gender : req.body.gender == 'male'
-  }
+  };
 
   var user = new User( new_user );
   var profile = new Profile( new_profile );
@@ -249,10 +249,24 @@ trafie.get('/login', function( req, res ) {
  */
 trafie.post('/login', function( req, res ) {
   var email = req.body.email;
-  var sha512_hash = crypto.createHash('sha512');
-  sha512_hash.update('23tR@Ck@nDF!3lD04' + req.body.password);
-  var password = sha512_hash.digest('hex');
+  var password = User.schema.encryptPassword(req.body.password);
 
+
+  User.schema.findOne({ 'email': email, 'password': password }, '_id')
+    .then(function(response) {
+	    if( response !== null && typeof response._id !== 'undefined') {
+	    	req.session.user_id = response._id;
+		    res.redirect('/');
+	    } else {
+	    	console.log('else');
+		    res.render('login', {"error":"Invalid input!"});
+	    }
+    })
+	.fail(function(response) {
+		console.log("Error : " + response);
+  });
+
+/*
   User.findOne({ 'email': email, 'password': password }, '_id', function ( err, user ) {
     if (err) return handleError(err);
     if( user != null ) {
@@ -262,6 +276,7 @@ trafie.post('/login', function( req, res ) {
       res.render('login');
     }
   });
+*/
 });
 
 
