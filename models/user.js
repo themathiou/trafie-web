@@ -10,13 +10,17 @@ var db = mongoose.connection;
 var userSchema = mongoose.Schema({
   email : { type: String, required: true, unique: true, index: true },
   password : { type: String, required: true },
+
+/*
   settings : {
 	                dateFormat : { type: String, required: true, default: 'Y/m/d' },
 	                language : { type: String, required: true, default: 'eng' },
 	                timeZone : { type: String, required: true, default: 'Europe/Helsinki' },
 	                unitSystem : { type: String, required: true, default: 'metric' }
 	          },
-  valid : { type: Boolean, required: true, default: false }
+*/
+  // TO-DO in later phase. Change default to 'false'.
+  valid : { type: Boolean, required: true, default: true }
 });
 
 /**
@@ -49,6 +53,42 @@ userSchema.encryptPassword = function (password) {
  * Input validations
  */
 
+//function that checks email for validity
+userSchema.validateEmail = function( email ) {
+	 email = email.trim();
+	 if ( /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test( email ) ) {
+		 return {"success":true, "value":email};
+	 } else {
+		 return {"success":false , "code":0};
+	 }
+}
+
+//function that checks password for validity
+userSchema.validatePassword = function( password, repeat ) {
+	 //password size < 6
+	 if( password.length < 6  ) {
+		 return {"success":false, "code":0};
+	 }
+	 //passwords doesn't match
+	 else if ( password !== repeat)  {
+		 return {"success":false, "code":1};
+	 }
+	 //it's OK. Hash password and
+	 else {
+	 	 var hashed_password = userSchema.encryptPassword(password);
+		 return {"success":true, "value":hashed_password};
+	 }
+}
+
+/////-------------------------------------
+
+var User = mongoose.model('User', userSchema);
+
+module.exports = User;
+
+
+
+//------ TO BE DELETED ----
 //Validate the user's input data
 /*
 userSchema.methods.validateUserInput = function(user_data) {
@@ -83,38 +123,3 @@ userSchema.methods.validateUserInput = function(user_data) {
 	return register_errors;
 }
 */
-
-
-
-
-
-
-
-/////-------------------------------------
-
-
-
-userSchema.methods.checkUserInput = function(user) {
-	var results = [];
-    results['email_valid'] =   /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test( user.email );
-    return results;
-};
-
-userSchema.methods.validate = function(user) {
-	var d = q.defer();
-	user.findOneUser({ 'email': user.email })
-	.then(function(db_user){
-		if(db_user==null){
-			console.log(user.checkUserInput(user)['email_valid']);
-		} else {
-			console.log('email is already taken');
-		}
-	});
-
-	d.resolve(user);
-    return d.promise;
-};
-
-var User = mongoose.model('User', userSchema);
-
-module.exports = User;

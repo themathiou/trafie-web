@@ -22,6 +22,17 @@ var profileSchema = mongoose.Schema({
 /**
  * Input validations
  */
+
+//function that checks first and last name for validity
+userSchema.validateName = function( name ) {
+	 name = name.trim();
+	 if ( /^[A-Za-z ]+$/.test( name ) ) {
+		return {"success":true, "value":name};
+	 } else {
+		 return {"success":false , "code":0};
+	 }
+}
+
 profileSchema.methods.validate = function( profile ) {
 
   var d = q.defer();

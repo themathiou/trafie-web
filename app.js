@@ -32,7 +32,7 @@ var path = require('path');
 var url = require('url') ;
 var mongoose = require('mongoose');
 var crypto = require('crypto');
-var nodemailer = require("nodemailer");
+var nodemailer = require('nodemailer');
 var q = require('q');
 
 // Initialize express
@@ -79,6 +79,7 @@ if ('development' == trafie.get('env')) {
  ******************************************************************************************************************************/
 
 // Create a SMTP transport object
+/*
 var transport = nodemailer.createTransport("SMTP", {
         //service: 'Gmail', // use well known service.
                             // If you are using @gmail.com address, then you don't
@@ -98,6 +99,7 @@ var message = {
         'X-Laziness-level': 1000
     }
 };
+*/
 
 
 /*******************************************************************************************************************************
@@ -266,17 +268,6 @@ trafie.post('/login', function( req, res ) {
 		console.log("Error : " + response);
   });
 
-/*
-  User.findOne({ 'email': email, 'password': password }, '_id', function ( err, user ) {
-    if (err) return handleError(err);
-    if( user != null ) {
-      req.session.user_id = user._id;
-      res.redirect('/');
-    } else {
-      res.render('login');
-    }
-  });
-*/
 });
 
 
@@ -300,9 +291,11 @@ trafie.get('/logout', function( req, res ) {
 /**
  * Settings - GET
  */
+/*
 trafie.get( '/settings', function( req, res ) {
   res.render( 'settings', { title: 'trafie - Settings' });
 });
+*/
 
 
 /*******************************************************************************************************************************
@@ -312,9 +305,11 @@ trafie.get( '/settings', function( req, res ) {
 /**
  * Statistics - GET
  */
+/*
 trafie.get( '/statistics', function( req, res ) {
   res.render( 'statistics', { title: 'trafie - Statistics' });
 });
+*/
 
 
 /*******************************************************************************************************************************
