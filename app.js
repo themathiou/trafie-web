@@ -114,7 +114,7 @@ trafie.get('/', function( req, res ){
   var user_id = req.session.user_id;
 
   if(!user_id) {
-	  res.redirect('/login');
+	  res.redirect('/register');
   } else {
     User.findOne({ '_id': user_id }, 'first_name last_name', function ( err, user ) {
   	  res.render( 'profile', { first_name: user.first_name, last_name: user.last_name });
