@@ -5,14 +5,9 @@ var db = mongoose.connection;
 var q = require('q');
 
 //Define User SCHEMA
-// Gender: 1 = male, 0 = female
 var profileSchema = mongoose.Schema({
   first_name : { type: String, required: true },
   last_name : { type: String, required: true },
-  gender : { type: Boolean, required: true },
-  country : { type: String, default: '' },
-  major_accomplishments : { type: String, default: '' },
-  nickname : { type: String, index: true, default: '' },
   disciplines : [
                   { type: String, default: '' },
                   { type: String, default: '' }

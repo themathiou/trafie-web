@@ -46,7 +46,7 @@ var db = mongoose.connection;
 /*******************************************************************************************************************************
  * MODELS                                                                                                                      *
  ******************************************************************************************************************************/
-
+ 
 var User = require('./models/user.js');
 var Profile = require('./models/profile.js');
 
@@ -72,34 +72,6 @@ trafie.use(express.static(path.join(__dirname, 'public')));
 if ('development' == trafie.get('env')) {
   trafie.use(express.errorHandler());
 }
-
-
-/*******************************************************************************************************************************
- * EMAIL                                                                                                                       *
- ******************************************************************************************************************************/
-
-// Create a SMTP transport object
-/*
-var transport = nodemailer.createTransport("SMTP", {
-        //service: 'Gmail', // use well known service.
-                            // If you are using @gmail.com address, then you don't
-                            // even have to define the service name
-        auth: {
-            user: "trafie.app@gmail.com",
-            pass: "tr@f!etr@f!e"
-        }
-    });
-
-console.log('SMTP Configured');
-
-// Message object
-var message = {
-    from: 'trafie <trafie.app@gmail.com>',
-    headers: {
-        'X-Laziness-level': 1000
-    }
-};
-*/
 
 
 /*******************************************************************************************************************************
@@ -147,8 +119,6 @@ trafie.post( '/register', function( req, res ) {
   register_errors['password'] = '';
   var password = '';
 
-
-
   //Checking password and matching
   if(req.body.password == '') {
     register_errors['password'] = 'Password is required';
@@ -161,14 +131,12 @@ trafie.post( '/register', function( req, res ) {
 
   var new_user = {
     email : req.body.email,
-    password : password,
-    valid : false
+    password : password
   };
 
   var new_profile = {
     first_name : req.body.first_name,
-    last_name : req.body.last_name,
-    gender : req.body.gender == 'male'
+    last_name : req.body.last_name
   };
 
   var user = new User( new_user );
@@ -176,14 +144,8 @@ trafie.post( '/register', function( req, res ) {
 
   var user_errors = user.validate( user );
 
-
-  /* we need user.validate > profile.validate > user.save; */
-
   var profile_errors = profile.validate( profile );
-  //res.send(profile_errors);
-  return;
 
-  console.log(user_errors + '  --  ' +profile_errors);
   user.save(function ( err, user ) {
     if ( err || register_errors.length ) {
       for( field in err.errors ) {
@@ -213,21 +175,6 @@ trafie.post( '/register', function( req, res ) {
 
       var hash = new User_hash( new_hash );
 
-      message.to = new_user.email;
-      message.subject = 'Welcome to trafie ✔';
-      message.html = '<h2>Hello ' + new_user.first_name + ' ' + new_user.last_name + '</h2>' +
-           '<p>You have successfully registered to trafie.</p><br><p>The <b><i>trafie</i></b> team</p><br>' +
-           'Follow the link to verify your email:<br>' +
-           '<a href="' + req.headers.host + '/validate/' + email_hash + '">This is the link</a>';
-
-      transport.sendMail(message, function(error){
-          if(error){
-              console.log('Error occured: ' + error);
-              return;
-          }
-          console.log('Message sent successfully!');
-      });
-
       req.session.user_id = user._id;
       res.redirect('/');
     }
@@ -252,7 +199,6 @@ trafie.get('/login', function( req, res ) {
 trafie.post('/login', function( req, res ) {
   var email = req.body.email;
   var password = User.schema.encryptPassword(req.body.password);
-
 
   User.schema.findOne({ 'email': email, 'password': password }, '_id')
     .then(function(response) {
@@ -294,20 +240,6 @@ trafie.get('/logout', function( req, res ) {
 /*
 trafie.get( '/settings', function( req, res ) {
   res.render( 'settings', { title: 'trafie - Settings' });
-});
-*/
-
-
-/*******************************************************************************************************************************
- * STATISTICS                                                                                                                   *
- ******************************************************************************************************************************/
-
-/**
- * Statistics - GET
- */
-/*
-trafie.get( '/statistics', function( req, res ) {
-  res.render( 'statistics', { title: 'trafie - Statistics' });
 });
 */
 
