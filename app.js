@@ -171,12 +171,13 @@ trafie.post( '/register', function( req, res ) {
       errors = true;
     }
 
-    // If there any errors, show the messages to the user
+    // If there are any errors, show the messages to the user
     if( errors ) {
       res.render( 'register', { errors: error_messages, fields: { 'first_name': first_name, 'last_name': last_name, 'email': email } });
       return;
     }
 
+    // Encrypting the password
     password = User.schema.encryptPassword(password);
 
     var new_user = {
