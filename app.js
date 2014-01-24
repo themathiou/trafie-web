@@ -116,27 +116,27 @@ trafie.post( '/register', function( req, res ) {
 
   // Checking input for blank values
   if( typeof req.body.password === 'undefined' || !req.body.password ) {
-    error_messages['password'] = 'Password is required';
+    error_messages.password = 'Password is required';
     error = true;
   }
   if( typeof req.body.repeat_password === 'undefined' || !req.body.repeat_password ) {
-    error_messages['repeat_password'] = 'Please repeat the password';
+    error_messages.repeat_password = 'Please repeat the password';
     error = true;
   }
   if( !error && req.body.repeat_password !== req.body.password ) {
-    error_messages['repeat_password'] = 'Passwords do not match';
+    error_messages.repeat_password = 'Passwords do not match';
     error = true;
   }
   if( typeof req.body.email === 'undefined' || !req.body.email ) {
-    error_messages['email'] = 'Email is required';
+    error_messages.email = 'Email is required';
     error = true;
   }
   if( typeof req.body.first_name === 'undefined' || !req.body.first_name ) {
-    error_messages['first_name'] = 'First name is required';
+    error_messages.first_name = 'First name is required';
     error = true;
   }
   if( typeof req.body.last_name === 'undefined' || !req.body.last_name ) {
-    error_messages['last_name'] = 'Last name is required';
+    error_messages.last_name = 'Last name is required';
     error = true;
   }
 
@@ -149,8 +149,6 @@ trafie.post( '/register', function( req, res ) {
     var email = req.body.email;
     var password = req.body.password;
   }
-res.render( 'register', { fields: { 'first_name': req.body.first_name, 'last_name': req.body.last_name, 'email': req.body.email } });
-return;
 
   var new_user = {
     'email': email,
