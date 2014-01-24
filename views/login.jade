@@ -7,15 +7,13 @@ block content
 			div#welcome_logo
 		div.forms
 			form.welcome_form(method="post", action="/login")
-				p= error
 				label(for="email_input") Email:
-				input#email_input(name="email", type="text")
+				input#email_input.textfield(name="email", type="text")
 				br
 				label(for="password_input") Password:
-				input#password_input(name="password", type="password")
+				input#password_input.textfield(name="password", type="password")
 				br
-				div.row
-					input(type="submit", value="Login at trafie")
+				input.button_green(type="submit", value="Login at trafie")
 				div
 					p Not a member?
 						a(href="/register") Register
