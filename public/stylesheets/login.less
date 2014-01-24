@@ -2,6 +2,9 @@
 @lightgray : rgba(0,0,0,0.1);
 @mediumgray : rgba(0,0,0,0.3);
 
+/* TO - BE - FIXED */
+@errorred : red;
+
 html
 {
 		height:100%;
@@ -17,7 +20,7 @@ body
 	height:100%;
 }
 
-/* ----------------------------------------  LOGIN */
+/* ----------------------------------------  LOGIN ---------------------------------------------------------- */
 .forms
 {
 	margin:0px auto;
@@ -70,9 +73,10 @@ body
 .welcome_form
 {
 	width:400px;
-	padding: 20px 20px 10px 20px;
+	padding: 5px 20px;
 	margin:0px auto;
-	background-color: rgba(0,0,0,0.6);
+	/* background-color: rgba(0,0,0,0.6); */
+	background-color: rgba(255,255,255,0.8);
 
 	-webkit-border-radius: 7px;
 	-moz-border-radius: 7px;
@@ -80,7 +84,7 @@ body
 	-ms-border-radius: 7px;
 	border-radius: 7px;
 
-	color:white;
+	color: black;
 
 	h3
 	{
@@ -96,8 +100,6 @@ body
 	input
 	{
 		width:100%;
-		height: 30px;
-		font-size: 1.4em;
 		margin:0px auto;
 
 		/* radius */
@@ -107,69 +109,7 @@ body
 		-ms-border-radius: 5px;
 		border-radius: 5px;
 
-		/* inner-shaddow */
-		-webkit-box-shadow: inset 0px 0px 0px #000000;
-		-moz-box-shadow: inset 0px 0px 0px #000000;
-		-o-box-shadow: inset 0px 0px 0px #000000;
-		-ms-box-shadow: inset 0px 0px 0px #000000;
-		box-shadow: inset 0px 0px 0px #000000;
-
 		margin-bottom: 5px;
-
-		&[type="submit"]
-		{
-			margin:20px 0px;
-			-moz-box-shadow:inset 0px 1px 0px 0px #cf866c;
-	        -webkit-box-shadow:inset 0px 1px 0px 0px #cf866c;
-	        box-shadow:inset 0px 1px 0px 0px #cf866c;
-
-	        background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #d0451b), color-stop(1, #bc3315));
-	        background:-moz-linear-gradient(top, @red 5%, @red 100%);
-	        background:-webkit-linear-gradient(top, @red 5%, @red 100%);
-	        background:-o-linear-gradient(top, @red 5%, @red 100%);
-	        background:-ms-linear-gradient(top, @red 5%, @red 100%);
-	        background:linear-gradient(to bottom, @red 5%, @red 100%);
-	        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='@red', endColorstr='@red',GradientType=0);
-
-	        background-color:#d0451b;
-
-	        -moz-border-radius:3px;
-	        -webkit-border-radius:3px;
-	        border-radius:3px;
-
-	        border:1px solid #942911;
-
-	        display:inline-block;
-	        color:#ffffff;
-	        font-family:arial;
-	        font-size:13px;
-	        font-weight:normal;
-	        padding:6px 24px;
-	        text-decoration:none;
-
-	        text-shadow:0px 1px 0px #854629;
-	        width:150px;
-
-			&:hover
-			{
-				background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #bc3315), color-stop(1, #d0451b));
-		        background:-moz-linear-gradient(top, #bc3315 5%, #d0451b 100%);
-		        background:-webkit-linear-gradient(top, #bc3315 5%, #d0451b 100%);
-		        background:-o-linear-gradient(top, #bc3315 5%, #d0451b 100%);
-		        background:-ms-linear-gradient(top, #bc3315 5%, #d0451b 100%);
-		        background:linear-gradient(to bottom, #bc3315 5%, #d0451b 100%);
-		        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#bc3315', endColorstr='#d0451b',GradientType=0);
-
-		        background-color:#bc3315;
-		    }
-
-			&:active
-			{
-		        position:relative;
-		        top:1px;
-		    }
-
-		}
 
 		&[type="radio"]
 		{
@@ -179,6 +119,10 @@ body
 		}
 	}
 
+	/*the text field parameters. use with <input> */
+	.textfield {
+		font-size: 1.4em;
+	}
 
 	.forgot_password a
 	{
@@ -192,20 +136,83 @@ body
 		}
 	}
 
-	.sign_up
-	{
-		padding-left: 5px;
-		a
-		{
-			color:white;
-			font-size: 0.9em;
-			text-decoration: none;
-			margin-bottom:5px;
-
-			&:hover
-			{
-				text-decoration: underline;
-			}
-		}
+	/*error messages - right of the label*/
+	.login_error {
+		color: @errorred;
+		margin-left: 5px;
+		font-weight: 400;
 	}
+
 }
+
+
+.button_green {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    padding: 6px 24px;
+    border: 1px solid #45861a;
+    border-radius: 8px;
+    background: #70d92b;
+    background: -webkit-gradient(linear, left top, left bottom, from(#70d92b), to(#45861a));
+    background: -moz-linear-gradient(top, #70d92b, #45861a);
+    background: linear-gradient(to bottom, #70d92b, #45861a);
+    font: 1em Open Sans,Arial,Helvetica,sans-serif;
+    color: #ffffff;
+    text-decoration: none;
+
+	&:hover, &:focus {
+	    border: 1px solid ##56a721;
+	    background: #86ff34;
+	    background: -webkit-gradient(linear, left top, left bottom, from(#86ff34), to(#53a11f));
+	    background: -moz-linear-gradient(top, #86ff34, #53a11f);
+	    background: linear-gradient(to bottom, #86ff34, #53a11f);
+	    color: #ffffff;
+	    text-decoration: none;
+	}
+
+	&:active {
+	    background: #45861a;
+	    background: -webkit-gradient(linear, left top, left bottom, from(#45861a), to(#45861a));
+	    background: -moz-linear-gradient(top, #45861a, #45861a);
+	    background: linear-gradient(to bottom, #45861a, #45861a);
+	}
+
+}
+
+.button-red {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    padding: 12px 24px;
+    border: 1px solid #a22b14;
+    border-radius: 8px;
+    background: #ff5026;
+    background: -webkit-gradient(linear, left top, left bottom, from(#ff5026), to(#a22b14));
+    background: -moz-linear-gradient(top, #ff5026, #a22b14);
+    background: linear-gradient(to bottom, #ff5026, #a22b14);
+    font: 1em Open Sans,Arial,Helvetica,sans-serif;
+    color: #ffffff;
+    text-decoration: none;
+
+    &:hover, &:focus {
+	    border: 1px solid ##bf3218;
+	    background: #ff602e;
+	    background: -webkit-gradient(linear, left top, left bottom, from(#ff602e), to(#c23418));
+	    background: -moz-linear-gradient(top, #ff602e, #c23418);
+	    background: linear-gradient(to bottom, #ff602e, #c23418);
+	    color: #ffffff;
+	    text-decoration: none;
+	}
+
+	&:active {
+	    background: #a22b14;
+	    background: -webkit-gradient(linear, left top, left bottom, from(#a22b14), to(#a22b14));
+	    background: -moz-linear-gradient(top, #a22b14, #a22b14);
+	    background: linear-gradient(to bottom, #a22b14, #a22b14);
+	}
+
+}
+
+
+
