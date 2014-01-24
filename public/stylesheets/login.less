@@ -1,9 +1,11 @@
 @red:#AE3731;
 @lightgray : rgba(0,0,0,0.1);
 @mediumgray : rgba(0,0,0,0.3);
+@darkgray : rgba(0,0,0,0.7);
 
 /* TO - BE - FIXED */
 @errorred : red;
+@informationorange : orange;
 
 html
 {
@@ -124,15 +126,21 @@ body
 		font-size: 1.4em;
 	}
 
-	.forgot_password a
+	.switch_login_register_message
 	{
-		color:white;
-		font-size: 0.7em;
-		text-decoration: none;
 
-		&:hover
-		{
-			text-decoration: underline;
+		color: @darkgray;
+		font-size: 0.9em;
+
+		a {
+			color:black;
+			padding-left: 3px;
+			font-size: 1em;
+			text-decoration: none;
+
+			&:hover {
+				text-decoration: underline;
+			}
 		}
 	}
 
@@ -145,6 +153,10 @@ body
 
 }
 
+.information_message {
+	color:@informationorange;
+	font-size: 0.9em;
+}
 
 .button_green {
     display: inline-block;

@@ -95,18 +95,27 @@ body {
 .welcome_form .textfield {
   font-size: 1.4em;
 }
-.welcome_form .forgot_password a {
-  color: white;
-  font-size: 0.7em;
+.welcome_form .switch_login_register_message {
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 0.9em;
+}
+.welcome_form .switch_login_register_message a {
+  color: black;
+  padding-left: 3px;
+  font-size: 1em;
   text-decoration: none;
 }
-.welcome_form .forgot_password a:hover {
+.welcome_form .switch_login_register_message a:hover {
   text-decoration: underline;
 }
 .welcome_form .login_error {
   color: #ff0000;
   margin-left: 5px;
   font-weight: 400;
+}
+.information_message {
+  color: #ffa500;
+  font-size: 0.9em;
 }
 .button_green {
   display: inline-block;
