@@ -112,63 +112,67 @@ trafie.get( '/register', function( req, res ) {
  */
 trafie.post( '/register', function( req, res ) {
   var error_messages = {};
-  var error = false;
+  var errors = false;
 
+  // Initializing the input values
   var first_name = typeof req.body.first_name !== 'undefined' ? req.body.first_name.trim() : '';
   var last_name = typeof req.body.last_name !== 'undefined' ? req.body.last_name.trim() : '';
   var email = typeof req.body.email !== 'undefined' ? req.body.email.trim() : '';
   var password = typeof req.body.password !== 'undefined' ? req.body.password : '';
   var repeat_password = typeof req.body.repeat_password !== 'undefined' ? req.body.repeat_password : '';
 
-  // Checking input for blank values
+  // Generating error messages
   if( !password ) {
     error_messages.password = 'Password is required';
-    error = true;
+    errors = true;
   }
-  else if( !error && !User.schema.validatePassword( password ) ) {
+  else if( !errors && !User.schema.validatePassword( password ) ) {
     error_messages.password = 'Password should be at least 6 characters long';
-    error = true;
+    errors = true;
   }
   if( !repeat_password ) {
     error_messages.repeat_password = 'Please repeat the password';
-    error = true;
+    errors = true;
   }
-  if( !error && repeat_password !== password ) {
+  if( !errors && repeat_password !== password ) {
     error_messages.repeat_password = 'Passwords do not match';
-    error = true;
+    errors = true;
   }
   if( !email ) {
     error_messages.email = 'Email is required';
-    error = true;
+    errors = true;
   }
   else if( !User.schema.validateEmail( email ) ) {
     error_messages.email = 'Email is not valid';
-    error = true;
+    errors = true;
   }
   if( !first_name ) {
     error_messages.first_name = 'First name is required';
-    error = true;
+    errors = true;
   }
   else if( !Profile.schema.validateName( first_name ) ) {
     error_messages.first_name = 'First name can only have latin characters';
-    error = true;
+    errors = true;
   }
   if( !last_name ) {
     error_messages.last_name = 'Last name is required';
-    error = true;
+    errors = true;
   }
   else if( !Profile.schema.validateName( last_name ) ) {
     error_messages.last_name = 'Last name can only have latin characters';
-    error = true;
+    errors = true;
   }
 
-  User.schema.emailIsUnique( email ).then( function( unique_email ){
+  // Checking if the given email already exists in the database
+  User.schema.emailIsUnique( email ).then( function( unique_email ) {
+    // If the email is not unique, add it to the errors
     if( !unique_email ) {
       error_messages.email = 'Email is already in use';
-      error = true;
+      errors = true;
     }
 
-    if( error ) {
+    // If there any errors, show the messages to the user
+    if( errors ) {
       res.render( 'register', { errors: error_messages, fields: { 'first_name': first_name, 'last_name': last_name, 'email': email } });
       return;
     }
@@ -185,12 +189,16 @@ trafie.post( '/register', function( req, res ) {
       'last_name': last_name
     };
 
+    // Creating the user and profile objects
     var user = new User( new_user );
     var profile = new Profile( new_profile );
 
+    // Saving the user and the profile data
     user.save(function ( err, user ) {
       profile.save(function ( err, profile ) {
+        // Storing the user id in the session
         req.session.user_id = user._id;
+        // Redirecting to the profile
         res.redirect('/');
       });
     });
