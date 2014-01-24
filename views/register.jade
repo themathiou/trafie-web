@@ -11,13 +11,13 @@ block content
 				label(for="first_name") First Name
 				span#first_name_error.login_error= errors['first_name']
 				//= errors['first_name']
-				input#first_name.textfield(type="text" name="first_name" placeholder="i.e Theodore" value="")
+				input#first_name.textfield(type="text" name="first_name" placeholder="i.e Jesse" value=field.first_name)
 				label(for="last_name") Last Name
 				span#last_name_error.login_error= errors['last_name']
-				input#last_name.textfield(type="text" name="last_name" value="fields.last_name")
+				input#last_name.textfield(type="text" name="last_name" placeholder="i.e Owens" value=fields.last_name)
 				label(for="email") Email
 				span#email_error.login_error= errors['email']
-				input#email.textfield(type="text" name="email" value="fields.email")
+				input#email.textfield(type="text" name="email" placeholder="i.e something@domain.com" value=fields.email)
 				label(for="password") Password
 				span#password_error.login_error= errors['password']
 				input#password.textfield(type="password" name="password")
