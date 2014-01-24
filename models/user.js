@@ -71,7 +71,7 @@ userSchema.validatePassword = function( password, repeat ) {
 userSchema.emailIsUnique = function( email ){
 	var d = q.defer();
 	User.findOne({'email': email}, '_id', function ( err, user ) {
-		d.resolve(!!user);
+		d.resolve(!user);
 	});
 	return d.promise;
 };

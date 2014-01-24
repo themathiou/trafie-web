@@ -104,14 +104,14 @@ trafie.get('/', function( req, res ){
  * Register - GET
  */
 trafie.get( '/register', function( req, res ) {
-  res.render( 'register', { title: 'trafie', errors: [] });
+  res.render( 'register' );
 });
 
 /**
  * Register - POST
  */
 trafie.post( '/register', function( req, res ) {
-  var error_messages = [];
+  var error_messages = {};
   var error = false;
 
   // Checking input for blank values
