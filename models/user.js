@@ -33,40 +33,28 @@ userSchema.encryptPassword = function ( password ) {
 	var sha512Hash = crypto.createHash('sha512');
 	sha512Hash.update('23tR@Ck@nDF!3lD04' + password);
 
-	//return encrypted password
+	// Return the encrypted password
 	return sha512Hash.digest('hex');
 };
 
 /**
- * Input validations
+ * Checks email for validity
  */
-
-//function that checks email for validity
 userSchema.validateEmail = function( email ) {
-	 if ( /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test( email ) ) {
-		 return {"success":true, "value":email};
-	 } else {
-		 return {"success":false , "code":0};
-	 }
+	 return /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test( email );
 };
 
-//function that checks password for validity
-userSchema.validatePassword = function( password, repeat ) {
-	 //password size < 6
-	 if( password.length < 6  ) {
-		 return {"success":false, "code":0};
-	 }
-	 //passwords doesn't match
-	 else if ( password !== repeat)  {
-		 return {"success":false, "code":1};
-	 }
-	 //it's OK. Hash password and
-	 else {
-	 	 var hashed_password = userSchema.encryptPassword(password);
-		 return {"success":true, "value":hashed_password};
-	 }
+/** 
+ * Checks password for validity
+ */
+userSchema.validatePassword = function( password ) {
+	 // The password should have at least 6 characters
+	 return password.length >= 6
 };
 
+/**
+ * Checks if the email exists in the database
+ */
 userSchema.emailIsUnique = function( email ){
 	var d = q.defer();
 	User.findOne({'email': email}, '_id', function ( err, user ) {
@@ -75,46 +63,7 @@ userSchema.emailIsUnique = function( email ){
 	return d.promise;
 };
 
-/////-------------------------------------
 
 var User = mongoose.model('User', userSchema);
 
 module.exports = User;
-
-
-
-//------ TO BE DELETED ----
-//Validate the user's input data
-/*
-userSchema.methods.validateUserInput = function(user_data) {
-
-	var ragister_errors=[];
-	register_errors['email'] = '';
-    register_errors['password'] = '';
-    register_errors['repeat_password'] = '';
-    register_errors['valid'] = '';
-    register_errors['settings'] = '';
-
-	//Checking email
-	if(typeOf user_data['email'] !== "undefined") {
-		if ( /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test( user_data['email'] ) ) {
-			register_errors['email'] = 'Email is not valid.';
-		}
-	}
-
-	//Checking password
-	if( typeOf user_data['password'] !== "undefined" ) {
-		if( user_data['password'].length < 6) {
-			register_errors['password'] = 'Password should be at least 6 characters long.';
-		}
-		//Checking repeat_password
-		if( typeOf user_data['repeat_password'] !== "undefined") {
-			if( user_data['repeat_password'] !== user_data['password']) {
-				register_errors['repeat_password'] = 'Passwords don\'t match.';
-			}
-		}
-	}
-
-	return register_errors;
-}
-*/

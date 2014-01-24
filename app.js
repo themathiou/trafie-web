@@ -117,12 +117,16 @@ trafie.post( '/register', function( req, res ) {
   var first_name = typeof req.body.first_name !== 'undefined' ? req.body.first_name.trim() : '';
   var last_name = typeof req.body.last_name !== 'undefined' ? req.body.last_name.trim() : '';
   var email = typeof req.body.email !== 'undefined' ? req.body.email.trim() : '';
-  var password = typeof req.body.password !== 'undefined' ? req.body.password.trim() : '';
-  var repeat_password = typeof req.body.repeat_password !== 'undefined' ? req.body.repeat_password.trim() : '';
+  var password = typeof req.body.password !== 'undefined' ? req.body.password : '';
+  var repeat_password = typeof req.body.repeat_password !== 'undefined' ? req.body.repeat_password : '';
 
   // Checking input for blank values
   if( !password ) {
     error_messages.password = 'Password is required';
+    error = true;
+  }
+  else if( !error && !User.schema.validatePassword( password ) ) {
+    error_messages.password = 'Password should be at least 6 characters long';
     error = true;
   }
   if( !repeat_password ) {
@@ -137,73 +141,60 @@ trafie.post( '/register', function( req, res ) {
     error_messages.email = 'Email is required';
     error = true;
   }
+  else if( !User.schema.validateEmail( email ) ) {
+    error_messages.email = 'Email is not valid';
+    error = true;
+  }
   if( !first_name ) {
     error_messages.first_name = 'First name is required';
+    error = true;
+  }
+  else if( !Profile.schema.validateName( first_name ) ) {
+    error_messages.first_name = 'First name can only have latin characters';
     error = true;
   }
   if( !last_name ) {
     error_messages.last_name = 'Last name is required';
     error = true;
   }
-
-  if( error ) {
-    res.render( 'register', { errors: error_messages, fields: { 'first_name': first_name, 'last_name': last_name, 'email': email } });
-    return;
+  else if( !Profile.schema.validateName( last_name ) ) {
+    error_messages.last_name = 'Last name can only have latin characters';
+    error = true;
   }
 
-  var new_user = {
-    'email': email,
-    'password': password
-  };
-
-  var new_profile = {
-    'first_name': first_name,
-    'last_name': last_name
-  };
-
-  var user = new User( new_user );
-  var profile = new Profile( new_profile );
-
-  User.schema.validateEmail()
-  User.schema.emailIsUnique( email ).then( function( success ){console.log(success);} );
-console.log();
-return;
-  var user_errors = user.validate( user );
-
-  var profile_errors = profile.validate( profile );
-
-  user.save(function ( err, user ) {
-    if ( err || register_errors.length ) {
-      for( field in err.errors ) {
-        if( err.errors[field].type == 'required' ) {
-          register_errors[field] = 'Required';
-        }
-        else if( err.errors[field].type == 'invalid' ) {
-          register_errors[field] = 'Invalid';
-        }
-        else if( err.errors[field].type == 'duplicate' ) {
-          register_errors[field] = 'Email already exists';
-        }
-      }
-
-      res.render( 'register', { title: 'trafie', errors: register_errors });
-    } else {
-      var sha512_hash = crypto.createHash('sha512');
-      sha512_hash.update('233m@!lh@5h04' + user._id);
-
-      var email_hash = sha512_hash.digest('hex');
-
-      var new_hash = {
-        user_id : user._id,
-        type : 'verify',
-        hash : email_hash
-      };
-
-      var hash = new User_hash( new_hash );
-
-      req.session.user_id = user._id;
-      res.redirect('/');
+  User.schema.emailIsUnique( email ).then( function( unique_email ){
+    if( !unique_email ) {
+      error_messages.email = 'Email is already in use';
+      error = true;
     }
+
+    if( error ) {
+      res.render( 'register', { errors: error_messages, fields: { 'first_name': first_name, 'last_name': last_name, 'email': email } });
+      return;
+    }
+
+    password = User.schema.encryptPassword(password);
+
+    var new_user = {
+      'email': email,
+      'password': password
+    };
+
+    var new_profile = {
+      'first_name': first_name,
+      'last_name': last_name
+    };
+
+    var user = new User( new_user );
+    var profile = new Profile( new_profile );
+
+    user.save(function ( err, user ) {
+      profile.save(function ( err, profile ) {
+        req.session.user_id = user._id;
+        res.redirect('/');
+      });
+    });
+
   });
 });
 

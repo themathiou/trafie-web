@@ -14,33 +14,11 @@ var profileSchema = mongoose.Schema({
                 ]
 });
 
-/**
- * Input validations
- */
-
-//function that checks first and last name for validity
+// Checks first and last name for validity
 profileSchema.validateName = function( name ) {
-	 name = name.trim();
-	 if ( /^[A-Za-z ]+$/.test( name ) ) {
-		return {"success":true, "value":name};
-	 } else {
-		 return {"success":false , "code":0};
-	 }
-}
-
-profileSchema.validate = function( profile ) {
-
-  var d = q.defer();
-  var results = [];
-  results['first_name_valid'] =  /^[a-zA-Z ']+$/.test( profile.first_name );
-  results['last_name_valid'] =  /^[a-zA-Z ']+$/.test( profile.last_name );
-  results['gender_valid'] =  profile.gender === true || profile.gender === false;
-
-   d.resolve(results);
-   return d.promise;
+	 return /^[A-Za-z ]+$/.test( name );
 }
 
 var Profile = mongoose.model('Profile', profileSchema);
-
 
 module.exports = Profile;
