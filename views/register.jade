@@ -9,20 +9,20 @@ block content
 		div.forms
 			form#register.welcome_form(method="post")
 				label(for="first_name") First Name
-				span#first_name_error.login_error= errors['first_name']
+				span#first_name_error.login_error= errors.first_name
 				//= errors['first_name']
-				input#first_name.textfield(type="text" name="first_name" placeholder="i.e Jesse" value=field.first_name)
+				input#first_name.textfield(type="text" name="first_name" placeholder="i.e Jesse" value="")
 				label(for="last_name") Last Name
-				span#last_name_error.login_error= errors['last_name']
-				input#last_name.textfield(type="text" name="last_name" placeholder="i.e Owens" value=fields.last_name)
+				span#last_name_error.login_error= errors.last_name
+				input#last_name.textfield(type="text" name="last_name" placeholder="i.e Owens" value="")
 				label(for="email") Email
-				span#email_error.login_error= errors['email']
-				input#email.textfield(type="text" name="email" placeholder="i.e something@domain.com" value=fields.email)
+				span#email_error.login_error= errors.email
+				input#email.textfield(type="text" name="email" placeholder="i.e something@domain.com" value="")
 				label(for="password") Password
-				span#password_error.login_error= errors['password']
+				span#password_error.login_error= errors.password
 				input#password.textfield(type="password" name="password")
 				label(for="repeat_password") Repeat Password
-				span#repeat_password_error.login_error= errors['repeat_password']
+				span#repeat_password_error.login_error= errors.repeat_password
 				input#repeat_password.textfield(type="password" name="repeat_password")
 
 				input.button_green(type="submit" name="sign_up" value="Register at trafie")
