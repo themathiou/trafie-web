@@ -140,28 +140,34 @@ trafie.post( '/register', function( req, res ) {
     error = true;
   }
 
-  if( !error ) {
+  if( error ) {
+    res.render( 'register', { errors: error_messages, fields: { 'first_name': req.body.first_name, 'last_name': req.body.last_name, 'email': req.body.email } });
+    return;
+  } else {
     var first_name = req.body.first_name;
     var last_name = req.body.last_name;
     var email = req.body.email;
     var password = req.body.password;
-  } else {
-    res.render( 'register', { errors: error_messages, fields: { 'first_name': req.body.first_name, 'last_name': req.body.last_name, 'email': req.body.email } });
   }
+res.render( 'register', { fields: { 'first_name': req.body.first_name, 'last_name': req.body.last_name, 'email': req.body.email } });
+return;
 
   var new_user = {
-    email : req.body.email,
-    password : password
+    'email': email,
+    'password': password
   };
 
   var new_profile = {
-    first_name : req.body.first_name,
-    last_name : req.body.last_name
+    'first_name': first_name,
+    'last_name': last_name
   };
 
   var user = new User( new_user );
   var profile = new Profile( new_profile );
 
+  User.schema.emailIsUnique( email ).then( function( success ){console.log(success);} );
+console.log();
+return;
   var user_errors = user.validate( user );
 
   var profile_errors = profile.validate( profile );

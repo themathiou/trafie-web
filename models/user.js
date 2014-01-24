@@ -17,7 +17,7 @@ var userSchema = mongoose.Schema({
 * @param json where({email:someone@trafie.com})
 * @param String select
 */
-userSchema.findOne = function( where, select ){
+userSchema.findOne = function( where, select ) {
 	var d = q.defer();
 	User.findOne(where, select, function ( err, user ) {
 		d.resolve(user);
@@ -29,13 +29,13 @@ userSchema.findOne = function( where, select ){
 * Encrypt password using sha512_hash
 * @param String password
 */
-userSchema.encryptPassword = function (password) {
+userSchema.encryptPassword = function ( password ) {
 	var sha512Hash = crypto.createHash('sha512');
 	sha512Hash.update('23tR@Ck@nDF!3lD04' + password);
 
 	//return encrypted password
 	return sha512Hash.digest('hex');
-}
+};
 
 /**
  * Input validations
@@ -49,7 +49,7 @@ userSchema.validateEmail = function( email ) {
 	 } else {
 		 return {"success":false , "code":0};
 	 }
-}
+};
 
 //function that checks password for validity
 userSchema.validatePassword = function( password, repeat ) {
@@ -66,7 +66,15 @@ userSchema.validatePassword = function( password, repeat ) {
 	 	 var hashed_password = userSchema.encryptPassword(password);
 		 return {"success":true, "value":hashed_password};
 	 }
-}
+};
+
+userSchema.emailIsUnique = function( email ){
+	var d = q.defer();
+	User.findOne({'email': email}, '_id', function ( err, user ) {
+		d.resolve(!!user);
+	});
+	return d.promise;
+};
 
 /////-------------------------------------
 

@@ -28,7 +28,7 @@ profileSchema.validateName = function( name ) {
 	 }
 }
 
-profileSchema.methods.validate = function( profile ) {
+profileSchema.validate = function( profile ) {
 
   var d = q.defer();
   var results = [];
