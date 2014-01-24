@@ -9,18 +9,7 @@ var db = mongoose.connection;
 //Define User SCHEMA
 var userSchema = mongoose.Schema({
   email : { type: String, required: true, unique: true, index: true },
-  password : { type: String, required: true },
-
-/*
-  settings : {
-	                dateFormat : { type: String, required: true, default: 'Y/m/d' },
-	                language : { type: String, required: true, default: 'eng' },
-	                timeZone : { type: String, required: true, default: 'Europe/Helsinki' },
-	                unitSystem : { type: String, required: true, default: 'metric' }
-	          },
-*/
-  // TO-DO in later phase. Change default to 'false'.
-  valid : { type: Boolean, required: true, default: true }
+  password : { type: String, required: true }
 });
 
 /**
@@ -28,14 +17,13 @@ var userSchema = mongoose.Schema({
 * @param json where({email:someone@trafie.com})
 * @param String select
 */
-userSchema.findOne = function(where,select){
+userSchema.findOne = function( where, select ){
 	var d = q.defer();
 	User.findOne(where, select, function ( err, user ) {
-	    d.resolve(user);
+		d.resolve(user);
 	});
 	return d.promise;
 };
-
 
 /**
 * Encrypt password using sha512_hash
