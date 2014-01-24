@@ -104,7 +104,7 @@ trafie.get('/', function( req, res ){
  * Register - GET
  */
 trafie.get( '/register', function( req, res ) {
-  res.render( 'register' );
+  res.render( 'register', { errors: {}, fields: { 'first_name': '', 'last_name': '', 'email': '' } } );
 });
 
 /**
@@ -114,40 +114,41 @@ trafie.post( '/register', function( req, res ) {
   var error_messages = {};
   var error = false;
 
+  var first_name = typeof req.body.first_name !== 'undefined' ? req.body.first_name.trim() : '';
+  var last_name = typeof req.body.last_name !== 'undefined' ? req.body.last_name.trim() : '';
+  var email = typeof req.body.email !== 'undefined' ? req.body.email.trim() : '';
+  var password = typeof req.body.password !== 'undefined' ? req.body.password.trim() : '';
+  var repeat_password = typeof req.body.repeat_password !== 'undefined' ? req.body.repeat_password.trim() : '';
+
   // Checking input for blank values
-  if( typeof req.body.password === 'undefined' || !req.body.password ) {
+  if( !password ) {
     error_messages.password = 'Password is required';
     error = true;
   }
-  if( typeof req.body.repeat_password === 'undefined' || !req.body.repeat_password ) {
+  if( !repeat_password ) {
     error_messages.repeat_password = 'Please repeat the password';
     error = true;
   }
-  if( !error && req.body.repeat_password !== req.body.password ) {
+  if( !error && repeat_password !== password ) {
     error_messages.repeat_password = 'Passwords do not match';
     error = true;
   }
-  if( typeof req.body.email === 'undefined' || !req.body.email ) {
+  if( !email ) {
     error_messages.email = 'Email is required';
     error = true;
   }
-  if( typeof req.body.first_name === 'undefined' || !req.body.first_name ) {
+  if( !first_name ) {
     error_messages.first_name = 'First name is required';
     error = true;
   }
-  if( typeof req.body.last_name === 'undefined' || !req.body.last_name ) {
+  if( !last_name ) {
     error_messages.last_name = 'Last name is required';
     error = true;
   }
 
   if( error ) {
-    res.render( 'register', { errors: error_messages, fields: { 'first_name': req.body.first_name, 'last_name': req.body.last_name, 'email': req.body.email } });
+    res.render( 'register', { errors: error_messages, fields: { 'first_name': first_name, 'last_name': last_name, 'email': email } });
     return;
-  } else {
-    var first_name = req.body.first_name;
-    var last_name = req.body.last_name;
-    var email = req.body.email;
-    var password = req.body.password;
   }
 
   var new_user = {
@@ -163,6 +164,7 @@ trafie.post( '/register', function( req, res ) {
   var user = new User( new_user );
   var profile = new Profile( new_profile );
 
+  User.schema.validateEmail()
   User.schema.emailIsUnique( email ).then( function( success ){console.log(success);} );
 console.log();
 return;

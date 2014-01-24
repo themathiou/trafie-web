@@ -43,7 +43,6 @@ userSchema.encryptPassword = function ( password ) {
 
 //function that checks email for validity
 userSchema.validateEmail = function( email ) {
-	 email = email.trim();
 	 if ( /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test( email ) ) {
 		 return {"success":true, "value":email};
 	 } else {
