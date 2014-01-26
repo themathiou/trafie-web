@@ -1,0 +1,167 @@
+extends layout
+block content
+
+	div#profile_container
+		div#image_container_1.picture_container
+
+		div#info_container
+			div.info_left
+				div#info_user_name.row
+					h4.left= first_name + ' ' + last_name
+					a.left.edit_profile_link(href="/settings") [Edit Profile]
+				div.profile_data
+					span High Jump, Triple Jump
+				div.profile_data
+					span Greece
+				div.profile_data
+					span 3 times Olympic Champion, Silver Medallist WC 2011
+
+	<!-- add new activity form -->
+	div#main_content
+		div#new_activity_form
+			a#toggle_new_activity(href="javascript:;") Add New
+			form.hidden(method="post" name="add_activity_form")
+			div.left_column
+				div.row
+					label(for="discipline_input") Discipline
+					select#discipline_input(name="discipline")
+						option(value="100m") 100m
+						option(value="200m") 200m
+						option(value="400m") 400m
+						option(value="800m") 800m
+						option(value="1500m") 1500m
+						option(value="3000m") 3000m
+						option(value="60m_hurdles") 60m_hurdles
+						option(value="100m_hurdles") 100m_hurdles
+						option(value="110m_hurdles") 110m_hurdles
+						option(value="400m_hurdles") 400m_hurdles
+						option(value="3000m_steeple") 3000m_steeple
+						option(value="4x100m_relay") 4x100m_relay
+						option(value="4x400m_relay") 4x400m_relay
+						option(value="marathon") marathon
+						option(value="high_jump") high_jump
+						option(value="long_jump") long_jump
+						option(value="triple_jump") triple_jump
+						option(value="pole_vault") pole_vault
+						option(value="shot_put") shot_put
+						option(value="discus") discus
+						option(value="hammer") hammer
+						option(value="javelin") javelin
+						option(value="pentathlon") pentathlon
+						option(value="heptathlon") heptathlon
+						option(value="decathlon") decathlon
+
+				<!-- time measure -->
+				div#time_activity.row performance_input $time_activity_visibility
+					Enter your time:
+					br
+					div
+						label(for="hours_input") Hours
+						input#hours_input"(name="hours" size="2" maxlength="2" onkeyup="if(this.value.length&gt;=2) document.add_activity_form.minutes.focus()"):
+					div
+						label(for="minutes_input") Minutes
+						input#minutes_input"(name="minutes" size="2" maxlength="2" onkeyup="if(this.value.length&gt;=2) document.add_activity_form.seconds.focus()"):
+					div
+						label(for="seconds_input") Seconds
+						input#seconds_input"(name="seconds" size="2" maxlength="2" onkeyup="if(this.value.length&gt;=2) document.add_activity_form.centiseconds.focus()").
+					div
+						label(for="centiseconds_input") Centiseconds
+						input#centiseconds_input"(name="centiseconds" size="2" maxlength="2") $time_activity_disabled
+					<!-- /time measure -->
+
+				div#distance_activity.row performance_input $distance_activity_visibility;
+					<!-- distance measure -->
+					Enter your performance:
+					br
+					div
+						label(for="distance_1_input") meters
+						input#distance_1_input(name="distance_1" size="2" maxlength="2" onkeyup="if(this.value.length&gt;=2) document.add_activity_form.distance_2.focus()").
+					div
+						label(for="distance_2_input") Centimeters
+						input#distance_2_input(name="distance_2" size="2" maxlength="2") $distance_activity_disabled;
+					<!-- /distance measure -->
+
+				div#point_activity.row performance_input $point_activity_visibility
+					<!-- points measure -->
+					span.required"
+						Enter your performance:
+						br
+						label(for="points_input") Points
+						input#points_input(type="text" name="points") $point_activity_disabled
+					<!-- /points measure -->
+
+				<!-- DATE -->
+				div.row
+					label(for="date_input") Date
+					input#date_input.js__datepicker(name="date" type="text" placeholder="" value="") 12-11-2013
+
+				div.row
+					div.onoffswitch
+						input#myonoffswitch.onoffswitch-checkbox(type="checkbox" name="onoffswitch")
+						label.onoffswitch-label(for="myonoffswitch")
+						div.onoffswitch-inner
+						div.onoffswitch-switch
+
+			div.right_column
+				<!-- TIME -->
+				div.row
+					label(for="time_input") Time:
+					input#time_input.js__timepicker(name="time" type="text" placeholder="")
+
+				div.row
+					label(for="place_input") Place:
+					input#place_input"(type="text" name="place")
+
+				div.row
+					label(for="location_input") Location:
+					input#location_input(type="text" name="location")
+
+				div.row
+					label(for="competition_input") Competition:
+					input#competition_input"(type="text" name="competition")
+
+				div.row
+					label(for="notes_input") Notes:
+					textarea#notes_input(rows="2" name="notes")
+
+				div.row
+					input(type="submit" name="new_competition" value="Submit")
+
+		<!--user's timeline -->
+		ul.timeline
+			li
+				div.direction-l
+					img.timeline_thumb(src="../images/profile_pics/001.png")
+				div.direction-r
+					div.flag-wrapper
+						span.flag High Jump : 2.18
+						span.time-wrapper
+							span.time 2 May 2014 , 16:40
+					div.desc For all these bullshits see the php version!
+			li
+				div.direction-l
+					img.timeline_thumb(src="../images/profile_pics/001.png")
+				div.direction-r
+					div.flag-wrapper
+						span.flag High Jump : 2.18
+						span.time-wrapper
+							span.time 2 May 2014 , 16:40
+					div.desc For all these bullshits see the php version!
+			li
+				div.direction-l
+					img.timeline_thumb(src="../images/profile_pics/001.png")
+				div.direction-r
+					div.flag-wrapper
+						span.flag High Jump : 2.18
+						span.time-wrapper
+							span.time 2 May 2014 , 16:40
+					div.desc For all these bullshits see the php version!
+			li
+				div.direction-l
+					img.timeline_thumb(src="../images/profile_pics/001.png")
+				div.direction-r
+					div.flag-wrapper
+						span.flag High Jump : 2.18
+						span.time-wrapper
+							span.time 2 May 2014 , 16:40
+					div.desc For all these bullshits see the php version!

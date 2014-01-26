@@ -1,5 +1,6 @@
-/* ----------------------------------------------------*/
-/* ------------------------------------------  GENERAL */
+/*******************************************************************************************************************************
+ * 							                                                                      GENERAL                      *
+ ******************************************************************************************************************************/
 body {
   margin: 0;
   padding: 0;
@@ -48,29 +49,13 @@ input {
   font-weight: 100;
   font-size: 1em;
 }
-label {
-  display: block;
-  width: 200px;
-  font-size: 14px;
-}
-textarea {
-  max-width: 910px;
-}
 .hidden {
   display: none;
 }
-/* /GENERAL */
-.big_quote {
-  padding: 50px;
-  color: rgba(0, 0, 0, 0.3);
-  font-size: 3.1em;
-  font-style: italic;
-  text-align: center;
-}
-.left {
+.floatleft {
   float: left;
 }
-.right {
+.floatright {
   float: right;
 }
 a {
@@ -80,8 +65,10 @@ a {
 a:visited {
   color: #ae3731;
 }
-/* ----------------------------------------------------*/
-/* ----------------------------------------  MAIN MENU */
+/*********************************************************** /GENERAL ***************************************/
+/*******************************************************************************************************************************
+ * 							                                                                      MAIN MENU                    *
+ ******************************************************************************************************************************/
 #mainmenu_container {
   background: #ffffff url(../images/bar_back.png) repeat-x left top;
   width: 100%;
@@ -173,4 +160,106 @@ a:visited {
   padding-top: 5px !important;
   z-index: 95 !important;
 }
-/* /MAIN MENU */
+/*********************************************************** /MAIN MENU ***************************************/
+/*******************************************************************************************************************************
+ * 							                                                                      PROFILE                      *
+ ******************************************************************************************************************************/
+#profile_container {
+  margin: 35px auto;
+  width: 980px;
+  height: 250px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  /* cover photo */
+
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-attachment: fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-image: url('../images/cover_photos/cover.png');
+}
+#profile_container #image_container {
+  width: 150px;
+  margin: 0px auto;
+}
+#profile_container #image_container img {
+  width: 140px;
+  margin: 25px auto 0px;
+  -webkit-border-radius: 70px;
+  -moz-border-radius: 70px;
+  -ms-border-radius: 70px;
+  -o-border-radius: 70px;
+  border-radius: 70px;
+  border: 4px solid white;
+}
+#profile_container #profileFullName {
+  text-align: center;
+  width: 100%;
+  color: white;
+}
+#profile_container #profileFullName h3 {
+  font-weight: 400;
+  font-size: 1.4em;
+}
+/*********************************************************** /PROFILE ***************************************/
+/*******************************************************************************************************************************
+ * 							                                                                      SETTINGS                    *
+ ******************************************************************************************************************************/
+#settingsNav {
+  float: left;
+  width: 170px;
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+#settingsNav ul {
+  list-style: none;
+  padding-left: 0px;
+}
+#settingsNav ul li {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 5px;
+}
+#settingsNav ul li:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+#settingsNav ul .first {
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+#settingsNav ul .active {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+#settingsNav ul .logout {
+  margin-top: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+#settingsContent {
+  float: right;
+  width: 730px;
+  padding-left: 10px;
+  padding-top: 30px;
+}
+#settingsContent form {
+  width: 100%;
+  display: inline-block;
+  padding: 20px 0px;
+}
+#settingsContent form label {
+  font-size: 1.2em;
+  float: left;
+}
+#settingsContent .settingsElement {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+#settingsContent .editLink {
+  float: right;
+}
+/*********************************************************** /SETTINGS ***************************************/
+/******************************************************/
+/*					FUNCTIONS		 				  */
+/******************************************************/
+/*rounded corners function : 5px is default radius*/

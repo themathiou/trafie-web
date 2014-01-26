@@ -1,8 +1,14 @@
 @red:#AE3731;
 @lightgray : rgba(0,0,0,0.1);
 @mediumgray : rgba(0,0,0,0.3);
-/* ----------------------------------------------------*/
-/* ------------------------------------------  GENERAL */
+
+
+@selectedOptionBackground : rgba(0,0,0,0.1);
+
+
+/*******************************************************************************************************************************
+ * 							                                                                      GENERAL                      *
+ ******************************************************************************************************************************/
 
 body
 {
@@ -72,40 +78,18 @@ input
 	font-size: 1em;
 }
 
-label
-{
-	display: block;
-	width:200px;
-	font-size: 14px;
-}
-
-textarea
-{
-	max-width: 910px;
-}
-
 .hidden
 {
 	display:none;
 }
 
-/* /GENERAL */
 
-.big_quote
-{
-	padding: 50px;
-	color: @mediumgray;
-	font-size: 3.1em;
-	font-style: italic;
-	text-align: center;
-}
-
-.left
+.floatleft
 {
 	float:left;
 }
 
-.right
+.floatright
 {
 	float:right;
 }
@@ -121,8 +105,14 @@ a
 	}
 }
 
-/* ----------------------------------------------------*/
-/* ----------------------------------------  MAIN MENU */
+
+
+/*********************************************************** /GENERAL ***************************************/
+
+
+/*******************************************************************************************************************************
+ * 							                                                                      MAIN MENU                    *
+ ******************************************************************************************************************************/
 #mainmenu_container
 {
 	background:white url(../images/bar_back.png) repeat-x left top;
@@ -255,4 +245,165 @@ a
 
 	/* /DROPDOWN */
 }
-/* /MAIN MENU */
+
+/*********************************************************** /MAIN MENU ***************************************/
+
+
+/*******************************************************************************************************************************
+ * 							                                                                      PROFILE                      *
+ ******************************************************************************************************************************/
+
+#profile_container {
+	margin:35px auto;
+	width: 980px;
+	height: 250px;
+	.rounded-corners (5px);
+
+	/* cover photo */
+	background-repeat: no-repeat;
+	background-position:  top center;
+	background-attachment: fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	background-image: url('../images/cover_photos/cover.png');
+
+	#image_container {
+		width:150px;
+		margin:0px auto;
+
+
+		img {
+			width:140px;
+			margin:25px auto 0px;
+			.rounded-corners (70px);
+			border:4px solid white;
+		}
+
+	}
+
+	#profileFullName {
+		text-align: center;
+		width:100%;
+		color: white;
+
+		h3 {
+			font-weight: 400;
+			font-size: 1.4em;
+		}
+	}
+}
+
+
+/*********************************************************** /PROFILE ***************************************/
+
+
+/*******************************************************************************************************************************
+* 							                                                                      HISTORY                    *
+******************************************************************************************************************************/
+
+/*********************************************************** /PROFILE ***************************************/
+
+/*******************************************************************************************************************************
+* 							                                                                      SETTINGS                    *
+******************************************************************************************************************************/
+
+#settingsNav {
+	float:left;
+	width:170px;
+	border-right: 1px solid rgba(0,0,0,0.2);
+
+	ul {
+		list-style: none;
+		padding-left: 0px;
+
+		li {
+			border-bottom: 1px solid rgba(0,0,0,0.2);
+			padding:5px;
+
+			&:hover {
+				background-color: @selectedOptionBackground;
+			}
+		}
+
+		.first {
+			border-top: 1px solid rgba(0,0,0,0.2);
+		}
+
+		.active {
+			background-color: @selectedOptionBackground;
+		}
+
+		.logout {
+			margin-top : 20px;
+			border-top: 1px solid rgba(0,0,0,0.2);
+		}
+	}
+
+
+
+
+}
+
+
+#settingsContent {
+	float:right;
+	width:730px;
+	padding-left:10px;
+	padding-top: 30px;
+
+
+	form {
+		width:100%;
+		display: inline-block;
+		padding: 20px 0px;
+
+		label {
+			font-size: 1.2em;
+			float:left;
+		}
+
+		.existedValue {
+
+		}
+
+	}
+
+
+	.settingsElement {
+		border-bottom: 1px solid rgba(0,0,0,0.1);
+	}
+
+	.editLink {
+		float:right;
+	}
+
+}
+
+/*********************************************************** /SETTINGS ***************************************/
+
+
+
+/******************************************************/
+/*					FUNCTIONS		 				  */
+/******************************************************/
+
+/*rounded corners function : 5px is default radius*/
+.rounded-corners (@radius: 5px) {
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+  -ms-border-radius: @radius;
+  -o-border-radius: @radius;
+  border-radius: @radius;
+}
+
+
+
+
+
+
+
+
+
+
