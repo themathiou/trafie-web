@@ -96,7 +96,6 @@ trafie.get('/', function( req, res ){
           'last_name' : response.last_name
         }
       };
-      console.log( view_data );
       res.render( 'profile', view_data );
     });
   }
