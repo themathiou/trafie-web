@@ -173,7 +173,7 @@ trafie.post( '/register', function( req, res ) {
 
     // If there are any errors, show the messages to the user
     if( errors ) {
-      res.render( 'register', { errors: error_messages, fields: { 'first_name': first_name, 'last_name': last_name, 'email': email } });
+      res.render( 'register', { 'errors': error_messages, 'fields': { 'first_name': first_name, 'last_name': last_name, 'email': email } });
       return;
     }
 
@@ -244,6 +244,38 @@ trafie.post('/login', function( req, res ) {
 
 
 /*******************************************************************************************************************************
+ * SETTINGS                                                                                                                   *
+ ******************************************************************************************************************************/
+
+/**
+ * Settings - GET
+ */
+trafie.get( '/settings', function( req, res ) {
+  var first_name, last_name;
+  var user_id = req.session.user_id;
+  var errors = {};
+
+  // If there is no user id in the session, redirect to register screen
+  if(!user_id) {
+    res.redirect('/register');
+  // Else, fetch the first name and the last name of the user from the database
+  } else {
+    User.findOne({ '_id': user_id }, 'first_name last_name', function ( err, user ) {
+      // Format the data that will go to the front end
+      var view_data = {
+        'data': {
+          'first_name': user.first_name,
+          'last_name' : user.last_name
+        },
+        'errors': errors
+      }
+      res.render( 'settings', view_data );
+    });
+  }
+});
+
+
+/*******************************************************************************************************************************
  * LOGOUT                                                                                                                      *
  ******************************************************************************************************************************/
 
@@ -253,18 +285,6 @@ trafie.post('/login', function( req, res ) {
 trafie.get('/logout', function( req, res ) {
   req.session.destroy();
   res.redirect('/');
-});
-
-
-/*******************************************************************************************************************************
- * SETTINGS                                                                                                                   *
- ******************************************************************************************************************************/
-
-/**
- * Settings - GET
- */
-trafie.get( '/settings', function( req, res ) {
-  res.render( 'settings', { title: 'trafie - Settings' });
 });
 
 
