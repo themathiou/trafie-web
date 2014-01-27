@@ -14,6 +14,19 @@ var profileSchema = mongoose.Schema({
                 ]
 });
 
+/**
+* Find user by element
+* @param json where({email:someone@trafie.com})
+* @param String select
+*/
+profileSchema.findOne = function( where, select ) {
+	var d = q.defer();
+	Profile.findOne(where, select, function ( err, profile ) {
+		d.resolve(profile);
+	});
+	return d.promise;
+};
+
 // Checks first and last name for validity
 profileSchema.validateName = function( name ) {
 	 return /^[A-Za-z ]+$/.test( name );

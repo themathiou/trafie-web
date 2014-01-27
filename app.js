@@ -192,10 +192,12 @@ trafie.post( '/register', function( req, res ) {
 
     // Creating the user and profile objects
     var user = new User( new_user );
-    var profile = new Profile( new_profile );
 
     // Saving the user and the profile data
     user.save(function ( err, user ) {
+      console.log(user);
+      new_profile._id = user._id;
+      var profile = new Profile( new_profile );
       profile.save(function ( err, profile ) {
         // Storing the user id in the session
         req.session.user_id = user._id;
@@ -232,7 +234,6 @@ trafie.post('/login', function( req, res ) {
 	    	req.session.user_id = response._id;
 		    res.redirect('/');
 	    } else {
-	    	console.log('else');
 		    res.render('login', {"error":"Invalid input!"});
 	    }
     })
@@ -260,16 +261,20 @@ trafie.get( '/settings', function( req, res ) {
     res.redirect('/register');
   // Else, fetch the first name and the last name of the user from the database
   } else {
-    User.findOne({ '_id': user_id }, 'first_name last_name', function ( err, user ) {
+    Profile.schema.findOne({ '_id': user_id }, 'first_name last_name')
+    .then( function( response ) {
       // Format the data that will go to the front end
       var view_data = {
         'data': {
-          'first_name': user.first_name,
-          'last_name' : user.last_name
+          'first_name': response.first_name,
+          'last_name' : response.last_name
         },
         'errors': errors
-      }
+      };
       res.render( 'settings', view_data );
+    })
+    .fail(function(response) {
+      console.log("Error : " + response);
     });
   }
 });
