@@ -195,7 +195,6 @@ trafie.post( '/register', function( req, res ) {
 
     // Saving the user and the profile data
     user.save(function ( err, user ) {
-      console.log(user);
       new_profile._id = user._id;
       var profile = new Profile( new_profile );
       profile.save(function ( err, profile ) {
@@ -278,6 +277,45 @@ trafie.get( '/settings', function( req, res ) {
     });
   }
 });
+
+/**
+ * Settings - POST
+ */
+ trafie.post('/settings', function( req, res ) {
+  var post_data = {};
+  if( typeof req.body.first_name !== 'undefined' ) {
+    post_data.first_name = req.body.first_name;
+  }
+  if( typeof req.body.last_name !== 'undefined' ) {
+    post_data.last_name = req.body.last_name;
+  }
+  var user_id = req.session.user_id;
+  var errors = {};
+console.log(post_data);
+  // If there is no user id in the session, redirect to register screen
+  if(!user_id) {
+    res.redirect('/register');
+  // Else, fetch the first name and the last name of the user from the database
+  } else {
+    Profile.update({ '_id': user_id }, { $set: post_data }, { upsert: true }, function( error ) {
+      Profile.schema.findOne({ '_id': user_id }, 'first_name last_name')
+      .then( function( response ) {
+        // Format the data that will go to the front end
+        var view_data = {
+          'data': {
+            'first_name': response.first_name,
+            'last_name' : response.last_name
+          },
+          'errors': errors
+        };
+        res.render( 'settings', view_data );
+      })
+      .fail(function(response) {
+        console.log("Error : " + response);
+      });
+    });
+  }
+ });
 
 
 /*******************************************************************************************************************************
