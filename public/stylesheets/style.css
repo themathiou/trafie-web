@@ -173,16 +173,20 @@ a:visited {
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
   border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.3);
   /* cover photo */
 
-  background-repeat: no-repeat;
-  background-position: top center;
-  background-attachment: fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  background-image: url('../images/cover_photos/cover.png');
+  /*
+		background-repeat: no-repeat;
+		background-position:  top center;
+		background-attachment: fixed;
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		background-size: cover;
+		background-image: url('../images/cover_photos/mo.jpg');
+	*/
+
 }
 #profile_container #image_container {
   width: 150px;
@@ -209,8 +213,12 @@ a:visited {
 }
 /*********************************************************** /PROFILE ***************************************/
 /*******************************************************************************************************************************
- * 							                                                                      SETTINGS                    *
- ******************************************************************************************************************************/
+* 							                                                                      HISTORY                    *
+******************************************************************************************************************************/
+/*********************************************************** /PROFILE ***************************************/
+/*******************************************************************************************************************************
+* 							                                                                      SETTINGS                    *
+******************************************************************************************************************************/
 #settingsNav {
   float: left;
   width: 170px;
