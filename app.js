@@ -82,15 +82,23 @@ if ('development' == trafie.get('env')) {
  * Profile - GET
  */
 trafie.get('/', function( req, res ){
-  var first_name, last_name;
   var user_id = req.session.user_id;
 
   if(!user_id) {
 	  res.redirect('/register');
   } else {
-    User.findOne({ '_id': user_id }, 'first_name last_name', function ( err, user ) {
-  	  res.render( 'profile', { first_name: user.first_name, last_name: user.last_name });
-  	});
+    Profile.schema.findOne({ '_id': user_id }, 'first_name last_name')
+    .then( function( response ) {
+      // Format the data that will go to the front end
+      var view_data = {
+        'data': {
+          'first_name': response.first_name,
+          'last_name' : response.last_name
+        }
+      };
+      console.log( view_data );
+      res.render( 'profile', view_data );
+    });
   }
 
 });
