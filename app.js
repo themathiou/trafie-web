@@ -269,6 +269,8 @@ trafie.get( '/settings', function( req, res ) {
         },
         'errors': errors
       }
+
+      console.log(view_data);
       res.render( 'settings', view_data );
     });
   }

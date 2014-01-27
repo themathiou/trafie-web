@@ -17,13 +17,13 @@ block content
 				form
 					label First Name :
 					input#first_name.existedValue( name="first_name" value=data.first_name disabled )
-					input( type="submit" value="Save" hidden)
-					a.editLink( href="javascript:;" onclick="editField()" ) Edit
+					input#submitFirstName( type="submit" value="Save" hidden)
+					a#editFirstName.editLink( href="javascript:;" onclick="editField('first_name', 'submitFirstName', 'editFirstName')" ) Edit
 
 			div.settingsElement
 				form
 					label Last Name :
 					input#last_name.existedValue( name="last_name" value=data.last_name disabled )
-					input( type="submit" value="Save" hidden)
-					a.editLink( href="javascript:;" onclick="editField()" ) Edit
+					input#submitLastName( type="submit" value="Save" hidden)
+					a#editLastName.editLink( href="javascript:;" onclick="editField('last_name', 'submitLastName', 'editLastName')" ) Edit
 
