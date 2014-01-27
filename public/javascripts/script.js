@@ -7,7 +7,8 @@ function editField( fieldID, saveID, cancelID, editID ) {
     document.getElementById(editID).style.display = 'none';
 }
 
-function cancelEditField ( fieldID, saveID, cancelID, editID ) {
+function cancelEditField (fieldID_shadow, fieldID, saveID, cancelID, editID ) {
+    document.getElementById(fieldID).value = document.getElementById(fieldID_shadow).value;
     document.getElementById(fieldID).disabled = true;
     document.getElementById(saveID).style.display = 'none';
     document.getElementById(cancelID).style.display = 'none';
