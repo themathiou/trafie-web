@@ -195,7 +195,6 @@ trafie.post( '/register', function( req, res ) {
 
     // Saving the user and the profile data
     user.save(function ( err, user ) {
-      console.log(user);
       new_profile._id = user._id;
       var profile = new Profile( new_profile );
       profile.save(function ( err, profile ) {
@@ -278,6 +277,67 @@ trafie.get( '/settings', function( req, res ) {
     });
   }
 });
+
+/**
+ * Settings - POST
+ */
+ trafie.post('/settings', function( req, res ) {
+  var error_messages = {};
+  var errors = false;
+  var post_data = {};
+  if( typeof req.body.first_name !== 'undefined' ) {
+    post_data.first_name = req.body.first_name;
+    if( !Profile.schema.validateName( post_data.first_name ) ) {
+      error_messages.first_name = 'Invalid name';
+      errors = true;
+    }
+  }
+  if( typeof req.body.last_name !== 'undefined' ) {
+    post_data.last_name = req.body.last_name;
+    if( !Profile.schema.validateName( post_data.last_name ) ) {
+      error_messages.last_name = 'Invalid name';
+      errors = true;
+    }
+  }
+  var user_id = req.session.user_id;
+
+  // If there is no user id in the session, redirect to register screen
+  if(!user_id) {
+    res.redirect('/register');
+  }
+  // If there are errors, do not update the profile
+  else if( errors ) {
+    Profile.schema.findOne({ '_id': user_id }, 'first_name last_name')
+    .then( function( response ) {
+      // Format the data that will go to the front end
+      var view_data = {
+        'data': {
+          'first_name': response.first_name,
+          'last_name' : response.last_name
+        },
+        'errors': error_messages
+      };
+      console.log(view_data);
+      res.render( 'settings', view_data );
+    });
+  // Else, fetch the first name and the last name of the user from the database
+  } else {
+    Profile.update({ '_id': user_id }, { $set: post_data }, { upsert: true }, function( error ) {
+      Profile.schema.findOne({ '_id': user_id }, 'first_name last_name')
+      .then( function( response ) {
+        // Format the data that will go to the front end
+        var view_data = {
+          'data': {
+            'first_name': response.first_name,
+            'last_name' : response.last_name
+          },
+          'errors': error_messages
+        };
+        res.render( 'settings', view_data );
+      });
+    });
+  }
+ });
 
 
 /*******************************************************************************************************************************
