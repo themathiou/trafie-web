@@ -14,16 +14,18 @@ block content
 
 		div#settingsContent
 			div.settingsElement
-				form
+				form( method="POST")
 					label First Name :
 					input#first_name.existedValue( name="first_name" value=data.first_name disabled )
 					input#submitFirstName( type="submit" value="Save" hidden)
-					a#editFirstName.editLink( href="javascript:;" onclick="editField('first_name', 'submitFirstName', 'editFirstName')" ) Edit
+					a#cancelEditFirstName.cancelEdit( href="javascript:;" onclick="cancelEditField('first_name', 'submitFirstName', 'cancelEditFirstName', 'editFirstName')" hidden) Cancel
+					a#editFirstName.editLink( href="javascript:;" onclick="editField('first_name', 'submitFirstName',  'cancelEditFirstName', 'editFirstName')" ) Edit
 
 			div.settingsElement
-				form
+				form( method="POST")
 					label Last Name :
 					input#last_name.existedValue( name="last_name" value=data.last_name disabled )
 					input#submitLastName( type="submit" value="Save" hidden)
-					a#editLastName.editLink( href="javascript:;" onclick="editField('last_name', 'submitLastName', 'editLastName')" ) Edit
+					a#cancelEditLastName.cancelEdit( href="javascript:;" onclick="cancelEditField('last_name', 'submitLastName', 'cancelEditLastName', 'editLastName')" hidden) Cancel
+					a#editLastName.editLink( href="javascript:;" onclick="editField('last_name', 'submitLastName', 'cancelEditLastName', 'editLastName')" ) Edit
 

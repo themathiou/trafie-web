@@ -1,9 +1,17 @@
 /*--------------------------------------------------- Settings dropdown menu */
-function editField( fieldID, saveID, editID) {
-    console.log(fieldID +  saveID + editID );
+function editField( fieldID, saveID, cancelID, editID ) {
+    // console.log(fieldID +  saveID + editID );
     document.getElementById(fieldID).disabled = false;
     document.getElementById(saveID).style.display = 'block';
+    document.getElementById(cancelID).style.display = 'block';
     document.getElementById(editID).style.display = 'none';
+}
+
+function cancelEditField ( fieldID, saveID, cancelID, editID ) {
+    document.getElementById(fieldID).disabled = true;
+    document.getElementById(saveID).style.display = 'none';
+    document.getElementById(cancelID).style.display = 'none';
+    document.getElementById(editID).style.display = 'block';
 }
 
 	
