@@ -16,6 +16,7 @@ block content
 			div.settingsElement
 				form( method="POST")
 					label First Name :
+					p= errors.first_name
 					input#first_name.existedValue( name="first_name" value=data.first_name disabled )
 					input#first_name_shadow( name="first_name" value=data.first_name hidden disabled)
 					input#submitFirstName( type="submit" value="Save" hidden)
@@ -25,6 +26,7 @@ block content
 			div.settingsElement
 				form( method="POST")
 					label Last Name :
+					p= errors.last_name
 					input#last_name.existedValue( name="last_name" value=data.last_name disabled )
 					input#last_name_shadow( name="last_name" value=data.last_name hidden disabled)
 					input#submitLastName( type="submit" value="Save" hidden)
