@@ -9,6 +9,7 @@ block content
 		div.forms
 			form.welcome_form(method="post", action="/login")
 				label(for="email_input") Email:
+				span#email_error.login_error errors.email<br>
 				input#email_input.textfield(name="email", type="text", value="dimitra@trafie.com")
 				br
 				label(for="password_input") Password:
