@@ -49,6 +49,7 @@ var db = mongoose.connection;
 
 var User = require('./models/user.js');
 var Profile = require('./models/profile.js');
+var Activity = require('./models/activity.js');
 
 
 /*******************************************************************************************************************************
@@ -89,14 +90,20 @@ trafie.get('/', function( req, res ){
   } else {
     Profile.schema.findOne({ '_id': user_id }, 'first_name last_name')
     .then( function( response ) {
-      // Format the data that will go to the front end
-      var view_data = {
-        'data': {
-          'first_name': response.first_name,
-          'last_name' : response.last_name
-        }
-      };
-      res.render( 'profile', view_data );
+      // If the user was found
+      if( typeof response.first_name !== 'undefined' ) {
+        // Format the data that will go to the front end
+        var view_data = {
+          'data': {
+            'first_name': response.first_name,
+            'last_name' : response.last_name
+          }
+        };
+        res.render( 'profile', view_data );
+      // If the user wasn't found
+      } else {
+        res.redirect('/login');
+      }
     });
   }
 
@@ -107,51 +114,96 @@ trafie.get('/', function( req, res ){
  */
 trafie.post('/', function( req, res ){
   var user_id = req.session.user_id;
-  var discipline = typeof req.body.discipline !== 'undefined' ? req.body.discipline : '';
-  var error = false;
 
-  switch (discipline) {
-    case '100m':
-    case '200m':
-    case '400m':
-    case '800m':
-    case '1500m':
-    case '3000m':
-    case '60m_hurdles':
-    case '100m_hurdles':
-    case '110m_hurdles':
-    case '400m_hurdles':
-    case '3000m_steeple':
-    case '4x100m_relay':
-    case '4x400m_relay':
-    case 'marathon':
-      var hours = typeof req.body.hours !== 'undefined' ? req.body.hours : '00';
-      var minutes = typeof req.body.minutes !== 'undefined' ? req.body.minutes: '00';
-      var seconds = typeof req.body.seconds !== 'undefined' ? req.body.seconds: '00';
-      var centiseconds = typeof req.body.centiseconds !== 'undefined' ? req.body.centiseconds : '00';
+  if(!user_id) {
+    res.redirect('/login');
+  } else {
+    Profile.schema.findOne({ '_id': user_id }, 'first_name last_name')
+    .then( function( response ) {
+      // If the user was found
+      if( typeof response.first_name !== 'undefined' ) {
 
-      if( typeof hours !== 'string' || parseInt( hours ) != hours ) {
-        error = true;
+        var discipline = typeof req.body.discipline !== 'undefined' ? req.body.discipline : '';
+        var performance = {};
+        var error = false;
+
+        switch (discipline) {
+          case '100m':
+          case '200m':
+          case '400m':
+          case '800m':
+          case '1500m':
+          case '3000m':
+          case '60m_hurdles':
+          case '100m_hurdles':
+          case '110m_hurdles':
+          case '400m_hurdles':
+          case '3000m_steeple':
+          case '4x100m_relay':
+          case '4x400m_relay':
+          case 'marathon':
+            // Get the posted values. If a value was not posted, replace it with 00
+            performance.hours = typeof req.body.hours !== 'undefined' && req.body.hours != '' ? req.body.hours : '00';
+            performance.minutes = typeof req.body.minutes !== 'undefined' && req.body.minutes != '' ? req.body.minutes: '00';
+            performance.seconds = typeof req.body.seconds !== 'undefined' && req.body.seconds != '' ? req.body.seconds: '00';
+            performance.centiseconds = typeof req.body.centiseconds !== 'undefined' && req.body.centiseconds != '' ? req.body.centiseconds : '00';
+
+            // Format the performance
+            performance = Activity.schema.validateTime( performance );
+
+            break;
+          case 'high_jump':
+          case 'long_jump':
+          case 'triple_jump':
+          case 'pole_vault':
+          case 'shot_put':
+          case 'discus':
+          case 'hammer':
+          case 'javelin':
+            break;
+          case 'pentathlon':
+          case 'heptathlon':
+          case 'decathlon':
+            break;
+          default:
+            break;
+        }
+
+        if( performance ) {
+          user.save(function ( err, user ) {
+            new_activity.user_id = user_id;
+            new_activity.discipline = discipline;
+            new_activity.performance = performance;
+
+            var activity = new Activity( new_activity );
+            activity.save(function ( err, activity ) {
+              // Format the data that will go to the front end
+              var view_data = {
+                'data': {
+                  'first_name': response.first_name,
+                  'last_name' : response.last_name
+                }
+              };
+              res.render( 'profile', view_data );
+            });
+          });
+        } else {
+          // Format the data that will go to the front end
+          var view_data = {
+            'data': {
+              'first_name': response.first_name,
+              'last_name' : response.last_name
+            }
+          };
+          res.render( 'profile', view_data );
+        }
+        
+      // If the user wasn't found
+      } else {
+        res.redirect('/login');
       }
-      break;
-    case 'high_jump':
-    case 'long_jump':
-    case 'triple_jump':
-    case 'pole_vault':
-    case 'shot_put':
-    case 'discus':
-    case 'hammer':
-    case 'javelin':
-      break;
-    case 'pentathlon':
-    case 'heptathlon':
-    case 'decathlon':
-      break;
-    default:
-      break;
-
+    });
   }
-
 });
 
 
