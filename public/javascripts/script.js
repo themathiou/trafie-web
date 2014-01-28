@@ -41,7 +41,7 @@ function show_specific_form(choice) {
         document.getElementById('point_activity').style.display = 'block';
     }
     else{
-        console.log('Shit! Fuck! Shit!'); //TO BE REMOVED!
+        console.log('none'); //TO BE REMOVED!
         document.getElementById('time_activity').style.display = 'none';
         document.getElementById('distance_activity').style.display = 'none';
         document.getElementById('point_activity').style.display = 'none';
@@ -62,6 +62,15 @@ function close_new_activity_form() {
     document.getElementById('add_activity_form').style.display = 'none';    
 }
 
+function number0to59(input) {
+    if (input.value < 0) input.value = 0;
+    if (input.value > 59) input.value = 59;
+    }
+
+function number0to99(input) {
+    if (input.value < 0) input.value = 0;
+    if (input.value > 99) input.value = 99;
+  }
 
 // var distance = ['high_jump','long_jump','triple_jump', 'pole_vault', 'shot_put', 'discus', 'hammer', 'javelin'];
 // var time = ['100m', '200m', '400m', '800m', '1500m', '3000m', '60m_hurdles', '100m_hurdles', '110m_hurdles', '400m_hurdles', '3000m_steeple', '4x100m_relay', '4x400m_relay', 'marathon'];
