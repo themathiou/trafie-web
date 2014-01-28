@@ -224,7 +224,7 @@ trafie.post( '/register', function( req, res ) {
  * Login - GET
  */
 trafie.get('/login', function( req, res ) {
-  res.render('login');
+  res.render('login', { 'errors': {} } );
 });
 
 /**
