@@ -1,6 +1,5 @@
 /*--------------------------------------------------- Settings dropdown menu */
 function editField( fieldID, saveID, cancelID, editID ) {
-    // console.log(fieldID +  saveID + editID );
     document.getElementById(fieldID).disabled = false;
     document.getElementById(saveID).style.display = 'block';
     document.getElementById(cancelID).style.display = 'block';
