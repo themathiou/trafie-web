@@ -52,13 +52,13 @@ block content
 								input#hours_input(name="hours" size="2" maxlength="2" )
 							div
 								label(for="minutes_input") Minutes:
-								input#minutes_input(name="minutes" size="2" maxlength="2" )
+								input#minutes_input(name="minutes" size="2" maxlength="2" onchange="number0to59(this);" )
 							div
 								label(for="seconds_input") Seconds:
-								input#seconds_input(name="seconds" size="2" maxlength="2" )
+								input#seconds_input(name="seconds" size="2" maxlength="2" onchange="number0to59(this);" )
 							div
 								label(for="centiseconds_input") Centiseconds:
-								input#centiseconds_input(name="centiseconds" size="2" maxlength="2")
+								input#centiseconds_input(name="centiseconds" size="2" maxlength="2" onchange="number0to99(this);" )
 							
 						//distance measure 
 						div#distance_activity.row( style="display:none;" ) Enter your performance:
@@ -68,7 +68,7 @@ block content
 								input#distance_1_input(name="distance_1" size="2" maxlength="2").
 							div
 								label(for="distance_2_input") Centimeters:
-								input#distance_2_input(name="distance_2" size="2" maxlength="2") 
+								input#distance_2_input(name="distance_2" size="2" maxlength="2" onchange="number0to99(this);" ) 
 
 						// points measure 
 						div#point_activity.row( style="display:none;" )  Enter your performance:

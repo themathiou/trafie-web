@@ -1,4 +1,3 @@
-/*--------------------------------------------------- Settings dropdown menu */
 function editField( fieldID, saveID, cancelID, editID ) {
     document.getElementById(fieldID).disabled = false;
     document.getElementById(saveID).style.display = 'block';
@@ -41,7 +40,7 @@ function show_specific_form(choice) {
         document.getElementById('point_activity').style.display = 'block';
     }
     else{
-        console.log('none'); //TO BE REMOVED!
+        console.log('none');
         document.getElementById('time_activity').style.display = 'none';
         document.getElementById('distance_activity').style.display = 'none';
         document.getElementById('point_activity').style.display = 'none';
@@ -62,11 +61,13 @@ function close_new_activity_form() {
     document.getElementById('add_activity_form').style.display = 'none';    
 }
 
+//function for checking values between 0-60 (i.e minutes)
 function number0to59(input) {
     if (input.value < 0) input.value = 0;
     if (input.value > 59) input.value = 59;
     }
 
+//function for checking values between 0-100 (i.e centimeters)
 function number0to99(input) {
     if (input.value < 0) input.value = 0;
     if (input.value > 99) input.value = 99;
