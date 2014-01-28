@@ -102,6 +102,15 @@ trafie.get('/', function( req, res ){
 
 });
 
+/**
+ * Profile - GET
+ */
+trafie.post('/', function( req, res ){
+  var user_id = req.session.user_id;
+  var discipline = req.body.discipline;
+
+});
+
 
 /*******************************************************************************************************************************
  * REGISTER                                                                                                                    *
