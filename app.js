@@ -240,7 +240,7 @@ trafie.post('/login', function( req, res ) {
 	    	req.session.user_id = response._id;
 		    res.redirect('/');
 	    } else {
-		    res.render('login', {"error":"Invalid input!"});
+		    res.render('login', { 'errors': { 'email': 'Email - password combination wasn\'t found' } } );
 	    }
     })
 	.fail(function(response) {
