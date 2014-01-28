@@ -15,7 +15,7 @@ block content
 					div 
 						a#add_activity_link( onclick="open_new_activity_form();" ) Add New Activity
 
-					form#add_activity_form( style="display:none;" )
+					form#add_activity_form( style="display:none;" method="POST" )
 						select#discipline_input(name="discipline" onchange="show_specific_form(this);")
 							option(value="no-selection" selected ) Choose your discipline:
 							option(value="100m") 100m
@@ -58,7 +58,7 @@ block content
 								input#seconds_input(name="seconds" size="2" maxlength="2" )
 							div
 								label(for="centiseconds_input") Centiseconds:
-								input#centiseconds_input"(name="centiseconds" size="2" maxlength="2")
+								input#centiseconds_input(name="centiseconds" size="2" maxlength="2")
 							
 						//distance measure 
 						div#distance_activity.row( style="display:none;" ) Enter your performance:
