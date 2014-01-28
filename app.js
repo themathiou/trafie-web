@@ -85,7 +85,7 @@ trafie.get('/', function( req, res ){
   var user_id = req.session.user_id;
 
   if(!user_id) {
-	  res.redirect('/register');
+	  res.redirect('/login');
   } else {
     Profile.schema.findOne({ '_id': user_id }, 'first_name last_name')
     .then( function( response ) {
@@ -98,6 +98,58 @@ trafie.get('/', function( req, res ){
       };
       res.render( 'profile', view_data );
     });
+  }
+
+});
+
+/**
+ * Profile - GET
+ */
+trafie.post('/', function( req, res ){
+  var user_id = req.session.user_id;
+  var discipline = typeof req.body.discipline !== 'undefined' ? req.body.discipline : '';
+  var error = false;
+
+  switch (discipline) {
+    case '100m':
+    case '200m':
+    case '400m':
+    case '800m':
+    case '1500m':
+    case '3000m':
+    case '60m_hurdles':
+    case '100m_hurdles':
+    case '110m_hurdles':
+    case '400m_hurdles':
+    case '3000m_steeple':
+    case '4x100m_relay':
+    case '4x400m_relay':
+    case 'marathon':
+      var hours = typeof req.body.hours !== 'undefined' ? req.body.hours : '00';
+      var minutes = typeof req.body.minutes !== 'undefined' ? req.body.minutes: '00';
+      var seconds = typeof req.body.seconds !== 'undefined' ? req.body.seconds: '00';
+      var centiseconds = typeof req.body.centiseconds !== 'undefined' ? req.body.centiseconds : '00';
+
+      if( typeof hours !== 'string' || parseInt( hours ) != hours ) {
+        error = true;
+      }
+      break;
+    case 'high_jump':
+    case 'long_jump':
+    case 'triple_jump':
+    case 'pole_vault':
+    case 'shot_put':
+    case 'discus':
+    case 'hammer':
+    case 'javelin':
+      break;
+    case 'pentathlon':
+    case 'heptathlon':
+    case 'decathlon':
+      break;
+    default:
+      break;
+
   }
 
 });
