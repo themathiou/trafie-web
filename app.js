@@ -114,7 +114,6 @@ trafie.get('/', function( req, res ){
  */
 trafie.post('/', function( req, res ){
   var user_id = req.session.user_id;
-
   if(!user_id) {
     res.redirect('/login');
   } else {
@@ -122,7 +121,6 @@ trafie.post('/', function( req, res ){
     .then( function( response ) {
       // If the user was found
       if( typeof response.first_name !== 'undefined' ) {
-
         var discipline = typeof req.body.discipline !== 'undefined' ? req.body.discipline : '';
         var performance = {};
         var error = false;
@@ -166,26 +164,27 @@ trafie.post('/', function( req, res ){
           case 'decathlon':
             break;
           default:
+            performance = '';
             break;
         }
 
         if( performance ) {
-          user.save(function ( err, user ) {
-            new_activity.user_id = user_id;
-            new_activity.discipline = discipline;
-            new_activity.performance = performance;
-
-            var activity = new Activity( new_activity );
-            activity.save(function ( err, activity ) {
-              // Format the data that will go to the front end
-              var view_data = {
-                'data': {
-                  'first_name': response.first_name,
-                  'last_name' : response.last_name
-                }
-              };
-              res.render( 'profile', view_data );
-            });
+          new_activity = {
+            'user_id': user_id,
+            'discipline': discipline,
+            'performance': performance
+          };
+console.log( new_activity );
+          var activity = new Activity( new_activity );
+          activity.save(function ( err, activity ) {
+            // Format the data that will go to the front end
+            var view_data = {
+              'data': {
+                'first_name': response.first_name,
+                'last_name' : response.last_name
+              }
+            };
+            res.render( 'profile', view_data );
           });
         } else {
           // Format the data that will go to the front end
