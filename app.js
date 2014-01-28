@@ -113,17 +113,19 @@ trafie.get('/', function( req, res ){
  * Profile - GET
  */
 trafie.post('/', function( req, res ){
+  // Get the user id from the session
   var user_id = req.session.user_id;
+  // If there is no user id, redirect to login
   if(!user_id) {
     res.redirect('/login');
   } else {
+    // Find the profile
     Profile.schema.findOne({ '_id': user_id }, 'first_name last_name')
     .then( function( response ) {
-      // If the user was found
+      // If the profile was found
       if( typeof response.first_name !== 'undefined' ) {
         var discipline = typeof req.body.discipline !== 'undefined' ? req.body.discipline : '';
         var performance = {};
-        var error = false;
 
         switch (discipline) {
           case '100m':
@@ -158,24 +160,29 @@ trafie.post('/', function( req, res ){
           case 'discus':
           case 'hammer':
           case 'javelin':
+            performance = '';
             break;
           case 'pentathlon':
           case 'heptathlon':
           case 'decathlon':
+            performance = '';
             break;
           default:
             performance = '';
             break;
         }
 
+        // If there is a valid performance value
         if( performance ) {
+          // Create the record that will be inserted in the db
           new_activity = {
             'user_id': user_id,
             'discipline': discipline,
             'performance': performance
           };
-console.log( new_activity );
+
           var activity = new Activity( new_activity );
+          // Save the activity
           activity.save(function ( err, activity ) {
             // Format the data that will go to the front end
             var view_data = {
@@ -197,7 +204,7 @@ console.log( new_activity );
           res.render( 'profile', view_data );
         }
         
-      // If the user wasn't found
+      // If the profile wasn't found
       } else {
         res.redirect('/login');
       }
