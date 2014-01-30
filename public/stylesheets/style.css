@@ -164,6 +164,7 @@ a:visited {
 /*******************************************************************************************************************************
  * 							                                                                      PROFILE                      *
  ******************************************************************************************************************************/
+/*profile container (profile pic and full name)*/
 #profile_container {
   margin: 35px auto;
   width: 980px;
@@ -215,6 +216,120 @@ a:visited {
 /*******************************************************************************************************************************
 * 							                                                                      HISTORY                    *
 ******************************************************************************************************************************/
+.add_activity {
+  padding-left: 200px;
+  padding-bottom: 30px;
+  display: block;
+  width: 100%;
+}
+.history_line {
+  margin: 30px 0 0 0;
+  padding: 0;
+  list-style: none;
+  position: relative;
+  /*line*/
+
+  /* The performance + date */
+
+  /* Right content */
+  /* info end point (left) */
+  /* The icons */
+  /* Example Media Queries */
+
+}
+.history_line:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  left: 20%;
+  margin-left: -10px;
+}
+.history_line > li .performance {
+  display: block;
+  width: 15%;
+  padding-right: 100px;
+  position: absolute;
+}
+.history_line > li .performance span {
+  display: block;
+  text-align: right;
+}
+.history_line > li .performance span:first-child {
+  font-size: 0.9em;
+  color: rgba(0, 0, 0, 0.3);
+}
+.history_line > li .performance span:last-child {
+  font-size: 2.9em;
+  color: rgba(0, 0, 0, 0.6);
+}
+.history_line > li:nth-child(odd) .performance span:last-child {
+  color: red;
+}
+.history_line > li .info {
+  margin: 0 0 15px 25%;
+  background: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  padding: 2em;
+  font-size: 1.2em;
+  font-weight: 300;
+  line-height: 1.4;
+  position: relative;
+  border-radius: 5px;
+}
+.history_line > li:nth-child(odd) .info {
+  background: rgba(0, 0, 0, 0.1);
+}
+.history_line > li .info h2 {
+  margin-top: 0px;
+  padding: 0 0 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+}
+.history_line > li .info:after {
+  right: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-right-color: rgba(0, 0, 0, 0.3);
+  border-width: 10px;
+  top: 10px;
+}
+.history_line > li:nth-child(odd) .info:after {
+  border-right-color: rgba(0, 0, 0, 0.1);
+}
+.history_line > li .icon {
+  width: 40px;
+  height: 40px;
+  font-family: 'ecoico';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  font-size: 1.4em;
+  line-height: 40px;
+  -webkit-font-smoothing: antialiased;
+  position: absolute;
+  color: #fff;
+  background: black;
+  border-radius: 50%;
+  box-shadow: 0 0 0 8px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  left: 20%;
+  /*top: 0;*/
+
+  margin: 0 0 0 -25px;
+}
+@media screen and (max-width: 65.375em) {
+  .history_line > li .performance span:last-child {
+    font-size: 1.5em;
+  }
+}
 /*********************************************************** /PROFILE ***************************************/
 /*******************************************************************************************************************************
 * 							                                                                      SETTINGS                    *

@@ -10,8 +10,9 @@ block content
 
 
 		div#history_container
-			ul
-				li
+			ul.history_line
+
+				li.add_activity
 					div 
 						a#add_activity_link( onclick="open_new_activity_form();" ) Add New Activity
 
@@ -80,10 +81,30 @@ block content
 						div.row
 							input(type="submit" name="new_competition" value="Submit")
 							a#cancel_activity_link( style="display:none;" onclick="close_new_activity_form();" ) Cancel
-							
+				
 				li
-					h4 2.32m
-					p High Jump 23 December 2013
+					div( class="performance")
+						span high jump
+						span 2.24m
+					div( class="icon") HJ
+					div( class="info")
+						h2 something
+						p something else
+
 				li
-					h4 2.32m
-					p High Jump 23 December 2013
+					div( class="performance")
+						span high jump
+						span 2.24m
+					div( class="icon") HJ
+					div( class="info")
+						h2 something
+						p something else
+
+				li
+					div( class="performance")
+						span high jump
+						span 2.24m
+					div( class="icon") HJ
+					div( class="info")
+						h2 something
+						p something else
