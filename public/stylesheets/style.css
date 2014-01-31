@@ -216,12 +216,6 @@ a:visited {
 /*******************************************************************************************************************************
 * 							                                                                      HISTORY                    *
 ******************************************************************************************************************************/
-.add_activity {
-  padding-left: 200px;
-  padding-bottom: 30px;
-  display: block;
-  width: 100%;
-}
 .history_line {
   margin: 30px 0 0 0;
   padding: 0;
@@ -276,6 +270,19 @@ a:visited {
   line-height: 1.4;
   position: relative;
   border-radius: 5px;
+}
+.history_line > li .add_activity {
+  background: none;
+  color: #fff;
+  padding: 0.5em;
+  font-size: 1.1em;
+  position: relative;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-left: none;
+  width: 350px;
+  margin-bottom: 30px;
+  text-align: right;
 }
 .history_line > li:nth-child(odd) .info {
   background: rgba(0, 0, 0, 0.1);

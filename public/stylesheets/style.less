@@ -307,13 +307,6 @@ a
 /*******************************************************************************************************************************
 * 							                                                                      HISTORY                    *
 ******************************************************************************************************************************/
-.add_activity {
-	padding-left: 200px;
-	padding-bottom: 30px; 
-	display: block;
-	width:100%;
-}
-
 .history_line {
 	margin: 30px 0 0 0;
 	padding: 0;
@@ -372,6 +365,20 @@ a
 		line-height: 1.4;
 		position: relative;
 		border-radius: 5px;
+	}
+
+	& > li .add_activity{
+		background: none;
+		color: #fff;
+		padding: 0.5em;
+		font-size: 1.1em;
+		position: relative;
+		border-radius: 5px;
+		border:1px solid @lightgray;
+		border-left: none;
+		width:350px;
+		margin-bottom: 30px;
+		text-align: right;
 	}
 
 	& > li:nth-child(odd) .info {
