@@ -37,7 +37,7 @@ body
 
 #main_content
 {
-	width: 918px;
+	width: 950px;
 	margin: 50px auto;
 	background-color: white;
 }
@@ -257,7 +257,7 @@ a
 /*profile container (profile pic and full name)*/
 #profile_container {
 	margin:35px auto;
-	width: 980px;
+	width: 100%;
 	height: 250px;
 	.rounded-corners (5px);
 
@@ -357,7 +357,7 @@ a
 	}
 
 	& > li:nth-child(odd) .performance span:last-child {
-		color: red;
+		color: @red;
 	}
 
 
@@ -408,7 +408,6 @@ a
 	& > li .icon {
 		width: 40px;
 		height: 40px;
-		font-family: 'ecoico';
 		speak: none;
 		font-style: normal;
 		font-weight: normal;
@@ -416,7 +415,6 @@ a
 		text-transform: none;
 		font-size: 1.4em;
 		line-height: 40px;
-		-webkit-font-smoothing: antialiased;
 		position: absolute;
 		color: #fff;
 		background: black;
@@ -426,14 +424,6 @@ a
 		left: 20%;
 		/*top: 0;*/
 		margin: 0 0 0 -25px;
-	}
-
-	/* Example Media Queries */
-	@media screen and (max-width: 65.375em) {
-
-		& > li .performance span:last-child {
-			font-size: 1.5em;
-		}
 	}
 
 } 
