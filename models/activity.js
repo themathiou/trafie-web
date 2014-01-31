@@ -36,6 +36,10 @@ activitySchema.validateTime = function( performance ) {
 		valid = false;
 	}
 
+	if( performance.hours == 0 && performance.minutes == 0 && performance.seconds == 0 && performance.centiseconds == 0 ) {
+		valid = false;
+	}
+
 	if( valid ) {
 		if( performance.hours.length == 1 ) {
 			performance.hours = '0' + performance.hours;
@@ -86,6 +90,10 @@ activitySchema.validateDistance = function( performance ) {
 		valid = false;
 	}
 
+	if( performance.distance_1 == 0 && performance.distance_2 == 0 ) {
+		valid = false;
+	}
+
 	if( valid ) {
 		var distance = performance.distance_1 * 10000 + performance.distance_2 * 100;
 	}
@@ -101,10 +109,9 @@ activitySchema.validateDistance = function( performance ) {
  * @return string
  */
 activitySchema.validatePoints = function( performance ) {
-	var valid = true;
 	var points = null;
 
-	if( typeof performance.points === 'string' && parseInt( performance.points ) == performance.points && performance.points.length <= 5 && performance.points >= 0 ) {
+	if( typeof performance.points === 'string' && parseInt( performance.points ) == performance.points && performance.points.length <= 5 && performance.points > 0 ) {
 		points = performance.points;
 	}
 

@@ -88,8 +88,7 @@ trafie.get('/', function( req, res ){
   if(!user_id) {
 	  res.redirect('/login');
   } else {
-    Profile.schema.findOne({ '_id': user_id }, 'first_name last_name')
-    .then( function( response ) {
+    Profile.schema.findOne({ '_id': user_id }, 'first_name last_name').then( function( response ) {
       // If the user was found
       if( typeof response.first_name !== 'undefined' ) {
         // Format the data that will go to the front end
@@ -172,13 +171,13 @@ trafie.post('/', function( req, res ){
           case 'heptathlon':
           case 'decathlon':
             // Get the posted values. If a value was not posted, replace it with 00
-            performance.distance_1 = typeof req.body.distance_1 !== 'undefined' ? req.body.distance_1 : '';
+            performance.points = typeof req.body.points !== 'undefined' ? req.body.points : null;
 
             // Format the performance
             performance = Activity.schema.validatePoints( performance );
             break;
           default:
-            performance = '';
+            performance = null;
             break;
         }
 
@@ -196,7 +195,7 @@ trafie.post('/', function( req, res ){
           activity.save(function ( err, activity ) {
             // Format the data that will go to the front end
             var view_data = {
-              'data': {
+              'profile': {
                 'first_name': response.first_name,
                 'last_name' : response.last_name
               }
@@ -206,7 +205,7 @@ trafie.post('/', function( req, res ){
         } else {
           // Format the data that will go to the front end
           var view_data = {
-            'data': {
+            'profile': {
               'first_name': response.first_name,
               'last_name' : response.last_name
             }
