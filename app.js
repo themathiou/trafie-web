@@ -91,33 +91,18 @@ trafie.get('/', function( req, res ){
     Profile.schema.findOne( { '_id': user_id }, 'first_name last_name' ).then( function( profile_data ) {
       // If the user was found
       if( typeof profile_data.first_name !== 'undefined' ) {
-        Activity.find(
-          // Where
-          { 'user_id': user_id },
-          // Select
-          null,
-          // Other parameters
-          {
-            //skip:0,
-            //limit:10,
-            sort:{
-              // -1 = descending
-              date: -1
-            }
-          },
-          // Callback
-          function( err, activities ) {
-            // Format the data that will go to the front end
-            var view_data = {
-              'profile': {
-                'first_name': profile_data.first_name,
-                'last_name' : profile_data.last_name
-              },
-              'activities': activities
-            };
-            res.render( 'profile', view_data );
-          }
-        );
+        Activity.schema.getActivitiesOfUser( { 'user_id': user_id }, null, -1 )
+        .then( function( activities ) {
+          // Format the data that will go to the front end
+          var view_data = {
+            'profile': {
+              'first_name': profile_data.first_name,
+              'last_name' : profile_data.last_name
+            },
+            'activities': activities
+          };
+          res.render( 'profile', view_data );
+        });
       // If the user wasn't found
       } else {
         res.redirect('/login');
@@ -211,24 +196,32 @@ trafie.post('/', function( req, res ){
           var activity = new Activity( new_activity );
           // Save the activity
           activity.save(function ( err, activity ) {
+            Activity.schema.getActivitiesOfUser( { 'user_id': user_id }, null, -1 )
+            .then( function( activities ) {
+              // Format the data that will go to the front end
+              var view_data = {
+                'profile': {
+                  'first_name': profile_data.first_name,
+                  'last_name' : profile_data.last_name
+                },
+                'activities': activities
+              };
+              res.render( 'profile', view_data );
+            });
+          });
+        } else {
+          Activity.schema.getActivitiesOfUser( { 'user_id': user_id }, null, -1 )
+          .then( function( activities ) {
             // Format the data that will go to the front end
             var view_data = {
               'profile': {
-                'first_name': response.first_name,
-                'last_name' : response.last_name
-              }
+                'first_name': profile_data.first_name,
+                'last_name' : profile_data.last_name
+              },
+              'activities': activities
             };
             res.render( 'profile', view_data );
           });
-        } else {
-          // Format the data that will go to the front end
-          var view_data = {
-            'profile': {
-              'first_name': response.first_name,
-              'last_name' : response.last_name
-            }
-          };
-          res.render( 'profile', view_data );
         }
         
       // If the profile wasn't found

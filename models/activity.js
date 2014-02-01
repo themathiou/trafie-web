@@ -16,18 +16,29 @@ var activitySchema = mongoose.Schema({
 * Find user by element
 * @param json where({email:someone@trafie.com})
 * @param String select
+* @param int sort (-1 == descending)
 */
-activitySchema.findAll = function( where, select ) {
+activitySchema.getActivitiesOfUser = function( where, select, sort ) {
 	var d = q.defer();
-	if( select ) {
-		Activity.find(where, select, function ( err, activity ) {
+	Activity.find(
+		// Where
+	    where,
+	    // Select
+	    select,
+	    // Other parameters
+	    {
+	      //skip:0,
+	      //limit:10,
+	      sort:{
+	        // -1 = descending
+	        date: sort
+	      }
+	    },
+		function ( err, activity ) {
 			d.resolve(activity);
-		});
-	} else {
-		Activity.find(where, function ( err, activity ) {
-			d.resolve(activity);
-		});
-	}
+		}
+	);
+
 	return d.promise;
 };
 
