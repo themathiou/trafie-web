@@ -17,8 +17,8 @@ block content
 				form( method="POST")
 					label First Name :
 					span= errors.first_name
-					input#first_name.existedValue( name="first_name" value=data.first_name disabled )
-					input#first_name_shadow( name="first_name" value=data.first_name hidden disabled)
+					input#first_name.existedValue( name="first_name" value=profile.first_name disabled )
+					input#first_name_shadow( name="first_name" value=profile.first_name hidden disabled)
 					input#submitFirstName( type="submit" value="Save" hidden)
 					a#cancelEditFirstName.cancelEdit( href="javascript:;" onclick="cancelEditField('first_name_shadow', 'first_name', 'submitFirstName', 'cancelEditFirstName', 'editFirstName')" hidden) Cancel
 					a#editFirstName.editLink( href="javascript:;" onclick="editField('first_name', 'submitFirstName',  'cancelEditFirstName', 'editFirstName')" ) Edit
@@ -27,8 +27,8 @@ block content
 				form( method="POST")
 					label Last Name :
 					span= errors.last_name
-					input#last_name.existedValue( name="last_name" value=data.last_name disabled )
-					input#last_name_shadow( name="last_name" value=data.last_name hidden disabled)
+					input#last_name.existedValue( name="last_name" value=profile.last_name disabled )
+					input#last_name_shadow( name="last_name" value=profile.last_name hidden disabled)
 					input#submitLastName( type="submit" value="Save" hidden)
 					a#cancelEditLastName.cancelEdit( href="javascript:;" onclick="cancelEditField('last_name_shadow', 'last_name', 'submitLastName', 'cancelEditLastName', 'editLastName')" hidden) Cancel
 					a#editLastName.editLink( href="javascript:;" onclick="editField('last_name', 'submitLastName', 'cancelEditLastName', 'editLastName')" ) Edit
