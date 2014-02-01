@@ -93,7 +93,9 @@ trafie.get('/', function( req, res ){
       if( typeof profile_data.first_name !== 'undefined' ) {
         Activity.schema.getActivitiesOfUser( { 'user_id': user_id }, null, -1 )
         .then( function( activities ) {
-          // Format the data that will go to the front end
+          // Format the activity data
+          activities = Activity.schema.formatActivities( activities );
+          // The data that will go to the front end
           var view_data = {
             'profile': {
               'first_name': profile_data.first_name,
@@ -130,7 +132,7 @@ trafie.post('/', function( req, res ){
         var discipline = typeof req.body.discipline !== 'undefined' ? req.body.discipline : '';
         var performance = {};
 
-        switch (discipline) {
+        switch ( discipline ) {
           case '100m':
           case '200m':
           case '400m':
@@ -198,7 +200,9 @@ trafie.post('/', function( req, res ){
           activity.save(function ( err, activity ) {
             Activity.schema.getActivitiesOfUser( { 'user_id': user_id }, null, -1 )
             .then( function( activities ) {
-              // Format the data that will go to the front end
+              // Format the activity data
+              activities = Activity.schema.formatActivities( activities );
+              // The data that will go to the front end
               var view_data = {
                 'profile': {
                   'first_name': profile_data.first_name,
@@ -212,7 +216,9 @@ trafie.post('/', function( req, res ){
         } else {
           Activity.schema.getActivitiesOfUser( { 'user_id': user_id }, null, -1 )
           .then( function( activities ) {
-            // Format the data that will go to the front end
+            // Format the activity data
+            activities = Activity.schema.formatActivities( activities );
+            // The data that will go to the front end
             var view_data = {
               'profile': {
                 'first_name': profile_data.first_name,

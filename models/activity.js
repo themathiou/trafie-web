@@ -43,6 +43,66 @@ activitySchema.getActivitiesOfUser = function( where, select, sort ) {
 };
 
 /**
+ * Converts the activity data to a more readable format
+ * @param array activities
+ */
+activitySchema.formatActivities = function( activities ) {
+	for( var i in activities ) {
+		switch ( activities[i] ) {
+          case '100m':
+          case '200m':
+          case '400m':
+          case '800m':
+          case '1500m':
+          case '3000m':
+          case '60m_hurdles':
+          case '100m_hurdles':
+          case '110m_hurdles':
+          case '400m_hurdles':
+          case '3000m_steeple':
+          case '4x100m_relay':
+          case '4x400m_relay':
+          case 'marathon':
+          	var counter = 0;
+
+			var centiseconds = activities[i].performance.split('.')[1];
+			var performance_parts = activities[i].performance.split('.')[0].split(':');
+
+			for( var i=0 ; i<2 ; i++ ) {
+				if( performance_parts[i] == 0 ) {
+					counter++;
+				} else {
+					break;
+				}
+			}
+
+			for( var i=0 ; i<counter ; i++ ) {
+			    performance_parts.splice(0, 1);
+			}
+			performance = performance_parts.join(':');
+			activities[i].performance = performance + '.' + centiseconds;
+            break;
+          case 'high_jump':
+          case 'long_jump':
+          case 'triple_jump':
+          case 'pole_vault':
+          case 'shot_put':
+          case 'discus':
+          case 'hammer':
+          case 'javelin':
+            activities[i].performance = (activities[i].performance / 10000).toFixed(2);
+            break;
+          case 'pentathlon':
+          case 'heptathlon':
+          case 'decathlon':
+           	
+            break;
+		}
+	}
+	return activities;
+};
+
+/**
  * Checks time inputs for validity, if they are valid, it adds leading zeros to
  * single digit values and it creates the performance string, ready to be stored
  * If the values are invalid, it returns an empty string
