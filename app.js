@@ -124,9 +124,9 @@ trafie.post('/', function( req, res ){
   } else {
     // Find the profile
     Profile.schema.findOne({ '_id': user_id }, 'first_name last_name')
-    .then( function( response ) {
+    .then( function( profile_data ) {
       // If the profile was found
-      if( typeof response.first_name !== 'undefined' ) {
+      if( typeof profile_data.first_name !== 'undefined' ) {
         var discipline = typeof req.body.discipline !== 'undefined' ? req.body.discipline : '';
         var performance = {};
 
