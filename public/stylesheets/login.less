@@ -79,11 +79,7 @@ body
 	margin:0px auto;
 	background-color: rgba(255,255,255,0.8);
 
-	-webkit-border-radius: 7px;
-	-moz-border-radius: 7px;
-	-o-border-radius: 7px;
-	-ms-border-radius: 7px;
-	border-radius: 7px;
+	.rounded-corners(7px);
 
 	color: #494949;
 
@@ -104,11 +100,7 @@ body
 		margin:0px auto;
 
 		/* radius */
-		-webkit-border-radius: 5px;
-		-moz-border-radius: 5px;
-		-o-border-radius: 5px;
-		-ms-border-radius: 5px;
-		border-radius: 5px;
+		.rounded-corners(5px);
 
 		margin-bottom: 5px;
 
@@ -170,7 +162,7 @@ body
     vertical-align: middle;
     padding: 4px 24px;
     border: 1px solid #45861a;
-    border-radius: 8px;
+    .rounded-corners(8px);
     background: #70d92b;
     background: -webkit-gradient(linear, left top, left bottom, from(#70d92b), to(#45861a));
     background: -moz-linear-gradient(top, #70d92b, #45861a);
@@ -198,3 +190,18 @@ body
 	}
 
 }
+
+
+/******************************************************/
+/*					FUNCTIONS		 				  */
+/******************************************************/
+
+/*rounded corners function : 5px is default radius*/
+.rounded-corners (@radius: 5px) {
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+  -ms-border-radius: @radius;
+  -o-border-radius: @radius;
+  border-radius: @radius;
+}
+

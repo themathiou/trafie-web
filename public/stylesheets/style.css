@@ -174,7 +174,8 @@ a:visited {
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
   border-radius: 5px;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-image: url('../images/cover_photos/dimitra.png');
+  background-size: cover;
   /* cover photo */
 
   /*
@@ -211,19 +212,19 @@ a:visited {
 #profile_container #profileFullName h3 {
   font-weight: 400;
   font-size: 1.4em;
+  text-shadow: 0px 0px 6px #666;
 }
 /*********************************************************** /PROFILE ***************************************/
 /*******************************************************************************************************************************
 * 							                                                                      HISTORY                    *
 ******************************************************************************************************************************/
 .history_line {
-  margin: 30px 0 0 0;
+  margin: 30px auto 0 auto;
   padding: 0;
   list-style: none;
   position: relative;
+  width: 450px;
   /*line*/
-
-  /* The performance + date */
 
   /* Right content */
   /* info end point (left) */
@@ -235,41 +236,36 @@ a:visited {
   top: 0;
   bottom: 0;
   width: 10px;
-  background: rgba(0, 0, 0, 0.6);
-  left: 20%;
-  margin-left: -10px;
-}
-.history_line > li .performance {
-  display: block;
-  width: 15%;
-  padding-right: 100px;
-  position: absolute;
-}
-.history_line > li .performance span {
-  display: block;
-  text-align: right;
-}
-.history_line > li .performance span:first-child {
-  font-size: 0.9em;
-  color: rgba(0, 0, 0, 0.3);
-}
-.history_line > li .performance span:last-child {
-  font-size: 2.9em;
-  color: rgba(0, 0, 0, 0.6);
-}
-.history_line > li:nth-child(odd) .performance span:last-child {
-  color: #ae3731;
+  background: #ae3731;
+  left: 5%;
+  margin-left: -14px;
 }
 .history_line > li .info {
-  margin: 0 0 15px 25%;
+  margin: 0 0 15px 12%;
   background: rgba(0, 0, 0, 0.3);
   color: #fff;
-  padding: 2em;
+  padding: 1em;
   font-size: 1.2em;
   font-weight: 300;
   line-height: 1.4;
   position: relative;
+  width: 350px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
   border-radius: 5px;
+}
+.history_line > li .info .performance {
+  font-size: 2.4em;
+  font-weight: 100;
+}
+.history_line > li .info .date {
+  font-size: 1em;
+  font-style: italic;
+}
+.history_line > li .info .discipline {
+  font-size: 1em;
 }
 .history_line > li .add_activity {
   background: none;
@@ -283,6 +279,21 @@ a:visited {
   width: 350px;
   margin-bottom: 30px;
   text-align: right;
+}
+.history_line > li .end {
+  width: 200px;
+  margin: 0 0 15px 10%;
+  line-height: 1.2;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: white;
+  padding: 0.5em;
+  font-size: 1em;
+  font-style: italic;
+  position: relative;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  text-align: center;
 }
 .history_line > li:nth-child(odd) .info {
   background: rgba(0, 0, 0, 0.1);
@@ -310,23 +321,26 @@ a:visited {
 .history_line > li .icon {
   width: 40px;
   height: 40px;
-  speak: none;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
   text-transform: none;
-  font-size: 1.4em;
+  font-size: 1em;
   line-height: 40px;
   position: absolute;
-  color: #fff;
-  background: black;
+  color: #black;
+  background: white;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
   border-radius: 50%;
   box-shadow: 0 0 0 8px rgba(0, 0, 0, 0.3);
   text-align: center;
-  left: 20%;
+  left: 5%;
   /*top: 0;*/
 
-  margin: 0 0 0 -25px;
+  margin: 0 0 0 -6.5%;
 }
 /*********************************************************** /PROFILE ***************************************/
 /*******************************************************************************************************************************

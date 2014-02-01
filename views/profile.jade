@@ -13,9 +13,6 @@ block content
 			ul.history_line
 
 				li
-					div( class="performance")
-						span 
-						span
 					div( class="icon") +
 					div( class="info add_activity")
 						a#add_activity_link( onclick="open_new_activity_form();" ) Add New Activity
@@ -82,30 +79,19 @@ block content
 							div.row
 								input(type="submit" name="new_competition" value="Submit")
 								a#cancel_activity_link( style="display:none;" onclick="close_new_activity_form();" ) Cancel
+			
+				each activity in activities 
+					li
+						div( class="icon") hj
+						div( class="info")
+							div.performance= activity.performance
+							div.discipline= activity.discipline
+							div.date= activity.date				
 				
 				li
-					div( class="performance")
-						span high jump
-						span 2.24m
-					div( class="icon") HJ
-					div( class="info")
-						h2 something
-						p something else
+						div( class="icon") *
+						div( class="end")
+							div.discipline everything started here			
 
-				li
-					div( class="performance")
-						span high jump
-						span 2.24m
-					div( class="icon") HJ
-					div( class="info")
-						h2 something
-						p something else
 
-				li
-					div( class="performance")
-						span high jump
-						span 2.24m
-					div( class="icon") HJ
-					div( class="info")
-						h2 something
-						p something else
+			

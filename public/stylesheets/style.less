@@ -261,7 +261,9 @@ a
 	height: 250px;
 	.rounded-corners (5px);
 
-	background-color: @mediumgray;
+	background-image: url('../images/cover_photos/dimitra.png');
+	background-size: cover;
+	//background: white;
 
 	/* cover photo */
 	/*
@@ -297,6 +299,7 @@ a
 		h3 {
 			font-weight: 400;
 			font-size: 1.4em;
+			text-shadow: 0px 0px 6px #666;
 		}
 	}
 }
@@ -308,10 +311,11 @@ a
 * 							                                                                      HISTORY                    *
 ******************************************************************************************************************************/
 .history_line {
-	margin: 30px 0 0 0;
+	margin: 30px auto 0 auto;
 	padding: 0;
 	list-style: none;
 	position: relative;
+	width:450px;
 
 	/*line*/
 	&:before {
@@ -320,51 +324,39 @@ a
 		top: 0;
 		bottom: 0;
 		width: 10px;
-		background: @darkgray;
-		left: 20%;
-		margin-left: -10px;
+		background: @red;
+		left: 5%;
+		margin-left: -14px;
 	}
 
-
-	/* The performance + date */
-	& > li .performance {
-		display: block;
-		width: 15%;
-		padding-right: 100px;
-		position: absolute;
-	}
-
-	& > li .performance span {
-		display: block;
-		text-align: right;
-	}
-
-	& > li .performance span:first-child {
-		font-size: 0.9em;
-		color: @mediumgray;
-	}
-
-	& > li .performance span:last-child {
-		font-size: 2.9em;
-		color: @darkgray;
-	}
-
-	& > li:nth-child(odd) .performance span:last-child {
-		color: @red;
-	}
 
 
 /* Right content */	
 	& > li .info {
-		margin: 0 0 15px 25%;
+		margin: 0 0 15px 12%;
 		background: @mediumgray;
 		color: #fff;
-		padding: 2em;
+		padding: 1em;
 		font-size: 1.2em;
 		font-weight: 300;
 		line-height: 1.4;
 		position: relative;
-		border-radius: 5px;
+		width:350px;
+		.rounded-corners(5px);
+
+		.performance {
+			font-size: 2.4em;
+			font-weight: 100;
+		}
+
+		.date {
+			font-size: 1em;
+			font-style: italic;
+		}
+
+		.discipline {
+			font-size: 1em;
+		}
 	}
 
 	& > li .add_activity{
@@ -379,6 +371,24 @@ a
 		width:350px;
 		margin-bottom: 30px;
 		text-align: right;
+	}
+
+	& > li .end {
+		width:200px;
+		margin: 0 0 15px 10%;
+		line-height: 1.2;
+		position: relative;
+		border-radius: 5px;
+		background-color: @mediumgray;
+		color: white;
+		padding: 0.5em;
+		font-size: 1em;
+		font-style: italic;
+		position: relative;
+		border-radius: 5px;
+		border:1px solid @lightgray;
+		margin-bottom: 30px;
+		text-align: center;
 	}
 
 	& > li:nth-child(odd) .info {
@@ -415,24 +425,22 @@ a
 	& > li .icon {
 		width: 40px;
 		height: 40px;
-		speak: none;
 		font-style: normal;
 		font-weight: normal;
 		font-variant: normal;
 		text-transform: none;
-		font-size: 1.4em;
+		font-size: 1em;
 		line-height: 40px;
 		position: absolute;
-		color: #fff;
-		background: black;
-		border-radius: 50%;
+		color: #black;
+		background: white;
+		.rounded-corners(50%);
 		box-shadow: 0 0 0 8px @mediumgray;
 		text-align: center;
-		left: 20%;
+		left: 5%;
 		/*top: 0;*/
-		margin: 0 0 0 -25px;
+		margin: 0 0 0 -6.5%;
 	}
-
 } 
 /*********************************************************** /PROFILE ***************************************/
 
