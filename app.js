@@ -88,18 +88,21 @@ trafie.get('/', function( req, res ){
   if(!user_id) {
 	  res.redirect('/login');
   } else {
-    Profile.schema.findOne({ '_id': user_id }, 'first_name last_name').then( function( response ) {
+    Profile.schema.findOne( { '_id': user_id }, 'first_name last_name' ).then( function( profile_data ) {
       // If the user was found
-      if( typeof response.first_name !== 'undefined' ) {
-        // Format the data that will go to the front end
-        var view_data = {
-          'profile': {
-            'first_name': response.first_name,
-            'last_name' : response.last_name
-          },
-          'activities': []
-        };
-        res.render( 'profile', view_data );
+      if( typeof profile_data.first_name !== 'undefined' ) {
+        Activity.schema.findAll( { 'user_id': user_id }, null ).then( function( activities ){
+          console.log( activities );
+          // Format the data that will go to the front end
+          var view_data = {
+            'profile': {
+              'first_name': profile_data.first_name,
+              'last_name' : profile_data.last_name
+            },
+            'activities': []
+          };
+          res.render( 'profile', view_data );
+        });
       // If the user wasn't found
       } else {
         res.redirect('/login');
@@ -160,7 +163,7 @@ trafie.post('/', function( req, res ){
           case 'discus':
           case 'hammer':
           case 'javelin':
-            // Get the posted values. If a value was not posted, replace it with 00
+            // Get the posted values. If a value was not posted, replace it with 0
             performance.distance_1 = typeof req.body.distance_1 !== 'undefined' && req.body.distance_1 != '' ? req.body.distance_1 : '0';
             performance.distance_2 = typeof req.body.distance_2 !== 'undefined' && req.body.distance_2 != '' ? req.body.distance_2: '0';
 
@@ -170,7 +173,7 @@ trafie.post('/', function( req, res ){
           case 'pentathlon':
           case 'heptathlon':
           case 'decathlon':
-            // Get the posted values. If a value was not posted, replace it with 00
+            // Get the posted values. If a value was not posted, replace it with null
             performance.points = typeof req.body.points !== 'undefined' ? req.body.points : null;
 
             // Format the performance
@@ -390,7 +393,7 @@ trafie.get( '/settings', function( req, res ) {
     .then( function( response ) {
       // Format the data that will go to the front end
       var view_data = {
-        'data': {
+        'profile': {
           'first_name': response.first_name,
           'last_name' : response.last_name
         },
