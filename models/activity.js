@@ -64,21 +64,22 @@ activitySchema.formatActivities = function( activities ) {
           case '4x100m_relay':
           case '4x400m_relay':
           case 'marathon':
-          	var counter = 0;
+          	// Getting the centiseconds
 			var centiseconds = activities[i].performance.split('.')[1];
+			// Getting the rest of the performance parts
 			var performance_parts = activities[i].performance.split('.')[0].split(':');
+			// If the first part of the time is 0, remove it (affects hours and minutes)
 			for( var j=0 ; j<2 ; j++ ) {
-				if( performance_parts[j] == 0 ) {
-					counter++;
+				if( performance_parts[0] == 0 ) {
+					performance_parts.splice( 0, 1 );
 				} else {
 					break;
 				}
 			}
 
-			for( var j=0 ; j<counter ; j++ ) {
-			    performance_parts.splice( 0, 1 );
-			}
+			// Joining the parts with :
 			var performance = performance_parts.join(':');
+			// Joining with the centiseconds
 			activities[i].performance = performance + '.' + centiseconds;
             break;
           case 'high_jump':
@@ -89,6 +90,7 @@ activitySchema.formatActivities = function( activities ) {
           case 'discus':
           case 'hammer':
           case 'javelin':
+          	// Converting the distance back to meters
             activities[i].performance = (activities[i].performance / 10000).toFixed(2);
             break;
           case 'pentathlon':
