@@ -95,6 +95,7 @@ trafie.get('/', function( req, res ){
         .then( function( activities ) {
           // Format the activity data
           activities = Activity.schema.formatActivities( activities );
+          console.log( activities );
           // The data that will go to the front end
           var view_data = {
             'profile': {

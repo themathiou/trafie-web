@@ -47,8 +47,9 @@ activitySchema.getActivitiesOfUser = function( where, select, sort ) {
  * @param array activities
  */
 activitySchema.formatActivities = function( activities ) {
-	for( var i in activities ) {
-		switch ( activities[i] ) {
+	var activities_count = activities.length;
+	for( var i=0 ; i<activities_count ; i++ ) {
+		switch ( activities[i].discipline ) {
           case '100m':
           case '200m':
           case '400m':
@@ -64,22 +65,20 @@ activitySchema.formatActivities = function( activities ) {
           case '4x400m_relay':
           case 'marathon':
           	var counter = 0;
-
 			var centiseconds = activities[i].performance.split('.')[1];
 			var performance_parts = activities[i].performance.split('.')[0].split(':');
-
-			for( var i=0 ; i<2 ; i++ ) {
-				if( performance_parts[i] == 0 ) {
+			for( var j=0 ; j<2 ; j++ ) {
+				if( performance_parts[j] == 0 ) {
 					counter++;
 				} else {
 					break;
 				}
 			}
 
-			for( var i=0 ; i<counter ; i++ ) {
-			    performance_parts.splice(0, 1);
+			for( var j=0 ; j<counter ; j++ ) {
+			    performance_parts.splice( 0, 1 );
 			}
-			performance = performance_parts.join(':');
+			var performance = performance_parts.join(':');
 			activities[i].performance = performance + '.' + centiseconds;
             break;
           case 'high_jump':
