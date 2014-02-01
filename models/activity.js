@@ -2,15 +2,15 @@
 
 var mongoose = require('mongoose');
 var db = mongoose.connection;
+var q = require('q');
 
 //Define User SCHEMA
 var activitySchema = mongoose.Schema({
-  user_id : { type: String, required: true, index: true },
-  discipline : { type: String, required: true },
-  performance : { type: String }
+  user_id		: { type: String, required: true, index: true },
+  discipline	: { type: String, required: true },
+  performance	: { type: String },
+  date 			: { type: Date, default: Date.now }
 });
-
-var Activity = mongoose.model( 'Activity', activitySchema );
 
 /**
 * Find user by element
@@ -19,14 +19,11 @@ var Activity = mongoose.model( 'Activity', activitySchema );
 */
 activitySchema.findAll = function( where, select ) {
 	var d = q.defer();
-	console.log( 'BEFORE! ');
 	if( select ) {
-		console.log( 'THERE!');
 		Activity.find(where, select, function ( err, activity ) {
 			d.resolve(activity);
 		});
 	} else {
-		console.log( 'HERE!');
 		Activity.find(where, function ( err, activity ) {
 			d.resolve(activity);
 		});
@@ -92,7 +89,7 @@ activitySchema.validateTime = function( performance ) {
 	}
 
 	return time;
-}
+};
 
 /**
  * Checks time inputs for validity, if they are valid, it adds leading zeros to
@@ -121,7 +118,7 @@ activitySchema.validateDistance = function( performance ) {
 	}
 
 	return distance;
-}
+};
 
 /**
  * Checks time inputs for validity, if they are valid, it adds leading zeros to
@@ -138,6 +135,8 @@ activitySchema.validatePoints = function( performance ) {
 	}
 
 	return points;
-}
+};
+
+var Activity = mongoose.model( 'Activity', activitySchema );
 
 module.exports = Activity;

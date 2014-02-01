@@ -91,18 +91,33 @@ trafie.get('/', function( req, res ){
     Profile.schema.findOne( { '_id': user_id }, 'first_name last_name' ).then( function( profile_data ) {
       // If the user was found
       if( typeof profile_data.first_name !== 'undefined' ) {
-        Activity.schema.findAll( { 'user_id': user_id }, null ).then( function( activities ){
-          console.log( activities );
-          // Format the data that will go to the front end
-          var view_data = {
-            'profile': {
-              'first_name': profile_data.first_name,
-              'last_name' : profile_data.last_name
-            },
-            'activities': []
-          };
-          res.render( 'profile', view_data );
-        });
+        Activity.find(
+          // Where
+          { 'user_id': user_id },
+          // Select
+          null,
+          // Other parameters
+          {
+            //skip:0,
+            //limit:10,
+            sort:{
+              // -1 = descending
+              date: -1
+            }
+          },
+          // Callback
+          function( err, activities ) {
+            // Format the data that will go to the front end
+            var view_data = {
+              'profile': {
+                'first_name': profile_data.first_name,
+                'last_name' : profile_data.last_name
+              },
+              'activities': activities
+            };
+            res.render( 'profile', view_data );
+          }
+        );
       // If the user wasn't found
       } else {
         res.redirect('/login');
@@ -386,7 +401,7 @@ trafie.get( '/settings', function( req, res ) {
 
   // If there is no user id in the session, redirect to register screen
   if(!user_id) {
-    res.redirect('/register');
+    res.redirect('/login');
   // Else, fetch the first name and the last name of the user from the database
   } else {
     Profile.schema.findOne({ '_id': user_id }, 'first_name last_name')
