@@ -13,6 +13,28 @@ var activitySchema = mongoose.Schema({
 var Activity = mongoose.model( 'Activity', activitySchema );
 
 /**
+* Find user by element
+* @param json where({email:someone@trafie.com})
+* @param String select
+*/
+activitySchema.findAll = function( where, select ) {
+	var d = q.defer();
+	console.log( 'BEFORE! ');
+	if( select ) {
+		console.log( 'THERE!');
+		Activity.find(where, select, function ( err, activity ) {
+			d.resolve(activity);
+		});
+	} else {
+		console.log( 'HERE!');
+		Activity.find(where, function ( err, activity ) {
+			d.resolve(activity);
+		});
+	}
+	return d.promise;
+};
+
+/**
  * Checks time inputs for validity, if they are valid, it adds leading zeros to
  * single digit values and it creates the performance string, ready to be stored
  * If the values are invalid, it returns an empty string
