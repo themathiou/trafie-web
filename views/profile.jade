@@ -13,8 +13,8 @@ block content
 			ul.history_line
 
 				li
-					div( class="icon") +
-					div( class="info add_activity")
+					div.icon +
+					div#slider.info.add_activity
 						a#add_activity_link( onclick="open_new_activity_form();" ) Add New Activity
 						form#add_activity_form( style="display:none;" method="POST" )
 							select#discipline_input(name="discipline" onchange="show_specific_form(this);")
@@ -79,14 +79,14 @@ block content
 							div.row
 								input(type="submit" name="new_competition" value="Submit")
 								a#cancel_activity_link( style="display:none;" onclick="close_new_activity_form();" ) Cancel
-			
+				
 				each activity in activities 
 					li
 						div( class="icon") hj
 						div( class="info")
 							div.performance= activity.performance
 							div.discipline= activity.discipline
-							div.date= activity.date				
+							div.date= activity.date.toString().split(' GMT')[0]		
 				
 				li
 						div( class="icon") *
