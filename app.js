@@ -42,6 +42,13 @@ var trafie = express();
 mongoose.connect('mongodb://localhost/trafiejs');
 var db = mongoose.connection;
 
+// Initialize translations
+var translations = [];
+var en = require('./languages/en.js');
+var gr = require('./languages/gr.js');
+translations['en'] = new en();
+translations['gr'] = new gr();
+
 
 /*******************************************************************************************************************************
  * MODELS                                                                                                                      *
@@ -94,15 +101,15 @@ trafie.get('/', function( req, res ){
         Activity.schema.getActivitiesOfUser( { 'user_id': user_id }, null, -1 )
         .then( function( activities ) {
           // Format the activity data
-          activities = Activity.schema.formatActivities( activities );
-          console.log( activities );
+          var activities = Activity.schema.formatActivities( activities );
           // The data that will go to the front end
           var view_data = {
             'profile': {
               'first_name': profile_data.first_name,
               'last_name' : profile_data.last_name
             },
-            'activities': activities
+            'activities': activities,
+            'tr'        : translations['en'].getProfileTranslations()
           };
           res.render( 'profile', view_data );
         });
@@ -202,14 +209,15 @@ trafie.post('/', function( req, res ){
             Activity.schema.getActivitiesOfUser( { 'user_id': user_id }, null, -1 )
             .then( function( activities ) {
               // Format the activity data
-              activities = Activity.schema.formatActivities( activities );
+              var activities = Activity.schema.formatActivities( activities );
               // The data that will go to the front end
               var view_data = {
                 'profile': {
                   'first_name': profile_data.first_name,
                   'last_name' : profile_data.last_name
                 },
-                'activities': activities
+                'activities': activities,
+                'tr'        : translations['en'].getProfileTranslations()
               };
               res.render( 'profile', view_data );
             });
@@ -218,14 +226,15 @@ trafie.post('/', function( req, res ){
           Activity.schema.getActivitiesOfUser( { 'user_id': user_id }, null, -1 )
           .then( function( activities ) {
             // Format the activity data
-            activities = Activity.schema.formatActivities( activities );
+            var activities = Activity.schema.formatActivities( activities );
             // The data that will go to the front end
             var view_data = {
               'profile': {
                 'first_name': profile_data.first_name,
                 'last_name' : profile_data.last_name
               },
-              'activities': activities
+              'activities': activities,
+              'tr'        : translations['en'].getProfileTranslations()
             };
             res.render( 'profile', view_data );
           });
@@ -412,7 +421,8 @@ trafie.get( '/settings', function( req, res ) {
           'first_name': response.first_name,
           'last_name' : response.last_name
         },
-        'errors': errors
+        'errors'  : errors,
+        'tr'      : translations['en'].getSettingsTranslations()
       };
       res.render( 'settings', view_data );
     })
@@ -455,11 +465,12 @@ trafie.get( '/settings', function( req, res ) {
     .then( function( response ) {
       // Format the data that will go to the front end
       var view_data = {
-        'data': {
+        'profile': {
           'first_name': response.first_name,
           'last_name' : response.last_name
         },
-        'errors': error_messages
+        'errors'  : error_messages,
+        'tr'      : translations['en'].getSettingsTranslations()
       };
       res.render( 'settings', view_data );
     });
@@ -474,7 +485,8 @@ trafie.get( '/settings', function( req, res ) {
             'first_name': response.first_name,
             'last_name' : response.last_name
           },
-          'errors': error_messages
+          'errors'  : error_messages,
+          'tr'      : translations['en'].getSettingsTranslations()
         };
         res.render( 'settings', view_data );
       });
