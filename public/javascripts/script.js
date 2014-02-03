@@ -39,54 +39,99 @@ function cancelEditField (fieldID_shadow, fieldID, saveID, cancelID, editID ) {
  * open_new_activity_form() : shows the elements of 'create a new activity' form
  */
 function open_new_activity_form() {
-	console.log('--->show');
-	document.getElementById('add_activity_link').style.display = 'none';
+
+	/* document.getElementById('add_activity_link').style.display = 'none';
 	document.getElementById('cancel_activity_link').style.display = 'block';
-	document.getElementById('add_activity_form').style.display = 'block';
+	document.getElementById('add_activity_form').style.display = 'block'; */
     
-    /*
-	var minheight = 20;
-	var maxheight = 300;
-	var time = 1000;
+    var minheight = 20;
+	var maxheight = 100;
+	var time = 500;
 	var timer = null;
 	var toggled = false;
 
-	var controler = document.getElementById('slide');
+	document.getElementById('add_activity_link').removeAttribute("onClick");
+	document.getElementById('add_activity_link').removeAttribute("href");
+
+	var controler = document.getElementById('add_activity_link');
 	var slider = document.getElementById('slider');
 	slider.style.height = minheight + 'px';
-	controler.onclick = function() {  
+	
 	clearInterval(timer);
 	var instanceheight = parseInt(slider.style.height);
 	var init = (new Date()).getTime();
-	var height = (toggled = !toggled) ? maxheight: minheight; 
+	var height = (toggled = !toggled) ? maxheight : minheight; 
+	
+	console.log('@open - ' + toggled);
 	
 	var disp = height - parseInt(slider.style.height);
-	timer = setInterval(function() {
+	timer = setInterval(function() 
+	{
 	  var instance = (new Date()).getTime() - init;
 	  if(instance < time ) {
 	    var pos = Math.floor(disp * instance / time);
 	    result = instanceheight + pos;
 	    slider.style.height =  result + 'px';
-	    document.getElementById('log').innerHTML = 'Current Height : <b>' + result + '</b><br /> Current Time : <b>' + instance + '</b>';
+/* 	    document.getElementById('log').innerHTML = 'Current Height : <b>' + result + '</b><br /> Current Time : <b>' + instance + '</b>'; */
 	  }else {
 	    slider.style.height = height + 'px'; //safety side ^^
 	    clearInterval(timer);
 	    controler.value = toggled ? ' Slide Up ' :' Slide Down ';
-	    document.getElementById('log').innerHTML = 'Current Height : <b>' + height + '</b><br /> Current Time : <b>' + time + '</b>';
+/* 	    document.getElementById('log').innerHTML = 'Current Height : <b>' + height + '</b><br /> Current Time : <b>' + time + '</b>'; */
 	  }
 	},1);
-	};
-*/
+
+	
 }
 
 /**
  * close_new_activity_form() : hides the elements of 'create a new activity' form
  */
 function close_new_activity_form() {
-    console.log('--->hide');
-    document.getElementById('add_activity_link').style.display = 'block';
+    /*document.getElementById('add_activity_link').style.display = 'block';
     document.getElementById('cancel_activity_link').style.display = 'none';
-    document.getElementById('add_activity_form').style.display = 'none';    
+    document.getElementById('add_activity_form').style.display = 'none';*/
+   
+    var minheight = 20;
+	var maxheight = 100;
+	var time = 300;
+	var timer = null;
+	var toggled = true;
+	
+	var controler = document.getElementById('cancel_activity_link');
+    var slider = document.getElementById('slider');
+	 
+	clearInterval(timer);
+	var instanceheight = parseInt(slider.style.height);
+	var init = ( new Date() ).getTime();
+	var height = (toggled = !toggled) ? maxheight : minheight; 
+
+	console.log('@close - ' + toggled);
+	
+	var disp = height - parseInt(slider.style.height);
+	timer = setInterval(function() 
+	{
+	  var instance = ( new Date() ).getTime() - init;
+	  if( instance < time ) {
+	    var pos = Math.floor(disp * instance / time);
+	    result = instanceheight + pos;
+	    slider.style.height =  result + 'px';
+	  } else {
+	    slider.style.height = height + 'px'; //safety side ^^
+	    clearInterval(timer);
+	    controler.value = toggled ? ' Slide Down ' :' Slide Up ';
+		}
+	},1);
+	
+		
+	document.getElementById('add_activity_link').setAttribute("onClick","open_new_activity_form();");
+	document.getElementById('add_activity_link').setAttribute("href","javascript:;");
+	document.getElementById('discipline_input').selectedIndex = 0;
+    document.getElementById('time_activity').style.display = 'none';
+    document.getElementById('distance_activity').style.display = 'none';
+    document.getElementById('point_activity').style.display = 'none';
+	
+	
 }
 
 /**
@@ -102,24 +147,28 @@ function show_specific_form(choice) {
 
     if( distance.indexOf(choice.value) > -1 ) {
         console.log('distance');
+        document.getElementById('slider').style.height = '180px';
         document.getElementById('time_activity').style.display = 'none';
         document.getElementById('distance_activity').style.display = 'block';
         document.getElementById('point_activity').style.display = 'none';
     }
     else if ( time.indexOf(choice.value) > -1 ) {
         console.log('time');
+        document.getElementById('slider').style.height = '250px';
         document.getElementById('time_activity').style.display = 'block';
         document.getElementById('distance_activity').style.display = 'none';
         document.getElementById('point_activity').style.display = 'none';
     } 
     else if ( points.indexOf(choice.value) > -1 ) {
         console.log('points');
+        document.getElementById('slider').style.height = '160px';
         document.getElementById('time_activity').style.display = 'none';
         document.getElementById('distance_activity').style.display = 'none';
         document.getElementById('point_activity').style.display = 'block';
     }
     else{
         console.log('none');
+        document.getElementById('slider').style.height = '100px';
         document.getElementById('time_activity').style.display = 'none';
         document.getElementById('distance_activity').style.display = 'none';
         document.getElementById('point_activity').style.display = 'none';
