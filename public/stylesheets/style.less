@@ -261,21 +261,10 @@ a
 	height: 250px;
 	.rounded-corners (5px);
 
-	background-image: url('../images/cover_photos/dimitra.png');
+	background-image: url('../images/cover_photos/stadium.png');
 	background-size: cover;
 	//background: white;
 
-	/* cover photo */
-	/*
-		background-repeat: no-repeat;
-		background-position:  top center;
-		background-attachment: fixed;
-		-webkit-background-size: cover;
-		-moz-background-size: cover;
-		-o-background-size: cover;
-		background-size: cover;
-		background-image: url('../images/cover_photos/mo.jpg');
-	*/
 
 	#image_container {
 		width:150px;
@@ -310,13 +299,17 @@ a
 /*******************************************************************************************************************************
 * 							                                                                      HISTORY                    *
 ******************************************************************************************************************************/
+#slider {
+	height: 20px;
+}
+
 .history_line {
 	margin: 30px auto 0 auto;
 	padding: 0;
 	list-style: none;
 	position: relative;
 	width:450px;
-
+	
 	/*line*/
 	&:before {
 		content: '';
@@ -371,6 +364,7 @@ a
 		width:350px;
 		margin-bottom: 30px;
 		text-align: right;
+		overflow: hidden;
 	}
 
 	& > li .end {

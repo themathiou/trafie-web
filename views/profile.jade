@@ -13,80 +13,80 @@ block content
 			ul.history_line
 
 				li
-					div( class="icon") +
-					div( class="info add_activity")
-						a#add_activity_link( onclick="open_new_activity_form();" ) Add New Activity
-						form#add_activity_form( style="display:none;" method="POST" )
+					div.icon +
+					div#slider( class="info add_activity" )
+						a#add_activity_link( onclick="open_new_activity_form();" href="javascript:;")= tr['add_new_activity']
+						form#add_activity_form( method="POST" )
 							select#discipline_input(name="discipline" onchange="show_specific_form(this);")
-								option(value="no-selection" selected ) Choose your discipline:
-								option(value="100m") 100m
-								option(value="200m") 200m
-								option(value="400m") 400m
-								option(value="800m") 800m
-								option(value="1500m") 1500m
-								option(value="3000m") 3000m
-								option(value="60m_hurdles") 60m hurdles
-								option(value="100m_hurdles") 100m hurdles
-								option(value="110m_hurdles") 110m hurdles
-								option(value="400m_hurdles") 400m hurdles
-								option(value="3000m_steeple") 3000m steeple
-								option(value="4x100m_relay") 4x100m relay
-								option(value="4x400m_relay") 4x400m relay
-								option(value="marathon") marathon
-								option(value="high_jump") high_jump
-								option(value="long_jump") long_jump
-								option(value="triple_jump") triple_jump
-								option(value="pole_vault") pole_vault
-								option(value="shot_put") shot_put
-								option(value="discus") discus
-								option(value="hammer") hammer
-								option(value="javelin") javelin
-								option(value="pentathlon") pentathlon
-								option(value="heptathlon") heptathlon
-								option(value="decathlon") decathlon
+								option(value="no-selection" selected )= tr['choose_your_discipline']
+								option(value="100m")= tr['100m']
+								option(value="200m")= tr['200m']
+								option(value="400m")= tr['400m']
+								option(value="800m")= tr['800m']
+								option(value="1500m")= tr['1500m']
+								option(value="3000m")= tr['3000m']
+								option(value="60m_hurdles")= tr['60m_hurdles']
+								option(value="100m_hurdles")= tr['100m_hurdles']
+								option(value="110m_hurdles")= tr['110m_hurdles']
+								option(value="400m_hurdles")= tr['400m_hurdles']
+								option(value="3000m_steeple")= tr['3000m_steeple']
+								option(value="4x100m_relay")= tr['4x100m_relay']
+								option(value="4x400m_relay")= tr['4x400m_relay']
+								option(value="marathon")= tr['marathon']
+								option(value="high_jump")= tr['high_jump']
+								option(value="long_jump")= tr['long_jump']
+								option(value="triple_jump")= tr['triple_jump']
+								option(value="pole_vault")= tr['pole_vault']
+								option(value="shot_put")= tr['shot_put']
+								option(value="discus")= tr['discus']
+								option(value="hammer")= tr['hammer']
+								option(value="javelin")= tr['javelin']
+								option(value="pentathlon")= tr['pentathlon']
+								option(value="heptathlon")= tr['heptathlon']
+								option(value="decathlon")= tr['decathlon']
 							//time measure
-							div#time_activity.row( style="display:none;" )  Enter your performance:
+							div#time_activity.row( style="display:none;" )= tr['enter_your_performance']
 								br
 								div
-									label(for="hours_input") Hours:
+									label(for="hours_input")= tr['hours'] + ' : '
 									input#hours_input(name="hours" size="2" maxlength="2" )
 								div
-									label(for="minutes_input") Minutes:
+									label(for="minutes_input")= tr['minutes'] + ' : '
 									input#minutes_input(name="minutes" size="2" maxlength="2" onchange="number0to59(this);" )
 								div
-									label(for="seconds_input") Seconds:
+									label(for="seconds_input")= tr['seconds'] + ' : '
 									input#seconds_input(name="seconds" size="2" maxlength="2" onchange="number0to59(this);" )
 								div
-									label(for="centiseconds_input") Centiseconds:
+									label(for="centiseconds_input")= tr['centiseconds'] + ' : '
 									input#centiseconds_input(name="centiseconds" size="2" maxlength="2" onchange="number0to99(this);" )
 								
 							//distance measure 
-							div#distance_activity.row( style="display:none;" ) Enter your performance:
+							div#distance_activity.row( style="display:none;" )= tr['enter_your_performance']
 								br
 								div
-									label(for="distance_1_input") Meters:
+									label(for="distance_1_input")= tr['meters'] + ' : '
 									input#distance_1_input(name="distance_1" size="2" maxlength="2").
 								div
-									label(for="distance_2_input") Centimeters:
+									label(for="distance_2_input")= tr['centimeters'] + ' : '
 									input#distance_2_input(name="distance_2" size="2" maxlength="2" onchange="number0to99(this);" ) 
 							// points measure 
-							div#point_activity.row( style="display:none;" )  Enter your performance:
+							div#point_activity.row( style="display:none;" )= tr['enter_your_performance']
 								br
-								label(for="points_input") Points:
+								label(for="points_input")= tr['points'] + ' : '
 								input#points_input(type="text" name="points")
 
 							//submit
 							div.row
 								input(type="submit" name="new_competition" value="Submit")
-								a#cancel_activity_link( style="display:none;" onclick="close_new_activity_form();" ) Cancel
-			
+								a#cancel_activity_link( onclick="close_new_activity_form();" href="javascript:;")= tr['cancel']
+				
 				each activity in activities 
 					li
 						div( class="icon") hj
 						div( class="info")
 							div.performance= activity.performance
-							div.discipline= activity.discipline
-							div.date= activity.date				
+							div.discipline= tr[activity.discipline]
+							div.date= activity.date.toString().split(' GMT')[0]		
 				
 				li
 						div( class="icon") *

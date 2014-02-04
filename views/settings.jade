@@ -5,31 +5,31 @@ block content
 
 		div#settingsNav
 			ul
-				li.first.active General Settings
+				li.first.active= tr['general_settings']
 				li Group 1
 				li Group 2
 				li.logout
-					a(href="/logout") Logout
+					a(href="/logout")= tr['logout']
 
 
 		div#settingsContent
 			div.settingsElement
 				form( method="POST")
-					label First Name :
+					label= tr['first_name'] + ' : '
 					span= errors.first_name
 					input#first_name.existedValue( name="first_name" value=profile.first_name disabled )
 					input#first_name_shadow( name="first_name" value=profile.first_name hidden disabled)
-					input#submitFirstName( type="submit" value="Save" hidden)
-					a#cancelEditFirstName.cancelEdit( href="javascript:;" onclick="cancelEditField('first_name_shadow', 'first_name', 'submitFirstName', 'cancelEditFirstName', 'editFirstName')" hidden) Cancel
-					a#editFirstName.editLink( href="javascript:;" onclick="editField('first_name', 'submitFirstName',  'cancelEditFirstName', 'editFirstName')" ) Edit
+					input#submitFirstName( type="submit" value=tr['submit'] hidden)
+					a#cancelEditFirstName.cancelEdit( href="javascript:;" onclick="cancelEditField('first_name_shadow', 'first_name', 'submitFirstName', 'cancelEditFirstName', 'editFirstName')" hidden)= tr['cancel']
+					a#editFirstName.editLink( href="javascript:;" onclick="editField('first_name', 'submitFirstName',  'cancelEditFirstName', 'editFirstName')" )= tr['edit']
 
 			div.settingsElement
 				form( method="POST")
-					label Last Name :
+					label= tr['last_name'] + ' : '
 					span= errors.last_name
 					input#last_name.existedValue( name="last_name" value=profile.last_name disabled )
 					input#last_name_shadow( name="last_name" value=profile.last_name hidden disabled)
-					input#submitLastName( type="submit" value="Save" hidden)
-					a#cancelEditLastName.cancelEdit( href="javascript:;" onclick="cancelEditField('last_name_shadow', 'last_name', 'submitLastName', 'cancelEditLastName', 'editLastName')" hidden) Cancel
-					a#editLastName.editLink( href="javascript:;" onclick="editField('last_name', 'submitLastName', 'cancelEditLastName', 'editLastName')" ) Edit
+					input#submitLastName( type="submit" value=tr['submit'] hidden)
+					a#cancelEditLastName.cancelEdit( href="javascript:;" onclick="cancelEditField('last_name_shadow', 'last_name', 'submitLastName', 'cancelEditLastName', 'editLastName')" hidden)= tr['cancel']
+					a#editLastName.editLink( href="javascript:;" onclick="editField('last_name', 'submitLastName', 'cancelEditLastName', 'editLastName')" )= tr['edit']
 

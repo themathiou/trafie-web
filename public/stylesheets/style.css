@@ -174,21 +174,8 @@ a:visited {
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
   border-radius: 5px;
-  background-image: url('../images/cover_photos/dimitra.png');
+  background-image: url('../images/cover_photos/stadium.png');
   background-size: cover;
-  /* cover photo */
-
-  /*
-		background-repeat: no-repeat;
-		background-position:  top center;
-		background-attachment: fixed;
-		-webkit-background-size: cover;
-		-moz-background-size: cover;
-		-o-background-size: cover;
-		background-size: cover;
-		background-image: url('../images/cover_photos/mo.jpg');
-	*/
-
 }
 #profile_container #image_container {
   width: 150px;
@@ -218,6 +205,9 @@ a:visited {
 /*******************************************************************************************************************************
 * 							                                                                      HISTORY                    *
 ******************************************************************************************************************************/
+#slider {
+  height: 20px;
+}
 .history_line {
   margin: 30px auto 0 auto;
   padding: 0;
@@ -279,6 +269,7 @@ a:visited {
   width: 350px;
   margin-bottom: 30px;
   text-align: right;
+  overflow: hidden;
 }
 .history_line > li .end {
   width: 200px;
