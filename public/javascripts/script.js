@@ -147,14 +147,14 @@ function show_specific_form(choice) {
 
     if( distance.indexOf(choice.value) > -1 ) {
         console.log('distance');
-        document.getElementById('slider').style.height = '180px';
+        document.getElementById('slider').style.height = '160px';
         document.getElementById('time_activity').style.display = 'none';
         document.getElementById('distance_activity').style.display = 'block';
         document.getElementById('point_activity').style.display = 'none';
     }
     else if ( time.indexOf(choice.value) > -1 ) {
         console.log('time');
-        document.getElementById('slider').style.height = '250px';
+        document.getElementById('slider').style.height = '160px';
         document.getElementById('time_activity').style.display = 'block';
         document.getElementById('distance_activity').style.display = 'none';
         document.getElementById('point_activity').style.display = 'none';

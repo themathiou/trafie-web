@@ -43,12 +43,6 @@ body {
 .row label {
   color: #ae3731;
 }
-input {
-  height: 18px;
-  width: 200px;
-  font-weight: 100;
-  font-size: 1em;
-}
 .hidden {
   display: none;
 }
@@ -67,6 +61,186 @@ a:visited {
 }
 /*********************************************************** /GENERAL ***************************************/
 /*******************************************************************************************************************************
+ * 							                                                                   	  ACTION BUTTONS               *
+ ******************************************************************************************************************************/
+input.btn_neutral {
+  background: #e3e3e3;
+  border: 1px solid #bbb;
+  border-radius: 3px;
+  -webkit-box-shadow: inset 0 0 1px 1px #f6f6f6;
+  box-shadow: inset 0 0 1px 1px #f6f6f6;
+  color: #333;
+  font: bold 12px/1;
+  padding: 2px 0;
+  text-align: center;
+  text-shadow: 0 1px 0 #fff;
+  width: 100px;
+  height: 25px;
+}
+input.btn_neutral:hover {
+  background: #d9d9d9;
+  -webkit-box-shadow: inset 0 0 1px 1px #eaeaea;
+  box-shadow: inset 0 0 1px 1px #eaeaea;
+  color: #222;
+  cursor: pointer;
+}
+input.btn_neutral:active {
+  background: #d0d0d0;
+  -webkit-box-shadow: inset 0 0 1px 1px #e3e3e3;
+  box-shadow: inset 0 0 1px 1px #e3e3e3;
+  color: #000;
+}
+input.btn_neutral_gray {
+  background-color: #eeeeee;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #eeeeee), color-stop(100%, #cccccc));
+  background-image: -webkit-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -ms-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -o-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: linear-gradient(top, #eeeeee, #cccccc);
+  border: 1px solid #ccc;
+  border-bottom: 1px solid #bbb;
+  border-radius: 3px;
+  color: #333;
+  font: bold 11px/1;
+  padding: 3px 0;
+  text-align: center;
+  text-shadow: 0 1px 0 #eee;
+  width: 100px;
+  height: 25px;
+}
+input.btn_neutral_gray:hover {
+  background-color: #dddddd;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #dddddd), color-stop(100%, #bbbbbb));
+  background-image: -webkit-linear-gradient(top, #dddddd, #bbbbbb);
+  background-image: -moz-linear-gradient(top, #dddddd, #bbbbbb);
+  background-image: -ms-linear-gradient(top, #dddddd, #bbbbbb);
+  background-image: -o-linear-gradient(top, #dddddd, #bbbbbb);
+  background-image: linear-gradient(top, #dddddd, #bbbbbb);
+  border: 1px solid #bbb;
+  border-bottom: 1px solid #999;
+  cursor: pointer;
+  text-shadow: 0 1px 0 #ddd;
+}
+input.btn_neutral_gray:active {
+  border: 1px solid #aaa;
+  border-bottom: 1px solid #888;
+  -webkit-box-shadow: inset 0 0 5px 2px #aaaaaa, 0 1px 0 0 #eeeeee;
+  box-shadow: inset 0 0 5px 2px #aaaaaa, 0 1px 0 0 #eeeeee;
+}
+input.btn_green {
+  background-color: #7fbf4d;
+  border: 1px solid #63a62f;
+  border-bottom: 1px solid #5b992b;
+  border-radius: 3px;
+  color: #fff;
+  font: bold 11px/1;
+  padding: 2px 0;
+  text-align: center;
+  text-shadow: 0 -1px 0 #4c9021;
+  width: 100px;
+  height: 25px;
+}
+input.btn_green:hover {
+  background-color: #76b347;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #76b347), color-stop(100%, #5e9e2e));
+  background-image: -webkit-linear-gradient(top, #76b347, #5e9e2e);
+  background-image: -moz-linear-gradient(top, #76b347, #5e9e2e);
+  background-image: -ms-linear-gradient(top, #76b347, #5e9e2e);
+  background-image: -o-linear-gradient(top, #76b347, #5e9e2e);
+  background-image: linear-gradient(top, #76b347, #5e9e2e);
+  -webkit-box-shadow: inset 0 1px 0 0 #8dbf67;
+  box-shadow: inset 0 1px 0 0 #8dbf67;
+  cursor: pointer;
+}
+input.btn_green:active {
+  border: 1px solid #5b992b;
+  border-bottom: 1px solid #538c27;
+  -webkit-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
+  box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee;
+}
+input.btn_blue_1 {
+  background-color: #d7e5f5;
+  border-top: 1px solid #abbbcc;
+  border-left: 1px solid #a7b6c7;
+  border-bottom: 1px solid #a1afbf;
+  border-right: 1px solid #a7b6c7;
+  border-radius: 3px;
+  color: #1a3e66;
+  font: normal 11px/1;
+  padding: 2px 0;
+  text-align: center;
+  text-shadow: 0 1px 1px #fff;
+  width: 100px;
+  height: 25px;
+}
+input.btn_blue_1:hover {
+  background-color: #ccd9e8;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ccd9e8), color-stop(100%, #c1d4e8));
+  background-image: -webkit-linear-gradient(top, #ccd9e8, #c1d4e8);
+  background-image: -moz-linear-gradient(top, #ccd9e8, #c1d4e8);
+  background-image: -ms-linear-gradient(top, #ccd9e8, #c1d4e8);
+  background-image: -o-linear-gradient(top, #ccd9e8, #c1d4e8);
+  background-image: linear-gradient(top, #ccd9e8, #c1d4e8);
+  border-top: 1px solid #a1afbf;
+  border-left: 1px solid #9caaba;
+  border-bottom: 1px solid #96a3b3;
+  border-right: 1px solid #9caaba;
+  -webkit-box-shadow: inset 0 1px 0 0 #f2f2f2;
+  box-shadow: inset 0 1px 0 0 #f2f2f2;
+  color: #163659;
+  cursor: pointer;
+}
+input.btn_blue_1:active {
+  border: 1px solid #8c98a7;
+  -webkit-box-shadow: inset 0 0 4px 2px #abbccf, 0 0 1px 0 #eeeeee;
+  box-shadow: inset 0 0 4px 2px #abbccf, 0 0 1px 0 #eeeeee;
+}
+input.btn_blue_2 {
+  background-color: #a5b8da;
+  border-top: 1px solid #758fba;
+  border-right: 1px solid #6c84ab;
+  border-bottom: 1px solid #5c6f91;
+  border-left: 1px solid #6c84ab;
+  border-radius: 4px;
+  color: #fff;
+  font: bold 11px/1;
+  padding: 2px 0;
+  text-align: center;
+  text-shadow: 0 -1px 1px #64799e;
+  width: 100px;
+  height: 25px;
+}
+input.btn_blue_2:hover {
+  background-color: #9badcc;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #9badcc), color-stop(100%, #687fa6));
+  background-image: -webkit-linear-gradient(top, #9badcc, #687fa6);
+  background-image: -moz-linear-gradient(top, #9badcc, #687fa6);
+  background-image: -ms-linear-gradient(top, #9badcc, #687fa6);
+  background-image: -o-linear-gradient(top, #9badcc, #687fa6);
+  background-image: linear-gradient(top, #9badcc, #687fa6);
+  border-top: 1px solid #6d86ad;
+  border-right: 1px solid #647a9e;
+  border-bottom: 1px solid #546685;
+  border-left: 1px solid #647a9e;
+  -webkit-box-shadow: inset 0 1px 0 0 #a5b9d9;
+  box-shadow: inset 0 1px 0 0 #a5b9d9;
+  cursor: pointer;
+}
+input.btn_blue_2:active {
+  border: 1px solid #546685;
+  -webkit-box-shadow: inset 0 0 8px 2px #7e8da6, 0 1px 0 0 #eeeeee;
+  box-shadow: inset 0 0 8px 2px #7e8da6, 0 1px 0 0 #eeeeee;
+}
+/* cancel button */
+.cancel_link {
+  font-size: 0.6em;
+  margin: 0px;
+  padding: 0px 5px;
+  font-weight: 400;
+}
+/*********************************************************** /ACTION BUTTONS  ***************************************/
+/*******************************************************************************************************************************
  * 							                                                                      MAIN MENU                    *
  ******************************************************************************************************************************/
 #mainmenu_container {
@@ -82,10 +256,6 @@ a:visited {
   width: 950px;
   text-align: right;
   z-index: 100;
-  /* DROPDOWN */
-
-  /* /DROPDOWN */
-
 }
 #mainmenu .logo {
   background-image: url(../images/logo.png);
@@ -125,40 +295,6 @@ a:visited {
 #mainmenu ul li a:hover,
 #mainmenu ul li a.active {
   border-bottom: white 4px solid;
-}
-#mainmenu ul.dropdown li:hover {
-  position: relative;
-}
-#mainmenu ul.dropdown ul {
-  visibility: hidden;
-  position: absolute;
-  padding: 10px 0px 0px 0px;
-  left: -40px;
-  -webkit-border-radius: 0px 0px 5px 5px;
-  -moz-border-radius: 0px 0px 5px 5px;
-  -o-border-radius: 0px 0px 5px 5px;
-  -ms-border-radius: 0px 0px 5px 5px;
-  border-radius: 0px 0px 5px 5px;
-  z-index: 100;
-}
-#mainmenu ul.dropdown ul li {
-  background: #ae3731;
-  display: block;
-  padding-top: 10px;
-  height: 27px;
-  width: 80px;
-  text-align: center;
-}
-#mainmenu ul.dropdown ul li a {
-  background-color: #ae3731;
-}
-#mainmenu ul.dropdown ul li a:hover {
-  border-bottom: none;
-  font-weight: 400;
-}
-#mainmenu .settings_dropdown {
-  padding-top: 5px !important;
-  z-index: 95 !important;
 }
 /*********************************************************** /MAIN MENU ***************************************/
 /*******************************************************************************************************************************
@@ -217,6 +353,8 @@ a:visited {
   /*line*/
 
   /* Right content */
+  /* ADD activity */
+
   /* info end point (left) */
   /* The icons */
 }
@@ -232,7 +370,7 @@ a:visited {
 }
 .history_line > li .info {
   margin: 0 0 15px 12%;
-  background: rgba(0, 0, 0, 0.3);
+  background-image: url('../images/ui/post_back_run_1.png');
   color: #fff;
   padding: 1em;
   font-size: 1.2em;
@@ -245,6 +383,7 @@ a:visited {
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
   border-radius: 5px;
+  text-shadow: 0px 0px 6px #000;
 }
 .history_line > li .info .performance {
   font-size: 2.4em;
@@ -258,9 +397,9 @@ a:visited {
   font-size: 1em;
 }
 .history_line > li .add_activity {
-  background: none;
+  background: rgba(0, 0, 0, 0.1) !important;
   color: #fff;
-  padding: 0.5em;
+  padding: 0.4em;
   font-size: 1.1em;
   position: relative;
   border-radius: 5px;
@@ -270,6 +409,21 @@ a:visited {
   margin-bottom: 30px;
   text-align: right;
   overflow: hidden;
+  text-align: left;
+}
+.history_line > li .add_activity .data_entry {
+  color: black;
+}
+.history_line > li .add_activity .data_entry div {
+  float: left;
+}
+.history_line > li .add_activity .data_entry label {
+  font-size: 0.8em;
+  padding: 0px;
+  margin: 0px;
+}
+.history_line > li .add_activity .data_entry .submit_buttons {
+  text-align: right;
 }
 .history_line > li .end {
   width: 200px;
@@ -287,7 +441,8 @@ a:visited {
   text-align: center;
 }
 .history_line > li:nth-child(odd) .info {
-  background: rgba(0, 0, 0, 0.1);
+  background-image: url('../images/ui/post_back_javelin.png');
+  background-position: center bottom;
 }
 .history_line > li .info h2 {
   margin-top: 0px;
