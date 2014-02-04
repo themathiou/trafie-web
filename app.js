@@ -59,6 +59,8 @@ var Activity = require('./models/activity.js');
 trafie.set('port', process.env.PORT || 3000);
 trafie.set('views', path.join(__dirname, 'views'));
 trafie.set('view engine', 'jade');
+trafie.set('view cache', true);
+trafie.set('env', 'development');
 trafie.use(express.favicon());
 trafie.use(express.logger('dev'));
 trafie.use(express.bodyParser());
@@ -95,7 +97,6 @@ trafie.get('/', function( req, res ){
         .then( function( activities ) {
           // Format the activity data
           activities = Activity.schema.formatActivities( activities );
-          console.log( activities );
           // The data that will go to the front end
           var view_data = {
             'profile': {
@@ -481,6 +482,25 @@ trafie.get( '/settings', function( req, res ) {
     });
   }
  });
+
+
+/*******************************************************************************************************************************
+ * 404                                                                                                                         *
+ ******************************************************************************************************************************/
+
+ trafie.use(function(req, res, next){
+  res.status(404);
+
+  // respond with html page
+/*  if (req.accepts('html')) {
+    res.render('404', { url: req.url });
+    return;
+  }
+  */
+
+  // default to plain-text. send()
+  res.type('txt').send('404 - Page not found');
+});
 
 
 /*******************************************************************************************************************************
