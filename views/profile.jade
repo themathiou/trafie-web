@@ -77,7 +77,7 @@ block content
 
 							//submit
 							div.row.submit_buttons
-								input.btn_neutral(type="submit" name="new_competition" value="Submit")
+								input.btn_green(type="submit" name="new_competition" value=tr['save'])
 								a#cancel_activity_link.cancel_link( onclick="close_new_activity_form();" href="javascript:;")= tr['cancel']
 							//div.row
 								input.btn_neutral_gray(type="submit" name="new_competition" value="Submit")
@@ -92,15 +92,12 @@ block content
 				each activity in activities 
 					li
 						div( class="icon") hj
-						div.info.runnning
+						div.info
 							div.performance= activity.performance
 							div.discipline= tr[activity.discipline]
 							div.date= activity.date.toString().split(' GMT')[0]		
 				
 				li
-						div( class="icon") *
-						div( class="end")
-							div.discipline everything started here			
-
-
-			
+					div( class="icon") *
+					div( class="end")
+						div.discipline everything started here

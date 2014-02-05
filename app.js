@@ -199,7 +199,7 @@ trafie.post('/', function( req, res ){
         // If there is a valid performance value
         if( performance !== null ) {
           // Create the record that will be inserted in the db
-          new_activity = {
+          var new_activity = {
             'user_id': user_id,
             'discipline': discipline,
             'performance': performance
@@ -483,7 +483,7 @@ trafie.get( '/settings', function( req, res ) {
       .then( function( response ) {
         // Format the data that will go to the front end
         var view_data = {
-          'data': {
+          'profile': {
             'first_name': response.first_name,
             'last_name' : response.last_name
           },

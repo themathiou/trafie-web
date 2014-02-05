@@ -6,8 +6,7 @@ block content
 		div#settingsNav
 			ul
 				li.first.active= tr['general_settings']
-				li Group 1
-				li Group 2
+				//li Group 1
 				li.logout
 					a(href="/logout")= tr['logout']
 
@@ -19,8 +18,8 @@ block content
 					span= errors.first_name
 					input#first_name.existedValue( name="first_name" value=profile.first_name disabled )
 					input#first_name_shadow( name="first_name" value=profile.first_name hidden disabled)
-					input#submitFirstName( type="submit" value=tr['submit'] hidden)
-					a#cancelEditFirstName.cancelEdit( href="javascript:;" onclick="cancelEditField('first_name_shadow', 'first_name', 'submitFirstName', 'cancelEditFirstName', 'editFirstName')" hidden)= tr['cancel']
+					input#submitFirstName.btn_green( type="submit" value=tr['submit'] hidden)
+					a#cancelEditFirstName.cancel_link( href="javascript:;" onclick="cancelEditField('first_name_shadow', 'first_name', 'submitFirstName', 'cancelEditFirstName', 'editFirstName')" hidden)= tr['cancel']
 					a#editFirstName.editLink( href="javascript:;" onclick="editField('first_name', 'submitFirstName',  'cancelEditFirstName', 'editFirstName')" )= tr['edit']
 
 			div.settingsElement
@@ -29,7 +28,7 @@ block content
 					span= errors.last_name
 					input#last_name.existedValue( name="last_name" value=profile.last_name disabled )
 					input#last_name_shadow( name="last_name" value=profile.last_name hidden disabled)
-					input#submitLastName( type="submit" value=tr['submit'] hidden)
-					a#cancelEditLastName.cancelEdit( href="javascript:;" onclick="cancelEditField('last_name_shadow', 'last_name', 'submitLastName', 'cancelEditLastName', 'editLastName')" hidden)= tr['cancel']
+					input#submitLastName.btn_green( type="submit" value=tr['submit'] hidden)
+					a#cancelEditLastName.cancel_link( href="javascript:;" onclick="cancelEditField('last_name_shadow', 'last_name', 'submitLastName', 'cancelEditLastName', 'editLastName')" hidden)= tr['cancel']
 					a#editLastName.editLink( href="javascript:;" onclick="editField('last_name', 'submitLastName', 'cancelEditLastName', 'editLastName')" )= tr['edit']
 

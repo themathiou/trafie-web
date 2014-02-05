@@ -164,7 +164,7 @@ activitySchema.validateTime = function( performance ) {
 };
 
 /**
- * Checks time inputs for validity, if they are valid, it adds leading zeros to
+ * Checks distance inputs for validity, if they are valid, it adds leading zeros to
  * single digit values and it creates the performance string, ready to be stored
  * If the values are invalid, it returns an empty string
  * @param object performance
@@ -186,14 +186,14 @@ activitySchema.validateDistance = function( performance ) {
 	}
 
 	if( valid ) {
-		var distance = performance.distance_1 * 10000 + performance.distance_2 * 100;
+		distance = performance.distance_1 * 10000 + performance.distance_2 * 100;
 	}
 
 	return distance;
 };
 
 /**
- * Checks time inputs for validity, if they are valid, it adds leading zeros to
+ * Checks points inputs for validity, if they are valid, it adds leading zeros to
  * single digit values and it creates the performance string, ready to be stored
  * If the values are invalid, it returns an empty string
  * @param object performance

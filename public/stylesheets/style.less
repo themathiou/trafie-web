@@ -1,11 +1,23 @@
-@red:#AE3731;
+/* @red:#AE3731; */
 @lightgray : rgba(0,0,0,0.1);
 @mediumgray : rgba(0,0,0,0.3);
 @darkgray : rgba(0,0,0,0.6);
 
-
 @selectedOptionBackground : rgba(0,0,0,0.1);
 
+/*PALETTE_1*/
+/*@peanut : #9CFFCE; /* (156,255,206) */
+/*@raf : #9ABBD6; /* (154,187,214) */
+/*@blue : #588EBB; /* (88,142,187) */
+/*@navy : #345570; /* (52,85,112) */
+/*@red : #B93838; /* (185,56,56) */
+
+/*PALETTE_2*/
+@light_gray : #F6F6F6; /* (156,255,206) */
+@snow : #E8E8E8; /* (154,187,214) */
+@dark_gray : #333333; /* (88,142,187) */
+@red : #990100; /* (52,85,112) */
+@red_bright : #90504; /* (185,56,56) */
 
 /*******************************************************************************************************************************
  * 							                                                                      GENERAL                      *
@@ -20,15 +32,6 @@ body
 	background: white;
 }
 
-#page
-{
-	margin: 0 auto;
-	width: 950px;
-	background: white;
-	border: 1px solid @lightgray;
-	border-top:none;
-}
-
 #content
 {
     padding: 0;
@@ -37,9 +40,11 @@ body
 
 #main_content
 {
-	width: 950px;
+	max-width: 950px;
+	min-width: 320px;
+	width:80%;
 	margin: 50px auto;
-	background-color: white;
+	background-color: none;
 }
 
 #footer
@@ -179,12 +184,11 @@ input.btn_neutral_gray {
 
 input.btn_green {
 	background-color: #7fbf4d;
-
 	border: 1px solid #63a62f;
 	border-bottom: 1px solid #5b992b;
 	border-radius: 3px;
 	color: #fff;
-	font: bold 11px/1;
+	font-size:1em;
 	padding: 2px 0;
 	text-align: center;
 	text-shadow: 0 -1px 0 #4c9021;
@@ -462,19 +466,20 @@ input.btn_blue_2 {
 
 /* Right content */	
 
-	
+	/* post */
 	& > li .info {
 		margin: 0 0 15px 12%;
-		background-image: url('../images/ui/post_back_run_1.png');
-		color: #fff;
+		background-color: @light_gray;
+		/* 		background-image: url('../images/ui/post_back_run_1.png'); */
+		color: @dark_gray;
 		padding: 1em;
 		font-size: 1.2em;
 		font-weight: 300;
 		line-height: 1.4;
 		position: relative;
-		width:350px;
 		.rounded-corners(5px);
-		text-shadow: 0px 0px 6px #000;
+		box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.2), 0 0 16px 4px rgba(255, 255, 255, 0.6) inset;
+		/* 		text-shadow: 0px 0px 4px #000; */
 
 		.performance {
 			font-size: 2.4em;
@@ -491,6 +496,29 @@ input.btn_blue_2 {
 		}
 		
 	}
+	
+	/* odd post */
+	& > li:nth-child(odd) .info {
+		background-color: @lightgray ;
+	}
+
+	/* info end point (left) */	
+	& > li .info:after {
+		right: 100%;
+		border: solid transparent;
+		content: " ";
+		height: 0;
+		width: 0;
+		position: absolute;
+		pointer-events: none;
+		border-right-color: @light_gray;
+		border-width: 10px;
+		top: 10px;
+	}
+
+	& > li:nth-child(odd) .info:after {
+		border-right-color: @lightgray;
+	}
 
 	
 	/* ADD activity */
@@ -503,11 +531,11 @@ input.btn_blue_2 {
 		border-radius: 5px;
 		border:1px solid @lightgray;
 		border-left: none;
-		width:350px;
 		margin-bottom: 30px;
 		text-align: right;
 		overflow: hidden;
 		text-align: left;
+		text-shadow: none;
 		
 		.data_entry {
 			color: black;
@@ -520,6 +548,14 @@ input.btn_blue_2 {
 				font-size: 0.8em;
 				padding:0px;
 				margin:0px;
+			}
+			
+			input {
+				.rounded-corners(5px);
+				box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2) inset;
+				border:1px white solid;
+				padding: 4px;
+				text-align: center;
 			}
 			
 			.submit_buttons {
@@ -547,10 +583,6 @@ input.btn_blue_2 {
 		text-align: center;
 	}
 
-	& > li:nth-child(odd) .info {
-		background-image: url('../images/ui/post_back_javelin.png');
-		background-position: center bottom;
-	}
 
 	& > li .info h2 { 
 		margin-top: 0px;
@@ -558,24 +590,6 @@ input.btn_blue_2 {
 		border-bottom: 1px solid rgba(255,255,255,0.4);
 	}
 
-
-/* info end point (left) */	
-	& > li .info:after {
-		right: 100%;
-		border: solid transparent;
-		content: " ";
-		height: 0;
-		width: 0;
-		position: absolute;
-		pointer-events: none;
-		border-right-color: @mediumgray;
-		border-width: 10px;
-		top: 10px;
-	}
-
-	& > li:nth-child(odd) .info:after {
-		border-right-color: @lightgray;
-	}
 
 
 /* The icons */	
