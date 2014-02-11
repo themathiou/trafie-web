@@ -241,7 +241,7 @@ trafie.post('/', function( req, res ){
             res.render( 'profile', view_data );
           });
         }
-        
+
       // If the profile wasn't found
       } else {
         res.redirect('/login');
@@ -258,6 +258,7 @@ trafie.post('/', function( req, res ){
 /**
  * Register - GET
  */
+
 trafie.get( '/register', function( req, res ) {
   res.render( 'register', { errors: {}, fields: { 'first_name': '', 'last_name': '', 'email': '' } } );
 });
@@ -505,7 +506,7 @@ trafie.get( '/settings', function( req, res ) {
   res.status(404);
 
   // respond with html page
-/*  
+/*
   if (req.accepts('html')) {
     res.render('404', { url: req.url });
     return;
@@ -513,7 +514,7 @@ trafie.get( '/settings', function( req, res ) {
   */
 
   // default to plain-text. send()
-  res.type('txt').send('404 - Page not found');
+  res.type('html').send('People are often unreasonable, illogical, and self-centered;<br><b>Forgive</b> them anyway.<br>If you are kind, people may accuse you of selfish, ulterior motives;<br><b>Be kind</b> anyway.<br>If you are successful, you will win some false friends and some true enemies;<br><b>Succeed</b> anyway.<br>If you are honest and frank, people may cheat you;<br><b>Be honest and frank</b> anyway.<br>What you spend years building, someone could destroy overnight;<br><b>Build</b> anyway.<br>If you find serenity and happiness, they may be jealous;<br><b>Be happy</b> anyway.<br>The good you do today, people will often forget tomorrow;<br><b>Do good</b> anyway.<br>Give the world the best you have and it may just never be enough;<br><b>Give the world the best you have</b> anyway.<br>You see, in the final analysis, it’s all between you and God;<br>It was never between you and them anyway.<br><a href="javascript:history.back();">Go Back</a>');
 });
 
 

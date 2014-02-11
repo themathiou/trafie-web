@@ -9,10 +9,9 @@
  * @param cancelID : the 'cancel' button id for show/hide
  * @param editID : the 'edit' button id for show/hide
  */
-function editField( fieldID, saveID, cancelID, editID ) {
+function editField( fieldID, divID, editID ) {
     document.getElementById(fieldID).disabled = false;
-    document.getElementById(saveID).style.display = 'block';
-    document.getElementById(cancelID).style.display = 'block';
+    document.getElementById(divID).style.display = 'block';
     document.getElementById(editID).style.display = 'none';
 }
 
@@ -23,11 +22,10 @@ function editField( fieldID, saveID, cancelID, editID ) {
  * @param cancelID : the 'cancel' button id for show/hide
  * @param editID : the 'edit' button id for show/hide
  */
-function cancelEditField (fieldID_shadow, fieldID, saveID, cancelID, editID ) {
+function cancelEditField (fieldID_shadow, fieldID, divID, editID ) {
     document.getElementById(fieldID).value = document.getElementById(fieldID_shadow).value;
     document.getElementById(fieldID).disabled = true;
-    document.getElementById(saveID).style.display = 'none';
-    document.getElementById(cancelID).style.display = 'none';
+    document.getElementById(divID).style.display = 'none';
     document.getElementById(editID).style.display = 'block';
 }
 
@@ -43,7 +41,7 @@ function open_new_activity_form() {
 	/* document.getElementById('add_activity_link').style.display = 'none';
 	document.getElementById('cancel_activity_link').style.display = 'block';
 	document.getElementById('add_activity_form').style.display = 'block'; */
-    
+
     var minheight = 20;
 	var maxheight = 100;
 	var time = 500;
@@ -56,16 +54,16 @@ function open_new_activity_form() {
 	var controler = document.getElementById('add_activity_link');
 	var slider = document.getElementById('slider');
 	slider.style.height = minheight + 'px';
-	
+
 	clearInterval(timer);
 	var instanceheight = parseInt(slider.style.height);
 	var init = (new Date()).getTime();
-	var height = (toggled = !toggled) ? maxheight : minheight; 
-	
+	var height = (toggled = !toggled) ? maxheight : minheight;
+
 	console.log('@open - ' + toggled);
-	
+
 	var disp = height - parseInt(slider.style.height);
-	timer = setInterval(function() 
+	timer = setInterval(function()
 	{
 	  var instance = (new Date()).getTime() - init;
 	  if(instance < time ) {
@@ -81,7 +79,7 @@ function open_new_activity_form() {
 	  }
 	},1);
 
-	
+
 }
 
 /**
@@ -91,25 +89,25 @@ function close_new_activity_form() {
     /*document.getElementById('add_activity_link').style.display = 'block';
     document.getElementById('cancel_activity_link').style.display = 'none';
     document.getElementById('add_activity_form').style.display = 'none';*/
-   
+
     var minheight = 20;
 	var maxheight = 100;
 	var time = 300;
 	var timer = null;
 	var toggled = true;
-	
+
 	var controler = document.getElementById('cancel_activity_link');
     var slider = document.getElementById('slider');
-	 
+
 	clearInterval(timer);
 	var instanceheight = parseInt(slider.style.height);
 	var init = ( new Date() ).getTime();
-	var height = (toggled = !toggled) ? maxheight : minheight; 
+	var height = (toggled = !toggled) ? maxheight : minheight;
 
 	console.log('@close - ' + toggled);
-	
+
 	var disp = height - parseInt(slider.style.height);
-	timer = setInterval(function() 
+	timer = setInterval(function()
 	{
 	  var instance = ( new Date() ).getTime() - init;
 	  if( instance < time ) {
@@ -122,16 +120,16 @@ function close_new_activity_form() {
 	    controler.value = toggled ? ' Slide Down ' :' Slide Up ';
 		}
 	},1);
-	
-		
+
+
 	document.getElementById('add_activity_link').setAttribute("onClick","open_new_activity_form();");
 	document.getElementById('add_activity_link').setAttribute("href","javascript:;");
 	document.getElementById('discipline_input').selectedIndex = 0;
     document.getElementById('time_activity').style.display = 'none';
     document.getElementById('distance_activity').style.display = 'none';
     document.getElementById('point_activity').style.display = 'none';
-	
-	
+
+
 }
 
 /**
@@ -142,7 +140,7 @@ function show_specific_form(choice) {
     var distance = ['high_jump','long_jump','triple_jump', 'pole_vault', 'shot_put', 'discus', 'hammer', 'javelin'];
     var time = ['100m', '200m', '400m', '800m', '1500m', '3000m', '60m_hurdles', '100m_hurdles', '110m_hurdles', '400m_hurdles', '3000m_steeple', '4x100m_relay', '4x400m_relay', 'marathon'];
     var points = ['pentathlon', 'heptathlon', 'decathlon'];
-    
+
     console.log('Choice: ' + choice.value);
 
     if( distance.indexOf(choice.value) > -1 ) {
@@ -158,7 +156,7 @@ function show_specific_form(choice) {
         document.getElementById('time_activity').style.display = 'block';
         document.getElementById('distance_activity').style.display = 'none';
         document.getElementById('point_activity').style.display = 'none';
-    } 
+    }
     else if ( points.indexOf(choice.value) > -1 ) {
         console.log('points');
         document.getElementById('slider').style.height = '160px';
@@ -172,7 +170,7 @@ function show_specific_form(choice) {
         document.getElementById('time_activity').style.display = 'none';
         document.getElementById('distance_activity').style.display = 'none';
         document.getElementById('point_activity').style.display = 'none';
-    } 
+    }
 }
 
 //function for checking values between 0-60 (i.e minutes)
@@ -187,6 +185,6 @@ function number0to99(input) {
     if (input.value > 99) input.value = 99;
   }
 
-	
-	
-	
+
+
+

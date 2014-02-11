@@ -42,9 +42,13 @@ body
 {
 	max-width: 950px;
 	min-width: 320px;
-	width:80%;
-	margin: 50px auto;
+	width: 80%;
+	margin: 0px auto;
+	padding: 50px auto;
 	background-color: none;
+	border: 1px solid @light_gray;
+	border-top: none;
+	border-bottom: none;
 }
 
 #footer
@@ -396,26 +400,27 @@ input.btn_blue_2 {
 
 /*profile container (profile pic and full name)*/
 #profile_container {
-	margin:35px auto;
+	margin: 55px auto 0px auto;
 	width: 100%;
 	height: 250px;
 	.rounded_corners (5px);
 
-	background-image: url('../images/cover_photos/stadium.png');
+	/*background-image: url('../images/cover_photos/stadium.png');
 	background-size: cover;
-	box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.2);
-	//background: white;
+	box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.2);*/
+
 
 
 	#image_container {
-		width:150px;
-		margin:0px auto;
+		width: 150px;
+		margin: 0px auto;
 
 
 		img {
-			width:140px;
-			margin:25px auto 0px;
+			width: 140px;
+			margin: 5px auto 0px;
 			.rounded_corners (70px);
+			box-shadow: 1px 1px 4px 2px rgba(0, 0, 0, 0.3);
 			/*border:4px solid white; */
 		}
 
@@ -424,12 +429,19 @@ input.btn_blue_2 {
 	#profileFullName {
 		text-align: center;
 		width:100%;
-		color: white;
+		color: @dark_gray;
 
 		h3 {
 			font-weight: 400;
-			font-size: 1.4em;
+			font-size: 1.6em;
 			text-shadow: 0px 0px 6px #666;
+			margin: 0px;
+		}
+
+		p {
+			font-size: 0.9em;
+			font-weight: lighter;
+			margin:0px;
 		}
 	}
 }
@@ -557,7 +569,7 @@ input.btn_blue_2 {
 				.rounded_corners(5px);
 				box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2) inset;
 				border:1px white solid;
-				padding: 4px;
+				padding: 6px;
 				text-align: center;
 			}
 
@@ -801,6 +813,7 @@ input.btn_blue_2 {
 	float:left;
 	width:170px;
 	border-right: 1px solid rgba(0,0,0,0.2);
+	padding-top:60px;
 
 	ul {
 		list-style: none;
@@ -839,7 +852,7 @@ input.btn_blue_2 {
 	float:right;
 	width:730px;
 	padding-left:10px;
-	padding-top: 30px;
+	padding-top: 60px;
 
 
 	form {
