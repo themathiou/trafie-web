@@ -1,22 +1,46 @@
 // The User Model
 
 var mongoose = require('mongoose');
+var q = require('q');
+var crypto = require('crypto');
 var db = mongoose.connection;
 
 /**
- * Define User SCHEMA
+ * Define User_Hashes SCHEMA
  * @param type string (valid input is ['verify', 'reset'])
- */ 
+ */
 var userHashSchema = mongoose.Schema({
   user_id : { type: String, required: true, index: true, unique: true },
   hash : { type: String, required: true },
   type : { type: String, required: true }
 });
 
-var User_hash = mongoose.model('User_hash', userHashSchema);
-
 /**
- * Input validations
+ * Create and save verification hash
  */
+
+userHashSchema.createVerificationHash = function ( email, user_id ) {
+	var sha512Hash = crypto.createHash('sha512');
+	sha512Hash.update('23tR@Ck@nDF!3lD04' + email + (new Date().getTime()) );
+
+	//the verification hash
+	var hash = sha512Hash.digest('hex')
+
+	console.log('------createVerificationHash');
+	var d = q.defer();
+	var user_hash = {
+		'user_id':	user_id,
+		'hash':		hash,
+		'type':		'verify'
+	};
+
+	User_hash.save( user_hash, function( err, user_hash ) {
+		d.resolve(user_hash.hash);
+	});
+	return d.promise;
+};
+
+
+var User_hash = mongoose.model('User_hash', userHashSchema);
 
 module.exports = User_hash;

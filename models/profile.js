@@ -20,10 +20,28 @@ var profileSchema = mongoose.Schema({
 * @param String select
 */
 profileSchema.findOne = function( where, select ) {
+	console.log('findOne-----------------------------------------------');
+	console.log(Profile);
 	var d = q.defer();
 	Profile.findOne(where, select, function ( err, profile ) {
 		d.resolve(profile);
 	});
+	return d.promise;
+};
+
+/**
+* Save user profile
+* @param object profile
+*/
+profileSchema.save = function( profile ) {
+	console.log('SAVE-----------------------------------------------');
+	console.log(Profile);
+	var d = q.defer();
+
+	Profile.save(function ( err, res ) {
+		d.resolve(res);
+	});
+
 	return d.promise;
 };
 

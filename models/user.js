@@ -9,7 +9,8 @@ var db = mongoose.connection;
 //Define User SCHEMA
 var userSchema = mongoose.Schema({
   email 	: { type: String, required: true, unique: true, index: true },
-  password 	: { type: String, required: true }
+  password 	: { type: String, required: true },
+  valid		: { type: Boolean, required: true, default: false}
 });
 
 /**
@@ -44,7 +45,7 @@ userSchema.validateEmail = function( email ) {
 	 return /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test( email );
 };
 
-/** 
+/**
  * Checks password for validity
  */
 userSchema.validatePassword = function( password ) {

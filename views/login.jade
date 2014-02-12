@@ -10,10 +10,10 @@ block content
 			form.welcome_form(method="post", action="/login")
 				label(for="email_input") Email:
 				span#email_error.login_error= errors.email
-				input#email_input.textfield(name="email" type="text" value="" autofocus)
+				input#email_input.textfield(name="email" type="text" value="dimitra@trafie.com" autofocus)
 				br
 				label(for="password_input") Password:
-				input#password_input.textfield(name="password" type="password" value="")
+				input#password_input.textfield(name="password" type="password" value="123123")
 				br
 				input.button_green(type="submit", value="Login")
 				//div

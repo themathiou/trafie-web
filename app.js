@@ -57,6 +57,7 @@ translations['gr'] = new gr();
 var User = require('./models/user.js');
 var Profile = require('./models/profile.js');
 var Activity = require('./models/activity.js');
+var UserHashes = require('./models/user_hashes.js');
 
 
 /*******************************************************************************************************************************
@@ -85,6 +86,31 @@ if ('development' == trafie.get('env')) {
 
 
 /*******************************************************************************************************************************
+ * EMAIL                                                                                                                       *
+ ******************************************************************************************************************************/
+
+// Create a SMTP transport object
+var transport = nodemailer.createTransport("SMTP", {
+        //service: 'Gmail', // use well known service.
+                            // If you are using @gmail.com address, then you don't
+                            // even have to define the service name
+        auth: {
+            user: "trafie.app@gmail.com",
+            pass: "tr@f!etr@f!e"
+        }
+    });
+
+console.log('SMTP Configured');
+
+// Message object
+var message = {
+    from: 'trafie <trafie.app@gmail.com>',
+    headers: {
+        'X-Laziness-level': 1000
+    }
+};
+
+/*******************************************************************************************************************************
  * PROFILE                                                                                                                     *
  ******************************************************************************************************************************/
 
@@ -95,7 +121,7 @@ trafie.get('/', function( req, res ){
   var user_id = req.session.user_id;
 
   if(!user_id) {
-	  res.redirect('/login');
+	  res.redirect('/register');
   } else {
     Profile.schema.findOne( { '_id': user_id }, 'first_name last_name' ).then( function( profile_data ) {
       // If the user was found
@@ -117,7 +143,7 @@ trafie.get('/', function( req, res ){
         });
       // If the user wasn't found
       } else {
-        res.redirect('/login');
+        res.redirect('/register');
       }
     });
   }
@@ -352,10 +378,31 @@ trafie.post( '/register', function( req, res ) {
     // Saving the user and the profile data
     user.save(function ( err, user ) {
       new_profile._id = user._id;
-      var profile = new Profile( new_profile );
-      profile.save(function ( err, profile ) {
+      //var profile = new Profile( new_profile );
+      Profile.schema.save(new_profile)
+      .then( UserHashes.schema.createVerificationHash(new_user.email) )
+      .then( function( email_hash ) {
         // Storing the user id in the session
         req.session.user_id = user._id;
+
+        console.log('------.then.then');
+
+		message.to = new_user.email;
+		message.subject = 'Welcome to trafie ✔';
+		message.html = '<h2>Hello ' + new_profile.first_name + ' ' + new_profile.last_name + '</h2>' +
+		   '<p>You have successfully registered to trafie.</p><br><p>The <b><i>trafie</i></b> team</p><br>' +
+		   'Follow the link to verify your email:<br>' +
+		   '<a href="' + req.headers.host + '/validate/' + email_hash + '">This is the link</a>';
+
+		transport.sendMail(message, function(error){
+		  if(error){
+		      console.log('Error occured: ' + error);
+		      return;
+		  }
+		  console.log('Message sent successfully to : ' +new_user.email+ ' !');
+		});
+
+
         // Redirecting to the profile
         res.redirect('/');
       });
@@ -517,6 +564,19 @@ trafie.get( '/settings', function( req, res ) {
   res.type('html').send('People are often unreasonable, illogical, and self-centered;<br><b>Forgive</b> them anyway.<br>If you are kind, people may accuse you of selfish, ulterior motives;<br><b>Be kind</b> anyway.<br>If you are successful, you will win some false friends and some true enemies;<br><b>Succeed</b> anyway.<br>If you are honest and frank, people may cheat you;<br><b>Be honest and frank</b> anyway.<br>What you spend years building, someone could destroy overnight;<br><b>Build</b> anyway.<br>If you find serenity and happiness, they may be jealous;<br><b>Be happy</b> anyway.<br>The good you do today, people will often forget tomorrow;<br><b>Do good</b> anyway.<br>Give the world the best you have and it may just never be enough;<br><b>Give the world the best you have</b> anyway.<br>You see, in the final analysis, it’s all between you and God;<br>It was never between you and them anyway.<br><a href="javascript:history.back();">Go Back</a>');
 });
 
+/*******************************************************************************************************************************
+ * VALIDATE USER REGISTRATION                                                                                                  *
+ ******************************************************************************************************************************/
+trafie.get('/validate/:hash', function( req,res ){
+
+	res.type('text').send(req.params.hash);
+
+
+
+
+});
+
+
 
 /*******************************************************************************************************************************
  * LOGOUT                                                                                                                      *
@@ -529,6 +589,7 @@ trafie.get('/logout', function( req, res ) {
   req.session.destroy();
   res.redirect('/');
 });
+
 
 
 /*******************************************************************************************************************************
