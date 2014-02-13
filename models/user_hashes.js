@@ -18,25 +18,26 @@ var userHashSchema = mongoose.Schema({
 /**
  * Create and save verification hash
  */
-
 userHashSchema.createVerificationHash = function ( email, user_id ) {
 	var sha512Hash = crypto.createHash('sha512');
 	sha512Hash.update('23tR@Ck@nDF!3lD04' + email + (new Date().getTime()) );
 
 	//the verification hash
-	var hash = sha512Hash.digest('hex')
-
-	console.log('------createVerificationHash');
+	var hash = sha512Hash.digest('hex');
 	var d = q.defer();
-	var user_hash = {
+	var new_user_hash = {
 		'user_id':	user_id,
 		'hash':		hash,
 		'type':		'verify'
 	};
 
-	User_hash.save( user_hash, function( err, user_hash ) {
-		d.resolve(user_hash.hash);
+	var user_hash = new User_hash(new_user_hash);
+
+	user_hash.save( function( err, user_hash ) {
+		console.log(new_user_hash);
+		d.resolve(new_user_hash.hash);
 	});
+
 	return d.promise;
 };
 

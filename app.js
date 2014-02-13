@@ -378,35 +378,32 @@ trafie.post( '/register', function( req, res ) {
     // Saving the user and the profile data
     user.save(function ( err, user ) {
       new_profile._id = user._id;
-      //var profile = new Profile( new_profile );
-      Profile.schema.save(new_profile)
-      .then( UserHashes.schema.createVerificationHash(new_user.email) )
+      var profile = new Profile( new_profile );
+      Profile.schema.save(profile)
+      .then( function(profile){return UserHashes.schema.createVerificationHash(new_user.email, user._id);})
       .then( function( email_hash ) {
-        // Storing the user id in the session
-        req.session.user_id = user._id;
+			// Storing the user id in the session
+			req.session.user_id = user._id;
 
-        console.log('------.then.then');
+			message.to = new_user.email;
+			message.subject = 'Welcome to trafie ✔';
+			message.html = '<h2>Hello ' + new_profile.first_name + ' ' + new_profile.last_name + '</h2>' +
+			   '<p>You have successfully registered to trafie.</p><br><p>The <b><i>trafie</i></b> team</p><br>' +
+			   'Follow the link to verify your email:<br>' +
+			   '<a href="' + req.headers.host + '/validate/' + email_hash + '">This is the link</a>';
 
-		message.to = new_user.email;
-		message.subject = 'Welcome to trafie ✔';
-		message.html = '<h2>Hello ' + new_profile.first_name + ' ' + new_profile.last_name + '</h2>' +
-		   '<p>You have successfully registered to trafie.</p><br><p>The <b><i>trafie</i></b> team</p><br>' +
-		   'Follow the link to verify your email:<br>' +
-		   '<a href="' + req.headers.host + '/validate/' + email_hash + '">This is the link</a>';
+			transport.sendMail(message, function(error){
+			  if(error){
+			      console.log('Error occured: ' + error);
+			      return;
+			  }
+			  console.log('Message sent successfully to : ' +new_user.email+ ' !');
+			});
 
-		transport.sendMail(message, function(error){
-		  if(error){
-		      console.log('Error occured: ' + error);
-		      return;
-		  }
-		  console.log('Message sent successfully to : ' +new_user.email+ ' !');
+			// Redirecting to the profile
+			res.redirect('/');
 		});
-
-
-        // Redirecting to the profile
-        res.redirect('/');
-      });
-    });
+	});
 
   });
 });
@@ -589,7 +586,6 @@ trafie.get('/logout', function( req, res ) {
   req.session.destroy();
   res.redirect('/');
 });
-
 
 
 /*******************************************************************************************************************************
