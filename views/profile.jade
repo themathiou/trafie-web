@@ -3,8 +3,10 @@ block content
 
 	div#main_content
 		div#profile_container
-			div#image_container
-				img(src="../images/profile_pics/user.png")
+			div#image_container( data-content="Change Photo" )
+				input#upload_profile_image( type="file" style="display: none;")
+				a( href="" onclick="document.getElementById('upload_profile_image').click(); return false"  )
+					img( src="../images/profile_pics/user.png" )
 			div#profileFullName
 				h3= profile.first_name+' '+profile.last_name
 				p Discipline, Country, Age
@@ -99,11 +101,11 @@ block content
 							div#activity_menu
 								ul
 									li
-										a(href="#") Options
+										a( href="#" ) &nbsp;
 										ul
 											li
-												a(href="#") Edit Activity
-												a(href="#") Delete Activity
+												a( href="#" ) Edit Activity
+												a( href="#" ) Delete Activity
 
 							//div.ribbon.ribbon-yellow
 								div.banner

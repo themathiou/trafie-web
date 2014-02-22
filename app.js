@@ -121,7 +121,7 @@ trafie.get('/', function( req, res ){
   var user_id = req.session.user_id;
 
   if(!user_id) {
-	  res.redirect('/register');
+	  res.redirect('/login');
   } else {
     Profile.schema.findOne( { '_id': user_id }, 'first_name last_name' ).then( function( profile_data ) {
       // If the user was found
@@ -143,7 +143,7 @@ trafie.get('/', function( req, res ){
         });
       // If the user wasn't found
       } else {
-        res.redirect('/register');
+        res.redirect('/login');
       }
     });
   }

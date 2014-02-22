@@ -330,6 +330,7 @@ input.btn_blue_2:active {
 #profile_container #image_container {
   width: 150px;
   margin: 0px auto;
+  position: relative;
 }
 #profile_container #image_container img {
   width: 140px;
@@ -340,8 +341,32 @@ input.btn_blue_2:active {
   -o-border-radius: 70px;
   border-radius: 70px;
   box-shadow: 1px 1px 4px 2px rgba(0, 0, 0, 0.3);
+  display: block;
   /*border:4px solid white; */
 
+}
+#profile_container #image_container:before {
+  position: absolute;
+  opacity: 0;
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+}
+#profile_container #image_container:before {
+  content: attr(data-content);
+  width: 70%;
+  color: #fff;
+  z-index: 1;
+  bottom: 0;
+  padding: 4px 10px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.3);
+  font-size: 1em;
+  bottom: 55px;
+  left: 12px;
+}
+#profile_container #image_container:hover:after,
+#profile_container #image_container:hover:before {
+  opacity: 1;
 }
 #profile_container #profileFullName {
   text-align: center;
@@ -430,7 +455,7 @@ input.btn_blue_2:active {
   padding: 0;
   float: left;
   position: relative;
-  left: 50%;
+  left: 140%;
   top: 1px;
 }
 .history_line #activity_menu ul li a {
@@ -439,11 +464,10 @@ input.btn_blue_2:active {
   font-size: 1em;
   text-decoration: none;
   color: #444;
-}
-.history_line #activity_menu ul li a:hover {
-  /* This line is required for IE 6 and below */
-
-  border-bottom: 1px solid #03f;
+  background-image: url('../images/ui/arrow_down_small_gray.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 33px;
 }
 .history_line #activity_menu ul li:hover ul {
   /* This line is required for IE 6 and below */
@@ -461,14 +485,14 @@ input.btn_blue_2:active {
   /* Sub menus are hidden by default */
 
   position: absolute;
-  left: -70%;
-  float: left;
+  left: -200%;
   right: auto;
   /*resets the right:50% on the parent ul */
 
   width: 6em;
   /* width of the drop-down menus */
 
+  text-align: center;
 }
 .history_line #activity_menu ul ul li {
   left: auto;
@@ -509,11 +533,9 @@ input.btn_blue_2:active {
   line-height: 1.4em;
   /* overwrite line-height value from top menu */
 
-  border-bottom: 1px solid #ddd;
-  /* sub menu item horizontal lines */
-
   float: left;
   width: 100%;
+  padding: 2px;
 }
 .history_line #activity_menu ul ul li a:hover,
 .history_line #activity_menu ul li.active ul li a:hover,
@@ -521,11 +543,16 @@ input.btn_blue_2:active {
 .history_line #activity_menu ul li.hover ul li a:hover {
   /* This line is required for IE 6 and below */
 
-  background: #36f;
+  background: rgba(0, 0, 0, 0.3);
   /* Sub menu items background colour */
 
   color: #fff;
   float: left;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
 }
 .history_line > li .info {
   margin: 0 0 15px 12%;
