@@ -997,7 +997,8 @@ input.btn_blue_2 {
 	form {
 		width:100%;
 		display: inline-block;
-		padding: 20px 0px;
+		margin: 0px;
+		padding: 3px 0px;
 
 		label {
 			font-size: 1.2em;
@@ -1010,10 +1011,16 @@ input.btn_blue_2 {
 
 	}
 
-
 	.settingsElement {
-		border-bottom: 1px solid rgba(0,0,0,0.1);
+		border-bottom: 1px solid @lightgray;
+		padding: 10px 5px;
 	}
+
+	.editable {
+		background-color: @light_gray;
+	}
+
+
 
 	.editLink {
 		float:right;

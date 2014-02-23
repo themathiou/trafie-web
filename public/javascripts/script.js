@@ -13,6 +13,7 @@ function editField( fieldID, divID, editID ) {
     document.getElementById(fieldID).disabled = false;
     document.getElementById(divID).style.display = 'block';
     document.getElementById(editID).style.display = 'none';
+    document.getElementById(editID).parentNode.parentNode.className = 'settingsElement editable' ;
 }
 
 /**
@@ -27,6 +28,7 @@ function cancelEditField (fieldID_shadow, fieldID, divID, editID ) {
     document.getElementById(fieldID).disabled = true;
     document.getElementById(divID).style.display = 'none';
     document.getElementById(editID).style.display = 'block';
+    document.getElementById(editID).parentNode.parentNode.className = 'settingsElement' ;
 }
 
 /********************************************/
