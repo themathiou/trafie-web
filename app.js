@@ -453,13 +453,14 @@ trafie.get('/validation_email_sent', function( req, res ) {
   if( typeof req.session.user_id === 'undefined' ) {
     res.redirect('/register');
   }
+  var email = '';
   var user_id = req.session.user_id;
   User.schema.findOne({ '_id': user_id }, 'email ')
   .then(function(response) {
-    if( !response.email ) {
+    if( !response.email || response.valid ) {
       res.redirect('/register');
     }
-    
+
     res.render('validation_email_sent', { 'email': response.email } );
   });
 
@@ -478,7 +479,7 @@ trafie.get( '/settings', function( req, res ) {
   var errors = {};
 
   // If there is no user id in the session, redirect to register screen
-  if(!user_id) {
+  if( !user_id ) {
     res.redirect('/login');
   // Else, fetch the first name and the last name of the user from the database
   } else {

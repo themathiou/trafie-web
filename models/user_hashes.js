@@ -49,7 +49,6 @@ userHashSchema.createVerificationHash = function ( email, user_id ) {
 	var user_hash = new User_hash(new_user_hash);
 
 	user_hash.save( function( err, user_hash ) {
-		console.log(new_user_hash);
 		d.resolve(new_user_hash.hash);
 	});
 
