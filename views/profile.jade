@@ -63,6 +63,9 @@ block content
 								div
 									label(for="centiseconds_input")= tr['centiseconds_short'] + ':'
 									input#centiseconds_input(name="centiseconds" size="3" maxlength="2" onkeyup="number0to99(this);" )
+								div.row
+									label(for="datepicker_time") Date:
+									input#datepicker_time( type="text" )
 
 							//distance measure
 							div#distance_activity.data_entry.row( style="display:none;" )= tr['enter_your_performance'] +':'
@@ -73,14 +76,20 @@ block content
 								div
 									label(for="distance_2_input")= tr['centimeters_short'] + ':'
 									input#distance_2_input(name="distance_2" size="3" maxlength="2" onkeyup="number0to99(this);" )
+								div.row
+									label(for="datepicker_distance") Date:
+									input#datepicker_distance( type="text" )
 							// points measure
 							div#point_activity.data_entry.row( style="display:none;" )= tr['enter_your_performance'] +':'
 								br
 								label(for="points_input")= tr['points'] + ':'
 								input#points_input(type="text" name="points" size="7" maxlength="5")
+								div.row
+									label(for="datepicker_point") Date:
+									input#datepicker_point( type="text" )
 
 							//submit
-							div.row.submit_buttons
+							div#submit_buttons.row.submit_buttons( style="display:none;" )
 								input.btn_green(type="submit" name="new_competition" value=tr['save'])
 								a#cancel_activity_link.cancel_link( onclick="close_new_activity_form();" href="javascript:;")= tr['cancel']
 							//div.row

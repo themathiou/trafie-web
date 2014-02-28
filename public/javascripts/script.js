@@ -45,7 +45,7 @@ function open_new_activity_form() {
 	document.getElementById('add_activity_form').style.display = 'block'; */
 
     var minheight = 20;
-	var maxheight = 100;
+	var maxheight = 60;
 	var time = 500;
 	var timer = null;
 	var toggled = false;
@@ -130,6 +130,7 @@ function close_new_activity_form() {
     document.getElementById('time_activity').style.display = 'none';
     document.getElementById('distance_activity').style.display = 'none';
     document.getElementById('point_activity').style.display = 'none';
+    document.getElementById('submit_buttons').style.display = 'none';
 
 
 }
@@ -146,29 +147,34 @@ function show_specific_form(choice) {
     console.log('Choice: ' + choice.value);
 
     if( distance.indexOf(choice.value) > -1 ) {
-        console.log('distance');
-        document.getElementById('slider').style.height = '160px';
+        document.getElementById('submit_buttons').style.display = 'block';
+
+        document.getElementById('slider').style.height = '210px';
         document.getElementById('time_activity').style.display = 'none';
         document.getElementById('distance_activity').style.display = 'block';
         document.getElementById('point_activity').style.display = 'none';
+
     }
     else if ( time.indexOf(choice.value) > -1 ) {
-        console.log('time');
-        document.getElementById('slider').style.height = '160px';
+        document.getElementById('submit_buttons').style.display = 'block';
+
+        document.getElementById('slider').style.height = '210px';
         document.getElementById('time_activity').style.display = 'block';
         document.getElementById('distance_activity').style.display = 'none';
         document.getElementById('point_activity').style.display = 'none';
     }
     else if ( points.indexOf(choice.value) > -1 ) {
-        console.log('points');
-        document.getElementById('slider').style.height = '160px';
+        document.getElementById('submit_buttons').style.display = 'block';
+
+        document.getElementById('slider').style.height = '210px';
         document.getElementById('time_activity').style.display = 'none';
         document.getElementById('distance_activity').style.display = 'none';
         document.getElementById('point_activity').style.display = 'block';
     }
     else{
-        console.log('none');
-        document.getElementById('slider').style.height = '100px';
+        document.getElementById('submit_buttons').style.display = 'none';
+
+        document.getElementById('slider').style.height = '60px';
         document.getElementById('time_activity').style.display = 'none';
         document.getElementById('distance_activity').style.display = 'none';
         document.getElementById('point_activity').style.display = 'none';
