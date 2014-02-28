@@ -15,6 +15,21 @@ var userHashSchema = mongoose.Schema({
   type : { type: String, required: true }
 });
 
+
+/**
+* Find user by element
+* @param json where({email:someone@trafie.com})
+* @param String select
+*/
+userHashSchema.findValidationHashByUserId = function( user_id ) {
+	var d = q.defer();
+	User_hash.findOne({ 'user_id': user_id, 'type': 'verify' }, 'user_id hash', function ( err, hash ) {
+		d.resolve(hash);
+	});
+	return d.promise;
+};
+
+
 /**
  * Create and save verification hash
  */
