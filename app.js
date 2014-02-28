@@ -392,16 +392,15 @@ trafie.post( '/register', function( req, res ) {
 			   'Follow the link to verify your email:<br>' +
 			   '<a href="' + req.headers.host + '/validate/' + email_hash + '">This is the link</a>';
 
-			transport.sendMail(message, function(error){
-			  if(error){
+			transport.sendMail(message, function(error) {
+			  if(error) {
 			      console.log('Error occured: ' + error);
 			      return;
 			  }
-			  console.log('Message sent successfully to : ' +new_user.email+ ' !');
 			});
 
 			// Redirecting to the profile
-			res.redirect('/');
+			res.redirect('/validation_email_sent');
 		});
 	});
 
@@ -428,14 +427,14 @@ trafie.post('/login', function( req, res ) {
   var password = User.schema.encryptPassword(req.body.password);
 
   User.schema.findOne({ 'email': email, 'password': password }, '_id')
-    .then(function(response) {
-	    if( response !== null && typeof response._id !== 'undefined') {
-	    	req.session.user_id = response._id;
-		    res.redirect('/');
-	    } else {
-		    res.render('login', { 'errors': { 'email': 'Email - password combination wasn\'t found' } } );
-	    }
-    })
+  .then(function(response) {
+    if( response !== null && typeof response._id !== 'undefined') {
+    	req.session.user_id = response._id;
+	    res.redirect('/');
+    } else {
+	    res.render('login', { 'errors': { 'email': 'Email - password combination wasn\'t found' } } );
+    }
+  })
 	.fail(function(response) {
 		console.log("Error : " + response);
   });
@@ -444,7 +443,30 @@ trafie.post('/login', function( req, res ) {
 
 
 /*******************************************************************************************************************************
- * SETTINGS                                                                                                                   *
+ * EMAIL VALIDATION                                                                                                            *
+ ******************************************************************************************************************************/
+
+/**
+ * Email validation - GET
+ */
+trafie.get('/validation_email_sent', function( req, res ) {
+  if( typeof req.session.user_id === 'undefined' ) {
+    res.redirect('/register');
+  }
+  var user_id = req.session.user_id;
+  User.schema.findOne({ '_id': user_id }, 'email ')
+  .then(function(response) {
+    if( !response.email ) {
+      res.redirect('/register');
+    }
+    
+    res.render('validation_email_sent', { 'email': response.email } );
+  });
+
+});
+
+/*******************************************************************************************************************************
+ * SETTINGS                                                                                                                    *
  ******************************************************************************************************************************/
 
 /**
