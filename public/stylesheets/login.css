@@ -160,7 +160,7 @@ body {
   background: linear-gradient(to bottom, #45861a, #45861a);
 }
 /******************************************************/
-/*					LOGIN			 				  */
+/*					VALIDATION MESSAGE SENT			  */
 /******************************************************/
 .validationMessage {
   width: 560px;
@@ -176,6 +176,10 @@ body {
 .validationMessage p {
   font-size: 1.2em;
   margin: 5px;
+  text-align: center;
+}
+.validationMessage p .main_message {
+  font-weight: bold;
 }
 .validationMessage p .greet {
   font-size: 1em;
