@@ -52,9 +52,6 @@ body {
   padding: 10px 0px;
   display: inline-block;
 }
-.row label {
-  color: #990100;
-}
 .hidden {
   display: none;
 }
@@ -737,146 +734,6 @@ input.btn_blue_2:active {
 }
 /*********************************************************** /PROFILE ***************************************/
 /*******************************************************************************************************************************
- * 							                                                                      RIBBONS                      *
- ******************************************************************************************************************************/
-.ribbon {
-  position: absolute;
-  top: 0;
-  right: 0;
-  /* reset certain elements (in case of conflicting CSS for classes, links, etc.) */
-
-}
-.ribbon .text,
-.ribbon .banner,
-.ribbon a {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  outline: 0;
-  font-size: 100%;
-  vertical-align: baseline;
-  background: transparent;
-}
-.ribbon a {
-  color: #fff;
-  text-decoration: none;
-}
-.ribbon .banner {
-  -webkit-transform: rotate(45deg);
-  -moz-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  -o-transform: rotate(45deg);
-  transform: rotate(45deg);
-  color: #fff;
-  -webkit-font-smoothing: antialiased;
-  display: block;
-  float: right;
-  position: relative;
-  right: -14px;
-  top: 22px;
-  width: 100px;
-}
-.ribbon .banner::after,
-.ribbon .banner::before {
-  content: '';
-  display: block;
-  height: 12px;
-  position: absolute;
-  width: 30px;
-}
-.ribbon .banner::before {
-  -webkit-transform: skewY(-45deg) translate(50%, 15px);
-  -moz-transform: skewY(-45deg) translate(50%, 15px);
-  -ms-transform: skewY(-45deg) translate(50%, 15px);
-  -o-transform: skewY(-45deg) translate(50%, 15px);
-  -webkit-transform-origin: 100% center;
-  -moz-transform-origin: 100% center;
-  -ms-transform-origin: 100% center;
-  -o-transform-origin: 100% center;
-  left: -45px;
-}
-.ribbon .banner::after {
-  -webkit-transform: translate(100%, -100%) skewY(45deg) translateX(-58%);
-  -moz-transform: translate(100%, -100%) skewY(45deg) translateX(-58%);
-  -ms-transform: translate(100%, -100%) skewY(45deg) translateX(-58%);
-  -o-transform: translate(100%, -100%) skewY(45deg) translateX(-58%);
-  -webkit-transform-origin: 0 center;
-  -moz-transform-origin: 0 center;
-  -ms-transform-origin: 0 center;
-  -o-transform-origin: 0 center;
-  right: -17px;
-}
-.no-css-transforms .ribbon {
-  font-size: 1em;
-  position: relative;
-  width: 100%;
-}
-.no-css-transforms .ribbon .banner {
-  position: static;
-  width: 100%;
-  float: none;
-  font-size: 10px;
-}
-.ribbon .text {
-  position: relative;
-  z-index: 2;
-  padding: 6px 0;
-  font-size: 12px;
-  font-weight: bold;
-  min-height: 18px;
-  line-height: 18px;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.ribbon .text::before,
-.ribbon .text::after {
-  content: '';
-  display: block;
-  height: 30px;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  z-index: -1;
-}
-.ribbon .text::before {
-  -webkit-transform: translateX(-15%) skewX(-45deg);
-  -moz-transform: translateX(-15%) skewX(-45deg);
-  -ms-transform: translateX(-15%) skewX(-45deg);
-  -o-transform: translateX(-15%) skewX(-45deg);
-}
-.ribbon .text::after {
-  -webkit-transform: translateX(15%) skewX(45deg);
-  -moz-transform: translateX(15%) skewX(45deg);
-  -ms-transform: translateX(15%) skewX(45deg);
-  -o-transform: translateX(15%) skewX(45deg);
-}
-.no-css-transforms .ribbon .text {
-  height: 25px;
-  padding: 3px;
-}
-/* yellow */
-.ribbon-yellow .banner::after,
-.ribbon-yellow .banner::before {
-  background-color: #f2ba00;
-}
-.ribbon-yellow .text::before,
-.ribbon-yellow .text::after,
-.no-css-transforms .ribbon-yellow .text {
-  background-color: #ffd95e;
-}
-/* red */
-.ribbon-red .banner::after,
-.ribbon-red .banner::before {
-  background-color: #bd362f;
-}
-.ribbon-red .text::before,
-.ribbon-red .text::after,
-.no-css-transforms .ribbon-red .text {
-  background-color: #ee5f5b;
-}
-/*********************************************************** /RIBBONS ***************************************/
-/*******************************************************************************************************************************
 * 							                                                                      SETTINGS                    *
 ******************************************************************************************************************************/
 #settingsNav {
@@ -888,6 +745,7 @@ input.btn_blue_2:active {
 #settingsNav ul {
   list-style: none;
   padding-left: 0px;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
 }
 #settingsNav ul li {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
@@ -896,40 +754,41 @@ input.btn_blue_2:active {
 #settingsNav ul li:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
-#settingsNav ul .first {
-  border-top: 1px solid rgba(0, 0, 0, 0.2);
-}
 #settingsNav ul .active {
   background-color: rgba(0, 0, 0, 0.1);
 }
 #settingsNav ul .logout {
-  margin-top: 20px;
   border-top: 1px solid rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
 }
-#settingsContent {
+.settingsContent {
   float: right;
   width: 730px;
   padding-left: 10px;
   padding-top: 60px;
 }
-#settingsContent form {
+.settingsContent h3 {
+  width: 100%;
+  text-align: center;
+}
+.settingsContent form {
   width: 100%;
   display: inline-block;
   margin: 0px;
   padding: 3px 0px;
 }
-#settingsContent form label {
+.settingsContent form label {
   font-size: 1.2em;
   float: left;
 }
-#settingsContent .settingsElement {
+.settingsContent .settingsElement {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   padding: 10px 5px;
 }
-#settingsContent .editable {
+.settingsContent .editable {
   background-color: #f6f6f6;
 }
-#settingsContent .editLink {
+.settingsContent .editLink {
   float: right;
 }
 /*********************************************************** /SETTINGS ***************************************/
@@ -1090,7 +949,147 @@ input.btn_blue_2:active {
   color: #999;
   opacity: .3;
 }
-/*********************************************************** /SETTINGS ***************************************/
+/*********************************************************** /DATEPICKER ***************************************/
+/*******************************************************************************************************************************
+ * 							                                                                      RIBBONS                      *
+ ******************************************************************************************************************************/
+.ribbon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  /* reset certain elements (in case of conflicting CSS for classes, links, etc.) */
+
+}
+.ribbon .text,
+.ribbon .banner,
+.ribbon a {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+.ribbon a {
+  color: #fff;
+  text-decoration: none;
+}
+.ribbon .banner {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+  color: #fff;
+  -webkit-font-smoothing: antialiased;
+  display: block;
+  float: right;
+  position: relative;
+  right: -14px;
+  top: 22px;
+  width: 100px;
+}
+.ribbon .banner::after,
+.ribbon .banner::before {
+  content: '';
+  display: block;
+  height: 12px;
+  position: absolute;
+  width: 30px;
+}
+.ribbon .banner::before {
+  -webkit-transform: skewY(-45deg) translate(50%, 15px);
+  -moz-transform: skewY(-45deg) translate(50%, 15px);
+  -ms-transform: skewY(-45deg) translate(50%, 15px);
+  -o-transform: skewY(-45deg) translate(50%, 15px);
+  -webkit-transform-origin: 100% center;
+  -moz-transform-origin: 100% center;
+  -ms-transform-origin: 100% center;
+  -o-transform-origin: 100% center;
+  left: -45px;
+}
+.ribbon .banner::after {
+  -webkit-transform: translate(100%, -100%) skewY(45deg) translateX(-58%);
+  -moz-transform: translate(100%, -100%) skewY(45deg) translateX(-58%);
+  -ms-transform: translate(100%, -100%) skewY(45deg) translateX(-58%);
+  -o-transform: translate(100%, -100%) skewY(45deg) translateX(-58%);
+  -webkit-transform-origin: 0 center;
+  -moz-transform-origin: 0 center;
+  -ms-transform-origin: 0 center;
+  -o-transform-origin: 0 center;
+  right: -17px;
+}
+.no-css-transforms .ribbon {
+  font-size: 1em;
+  position: relative;
+  width: 100%;
+}
+.no-css-transforms .ribbon .banner {
+  position: static;
+  width: 100%;
+  float: none;
+  font-size: 10px;
+}
+.ribbon .text {
+  position: relative;
+  z-index: 2;
+  padding: 6px 0;
+  font-size: 12px;
+  font-weight: bold;
+  min-height: 18px;
+  line-height: 18px;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.ribbon .text::before,
+.ribbon .text::after {
+  content: '';
+  display: block;
+  height: 30px;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: -1;
+}
+.ribbon .text::before {
+  -webkit-transform: translateX(-15%) skewX(-45deg);
+  -moz-transform: translateX(-15%) skewX(-45deg);
+  -ms-transform: translateX(-15%) skewX(-45deg);
+  -o-transform: translateX(-15%) skewX(-45deg);
+}
+.ribbon .text::after {
+  -webkit-transform: translateX(15%) skewX(45deg);
+  -moz-transform: translateX(15%) skewX(45deg);
+  -ms-transform: translateX(15%) skewX(45deg);
+  -o-transform: translateX(15%) skewX(45deg);
+}
+.no-css-transforms .ribbon .text {
+  height: 25px;
+  padding: 3px;
+}
+/* yellow */
+.ribbon-yellow .banner::after,
+.ribbon-yellow .banner::before {
+  background-color: #f2ba00;
+}
+.ribbon-yellow .text::before,
+.ribbon-yellow .text::after,
+.no-css-transforms .ribbon-yellow .text {
+  background-color: #ffd95e;
+}
+/* red */
+.ribbon-red .banner::after,
+.ribbon-red .banner::before {
+  background-color: #bd362f;
+}
+.ribbon-red .text::before,
+.ribbon-red .text::after,
+.no-css-transforms .ribbon-red .text {
+  background-color: #ee5f5b;
+}
+/*********************************************************** /RIBBONS ***************************************/
 /******************************************************/
 /*					FUNCTIONS		 				  */
 /******************************************************/
