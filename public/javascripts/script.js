@@ -31,6 +31,24 @@ function cancelEditField (fieldID_shadow, fieldID, divID, editID ) {
     document.getElementById(editID).parentNode.parentNode.className = 'settingsElement' ;
 }
 
+/**
+ * showSettingsTab() : show specific tab in settings page
+ * @param tab : the specific tab to appear
+ */
+function showSettingsTab( tab ) {
+	/* show specific tab content */
+	document.getElementById('profileSettings').style.display = 'none';
+	document.getElementById('accountSettings').style.display = 'none';
+	document.getElementById(tab).style.display = 'block';
+
+	/* change selected button */
+	document.getElementById('profileSettingsTab').className="";
+	document.getElementById('accountSettingsTab').className="";
+	var d = document.getElementById(tab+'Tab')
+	d.className= d.className + " active";
+
+}
+
 /********************************************/
 /* 				PROFILE 					*/
 /********************************************/
@@ -45,7 +63,7 @@ function open_new_activity_form() {
 	document.getElementById('add_activity_form').style.display = 'block'; */
 
     var minheight = 20;
-	var maxheight = 100;
+	var maxheight = 60;
 	var time = 500;
 	var timer = null;
 	var toggled = false;
@@ -130,6 +148,7 @@ function close_new_activity_form() {
     document.getElementById('time_activity').style.display = 'none';
     document.getElementById('distance_activity').style.display = 'none';
     document.getElementById('point_activity').style.display = 'none';
+    document.getElementById('submit_buttons').style.display = 'none';
 
 
 }
@@ -146,29 +165,34 @@ function show_specific_form(choice) {
     console.log('Choice: ' + choice.value);
 
     if( distance.indexOf(choice.value) > -1 ) {
-        console.log('distance');
-        document.getElementById('slider').style.height = '160px';
+        document.getElementById('submit_buttons').style.display = 'block';
+
+        document.getElementById('slider').style.height = '210px';
         document.getElementById('time_activity').style.display = 'none';
         document.getElementById('distance_activity').style.display = 'block';
         document.getElementById('point_activity').style.display = 'none';
+
     }
     else if ( time.indexOf(choice.value) > -1 ) {
-        console.log('time');
-        document.getElementById('slider').style.height = '160px';
+        document.getElementById('submit_buttons').style.display = 'block';
+
+        document.getElementById('slider').style.height = '210px';
         document.getElementById('time_activity').style.display = 'block';
         document.getElementById('distance_activity').style.display = 'none';
         document.getElementById('point_activity').style.display = 'none';
     }
     else if ( points.indexOf(choice.value) > -1 ) {
-        console.log('points');
-        document.getElementById('slider').style.height = '160px';
+        document.getElementById('submit_buttons').style.display = 'block';
+
+        document.getElementById('slider').style.height = '210px';
         document.getElementById('time_activity').style.display = 'none';
         document.getElementById('distance_activity').style.display = 'none';
         document.getElementById('point_activity').style.display = 'block';
     }
     else{
-        console.log('none');
-        document.getElementById('slider').style.height = '100px';
+        document.getElementById('submit_buttons').style.display = 'none';
+
+        document.getElementById('slider').style.height = '60px';
         document.getElementById('time_activity').style.display = 'none';
         document.getElementById('distance_activity').style.display = 'none';
         document.getElementById('point_activity').style.display = 'none';

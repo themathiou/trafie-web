@@ -5,13 +5,16 @@ block content
 
 		div#settingsNav
 			ul
-				li.first.active= tr['general_settings']
-				//li Group 1
+				li#profileSettingsTab.active
+					a( href="javascript:;" onclick="showSettingsTab('profileSettings')") Profile Settings
+				li#accountSettingsTab
+					a( href="javascript:;" onclick="showSettingsTab('accountSettings')") Account Settings
 				li.logout
 					a(href="/logout")= tr['logout']
 
-
-		div#settingsContent
+		//PROFILE SETTINGS
+		div#profileSettings.settingsContent
+			h3 Profile Settings
 			div.settingsElement
 				form( method="POST")
 					label= tr['first_name'] + ' : '
@@ -33,4 +36,50 @@ block content
 						input#submitLastName.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditLastName.cancel_link( href="javascript:;" onclick="cancelEditField('last_name_shadow', 'last_name', 'settingsLastNamebuttons', 'editLastName')")= tr['cancel']
 					a#editLastName.editLink( href="javascript:;" onclick="editField('last_name', 'settingsLastNamebuttons', 'editLastName')" )= tr['edit']
+
+
+			div.settingsElement
+				form( method="POST")
+					label Main Discipline
+					span= errors.last_name
+					input#last_name.existedValue( name="last_name" value=profile.last_name disabled )
+					input#last_name_shadow( name="last_name" value=profile.last_name hidden disabled)
+					div#settingsLastNamebuttons(hidden)
+						input#submitLastName.btn_green( type="submit" value=tr['submit'])
+						a#cancelEditLastName.cancel_link( href="javascript:;" onclick="cancelEditField('last_name_shadow', 'last_name', 'settingsLastNamebuttons', 'editLastName')")= tr['cancel']
+					a#editLastName.editLink( href="javascript:;" onclick="editField('last_name', 'settingsLastNamebuttons', 'editLastName')" )= tr['edit']
+
+			div.settingsElement
+				form( method="POST")
+					label About me
+					span= errors.last_name
+					input#last_name.existedValue( name="last_name" value=profile.last_name disabled )
+					input#last_name_shadow( name="last_name" value=profile.last_name hidden disabled)
+					div#settingsLastNamebuttons(hidden)
+						input#submitLastName.btn_green( type="submit" value=tr['submit'])
+						a#cancelEditLastName.cancel_link( href="javascript:;" onclick="cancelEditField('last_name_shadow', 'last_name', 'settingsLastNamebuttons', 'editLastName')")= tr['cancel']
+					a#editLastName.editLink( href="javascript:;" onclick="editField('last_name', 'settingsLastNamebuttons', 'editLastName')" )= tr['edit']
+
+		//ACCOUNT SETTINGS
+		div#accountSettings.settingsContent( style="display:none;" )
+			h3 Account Settings
+			h4 Change Password
+			div.settingsElement
+				form( method="POST")
+					span.row
+						label( for="old_password" ) Old Password:
+						span= errors.first_name
+						input#old_password.existedValue( name="first_name" value=profile.first_name disabled )
+
+					span.row
+						label( for="new_password" ) New Password:
+						span= errors.first_name
+						input#new_password.existedValue( name="first_name" value=profile.first_name disabled )
+
+					span.row
+						label( for="repeat_new_password" ) Repeat New Password:
+						span= errors.first_name
+						input#repeat_new_password.existedValue( name="first_name" value=profile.first_name disabled )
+
+					a#editFirstName.editLink( href="javascript:;" onclick="editField('first_name', 'settingsFirstNameButtons', 'editFirstName')" )= tr['edit']
 
