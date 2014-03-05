@@ -453,13 +453,15 @@ trafie.get('/validation_email_sent', function( req, res ) {
   if( typeof req.session.user_id === 'undefined' ) {
     res.redirect('/register');
   }
+  var email = '';
   var user_id = req.session.user_id;
-  User.schema.findOne({ '_id': user_id }, 'email ')
+  User.schema.findOne({ '_id': user_id }, 'email valid')
   .then(function(response) {
-    if( !response.email ) {
-      res.redirect('/register');
+    console.log( response.valid );
+    if( !response.email || response.valid ) {
+      res.redirect('/login');
     }
-    
+
     res.render('validation_email_sent', { 'email': response.email } );
   });
 
@@ -478,7 +480,7 @@ trafie.get( '/settings', function( req, res ) {
   var errors = {};
 
   // If there is no user id in the session, redirect to register screen
-  if(!user_id) {
+  if( !user_id ) {
     res.redirect('/login');
   // Else, fetch the first name and the last name of the user from the database
   } else {
@@ -583,16 +585,22 @@ trafie.get( '/settings', function( req, res ) {
   res.type('html').send('People are often unreasonable, illogical, and self-centered;<br><b>Forgive</b> them anyway.<br>If you are kind, people may accuse you of selfish, ulterior motives;<br><b>Be kind</b> anyway.<br>If you are successful, you will win some false friends and some true enemies;<br><b>Succeed</b> anyway.<br>If you are honest and frank, people may cheat you;<br><b>Be honest and frank</b> anyway.<br>What you spend years building, someone could destroy overnight;<br><b>Build</b> anyway.<br>If you find serenity and happiness, they may be jealous;<br><b>Be happy</b> anyway.<br>The good you do today, people will often forget tomorrow;<br><b>Do good</b> anyway.<br>Give the world the best you have and it may just never be enough;<br><b>Give the world the best you have</b> anyway.<br>You see, in the final analysis, it’s all between you and God;<br>It was never between you and them anyway.<br><a href="javascript:history.back();">Go Back</a>');
 });
 
+
 /*******************************************************************************************************************************
  * VALIDATE USER REGISTRATION                                                                                                  *
  ******************************************************************************************************************************/
 trafie.get('/validate/:hash', function( req,res ){
-
-	res.type('text').send(req.params.hash);
-
-
-
-
+  UserHashes.schema.findUserIdByValidationHash( req.params.hash )
+  .then( function( response ) {
+    if( response ) {
+      return User.schema.validateUser( response.user_id );
+    } else {
+      res.redirect('/login');
+    }
+  }).then( function(){
+    UserHashes.schema.deleteValidationHash( req.params.hash );
+    res.redirect('/login');
+  });
 });
 
 
