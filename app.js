@@ -592,19 +592,14 @@ trafie.get( '/settings', function( req, res ) {
 trafie.get('/validate/:hash', function( req,res ){
   UserHashes.schema.findUserIdByValidationHash( req.params.hash )
   .then( function( response ) {
-
-    console.log( response );
-    console.log( 'BEFORE IF !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
     if( response ) {
-    console.log( 'VALIDATING USER !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
       return User.schema.validateUser( response.user_id );
     } else {
-      redirect('/login');
+      res.redirect('/login');
     }
   }).then( function(){
-    console.log( 'DELETING THE HASH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
     UserHashes.schema.deleteValidationHash( req.params.hash );
-    redirect('/login');
+    res.redirect('/login');
   });
 });
 
