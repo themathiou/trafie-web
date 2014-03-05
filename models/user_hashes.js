@@ -17,14 +17,27 @@ var userHashSchema = mongoose.Schema({
 
 
 /**
-* Find user by element
-* @param json where({email:someone@trafie.com})
-* @param String select
-*/
-userHashSchema.findValidationHashByUserId = function( user_id ) {
+ * Returns the user id of the user to whom the hash was sent
+ * @param string hash
+ */
+userHashSchema.findUserIdByValidationHash = function( hash ) {
 	var d = q.defer();
-	User_hash.findOne({ 'user_id': user_id, 'type': 'verify' }, 'user_id hash', function ( err, hash ) {
-		d.resolve(hash);
+	User_hash.findOne({ 'hash': hash, 'type': 'verify' }, 'user_id hash', function ( err, response ) {
+		d.resolve(response);
+	});
+	return d.promise;
+};
+
+
+/**
+ * Find user by element
+ * @param json where({email:someone@trafie.com})
+ * @param String select
+ */
+userHashSchema.deleteValidationHash = function( hash ) {
+	var d = q.defer();
+	User_hash.find({ 'hash': hash, 'type': 'verify' }).remove( function ( err, response ) {
+		d.resolve( response );
 	});
 	return d.promise;
 };

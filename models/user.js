@@ -56,7 +56,7 @@ userSchema.validatePassword = function( password ) {
 /**
  * Checks if the email exists in the database
  */
-userSchema.emailIsUnique = function( email ){
+userSchema.emailIsUnique = function( email ) {
 	var d = q.defer();
 	User.findOne({'email': email}, '_id', function ( err, user ) {
 		d.resolve(!user);
@@ -64,6 +64,13 @@ userSchema.emailIsUnique = function( email ){
 	return d.promise;
 };
 
+userSchema.validateUser = function( user_id ) {
+	var d = q.defer();
+	User.findByIdAndUpdate( user_id, { valid: true }, '', function ( err, user ) {
+		d.resolve(!user);
+	});
+	return d.promise;
+};
 
 var User = mongoose.model('User', userSchema);
 
