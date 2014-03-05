@@ -424,14 +424,14 @@ trafie.post('/login', function( req, res ) {
   var email = req.body.email;
   var password = User.schema.encryptPassword(req.body.password);
 
-  User.schema.findOne({ 'email': email, 'password': password, }, '_id')
+  User.schema.findOne({ 'email': email, 'password': password, }, '_id valid')
   .then(function(response) {
     if( response !== null && typeof response._id !== 'undefined' ) {
       if( response.valid === true ) {
       	req.session.user_id = response._id;
   	    res.redirect('/');
       } else {
-        res.render('login', { 'errors': { 'email': 'Your account has not been validated yet' } } );
+        res.render('login', { 'errors': { 'email': 'Your account has not been validated yet. <a href="/resend_validation_email/' + response._id + '">Resend validation email</a>' } } );
       }
     } else {
 	    res.render('login', { 'errors': { 'email': 'Email - password combination wasn\'t found' } } );
@@ -450,6 +450,8 @@ trafie.post('/login', function( req, res ) {
 
 /**
  * Email validation - GET
+ * Shows a page that just informs the user to check their email
+ * in order to validate their account
  */
 trafie.get('/validation_email_sent/:user_id', function( req, res ) {
   var email = '';
@@ -462,7 +464,28 @@ trafie.get('/validation_email_sent/:user_id', function( req, res ) {
 
     res.render('validation_email_sent', { 'email': response.email } );
   });
+});
 
+/**
+ * Validate - GET
+ * Validates the newly created user
+ */
+trafie.get('/validate/:hash', function( req,res ){
+  var user_id = '';
+  UserHashes.schema.findUserIdByValidationHash( req.params.hash )
+  .then( function( response ) {
+    if( response ) {
+      user_id = response.user_id;
+      return User.schema.validateUser( response.user_id );
+    } else {
+      res.redirect('/login');
+    }
+  }).then( function(){
+    UserHashes.schema.deleteValidationHash( req.params.hash );
+    // Storing the user id in the session
+    req.session.user_id = user_id;
+    res.redirect('/');
+  });
 });
 
 /*******************************************************************************************************************************
@@ -582,29 +605,6 @@ trafie.get( '/settings', function( req, res ) {
   // default to plain-text. send()
   res.type('html').send('People are often unreasonable, illogical, and self-centered;<br><b>Forgive</b> them anyway.<br>If you are kind, people may accuse you of selfish, ulterior motives;<br><b>Be kind</b> anyway.<br>If you are successful, you will win some false friends and some true enemies;<br><b>Succeed</b> anyway.<br>If you are honest and frank, people may cheat you;<br><b>Be honest and frank</b> anyway.<br>What you spend years building, someone could destroy overnight;<br><b>Build</b> anyway.<br>If you find serenity and happiness, they may be jealous;<br><b>Be happy</b> anyway.<br>The good you do today, people will often forget tomorrow;<br><b>Do good</b> anyway.<br>Give the world the best you have and it may just never be enough;<br><b>Give the world the best you have</b> anyway.<br>You see, in the final analysis, it’s all between you and God;<br>It was never between you and them anyway.<br><a href="javascript:history.back();">Go Back</a>');
 });
-
-
-/*******************************************************************************************************************************
- * VALIDATE USER REGISTRATION                                                                                                  *
- ******************************************************************************************************************************/
-trafie.get('/validate/:hash', function( req,res ){
-  var user_id = '';
-  UserHashes.schema.findUserIdByValidationHash( req.params.hash )
-  .then( function( response ) {
-    if( response ) {
-      user_id = response.user_id;
-      return User.schema.validateUser( response.user_id );
-    } else {
-      res.redirect('/login');
-    }
-  }).then( function(){
-    UserHashes.schema.deleteValidationHash( req.params.hash );
-    // Storing the user id in the session
-    req.session.user_id = user_id;
-    res.redirect('/');
-  });
-});
-
 
 
 /*******************************************************************************************************************************
