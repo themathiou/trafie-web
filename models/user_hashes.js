@@ -30,6 +30,19 @@ userHashSchema.findUserIdByValidationHash = function( hash ) {
 
 
 /**
+ * Returns the user id of the user to whom the hash was sent
+ * @param string hash
+ */
+userHashSchema.findValidationHashByUserId = function( user_id ) {
+	var d = q.defer();
+	User_hash.findOne({ 'user_id': user_id, 'type': 'verify' }, 'user_id hash', function ( err, response ) {
+		d.resolve(response);
+	});
+	return d.promise;
+};
+
+
+/**
  * Find user by element
  * @param json where({email:someone@trafie.com})
  * @param String select

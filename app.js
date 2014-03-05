@@ -383,22 +383,10 @@ trafie.post( '/register', function( req, res ) {
       .then( function(profile){return UserHashes.schema.createVerificationHash(new_user.email, user._id);})
       .then( function( email_hash ) {
 
-			message.to = new_user.email;
-			message.subject = 'Welcome to trafie ✔';
-			message.html = '<h2>Hello ' + new_profile.first_name + ' ' + new_profile.last_name + '</h2>' +
-			   '<p>You have successfully registered to trafie.</p><br><p>The <b><i>trafie</i></b> team</p><br>' +
-			   'Follow the link to verify your email:<br>' +
-			   '<a href="' + req.headers.host + '/validate/' + email_hash + '">This is the link</a>';
-
-			transport.sendMail(message, function(error) {
-			  if(error) {
-			      console.log('Error occured: ' + error);
-			      return;
-			  }
-			});
+      send_verification_email( new_user.email, new_profile.first_name, new_profile.last_name, email_hash, req.headers.host );
 
 			// Redirecting to the profile
-			res.redirect( '/validation_email_sent/' + user._id );
+			res.redirect( '/validation_email_sent/0/' + user._id );
 		});
 	});
 
@@ -431,7 +419,7 @@ trafie.post('/login', function( req, res ) {
       	req.session.user_id = response._id;
   	    res.redirect('/');
       } else {
-        res.render('login', { 'errors': { 'email': 'Your account has not been validated yet. <a href="/resend_validation_email/' + response._id + '">Resend validation email</a>' } } );
+        res.redirect('/validation_email_sent/1/' + response._id );
       }
     } else {
 	    res.render('login', { 'errors': { 'email': 'Email - password combination wasn\'t found' } } );
@@ -453,8 +441,7 @@ trafie.post('/login', function( req, res ) {
  * Shows a page that just informs the user to check their email
  * in order to validate their account
  */
-trafie.get('/validation_email_sent/:user_id', function( req, res ) {
-  var email = '';
+trafie.get('/validation_email_sent/:resend/:user_id', function( req, res ) {
   var user_id = req.params.user_id;
   User.schema.findOne({ '_id': user_id }, 'email valid')
   .then(function(response) {
@@ -462,7 +449,7 @@ trafie.get('/validation_email_sent/:user_id', function( req, res ) {
       res.redirect('/login');
     }
 
-    res.render('validation_email_sent', { 'email': response.email } );
+    res.render('validation_email_sent', { 'email': response.email, 'resend': req.params.resend, 'user_id': user_id } );
   });
 });
 
@@ -485,6 +472,35 @@ trafie.get('/validate/:hash', function( req,res ){
     // Storing the user id in the session
     req.session.user_id = user_id;
     res.redirect('/');
+  });
+});
+
+/**
+ * Resend validation email - GET
+ * Resends the validation email
+ */
+trafie.get('/resend_validation_email/:user_id', function( req, res ) {
+  var email = '';
+  var first_name = '';
+  var last_name = '';
+  var user_id = req.params.user_id;
+  User.schema.findOne({ '_id': user_id }, 'email valid')
+  .then(function( response ) {
+    if( !response.email || response.valid ) {
+      res.redirect('/login');
+    }
+    email = response.email;
+    return Profile.schema.findOne( { '_id': user_id }, 'first_name last_name' );
+  })
+  .then(function( response ) {
+    first_name = response.first_name;
+    last_name = response.last_name;
+    return UserHashes.schema.findValidationHashByUserId( user_id );
+  })
+  .then(function( response ) {
+    send_verification_email( email, first_name, last_name, response.hash, req.headers.host );
+
+    res.redirect('/validation_email_sent/1/' + user_id);
   });
 });
 
@@ -627,3 +643,19 @@ trafie.get('/logout', function( req, res ) {
 http.createServer( trafie ).listen( trafie.get('port'), function(){
   console.log('Express server listening on port ' + trafie.get('port'));
 });
+
+function send_verification_email( email, first_name, last_name, email_hash, host ) {
+  message.to = email;
+  message.subject = 'Welcome to trafie ✔';
+  message.html = '<h2>Hello ' + first_name + ' ' + last_name + '</h2>' +
+     '<p>You have successfully registered to trafie.</p><br><p>The <b><i>trafie</i></b> team</p><br>' +
+     'Follow the link to verify your email:<br>' +
+     '<a href="' + host + '/validate/' + email_hash + '">This is the link</a>';
+
+  transport.sendMail(message, function(error) {
+    if(error) {
+        console.log('Error occured: ' + error);
+        return;
+    }
+  });
+}
