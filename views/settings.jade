@@ -42,12 +42,37 @@ block content
 				form( method="POST")
 					label Main Discipline :
 					span= errors.last_name
-					input#last_name.existedValue( name="last_name" value=profile.last_name disabled )
-					input#last_name_shadow( name="last_name" value=profile.last_name hidden disabled)
-					div#settingsLastNamebuttons(hidden)
-						input#submitLastName.btn_green( type="submit" value=tr['submit'])
-						a#cancelEditLastName.cancel_link( href="javascript:;" onclick="cancelEditField('last_name_shadow', 'last_name', 'settingsLastNamebuttons', 'editLastName')")= tr['cancel']
-					a#editLastName.editLink( href="javascript:;" onclick="editField('last_name', 'settingsLastNamebuttons', 'editLastName')" )= tr['edit']
+					select#main_discipline_input(name="discipline" onchange="show_specific_form(this);" disabled)
+								option(value="no-selection" selected )= tr['choose_your_discipline']
+								option(value="100m")= tr['100m']
+								option(value="200m")= tr['200m']
+								option(value="400m")= tr['400m']
+								option(value="800m")= tr['800m']
+								option(value="1500m")= tr['1500m']
+								option(value="3000m")= tr['3000m']
+								option(value="60m_hurdles")= tr['60m_hurdles']
+								option(value="100m_hurdles")= tr['100m_hurdles']
+								option(value="110m_hurdles")= tr['110m_hurdles']
+								option(value="400m_hurdles")= tr['400m_hurdles']
+								option(value="3000m_steeple")= tr['3000m_steeple']
+								option(value="4x100m_relay")= tr['4x100m_relay']
+								option(value="4x400m_relay")= tr['4x400m_relay']
+								option(value="marathon")= tr['marathon']
+								option(value="high_jump")= tr['high_jump']
+								option(value="long_jump")= tr['long_jump']
+								option(value="triple_jump")= tr['triple_jump']
+								option(value="pole_vault")= tr['pole_vault']
+								option(value="shot_put")= tr['shot_put']
+								option(value="discus")= tr['discus']
+								option(value="hammer")= tr['hammer']
+								option(value="javelin")= tr['javelin']
+								option(value="pentathlon")= tr['pentathlon']
+								option(value="heptathlon")= tr['heptathlon']
+								option(value="decathlon")= tr['decathlon']
+					div#settingsMainDisciplineButtons(hidden)
+						input#submitMainDiscipline.btn_green( type="submit" value=tr['submit'])
+						a#cancelEditMainDiscipline.cancel_link( href="javascript:;" onclick="cancelEditField('last_name_shadow', 'last_name', 'settingsMainDisciplineButtons', 'editLastName')")= tr['cancel']
+					a#editMainDiscipline.editLink( href="javascript:;" onclick="editField('main_discipline_input', 'settingsMainDisciplineButtons', 'editMainDiscipline')" )= tr['edit']
 
 			div.settingsElement
 				form( method="POST")
