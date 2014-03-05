@@ -382,8 +382,6 @@ trafie.post( '/register', function( req, res ) {
       Profile.schema.save(profile)
       .then( function(profile){return UserHashes.schema.createVerificationHash(new_user.email, user._id);})
       .then( function( email_hash ) {
-			// Storing the user id in the session
-			req.session.user_id = user._id;
 
 			message.to = new_user.email;
 			message.subject = 'Welcome to trafie ✔';
@@ -400,7 +398,7 @@ trafie.post( '/register', function( req, res ) {
 			});
 
 			// Redirecting to the profile
-			res.redirect('/validation_email_sent');
+			res.redirect( '/validation_email_sent/' + user._id );
 		});
 	});
 
@@ -426,11 +424,15 @@ trafie.post('/login', function( req, res ) {
   var email = req.body.email;
   var password = User.schema.encryptPassword(req.body.password);
 
-  User.schema.findOne({ 'email': email, 'password': password }, '_id')
+  User.schema.findOne({ 'email': email, 'password': password, }, '_id')
   .then(function(response) {
-    if( response !== null && typeof response._id !== 'undefined') {
-    	req.session.user_id = response._id;
-	    res.redirect('/');
+    if( response !== null && typeof response._id !== 'undefined' ) {
+      if( response.valid === true ) {
+      	req.session.user_id = response._id;
+  	    res.redirect('/');
+      } else {
+        res.render('login', { 'errors': { 'email': 'Your account has not been validated yet' } } );
+      }
     } else {
 	    res.render('login', { 'errors': { 'email': 'Email - password combination wasn\'t found' } } );
     }
@@ -449,15 +451,11 @@ trafie.post('/login', function( req, res ) {
 /**
  * Email validation - GET
  */
-trafie.get('/validation_email_sent', function( req, res ) {
-  if( typeof req.session.user_id === 'undefined' ) {
-    res.redirect('/register');
-  }
+trafie.get('/validation_email_sent/:user_id', function( req, res ) {
   var email = '';
-  var user_id = req.session.user_id;
+  var user_id = req.params.user_id;
   User.schema.findOne({ '_id': user_id }, 'email valid')
   .then(function(response) {
-    console.log( response.valid );
     if( !response.email || response.valid ) {
       res.redirect('/login');
     }
@@ -590,16 +588,20 @@ trafie.get( '/settings', function( req, res ) {
  * VALIDATE USER REGISTRATION                                                                                                  *
  ******************************************************************************************************************************/
 trafie.get('/validate/:hash', function( req,res ){
+  var user_id = '';
   UserHashes.schema.findUserIdByValidationHash( req.params.hash )
   .then( function( response ) {
     if( response ) {
+      user_id = response.user_id;
       return User.schema.validateUser( response.user_id );
     } else {
       res.redirect('/login');
     }
   }).then( function(){
     UserHashes.schema.deleteValidationHash( req.params.hash );
-    res.redirect('/login');
+    // Storing the user id in the session
+    req.session.user_id = user_id;
+    res.redirect('/');
   });
 });
 
