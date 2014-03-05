@@ -9,9 +9,9 @@
  * @param cancelID : the 'cancel' button id for show/hide
  * @param editID : the 'edit' button id for show/hide
  */
-function editField( fieldID, divID, editID ) {
+function editField( fieldID, saveID, editID ) {
     document.getElementById(fieldID).disabled = false;
-    document.getElementById(divID).style.display = 'block';
+    document.getElementById(saveID).className = 'submitButtonsVisible';
     document.getElementById(editID).style.display = 'none';
     document.getElementById(editID).parentNode.parentNode.className = 'settingsElement editable' ;
 }
@@ -23,10 +23,10 @@ function editField( fieldID, divID, editID ) {
  * @param cancelID : the 'cancel' button id for show/hide
  * @param editID : the 'edit' button id for show/hide
  */
-function cancelEditField (fieldID_shadow, fieldID, divID, editID ) {
+function cancelEditField (fieldID_shadow, fieldID, saveID, editID ) {
     document.getElementById(fieldID).value = document.getElementById(fieldID_shadow).value;
     document.getElementById(fieldID).disabled = true;
-    document.getElementById(divID).style.display = 'none';
+    document.getElementById(saveID).className = 'submitButtonsHide';
     document.getElementById(editID).style.display = 'block';
     document.getElementById(editID).parentNode.parentNode.className = 'settingsElement' ;
 }
