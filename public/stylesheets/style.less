@@ -336,30 +336,6 @@ input.btn_blue_2 {
 		padding:20px 36px;
 	}
 
-	.settings
-	{
-		background-image: url(../images/settings_inactive.png);
-		background-repeat: no-repeat;
-		background-position: center 8px;
-		padding: 10px 20px 7px 20px;
-		margin-right: -8px;
-
-
-		&:hover
-		{
-			background-image: url(../images/settings_active.png);
-		}
-
-		.active
-		{
-			background-image: url(../images/settings_active.png);
-			border-bottom: white 4px solid;
-		}
-
-
-	}
-
-
 	ul
 	{
 		padding:10px 16px;
@@ -458,7 +434,6 @@ input.btn_blue_2 {
 
 		h3 {
 			font-weight: 400;
-			font-size: 1.6em;
 			text-shadow: 0px 0px 6px #666;
 			margin: 0px;
 		}
@@ -622,10 +597,8 @@ input.btn_blue_2 {
 	& > li .info {
 		margin: 0 0 15px 12%;
 		background-color: @light_gray;
-		/* 		background-image: url('../images/ui/post_back_run_1.png'); */
 		color: @dark_gray;
 		padding: 1em;
-		font-size: 1.2em;
 		font-weight: 300;
 		line-height: 1.4;
 		position: relative;
@@ -639,12 +612,10 @@ input.btn_blue_2 {
 		}
 
 		.date {
-			font-size: 1em;
 			font-style: italic;
 		}
 
 		.discipline {
-			font-size: 1em;
 		}
 
 	}
@@ -843,12 +814,13 @@ input.btn_blue_2 {
 		padding: 3px 0px;
 
 		label {
-			font-size: 1.2em;
+			font-size: 0.8em;
 			float:left;
 		}
 
 		.existedValue {
-
+			border: none;
+			font-size: 1em;
 		}
 
 	}
@@ -862,6 +834,15 @@ input.btn_blue_2 {
 		background-color: @light_gray;
 	}
 
+	.submitButtonsVisible {
+		display: block;
+		width:150px;
+		float:right;
+	}
+
+	.submitButtonsHide {
+		visibility: hidden;
+	}
 
 
 	.editLink {
