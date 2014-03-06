@@ -17,6 +17,16 @@ function editField( fieldID, saveID, editID ) {
 }
 
 /**
+ * editHiddenField() : shows the elements for editing a field
+ * @param hiddenFieldID : the field we want to make editable
+ * @param editID : the 'edit' button id for show/hide
+ */
+function editHiddenField( hiddenFieldID, editID) {
+	document.getElementById(hiddenFieldID).style.display = 'block';
+	document.getElementById(editID).style.display = 'none';
+}
+
+/**
  * cancelEditField() : hides the elements for editing a field (reverse action of editField )
  * @param fieldID : the field we want to make editable
  * @param saveID : the 'save' button id for show/hide
@@ -30,6 +40,19 @@ function cancelEditField (fieldID_shadow, fieldID, saveID, editID ) {
     document.getElementById(editID).style.display = 'block';
     document.getElementById(editID).parentNode.parentNode.className = 'settingsElement' ;
 }
+
+/**
+ * cancelEditHiddenField() : hides the elements for editing a field (reverse action of editHiddenField )
+ * @param fieldID : the field we want to make editable
+ * @param saveID : the 'save' button id for show/hide
+ * @param cancelID : the 'cancel' button id for show/hide
+ * @param editID : the 'edit' button id for show/hide
+ */
+function cancelEditHiddenField( hiddenFieldID, editID) {
+	document.getElementById(hiddenFieldID).style.display = 'none';
+	document.getElementById(editID).style.display = 'block';
+}
+
 
 /**
  * showSettingsTab() : show specific tab in settings page

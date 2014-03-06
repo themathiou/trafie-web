@@ -3,10 +3,8 @@ block content
 
 	div#main_content
 		div#profile_container
-			div#image_container( data-content="Change Photo" )
-				input#upload_profile_image( type="file" style="display: none;")
-				a( href="" onclick="document.getElementById('upload_profile_image').click(); return false"  )
-					img( src="../images/profile_pics/user.png" )
+			div#image_container
+				img( src="../images/profile_pics/user.png" )
 			div#profileFullName
 				h3= profile.first_name+' '+profile.last_name
 				p Discipline, Country, Age
@@ -129,17 +127,10 @@ block content
 					div.end
 						div.discipline everything started here
 
-	script(type='text/javascript', src='/javascripts/pikaday.min.js')
-	script(type='text/javascript').
-		var picker_time = new Pikaday(
-		{
-			field: document.getElementById('datepicker_time'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date('2020-12-31'), yearRange: [2000,2020]
-		})
-		var picker_distance = new Pikaday(
-		{
-			field: document.getElementById('datepicker_distance'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date('2020-12-31'), yearRange: [2000,2020]
-		})
-		var picker_point = new Pikaday(
-		{
-			field: document.getElementById('datepicker_point'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date('2020-12-31'), yearRange: [2000,2020]
-		})
+	script( type='text/javascript', src='/javascripts/pikaday.min.js')
+	script.
+		var picker_time = new Pikaday({field: document.getElementById('datepicker_time'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date('2020-12-31'), yearRange: [2000,2020]})
+
+		var picker_distance = new Pikaday({field: document.getElementById('datepicker_distance'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date('2020-12-31'), yearRange: [2000,2020]})
+
+		var picker_point = new Pikaday({field: document.getElementById('datepicker_point'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date('2020-12-31'), yearRange: [2000,2020]})

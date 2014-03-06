@@ -43,15 +43,16 @@ var En = function() {
         'submit'				: 'Submit',
         'save'					: 'Save',
         'cancel'				: 'Cancel',
-        
+
 	};
 
 	this.settings = {
-		'edit'				: 'Edit',
-		'general_settings'	: 'General Settings',
-		'logout'			: 'Logout',
-		'first_name'		: 'First Name',
-		'last_name'			: 'Last Name'
+		'edit'					 : 'Edit',
+		'general_settings'		 : 'General Settings',
+		'logout'				 : 'Logout',
+		'first_name'			 : 'First Name',
+		'last_name'				 : 'Last Name',
+		'choose_your_discipline' : 'Choose your discipline'
 	};
 
 	this.profile = {

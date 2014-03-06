@@ -41,7 +41,7 @@ body
 #main_content
 {
 	max-width: 950px;
-	min-width: 320px;
+	min-width: 950px;
 	width: 80%;
 	margin: 0px auto;
 	padding: 50px auto;
@@ -377,9 +377,6 @@ input.btn_blue_2 {
 	height: 250px;
 	.rounded_corners (5px);
 
-	/*background-image: url('../images/cover_photos/stadium.png');
-	background-size: cover;
-	box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.2);*/
 
 
 
@@ -398,31 +395,6 @@ input.btn_blue_2 {
 			display: block;
 			/*border:4px solid white; */
 
-		}
-
-		&:before {
-		    position:absolute;
-		    opacity:0;
-		    transition: all 0.5s;
-		    -webkit-transition: all 0.5s;
-		}
-
-		&:before {
-		    content: attr(data-content);
-		    width:70%;
-		    color:#fff;
-		    z-index:1;
-		    bottom:0;
-		    padding:4px 10px;
-		    text-align:center;
-		    background: @mediumgray ;
-		    font-size: 1em;
-		    bottom: 55px;
-		    left: 12px;
-		}
-
-		&:hover:after, &:hover:before {
-		    opacity:1;
 		}
 	}
 
@@ -457,7 +429,7 @@ input.btn_blue_2 {
 }
 
 .history_line {
-	margin: 30px auto 0 auto;
+	margin: 0 auto;
 	padding: 0;
 	list-style: none;
 	position: relative;
@@ -821,6 +793,11 @@ input.btn_blue_2 {
 		.existedValue {
 			border: none;
 			font-size: 1em;
+		}
+
+		.textarea {
+			width: 550px;
+			max-width: 550px;
 		}
 
 	}

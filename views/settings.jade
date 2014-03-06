@@ -43,7 +43,7 @@ block content
 					label Main Discipline :
 					span= errors.last_name
 					select#main_discipline_input(name="discipline" onchange="show_specific_form(this);" disabled)
-								option(value="no-selection" selected )= tr['choose_your_discipline']
+								option(value="no-selection" selected)= tr['choose_your_discipline']
 								option(value="100m")= tr['100m']
 								option(value="200m")= tr['200m']
 								option(value="400m")= tr['400m']
@@ -71,40 +71,46 @@ block content
 								option(value="decathlon")= tr['decathlon']
 					div#settingsMainDisciplineButtons(hidden)
 						input#submitMainDiscipline.btn_green( type="submit" value=tr['submit'])
-						a#cancelEditMainDiscipline.cancel_link( href="javascript:;" onclick="cancelEditField('last_name_shadow', 'last_name', 'settingsMainDisciplineButtons', 'editLastName')")= tr['cancel']
+						a#cancelEditMainDiscipline.cancel_link( href="javascript:;" onclick="cancelEditField('last_name_shadow', 'main_discipline_input', 'settingsMainDisciplineButtons', 'editMainDiscipline')")= tr['cancel']
 					a#editMainDiscipline.editLink( href="javascript:;" onclick="editField('main_discipline_input', 'settingsMainDisciplineButtons', 'editMainDiscipline')" )= tr['edit']
 
 			div.settingsElement
 				form( method="POST")
 					label About me :
 					span= errors.last_name
-					input#last_name.existedValue( name="last_name" value=profile.last_name disabled )
-					input#last_name_shadow( name="last_name" value=profile.last_name hidden disabled)
-					div#settingsLastNamebuttons(hidden)
-						input#submitLastName.btn_green( type="submit" value=tr['submit'])
-						a#cancelEditLastName.cancel_link( href="javascript:;" onclick="cancelEditField('last_name_shadow', 'last_name', 'settingsLastNamebuttons', 'editLastName')")= tr['cancel']
-					a#editLastName.editLink( href="javascript:;" onclick="editField('last_name', 'settingsLastNamebuttons', 'editLastName')" )= tr['edit']
+					textarea#about_me.existedValue.textarea( name="last_name" maxlength="1000" disabled) Two times olympic champion. Dragons and stories lives here bla bla bla
+					input#about_me_shadow( name="last_name" type="text" value=profile.last_name hidden disabled)
+					div#settingsAboutMeButtons(hidden)
+						input#submitAboutMe.btn_green( type="submit" value=tr['submit'])
+						a#cancelEditAboutMe.cancel_link( href="javascript:;" onclick="cancelEditField('last_name_shadow', 'about_me', 'settingsAboutMeButtons', 'editAboutMe')")= tr['cancel']
+					a#editAboutMe.editLink( href="javascript:;" onclick="editField('about_me', 'settingsAboutMeButtons', 'editAboutMe')" )= tr['edit']
 
 		//ACCOUNT SETTINGS
 		div#accountSettings.settingsContent( style="display:none;" )
 			h3 Account Settings
-			h4 Change Password
+
 			div.settingsElement
-				form( method="POST")
-					span.row
-						label( for="old_password" ) Old Password:
-						span= errors.first_name
-						input#old_password.existedValue( name="first_name" value=profile.first_name disabled )
+				label Change Password
+				a#editPassword.editLink( href="javascript:;" onclick="editHiddenField('changePassword', 'editPassword')" )= tr['edit']
+				div#changePassword( hidden )
+					form#changePasswordForm( method="POST")
+						span.row
+							label( for="old_password" ) Old Password:
+							span= errors.first_name
+							input#old_password
 
-					span.row
-						label( for="new_password" ) New Password:
-						span= errors.first_name
-						input#new_password.existedValue( name="first_name" value=profile.first_name disabled )
+						span.row
+							label( for="new_password" ) New Password:
+							span= errors.first_name
+							input#new_password
 
-					span.row
-						label( for="repeat_new_password" ) Repeat New Password:
-						span= errors.first_name
-						input#repeat_new_password.existedValue( name="first_name" value=profile.first_name disabled )
+						span.row
+							label( for="repeat_new_password" ) Repeat New Password:
+							span= errors.first_name
+							input#repeat_new_password
 
-					a#editFirstName.editLink( href="javascript:;" onclick="editField('first_name', 'settingsFirstNameButtons', 'editFirstName')" )= tr['edit']
+						div#settingsAboutMeButtons
+							input#submitNewPassword.btn_green( type="submit" value=tr['submit'])
+							a#cancelNewPassword.cancel_link( href="javascript:;" onclick="cancelEditHiddenField('changePassword', 'editPassword')")= tr['cancel']
+
 
