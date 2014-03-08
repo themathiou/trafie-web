@@ -504,6 +504,53 @@ trafie.get('/resend_validation_email/:user_id', function( req, res ) {
   });
 });
 
+
+/*******************************************************************************************************************************
+ * RESET PASSWORD                                                                                                              *
+ ******************************************************************************************************************************/
+
+/**
+ * Reset Password Request - GET
+ */
+trafie.get( '/reset_password_request', function( req, res ) {
+  var view_data = {
+    'error' => ''
+  };
+  res.render( 'reset_password_request', view_data );
+});
+
+/**
+ * Reset Password Request - GET
+ */
+trafie.post( '/reset_password_request', function( req, res ) {
+  var email = req.body.email;
+  var view_data = {
+    'error' => ''
+  };
+  User.schema.findOne({ 'email': email }, 'email _id')
+  .then(function( response ) {
+    if( !response._id ) {
+      view_data.error = 'Email not found';
+      res.render( 'reset_password_request', view_data );
+    }
+    var user_id = response._id;
+    return Profile.schema.findOne( { '_id': user_id }, 'first_name last_name' );
+  })
+  .then(function( response ) {
+    var first_name = response.first_name;
+    var last_name = response.last_name;
+
+    return UserHashes.schema.createResetPasswordHash( user._id );
+  })
+  .then(function( response ) {
+    send_reset_password_email( email, first_name, last_name, response.hash, req.headers.host );
+
+    view_data.email = email;
+    res.render( 'reset_password_email_sent', view_data );
+  });
+});
+
+
 /*******************************************************************************************************************************
  * SETTINGS                                                                                                                    *
  ******************************************************************************************************************************/
@@ -644,13 +691,29 @@ http.createServer( trafie ).listen( trafie.get('port'), function(){
   console.log('Express server listening on port ' + trafie.get('port'));
 });
 
-function send_verification_email( email, first_name, last_name, email_hash, host ) {
+function send_verification_email( email, first_name, last_name, hash, host ) {
   message.to = email;
   message.subject = 'Welcome to trafie ✔';
   message.html = '<h2>Hello ' + first_name + ' ' + last_name + '</h2>' +
      '<p>You have successfully registered to trafie.</p><br><p>The <b><i>trafie</i></b> team</p><br>' +
      'Follow the link to verify your email:<br>' +
-     '<a href="' + host + '/validate/' + email_hash + '">This is the link</a>';
+     '<a href="' + host + '/validate/' + hash + '">This is the link</a>';
+
+  transport.sendMail(message, function(error) {
+    if(error) {
+        console.log('Error occured: ' + error);
+        return;
+    }
+  });
+}
+
+function send_reset_password_email( email, first_name, last_name, hash, host ) {
+  message.to = email;
+  message.subject = 'Password reset request ✔';
+  message.html = '<h2>Hello ' + first_name + ' ' + last_name + '</h2>' +
+     '<p>You have requested to reset your password of your account on trafie.</p><br>' +
+     'Follow the link in order to enter a new password:<br>' +
+     '<a href="' + host + '/reset_password/' + hash + '">This is the link</a>';
 
   transport.sendMail(message, function(error) {
     if(error) {
