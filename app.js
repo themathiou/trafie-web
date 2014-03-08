@@ -524,6 +524,9 @@ trafie.get( '/reset_password_request', function( req, res ) {
  */
 trafie.post( '/reset_password_request', function( req, res ) {
   var email = req.body.email;
+  var user_id = '';
+  var first_name = '';
+  var last_name = '';
   var view_data = {
     'error': ''
   };
@@ -533,18 +536,18 @@ trafie.post( '/reset_password_request', function( req, res ) {
       view_data.error = 'Email not found';
       res.render( 'reset_password_request', view_data );
     }
-    var user_id = response._id;
+    user_id = response._id;
     return Profile.schema.findOne( { '_id': user_id }, 'first_name last_name' );
   })
   .then(function( response ) {
-    var first_name = response.first_name;
-    var last_name = response.last_name;
+    first_name = response.first_name;
+    last_name = response.last_name;
 
-    return UserHashes.schema.createResetPasswordHash( user._id );
+    return UserHashes.schema.createResetPasswordHash( user_id );
   })
   .then(function( response ) {
-    send_reset_password_email( email, first_name, last_name, response.hash, req.headers.host );
-
+    send_reset_password_email( email, first_name, last_name, response, req.headers.host );
+    console.log( response );
     view_data.email = email;
     res.render( 'reset_password_email_sent', view_data );
   });
@@ -709,9 +712,9 @@ function send_verification_email( email, first_name, last_name, hash, host ) {
 
 function send_reset_password_email( email, first_name, last_name, hash, host ) {
   message.to = email;
-  message.subject = 'Password reset request ✔';
+  message.subject = 'Password reset request';
   message.html = '<h2>Hello ' + first_name + ' ' + last_name + '</h2>' +
-     '<p>You have requested to reset your password of your account on trafie.</p><br>' +
+     '<p>You have requested to reset the password of your account on trafie.</p><br>' +
      'Follow the link in order to enter a new password:<br>' +
      '<a href="' + host + '/reset_password/' + hash + '">This is the link</a>';
 
