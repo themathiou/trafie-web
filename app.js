@@ -532,9 +532,10 @@ trafie.post( '/reset_password_request', function( req, res ) {
   };
   User.schema.findOne({ 'email': email }, 'email _id')
   .then(function( response ) {
-    if( !response._id ) {
+    if( !response ) {
       view_data.error = 'Email not found';
       res.render( 'reset_password_request', view_data );
+      return;
     }
     user_id = response._id;
     return Profile.schema.findOne( { '_id': user_id }, 'first_name last_name' );
@@ -547,7 +548,6 @@ trafie.post( '/reset_password_request', function( req, res ) {
   })
   .then(function( response ) {
     send_reset_password_email( email, first_name, last_name, response, req.headers.host );
-    console.log( response );
     view_data.email = email;
     res.render( 'reset_password_email_sent', view_data );
   });
