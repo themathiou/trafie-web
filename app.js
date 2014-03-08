@@ -514,7 +514,7 @@ trafie.get('/resend_validation_email/:user_id', function( req, res ) {
  */
 trafie.get( '/reset_password_request', function( req, res ) {
   var view_data = {
-    'error' => ''
+    'error': ''
   };
   res.render( 'reset_password_request', view_data );
 });
@@ -525,7 +525,7 @@ trafie.get( '/reset_password_request', function( req, res ) {
 trafie.post( '/reset_password_request', function( req, res ) {
   var email = req.body.email;
   var view_data = {
-    'error' => ''
+    'error': ''
   };
   User.schema.findOne({ 'email': email }, 'email _id')
   .then(function( response ) {
