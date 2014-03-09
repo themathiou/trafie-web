@@ -64,9 +64,23 @@ userSchema.emailIsUnique = function( email ) {
 	return d.promise;
 };
 
+/**
+ * Makes the user valid
+ */
 userSchema.validateUser = function( user_id ) {
 	var d = q.defer();
 	User.findByIdAndUpdate( user_id, { valid: true }, '', function ( err, user ) {
+		d.resolve(!user);
+	});
+	return d.promise;
+};
+
+/**
+ * Resets user's password
+ */
+userSchema.resetPassword = function( user_id, password ) {
+	var d = q.defer();
+	User.findByIdAndUpdate( user_id, { password: password }, '', function ( err, user ) {
 		d.resolve(!user);
 	});
 	return d.promise;
