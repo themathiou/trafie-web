@@ -778,12 +778,12 @@ input.btn_blue_2:active {
   border-bottom-color: #bbb;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
-.pika-single .is-hidden {
-  display: none;
-}
-.pika-single .is-bound {
+.pika-single.is-bound {
   position: absolute;
   box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.5);
+}
+.pika-single.is-hidden {
+  display: none;
 }
 .pika-title {
   position: relative;
@@ -822,8 +822,6 @@ input.btn_blue_2:active {
   padding: 0;
   width: 20px;
   height: 30px;
-  /* hide text using text-indent trick, using width value (it's enough) */
-
   text-indent: 20px;
   white-space: nowrap;
   overflow: hidden;
@@ -839,8 +837,8 @@ input.btn_blue_2:active {
 .pika-next:hover {
   opacity: 1;
 }
-.pika-prev .is-disabled,
-.pika-next .is-disabled {
+.pika-prev.is-disabled,
+.pika-next.is-disabled {
   cursor: default;
   opacity: .2;
 }
