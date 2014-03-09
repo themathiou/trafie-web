@@ -19,10 +19,11 @@ var userHashSchema = mongoose.Schema({
 /**
  * Returns the user id of the user to whom the hash was sent
  * @param string hash
+ * @param string type (can be 'verify' and 'reset')
  */
-userHashSchema.findUserIdByValidationHash = function( hash ) {
+userHashSchema.findUserIdByHash = function( hash, type ) {
 	var d = q.defer();
-	User_hash.findOne({ 'hash': hash, 'type': 'verify' }, 'user_id hash', function ( err, response ) {
+	User_hash.findOne({ 'hash': hash, 'type': type }, 'user_id hash', function ( err, response ) {
 		d.resolve(response);
 	});
 	return d.promise;
@@ -43,13 +44,13 @@ userHashSchema.findValidationHashByUserId = function( user_id ) {
 
 
 /**
- * Find user by element
- * @param json where({email:someone@trafie.com})
- * @param String select
+ * Delete a hash
+ * @param string hash
+ * @param string type (can be 'verify' and 'reset')
  */
-userHashSchema.deleteValidationHash = function( hash ) {
+userHashSchema.deleteHash = function( hash, type ) {
 	var d = q.defer();
-	User_hash.find({ 'hash': hash, 'type': 'verify' }).remove( function ( err, response ) {
+	User_hash.find({ 'hash': hash, 'type': hash_type }).remove( function ( err, response ) {
 		d.resolve( response );
 	});
 	return d.promise;
@@ -58,6 +59,8 @@ userHashSchema.deleteValidationHash = function( hash ) {
 
 /**
  * Create and save verification hash
+ * @param string email
+ * @param string user_id
  */
 userHashSchema.createVerificationHash = function ( email, user_id ) {
 	var sha512Hash = crypto.createHash('sha512');
@@ -84,6 +87,7 @@ userHashSchema.createVerificationHash = function ( email, user_id ) {
 
 /**
  * Create and save reset password hash
+ * @param string user_id
  */
 userHashSchema.createResetPasswordHash = function ( user_id ) {
 	var d = q.defer();

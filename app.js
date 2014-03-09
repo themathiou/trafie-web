@@ -459,7 +459,7 @@ trafie.get('/validation_email_sent/:resend/:user_id', function( req, res ) {
  */
 trafie.get('/validate/:hash', function( req,res ){
   var user_id = '';
-  UserHashes.schema.findUserIdByValidationHash( req.params.hash )
+  UserHashes.schema.findUserIdByValidationHash( req.params.hash, 'verify' )
   .then( function( response ) {
     if( response ) {
       user_id = response.user_id;
@@ -468,7 +468,7 @@ trafie.get('/validate/:hash', function( req,res ){
       res.redirect('/login');
     }
   }).then( function(){
-    UserHashes.schema.deleteValidationHash( req.params.hash );
+    UserHashes.schema.deleteValidationHash( req.params.hash, 'verify' );
     // Storing the user id in the session
     req.session.user_id = user_id;
     res.redirect('/');
@@ -550,6 +550,64 @@ trafie.post( '/reset_password_request', function( req, res ) {
     send_reset_password_email( email, first_name, last_name, response, req.headers.host );
     view_data.email = email;
     res.render( 'reset_password_email_sent', view_data );
+  });
+});
+
+/**
+ * Reset Password - GET
+ */
+trafie.get( '/reset_password/:hash', function( req, res ) {
+  var view_data = {
+    'errors': {
+      'password'        : '',
+      'repeat_password' : ''
+    }
+  };
+  res.render( 'reset_password', view_data );
+});
+
+/**
+ * Reset Password - GET
+ */
+trafie.post( '/reset_password/:hash', function( req, res ) {
+  var password = req.body.password;
+  var repeat_password = req.body.repeat_password;
+  var hash = req.params.hash;
+  var errors = false;
+  var view_data = {
+    'errors': {
+      'password'        : '',
+      'repeat_password' : ''
+    }
+  };
+  var user_id = '';
+
+  if( !User.schema.validatePassword( password ) ) {
+    errors = true;
+    view_data.errors.password = 'Password should be at least 6 characters long';
+  }
+  if( password != repeat_password ) {
+    errors = true;
+    view_data.errors.repeat_password = 'Passwords do not match';
+  }
+
+  if( errors ) {
+    res.render( 'reset_password', view_data );
+  }
+
+  UserHashes.schema.findUserIdByHash( req.params.hash, 'reset' )
+  .then( function( response ) {
+    if( response ) {
+      user_id = response.user_id;
+      return User.schema.resetPassword( user_id, password );
+    } else {
+      res.redirect('/login');
+    }
+  }).then( function() {
+    UserHashes.schema.deleteHash( req.params.hash, 'reset' );
+    // Storing the user id in the session
+    req.session.user_id = user_id;
+    res.redirect('/');
   });
 });
 
