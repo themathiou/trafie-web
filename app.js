@@ -595,7 +595,7 @@ trafie.post( '/reset_password/:hash', function( req, res ) {
     res.render( 'reset_password', view_data );
   }
 
-  UserHashes.schema.findUserIdByHash( req.params.hash, 'reset' )
+  UserHashes.schema.findUserIdByHash( hash, 'reset' )
   .then( function( response ) {
     if( response ) {
       user_id = response.user_id;
@@ -604,7 +604,7 @@ trafie.post( '/reset_password/:hash', function( req, res ) {
       res.redirect('/login');
     }
   }).then( function() {
-    UserHashes.schema.deleteHash( req.params.hash, 'reset' );
+    UserHashes.schema.deleteHash( hash, 'reset' );
     // Storing the user id in the session
     req.session.user_id = user_id;
     res.redirect('/');

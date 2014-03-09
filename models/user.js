@@ -80,8 +80,9 @@ userSchema.validateUser = function( user_id ) {
  */
 userSchema.resetPassword = function( user_id, password ) {
 	var d = q.defer();
+	password = this.encryptPassword( password );
 	User.findByIdAndUpdate( user_id, { password: password }, '', function ( err, user ) {
-		d.resolve(!user);
+		d.resolve(user);
 	});
 	return d.promise;
 };
