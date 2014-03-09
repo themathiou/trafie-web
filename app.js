@@ -563,7 +563,16 @@ trafie.get( '/reset_password/:hash', function( req, res ) {
       'repeat_password' : ''
     }
   };
-  res.render( 'reset_password', view_data );
+
+  UserHashes.schema.findUserIdByHash( req.params.hash, 'reset' )
+  .then( function( response ) {
+    if( response ) {
+      res.render( 'reset_password', view_data );
+    } else {
+      res.redirect('/login');
+    }
+  })
+
 });
 
 /**
