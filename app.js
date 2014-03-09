@@ -459,7 +459,7 @@ trafie.get('/validation_email_sent/:resend/:user_id', function( req, res ) {
  */
 trafie.get('/validate/:hash', function( req,res ){
   var user_id = '';
-  UserHashes.schema.findUserIdByValidationHash( req.params.hash, 'verify' )
+  UserHashes.schema.findUserIdByHash( req.params.hash, 'verify' )
   .then( function( response ) {
     if( response ) {
       user_id = response.user_id;
@@ -468,7 +468,7 @@ trafie.get('/validate/:hash', function( req,res ){
       res.redirect('/login');
     }
   }).then( function(){
-    UserHashes.schema.deleteValidationHash( req.params.hash, 'verify' );
+    UserHashes.schema.deleteHash( req.params.hash, 'verify' );
     // Storing the user id in the session
     req.session.user_id = user_id;
     res.redirect('/');

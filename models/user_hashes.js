@@ -50,7 +50,7 @@ userHashSchema.findValidationHashByUserId = function( user_id ) {
  */
 userHashSchema.deleteHash = function( hash, type ) {
 	var d = q.defer();
-	User_hash.find({ 'hash': hash, 'type': hash_type }).remove( function ( err, response ) {
+	User_hash.find({ 'hash': hash, 'type': type }).remove( function ( err, response ) {
 		d.resolve( response );
 	});
 	return d.promise;
