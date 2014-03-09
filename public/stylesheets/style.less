@@ -786,13 +786,8 @@ input.btn_blue_2 {
 		padding: 3px 0px;
 
 		label {
-			font-size: 0.8em;
-			float:left;
-		}
-
-		.existedValue {
-			border: none;
 			font-size: 1em;
+			float:left;
 		}
 
 		.textarea {
@@ -805,10 +800,32 @@ input.btn_blue_2 {
 	.settingsElement {
 		border-bottom: 1px solid @lightgray;
 		padding: 10px 5px;
+
+		input {
+			border: none;
+			font-size: 1em;
+		}
+
+		textarea {
+			border: none;
+			font-size: 1em;
+		}
 	}
 
 	.editable {
 		background-color: @light_gray;
+
+		input {
+			.rounded_corners(5px);
+			box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2) inset;
+			border:1px white solid;
+		}
+
+		textarea {
+			.rounded_corners(5px);
+			box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2) inset;
+			border:1px white solid;
+		}
 	}
 
 	.submitButtonsVisible {

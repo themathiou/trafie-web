@@ -729,12 +729,8 @@ input.btn_blue_2:active {
   padding: 3px 0px;
 }
 .settingsContent form label {
-  font-size: 0.8em;
-  float: left;
-}
-.settingsContent form .existedValue {
-  border: none;
   font-size: 1em;
+  float: left;
 }
 .settingsContent form .textarea {
   width: 550px;
@@ -744,8 +740,34 @@ input.btn_blue_2:active {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   padding: 10px 5px;
 }
+.settingsContent .settingsElement input {
+  border: none;
+  font-size: 1em;
+}
+.settingsContent .settingsElement textarea {
+  border: none;
+  font-size: 1em;
+}
 .settingsContent .editable {
   background-color: #f6f6f6;
+}
+.settingsContent .editable input {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2) inset;
+  border: 1px white solid;
+}
+.settingsContent .editable textarea {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2) inset;
+  border: 1px white solid;
 }
 .settingsContent .submitButtonsVisible {
   display: block;

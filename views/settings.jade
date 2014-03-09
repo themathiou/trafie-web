@@ -19,7 +19,7 @@ block content
 				form( method="POST")
 					label= tr['first_name'] + ' : '
 					span= errors.first_name
-					input#first_name.existedValue( name="first_name" value=profile.first_name disabled )
+					input#first_name( name="first_name" value=profile.first_name disabled )
 					input#first_name_shadow( name="first_name" value=profile.first_name hidden disabled)
 					div#settingsFirstNameButtons(hidden)
 						input#submitFirstName.btn_green( type="submit" value=tr['submit'])
@@ -30,7 +30,7 @@ block content
 				form( method="POST")
 					label= tr['last_name'] + ' : '
 					span= errors.last_name
-					input#last_name.existedValue( name="last_name" value=profile.last_name disabled )
+					input#last_name( name="last_name" value=profile.last_name disabled )
 					input#last_name_shadow( name="last_name" value=profile.last_name hidden disabled)
 					div#settingsLastNamebuttons(hidden)
 						input#submitLastName.btn_green( type="submit" value=tr['submit'])
@@ -78,7 +78,7 @@ block content
 				form( method="POST")
 					label About me :
 					span= errors.last_name
-					textarea#about_me.existedValue.textarea( name="last_name" maxlength="1000" disabled) Two times olympic champion. Dragons and stories lives here bla bla bla
+					textarea#about_me.textarea( name="last_name" maxlength="1000" disabled) Two times olympic champion. Dragons and stories lives here bla bla bla
 					input#about_me_shadow( name="last_name" type="text" value=profile.last_name hidden disabled)
 					div#settingsAboutMeButtons(hidden)
 						input#submitAboutMe.btn_green( type="submit" value=tr['submit'])
@@ -92,7 +92,7 @@ block content
 			div.settingsElement
 				label Change Password
 				a#editPassword.editLink( href="javascript:;" onclick="editHiddenField('changePassword', 'editPassword')" )= tr['edit']
-				div#changePassword( hidden )
+				div#changePassword.editable( hidden )
 					form#changePasswordForm( method="POST")
 						span.row
 							label( for="old_password" ) Old Password:
