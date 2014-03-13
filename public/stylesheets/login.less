@@ -3,8 +3,9 @@
 @mediumgray : rgba(0,0,0,0.3);
 @darkgray : rgba(0,0,0,0.7);
 
-/* TO - BE - FIXED */
-@errorred : red;
+@red_message_back : #D14337;
+@green_message_back : #C6FDBC;
+
 @informationorange : orange;
 
 
@@ -23,6 +24,28 @@ body
 	height:100%;
 }
 
+
+/*error message - full width red*/
+.error_message {
+	color: white;
+	background-color: @red_message_back;
+	width: 100%;
+	.rounded-corners(5px);
+	margin: 3px 0px;
+	padding: 3px 3px;
+	font-weight: 400;
+	text-align: left;
+}
+
+/*error message - full width red*/
+.green_message {
+	color: green;
+	background-color: @green_message_back;
+	.rounded-corners(5px);
+	margin: 3px 0px;
+	padding: 3px 3px;
+	text-align: left;
+}
 
 
 /******************************************************/
@@ -82,11 +105,19 @@ body
 	width:400px;
 	padding: 5px 20px;
 	margin:0px auto;
-	background-color: rgba(255,255,255,0.8);
+	background-color: rgba(255,255,255,0.9);
 
 	.rounded-corners(7px);
 
 	color: #494949;
+
+	h4 {
+		text-align: left;
+		font-weight: 400;
+		font-size: 1.2em;
+		margin-bottom: 10px;
+		color: @darkgray;
+	}
 
 	h3
 	{
@@ -117,6 +148,10 @@ body
 		}
 	}
 
+	label {
+		display: block;
+	}
+
 	/*the text field parameters. use with <input> */
 	.textfield {
 
@@ -144,13 +179,6 @@ body
 				text-decoration: underline;
 			}
 		}
-	}
-
-	/*error messages - right of the label*/
-	.login_error {
-		color: @errorred;
-		margin-left: 5px;
-		font-weight: 400;
 	}
 
 }
@@ -198,39 +226,15 @@ body
 
 
 /******************************************************/
-/*					VALIDATION MESSAGE SENT			  */
+/*					MESSAGE SENT			  		  */
 /******************************************************/
-.validationMessage {
+.message {
 	width:560px;
 	padding: 5px 20px;
 	margin:0px auto;
 	background-color: rgba(255,255,255,0.9);
 
 	.rounded-corners(7px);
-
-	p {
-		font-size: 1.2em;
-		margin:5px;
-		text-align: center;
-
-		.main_message {
-			font-weight: bold;
-		}
-
-		.greet {
-			font-size: 1em;
-			font-style: italic;
-		}
-
-		.email {
-			font-size: 1.2em;
-			font-weight: 400;
-			color: green;
-			margin-left: 3px;
-		}
-	}
-
-
 }
 
 
