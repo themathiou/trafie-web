@@ -121,7 +121,7 @@ trafie.get('/', function( req, res ){
   var user_id = req.session.user_id;
 
   if(!user_id) {
-	  res.redirect('/login');
+	  res.redirect('/register');
   } else {
     Profile.schema.findOne( { '_id': user_id }, 'first_name last_name' ).then( function( profile_data ) {
       // If the user was found
@@ -158,7 +158,7 @@ trafie.post('/', function( req, res ){
   var user_id = req.session.user_id;
   // If there is no user id, redirect to login
   if(!user_id) {
-    res.redirect('/login');
+    res.redirect('/register');
   } else {
     // Find the profile
     Profile.schema.findOne({ '_id': user_id }, 'first_name last_name')
@@ -635,16 +635,29 @@ trafie.get( '/settings', function( req, res ) {
 
   // If there is no user id in the session, redirect to register screen
   if( !user_id ) {
-    res.redirect('/login');
+    res.redirect('/register');
   // Else, fetch the first name and the last name of the user from the database
   } else {
     Profile.schema.findOne({ '_id': user_id }, 'first_name last_name')
     .then( function( response ) {
       // Format the data that will go to the front end
+      var gender = '';
+      if( response.male === true ) {
+        gender = 'male';
+      }
+      else if( response.male === false ) {
+        gender = 'female';
+      }
+      var age = response.age ? response.age : '';
       var view_data = {
         'profile': {
           'first_name': response.first_name,
-          'last_name' : response.last_name
+          'last_name' : response.last_name,
+          'discipline': response.discipline,
+          'about'     : response.about,
+          'gender'    : gender,
+          'country'   : response.country,
+          'age'       : response.age
         },
         'errors'  : errors,
         'tr'      : translations['en'].getSettingsTranslations()

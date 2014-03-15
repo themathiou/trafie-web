@@ -8,10 +8,12 @@ var q = require('q');
 var profileSchema = mongoose.Schema({
   first_name	: { type: String, required: true },
   last_name		: { type: String, required: true },
-  disciplines	: [
-                	{ type: String, default: '' },
-                	{ type: String, default: '' }
-               	  ]
+  male			: { type: Boolean, required: false, default: null },
+  age 			: { type: Number, required: false, default: 0 },
+  discipline	: { type: String, required: false, default: '' },
+  about 		: { type: String, required: false, default: '' },
+  country 		: { type: String, required: false, default: '' },
+  picture 		: { type: String, required: false, default: '' }
 });
 
 /**
