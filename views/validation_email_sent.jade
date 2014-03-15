@@ -5,21 +5,20 @@ block content
 	div#welcome_container
 		div#header
 			div#welcome_logo trafie
-
-			if 1==1
-				div.validationMessage
+			if resend==1
+				div.message
 					p
 						span.main_message It seems that your account hasn't been activated.
 					p Go to
-						span.email= email
+						span.green_message= email
 						| &nbsp;and click the activation link.
 					p OR &nbsp;
 						a.resendActivationLink( href="/resend_validation_email/"+user_id )
 							| click here to send you again the activation e-mail.
 			else
-				div.validationMessage
+				div.message
 					p
 						span.main_message Your registration was succesfull!
 					p Go to
-						span.email= email
+						span.green_message= email
 						| &nbsp;and click the activation link.

@@ -8,18 +8,17 @@ block content
 
 		div.forms
 			form#register.welcome_form(method="post")
-				if errors.first_name
-						div.error_message= errors.first_name
-				if errors.last_name
-						div.error_message= errors.last_name
-				if errors.email
-						div.error_message= errors.email
-
 				label(for="first_name") First Name
+					if errors.first_name
+						span.error_message= errors.first_name
 				input#first_name.textfield(type="text" name="first_name" placeholder="" value=fields.first_name)
 				label(for="last_name") Last Name
+					if errors.last_name
+						span.error_message= errors.last_name
 				input#last_name.textfield(type="text" name="last_name" placeholder="" value=fields.last_name)
 				label(for="email") Email
+					if errors.email
+						span.error_message= errors.email
 				input#email.textfield(type="text" name="email" placeholder="" value=fields.email)
 
 				if errors.password

@@ -15,6 +15,7 @@ block content
 		//PROFILE SETTINGS
 		div#profileSettings.settingsContent
 			h3 Profile Settings
+			//FIRST NAME
 			div.settingsElement
 				form( method="POST")
 					label= tr['first_name'] + ' : '
@@ -26,6 +27,7 @@ block content
 						a#cancelEditFirstName.cancel_link( href="javascript:;" onclick="cancelEditField('first_name_shadow', 'first_name', 'settingsFirstNameButtons', 'editFirstName')")= tr['cancel']
 					a#editFirstName.editLink( href="javascript:;" onclick="editField('first_name', 'settingsFirstNameButtons', 'editFirstName')" )= tr['edit']
 
+			//LAST NAME
 			div.settingsElement
 				form( method="POST")
 					label= tr['last_name'] + ' : '
@@ -37,7 +39,31 @@ block content
 						a#cancelEditLastName.cancel_link( href="javascript:;" onclick="cancelEditField('last_name_shadow', 'last_name', 'settingsLastNamebuttons', 'editLastName')")= tr['cancel']
 					a#editLastName.editLink( href="javascript:;" onclick="editField('last_name', 'settingsLastNamebuttons', 'editLastName')" )= tr['edit']
 
+			//GENDER
+			div.settingsElement
+				form( method="POST")
+					label Gender :
+					span= errors.last_name
+					input#gender( name="gender" value=profile.gender disabled )
+					input#gender_shadow( name="last_name" value=profile.gender hidden disabled)
+					div#settingsGenderbuttons(hidden)
+						input#submitGender.btn_green( type="submit" value=tr['submit'])
+						a#cancelEditGender.cancel_link( href="javascript:;" onclick="cancelEditField('gender_shadow', 'gender', 'settingsGenderbuttons', 'editGender')")= tr['cancel']
+					a#editGender.editLink( href="javascript:;" onclick="editField('gender', 'settingsGenderbuttons', 'editGender')" )= tr['edit']
 
+			//AGE
+			div.settingsElement
+				form( method="POST")
+					label Age :
+					span= errors.age
+					input#age( name="age" value=profile.age disabled )
+					input#age_shadow( name="age" value=profile.age hidden disabled)
+					div#settingsAgebuttons(hidden)
+						input#submitAge.btn_green( type="submit" value=tr['submit'])
+						a#cancelEditAge.cancel_link( href="javascript:;" onclick="cancelEditField('age_shadow', 'age', 'settingsAgebuttons', 'editAge')")= tr['cancel']
+					a#editAge.editLink( href="javascript:;" onclick="editField('age', 'settingsAgebuttons', 'editAge')" )= tr['edit']
+
+			//MAIN DISCIPLINE
 			div.settingsElement
 				form( method="POST")
 					label Main Discipline :
@@ -74,6 +100,23 @@ block content
 						a#cancelEditMainDiscipline.cancel_link( href="javascript:;" onclick="cancelEditField('last_name_shadow', 'main_discipline_input', 'settingsMainDisciplineButtons', 'editMainDiscipline')")= tr['cancel']
 					a#editMainDiscipline.editLink( href="javascript:;" onclick="editField('main_discipline_input', 'settingsMainDisciplineButtons', 'editMainDiscipline')" )= tr['edit']
 
+			//COUNTRY
+			div.settingsElement
+				form( method="POST")
+					label Country :
+					span= errors.country
+					select#country_input(name="country" onchange="show_specific_form(this);" disabled)
+								option(value="no-selection" selected) Choose your country
+								option(value="el") Greece
+								option(value="en") UK
+								option(value="us") USA
+								option(value="ru") Russia
+					div#settingsCountryButtons(hidden)
+						input#submitCountry.btn_green( type="submit" value=tr['submit'])
+						a#cancelEditCountry.cancel_link( href="javascript:;" onclick="cancelEditField('country_shadow', 'country_input', 'settingsCountryButtons', 'editCountry')")= tr['cancel']
+					a#editCountry.editLink( href="javascript:;" onclick="editField('country_input', 'settingsCountryButtons', 'editCountry')" )= tr['edit']
+
+			//ABOUT ME
 			div.settingsElement
 				form( method="POST")
 					label About me :
@@ -84,6 +127,7 @@ block content
 						input#submitAboutMe.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditAboutMe.cancel_link( href="javascript:;" onclick="cancelEditField('last_name_shadow', 'about_me', 'settingsAboutMeButtons', 'editAboutMe')")= tr['cancel']
 					a#editAboutMe.editLink( href="javascript:;" onclick="editField('about_me', 'settingsAboutMeButtons', 'editAboutMe')" )= tr['edit']
+
 
 		//ACCOUNT SETTINGS
 		div#accountSettings.settingsContent( style="display:none;" )
