@@ -55,13 +55,28 @@ profileSchema.validateName = function( name ) {
 }
 
 /**
- * Checks first and last name for validity
+ * Checks the birthday for validity
  */
 profileSchema.validateBirthday = function( birthday ) {
-	if( !isPositiveInteger( birthday.day ) && isPositiveInteger( birthday.month ) ) {
+	if( !isPositiveInteger( birthday.day ) || !isPositiveInteger( birthday.month ) || !isPositiveInteger( birthday.year ) ) {
 		return false;
 	}
-	var leap_year = ((age.year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
+	if( birthday.year < 1900 || birthday.year > 2010 || birthday.month > 12 ) {
+		return false;
+	}
+	
+	var leap_year = ( (birthday.year % 4 == 0) && (birthday % 100 != 0) ) || (birthday % 400 == 0);
+
+	if( birthday.day > 31 ) {
+		return false;
+	}
+	if( [4,6,9,11].indexOf( birthday.month ) >= 0  && birthday.day > 30 ) {
+		return false;
+	}
+	if( ( birthday.month == 2 && !leap_year && birthday.day > 28 ) || ( birthday.month == 2 && leap_year && birthday.day > 29 ) ) {
+		return false;
+	}
+	return true;
 }
 
 function isPositiveInteger( value ) {
