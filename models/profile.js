@@ -9,7 +9,11 @@ var profileSchema = mongoose.Schema({
   first_name	: { type: String, required: true },
   last_name		: { type: String, required: true },
   male			: { type: Boolean, required: false, default: null },
-  age 			: { type: Number, required: false, default: 0 },
+  birthday		: {
+  					day: 	{ type: Number, required: false, default: null },
+  					month: 	{ type: Number, required: false, default: null },
+  					year: 	{ type: Number, required: false, default: null } 
+   				  },
   discipline	: { type: String, required: false, default: '' },
   about 		: { type: String, required: false, default: '' },
   country 		: { type: String, required: false, default: '' },
@@ -43,9 +47,25 @@ profileSchema.save = function( profile ) {
 	return d.promise;
 };
 
-// Checks first and last name for validity
+/**
+ * Checks first and last name for validity
+ */
 profileSchema.validateName = function( name ) {
-	 return /^[A-Za-z ]+$/.test( name );
+	return /^[A-Za-z ]+$/.test( name );
+}
+
+/**
+ * Checks first and last name for validity
+ */
+profileSchema.validateBirthday = function( birthday ) {
+	if( !isPositiveInteger( birthday.day ) && isPositiveInteger( birthday.month ) ) {
+		return false;
+	}
+	var leap_year = ((age.year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
+}
+
+function isPositiveInteger( value ) {
+	return typeof value !== 'undefined' && !isNaN( parseInt(value) ) && isFinite( value ) && value > 0 && value % 1 === 0;
 }
 
 var Profile = mongoose.model('Profile', profileSchema);
