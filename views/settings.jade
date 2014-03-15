@@ -20,55 +20,72 @@ block content
 				form( method="POST")
 					label= tr['first_name'] + ' : '
 					span= errors.first_name
-					input#first_name( name="first_name" value=profile.first_name disabled )
-					input#first_name_shadow( name="first_name" value=profile.first_name hidden disabled)
+					span#first_name_existed.existed= profile.first_name
+					input#first_name( name="first_name" value=profile.first_name hidden)
 					div#settingsFirstNameButtons(hidden)
 						input#submitFirstName.btn_green( type="submit" value=tr['submit'])
-						a#cancelEditFirstName.cancel_link( href="javascript:;" onclick="cancelEditField('first_name_shadow', 'first_name', 'settingsFirstNameButtons', 'editFirstName')")= tr['cancel']
-					a#editFirstName.editLink( href="javascript:;" onclick="editField('first_name', 'settingsFirstNameButtons', 'editFirstName')" )= tr['edit']
+						a#cancelEditFirstName.cancel_link( href="javascript:;" onclick="cancelEditField('first_name_existed', 'first_name', 'settingsFirstNameButtons', 'editFirstName')")= tr['cancel']
+
+					a#editFirstName.editLink( href="javascript:;" onclick="editField('first_name_existed', 'first_name', 'settingsFirstNameButtons', 'editFirstName')" )= tr['edit']
 
 			//LAST NAME
 			div.settingsElement
 				form( method="POST")
 					label= tr['last_name'] + ' : '
 					span= errors.last_name
-					input#last_name( name="last_name" value=profile.last_name disabled )
-					input#last_name_shadow( name="last_name" value=profile.last_name hidden disabled)
+					span#last_name_existed.existed= profile.last_name
+					input#last_name( name="last_name" value=profile.last_name hidden )
 					div#settingsLastNamebuttons(hidden)
 						input#submitLastName.btn_green( type="submit" value=tr['submit'])
-						a#cancelEditLastName.cancel_link( href="javascript:;" onclick="cancelEditField('last_name_shadow', 'last_name', 'settingsLastNamebuttons', 'editLastName')")= tr['cancel']
-					a#editLastName.editLink( href="javascript:;" onclick="editField('last_name', 'settingsLastNamebuttons', 'editLastName')" )= tr['edit']
+						a#cancelEditLastName.cancel_link( href="javascript:;" onclick="cancelEditField('last_name_existed', 'last_name', 'settingsLastNamebuttons', 'editLastName')")= tr['cancel']
+					a#editLastName.editLink( href="javascript:;" onclick="editField('last_name_existed', 'last_name', 'settingsLastNamebuttons', 'editLastName')" )= tr['edit']
 
 			//GENDER
 			div.settingsElement
 				form( method="POST")
 					label Gender :
 					span= errors.last_name
-					input#gender( name="gender" value=profile.gender disabled )
-					input#gender_shadow( name="last_name" value=profile.gender hidden disabled)
+					span#gender_existed= profile.gender || "undefined"
+					input#gender( name="gender" value=profile.gender hidden )
 					div#settingsGenderbuttons(hidden)
 						input#submitGender.btn_green( type="submit" value=tr['submit'])
-						a#cancelEditGender.cancel_link( href="javascript:;" onclick="cancelEditField('gender_shadow', 'gender', 'settingsGenderbuttons', 'editGender')")= tr['cancel']
-					a#editGender.editLink( href="javascript:;" onclick="editField('gender', 'settingsGenderbuttons', 'editGender')" )= tr['edit']
+						a#cancelEditGender.cancel_link( href="javascript:;" onclick="cancelEditField('gender_existed', 'gender', 'settingsGenderbuttons', 'editGender')")= tr['cancel']
+					a#editGender.editLink( href="javascript:;" onclick="editField('gender_existed', 'gender', 'settingsGenderbuttons', 'editGender')" )= tr['edit']
 
 			//AGE
 			div.settingsElement
 				form( method="POST")
 					label Age :
 					span= errors.age
-					input#age( name="age" value=profile.age disabled )
-					input#age_shadow( name="age" value=profile.age hidden disabled)
+					span#age_existed= profile.birthday || "undefined"
+					div#age( hidden )
+						select#age_year.age( name="age_year" onChange="setLeap(this.value)" )
+							- for (var i = 2010; i > 1900; i--) {
+								option(value=i )= i
+							- }
+						select#age_month.age( name="age_month" onChange="setSmall(this.value)" )
+							- for (var i = 1; i < 13; i++) {
+								option(value=i )= i
+							- }
+						select#age_day.age( name="age_day" )
+							- for (var i = 1; i < 29; i++) {
+								option(value=i )= i
+							- }
+								option#m29( value="29" ) 29
+								option#m30( value="30" ) 30
+								option#m31( value="31" ) 31
 					div#settingsAgebuttons(hidden)
 						input#submitAge.btn_green( type="submit" value=tr['submit'])
-						a#cancelEditAge.cancel_link( href="javascript:;" onclick="cancelEditField('age_shadow', 'age', 'settingsAgebuttons', 'editAge')")= tr['cancel']
-					a#editAge.editLink( href="javascript:;" onclick="editField('age', 'settingsAgebuttons', 'editAge')" )= tr['edit']
+						a#cancelEditAge.cancel_link( href="javascript:;" onclick="cancelEditField('age_existed', 'age', 'settingsAgebuttons', 'editAge')")= tr['cancel']
+					a#editAge.editLink( href="javascript:;" onclick="editField('age_existed', 'age', 'settingsAgebuttons', 'editAge')" )= tr['edit']
 
 			//MAIN DISCIPLINE
 			div.settingsElement
 				form( method="POST")
 					label Main Discipline :
 					span= errors.last_name
-					select#main_discipline_input(name="discipline" onchange="show_specific_form(this);" disabled)
+					span#main_discipline_existed= profile.discipline || "undefined"
+					select#main_discipline_input(name="discipline" onchange="show_specific_form(this);" hidden)
 								option(value="no-selection" selected)= tr['choose_your_discipline']
 								option(value="100m")= tr['100m']
 								option(value="200m")= tr['200m']
@@ -97,15 +114,16 @@ block content
 								option(value="decathlon")= tr['decathlon']
 					div#settingsMainDisciplineButtons(hidden)
 						input#submitMainDiscipline.btn_green( type="submit" value=tr['submit'])
-						a#cancelEditMainDiscipline.cancel_link( href="javascript:;" onclick="cancelEditField('last_name_shadow', 'main_discipline_input', 'settingsMainDisciplineButtons', 'editMainDiscipline')")= tr['cancel']
-					a#editMainDiscipline.editLink( href="javascript:;" onclick="editField('main_discipline_input', 'settingsMainDisciplineButtons', 'editMainDiscipline')" )= tr['edit']
+						a#cancelEditMainDiscipline.cancel_link( href="javascript:;" onclick="cancelEditField('main_discipline_existed', 'main_discipline_input', 'settingsMainDisciplineButtons', 'editMainDiscipline')")= tr['cancel']
+					a#editMainDiscipline.editLink( href="javascript:;" onclick="editField('main_discipline_existed', 'main_discipline_input', 'settingsMainDisciplineButtons', 'editMainDiscipline')" )= tr['edit']
 
 			//COUNTRY
 			div.settingsElement
 				form( method="POST")
 					label Country :
 					span= errors.country
-					select#country_input(name="country" onchange="show_specific_form(this);" disabled)
+					span#country_existed= profile.country || "undefined"
+					select#country_input(name="country" hidden)
 								option(value="no-selection" selected) Choose your country
 								option(value="el") Greece
 								option(value="en") UK
@@ -113,20 +131,20 @@ block content
 								option(value="ru") Russia
 					div#settingsCountryButtons(hidden)
 						input#submitCountry.btn_green( type="submit" value=tr['submit'])
-						a#cancelEditCountry.cancel_link( href="javascript:;" onclick="cancelEditField('country_shadow', 'country_input', 'settingsCountryButtons', 'editCountry')")= tr['cancel']
-					a#editCountry.editLink( href="javascript:;" onclick="editField('country_input', 'settingsCountryButtons', 'editCountry')" )= tr['edit']
+						a#cancelEditCountry.cancel_link( href="javascript:;" onclick="cancelEditField('country_existed', 'country_input', 'settingsCountryButtons', 'editCountry')")= tr['cancel']
+					a#editCountry.editLink( href="javascript:;" onclick="editField('country_existed', 'country_input', 'settingsCountryButtons', 'editCountry')" )= tr['edit']
 
 			//ABOUT ME
 			div.settingsElement
 				form( method="POST")
 					label About me :
-					span= errors.last_name
-					textarea#about_me.textarea( name="last_name" maxlength="1000" disabled) Two times olympic champion. Dragons and stories lives here bla bla bla
-					input#about_me_shadow( name="last_name" type="text" value=profile.last_name hidden disabled)
+					span= errors.about
+					span#about_existed= profile.about || "undefined"
+					textarea#about_me.textarea( name="last_name" maxlength="1000" hidden)= profile.about
 					div#settingsAboutMeButtons(hidden)
 						input#submitAboutMe.btn_green( type="submit" value=tr['submit'])
-						a#cancelEditAboutMe.cancel_link( href="javascript:;" onclick="cancelEditField('last_name_shadow', 'about_me', 'settingsAboutMeButtons', 'editAboutMe')")= tr['cancel']
-					a#editAboutMe.editLink( href="javascript:;" onclick="editField('about_me', 'settingsAboutMeButtons', 'editAboutMe')" )= tr['edit']
+						a#cancelEditAboutMe.cancel_link( href="javascript:;" onclick="cancelEditField('about_existed', 'about_me', 'settingsAboutMeButtons', 'editAboutMe')")= tr['cancel']
+					a#editAboutMe.editLink( href="javascript:;" onclick="editField('about_existed', 'about_me', 'settingsAboutMeButtons', 'editAboutMe')" )= tr['edit']
 
 
 		//ACCOUNT SETTINGS

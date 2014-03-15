@@ -747,7 +747,7 @@ input.btn_blue_2 {
 			padding:5px;
 
 			&:hover {
-				background-color: @selectedOptionBackground;
+				background-color: @light_gray;
 			}
 		}
 
@@ -810,6 +810,14 @@ input.btn_blue_2 {
 			border: none;
 			font-size: 1em;
 		}
+
+		.existed {
+			display: inline-block;
+		}
+
+		&:hover{
+			background-color: @light_gray;
+		}
 	}
 
 	.editable {
@@ -831,7 +839,6 @@ input.btn_blue_2 {
 	.submitButtonsVisible {
 		display: block;
 		width:150px;
-		float:right;
 	}
 
 	.submitButtonsHide {
