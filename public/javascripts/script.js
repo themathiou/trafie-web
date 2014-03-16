@@ -85,13 +85,13 @@ function setLeap( year ) {
 	console.log(year);
 
 	if ( ( (year % 4 == 0) && (year % 100 != 0) ) || (year % 400 == 0) ){
-		document.getElementById('m29').style.visibility="hidden";
-		document.getElementById('m30').style.visibility="hidden";
+		document.getElementById('m29').style.display = "none";
+		document.getElementById('m30').style.display = "none";
 		console.log('if');
 	}
 	else {
-		document.getElementById('m29').style.visibility="visible";
-		document.getElementById('m30').style.visibility="visible";
+		document.getElementById('m29').style.display = "block";
+		document.getElementById('m30').style.display = "block";
 		console.log('else');
 
 	}
@@ -106,11 +106,11 @@ function setSmall( year ) {
 	console.log(year + '- 31' );
 
 	if ( ( (year % 4 == 0) && (year % 100 != 0) ) || (year % 400 == 0) ){
-		document.getElementById('m31').style.visibility="hidden";
+		document.getElementById('m31').style.display = "none";
 		console.log('if-31');
 	}
 	else {
-		document.getElementById('m31').style.visibility="visible";
+		document.getElementById('m31').style.display = "block";
 		console.log('else-31');
 
 	}

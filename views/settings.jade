@@ -57,17 +57,17 @@ block content
 				form( method="POST")
 					label Age :
 					span= errors.age
-					span#age_existed= profile.birthday || "undefined"
-					div#age( hidden )
-						select#age_year.age( name="age_year" onChange="setLeap(this.value)" )
+					span#birthday_existed= profile.birthday.year+'/'+profile.birthday.month+'/'+profile.birthday.day
+					div#birthday( hidden )
+						select#birthday_year( name="birthday_year" onChange="setLeap(this.value)" )
 							- for (var i = 2010; i > 1900; i--) {
 								option(value=i )= i
 							- }
-						select#age_month.age( name="age_month" onChange="setSmall(this.value)" )
+						select#birthday_month( name="birthday_month" onChange="setSmall(this.value)" )
 							- for (var i = 1; i < 13; i++) {
 								option(value=i )= i
 							- }
-						select#age_day.age( name="age_day" )
+						select#birthday_day( name="birthday_day" )
 							- for (var i = 1; i < 29; i++) {
 								option(value=i )= i
 							- }
@@ -76,8 +76,8 @@ block content
 								option#m31( value="31" ) 31
 					div#settingsAgebuttons(hidden)
 						input#submitAge.btn_green( type="submit" value=tr['submit'])
-						a#cancelEditAge.cancel_link( href="javascript:;" onclick="cancelEditField('age_existed', 'age', 'settingsAgebuttons', 'editAge')")= tr['cancel']
-					a#editAge.editLink( href="javascript:;" onclick="editField('age_existed', 'age', 'settingsAgebuttons', 'editAge')" )= tr['edit']
+						a#cancelEditAge.cancel_link( href="javascript:;" onclick="cancelEditField('birthday_existed', 'birthday', 'settingsAgebuttons', 'editAge')")= tr['cancel']
+					a#editAge.editLink( href="javascript:;" onclick="editField('birthday_existed', 'birthday', 'settingsAgebuttons', 'editAge')" )= tr['edit']
 
 			//MAIN DISCIPLINE
 			div.settingsElement
