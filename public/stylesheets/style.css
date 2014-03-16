@@ -703,7 +703,7 @@ input.btn_blue_2:active {
   padding: 5px;
 }
 #settingsNav ul li:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: #f6f6f6;
 }
 #settingsNav ul .active {
   background-color: rgba(0, 0, 0, 0.1);
@@ -748,6 +748,12 @@ input.btn_blue_2:active {
   border: none;
   font-size: 1em;
 }
+.settingsContent .settingsElement .existed {
+  display: inline-block;
+}
+.settingsContent .settingsElement:hover {
+  background-color: #f6f6f6;
+}
 .settingsContent .editable {
   background-color: #f6f6f6;
 }
@@ -772,7 +778,6 @@ input.btn_blue_2:active {
 .settingsContent .submitButtonsVisible {
   display: block;
   width: 150px;
-  float: right;
 }
 .settingsContent .submitButtonsHide {
   visibility: hidden;

@@ -4,13 +4,16 @@
 
 /**
  * editField() : shows the elements for editing a field
+ * @param existedID : the span that contains the existed value
  * @param fieldID : the field we want to make editable
  * @param saveID : the 'save' button id for show/hide
  * @param cancelID : the 'cancel' button id for show/hide
  * @param editID : the 'edit' button id for show/hide
  */
-function editField( fieldID, saveID, editID ) {
-    document.getElementById(fieldID).disabled = false;
+function editField( existedID, fieldID, saveID, editID ) {
+	document.getElementById(existedID).style.display = 'none';
+    document.getElementById(fieldID).style.display = 'block';
+
     document.getElementById(saveID).className = 'submitButtonsVisible';
     document.getElementById(editID).style.display = 'none';
     document.getElementById(editID).parentNode.parentNode.className = 'settingsElement editable' ;
@@ -28,14 +31,16 @@ function editHiddenField( hiddenFieldID, editID) {
 
 /**
  * cancelEditField() : hides the elements for editing a field (reverse action of editField )
+ * @param existedID : the span that contains the existed value
  * @param fieldID : the field we want to make editable
  * @param saveID : the 'save' button id for show/hide
  * @param cancelID : the 'cancel' button id for show/hide
  * @param editID : the 'edit' button id for show/hide
  */
-function cancelEditField (fieldID_shadow, fieldID, saveID, editID ) {
-    document.getElementById(fieldID).value = document.getElementById(fieldID_shadow).value;
-    document.getElementById(fieldID).disabled = true;
+function cancelEditField (existedID, fieldID, saveID, editID ) {
+	document.getElementById(existedID).style.display = 'inline-block';
+    document.getElementById(fieldID).style.display = 'none';
+
     document.getElementById(saveID).className = 'submitButtonsHide';
     document.getElementById(editID).style.display = 'block';
     document.getElementById(editID).parentNode.parentNode.className = 'settingsElement' ;
@@ -69,6 +74,46 @@ function showSettingsTab( tab ) {
 	document.getElementById('accountSettingsTab').className="";
 	var d = document.getElementById(tab+'Tab')
 	d.className= d.className + " active";
+
+}
+
+/**
+ * setLeap() : called when year selected to set the number of days
+ * @param year : the selected year
+ */
+function setLeap( year ) {
+	console.log(year);
+
+	if ( ( (year % 4 == 0) && (year % 100 != 0) ) || (year % 400 == 0) ){
+		document.getElementById('m29').style.visibility="hidden";
+		document.getElementById('m30').style.visibility="hidden";
+		console.log('if');
+	}
+	else {
+		document.getElementById('m29').style.visibility="visible";
+		document.getElementById('m30').style.visibility="visible";
+		console.log('else');
+
+	}
+
+}
+
+/**
+ * setSmall() : called when month selected to set the number of days
+ * @param year : the selected year
+ */
+function setSmall( year ) {
+	console.log(year + '- 31' );
+
+	if ( ( (year % 4 == 0) && (year % 100 != 0) ) || (year % 400 == 0) ){
+		document.getElementById('m31').style.visibility="hidden";
+		console.log('if-31');
+	}
+	else {
+		document.getElementById('m31').style.visibility="visible";
+		console.log('else-31');
+
+	}
 
 }
 
