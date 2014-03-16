@@ -649,7 +649,7 @@ trafie.get( '/settings', function( req, res ) {
       else if( response.male === false ) {
         gender = 'female';
       }
-      
+
       var birthday = {};
       birthday.day = response.birthday.day ? response.birthday.day : '';
       birthday.month = response.birthday.month ? response.birthday.month : '';
@@ -721,15 +721,33 @@ trafie.get( '/settings', function( req, res ) {
   }
   // If there are errors, do not update the profile
   else if( errors ) {
-    Profile.schema.findOne({ '_id': user_id }, 'first_name last_name')
+    Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline about male country birthday')
     .then( function( response ) {
       // Format the data that will go to the front end
+      var gender = '';
+      if( response.male === true ) {
+        gender = 'male';
+      }
+      else if( response.male === false ) {
+        gender = 'female';
+      }
+      
+      var birthday = {};
+      birthday.day = response.birthday.day ? response.birthday.day : '';
+      birthday.month = response.birthday.month ? response.birthday.month : '';
+      birthday.year = response.birthday.year ? response.birthday.year : '';
+
       var view_data = {
         'profile': {
           'first_name': response.first_name,
-          'last_name' : response.last_name
+          'last_name' : response.last_name,
+          'discipline': response.discipline,
+          'about'     : response.about,
+          'gender'    : gender,
+          'country'   : response.country,
+          'birthday'  : birthday
         },
-        'errors'  : error_messages,
+        'errors'  : errors,
         'tr'      : translations['en'].getSettingsTranslations()
       };
       res.render( 'settings', view_data );
@@ -737,15 +755,33 @@ trafie.get( '/settings', function( req, res ) {
   // Else, fetch the first name and the last name of the user from the database
   } else {
     Profile.update({ '_id': user_id }, { $set: post_data }, { upsert: true }, function( error ) {
-      Profile.schema.findOne({ '_id': user_id }, 'first_name last_name')
+      Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline about male country birthday')
       .then( function( response ) {
-        // Format the data that will go to the front end
+      // Format the data that will go to the front end
+      var gender = '';
+      if( response.male === true ) {
+        gender = 'male';
+      }
+      else if( response.male === false ) {
+        gender = 'female';
+      }
+      
+      var birthday = {};
+      birthday.day = response.birthday.day ? response.birthday.day : '';
+      birthday.month = response.birthday.month ? response.birthday.month : '';
+      birthday.year = response.birthday.year ? response.birthday.year : '';
+
         var view_data = {
           'profile': {
             'first_name': response.first_name,
-            'last_name' : response.last_name
+            'last_name' : response.last_name,
+            'discipline': response.discipline,
+            'about'     : response.about,
+            'gender'    : gender,
+            'country'   : response.country,
+            'birthday'  : birthday
           },
-          'errors'  : error_messages,
+          'errors'  : errors,
           'tr'      : translations['en'].getSettingsTranslations()
         };
         res.render( 'settings', view_data );
