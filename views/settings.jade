@@ -61,15 +61,28 @@ block content
 					div#birthday( hidden )
 						select#birthday_year( name="birthday_year" onChange="setLeap(this.value)" )
 							- for (var i = 2010; i > 1900; i--) {
-								option(value=i )= i
+									if i == profile.birthday.year {
+										option( value=i selected)= i
+									} else {
+										option( value=i )= i
+									}
 							- }
 						select#birthday_month( name="birthday_month" onChange="setSmall(this.value)" )
 							- for (var i = 1; i < 13; i++) {
-								option(value=i )= i
+								if i == profile.birthday.month {
+									option( value=i selected )= i
+								} else {
+									option( value=i )= i
+								}
 							- }
 						select#birthday_day( name="birthday_day" )
 							- for (var i = 1; i < 29; i++) {
-								option(value=i )= i
+								if i == profile.birthday.day {
+									option( value=i selected )= i
+								} else {
+									option( value=i )= i
+								}
+
 							- }
 								option#m29( value="29" ) 29
 								option#m30( value="30" ) 30
