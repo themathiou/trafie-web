@@ -144,9 +144,9 @@ block content
 					span#country_existed= profile.country || "undefined"
 					select#country_input(name="country" hidden)
 							option(value="no-selection" selected) Choose your country
-							each i in countries
-								option( value=i )= countries[i]
-
+							- for( var i in tr['countries'] ) {
+								option( value=i )= tr['countries'][i]
+							- }
 					div#settingsCountryButtons(hidden)
 						input#submitCountry.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditCountry.cancel_link( href="javascript:;" onclick="cancelEditField('country_existed', 'country_input', 'settingsCountryButtons', 'editCountry')")= tr['cancel']

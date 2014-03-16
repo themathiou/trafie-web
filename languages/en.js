@@ -42,8 +42,7 @@ var En = function() {
         'points'				: 'Points',
         'submit'				: 'Submit',
         'save'					: 'Save',
-        'cancel'				: 'Cancel',
-
+        'cancel'				: 'Cancel'
 	};
 
 	this.settings = {
@@ -61,257 +60,256 @@ var En = function() {
 		'enter_your_performance'	: 'Enter your performance'
 	};
 
-    this.countries = {
-        'AF' : 'Afghanistan',
-        'AX' : 'Aland Islands',
-        'AL' : 'Albania',
-        'DZ' : 'Algeria',
-        'AS' : 'American Samoa',
-        'AD' : 'Andorra',
-        'AO' : 'Angola',
-        'AI' : 'Anguilla',
-        'AQ' : 'Antarctica',
-        'AG' : 'Antigua and Barbuda',
-        'AR' : 'Argentina',
-        'AM' : 'Armenia',
-        'AW' : 'Aruba',
-        'AU' : 'Australia',
-        'AT' : 'Austria',
-        'AZ' : 'Azerbaijan',
-        'BS' : 'Bahamas',
-        'BH' : 'Bahrain',
-        'BD' : 'Bangladesh',
-        'BB' : 'Barbados',
-        'BY' : 'Belarus',
-        'BE' : 'Belgium',
-        'BZ' : 'Belize',
-        'BJ' : 'Benin',
-        'BM' : 'Bermuda',
-        'BT' : 'Bhutan',
-        'BO' : 'Bolivia, Plurinational State of',
-        'BQ' : 'Bonaire, Sint Eustatius and Saba',
-        'BA' : 'Bosnia and Herzegovina',
-        'BW' : 'Botswana',
-        'BV' : 'Bouvet Island',
-        'BR' : 'Brazil',
-        'IO' : 'British Indian Ocean Territory',
-        'BN' : 'Brunei Darussalam',
-        'BG' : 'Bulgaria',
-        'BF' : 'Burkina Faso',
-        'BI' : 'Burundi',
-        'KH' : 'Cambodia',
-        'CM' : 'Cameroon',
-        'CA' : 'Canada',
-        'CV' : 'Cape Verde',
-        'KY' : 'Cayman Islands',
-        'CF' : 'Central African Republic',
-        'TD' : 'Chad',
-        'CL' : 'Chile',
-        'CN' : 'China',
-        'CX' : 'Christmas Island',
-        'CC' : 'Cocos (Keeling) Islands',
-        'CO' : 'Colombia',
-        'KM' : 'Comoros',
-        'CG' : 'Congo',
-        'CD' : 'Congo, The Democratic Republic of the',
-        'CK' : 'Cook Islands',
-        'CR' : 'Costa Rica',
-        'CI' : 'Cote d\'Ivoire',
-        'HR' : 'Croatia',
-        'CU' : 'Cuba',
-        'CW' : 'Curacao',
-        'CY' : 'Cyprus',
-        'CZ' : 'Czech Republic',
-        'DK' : 'Denmark',
-        'DJ' : 'Djibouti',
-        'DM' : 'Dominica',
-        'DO' : 'Dominican Republic',
-        'EC' : 'Ecuador',
-        'EG' : 'Egypt',
-        'SV' : 'El Salvador',
-        'GQ' : 'Equatorial Guinea',
-        'ER' : 'Eritrea',
-        'EE' : 'Estonia',
-        'ET' : 'Ethiopia',
-        'FK' : 'Falkland Islands (Malvinas)',
-        'FO' : 'Faroe Islands',
-        'FJ' : 'Fiji',
-        'FI' : 'Finland',
-        'FR' : 'France',
-        'GF' : 'French Guiana',
-        'PF' : 'French Polynesia',
-        'TF' : 'French Southern Territories',
-        'GA' : 'Gabon',
-        'GM' : 'Gambia',
-        'GE' : 'Georgia',
-        'DE' : 'Germany',
-        'GH' : 'Ghana',
-        'GI' : 'Gibraltar',
-        'GR' : 'Greece',
-        'GL' : 'Greenland',
-        'GD' : 'Grenada',
-        'GP' : 'Guadeloupe',
-        'GU' : 'Guam',
-        'GT' : 'Guatemala',
-        'GG' : 'Guernsey',
-        'GN' : 'Guinea',
-        'GW' : 'Guinea-Bissau',
-        'GY' : 'Guyana',
-        'HT' : 'Haiti',
-        'HM' : 'Heard Island and McDonald Islands',
-        'VA' : 'Holy See (Vatican City State)',
-        'HN' : 'Honduras',
-        'HK' : 'Hong Kong',
-        'HU' : 'Hungary',
-        'IS' : 'Iceland',
-        'IN' : 'India',
-        'ID' : 'Indonesia',
-        'IR' : 'Iran, Islamic Republic of',
-        'IQ' : 'Iraq',
-        'IE' : 'Ireland',
-        'IM' : 'Isle of Man',
-        'IL' : 'Israel',
-        'IT' : 'Italy',
-        'JM' : 'Jamaica',
-        'JP' : 'Japan',
-        'JE' : 'Jersey',
-        'JO' : 'Jordan',
-        'KZ' : 'Kazakhstan',
-        'KE' : 'Kenya',
-        'KI' : 'Kiribati',
-        'KP' : 'Korea, Democratic People\'s Republic of',
-        'KR' : 'Korea, Republic of',
-        'KW' : 'Kuwait',
-        'KG' : 'Kyrgyzstan',
-        'LA' : 'Lao People\'s Democratic Republic',
-        'LV' : 'Latvia',
-        'LB' : 'Lebanon',
-        'LS' : 'Lesotho',
-        'LR' : 'Liberia',
-        'LY' : 'Libya',
-        'LI' : 'Liechtenstein',
-        'LT' : 'Lithuania',
-        'LU' : 'Luxembourg',
-        'MO' : 'Macao',
-        'MK' : 'Macedonia, The Former Yugoslav Republic of',
-        'MG' : 'Madagascar',
-        'MW' : 'Malawi',
-        'MY' : 'Malaysia',
-        'MV' : 'Maldives',
-        'ML' : 'Mali',
-        'MT' : 'Malta',
-        'MH' : 'Marshall Islands',
-        'MQ' : 'Martinique',
-        'MR' : 'Mauritania',
-        'MU' : 'Mauritius',
-        'YT' : 'Mayotte',
-        'MX' : 'Mexico',
-        'FM' : 'Micronesia, Federated States of',
-        'MD' : 'Moldova, Republic of',
-        'MC' : 'Monaco',
-        'MN' : 'Mongolia',
-        'ME' : 'Montenegro',
-        'MS' : 'Montserrat',
-        'MA' : 'Morocco',
-        'MZ' : 'Mozambique',
-        'MM' : 'Myanmar',
-        'NA' : 'Namibia',
-        'NR' : 'Nauru',
-        'NP' : 'Nepal',
-        'NL' : 'Netherlands',
-        'NC' : 'New Caledonia',
-        'NZ' : 'New Zealand',
-        'NI' : 'Nicaragua',
-        'NE' : 'Niger',
-        'NG' : 'Nigeria',
-        'NU' : 'Niue',
-        'NF' : 'Norfolk Island',
-        'MP' : 'Northern Mariana Islands',
-        'NO' : 'Norway',
-        'OM' : 'Oman',
-        'PK' : 'Pakistan',
-        'PW' : 'Palau',
-        'PS' : 'Palestine, State of',
-        'PA' : 'Panama',
-        'PG' : 'Papua New Guinea',
-        'PY' : 'Paraguay',
-        'PE' : 'Peru',
-        'PH' : 'Philippines',
-        'PN' : 'Pitcairn',
-        'PL' : 'Poland',
-        'PT' : 'Portugal',
-        'PR' : 'Puerto rico',
-        'QA' : 'Qatar',
-        'RE' : 'Reunion',
-        'RO' : 'Romania',
-        'RU' : 'Russian Federation',
-        'RW' : 'Rwanda',
-        'BL' : 'Saint Barthelemy',
-        'SH' : 'Saint Helena, Ascension and Tristan da Cunha',
-        'KN' : 'Saint Kitts and Nevis',
-        'LC' : 'Saint Lucia',
-        'MF' : 'Saint Martin (French Part)',
-        'PM' : 'Saint Pierre and Miquelon',
-        'VC' : 'Saint Vincent and the Grenadines',
-        'WS' : 'Samoa',
-        'SM' : 'San Marino',
-        'ST' : 'Sao Tome and Principe',
-        'SA' : 'Saudi Arabia',
-        'SN' : 'Senegal',
-        'RS' : 'Serbia',
-        'SC' : 'Seychelles',
-        'SL' : 'Sierra Leone',
-        'SG' : 'Singapore',
-        'SX' : 'Sint Maarten (Dutch Part)',
-        'SK' : 'Slovakia',
-        'SI' : 'Slovenia',
-        'SB' : 'Solomon Islands',
-        'SO' : 'Somalia',
-        'ZA' : 'South Africa',
-        'GS' : 'South Georgia and the South Sandwich Islands',
-        'SS' : 'South Sudan',
-        'ES' : 'Spain',
-        'LK' : 'Sri Lanka',
-        'SD' : 'Sudan',
-        'SR' : 'Suriname',
-        'SJ' : 'Svalbard and Jan Mayen',
-        'SZ' : 'Swaziland',
-        'SE' : 'Sweden',
-        'CH' : 'Switzerland',
-        'SY' : 'Syrian Arab Republic',
-        'TW' : 'Taiwan, Province of China',
-        'TJ' : 'Tajikistan',
-        'TZ' : 'Tanzania, United Republic of',
-        'TH' : 'Thailand',
-        'TL' : 'Timor-Leste',
-        'TG' : 'Togo',
-        'TK' : 'Tokelau',
-        'TO' : 'Tonga',
-        'TT' : 'Trinidad and Tobago',
-        'TN' : 'Tunisia',
-        'TR' : 'Turkey',
-        'TM' : 'Turkmenistan',
-        'TC' : 'Turks and Caicos Islands',
-        'TV' : 'Tuvalu',
-        'UG' : 'Uganda',
-        'UA' : 'Ukraine',
-        'AE' : 'United Arab Emirates',
-        'GB' : 'United Kingdom',
-        'US' : 'United States',
-        'UM' : 'United States Minor Outlying Islands',
-        'UY' : 'Uruguay',
-        'UZ' : 'Uzbekistan',
-        'VU' : 'Vanuatu',
-        'VE' : 'Venezuela, Bolivarian Republic of',
-        'VN' : 'Vietnam',
-        'VG' : 'Virgin Islands, British',
-        'VI' : 'Virgin Islands, U.S.',
-        'WF' : 'Wallis and Futuna',
-        'EH' : 'Western Sahara',
-        'YE' : 'Yemen',
-        'ZM' : 'Zambia',
-        'ZW' : 'Zimbabwe'
-    }
+    this.countries = [];
+    this.countries['AF'] = 'Afghanistan';
+    this.countries['AX'] = 'Aland Islands';
+    this.countries['AL'] = 'Albania';
+    this.countries['DZ'] = 'Algeria';
+    this.countries['AS'] = 'American Samoa';
+    this.countries['AD'] = 'Andorra';
+    this.countries['AO'] = 'Angola';
+    this.countries['AI'] = 'Anguilla';
+    this.countries['AQ'] = 'Antarctica';
+    this.countries['AG'] = 'Antigua and Barbuda';
+    this.countries['AR'] = 'Argentina';
+    this.countries['AM'] = 'Armenia';
+    this.countries['AW'] = 'Aruba';
+    this.countries['AU'] = 'Australia';
+    this.countries['AT'] = 'Austria';
+    this.countries['AZ'] = 'Azerbaijan';
+    this.countries['BS'] = 'Bahamas';
+    this.countries['BH'] = 'Bahrain';
+    this.countries['BD'] = 'Bangladesh';
+    this.countries['BB'] = 'Barbados';
+    this.countries['BY'] = 'Belarus';
+    this.countries['BE'] = 'Belgium';
+    this.countries['BZ'] = 'Belize';
+    this.countries['BJ'] = 'Benin';
+    this.countries['BM'] = 'Bermuda';
+    this.countries['BT'] = 'Bhutan';
+    this.countries['BO'] = 'Bolivia, Plurinational State of';
+    this.countries['BQ'] = 'Bonaire, Sint Eustatius and Saba';
+    this.countries['BA'] = 'Bosnia and Herzegovina';
+    this.countries['BW'] = 'Botswana';
+    this.countries['BV'] = 'Bouvet Island';
+    this.countries['BR'] = 'Brazil';
+    this.countries['IO'] = 'British Indian Ocean Territory';
+    this.countries['BN'] = 'Brunei Darussalam';
+    this.countries['BG'] = 'Bulgaria';
+    this.countries['BF'] = 'Burkina Faso';
+    this.countries['BI'] = 'Burundi';
+    this.countries['KH'] = 'Cambodia';
+    this.countries['CM'] = 'Cameroon';
+    this.countries['CA'] = 'Canada';
+    this.countries['CV'] = 'Cape Verde';
+    this.countries['KY'] = 'Cayman Islands';
+    this.countries['CF'] = 'Central African Republic';
+    this.countries['TD'] = 'Chad';
+    this.countries['CL'] = 'Chile';
+    this.countries['CN'] = 'China';
+    this.countries['CX'] = 'Christmas Island';
+    this.countries['CC'] = 'Cocos (Keeling) Islands';
+    this.countries['CO'] = 'Colombia';
+    this.countries['KM'] = 'Comoros';
+    this.countries['CG'] = 'Congo';
+    this.countries['CD'] = 'Congo, The Democratic Republic of the';
+    this.countries['CK'] = 'Cook Islands';
+    this.countries['CR'] = 'Costa Rica';
+    this.countries['CI'] = 'Cote d\'Ivoire';
+    this.countries['HR'] = 'Croatia';
+    this.countries['CU'] = 'Cuba';
+    this.countries['CW'] = 'Curacao';
+    this.countries['CY'] = 'Cyprus';
+    this.countries['CZ'] = 'Czech Republic';
+    this.countries['DK'] = 'Denmark';
+    this.countries['DJ'] = 'Djibouti';
+    this.countries['DM'] = 'Dominica';
+    this.countries['DO'] = 'Dominican Republic';
+    this.countries['EC'] = 'Ecuador';
+    this.countries['EG'] = 'Egypt';
+    this.countries['SV'] = 'El Salvador';
+    this.countries['GQ'] = 'Equatorial Guinea';
+    this.countries['ER'] = 'Eritrea';
+    this.countries['EE'] = 'Estonia';
+    this.countries['ET'] = 'Ethiopia';
+    this.countries['FK'] = 'Falkland Islands (Malvinas)';
+    this.countries['FO'] = 'Faroe Islands';
+    this.countries['FJ'] = 'Fiji';
+    this.countries['FI'] = 'Finland';
+    this.countries['FR'] = 'France';
+    this.countries['GF'] = 'French Guiana';
+    this.countries['PF'] = 'French Polynesia';
+    this.countries['TF'] = 'French Southern Territories';
+    this.countries['GA'] = 'Gabon';
+    this.countries['GM'] = 'Gambia';
+    this.countries['GE'] = 'Georgia';
+    this.countries['DE'] = 'Germany';
+    this.countries['GH'] = 'Ghana';
+    this.countries['GI'] = 'Gibraltar';
+    this.countries['GR'] = 'Greece';
+    this.countries['GL'] = 'Greenland';
+    this.countries['GD'] = 'Grenada';
+    this.countries['GP'] = 'Guadeloupe';
+    this.countries['GU'] = 'Guam';
+    this.countries['GT'] = 'Guatemala';
+    this.countries['GG'] = 'Guernsey';
+    this.countries['GN'] = 'Guinea';
+    this.countries['GW'] = 'Guinea-Bissau';
+    this.countries['GY'] = 'Guyana';
+    this.countries['HT'] = 'Haiti';
+    this.countries['HM'] = 'Heard Island and McDonald Islands';
+    this.countries['VA'] = 'Holy See (Vatican City State)';
+    this.countries['HN'] = 'Honduras';
+    this.countries['HK'] = 'Hong Kong';
+    this.countries['HU'] = 'Hungary';
+    this.countries['IS'] = 'Iceland';
+    this.countries['IN'] = 'India';
+    this.countries['ID'] = 'Indonesia';
+    this.countries['IR'] = 'Iran, Islamic Republic of';
+    this.countries['IQ'] = 'Iraq';
+    this.countries['IE'] = 'Ireland';
+    this.countries['IM'] = 'Isle of Man';
+    this.countries['IL'] = 'Israel';
+    this.countries['IT'] = 'Italy';
+    this.countries['JM'] = 'Jamaica';
+    this.countries['JP'] = 'Japan';
+    this.countries['JE'] = 'Jersey';
+    this.countries['JO'] = 'Jordan';
+    this.countries['KZ'] = 'Kazakhstan';
+    this.countries['KE'] = 'Kenya';
+    this.countries['KI'] = 'Kiribati';
+    this.countries['KP'] = 'Korea, Democratic People\'s Republic of';
+    this.countries['KR'] = 'Korea, Republic of';
+    this.countries['KW'] = 'Kuwait';
+    this.countries['KG'] = 'Kyrgyzstan';
+    this.countries['LA'] = 'Lao People\'s Democratic Republic';
+    this.countries['LV'] = 'Latvia';
+    this.countries['LB'] = 'Lebanon';
+    this.countries['LS'] = 'Lesotho';
+    this.countries['LR'] = 'Liberia';
+    this.countries['LY'] = 'Libya';
+    this.countries['LI'] = 'Liechtenstein';
+    this.countries['LT'] = 'Lithuania';
+    this.countries['LU'] = 'Luxembourg';
+    this.countries['MO'] = 'Macao';
+    this.countries['MK'] = 'Macedonia, The Former Yugoslav Republic of';
+    this.countries['MG'] = 'Madagascar';
+    this.countries['MW'] = 'Malawi';
+    this.countries['MY'] = 'Malaysia';
+    this.countries['MV'] = 'Maldives';
+    this.countries['ML'] = 'Mali';
+    this.countries['MT'] = 'Malta';
+    this.countries['MH'] = 'Marshall Islands';
+    this.countries['MQ'] = 'Martinique';
+    this.countries['MR'] = 'Mauritania';
+    this.countries['MU'] = 'Mauritius';
+    this.countries['YT'] = 'Mayotte';
+    this.countries['MX'] = 'Mexico';
+    this.countries['FM'] = 'Micronesia, Federated States of';
+    this.countries['MD'] = 'Moldova, Republic of';
+    this.countries['MC'] = 'Monaco';
+    this.countries['MN'] = 'Mongolia';
+    this.countries['ME'] = 'Montenegro';
+    this.countries['MS'] = 'Montserrat';
+    this.countries['MA'] = 'Morocco';
+    this.countries['MZ'] = 'Mozambique';
+    this.countries['MM'] = 'Myanmar';
+    this.countries['NA'] = 'Namibia';
+    this.countries['NR'] = 'Nauru';
+    this.countries['NP'] = 'Nepal';
+    this.countries['NL'] = 'Netherlands';
+    this.countries['NC'] = 'New Caledonia';
+    this.countries['NZ'] = 'New Zealand';
+    this.countries['NI'] = 'Nicaragua';
+    this.countries['NE'] = 'Niger';
+    this.countries['NG'] = 'Nigeria';
+    this.countries['NU'] = 'Niue';
+    this.countries['NF'] = 'Norfolk Island';
+    this.countries['MP'] = 'Northern Mariana Islands';
+    this.countries['NO'] = 'Norway';
+    this.countries['OM'] = 'Oman';
+    this.countries['PK'] = 'Pakistan';
+    this.countries['PW'] = 'Palau';
+    this.countries['PS'] = 'Palestine, State of';
+    this.countries['PA'] = 'Panama';
+    this.countries['PG'] = 'Papua New Guinea';
+    this.countries['PY'] = 'Paraguay';
+    this.countries['PE'] = 'Peru';
+    this.countries['PH'] = 'Philippines';
+    this.countries['PN'] = 'Pitcairn';
+    this.countries['PL'] = 'Poland';
+    this.countries['PT'] = 'Portugal';
+    this.countries['PR'] = 'Puerto rico';
+    this.countries['QA'] = 'Qatar';
+    this.countries['RE'] = 'Reunion';
+    this.countries['RO'] = 'Romania';
+    this.countries['RU'] = 'Russian Federation';
+    this.countries['RW'] = 'Rwanda';
+    this.countries['BL'] = 'Saint Barthelemy';
+    this.countries['SH'] = 'Saint Helena, Ascension and Tristan da Cunha';
+    this.countries['KN'] = 'Saint Kitts and Nevis';
+    this.countries['LC'] = 'Saint Lucia';
+    this.countries['MF'] = 'Saint Martin (French Part)';
+    this.countries['PM'] = 'Saint Pierre and Miquelon';
+    this.countries['VC'] = 'Saint Vincent and the Grenadines';
+    this.countries['WS'] = 'Samoa';
+    this.countries['SM'] = 'San Marino';
+    this.countries['ST'] = 'Sao Tome and Principe';
+    this.countries['SA'] = 'Saudi Arabia';
+    this.countries['SN'] = 'Senegal';
+    this.countries['RS'] = 'Serbia';
+    this.countries['SC'] = 'Seychelles';
+    this.countries['SL'] = 'Sierra Leone';
+    this.countries['SG'] = 'Singapore';
+    this.countries['SX'] = 'Sint Maarten (Dutch Part)';
+    this.countries['SK'] = 'Slovakia';
+    this.countries['SI'] = 'Slovenia';
+    this.countries['SB'] = 'Solomon Islands';
+    this.countries['SO'] = 'Somalia';
+    this.countries['ZA'] = 'South Africa';
+    this.countries['GS'] = 'South Georgia and the South Sandwich Islands';
+    this.countries['SS'] = 'South Sudan';
+    this.countries['ES'] = 'Spain';
+    this.countries['LK'] = 'Sri Lanka';
+    this.countries['SD'] = 'Sudan';
+    this.countries['SR'] = 'Suriname';
+    this.countries['SJ'] = 'Svalbard and Jan Mayen';
+    this.countries['SZ'] = 'Swaziland';
+    this.countries['SE'] = 'Sweden';
+    this.countries['CH'] = 'Switzerland';
+    this.countries['SY'] = 'Syrian Arab Republic';
+    this.countries['TW'] = 'Taiwan, Province of China';
+    this.countries['TJ'] = 'Tajikistan';
+    this.countries['TZ'] = 'Tanzania, United Republic of';
+    this.countries['TH'] = 'Thailand';
+    this.countries['TL'] = 'Timor-Leste';
+    this.countries['TG'] = 'Togo';
+    this.countries['TK'] = 'Tokelau';
+    this.countries['TO'] = 'Tonga';
+    this.countries['TT'] = 'Trinidad and Tobago';
+    this.countries['TN'] = 'Tunisia';
+    this.countries['TR'] = 'Turkey';
+    this.countries['TM'] = 'Turkmenistan';
+    this.countries['TC'] = 'Turks and Caicos Islands';
+    this.countries['TV'] = 'Tuvalu';
+    this.countries['UG'] = 'Uganda';
+    this.countries['UA'] = 'Ukraine';
+    this.countries['AE'] = 'United Arab Emirates';
+    this.countries['GB'] = 'United Kingdom';
+    this.countries['US'] = 'United States';
+    this.countries['UM'] = 'United States Minor Outlying Islands';
+    this.countries['UY'] = 'Uruguay';
+    this.countries['UZ'] = 'Uzbekistan';
+    this.countries['VU'] = 'Vanuatu';
+    this.countries['VE'] = 'Venezuela, Bolivarian Republic of';
+    this.countries['VN'] = 'Vietnam';
+    this.countries['VG'] = 'Virgin Islands, British';
+    this.countries['VI'] = 'Virgin Islands, U.S.';
+    this.countries['WF'] = 'Wallis and Futuna';
+    this.countries['EH'] = 'Western Sahara';
+    this.countries['YE'] = 'Yemen';
+    this.countries['ZM'] = 'Zambia';
+    this.countries['ZW'] = 'Zimbabwe';
 };
 
 En.prototype.mergeSections = function( section1, section2 ) {
@@ -332,7 +330,7 @@ En.prototype.getProfileTranslations = function() {
 
 En.prototype.getSettingsTranslations = function() {
 	var settings = this.mergeSections( this.general, this.settings );
-    var settings = this.mergeSections( settings, this.counties );
+    settings['countries'] = this.countries;
 	return settings;
 };
 

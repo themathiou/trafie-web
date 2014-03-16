@@ -668,6 +668,7 @@ trafie.get( '/settings', function( req, res ) {
         'errors'  : errors,
         'tr'      : translations['en'].getSettingsTranslations()
       };
+      console.log( view_data.tr );
       res.render( 'settings', view_data );
     })
     .fail(function(response) {
