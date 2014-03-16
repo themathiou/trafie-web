@@ -46,7 +46,16 @@ block content
 					label Gender :
 					span= errors.last_name
 					span#gender_existed= profile.gender || "undefined"
-					input#gender( name="gender" value=profile.gender hidden )
+					div#gender( hidden )
+						if profile.gender == 'male'
+							<input name="gender" type="radio" value="male" checked /> Male
+						else
+							<input name="gender" type="radio" value="male" /> Male
+						if profile.gender == 'female'
+							<input name="gender" type="radio" value="female" checked/> Female
+						else
+							<input name="gender" type="radio" value="female" /> Female
+
 					div#settingsGenderbuttons(hidden)
 						input#submitGender.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditGender.cancel_link( href="javascript:;" onclick="cancelEditField('gender_existed', 'gender', 'settingsGenderbuttons', 'editGender')")= tr['cancel']
@@ -61,15 +70,25 @@ block content
 					div#birthday( hidden )
 						select#birthday_year( name="birthday_year" onChange="setLeap(this.value)" )
 							- for (var i = 2010; i > 1900; i--) {
-								option(value=i )= i
+									if i == profile.birthday.year
+										option( value=i selected)= i
+									else
+										option( value=i )= i
 							- }
 						select#birthday_month( name="birthday_month" onChange="setSmall(this.value)" )
 							- for (var i = 1; i < 13; i++) {
-								option(value=i )= i
+								if i == profile.birthday.month
+									option( value=i selected )= i
+								else
+									option( value=i )= i
+
 							- }
 						select#birthday_day( name="birthday_day" )
 							- for (var i = 1; i < 29; i++) {
-								option(value=i )= i
+								if i == profile.birthday.day
+									option( value=i selected )= i
+								else
+									option( value=i )= i
 							- }
 								option#m29( value="29" ) 29
 								option#m30( value="30" ) 30
@@ -124,11 +143,10 @@ block content
 					span= errors.country
 					span#country_existed= profile.country || "undefined"
 					select#country_input(name="country" hidden)
-								option(value="no-selection" selected) Choose your country
-								option(value="el") Greece
-								option(value="en") UK
-								option(value="us") USA
-								option(value="ru") Russia
+							option(value="no-selection" selected) Choose your country
+							each i in countries
+								option( value=i )= countries[i]
+
 					div#settingsCountryButtons(hidden)
 						input#submitCountry.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditCountry.cancel_link( href="javascript:;" onclick="cancelEditField('country_existed', 'country_input', 'settingsCountryButtons', 'editCountry')")= tr['cancel']
@@ -174,5 +192,3 @@ block content
 						div#settingsAboutMeButtons
 							input#submitNewPassword.btn_green( type="submit" value=tr['submit'])
 							a#cancelNewPassword.cancel_link( href="javascript:;" onclick="cancelEditHiddenField('changePassword', 'editPassword')")= tr['cancel']
-
-

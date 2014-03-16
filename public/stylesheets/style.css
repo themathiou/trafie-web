@@ -744,6 +744,9 @@ input.btn_blue_2:active {
   border: none;
   font-size: 1em;
 }
+.settingsContent .settingsElement input[type="radio"] {
+  -webkit-appearance: radio;
+}
 .settingsContent .settingsElement textarea {
   border: none;
   font-size: 1em;
