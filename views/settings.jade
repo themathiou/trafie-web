@@ -46,7 +46,9 @@ block content
 					label Gender :
 					span= errors.last_name
 					span#gender_existed= profile.gender || "undefined"
-					input#gender( name="gender" value=profile.gender hidden )
+					div#gender( hidden )
+						<input name="gender" type="radio" value="male" /> male
+						<input name="gender" type="radio" value="female" /> female
 					div#settingsGenderbuttons(hidden)
 						input#submitGender.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditGender.cancel_link( href="javascript:;" onclick="cancelEditField('gender_existed', 'gender', 'settingsGenderbuttons', 'editGender')")= tr['cancel']
@@ -61,28 +63,25 @@ block content
 					div#birthday( hidden )
 						select#birthday_year( name="birthday_year" onChange="setLeap(this.value)" )
 							- for (var i = 2010; i > 1900; i--) {
-									if i == profile.birthday.year {
+									if i == profile.birthday.year
 										option( value=i selected)= i
-									} else {
+									else
 										option( value=i )= i
-									}
 							- }
 						select#birthday_month( name="birthday_month" onChange="setSmall(this.value)" )
 							- for (var i = 1; i < 13; i++) {
-								if i == profile.birthday.month {
+								if i == profile.birthday.month
 									option( value=i selected )= i
-								} else {
+								else
 									option( value=i )= i
-								}
+
 							- }
 						select#birthday_day( name="birthday_day" )
 							- for (var i = 1; i < 29; i++) {
-								if i == profile.birthday.day {
+								if i == profile.birthday.day
 									option( value=i selected )= i
-								} else {
+								else
 									option( value=i )= i
-								}
-
 							- }
 								option#m29( value="29" ) 29
 								option#m30( value="30" ) 30
