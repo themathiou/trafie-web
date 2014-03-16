@@ -141,7 +141,7 @@ block content
 				form( method="POST")
 					label Country :
 					span= errors.country
-					span#country_existed= profile.country || "undefined"
+					span#country_existed= tr['countries'][profile.country] || "undefined"
 					select#country_input(name="country" hidden)
 							option(value="no-selection" selected) Choose your country
 							- for( var i in tr['countries'] ) {
