@@ -680,6 +680,12 @@ trafie.get( '/settings', function( req, res ) {
  * Settings - POST
  */
  trafie.post('/settings', function( req, res ) {
+  var user_id = req.session.user_id;
+
+  // If there is no user id in the session, redirect to register screen
+  if(!user_id) {
+    res.redirect('/register');
+  }
   var error_messages = {};
   var errors = false;
   var post_data = {};
@@ -703,24 +709,19 @@ trafie.get( '/settings', function( req, res ) {
     post_data.birthday.month = req.body.birthday_month;
     post_data.birthday.year = req.body.birthday_year;
     if( !Profile.schema.validateBirthday( post_data.birthday ) ) {
-      error_messages.birthday = 'Invalid birthday';
       errors = true;
     }
   }
   if( typeof req.body.gender !== 'undefined' ) {
-    if( !Profile.schema.validateBirthday( post_data.birthday ) ) {
-      error_messages.birthday = 'Invalid birthday';
+    if( !Profile.schema.validateGender( req.body.gender ) ) {
       errors = true;
+    } else {
+      post_data.male = req.body.gender == 'male';
     }
   }
-  var user_id = req.session.user_id;
-
-  // If there is no user id in the session, redirect to register screen
-  if(!user_id) {
-    res.redirect('/register');
-  }
+  
   // If there are errors, do not update the profile
-  else if( errors ) {
+  if( errors ) {
     Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline about male country birthday')
     .then( function( response ) {
       // Format the data that will go to the front end
