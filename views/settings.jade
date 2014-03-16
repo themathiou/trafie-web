@@ -47,8 +47,15 @@ block content
 					span= errors.last_name
 					span#gender_existed= profile.gender || "undefined"
 					div#gender( hidden )
-						<input name="gender" type="radio" value="male" /> male
-						<input name="gender" type="radio" value="female" /> female
+						if profile.gender == 'male'
+							<input name="gender" type="radio" value="male" checked /> Male
+						else
+							<input name="gender" type="radio" value="male" /> Male
+						if profile.gender == 'female'
+							<input name="gender" type="radio" value="female" checked/> Female
+						else
+							<input name="gender" type="radio" value="female" /> Female
+
 					div#settingsGenderbuttons(hidden)
 						input#submitGender.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditGender.cancel_link( href="javascript:;" onclick="cancelEditField('gender_existed', 'gender', 'settingsGenderbuttons', 'editGender')")= tr['cancel']
@@ -136,11 +143,10 @@ block content
 					span= errors.country
 					span#country_existed= profile.country || "undefined"
 					select#country_input(name="country" hidden)
-								option(value="no-selection" selected) Choose your country
-								option(value="el") Greece
-								option(value="en") UK
-								option(value="us") USA
-								option(value="ru") Russia
+							option(value="no-selection" selected) Choose your country
+							each i in countries
+								option( value=i )= countries[i]
+
 					div#settingsCountryButtons(hidden)
 						input#submitCountry.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditCountry.cancel_link( href="javascript:;" onclick="cancelEditField('country_existed', 'country_input', 'settingsCountryButtons', 'editCountry')")= tr['cancel']
@@ -186,5 +192,3 @@ block content
 						div#settingsAboutMeButtons
 							input#submitNewPassword.btn_green( type="submit" value=tr['submit'])
 							a#cancelNewPassword.cancel_link( href="javascript:;" onclick="cancelEditHiddenField('changePassword', 'editPassword')")= tr['cancel']
-
-
