@@ -726,6 +726,13 @@ trafie.get( '/settings', function( req, res ) {
       post_data.country = req.body.country;
     }
   }
+  if( typeof req.body.discipline !== 'undefined' ) {
+    if( !Profile.schema.validateDiscipline( req.body.discipline ) ) {
+      errors = true;
+    } else {
+      post_data.discipline = req.body.discipline;
+    }
+  }
 
   // If there are errors, do not update the profile
   if( errors ) {
