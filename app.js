@@ -719,7 +719,14 @@ trafie.get( '/settings', function( req, res ) {
       post_data.male = req.body.gender == 'male';
     }
   }
-  
+  if( typeof req.body.country !== 'undefined' ) {
+    if( !Profile.schema.validateCountry( req.body.country ) ) {
+      errors = true;
+    } else {
+      post_data.country = req.body.country;
+    }
+  }
+
   // If there are errors, do not update the profile
   if( errors ) {
     Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline about male country birthday')
