@@ -697,11 +697,11 @@ trafie.get( '/settings', function( req, res ) {
       errors = true;
     }
   }
-  if( typeof req.body.day !== 'undefined' && typeof req.body.month !== 'undefined' && typeof req.body.year !== 'undefined' ) {
+  if( typeof req.body.birthday_day !== 'undefined' && typeof req.body.birthday_month !== 'undefined' && typeof req.body.birthday_year !== 'undefined' ) {
     post_data.birthday = {};
-    post_data.birthday.day = req.body.day;
-    post_data.birthday.month = req.body.month;
-    post_data.birthday.year = req.body.year;
+    post_data.birthday.day = req.body.birthday_day;
+    post_data.birthday.month = req.body.birthday_month;
+    post_data.birthday.year = req.body.birthday_year;
     if( !Profile.schema.validateBirthday( post_data.birthday ) ) {
       error_messages.birthday = 'Invalid birthday';
       errors = true;
