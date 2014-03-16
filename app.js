@@ -638,7 +638,7 @@ trafie.get( '/settings', function( req, res ) {
     res.redirect('/register');
   // Else, fetch the first name and the last name of the user from the database
   } else {
-    Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline about male country age')
+    Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline about male country birthday')
     .then( function( response ) {
 
       // Format the data that will go to the front end
@@ -649,7 +649,7 @@ trafie.get( '/settings', function( req, res ) {
       else if( response.male === false ) {
         gender = 'female';
       }
-
+      
       var birthday = {};
       birthday.day = response.birthday.day ? response.birthday.day : '';
       birthday.month = response.birthday.month ? response.birthday.month : '';
@@ -702,6 +702,12 @@ trafie.get( '/settings', function( req, res ) {
     post_data.birthday.day = req.body.birthday_day;
     post_data.birthday.month = req.body.birthday_month;
     post_data.birthday.year = req.body.birthday_year;
+    if( !Profile.schema.validateBirthday( post_data.birthday ) ) {
+      error_messages.birthday = 'Invalid birthday';
+      errors = true;
+    }
+  }
+  if( typeof req.body.gender !== 'undefined' ) {
     if( !Profile.schema.validateBirthday( post_data.birthday ) ) {
       error_messages.birthday = 'Invalid birthday';
       errors = true;
