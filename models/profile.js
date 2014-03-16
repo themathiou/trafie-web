@@ -83,6 +83,13 @@ function isPositiveInteger( value ) {
 	return typeof value !== 'undefined' && !isNaN( parseInt(value) ) && isFinite( value ) && value > 0 && value % 1 === 0;
 }
 
+/**
+ * Checks first and last name for validity
+ */
+profileSchema.validateGender = function( gender ) {
+	return gender == 'male' || gender == 'female';
+}
+
 var Profile = mongoose.model('Profile', profileSchema);
 
 module.exports = Profile;
