@@ -57,7 +57,7 @@ block content
 				form( method="POST")
 					label Age :
 					span= errors.age
-					span#birthday_existed= profile.birthday || "undefined"
+					span#birthday_existed= profile.birthday.year+'/'+profile.birthday.month+'/'+profile.birthday.day
 					div#birthday( hidden )
 						select#birthday_year( name="birthday_year" onChange="setLeap(this.value)" )
 							- for (var i = 2010; i > 1900; i--) {
