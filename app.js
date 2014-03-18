@@ -734,11 +734,10 @@ trafie.get( '/settings', function( req, res ) {
     }
   }
   if( typeof req.body.about !== 'undefined' ) {
-    console.log('YES!');
     if( !Profile.schema.validateAbout( req.body.about ) ) {
       errors = true;
     } else {
-      post_data.discipline = req.body.discipline;
+      post_data.about = req.body.about;
     }
   }
 

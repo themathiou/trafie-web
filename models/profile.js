@@ -3,7 +3,6 @@
 var mongoose = require('mongoose');
 var db = mongoose.connection;
 var q = require('q');
-var entities = require('html-entities').AllHtmlEntities;
 
 //Define User SCHEMA
 var profileSchema = mongoose.Schema({
@@ -103,9 +102,7 @@ profileSchema.validateDiscipline = function( discipline ) {
 };
 
 profileSchema.validateAbout = function( about ) {
-	if( about && about.length < 400 ) {
-		console.log(entities.encode( about ));
-	}
+	return about && about.length <= 400;
 }
 
 var Profile = mongoose.model('Profile', profileSchema);
