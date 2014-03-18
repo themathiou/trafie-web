@@ -325,6 +325,7 @@ En.prototype.mergeSections = function( section1, section2 ) {
 
 En.prototype.getProfileTranslations = function() {
 	var profile = this.mergeSections( this.general, this.profile );
+    profile['countries'] = this.countries;
 	return profile;
 };
 
