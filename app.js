@@ -123,7 +123,7 @@ trafie.get('/', function( req, res ){
   if(!user_id) {
 	  res.redirect('/register');
   } else {
-    Profile.schema.findOne( { '_id': user_id }, 'first_name last_name' ).then( function( profile_data ) {
+    Profile.schema.findOne( { '_id': user_id }, 'first_name last_name discipline country birthday' ).then( function( profile_data ) {
       // If the user was found
       if( typeof profile_data.first_name !== 'undefined' ) {
         Activity.schema.getActivitiesOfUser( { 'user_id': user_id }, null, -1 )
@@ -134,7 +134,9 @@ trafie.get('/', function( req, res ){
           var view_data = {
             'profile': {
               'first_name': profile_data.first_name,
-              'last_name' : profile_data.last_name
+              'last_name' : profile_data.last_name,
+              'discipline': profile_data.discipline,
+              'country'   : profile_data.country
             },
             'activities': activities,
             'tr'        : translations['en'].getProfileTranslations()
@@ -161,7 +163,7 @@ trafie.post('/', function( req, res ){
     res.redirect('/register');
   } else {
     // Find the profile
-    Profile.schema.findOne({ '_id': user_id }, 'first_name last_name')
+    Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline country birthday')
     .then( function( profile_data ) {
       // If the profile was found
       if( typeof profile_data.first_name !== 'undefined' ) {
@@ -242,7 +244,9 @@ trafie.post('/', function( req, res ){
               var view_data = {
                 'profile': {
                   'first_name': profile_data.first_name,
-                  'last_name' : profile_data.last_name
+                  'last_name' : profile_data.last_name,
+                  'discipline': profile_data.discipline,
+                  'country'   : profile_data.country
                 },
                 'activities': activities,
                 'tr'        : translations['en'].getProfileTranslations()
@@ -259,7 +263,9 @@ trafie.post('/', function( req, res ){
             var view_data = {
               'profile': {
                 'first_name': profile_data.first_name,
-                'last_name' : profile_data.last_name
+                'last_name' : profile_data.last_name,
+                'discipline': profile_data.discipline,
+                'country'   : profile_data.country
               },
               'activities': activities,
               'tr'        : translations['en'].getProfileTranslations()
