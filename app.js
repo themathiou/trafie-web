@@ -668,7 +668,6 @@ trafie.get( '/settings', function( req, res ) {
         'errors'  : errors,
         'tr'      : translations['en'].getSettingsTranslations()
       };
-      console.log( view_data.tr );
       res.render( 'settings', view_data );
     })
     .fail(function(response) {
@@ -729,6 +728,14 @@ trafie.get( '/settings', function( req, res ) {
   }
   if( typeof req.body.discipline !== 'undefined' ) {
     if( !Profile.schema.validateDiscipline( req.body.discipline ) ) {
+      errors = true;
+    } else {
+      post_data.discipline = req.body.discipline;
+    }
+  }
+  if( typeof req.body.about !== 'undefined' ) {
+    console.log('YES!');
+    if( !Profile.schema.validateAbout( req.body.about ) ) {
       errors = true;
     } else {
       post_data.discipline = req.body.discipline;
