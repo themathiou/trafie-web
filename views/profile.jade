@@ -7,7 +7,7 @@ block content
 				img( src="../images/profile_pics/user.png" )
 			div#profileFullName
 				h3= profile.first_name+' '+profile.last_name
-				p= profile.discipline + ' - ' + profile.country
+				p= tr[profile.discipline] + ' - ' + tr['countries'][profile.country]
 
 
 		div#history_container
