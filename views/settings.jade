@@ -64,7 +64,7 @@ block content
 			//AGE
 			div.settingsElement
 				form( method="POST")
-					label Age :
+					label Birthday :
 					span= errors.age
 					span#birthday_existed= profile.birthday.year+'/'+profile.birthday.month+'/'+profile.birthday.day
 					div#birthday( hidden )
@@ -103,9 +103,9 @@ block content
 				form( method="POST")
 					label Main Discipline :
 					span= errors.last_name
-					span#main_discipline_existed= profile.discipline || "undefined"
+					span#main_discipline_existed= tr[profile.discipline] || "undefined"
 					select#main_discipline_input(name="discipline" onchange="show_specific_form(this);" hidden)
-								option(value="no-selection" selected)= tr['choose_your_discipline']
+								option(value="no-selection")= tr['choose_your_discipline']
 								option(value="100m")= tr['100m']
 								option(value="200m")= tr['200m']
 								option(value="400m")= tr['400m']
@@ -145,7 +145,10 @@ block content
 					select#country_input(name="country" hidden)
 							option(value="no-selection" selected) Choose your country
 							- for( var i in tr['countries'] ) {
-								option( value=i )= tr['countries'][i]
+								if tr['countries'][profile.country] == tr['countries'][i]
+									option( value=i selected)= tr['countries'][i]
+								else
+									option( value=i )= tr['countries'][i]
 							- }
 					div#settingsCountryButtons(hidden)
 						input#submitCountry.btn_green( type="submit" value=tr['submit'])
@@ -157,8 +160,8 @@ block content
 				form( method="POST")
 					label About me :
 					span= errors.about
-					span#about_existed= profile.about || "undefined"
-					textarea#about_me.textarea( name="last_name" maxlength="1000" hidden)= profile.about
+					span#about_existed( style="overflow-wrap: break-word;")= profile.about || " Write something about you."
+					textarea#about_me.textarea( name="about" maxlength="400" hidden)= profile.about
 					div#settingsAboutMeButtons(hidden)
 						input#submitAboutMe.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditAboutMe.cancel_link( href="javascript:;" onclick="cancelEditField('about_existed', 'about_me', 'settingsAboutMeButtons', 'editAboutMe')")= tr['cancel']
