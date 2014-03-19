@@ -6,9 +6,9 @@
  ##         ##                                         ##          ''                    ##
  ##     ###########   /#  ,cc,,    ,xo#####\ ##   ###########    /#;`    ,xo#####\       ##
  ##        ##         ##,##^^^+   j#^     ^#\#,       ##         ##     j#^     ^#)      ##
- ##       j#,        /##]^       /#         #D       /#,        /#;    /#^       #D      ##
- ##       ##         ##         j#         `#/       ##         ##    j#,,;yxx###/'      ##
- ##      j#,        /#/         #/         #/      /#,        /#"    #/^"                ##
+ ##       j#,        /##]^       /#        `#D       /#,        /#;    /#^       #D      ##
+ ##       ##         ##         j#         `#       '##        '##    j#,,;yxx###/'      ##
+ ##      j#,        /#/         #/         #/      /#/        '#"    #/^"                ##
  ##      ##         ##         |#,        ##       ##         ##    |#,                  ##
  ##     ##, __     /#           \#,     #/|#      ##;        ##,     \#,      ,p         ##
  ##     `%##^^    /#/            ^\#####^ |#     /#,        /#,       ^\####^>*          ##
@@ -24,16 +24,13 @@
  * EXPRESS                                                                                                                     *
  ******************************************************************************************************************************/
 
-var express = require('express');
-var routes = require('./routes');
-var user = require('./routes/user');
-var http = require('http');
-var path = require('path');
-var url = require('url') ;
-var mongoose = require('mongoose');
-var crypto = require('crypto');
-var nodemailer = require('nodemailer');
-var q = require('q');
+var express = require('express'),
+    http = require('http'),
+    path = require('path');
+    url = require('url') ,
+    mongoose = require('mongoose'),
+    crypto = require('crypto'),
+    q = require('q');
 
 // Initialize express
 var trafie = express();
@@ -42,22 +39,30 @@ var trafie = express();
 mongoose.connect('mongodb://localhost/trafiejs');
 var db = mongoose.connection;
 
-// Initialize translations
-var translations = [];
-var en = require('./languages/en.js');
-var gr = require('./languages/gr.js');
-translations['en'] = new en();
-translations['gr'] = new gr();
+// Initialize the routes
+var login = require('./routes/login'),
+    register = require('./routes/register'),
+    profile = require('./routes/profile'),
+    settings = require('./routes/settings'),
+    email_validation = require('./routes/email_validation'),
+    reset_password = require('./routes/reset_password');
 
 
 /*******************************************************************************************************************************
  * MODELS                                                                                                                      *
  ******************************************************************************************************************************/
 
-var User = require('./models/user.js');
-var Profile = require('./models/profile.js');
-var Activity = require('./models/activity.js');
-var UserHashes = require('./models/user_hashes.js');
+var User = require('./models/user.js'),
+    Profile = require('./models/profile.js'),
+    Activity = require('./models/activity.js'),
+    UserHashes = require('./models/user_hashes.js');
+
+
+/*******************************************************************************************************************************
+ * LIBRARIES                                                                                                                   *
+ ******************************************************************************************************************************/
+
+var Email = require('./libs/email');
 
 
 /*******************************************************************************************************************************
@@ -86,356 +91,39 @@ if ('development' == trafie.get('env')) {
 
 
 /*******************************************************************************************************************************
- * EMAIL                                                                                                                       *
- ******************************************************************************************************************************/
-
-// Create a SMTP transport object
-var transport = nodemailer.createTransport("SMTP", {
-        //service: 'Gmail', // use well known service.
-                            // If you are using @gmail.com address, then you don't
-                            // even have to define the service name
-        auth: {
-            user: "trafie.app@gmail.com",
-            pass: "tr@f!etr@f!e"
-        }
-    });
-
-console.log('SMTP Configured');
-
-// Message object
-var message = {
-    from: 'trafie <trafie.app@gmail.com>',
-    headers: {
-        'X-Laziness-level': 1000
-    }
-};
-
-/*******************************************************************************************************************************
  * PROFILE                                                                                                                     *
  ******************************************************************************************************************************/
 
-/**
- * Profile - GET
- */
-trafie.get('/', function( req, res ){
-  var user_id = req.session.user_id;
+trafie.get( '/', profile.get );
 
-  if(!user_id) {
-	  res.redirect('/register');
-  } else {
-    Profile.schema.findOne( { '_id': user_id }, 'first_name last_name discipline country birthday' ).then( function( profile_data ) {
-      // If the user was found
-      if( typeof profile_data.first_name !== 'undefined' ) {
-        Activity.schema.getActivitiesOfUser( { 'user_id': user_id }, null, -1 )
-        .then( function( activities ) {
-          // Format the activity data
-          var activities = Activity.schema.formatActivities( activities );
-          // The data that will go to the front end
-          var view_data = {
-            'profile': {
-              'first_name': profile_data.first_name,
-              'last_name' : profile_data.last_name,
-              'discipline': profile_data.discipline,
-              'country'   : profile_data.country
-            },
-            'activities': activities,
-            'tr'        : translations['en'].getProfileTranslations()
-          };
-          res.render( 'profile', view_data );
-        });
-      // If the user wasn't found
-      } else {
-        res.redirect('/login');
-      }
-    });
-  }
+trafie.post( '/', profile.post );
 
-});
 
-/**
- * Profile - GET
- */
-trafie.post('/', function( req, res ){
-  // Get the user id from the session
-  var user_id = req.session.user_id;
-  // If there is no user id, redirect to login
-  if(!user_id) {
-    res.redirect('/register');
-  } else {
-    // Find the profile
-    Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline country birthday')
-    .then( function( profile_data ) {
-      // If the profile was found
-      if( typeof profile_data.first_name !== 'undefined' ) {
-        var discipline = typeof req.body.discipline !== 'undefined' ? req.body.discipline : '';
-        var performance = {};
+/*******************************************************************************************************************************
+ * SETTINGS                                                                                                                    *
+ ******************************************************************************************************************************/
 
-        switch ( discipline ) {
-          case '100m':
-          case '200m':
-          case '400m':
-          case '800m':
-          case '1500m':
-          case '3000m':
-          case '60m_hurdles':
-          case '100m_hurdles':
-          case '110m_hurdles':
-          case '400m_hurdles':
-          case '3000m_steeple':
-          case '4x100m_relay':
-          case '4x400m_relay':
-          case 'marathon':
-            // Get the posted values. If a value was not posted, replace it with 00
-            performance.hours = typeof req.body.hours !== 'undefined' && req.body.hours != '' ? req.body.hours : '00';
-            performance.minutes = typeof req.body.minutes !== 'undefined' && req.body.minutes != '' ? req.body.minutes: '00';
-            performance.seconds = typeof req.body.seconds !== 'undefined' && req.body.seconds != '' ? req.body.seconds: '00';
-            performance.centiseconds = typeof req.body.centiseconds !== 'undefined' && req.body.centiseconds != '' ? req.body.centiseconds : '00';
+trafie.get( '/settings', settings.get );
 
-            // Format the performance
-            performance = Activity.schema.validateTime( performance );
-
-            break;
-          case 'high_jump':
-          case 'long_jump':
-          case 'triple_jump':
-          case 'pole_vault':
-          case 'shot_put':
-          case 'discus':
-          case 'hammer':
-          case 'javelin':
-            // Get the posted values. If a value was not posted, replace it with 0
-            performance.distance_1 = typeof req.body.distance_1 !== 'undefined' && req.body.distance_1 != '' ? req.body.distance_1 : '0';
-            performance.distance_2 = typeof req.body.distance_2 !== 'undefined' && req.body.distance_2 != '' ? req.body.distance_2: '0';
-
-            // Format the performance
-            performance = Activity.schema.validateDistance( performance );
-            break;
-          case 'pentathlon':
-          case 'heptathlon':
-          case 'decathlon':
-            // Get the posted values. If a value was not posted, replace it with null
-            performance.points = typeof req.body.points !== 'undefined' ? req.body.points : null;
-
-            // Format the performance
-            performance = Activity.schema.validatePoints( performance );
-            break;
-          default:
-            performance = null;
-            break;
-        }
-
-        // If there is a valid performance value
-        if( performance !== null ) {
-          // Create the record that will be inserted in the db
-          var new_activity = {
-            'user_id': user_id,
-            'discipline': discipline,
-            'performance': performance
-          };
-
-          var activity = new Activity( new_activity );
-          // Save the activity
-          activity.save(function ( err, activity ) {
-            Activity.schema.getActivitiesOfUser( { 'user_id': user_id }, null, -1 )
-            .then( function( activities ) {
-              // Format the activity data
-              var activities = Activity.schema.formatActivities( activities );
-              // The data that will go to the front end
-              var view_data = {
-                'profile': {
-                  'first_name': profile_data.first_name,
-                  'last_name' : profile_data.last_name,
-                  'discipline': profile_data.discipline,
-                  'country'   : profile_data.country
-                },
-                'activities': activities,
-                'tr'        : translations['en'].getProfileTranslations()
-              };
-              res.render( 'profile', view_data );
-            });
-          });
-        } else {
-          Activity.schema.getActivitiesOfUser( { 'user_id': user_id }, null, -1 )
-          .then( function( activities ) {
-            // Format the activity data
-            var activities = Activity.schema.formatActivities( activities );
-            // The data that will go to the front end
-            var view_data = {
-              'profile': {
-                'first_name': profile_data.first_name,
-                'last_name' : profile_data.last_name,
-                'discipline': profile_data.discipline,
-                'country'   : profile_data.country
-              },
-              'activities': activities,
-              'tr'        : translations['en'].getProfileTranslations()
-            };
-            res.render( 'profile', view_data );
-          });
-        }
-
-      // If the profile wasn't found
-      } else {
-        res.redirect('/login');
-      }
-    });
-  }
-});
+ trafie.post( '/settings', settings.post );
 
 
 /*******************************************************************************************************************************
  * REGISTER                                                                                                                    *
  ******************************************************************************************************************************/
 
-/**
- * Register - GET
- */
+trafie.get( '/register', register.get );
 
-trafie.get( '/register', function( req, res ) {
-  res.render( 'register', { errors: {}, fields: { 'first_name': '', 'last_name': '', 'email': '' } } );
-});
-
-/**
- * Register - POST
- */
-trafie.post( '/register', function( req, res ) {
-  var error_messages = {};
-  var errors = false;
-
-  // Initializing the input values
-  var first_name = typeof req.body.first_name !== 'undefined' ? req.body.first_name.trim() : '';
-  var last_name = typeof req.body.last_name !== 'undefined' ? req.body.last_name.trim() : '';
-  var email = typeof req.body.email !== 'undefined' ? req.body.email.trim() : '';
-  var password = typeof req.body.password !== 'undefined' ? req.body.password : '';
-  var repeat_password = typeof req.body.repeat_password !== 'undefined' ? req.body.repeat_password : '';
-
-  // Generating error messages
-  if( !password ) {
-    error_messages.password = 'Password is required';
-    errors = true;
-  }
-  else if( !errors && !User.schema.validatePassword( password ) ) {
-    error_messages.password = 'Password should be at least 6 characters long';
-    errors = true;
-  }
-  if( !repeat_password ) {
-    error_messages.repeat_password = 'Please repeat the password';
-    errors = true;
-  }
-  if( !errors && repeat_password !== password ) {
-    error_messages.repeat_password = 'Passwords do not match';
-    errors = true;
-  }
-  if( !email ) {
-    error_messages.email = 'Email is required';
-    errors = true;
-  }
-  else if( !User.schema.validateEmail( email ) ) {
-    error_messages.email = 'Email is not valid';
-    errors = true;
-  }
-  if( !first_name ) {
-    error_messages.first_name = 'First name is required';
-    errors = true;
-  }
-  else if( !Profile.schema.validateName( first_name ) ) {
-    error_messages.first_name = 'First name can only have latin characters';
-    errors = true;
-  }
-  if( !last_name ) {
-    error_messages.last_name = 'Last name is required';
-    errors = true;
-  }
-  else if( !Profile.schema.validateName( last_name ) ) {
-    error_messages.last_name = 'Last name can only have latin characters';
-    errors = true;
-  }
-
-  // Checking if the given email already exists in the database
-  User.schema.emailIsUnique( email ).then( function( unique_email ) {
-    // If the email is not unique, add it to the errors
-    if( !unique_email ) {
-      error_messages.email = 'Email is already in use';
-      errors = true;
-    }
-
-    // If there are any errors, show the messages to the user
-    if( errors ) {
-      res.render( 'register', { 'errors': error_messages, 'fields': { 'first_name': first_name, 'last_name': last_name, 'email': email } });
-      return;
-    }
-
-    // Encrypting the password
-    password = User.schema.encryptPassword(password);
-
-    var new_user = {
-      'email': email,
-      'password': password
-    };
-
-    var new_profile = {
-      'first_name': first_name,
-      'last_name': last_name
-    };
-
-    // Creating the user and profile objects
-    var user = new User( new_user );
-
-    // Saving the user and the profile data
-    user.save(function ( err, user ) {
-      new_profile._id = user._id;
-      var profile = new Profile( new_profile );
-      Profile.schema.save(profile)
-      .then( function(profile){return UserHashes.schema.createVerificationHash(new_user.email, user._id);})
-      .then( function( email_hash ) {
-
-      send_verification_email( new_user.email, new_profile.first_name, new_profile.last_name, email_hash, req.headers.host );
-
-			// Redirecting to the profile
-			res.redirect( '/validation_email_sent/0/' + user._id );
-		});
-	});
-
-  });
-});
+trafie.post( '/register', register.post );
 
 
 /*******************************************************************************************************************************
  * LOGIN                                                                                                                       *
  ******************************************************************************************************************************/
 
-/**
- * Login - GET
- */
-trafie.get('/login', function( req, res ) {
-  res.render('login', { 'errors': {} } );
-});
+trafie.get( '/login', login.get );
 
-/**
- * Login - POST
- */
-trafie.post('/login', function( req, res ) {
-  var email = req.body.email;
-  var password = User.schema.encryptPassword(req.body.password);
-
-  User.schema.findOne({ 'email': email, 'password': password, }, '_id valid')
-  .then(function(response) {
-    if( response !== null && typeof response._id !== 'undefined' ) {
-      if( response.valid === true ) {
-      	req.session.user_id = response._id;
-  	    res.redirect('/');
-      } else {
-        res.redirect('/validation_email_sent/1/' + response._id );
-      }
-    } else {
-	    res.render('login', { 'errors': { 'email': 'Email - password combination wasn\'t found' } } );
-    }
-  })
-	.fail(function(response) {
-		console.log("Error : " + response);
-  });
-
-});
+trafie.post( '/login', login.post );
 
 
 /*******************************************************************************************************************************
@@ -447,376 +135,36 @@ trafie.post('/login', function( req, res ) {
  * Shows a page that just informs the user to check their email
  * in order to validate their account
  */
-trafie.get('/validation_email_sent/:resend/:user_id', function( req, res ) {
-  var user_id = req.params.user_id;
-  User.schema.findOne({ '_id': user_id }, 'email valid')
-  .then(function(response) {
-    if( !response.email || response.valid ) {
-      res.redirect('/login');
-    }
-
-    res.render('validation_email_sent', { 'email': response.email, 'resend': req.params.resend, 'user_id': user_id } );
-  });
-});
+trafie.get( '/validation_email_sent/:resend/:user_id', email_validation.validation_email_sent );
 
 /**
  * Validate - GET
  * Validates the newly created user
  */
-trafie.get('/validate/:hash', function( req,res ){
-  var user_id = '';
-  UserHashes.schema.findUserIdByHash( req.params.hash, 'verify' )
-  .then( function( response ) {
-    if( response ) {
-      user_id = response.user_id;
-      return User.schema.validateUser( response.user_id );
-    } else {
-      res.redirect('/login');
-    }
-  }).then( function(){
-    UserHashes.schema.deleteHash( req.params.hash, 'verify' );
-    // Storing the user id in the session
-    req.session.user_id = user_id;
-    res.redirect('/');
-  });
-});
+trafie.get( '/validate/:hash', email_validation.validate );
 
 /**
  * Resend validation email - GET
  * Resends the validation email
  */
-trafie.get('/resend_validation_email/:user_id', function( req, res ) {
-  var email = '';
-  var first_name = '';
-  var last_name = '';
-  var user_id = req.params.user_id;
-  User.schema.findOne({ '_id': user_id }, 'email valid')
-  .then(function( response ) {
-    if( !response.email || response.valid ) {
-      res.redirect('/login');
-    }
-    email = response.email;
-    return Profile.schema.findOne( { '_id': user_id }, 'first_name last_name' );
-  })
-  .then(function( response ) {
-    first_name = response.first_name;
-    last_name = response.last_name;
-    return UserHashes.schema.findValidationHashByUserId( user_id );
-  })
-  .then(function( response ) {
-    send_verification_email( email, first_name, last_name, response.hash, req.headers.host );
-
-    res.redirect('/validation_email_sent/1/' + user_id);
-  });
-});
+trafie.get( '/resend_validation_email/:user_id', email_validation.resend_validation_email );
 
 
 /*******************************************************************************************************************************
  * RESET PASSWORD                                                                                                              *
  ******************************************************************************************************************************/
 
-/**
- * Reset Password Request - GET
- */
-trafie.get( '/reset_password_request', function( req, res ) {
-  var view_data = {
-    'error': ''
-  };
-  res.render( 'reset_password_request', view_data );
-});
+// Reset Password Request - GET
+trafie.get( '/reset_password_request', reset_password.request.get );
 
-/**
- * Reset Password Request - GET
- */
-trafie.post( '/reset_password_request', function( req, res ) {
-  var email = req.body.email;
-  var user_id = '';
-  var first_name = '';
-  var last_name = '';
-  var view_data = {
-    'error': ''
-  };
-  User.schema.findOne({ 'email': email }, 'email _id')
-  .then(function( response ) {
-    if( !response ) {
-      view_data.error = 'Email not found';
-      res.render( 'reset_password_request', view_data );
-      return;
-    }
-    user_id = response._id;
-    return Profile.schema.findOne( { '_id': user_id }, 'first_name last_name' );
-  })
-  .then(function( response ) {
-    first_name = response.first_name;
-    last_name = response.last_name;
+// Reset Password Request - GET
+trafie.post( '/reset_password_request', reset_password.request.post );
 
-    return UserHashes.schema.createResetPasswordHash( user_id );
-  })
-  .then(function( response ) {
-    send_reset_password_email( email, first_name, last_name, response, req.headers.host );
-    view_data.email = email;
-    res.render( 'reset_password_email_sent', view_data );
-  });
-});
+// Reset Password - GET
+trafie.get( '/reset_password/:hash', reset_password.get );
 
-/**
- * Reset Password - GET
- */
-trafie.get( '/reset_password/:hash', function( req, res ) {
-  var view_data = {
-    'errors': {
-      'password'        : '',
-      'repeat_password' : ''
-    }
-  };
-
-  UserHashes.schema.findUserIdByHash( req.params.hash, 'reset' )
-  .then( function( response ) {
-    if( response ) {
-      res.render( 'reset_password', view_data );
-    } else {
-      res.redirect('/login');
-    }
-  })
-
-});
-
-/**
- * Reset Password - GET
- */
-trafie.post( '/reset_password/:hash', function( req, res ) {
-  var password = req.body.password;
-  var repeat_password = req.body.repeat_password;
-  var hash = req.params.hash;
-  var errors = false;
-  var view_data = {
-    'errors': {
-      'password'        : '',
-      'repeat_password' : ''
-    }
-  };
-  var user_id = '';
-
-  if( !User.schema.validatePassword( password ) ) {
-    errors = true;
-    view_data.errors.password = 'Password should be at least 6 characters long';
-  }
-  if( password != repeat_password ) {
-    errors = true;
-    view_data.errors.repeat_password = 'Passwords do not match';
-  }
-
-  if( errors ) {
-    res.render( 'reset_password', view_data );
-  }
-
-  UserHashes.schema.findUserIdByHash( hash, 'reset' )
-  .then( function( response ) {
-    if( response ) {
-      user_id = response.user_id;
-      return User.schema.resetPassword( user_id, password );
-    } else {
-      res.redirect('/login');
-    }
-  }).then( function() {
-    UserHashes.schema.deleteHash( hash, 'reset' );
-    // Storing the user id in the session
-    req.session.user_id = user_id;
-    res.redirect('/');
-  });
-});
-
-
-/*******************************************************************************************************************************
- * SETTINGS                                                                                                                    *
- ******************************************************************************************************************************/
-
-/**
- * Settings - GET
- */
-trafie.get( '/settings', function( req, res ) {
-  var first_name, last_name;
-  var user_id = req.session.user_id;
-  var errors = {};
-
-  // If there is no user id in the session, redirect to register screen
-  if( !user_id ) {
-    res.redirect('/register');
-  // Else, fetch the first name and the last name of the user from the database
-  } else {
-    Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline about male country birthday')
-    .then( function( response ) {
-
-      // Format the data that will go to the front end
-      var gender = '';
-      if( response.male === true ) {
-        gender = 'male';
-      }
-      else if( response.male === false ) {
-        gender = 'female';
-      }
-
-      var birthday = {};
-      birthday.day = response.birthday.day ? response.birthday.day : '';
-      birthday.month = response.birthday.month ? response.birthday.month : '';
-      birthday.year = response.birthday.year ? response.birthday.year : '';
-
-      var view_data = {
-        'profile': {
-          'first_name': response.first_name,
-          'last_name' : response.last_name,
-          'discipline': response.discipline,
-          'about'     : response.about,
-          'gender'    : gender,
-          'country'   : response.country,
-          'birthday'  : birthday
-        },
-        'errors'  : errors,
-        'tr'      : translations['en'].getSettingsTranslations()
-      };
-      res.render( 'settings', view_data );
-    })
-    .fail(function(response) {
-      console.log("Error : " + response);
-    });
-  }
-});
-
-/**
- * Settings - POST
- */
- trafie.post('/settings', function( req, res ) {
-  var user_id = req.session.user_id;
-
-  // If there is no user id in the session, redirect to register screen
-  if(!user_id) {
-    res.redirect('/register');
-  }
-  var error_messages = {};
-  var errors = false;
-  var post_data = {};
-  if( typeof req.body.first_name !== 'undefined' ) {
-    post_data.first_name = req.body.first_name;
-    if( !Profile.schema.validateName( post_data.first_name ) ) {
-      error_messages.first_name = 'Invalid name';
-      errors = true;
-    }
-  }
-  if( typeof req.body.last_name !== 'undefined' ) {
-    post_data.last_name = req.body.last_name;
-    if( !Profile.schema.validateName( post_data.last_name ) ) {
-      error_messages.last_name = 'Invalid name';
-      errors = true;
-    }
-  }
-  if( typeof req.body.birthday_day !== 'undefined' && typeof req.body.birthday_month !== 'undefined' && typeof req.body.birthday_year !== 'undefined' ) {
-    post_data.birthday = {};
-    post_data.birthday.day = req.body.birthday_day;
-    post_data.birthday.month = req.body.birthday_month;
-    post_data.birthday.year = req.body.birthday_year;
-    if( !Profile.schema.validateBirthday( post_data.birthday ) ) {
-      errors = true;
-    }
-  }
-  if( typeof req.body.gender !== 'undefined' ) {
-    if( !Profile.schema.validateGender( req.body.gender ) ) {
-      errors = true;
-    } else {
-      post_data.male = req.body.gender == 'male';
-    }
-  }
-  if( typeof req.body.country !== 'undefined' ) {
-    if( !Profile.schema.validateCountry( req.body.country ) ) {
-      errors = true;
-    } else {
-      post_data.country = req.body.country;
-    }
-  }
-  if( typeof req.body.discipline !== 'undefined' ) {
-    if( !Profile.schema.validateDiscipline( req.body.discipline ) ) {
-      errors = true;
-    } else {
-      post_data.discipline = req.body.discipline;
-    }
-  }
-  if( typeof req.body.about !== 'undefined' ) {
-    if( !Profile.schema.validateAbout( req.body.about ) ) {
-      errors = true;
-    } else {
-      post_data.about = req.body.about;
-    }
-  }
-
-  // If there are errors, do not update the profile
-  if( errors ) {
-    Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline about male country birthday')
-    .then( function( response ) {
-      // Format the data that will go to the front end
-      var gender = '';
-      if( response.male === true ) {
-        gender = 'male';
-      }
-      else if( response.male === false ) {
-        gender = 'female';
-      }
-      
-      var birthday = {};
-      birthday.day = response.birthday.day ? response.birthday.day : '';
-      birthday.month = response.birthday.month ? response.birthday.month : '';
-      birthday.year = response.birthday.year ? response.birthday.year : '';
-
-      var view_data = {
-        'profile': {
-          'first_name': response.first_name,
-          'last_name' : response.last_name,
-          'discipline': response.discipline,
-          'about'     : response.about,
-          'gender'    : gender,
-          'country'   : response.country,
-          'birthday'  : birthday
-        },
-        'errors'  : errors,
-        'tr'      : translations['en'].getSettingsTranslations()
-      };
-      res.render( 'settings', view_data );
-    });
-  // Else, fetch the first name and the last name of the user from the database
-  } else {
-    Profile.update({ '_id': user_id }, { $set: post_data }, { upsert: true }, function( error ) {
-      Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline about male country birthday')
-      .then( function( response ) {
-      // Format the data that will go to the front end
-      var gender = '';
-      if( response.male === true ) {
-        gender = 'male';
-      }
-      else if( response.male === false ) {
-        gender = 'female';
-      }
-      
-      var birthday = {};
-      birthday.day = response.birthday.day ? response.birthday.day : '';
-      birthday.month = response.birthday.month ? response.birthday.month : '';
-      birthday.year = response.birthday.year ? response.birthday.year : '';
-
-        var view_data = {
-          'profile': {
-            'first_name': response.first_name,
-            'last_name' : response.last_name,
-            'discipline': response.discipline,
-            'about'     : response.about,
-            'gender'    : gender,
-            'country'   : response.country,
-            'birthday'  : birthday
-          },
-          'errors'  : errors,
-          'tr'      : translations['en'].getSettingsTranslations()
-        };
-        res.render( 'settings', view_data );
-      });
-    });
-  }
- });
+// Reset Password - GET
+trafie.post( '/reset_password/:hash', reset_password.post );
 
 
 /*******************************************************************************************************************************
@@ -825,14 +173,6 @@ trafie.get( '/settings', function( req, res ) {
 
  trafie.use(function(req, res, next){
   res.status(404);
-
-  // respond with html page
-/*
-  if (req.accepts('html')) {
-    res.render('404', { url: req.url });
-    return;
-  }
-  */
 
   // default to plain-text. send()
   res.type('html').send('People are often unreasonable, illogical, and self-centered;<br><b>Forgive</b> them anyway.<br>If you are kind, people may accuse you of selfish, ulterior motives;<br><b>Be kind</b> anyway.<br>If you are successful, you will win some false friends and some true enemies;<br><b>Succeed</b> anyway.<br>If you are honest and frank, people may cheat you;<br><b>Be honest and frank</b> anyway.<br>What you spend years building, someone could destroy overnight;<br><b>Build</b> anyway.<br>If you find serenity and happiness, they may be jealous;<br><b>Be happy</b> anyway.<br>The good you do today, people will often forget tomorrow;<br><b>Do good</b> anyway.<br>Give the world the best you have and it may just never be enough;<br><b>Give the world the best you have</b> anyway.<br>You see, in the final analysis, it’s all between you and God;<br>It was never between you and them anyway.<br><a href="javascript:history.back();">Go Back</a>');
@@ -859,35 +199,3 @@ trafie.get('/logout', function( req, res ) {
 http.createServer( trafie ).listen( trafie.get('port'), function(){
   console.log('Express server listening on port ' + trafie.get('port'));
 });
-
-function send_verification_email( email, first_name, last_name, hash, host ) {
-  message.to = email;
-  message.subject = 'Welcome to trafie ✔';
-  message.html = '<h2>Hello ' + first_name + ' ' + last_name + '</h2>' +
-     '<p>You have successfully registered to trafie.</p><br><p>The <b><i>trafie</i></b> team</p><br>' +
-     'Follow the link to verify your email:<br>' +
-     '<a href="' + host + '/validate/' + hash + '">This is the link</a>';
-
-  transport.sendMail(message, function(error) {
-    if(error) {
-        console.log('Error occured: ' + error);
-        return;
-    }
-  });
-}
-
-function send_reset_password_email( email, first_name, last_name, hash, host ) {
-  message.to = email;
-  message.subject = 'Password reset request';
-  message.html = '<h2>Hello ' + first_name + ' ' + last_name + '</h2>' +
-     '<p>You have requested to reset the password of your account on trafie.</p><br>' +
-     'Follow the link in order to enter a new password:<br>' +
-     '<a href="' + host + '/reset_password/' + hash + '">This is the link</a>';
-
-  transport.sendMail(message, function(error) {
-    if(error) {
-        console.log('Error occured: ' + error);
-        return;
-    }
-  });
-}
