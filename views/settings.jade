@@ -180,17 +180,17 @@ block content
 						span.row
 							label( for="old_password" ) Old Password:
 							span= errors.first_name
-							input#old_password
+							input#old_password( name ="old_password" )
 
 						span.row
 							label( for="new_password" ) New Password:
 							span= errors.first_name
-							input#new_password
+							input#new_password( name ="new_password" )
 
 						span.row
 							label( for="repeat_new_password" ) Repeat New Password:
 							span= errors.first_name
-							input#repeat_new_password
+							input#repeat_new_password( name ="repeat_new_password")
 
 						div#settingsAboutMeButtons
 							input#submitNewPassword.btn_green( type="submit" value=tr['submit'])
