@@ -17,9 +17,9 @@ block content
 					div.icon_back
 					div.icon +
 					div#slider( class="info add_activity" )
-						a#add_activity_link( onclick="open_new_activity_form();" href="javascript:;")= tr['add_new_activity']
+						a#add_activity_link( href="javascript:;" )= tr['add_new_activity']
 						form#add_activity_form( method="POST" )
-							select#discipline_input(name="discipline" onchange="show_specific_form(this);")
+							select#discipline_input( name="discipline" )
 								option(value="no-selection" selected )= tr['choose_your_discipline']
 								option(value="100m")= tr['100m']
 								option(value="200m")= tr['200m']
@@ -51,16 +51,16 @@ block content
 								br
 								div
 									label(for="hours_input")= tr['hours_short'] + ':'
-									input#hours_input(name="hours" size="3" maxlength="2" onkeyup="number0to59(this);" )
+									input#hours_input(name="hours" size="3" maxlength="2" )
 								div
 									label(for="minutes_input")= tr['minutes_short'] + ':'
-									input#minutes_input(name="minutes" size="3" maxlength="2" onkeyup="number0to59(this);" )
+									input#minutes_input(name="minutes" size="3" maxlength="2" )
 								div
 									label(for="seconds_input")= tr['seconds_short'] + ':'
-									input#seconds_input(name="seconds" size="3" maxlength="2" onkeyup="number0to59(this);" )
+									input#seconds_input(name="seconds" size="3" maxlength="2" )
 								div
 									label(for="centiseconds_input")= tr['centiseconds_short'] + ':'
-									input#centiseconds_input(name="centiseconds" size="3" maxlength="2" onkeyup="number0to99(this);" )
+									input#centiseconds_input(name="centiseconds" size="3" maxlength="2" )
 								div.row
 									label(for="datepicker_time") Date:
 									input#datepicker_time( type="text" )
@@ -73,7 +73,7 @@ block content
 									input#distance_1_input(name="distance_1" size="3" maxlength="2").
 								div
 									label(for="distance_2_input")= tr['centimeters_short'] + ':'
-									input#distance_2_input(name="distance_2" size="3" maxlength="2" onkeyup="number0to99(this);" )
+									input#distance_2_input(name="distance_2" size="3" maxlength="2" )
 								div.row
 									label(for="datepicker_distance") Date:
 									input#datepicker_distance( type="text" )
@@ -127,6 +127,8 @@ block content
 					div.end
 						div.discipline everything started here
 
+	//scripts
+	script(type='text/javascript', src='/javascripts/profile.js')
 	script( type='text/javascript', src='/javascripts/pikaday.min.js')
 	script.
 		var picker_time = new Pikaday({field: document.getElementById('datepicker_time'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date('2020-12-31'), yearRange: [2000,2020]})
@@ -134,3 +136,5 @@ block content
 		var picker_distance = new Pikaday({field: document.getElementById('datepicker_distance'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date('2020-12-31'), yearRange: [2000,2020]})
 
 		var picker_point = new Pikaday({field: document.getElementById('datepicker_point'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date('2020-12-31'), yearRange: [2000,2020]})
+	script.
+		profileHandlers();

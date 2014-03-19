@@ -148,8 +148,6 @@ function open_new_activity_form() {
 	var init = (new Date()).getTime();
 	var height = (toggled = !toggled) ? maxheight : minheight;
 
-	console.log('@open - ' + toggled);
-
 	var disp = height - parseInt(slider.style.height);
 	timer = setInterval(function()
 	{
@@ -192,8 +190,6 @@ function close_new_activity_form() {
 	var init = ( new Date() ).getTime();
 	var height = (toggled = !toggled) ? maxheight : minheight;
 
-	console.log('@close - ' + toggled);
-
 	var disp = height - parseInt(slider.style.height);
 	timer = setInterval(function()
 	{
@@ -230,8 +226,6 @@ function show_specific_form(choice) {
     var time = ['100m', '200m', '400m', '800m', '1500m', '3000m', '60m_hurdles', '100m_hurdles', '110m_hurdles', '400m_hurdles', '3000m_steeple', '4x100m_relay', '4x400m_relay', 'marathon'];
     var points = ['pentathlon', 'heptathlon', 'decathlon'];
 
-    console.log('Choice: ' + choice.value);
-
     if( distance.indexOf(choice.value) > -1 ) {
         document.getElementById('submit_buttons').style.display = 'block';
 
@@ -267,17 +261,27 @@ function show_specific_form(choice) {
     }
 }
 
-//function for checking values between 0-60 (i.e minutes)
+/**
+ * number0to59() : checking values between 0-60 (i.e minutes)
+ * @param input : the input
+ */
 function number0to59(input) {
     if (input.value < 0) input.value = 0;
     if (input.value > 59) input.value = 59;
     }
 
-//function for checking values between 0-100 (i.e centimeters)
+/**
+ * number0to99() : checking values between 0-100 (i.e minutes)
+ * @param input : the input
+ */
 function number0to99(input) {
     if (input.value < 0) input.value = 0;
     if (input.value > 99) input.value = 99;
   }
+
+
+
+
 
 
 
