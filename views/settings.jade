@@ -6,9 +6,9 @@ block content
 		div#settingsNav
 			ul
 				li#profileSettingsTab.active
-					a( href="javascript:;" onclick="showSettingsTab('profileSettings')") Profile Settings
+					a( href="javascript:;" ) Profile Settings
 				li#accountSettingsTab
-					a( href="javascript:;" onclick="showSettingsTab('accountSettings')") Account Settings
+					a( href="javascript:;" ) Account Settings
 				li.logout
 					a(href="/logout")= tr['logout']
 
@@ -24,9 +24,9 @@ block content
 					input#first_name( name="first_name" value=profile.first_name hidden)
 					div#settingsFirstNameButtons(hidden)
 						input#submitFirstName.btn_green( type="submit" value=tr['submit'])
-						a#cancelEditFirstName.cancel_link( href="javascript:;" onclick="cancelEditField('first_name_existed', 'first_name', 'settingsFirstNameButtons', 'editFirstName')")= tr['cancel']
+						a#cancelEditFirstName.cancel_link( href="javascript:;" )= tr['cancel']
 
-					a#editFirstName.editLink( href="javascript:;" onclick="editField('first_name_existed', 'first_name', 'settingsFirstNameButtons', 'editFirstName')" )= tr['edit']
+					a#editFirstName.editLink( href="javascript:;" )= tr['edit']
 
 			//LAST NAME
 			div.settingsElement
@@ -37,8 +37,8 @@ block content
 					input#last_name( name="last_name" value=profile.last_name hidden )
 					div#settingsLastNamebuttons(hidden)
 						input#submitLastName.btn_green( type="submit" value=tr['submit'])
-						a#cancelEditLastName.cancel_link( href="javascript:;" onclick="cancelEditField('last_name_existed', 'last_name', 'settingsLastNamebuttons', 'editLastName')")= tr['cancel']
-					a#editLastName.editLink( href="javascript:;" onclick="editField('last_name_existed', 'last_name', 'settingsLastNamebuttons', 'editLastName')" )= tr['edit']
+						a#cancelEditLastName.cancel_link( href="javascript:;" )= tr['cancel']
+					a#editLastName.editLink( href="javascript:;" )= tr['edit']
 
 			//GENDER
 			div.settingsElement
@@ -58,8 +58,8 @@ block content
 
 					div#settingsGenderbuttons(hidden)
 						input#submitGender.btn_green( type="submit" value=tr['submit'])
-						a#cancelEditGender.cancel_link( href="javascript:;" onclick="cancelEditField('gender_existed', 'gender', 'settingsGenderbuttons', 'editGender')")= tr['cancel']
-					a#editGender.editLink( href="javascript:;" onclick="editField('gender_existed', 'gender', 'settingsGenderbuttons', 'editGender')" )= tr['edit']
+						a#cancelEditGender.cancel_link( href="javascript:;" )= tr['cancel']
+					a#editGender.editLink( href="javascript:;" )= tr['edit']
 
 			//AGE
 			div.settingsElement
@@ -95,8 +95,8 @@ block content
 								option#m31( value="31" ) 31
 					div#settingsAgebuttons(hidden)
 						input#submitAge.btn_green( type="submit" value=tr['submit'])
-						a#cancelEditAge.cancel_link( href="javascript:;" onclick="cancelEditField('birthday_existed', 'birthday', 'settingsAgebuttons', 'editAge')")= tr['cancel']
-					a#editAge.editLink( href="javascript:;" onclick="editField('birthday_existed', 'birthday', 'settingsAgebuttons', 'editAge')" )= tr['edit']
+						a#cancelEditAge.cancel_link( href="javascript:;" )= tr['cancel']
+					a#editAge.editLink( href="javascript:;" )= tr['edit']
 
 			//MAIN DISCIPLINE
 			div.settingsElement
@@ -104,7 +104,7 @@ block content
 					label Main Discipline :
 					span= errors.last_name
 					span#main_discipline_existed= tr[profile.discipline] || "undefined"
-					select#main_discipline_input(name="discipline" onchange="show_specific_form(this);" hidden)
+					select#main_discipline_input(name="discipline" hidden)
 								option(value="no-selection")= tr['choose_your_discipline']
 								option(value="100m")= tr['100m']
 								option(value="200m")= tr['200m']
@@ -133,8 +133,8 @@ block content
 								option(value="decathlon")= tr['decathlon']
 					div#settingsMainDisciplineButtons(hidden)
 						input#submitMainDiscipline.btn_green( type="submit" value=tr['submit'])
-						a#cancelEditMainDiscipline.cancel_link( href="javascript:;" onclick="cancelEditField('main_discipline_existed', 'main_discipline_input', 'settingsMainDisciplineButtons', 'editMainDiscipline')")= tr['cancel']
-					a#editMainDiscipline.editLink( href="javascript:;" onclick="editField('main_discipline_existed', 'main_discipline_input', 'settingsMainDisciplineButtons', 'editMainDiscipline')" )= tr['edit']
+						a#cancelEditMainDiscipline.cancel_link( href="javascript:;" )= tr['cancel']
+					a#editMainDiscipline.editLink( href="javascript:;" )= tr['edit']
 
 			//COUNTRY
 			div.settingsElement
@@ -152,8 +152,8 @@ block content
 							- }
 					div#settingsCountryButtons(hidden)
 						input#submitCountry.btn_green( type="submit" value=tr['submit'])
-						a#cancelEditCountry.cancel_link( href="javascript:;" onclick="cancelEditField('country_existed', 'country_input', 'settingsCountryButtons', 'editCountry')")= tr['cancel']
-					a#editCountry.editLink( href="javascript:;" onclick="editField('country_existed', 'country_input', 'settingsCountryButtons', 'editCountry')" )= tr['edit']
+						a#cancelEditCountry.cancel_link( href="javascript:;" )= tr['cancel']
+					a#editCountry.editLink( href="javascript:;" )= tr['edit']
 
 			//ABOUT ME
 			div.settingsElement
@@ -164,8 +164,8 @@ block content
 					textarea#about_me.textarea( name="about" maxlength="400" hidden)= profile.about
 					div#settingsAboutMeButtons(hidden)
 						input#submitAboutMe.btn_green( type="submit" value=tr['submit'])
-						a#cancelEditAboutMe.cancel_link( href="javascript:;" onclick="cancelEditField('about_existed', 'about_me', 'settingsAboutMeButtons', 'editAboutMe')")= tr['cancel']
-					a#editAboutMe.editLink( href="javascript:;" onclick="editField('about_existed', 'about_me', 'settingsAboutMeButtons', 'editAboutMe')" )= tr['edit']
+						a#cancelEditAboutMe.cancel_link( href="javascript:;" )= tr['cancel']
+					a#editAboutMe.editLink( href="javascript:;" )= tr['edit']
 
 
 		//ACCOUNT SETTINGS
@@ -180,18 +180,23 @@ block content
 						span.row
 							label( for="old_password" ) Old Password:
 							span= errors.first_name
-							input#old_password
+							input#old_password( name ="old_password" )
 
 						span.row
 							label( for="new_password" ) New Password:
 							span= errors.first_name
-							input#new_password
+							input#new_password( name ="new_password" )
 
 						span.row
 							label( for="repeat_new_password" ) Repeat New Password:
 							span= errors.first_name
-							input#repeat_new_password
+							input#repeat_new_password( name ="repeat_new_password")
 
 						div#settingsAboutMeButtons
 							input#submitNewPassword.btn_green( type="submit" value=tr['submit'])
 							a#cancelNewPassword.cancel_link( href="javascript:;" onclick="cancelEditHiddenField('changePassword', 'editPassword')")= tr['cancel']
+
+	//scripts
+	script(type='text/javascript', src='/javascripts/settings.js')
+	script.
+		settingsHandlers();
