@@ -25,6 +25,7 @@ block content
 					div#settingsFirstNameButtons.formButtons(hidden)
 						input#submitFirstName.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditFirstName.cancel_link( href="javascript:;" )= tr['cancel']
+
 					a#editFirstName.editLink( href="javascript:;" )= tr['edit']
 
 			//LAST NAME
@@ -44,16 +45,20 @@ block content
 				form( method="POST")
 					label Gender :
 					span= errors.last_name
-					span#gender_existed= profile.gender || "undefined"
+					span#gender_existed= tr[profile.gender] || "undefined"
 					div#gender( hidden )
 						if profile.gender == 'male'
-							<input name="gender" type="radio" value="male" checked /> tr['male']
+							input(id="male" name="gender" type="radio" value="male" checked)
+							label(for="male" class="clearfloat" )= tr['male']
 						else
-							<input name="gender" type="radio" value="male" /> tr['male']
+							input(id="male" name="gender" type="radio" value="male" )
+							label(for="male" class="clearfloat" )= tr['male']
 						if profile.gender == 'female'
-							<input name="gender" type="radio" value="female" checked/> tr['female']
+							input(id="female" name="gender" type="radio" value="female" checked)
+							label(for="female" class="clearfloat" )= tr['female']
 						else
-							<input name="gender" type="radio" value="female" /> tr['female']
+							input(id="female" name="gender" type="radio" value="female")
+							label(for="female" class="clearfloat" )= tr['female']
 
 					div#settingsGenderbuttons.formButtons(hidden)
 						input#submitGender.btn_green( type="submit" value=tr['submit'])
