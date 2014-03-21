@@ -22,10 +22,9 @@ block content
 					span= errors.first_name
 					span#first_name_existed.existed= profile.first_name
 					input#first_name( name="first_name" value=profile.first_name hidden)
-					div#settingsFirstNameButtons(hidden)
+					div#settingsFirstNameButtons.formButtons(hidden)
 						input#submitFirstName.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditFirstName.cancel_link( href="javascript:;" )= tr['cancel']
-
 					a#editFirstName.editLink( href="javascript:;" )= tr['edit']
 
 			//LAST NAME
@@ -35,7 +34,7 @@ block content
 					span= errors.last_name
 					span#last_name_existed.existed= profile.last_name
 					input#last_name( name="last_name" value=profile.last_name hidden )
-					div#settingsLastNamebuttons(hidden)
+					div#settingsLastNamebuttons.formButtons(hidden)
 						input#submitLastName.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditLastName.cancel_link( href="javascript:;" )= tr['cancel']
 					a#editLastName.editLink( href="javascript:;" )= tr['edit']
@@ -48,15 +47,15 @@ block content
 					span#gender_existed= profile.gender || "undefined"
 					div#gender( hidden )
 						if profile.gender == 'male'
-							<input name="gender" type="radio" value="male" checked /> Male
+							<input name="gender" type="radio" value="male" checked /> tr['male']
 						else
-							<input name="gender" type="radio" value="male" /> Male
+							<input name="gender" type="radio" value="male" /> tr['male']
 						if profile.gender == 'female'
-							<input name="gender" type="radio" value="female" checked/> Female
+							<input name="gender" type="radio" value="female" checked/> tr['female']
 						else
-							<input name="gender" type="radio" value="female" /> Female
+							<input name="gender" type="radio" value="female" /> tr['female']
 
-					div#settingsGenderbuttons(hidden)
+					div#settingsGenderbuttons.formButtons(hidden)
 						input#submitGender.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditGender.cancel_link( href="javascript:;" )= tr['cancel']
 					a#editGender.editLink( href="javascript:;" )= tr['edit']
@@ -93,7 +92,7 @@ block content
 								option#m29( value="29" ) 29
 								option#m30( value="30" ) 30
 								option#m31( value="31" ) 31
-					div#settingsAgebuttons(hidden)
+					div#settingsAgebuttons.formButtons(hidden)
 						input#submitAge.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditAge.cancel_link( href="javascript:;" )= tr['cancel']
 					a#editAge.editLink( href="javascript:;" )= tr['edit']
@@ -105,15 +104,13 @@ block content
 					span= errors.last_name
 					span#main_discipline_existed= tr[profile.discipline] || "undefined"
 					select#main_discipline_input(name="discipline" hidden)
-						for( var i in disciplines )
-							if !profile.discipline
-								option(value="no-selection")= tr['choose_your_discipline']
+						- for( var i in profile.disciplines ) {
+							if profile.discipline == profile.disciplines[i]
+								option( value=profile.disciplines[i] selected)= tr[profile.disciplines[i]]
 							else
-								if profile.discipline == i
-									option( value=i selected)= tr[i]
-								else
-									option( value=i )= tr[i]
-					div#settingsMainDisciplineButtons(hidden)
+								option( value=profile.disciplines[i] )= tr[profile.disciplines[i]]
+						- }
+					div#settingsMainDisciplineButtons.formButtons(hidden)
 						input#submitMainDiscipline.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditMainDiscipline.cancel_link( href="javascript:;" )= tr['cancel']
 					a#editMainDiscipline.editLink( href="javascript:;" )= tr['edit']
@@ -132,7 +129,7 @@ block content
 								else
 									option( value=i )= tr['countries'][i]
 							- }
-					div#settingsCountryButtons(hidden)
+					div#settingsCountryButtons.formButtons(hidden)
 						input#submitCountry.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditCountry.cancel_link( href="javascript:;" )= tr['cancel']
 					a#editCountry.editLink( href="javascript:;" )= tr['edit']
@@ -144,7 +141,7 @@ block content
 					span= errors.about
 					span#about_existed( style="overflow-wrap: break-word;")= profile.about || " Write something about you."
 					textarea#about_me.textarea( name="about" maxlength="400" hidden)= profile.about
-					div#settingsAboutMeButtons(hidden)
+					div#settingsAboutMeButtons.formButtons(hidden)
 						input#submitAboutMe.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditAboutMe.cancel_link( href="javascript:;" )= tr['cancel']
 					a#editAboutMe.editLink( href="javascript:;" )= tr['edit']
@@ -162,17 +159,17 @@ block content
 						span.row
 							label( for="old_password" ) Old Password:
 							span= errors.first_name
-							input#old_password( name ="old_password" )
+							input#old_password( name="old_password" type="password")
 
 						span.row
-							label( for="new_password" ) New Password:
+							label( for="password" ) New Password:
 							span= errors.first_name
-							input#new_password( name ="new_password" )
+							input#new_password( name="password" type="password")
 
 						span.row
-							label( for="repeat_new_password" ) Repeat New Password:
+							label( for="repeat_password" ) Repeat New Password:
 							span= errors.first_name
-							input#repeat_new_password( name ="repeat_new_password")
+							input#repeat_new_password( name="repeat_password" type="password")
 
 						div#settingsAboutMeButtons
 							input#submitNewPassword.btn_green( type="submit" value=tr['submit'])

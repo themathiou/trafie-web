@@ -3,7 +3,23 @@
 /********************************************/
 
 /* document.getElementById("id").event = function() { doSomething(); } */
+/**
+ * settingsHandlers() : the handlers for the buttons in settings
+ */
+function closeOthers() {
+	cancelEditField('first_name_existed', 'first_name', 'settingsFirstNameButtons', 'editFirstName');
+	cancelEditField('last_name_existed', 'last_name', 'settingsLastNamebuttons', 'editLastName');
+	cancelEditField('gender_existed', 'gender', 'settingsGenderbuttons', 'editGender');
+	cancelEditField('birthday_existed', 'birthday', 'settingsAgebuttons', 'editAge');
+	cancelEditField('main_discipline_existed', 'main_discipline_input', 'settingsMainDisciplineButtons', 'editMainDiscipline');
+	cancelEditField('country_existed', 'country_input', 'settingsCountryButtons', 'editCountry');
+	cancelEditField('about_existed', 'about_me', 'settingsAboutMeButtons', 'editAboutMe');
+}
 
+
+/**
+ * settingsHandlers() : the handlers for the buttons in settings
+ */
 function settingsHandlers() {
 	document.getElementById("profileSettingsTab").onclick = function() {
 		showSettingsTab('profileSettings');
@@ -15,6 +31,7 @@ function settingsHandlers() {
 	/* -- Profile Settings */
 	/* first name */
 	document.getElementById("editFirstName").onclick = function() {
+		closeOthers();
 		editField('first_name_existed', 'first_name', 'settingsFirstNameButtons', 'editFirstName');
 	}
 	document.getElementById("cancelEditFirstName").onclick = function() {
@@ -23,6 +40,7 @@ function settingsHandlers() {
 
 	/* last name */
 	document.getElementById("editLastName").onclick = function() {
+		closeOthers();
 		editField('last_name_existed', 'last_name', 'settingsLastNamebuttons', 'editLastName');
 	}
 	document.getElementById("cancelEditLastName").onclick = function() {
@@ -31,6 +49,7 @@ function settingsHandlers() {
 
 	/* gender */
 	document.getElementById("editGender").onclick = function() {
+		closeOthers();
 		editField('gender_existed', 'gender', 'settingsGenderbuttons', 'editGender');
 	}
 	document.getElementById("cancelEditGender").onclick = function() {
@@ -39,6 +58,7 @@ function settingsHandlers() {
 
 	/* age */
 	document.getElementById("editAge").onclick = function() {
+		closeOthers();
 		editField('birthday_existed', 'birthday', 'settingsAgebuttons', 'editAge');
 	}
 	document.getElementById("cancelEditAge").onclick = function() {
@@ -50,6 +70,7 @@ function settingsHandlers() {
 		show_specific_form(this);
 	}
 	document.getElementById("editMainDiscipline").onclick = function() {
+		closeOthers();
 		editField('main_discipline_existed', 'main_discipline_input', 'settingsMainDisciplineButtons', 'editMainDiscipline');
 	}
 	document.getElementById("cancelEditMainDiscipline").onclick = function() {
@@ -58,6 +79,7 @@ function settingsHandlers() {
 
 	/* country */
 	document.getElementById("editCountry").onclick = function() {
+		closeOthers();
 		editField('country_existed', 'country_input', 'settingsCountryButtons', 'editCountry');
 	}
 	document.getElementById("cancelEditCountry").onclick = function() {
@@ -66,6 +88,7 @@ function settingsHandlers() {
 
 	/* about */
 	document.getElementById("editAboutMe").onclick = function() {
+		closeOthers();
 		editField('about_existed', 'about_me', 'settingsAboutMeButtons', 'editAboutMe');
 	}
 	document.getElementById("cancelEditAboutMe").onclick = function() {
