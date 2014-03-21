@@ -40,6 +40,8 @@ var en = {
         'centimeters'			: 'Centimeters',
         'centimeters_short'		: 'cm',
         'points'				: 'Points',
+        'male'                  : 'Male',
+        'female'                : 'Female',
         'submit'				: 'Submit',
         'save'					: 'Save',
         'cancel'				: 'Cancel'
@@ -51,7 +53,10 @@ var en = {
 		'logout'				 : 'Logout',
 		'first_name'			 : 'First Name',
 		'last_name'				 : 'Last Name',
-		'choose_your_discipline' : 'Choose your discipline'
+		'choose_your_discipline' : 'Choose your discipline',
+        'passwords_do_not_match' : 'Passwords do not match',
+        'wrong_password'         : 'Wrong password',
+        'password_should_be_at_least_6_characters_long' : 'Password should be at least 6 characters long'
 	},
 
 	profile: {
