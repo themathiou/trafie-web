@@ -84,7 +84,9 @@ exports.post = function( req, res ){
     }
   }
   if( typeof req.body.old_password !== 'undefined' && typeof req.body.new_password !== 'undefined' && req.body.repeat_new_password ) {
-    
+    if( req.body.new_password !== req.body.old_password ) {
+
+    }
   }
 
   // If there are errors, do not update the profile
@@ -115,15 +117,18 @@ function render( res, user_id, errors ) {
     birthday.month = response.birthday.month ? response.birthday.month : '';
     birthday.year = response.birthday.year ? response.birthday.year : '';
 
+    var disciplines = ['100m','200m','400m','800m','1500m','3000m','60m_hurdles','100m_hurdles','110m_hurdles','400m_hurdles','3000m_steeple','4x100m_relay','4x400m_relay','marathon','high_jump','long_jump','triple_jump','pole_vault','shot_put','discus','hammer','javelin','pentathlon','heptathlon','decathlon'];
+
     var view_data = {
       'profile': {
-        'first_name': response.first_name,
-        'last_name' : response.last_name,
-        'discipline': response.discipline,
-        'about'     : response.about,
-        'gender'    : gender,
-        'country'   : response.country,
-        'birthday'  : birthday
+        'first_name'  : response.first_name,
+        'last_name'   : response.last_name,
+        'discipline'  : response.discipline,
+        'about'       : response.about,
+        'gender'      : gender,
+        'country'     : response.country,
+        'birthday'    : birthday,
+        'disciplines' : disciplines
       },
       'errors'  : errors,
       'tr'      : translations['en'].getSettingsTranslations()
