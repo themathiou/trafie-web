@@ -105,32 +105,14 @@ block content
 					span= errors.last_name
 					span#main_discipline_existed= tr[profile.discipline] || "undefined"
 					select#main_discipline_input(name="discipline" hidden)
+						for( var i in disciplines )
+							if !profile.discipline
 								option(value="no-selection")= tr['choose_your_discipline']
-								option(value="100m")= tr['100m']
-								option(value="200m")= tr['200m']
-								option(value="400m")= tr['400m']
-								option(value="800m")= tr['800m']
-								option(value="1500m")= tr['1500m']
-								option(value="3000m")= tr['3000m']
-								option(value="60m_hurdles")= tr['60m_hurdles']
-								option(value="100m_hurdles")= tr['100m_hurdles']
-								option(value="110m_hurdles")= tr['110m_hurdles']
-								option(value="400m_hurdles")= tr['400m_hurdles']
-								option(value="3000m_steeple")= tr['3000m_steeple']
-								option(value="4x100m_relay")= tr['4x100m_relay']
-								option(value="4x400m_relay")= tr['4x400m_relay']
-								option(value="marathon")= tr['marathon']
-								option(value="high_jump")= tr['high_jump']
-								option(value="long_jump")= tr['long_jump']
-								option(value="triple_jump")= tr['triple_jump']
-								option(value="pole_vault")= tr['pole_vault']
-								option(value="shot_put")= tr['shot_put']
-								option(value="discus")= tr['discus']
-								option(value="hammer")= tr['hammer']
-								option(value="javelin")= tr['javelin']
-								option(value="pentathlon")= tr['pentathlon']
-								option(value="heptathlon")= tr['heptathlon']
-								option(value="decathlon")= tr['decathlon']
+							else
+								if profile.discipline == i
+									option( value=i selected)= tr[i]
+								else
+									option( value=i )= tr[i]
 					div#settingsMainDisciplineButtons(hidden)
 						input#submitMainDiscipline.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditMainDiscipline.cancel_link( href="javascript:;" )= tr['cancel']
@@ -174,7 +156,7 @@ block content
 
 			div.settingsElement
 				label Change Password
-				a#editPassword.editLink( href="javascript:;" onclick="editHiddenField('changePassword', 'editPassword')" )= tr['edit']
+				a#editPassword.editLink( href="javascript:;" )= tr['edit']
 				div#changePassword.editable( hidden )
 					form#changePasswordForm( method="POST")
 						span.row
@@ -194,7 +176,7 @@ block content
 
 						div#settingsAboutMeButtons
 							input#submitNewPassword.btn_green( type="submit" value=tr['submit'])
-							a#cancelNewPassword.cancel_link( href="javascript:;" onclick="cancelEditHiddenField('changePassword', 'editPassword')")= tr['cancel']
+							a#cancelNewPassword.cancel_link( href="javascript:;" )= tr['cancel']
 
 	//scripts
 	script(type='text/javascript', src='/javascripts/settings.js')
