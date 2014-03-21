@@ -42,8 +42,6 @@ exports.post = function( req, res ){
     if( !Profile.schema.validateName( profile_data.first_name ) ) {
       error_messages.first_name = 'Invalid name';
       errors = true;
-    } else {
-      update = 'profile';
     }
   }
 
@@ -52,8 +50,6 @@ exports.post = function( req, res ){
     if( !Profile.schema.validateName( profile_data.last_name ) ) {
       error_messages.last_name = 'Invalid name';
       errors = true;
-    } else {
-      update = 'profile';
     }
   }
 
@@ -64,8 +60,6 @@ exports.post = function( req, res ){
     profile_data.birthday.year = req.body.birthday_year;
     if( !Profile.schema.validateBirthday( profile_data.birthday ) ) {
       errors = true;
-    } else {
-      update = 'profile';
     }
   }
 
@@ -74,7 +68,6 @@ exports.post = function( req, res ){
       errors = true;
     } else {
       profile_data.male = req.body.gender == 'male';
-      update = 'profile';
     }
   }
 
@@ -83,7 +76,6 @@ exports.post = function( req, res ){
       errors = true;
     } else {
       profile_data.country = req.body.country;
-      update = 'profile';
     }
   }
 
@@ -92,7 +84,6 @@ exports.post = function( req, res ){
       errors = true;
     } else {
       profile_data.discipline = req.body.discipline;
-      update = 'profile';
     }
   }
 
@@ -101,51 +92,50 @@ exports.post = function( req, res ){
       errors = true;
     } else {
       profile_data.about = req.body.about;
-      update = 'profile';
     }
   }
 
   if( typeof req.body.old_password !== 'undefined' && typeof req.body.password !== 'undefined' && req.body.repeat_password ) {
-    if( req.body.password !== req.body.old_password ) {
-      errors = true;
-      error_messages.repeat_password = 'passwords_do_not_match';
-
-      User.schema.findOne({ '_id': user_id }, 'password')
-      .then( function( response ){
-        if( typeof response.password === 'undefined' ) {
-          redirect('/register');
+    User.schema.findOne({ '_id': user_id }, 'password')
+    .then( function( response ){
+      if( typeof response.password === 'undefined' ) {
+        redirect('/register');
+      }
+      else { 
+        if( req.body.password !== req.body.repeat_password ) {
+          errors = true;
+          error_messages.repeat_password = 'passwords_do_not_match';
         }
-        else { 
-          if( response.password !== req.body.old_password ) {
-            errors = true;
-            error_messages.old_password = 'wrong_password';
-          }
-          if( !User.schema.validatePassword( req.body.password ) ) {
-            errors = true;
-            error_messages.password = 'password_should_be_at_least_6_characters_long';
-          }
-          user_data.password = req.body.password;
-          update = 'user';
+        if( response.password !== User.schema.encryptPassword( req.body.old_password ) ) {
+          errors = true;
+          error_messages.old_password = 'wrong_password';
         }
-      });
-    }
-  }
-
-  // If there are errors, do not update the profile
-  if( errors ) {
-    render( res, user_id, error_messages );
-  // Else, fetch the first name and the last name of the user from the database
+        if( !User.schema.validatePassword( req.body.password ) ) {
+          errors = true;
+          error_messages.password = 'password_should_be_at_least_6_characters_long';
+        }
+        if( errors ) {
+          render( res, user_id, error_messages );
+        } else {
+          User.schema.resetPassword( user_id, req.body.password )
+          .then( function(){
+            render( res, user_id, error_messages );
+          });
+        }
+      }
+    });
   } else {
-    if( update == 'profile' ) {
+    // If there are errors, do not update the profile
+    if( errors ) {
+      render( res, user_id, error_messages );
+    // Else, fetch the first name and the last name of the user from the database
+    } else {
       Profile.update({ '_id': user_id }, { $set: profile_data }, { upsert: true }, function( error ) {
         render( res, user_id, error_messages );
       });
-    } else {
-      User.update({ '_id': user_id }, { $set: user_data }, { upsert: true }, function( error ) {
-        render( res, user_id, error_messages );
-      });
     }
   }
+
 };
 
 
@@ -167,8 +157,6 @@ function render( res, user_id, error_messages ) {
     birthday.year = response.birthday.year ? response.birthday.year : '';
 
     var disciplines = ['100m','200m','400m','800m','1500m','3000m','60m_hurdles','100m_hurdles','110m_hurdles','400m_hurdles','3000m_steeple','4x100m_relay','4x400m_relay','marathon','high_jump','long_jump','triple_jump','pole_vault','shot_put','discus','hammer','javelin','pentathlon','heptathlon','decathlon'];
-
-    console.log( error_messages );
 
     var view_data = {
       'profile': {
