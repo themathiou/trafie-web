@@ -15,6 +15,15 @@ block content
 		//PROFILE SETTINGS
 		div#profileSettings.settingsContent
 			h3 Profile Settings
+
+			//PROFILE PIC
+			div.settingsElement
+				form( method="POST")
+					label Profile pic :
+					span= errors.profile_pic
+					input#upload_profile_pic( name="profile_pic" type="file" accept="image/*")
+					input#submit_profile_pic( type="submit" value=tr['submit'])
+
 			//FIRST NAME
 			div.settingsElement
 				form( method="POST")
