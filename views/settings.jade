@@ -18,7 +18,8 @@ block content
 
 			//PROFILE PIC
 			div.settingsElement
-				form( method="POST")
+				form( method="POST" enctype="multipart/form-data" )
+					img( src="../images/profile_pics/ppic_thumb.png" style="height:80px;")
 					label Profile pic :
 					span= errors.profile_pic
 					input#upload_profile_pic( name="profile_pic" type="file" accept="image/*")
