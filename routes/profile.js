@@ -1,3 +1,6 @@
+var path = require('path'),
+    root_dir = path.dirname( require.main.filename );
+
 var Profile = require('../models/profile.js'),
     Activity = require('../models/activity.js');
 
@@ -17,7 +20,7 @@ exports.get = function( req, res ){
   if(!user_id) {
 	  res.redirect('/register');
   } else {
-    Profile.schema.findOne( { '_id': user_id }, 'first_name last_name discipline country birthday' ).then( function( profile_data ) {
+    Profile.schema.findOne( { '_id': user_id }, 'first_name last_name discipline country birthday picture' ).then( function( profile_data ) {
       // If the user was found
       if( typeof profile_data.first_name !== 'undefined' ) {
         render( res, user_id, profile_data );
@@ -41,7 +44,7 @@ exports.post = function( req, res ){
     res.redirect('/register');
   } else {
     // Find the profile
-    Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline country birthday')
+    Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline country male birthday picture')
     .then( function( profile_data ) {
       // If the profile was found
       if( typeof profile_data.first_name !== 'undefined' ) {
@@ -134,18 +137,23 @@ function render( res, user_id, profile_data ) {
     // Format the activity data
     var activities = Activity.schema.formatActivities( activities );
     var disciplines = ['100m','200m','400m','800m','1500m','3000m','60m_hurdles','100m_hurdles','110m_hurdles','400m_hurdles','3000m_steeple','4x100m_relay','4x400m_relay','marathon','high_jump','long_jump','triple_jump','pole_vault','shot_put','discus','hammer','javelin','pentathlon','heptathlon','decathlon'];
+
+    var picture = profile_data.picture ? profile_data.picture : ( profile_data.male ? '/public/images/profile_pics/default_male.png' : '/public/images/profile_pics/default_female.png' );
+
     // The data that will go to the front end
     var view_data = {
       'profile': {
         'first_name'  : profile_data.first_name,
         'last_name'   : profile_data.last_name,
         'discipline'  : profile_data.discipline,
-        'country'     : profile_data.country
+        'country'     : profile_data.country,
+        'picture'     : picture
       },
       'disciplines' : disciplines,
       'activities'  : activities,
       'tr'          : translations['en'].getProfileTranslations()
     };
+    
     res.render( 'profile', view_data );
   });
 }
