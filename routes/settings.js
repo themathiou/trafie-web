@@ -37,6 +37,7 @@ exports.post = function( req, res ){
   var user_data = {};
   var errors = false;
 
+
   if( typeof req.body.first_name !== 'undefined' ) {
     profile_data.first_name = req.body.first_name;
     if( !Profile.schema.validateName( profile_data.first_name ) ) {
