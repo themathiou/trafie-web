@@ -4,7 +4,10 @@ block content
 	div#main_content
 		div#profile_container
 			div#image_container
-				img( src="../images/profile_pics/user.png" )
+				if profile.profile_pic
+					img( src=profile.profile_pic )
+				else
+					img( src="../images/profile_pics/ppic_thumb.png"  )
 			div#profileFullName
 				h3= profile.first_name+' '+profile.last_name
 				p= tr[profile.discipline] + ' - ' + tr['countries'][profile.country]
@@ -20,7 +23,6 @@ block content
 						a#add_activity_link( href="javascript:;" )= tr['add_new_activity']
 						form#add_activity_form( method="POST" )
 							select#discipline_input( name="discipline" )
-								option(value="no-selection" selected )= tr['choose_your_discipline']
 								option(value="100m")= tr['100m']
 								option(value="200m")= tr['200m']
 								option(value="400m")= tr['400m']
@@ -35,7 +37,7 @@ block content
 								option(value="4x100m_relay")= tr['4x100m_relay']
 								option(value="4x400m_relay")= tr['4x400m_relay']
 								option(value="marathon")= tr['marathon']
-								option(value="high_jump")= tr['high_jump']
+								option(value="high_jump" selected)= tr['high_jump']
 								option(value="long_jump")= tr['long_jump']
 								option(value="triple_jump")= tr['triple_jump']
 								option(value="pole_vault")= tr['pole_vault']
@@ -46,8 +48,9 @@ block content
 								option(value="pentathlon")= tr['pentathlon']
 								option(value="heptathlon")= tr['heptathlon']
 								option(value="decathlon")= tr['decathlon']
+
 							//time measure
-							div#time_activity.data_entry.row( style="display:none;" )= tr['enter_your_performance'] +':'
+							div#time_activity.data_entry.row= tr['enter_your_performance'] +':'
 								br
 								div
 									label(for="hours_input")= tr['hours_short'] + ':'
