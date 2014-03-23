@@ -1,3 +1,7 @@
+var fs = require('fs'),
+    path = require('path'),
+    root_dir = path.dirname( require.main.filename );
+
 // Initialize translations
 var translations = [];
 translations['en'] = require('../languages/en.js');
@@ -36,7 +40,6 @@ exports.post = function( req, res ){
   var profile_data = {};
   var user_data = {};
   var errors = false;
-
 
   if( typeof req.body.first_name !== 'undefined' ) {
     profile_data.first_name = req.body.first_name;
@@ -96,9 +99,24 @@ exports.post = function( req, res ){
     }
   }
 
+  if( typeof req.files !== 'undefined' && typeof req.files.profile_pic !== 'undefined' ) {
+    fs.readFile( req.files.profile_pic.path, function ( err, data ) {
+      console.log( data );
+      var extension = req.files.profile_pic.name.split('.')[1];
+      var profile_pic_dir = root_dir + '/public/images/profile_pics/' + user_id + '.' + extension;
+
+      console.log( profile_pic_dir );
+
+      fs.writeFile( profile_pic_dir, data, function ( err ) {
+        render( res, user_id, error_messages );
+      });
+
+    });
+  }
+
   if( typeof req.body.old_password !== 'undefined' && typeof req.body.password !== 'undefined' && req.body.repeat_password ) {
     User.schema.findOne({ '_id': user_id }, 'password')
-    .then( function( response ){
+    .then( function( response ) {
       if( typeof response.password === 'undefined' ) {
         redirect('/register');
       }
@@ -167,11 +185,11 @@ function render( res, user_id, error_messages ) {
         'about'       : response.about,
         'gender'      : gender,
         'country'     : response.country,
-        'birthday'    : birthday,
-        'disciplines' : disciplines
+        'birthday'    : birthday
       },
-      'errors'  : error_messages,
-      'tr'      : translations['en'].getSettingsTranslations()
+      'errors'      : error_messages,
+      'disciplines' : disciplines
+      'tr'          : translations['en'].getSettingsTranslations()
     };
 
     res.render( 'settings', view_data );

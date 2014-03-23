@@ -133,16 +133,18 @@ function render( res, user_id, profile_data ) {
   .then( function( activities ) {
     // Format the activity data
     var activities = Activity.schema.formatActivities( activities );
+    var disciplines = ['100m','200m','400m','800m','1500m','3000m','60m_hurdles','100m_hurdles','110m_hurdles','400m_hurdles','3000m_steeple','4x100m_relay','4x400m_relay','marathon','high_jump','long_jump','triple_jump','pole_vault','shot_put','discus','hammer','javelin','pentathlon','heptathlon','decathlon'];
     // The data that will go to the front end
     var view_data = {
       'profile': {
-        'first_name': profile_data.first_name,
-        'last_name' : profile_data.last_name,
-        'discipline': profile_data.discipline,
-        'country'   : profile_data.country
+        'first_name'  : profile_data.first_name,
+        'last_name'   : profile_data.last_name,
+        'discipline'  : profile_data.discipline,
+        'country'     : profile_data.country
       },
-      'activities': activities,
-      'tr'        : translations['en'].getProfileTranslations()
+      'disciplines' : disciplines
+      'activities'  : activities,
+      'tr'          : translations['en'].getProfileTranslations()
     };
     res.render( 'profile', view_data );
   });
