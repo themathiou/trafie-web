@@ -19,7 +19,7 @@ block content
 			//PROFILE PIC
 			div.settingsElement
 				form( method="POST" enctype="multipart/form-data" )
-					img( src="../images/profile_pics/ppic_thumb.png" style="height:80px;")
+					img( src=profile.picture style="height:80px;")
 					label Profile pic :
 					span= errors.profile_pic
 					input#upload_profile_pic( name="profile_pic" type="file" accept="image/*")
@@ -119,11 +119,11 @@ block content
 					span= errors.last_name
 					span#main_discipline_existed= tr[profile.discipline] || "undefined"
 					select#main_discipline_input(name="discipline" hidden)
-						- for( var i in profile.disciplines ) {
-							if profile.discipline == profile.disciplines[i]
-								option( value=profile.disciplines[i] selected)= tr[profile.disciplines[i]]
+						- for( var i in disciplines ) {
+							if profile.discipline == disciplines[i]
+								option( value=disciplines[i] selected)= tr[disciplines[i]]
 							else
-								option( value=profile.disciplines[i] )= tr[profile.disciplines[i]]
+								option( value=disciplines[i] )= tr[disciplines[i]]
 						- }
 					div#settingsMainDisciplineButtons.formButtons(hidden)
 						input#submitMainDiscipline.btn_green( type="submit" value=tr['submit'])

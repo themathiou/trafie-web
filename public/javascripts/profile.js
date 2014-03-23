@@ -173,6 +173,14 @@ function profileHandlers() {
 		number0to99(this);
 	}
 
+
+/*
+	show_specific_form('decathlon');
+	var predefined_discipline = document.getElementById("discipline_input");
+	show_specific_form(predefined_discipline.options[predefined_discipline.selectedIndex].value);
+	console.log(predefined_discipline.options[predefined_discipline.selectedIndex].value);
+*/
+
 }
 
 
