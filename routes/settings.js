@@ -101,12 +101,13 @@ exports.post = function( req, res ){
 
   if( typeof req.files !== 'undefined' && typeof req.files.profile_pic !== 'undefined' ) {
     fs.readFile( req.files.profile_pic.path, function ( err, data ) {
-      console.log( data );
       var extension = req.files.profile_pic.name.split('.')[1];
-      var profile_pic_dir = root_dir + '/public/images/profile_pics/' + user_id + '.' + extension;
+      profile_data.picture = '/public/images/profile_pics/' + user_id + '.' + extension;
 
-      fs.writeFile( profile_pic_dir, data, function ( err ) {
-        render( res, user_id, error_messages );
+      fs.writeFile( root_dir + profile_data.picture, data, function ( err ) {
+        Profile.update({ '_id': user_id }, { $set: profile_data }, { upsert: true }, function( error ) {
+          render( res, user_id, error_messages );
+        });
       });
 
     });
@@ -157,7 +158,7 @@ exports.post = function( req, res ){
 
 
 function render( res, user_id, error_messages ) {
-  Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline about male country birthday')
+  Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline about male country birthday picture')
   .then( function( response ) {
     if( typeof response.first_name === 'undefined' ) redirect('/register');
     // Format the data that will go to the front end
@@ -173,6 +174,8 @@ function render( res, user_id, error_messages ) {
     birthday.month = response.birthday.month ? response.birthday.month : '';
     birthday.year = response.birthday.year ? response.birthday.year : '';
 
+    var picture = response.picture ? response.picture : ( response.male ? '/public/images/profile_pics/default_male.png' : '/public/images/profile_pics/default_female.png' );
+
     var disciplines = ['100m','200m','400m','800m','1500m','3000m','60m_hurdles','100m_hurdles','110m_hurdles','400m_hurdles','3000m_steeple','4x100m_relay','4x400m_relay','marathon','high_jump','long_jump','triple_jump','pole_vault','shot_put','discus','hammer','javelin','pentathlon','heptathlon','decathlon'];
 
     var view_data = {
@@ -183,7 +186,8 @@ function render( res, user_id, error_messages ) {
         'about'       : response.about,
         'gender'      : gender,
         'country'     : response.country,
-        'birthday'    : birthday
+        'birthday'    : birthday,
+        'picture'     : picture
       },
       'errors'      : error_messages,
       'disciplines' : disciplines,
