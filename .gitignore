@@ -2,13 +2,13 @@
 
 *.DS_Store
 
-protected/runtime/*
 
-.settings
 
-.settings/*
 
-.buildpath
+
+
+
+
 
 .project
 
