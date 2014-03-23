@@ -142,7 +142,7 @@ function render( res, user_id, profile_data ) {
         'discipline'  : profile_data.discipline,
         'country'     : profile_data.country
       },
-      'disciplines' : disciplines
+      'disciplines' : disciplines,
       'activities'  : activities,
       'tr'          : translations['en'].getProfileTranslations()
     };
