@@ -49,8 +49,10 @@ block content
 								option(value="heptathlon")= tr['heptathlon']
 								option(value="decathlon")= tr['decathlon']
 
+								if 1==1
+									show_specific_form('high_jump')
 							//time measure
-							div#time_activity.data_entry.row= tr['enter_your_performance'] +':'
+							div#time_activity.data_entry.row( style="display:none;" )= tr['enter_your_performance'] +':'
 								br
 								div
 									label(for="hours_input")= tr['hours_short'] + ':'
