@@ -105,8 +105,6 @@ exports.post = function( req, res ){
       var extension = req.files.profile_pic.name.split('.')[1];
       var profile_pic_dir = root_dir + '/public/images/profile_pics/' + user_id + '.' + extension;
 
-      console.log( profile_pic_dir );
-
       fs.writeFile( profile_pic_dir, data, function ( err ) {
         render( res, user_id, error_messages );
       });
@@ -188,7 +186,7 @@ function render( res, user_id, error_messages ) {
         'birthday'    : birthday
       },
       'errors'      : error_messages,
-      'disciplines' : disciplines
+      'disciplines' : disciplines,
       'tr'          : translations['en'].getSettingsTranslations()
     };
 
