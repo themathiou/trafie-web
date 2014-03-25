@@ -139,14 +139,16 @@ function submit_form(form, callback) {
 function post(data, url, callback) {
 	xhr.open('POST', url);
 
+	console.log(data);
+
 	xhr.addEventListener('load', function (e) {
-	    callback( JSON.parse(xhr.responseText) );
+	    callback( xhr.responseText );
 	    console.log(xhr.responseText);
 	}, false);
 
 	xhr.setRequestHeader('Content-Type', 'application/json');
 
-	xhr.send(JSON.stringify(data));
+	xhr.send(data);
 }
 
 
