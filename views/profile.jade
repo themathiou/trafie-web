@@ -7,7 +7,10 @@ block content
 				img( src=profile.picture )
 			div#profileFullName
 				h3= profile.first_name+' '+profile.last_name
-				p= ( tr[profile.discipline] || "") + " " + ( tr['countries'][profile.country] || "")
+				if  tr[profile.discipline] && tr['countries'][profile.country]
+					p= ( tr[profile.discipline] ) + " - " + ( tr['countries'][profile.country] )
+				else
+					p= ( tr[profile.discipline] || "") + ( tr['countries'][profile.country] || "")
 
 
 		div#history_container
@@ -18,55 +21,98 @@ block content
 					div.icon +
 					div#slider( class="info add_activity" )
 						a#add_activity_link( href="javascript:;" )= tr['add_new_activity']
-						form#add_activity_form( method="POST" )
+						form#add_activity_form( method="POST" action="/activity")
 							select#discipline_input( name="discipline" )
-								- for( var i in disciplines ) {
-									if profile.discipline == disciplines[i]
-										option( value=disciplines[i] selected)= tr[disciplines[i]]
-									else
-										option( value=disciplines[i] )= tr[disciplines[i]]
+								- for( var category in disciplines ) {
+									-for( var i in disciplines[category]) {
+										if profile.discipline == disciplines[category][i]
+											option( value=disciplines[category][i] selected)= tr[disciplines[category][i]]
+										else
+											option( value=disciplines[category][i] )= tr[disciplines[category][i]]
+									-}
 								- }
 
 							//time measure
-							div#time_activity.data_entry.row= tr['enter_your_performance'] +':'
-								br
-								div
-									label(for="hours_input")= tr['hours_short'] + ':'
-									input#hours_input(name="hours" size="3" maxlength="2" )
-								div
-									label(for="minutes_input")= tr['minutes_short'] + ':'
-									input#minutes_input(name="minutes" size="3" maxlength="2" )
-								div
-									label(for="seconds_input")= tr['seconds_short'] + ':'
-									input#seconds_input(name="seconds" size="3" maxlength="2" )
-								div
-									label(for="centiseconds_input")= tr['centiseconds_short'] + ':'
-									input#centiseconds_input(name="centiseconds" size="3" maxlength="2" )
-								div.row
-									label(for="datepicker_time") Date:
-									input#datepicker_time( type="text" )
+							if disciplines.time.indexOf(profile.discipline) > -1
+								div#time_activity.data_entry.row= tr['enter_your_performance'] +':'
+									br
+									div
+										label(for="hours_input")= tr['hours_short'] + ':'
+										input#hours_input(name="hours" size="3" maxlength="2" )
+									div
+										label(for="minutes_input")= tr['minutes_short'] + ':'
+										input#minutes_input(name="minutes" size="3" maxlength="2" )
+									div
+										label(for="seconds_input")= tr['seconds_short'] + ':'
+										input#seconds_input(name="seconds" size="3" maxlength="2" )
+									div
+										label(for="centiseconds_input")= tr['centiseconds_short'] + ':'
+										input#centiseconds_input(name="centiseconds" size="3" maxlength="2" )
+									div.row
+										label(for="datepicker_time") Date:
+										input#datepicker_time( type="text" )
+							else
+								div#time_activity.data_entry.row( style="display:none;" )= tr['enter_your_performance'] +':'
+									br
+									div
+										label(for="hours_input")= tr['hours_short'] + ':'
+										input#hours_input(name="hours" size="3" maxlength="2" )
+									div
+										label(for="minutes_input")= tr['minutes_short'] + ':'
+										input#minutes_input(name="minutes" size="3" maxlength="2" )
+									div
+										label(for="seconds_input")= tr['seconds_short'] + ':'
+										input#seconds_input(name="seconds" size="3" maxlength="2" )
+									div
+										label(for="centiseconds_input")= tr['centiseconds_short'] + ':'
+										input#centiseconds_input(name="centiseconds" size="3" maxlength="2" )
+									div.row
+										label(for="datepicker_time") Date:
+										input#datepicker_time( type="text" )
 
 							//distance measure
-							div#distance_activity.data_entry.row( style="display:none;" )= tr['enter_your_performance'] +':'
-								br
-								div
-									label(for="distance_1_input")= tr['meters_short'] + ':'
-									input#distance_1_input(name="distance_1" size="3" maxlength="2").
-								div
-									label(for="distance_2_input")= tr['centimeters_short'] + ':'
-									input#distance_2_input(name="distance_2" size="3" maxlength="2" )
-								div.row
-									label(for="datepicker_distance") Date:
-									input#datepicker_distance( type="text" )
+							if disciplines.distance.indexOf(profile.discipline) > -1
+								div#distance_activity.data_entry.row= tr['enter_your_performance'] +':'
+									br
+									div
+										label(for="distance_1_input")= tr['meters_short'] + ':'
+										input#distance_1_input(name="distance_1" size="3" maxlength="2").
+									div
+										label(for="distance_2_input")= tr['centimeters_short'] + ':'
+										input#distance_2_input(name="distance_2" size="3" maxlength="2" )
+									div.row
+										label(for="datepicker_distance") Date:
+										input#datepicker_distance( type="text" )
+							else
+								div#distance_activity.data_entry.row( style="display:none;" )= tr['enter_your_performance'] +':'
+									br
+									div
+										label(for="distance_1_input")= tr['meters_short'] + ':'
+										input#distance_1_input(name="distance_1" size="3" maxlength="2").
+									div
+										label(for="distance_2_input")= tr['centimeters_short'] + ':'
+										input#distance_2_input(name="distance_2" size="3" maxlength="2" )
+									div.row
+										label(for="datepicker_distance") Date:
+										input#datepicker_distance( type="text" )
 
 							// points measure
-							div#point_activity.data_entry.row( style="display:none;" )= tr['enter_your_performance'] +':'
-								br
-								label(for="points_input")= tr['points'] + ':'
-								input#points_input(type="text" name="points" size="7" maxlength="5")
-								div.row
-									label(for="datepicker_point") Date:
-									input#datepicker_point( type="text" )
+							if disciplines.points.indexOf(profile.discipline) > -1
+								div#point_activity.data_entry.row= tr['enter_your_performance'] +':'
+									br
+									label(for="points_input")= tr['points'] + ':'
+									input#points_input(type="text" name="points" size="7" maxlength="5")
+									div.row
+										label(for="datepicker_point") Date:
+										input#datepicker_point( type="text" )
+							else
+								div#point_activity.data_entry.row( style="display:none;" )= tr['enter_your_performance'] +':'
+									br
+									label(for="points_input")= tr['points'] + ':'
+									input#points_input(type="text" name="points" size="7" maxlength="5")
+									div.row
+										label(for="datepicker_point") Date:
+										input#datepicker_point( type="text" )
 
 							//submit
 							div#submit_buttons.row.submit_buttons
@@ -111,6 +157,7 @@ block content
 	//scripts
 	script(type='text/javascript', src='/javascripts/profile.js')
 	script( type='text/javascript', src='/javascripts/pikaday.min.js')
+	script( type='text/javascript', src='/javascripts/serialize-0.2.min.js')
 	script.
 		var picker_time = new Pikaday({field: document.getElementById('datepicker_time'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date('2020-12-31'), yearRange: [2000,2020]})
 

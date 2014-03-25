@@ -5,6 +5,24 @@
 /* document.getElementById("id").event = function() { doSomething(); } */
 
 /**
+ * number0to59() : checking values between 0-60 (i.e minutes)
+ * @param input : the input
+ */
+function number0to59(input) {
+    if (input.value < 0) input.value = 0;
+    if (input.value > 59) input.value = 59;
+    }
+
+/**
+ * number0to99() : checking values between 0-100 (i.e minutes)
+ * @param input : the input
+ */
+function number0to99(input) {
+    if (input.value < 0) input.value = 0;
+    if (input.value > 99) input.value = 99;
+  }
+
+/**
  * show_specific_form() : shows specific elements on 'create a new activity' form, based on selected discipline
  * @param choice : user's choice of discipline
  */
@@ -167,6 +185,15 @@ function profileHandlers() {
 
 	document.getElementById("distance_2_input").onkeyup = function() {
 		number0to99(this);
+	}
+
+	document.getElementById("add_activity_form").onsubmit = function (e) {
+		var evt = e ? e : window.event;
+		if (evt.preventDefault) evt.preventDefault();
+
+		submit_form(this, function(response){
+			console.log(response);
+		});
 	}
 
 

@@ -118,28 +118,36 @@ function setSmall( year ) {
 }
 
 /********************************************/
-/* 				PROFILE 					*/
+/* 				REST CALLS 					*/
 /********************************************/
 
-/**
- * number0to59() : checking values between 0-60 (i.e minutes)
- * @param input : the input
- */
-function number0to59(input) {
-    if (input.value < 0) input.value = 0;
-    if (input.value > 59) input.value = 59;
-    }
+var xhr = new XMLHttpRequest();
 
-/**
- * number0to99() : checking values between 0-100 (i.e minutes)
- * @param input : the input
- */
-function number0to99(input) {
-    if (input.value < 0) input.value = 0;
-    if (input.value > 99) input.value = 99;
-  }
+function submit_form(form, callback) {
+	var data = serialize(form);
+	var method = form.attributes.method.value;
+	switch(method){
+		case 'POST':
+			post(data, form.attributes.action.value, callback);
+			break;
+		case 'GET' :
+			console.log('-get?');
+	}
 
+}
 
+function post(data, url, callback) {
+	xhr.open('POST', url);
+
+	xhr.addEventListener('load', function (e) {
+	    callback( JSON.parse(xhr.responseText) );
+	    console.log(xhr.responseText);
+	}, false);
+
+	xhr.setRequestHeader('Content-Type', 'application/json');
+
+	xhr.send(JSON.stringify(data));
+}
 
 
 
