@@ -92,6 +92,8 @@ function open_new_activity_form() {
 	  }
 	},1);
 
+	document.getElementById('add_activity_link').setAttribute("onClick","close_new_activity_form();");
+	document.getElementById('add_activity_link').setAttribute("href","javascript:;");
 
 }
 
@@ -135,12 +137,6 @@ function close_new_activity_form() {
 
 	document.getElementById('add_activity_link').setAttribute("onClick","open_new_activity_form();");
 	document.getElementById('add_activity_link').setAttribute("href","javascript:;");
-	document.getElementById('discipline_input').selectedIndex = 0;
-    document.getElementById('time_activity').style.display = 'none';
-    document.getElementById('distance_activity').style.display = 'none';
-    document.getElementById('point_activity').style.display = 'none';
-    document.getElementById('submit_buttons').style.display = 'none';
-
 
 }
 

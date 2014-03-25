@@ -7,7 +7,7 @@ block content
 				img( src=profile.picture )
 			div#profileFullName
 				h3= profile.first_name+' '+profile.last_name
-				p= tr[profile.discipline] + ' - ' + tr['countries'][profile.country]
+				p= ( tr[profile.discipline] || "") + " " + ( tr['countries'][profile.country] || "")
 
 
 		div#history_container
@@ -28,7 +28,7 @@ block content
 								- }
 
 							//time measure
-							div#time_activity.data_entry.row( style="display:none;" )= tr['enter_your_performance'] +':'
+							div#time_activity.data_entry.row= tr['enter_your_performance'] +':'
 								br
 								div
 									label(for="hours_input")= tr['hours_short'] + ':'
@@ -58,6 +58,7 @@ block content
 								div.row
 									label(for="datepicker_distance") Date:
 									input#datepicker_distance( type="text" )
+
 							// points measure
 							div#point_activity.data_entry.row( style="display:none;" )= tr['enter_your_performance'] +':'
 								br
@@ -68,7 +69,7 @@ block content
 									input#datepicker_point( type="text" )
 
 							//submit
-							div#submit_buttons.row.submit_buttons( style="display:none;" )
+							div#submit_buttons.row.submit_buttons
 								input.btn_green(type="submit" name="new_competition" value=tr['save'])
 								a#cancel_activity_link.cancel_link( onclick="close_new_activity_form();" href="javascript:;")= tr['cancel']
 							//div.row
@@ -79,7 +80,6 @@ block content
 								input.btn_blue_1(type="submit" name="new_competition" value="Submit")
 							//div.row
 								input.btn_blue_2(type="submit" name="new_competition" value="Submit")
-
 
 				each activity in activities
 					li
