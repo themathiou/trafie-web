@@ -136,7 +136,39 @@ function render( res, user_id, profile_data ) {
   .then( function( activities ) {
     // Format the activity data
     var activities = Activity.schema.formatActivities( activities );
-    var disciplines = ['100m','200m','400m','800m','1500m','3000m','60m_hurdles','100m_hurdles','110m_hurdles','400m_hurdles','3000m_steeple','4x100m_relay','4x400m_relay','marathon','high_jump','long_jump','triple_jump','pole_vault','shot_put','discus','hammer','javelin','pentathlon','heptathlon','decathlon'];
+    var disciplines = {
+      'time': [
+        '100m',
+        '200m',
+        '400m',
+        '800m',
+        '1500m',
+        '3000m',
+        '60m_hurdles',
+        '100m_hurdles',
+        '110m_hurdles',
+        '400m_hurdles',
+        '3000m_steeple',
+        '4x100m_relay',
+        '4x400m_relay',
+        'marathon'
+      ],
+      'distance': [
+        'high_jump',
+        'long_jump',
+        'triple_jump',
+        'pole_vault',
+        'shot_put',
+        'discus',
+        'hammer',
+        'javelin'
+      ],
+      'points': [
+        'pentathlon',
+        'heptathlon',
+        'decathlon'
+      ]
+    };
 
     var picture = profile_data.picture ? profile_data.picture : ( profile_data.male ? '/images/profile_pics/default_male.png' : '/images/profile_pics/default_female.png' );
 
