@@ -86,7 +86,11 @@ if ('development' == trafie.get('env')) {
 
 trafie.get( '/', profile.get );
 
-trafie.post( '/', profile.post );
+trafie.post( '/activity', profile.post );
+
+//trafie.put( '/activity', profile.put );
+
+trafie.delete( '/activity', profile.delete );
 
 
 /*******************************************************************************************************************************

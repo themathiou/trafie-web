@@ -27,133 +27,141 @@ exports.get = function( req, res ){
 };
 
 
-exports.post = function( req, res ){
+exports.post = function( req, res ) {
   var user_id = req.session.user_id;
 
   // If there is no user id in the session, redirect to register screen
-  if(!user_id) {
-    res.redirect('/register');
-  }
+  if(!user_id) res.redirect('/register');
 
-  var error_messages = {};
-  var update = '';
-  var profile_data = {};
-  var user_data = {};
-  var errors = false;
+  // Check if the profile really exists
+  Profile.schema.findOne({ '_id': user_id }, 'first_name')
+  .then( function( response ) {
+    // If the profile doesn't exist, redirect
+    if( typeof response.first_name === 'undefined' ) redirect('/register');
 
-  if( typeof req.body.first_name !== 'undefined' ) {
-    profile_data.first_name = req.body.first_name;
-    if( !Profile.schema.validateName( profile_data.first_name ) ) {
-      error_messages.first_name = 'Invalid name';
-      errors = true;
+    var error_messages = {};
+    var update = '';
+    var profile_data = {};
+    var user_data = {};
+    var errors = false;
+
+    if( typeof req.body.first_name !== 'undefined' ) {
+      profile_data.first_name = req.body.first_name;
+      if( !Profile.schema.validateName( profile_data.first_name ) ) {
+        error_messages.first_name = 'Invalid name';
+        errors = true;
+      }
     }
-  }
 
-  if( typeof req.body.last_name !== 'undefined' ) {
-    profile_data.last_name = req.body.last_name;
-    if( !Profile.schema.validateName( profile_data.last_name ) ) {
-      error_messages.last_name = 'Invalid name';
-      errors = true;
+    if( typeof req.body.last_name !== 'undefined' ) {
+      profile_data.last_name = req.body.last_name;
+      if( !Profile.schema.validateName( profile_data.last_name ) ) {
+        error_messages.last_name = 'Invalid name';
+        errors = true;
+      }
     }
-  }
 
-  if( typeof req.body.birthday_day !== 'undefined' && typeof req.body.birthday_month !== 'undefined' && typeof req.body.birthday_year !== 'undefined' ) {
-    profile_data.birthday = {};
-    profile_data.birthday.day = req.body.birthday_day;
-    profile_data.birthday.month = req.body.birthday_month;
-    profile_data.birthday.year = req.body.birthday_year;
-    if( !Profile.schema.validateBirthday( profile_data.birthday ) ) {
-      errors = true;
+    if( typeof req.body.birthday_day !== 'undefined' && typeof req.body.birthday_month !== 'undefined' && typeof req.body.birthday_year !== 'undefined' ) {
+      profile_data.birthday = {};
+      profile_data.birthday.day = req.body.birthday_day;
+      profile_data.birthday.month = req.body.birthday_month;
+      profile_data.birthday.year = req.body.birthday_year;
+      if( !Profile.schema.validateBirthday( profile_data.birthday ) ) {
+        errors = true;
+      }
     }
-  }
 
-  if( typeof req.body.gender !== 'undefined' ) {
-    if( !Profile.schema.validateGender( req.body.gender ) ) {
-      errors = true;
+    if( typeof req.body.gender !== 'undefined' ) {
+      if( !Profile.schema.validateGender( req.body.gender ) ) {
+        errors = true;
+      } else {
+        profile_data.male = req.body.gender == 'male';
+      }
+    }
+
+    if( typeof req.body.country !== 'undefined' ) {
+      if( !Profile.schema.validateCountry( req.body.country ) ) {
+        errors = true;
+      } else {
+        profile_data.country = req.body.country;
+      }
+    }
+
+    if( typeof req.body.discipline !== 'undefined' ) {
+      if( !Profile.schema.validateDiscipline( req.body.discipline ) ) {
+        errors = true;
+      } else {
+        profile_data.discipline = req.body.discipline;
+      }
+    }
+
+    if( typeof req.body.about !== 'undefined' ) {
+      if( !Profile.schema.validateAbout( req.body.about ) ) {
+        errors = true;
+      } else {
+        profile_data.about = req.body.about;
+      }
+    }
+
+    if( typeof req.files !== 'undefined' && typeof req.files.profile_pic !== 'undefined' ) {
+      // Read the image file
+      fs.readFile( req.files.profile_pic.path, function ( err, data ) {
+        // Get the file extension
+        var extension = req.files.profile_pic.name.split('.')[1];
+        profile_data.picture = '/images/profile_pics/' + user_id + '.' + extension;
+
+        // Save the file in the images folder
+        fs.writeFile( root_dir + '/public' + profile_data.picture, data, function ( err ) {
+          // Update the database
+          Profile.update({ '_id': user_id }, { $set: profile_data }, { upsert: true }, function( error ) {
+            render( res, user_id, error_messages );
+          });
+        });
+
+      });
+    }
+
+    if( typeof req.body.old_password !== 'undefined' && typeof req.body.password !== 'undefined' && req.body.repeat_password ) {
+      User.schema.findOne({ '_id': user_id }, 'password')
+      .then( function( response ) {
+        if( typeof response.password === 'undefined' ) {
+          redirect('/register');
+        }
+        else { 
+          if( req.body.password !== req.body.repeat_password ) {
+            errors = true;
+            error_messages.repeat_password = 'passwords_do_not_match';
+          }
+          if( response.password !== User.schema.encryptPassword( req.body.old_password ) ) {
+            errors = true;
+            error_messages.old_password = 'wrong_password';
+          }
+          if( !User.schema.validatePassword( req.body.password ) ) {
+            errors = true;
+            error_messages.password = 'password_should_be_at_least_6_characters_long';
+          }
+          if( errors ) {
+            render( res, user_id, error_messages );
+          } else {
+            User.schema.resetPassword( user_id, req.body.password )
+            .then( function(){
+              render( res, user_id, error_messages );
+            });
+          }
+        }
+      });
     } else {
-      profile_data.male = req.body.gender == 'male';
-    }
-  }
-
-  if( typeof req.body.country !== 'undefined' ) {
-    if( !Profile.schema.validateCountry( req.body.country ) ) {
-      errors = true;
-    } else {
-      profile_data.country = req.body.country;
-    }
-  }
-
-  if( typeof req.body.discipline !== 'undefined' ) {
-    if( !Profile.schema.validateDiscipline( req.body.discipline ) ) {
-      errors = true;
-    } else {
-      profile_data.discipline = req.body.discipline;
-    }
-  }
-
-  if( typeof req.body.about !== 'undefined' ) {
-    if( !Profile.schema.validateAbout( req.body.about ) ) {
-      errors = true;
-    } else {
-      profile_data.about = req.body.about;
-    }
-  }
-
-  if( typeof req.files !== 'undefined' && typeof req.files.profile_pic !== 'undefined' ) {
-    fs.readFile( req.files.profile_pic.path, function ( err, data ) {
-      var extension = req.files.profile_pic.name.split('.')[1];
-      profile_data.picture = '/images/profile_pics/' + user_id + '.' + extension;
-
-      fs.writeFile( root_dir + '/public' + profile_data.picture, data, function ( err ) {
+      // If there are errors, do not update the profile
+      if( errors ) {
+        render( res, user_id, error_messages );
+      // Else, fetch the first name and the last name of the user from the database
+      } else {
         Profile.update({ '_id': user_id }, { $set: profile_data }, { upsert: true }, function( error ) {
           render( res, user_id, error_messages );
         });
-      });
-
-    });
-  }
-
-  if( typeof req.body.old_password !== 'undefined' && typeof req.body.password !== 'undefined' && req.body.repeat_password ) {
-    User.schema.findOne({ '_id': user_id }, 'password')
-    .then( function( response ) {
-      if( typeof response.password === 'undefined' ) {
-        redirect('/register');
       }
-      else { 
-        if( req.body.password !== req.body.repeat_password ) {
-          errors = true;
-          error_messages.repeat_password = 'passwords_do_not_match';
-        }
-        if( response.password !== User.schema.encryptPassword( req.body.old_password ) ) {
-          errors = true;
-          error_messages.old_password = 'wrong_password';
-        }
-        if( !User.schema.validatePassword( req.body.password ) ) {
-          errors = true;
-          error_messages.password = 'password_should_be_at_least_6_characters_long';
-        }
-        if( errors ) {
-          render( res, user_id, error_messages );
-        } else {
-          User.schema.resetPassword( user_id, req.body.password )
-          .then( function(){
-            render( res, user_id, error_messages );
-          });
-        }
-      }
-    });
-  } else {
-    // If there are errors, do not update the profile
-    if( errors ) {
-      render( res, user_id, error_messages );
-    // Else, fetch the first name and the last name of the user from the database
-    } else {
-      Profile.update({ '_id': user_id }, { $set: profile_data }, { upsert: true }, function( error ) {
-        render( res, user_id, error_messages );
-      });
     }
-  }
-
+  });
 };
 
 

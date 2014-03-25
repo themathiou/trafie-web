@@ -13,6 +13,19 @@ var activitySchema = mongoose.Schema({
 });
 
 /**
+* Find activity by element
+* @param json where({_id:id})
+* @param String select
+*/
+activitySchema.findOne = function( where, select ) {
+	var d = q.defer();
+	Activity.findOne(where, select, function ( err, activity ) {
+		d.resolve( activity );
+	});
+	return d.promise;
+};
+
+/**
 * Find user by element
 * @param json where({email:someone@trafie.com})
 * @param String select
@@ -49,59 +62,64 @@ activitySchema.getActivitiesOfUser = function( where, select, sort ) {
 activitySchema.formatActivities = function( activities ) {
 	var activities_count = activities.length;
 	for( var i=0 ; i<activities_count ; i++ ) {
-		switch ( activities[i].discipline ) {
-          case '100m':
-          case '200m':
-          case '400m':
-          case '800m':
-          case '1500m':
-          case '3000m':
-          case '60m_hurdles':
-          case '100m_hurdles':
-          case '110m_hurdles':
-          case '400m_hurdles':
-          case '3000m_steeple':
-          case '4x100m_relay':
-          case '4x400m_relay':
-          case 'marathon':
-          	// Getting the centiseconds
-			var centiseconds = activities[i].performance.split('.')[1];
-			// Getting the rest of the performance parts
-			var performance_parts = activities[i].performance.split('.')[0].split(':');
-			// If the first part of the time is 0, remove it (affects hours and minutes)
-			for( var j=0 ; j<2 ; j++ ) {
-				if( performance_parts[0] == 0 ) {
-					performance_parts.splice( 0, 1 );
-				} else {
-					break;
-				}
-			}
-
-			// Joining the parts with :
-			var performance = performance_parts.join(':');
-			// Joining with the centiseconds
-			activities[i].performance = performance + '.' + centiseconds;
-            break;
-          case 'high_jump':
-          case 'long_jump':
-          case 'triple_jump':
-          case 'pole_vault':
-          case 'shot_put':
-          case 'discus':
-          case 'hammer':
-          case 'javelin':
-          	// Converting the distance back to meters
-            activities[i].performance = (activities[i].performance / 10000).toFixed(2);
-            break;
-          case 'pentathlon':
-          case 'heptathlon':
-          case 'decathlon':
-           	
-            break;
-		}
+		activities[i] = activitySchema.formatActivity( activities[i] );
 	}
 	return activities;
 };
+
+activitySchema.formatActivity = function( activity ) {
+	switch ( activity.discipline ) {
+      case '100m':
+      case '200m':
+      case '400m':
+      case '800m':
+      case '1500m':
+      case '3000m':
+      case '60m_hurdles':
+      case '100m_hurdles':
+      case '110m_hurdles':
+      case '400m_hurdles':
+      case '3000m_steeple':
+      case '4x100m_relay':
+      case '4x400m_relay':
+      case 'marathon':
+      	// Getting the centiseconds
+		var centiseconds = activity.performance.split('.')[1];
+		// Getting the rest of the performance parts
+		var performance_parts = activity.performance.split('.')[0].split(':');
+		// If the first part of the time is 0, remove it (affects hours and minutes)
+		for( var j=0 ; j<2 ; j++ ) {
+			if( performance_parts[0] == 0 ) {
+				performance_parts.splice( 0, 1 );
+			} else {
+				break;
+			}
+		}
+
+		// Joining the parts with :
+		var performance = performance_parts.join(':');
+		// Joining with the centiseconds
+		activity.performance = performance + '.' + centiseconds;
+        break;
+      case 'high_jump':
+      case 'long_jump':
+      case 'triple_jump':
+      case 'pole_vault':
+      case 'shot_put':
+      case 'discus':
+      case 'hammer':
+      case 'javelin':
+      	// Converting the distance back to meters
+        activity.performance = (activity.performance / 10000).toFixed(2);
+        break;
+      case 'pentathlon':
+      case 'heptathlon':
+      case 'decathlon':
+       	
+        break;
+	}
+	return activity;
+}
 
 /**
  * Checks time inputs for validity, if they are valid, it adds leading zeros to
