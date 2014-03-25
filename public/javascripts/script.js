@@ -124,7 +124,15 @@ function setSmall( year ) {
 var xhr = new XMLHttpRequest();
 
 function submit_form(form, callback) {
-	var data = serialize(form);
+	var data = '';
+	for( var i in form.elements) {
+		if ( form.elements.hasOwnProperty(i) ) {
+			data += '\"'+form.elements[i].name + '\":\"' + form.elements[i].value + '\",';
+		}
+	}
+	data = data.replace( ',\"undefined\":\"undefined\",' , '' );
+	data = '{' + data + '}';
+
 	var method = form.attributes.method.value;
 	switch(method){
 		case 'POST':
@@ -138,13 +146,14 @@ function submit_form(form, callback) {
 
 function post(data, url, callback) {
 	xhr.open('POST', url);
+	console.log( data );
 
 	xhr.addEventListener('load', function (e) {
 	    callback( xhr.responseText );
 	    console.log(xhr.responseText);
 	}, false);
 
-	xhr.setRequestHeader('Content-Type', 'text/html');
+	xhr.setRequestHeader('Content-Type', 'application/json');
 
 	xhr.send(data);
 }

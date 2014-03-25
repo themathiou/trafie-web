@@ -50,7 +50,7 @@ block content
 										input#centiseconds_input(name="centiseconds" size="3" maxlength="2" )
 									div.row
 										label(for="datepicker_time") Date:
-										input#datepicker_time( type="text" )
+										input#datepicker_time( name="datepicker_time" type="text" )
 							else
 								div#time_activity.data_entry.row( style="display:none;" )= tr['enter_your_performance'] +':'
 									br
@@ -58,17 +58,17 @@ block content
 										label(for="hours_input")= tr['hours_short'] + ':'
 										input#hours_input(name="hours" size="3" maxlength="2" )
 									div
-										label(for="minutes_input")= tr['minutes_short'] + ':'
+										label( for="minutes_input" )= tr['minutes_short'] + ':'
 										input#minutes_input(name="minutes" size="3" maxlength="2" )
 									div
-										label(for="seconds_input")= tr['seconds_short'] + ':'
-										input#seconds_input(name="seconds" size="3" maxlength="2" )
+										label( for="seconds_input" )= tr['seconds_short'] + ':'
+										input#seconds_input( name="seconds" size="3" maxlength="2" )
 									div
 										label(for="centiseconds_input")= tr['centiseconds_short'] + ':'
-										input#centiseconds_input(name="centiseconds" size="3" maxlength="2" )
+										input#centiseconds_input( name="centiseconds" size="3" maxlength="2" )
 									div.row
 										label(for="datepicker_time") Date:
-										input#datepicker_time( type="text" )
+										input#datepicker_time( name="datepicker_time" type="text" )
 
 							//distance measure
 							if disciplines.distance.indexOf(profile.discipline) > -1
@@ -82,19 +82,19 @@ block content
 										input#distance_2_input(name="distance_2" size="3" maxlength="2" )
 									div.row
 										label(for="datepicker_distance") Date:
-										input#datepicker_distance( type="text" )
+										input#datepicker_distance( name="datepicker_distance" type="text" )
 							else
 								div#distance_activity.data_entry.row( style="display:none;" )= tr['enter_your_performance'] +':'
 									br
 									div
 										label(for="distance_1_input")= tr['meters_short'] + ':'
-										input#distance_1_input(name="distance_1" size="3" maxlength="2").
+										input#distance_1_input( name="distance_1" size="3" maxlength="2").
 									div
 										label(for="distance_2_input")= tr['centimeters_short'] + ':'
-										input#distance_2_input(name="distance_2" size="3" maxlength="2" )
+										input#distance_2_input( name="distance_2" size="3" maxlength="2" )
 									div.row
 										label(for="datepicker_distance") Date:
-										input#datepicker_distance( type="text" )
+										input#datepicker_distance( name="datepicker_distance" type="text" )
 
 							// points measure
 							if disciplines.points.indexOf(profile.discipline) > -1
@@ -104,7 +104,7 @@ block content
 									input#points_input(type="text" name="points" size="7" maxlength="5")
 									div.row
 										label(for="datepicker_point") Date:
-										input#datepicker_point( type="text" )
+										input#datepicker_point( name="datepicker_point" type="text" )
 							else
 								div#point_activity.data_entry.row( style="display:none;" )= tr['enter_your_performance'] +':'
 									br
@@ -112,7 +112,7 @@ block content
 									input#points_input(type="text" name="points" size="7" maxlength="5")
 									div.row
 										label(for="datepicker_point") Date:
-										input#datepicker_point( type="text" )
+										input#datepicker_point( name="datepicker_point" type="text" )
 
 							//submit
 							div#submit_buttons.row.submit_buttons
@@ -157,7 +157,6 @@ block content
 	//scripts
 	script(type='text/javascript', src='/javascripts/profile.js')
 	script( type='text/javascript', src='/javascripts/pikaday.min.js')
-	script( type='text/javascript', src='/javascripts/serialize-0.2.min.js')
 	script.
 		var picker_time = new Pikaday({field: document.getElementById('datepicker_time'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date('2020-12-31'), yearRange: [2000,2020]})
 
