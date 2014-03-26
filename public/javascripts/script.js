@@ -130,8 +130,13 @@ function submit_form(form, callback) {
 			data += '\"'+form.elements[i].name + '\":\"' + form.elements[i].value + '\",';
 		}
 	}
-	data = data.replace( ',\"undefined\":\"undefined\",' , '' );
-	data = '{' + data + '}';
+
+	data = '{' + data.replace( ',\"undefined\":\"undefined\",' , '' ) + '}';
+	try {
+	  JSON.parse(data);
+	} catch (e) {
+	  console.error("Parsing json from submit form error:", e);
+	}
 
 	var method = form.attributes.method.value;
 	switch(method){
