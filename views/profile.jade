@@ -49,7 +49,7 @@ block content
 										label(for="centiseconds_input")= tr['centiseconds_short'] + ':'
 										input#centiseconds_input(name="centiseconds" size="3" maxlength="2" )
 									div.row
-										label(for="datepicker_time")= tr[date] + ':'
+										label(for="datepicker_time")= tr['date'] + ':'
 										input#datepicker_time( name="datepicker_time" type="text" )
 							else
 								div#time_activity.data_entry.row( style="display:none;" )= tr['enter_your_performance'] +':'
@@ -67,7 +67,7 @@ block content
 										label(for="centiseconds_input")= tr['centiseconds_short'] + ':'
 										input#centiseconds_input( name="centiseconds" size="3" maxlength="2" )
 									div.row
-										label(for="datepicker_time")= tr[date] + ':'
+										label(for="datepicker_time")= tr['date'] + ':'
 										input#datepicker_time( name="datepicker_time" type="text" )
 
 							//distance measure
@@ -81,7 +81,7 @@ block content
 										label(for="distance_2_input")= tr['centimeters_short'] + ':'
 										input#distance_2_input(name="distance_2" size="3" maxlength="2" )
 									div.row
-										label(for="datepicker_distance")= tr[date] + ':'
+										label(for="datepicker_distance")= tr['date'] + ':'
 										input#datepicker_distance( name="datepicker_distance" type="text" )
 							else
 								div#distance_activity.data_entry.row( style="display:none;" )= tr['enter_your_performance'] +':'
@@ -93,7 +93,7 @@ block content
 										label(for="distance_2_input")= tr['centimeters_short'] + ':'
 										input#distance_2_input( name="distance_2" size="3" maxlength="2" )
 									div.row
-										label(for="datepicker_distance")= tr[date] + ':'
+										label(for="datepicker_distance")= tr['date'] + ':'
 										input#datepicker_distance( name="datepicker_distance" type="text" )
 
 							// points measure
@@ -103,7 +103,7 @@ block content
 									label(for="points_input")= tr['points'] + ':'
 									input#points_input(type="text" name="points" size="7" maxlength="5")
 									div.row
-										label(for="datepicker_point")= tr[date] + ':'
+										label(for="datepicker_point")= tr['date'] + ':'
 										input#datepicker_point( name="datepicker_point" type="text" )
 							else
 								div#point_activity.data_entry.row( style="display:none;" )= tr['enter_your_performance'] +':'
@@ -111,7 +111,7 @@ block content
 									label(for="points_input")= tr['points'] + ':'
 									input#points_input(type="text" name="points" size="7" maxlength="5")
 									div.row
-										label(for="datepicker_point")= tr[date] + ':'
+										label(for="datepicker_point")= tr['date'] + ':'
 										input#datepicker_point( name="datepicker_point" type="text" )
 
 							//submit
