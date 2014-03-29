@@ -154,11 +154,15 @@ block content
 				form( method="POST")
 					label Language :
 					span= errors.language
-					span#language_existed English
+					span#language_existed languages[profile.language]
 					select#language_input(name="language" hidden)
 							option(value="no-selection" selected) Choose your Language
-							option(value="en" selected) English
-							option(value="gr" selected) Ελληνικά
+							- for( var i in languages ) {
+								if languages[profile.language] == languages[i]
+									option( value=i selected)= languages[i]
+								else
+									option( value=i )= languages[i]
+							- }
 					div#settingsLanguageButtons.formButtons(hidden)
 						input#submitLanguage.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditLanguage.cancel_link( href="javascript:;" )= tr['cancel']
