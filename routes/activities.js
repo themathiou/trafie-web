@@ -140,8 +140,7 @@ function return_activity( res, activity_id, language ) {
   .then( function( activity ) {
     var activity = Activity.schema.formatActivity( activity );
 
-    var tr = translations[language].getProfileTranslations();
-    activity.discipline = tr[activity.discipline];
+    activity.discipline = translations[language][activity.discipline];
 
     res.statusCode = 201;
     res.json( activity );
