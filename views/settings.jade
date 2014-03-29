@@ -135,14 +135,14 @@ block content
 				form( method="POST")
 					label Country :
 					span= errors.country
-					span#country_existed= countries[profile.country] || "undefined"
+					span#country_existed= tr[profile.country] || "undefined"
 					select#country_input(name="country" hidden)
 							option(value="no-selection" selected) Choose your country
 							- for( var i in countries ) {
-								if countries[profile.country] == countries[i]
-									option( value=i selected) = countries[i]
+								if profile.country == countries[i]
+									option( value=countries[i] selected)= tr[countries[i]]
 								else
-									option( value=i ) = countries[i]
+									option( value=countries[i] )= tr[countries[i]]
 							- }
 					div#settingsCountryButtons.formButtons(hidden)
 						input#submitCountry.btn_green( type="submit" value=tr['submit'])
