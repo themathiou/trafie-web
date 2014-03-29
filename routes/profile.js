@@ -46,14 +46,11 @@ exports.post = function( req, res ){
     // Find the profile
     Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline country male birthday picture')
     .then( function( profile_data ) {
-      // If the profile was found
-      
       // If the profile doesn't exist, redirect
-      if( typeof response.first_name === 'undefined' ) redirect('/register');
-
+      if( typeof profile_data.first_name === 'undefined' ) redirect('/register');
       var discipline = typeof req.body.discipline !== 'undefined' ? req.body.discipline : '';
       var performance = {};
-
+      
       switch ( discipline ) {
         case '100m':
         case '200m':
@@ -74,7 +71,6 @@ exports.post = function( req, res ){
           performance.minutes = typeof req.body.minutes !== 'undefined' && req.body.minutes != '' ? req.body.minutes: '00';
           performance.seconds = typeof req.body.seconds !== 'undefined' && req.body.seconds != '' ? req.body.seconds: '00';
           performance.centiseconds = typeof req.body.centiseconds !== 'undefined' && req.body.centiseconds != '' ? req.body.centiseconds : '00';
-
           // Format the performance
           performance = Activity.schema.validateTime( performance );
 
