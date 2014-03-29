@@ -46,7 +46,7 @@ exports.post = function( req, res ) {
   var user_id = req.session.user_id;
   // If there is no user id, redirect to login
   if(!user_id) {
-    res.json( null );
+    return_activity( res, '' );
   } else {
     // Find the profile
     Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline country male birthday picture')
@@ -131,11 +131,15 @@ exports.post = function( req, res ) {
 };
 
 function return_activity( res, activity_id ) {
-  if( !activity_id) res.json( null );
-  
+  if( !activity_id) {
+    res.statusCode = 400;
+    res.json( null );
+  }
+
   Activity.schema.findOne( {'_id': activity_id}, '' )
   .then( function( activity ){
     var activity = Activity.schema.formatActivity( activity );
+    res.statusCode = 201;
     res.json( activity );
   });
 }
