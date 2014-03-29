@@ -227,9 +227,15 @@ function profileHandlers() {
 
 	/* delete activity */
 	var deleteLinks = document.getElementsByClassName('deleteActivity');
+
 	for (var i in deleteLinks) {
 		deleteLinks[i].onclick  = function() {
-			alert('Are you fuckin sure you want to delete this motha fuckin activity?');
+			var r = confirm(" Are you sure you want to delete this activity? ");
+			if (r==true)
+			  {
+			  	this.parentNode.style.display = 'none';
+  				console.log(this.parentNode.getAttribute('data-activity-id'));
+			  }
 		}
 	}
 
