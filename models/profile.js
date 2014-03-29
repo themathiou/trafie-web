@@ -1,5 +1,4 @@
 // The User Model
-
 var mongoose = require('mongoose');
 var db = mongoose.connection;
 var q = require('q');
