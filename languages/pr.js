@@ -80,6 +80,10 @@ var pr = {
 	'enter_your_performance'                        : 'Enter your pitiful performance',
     'write_something_about_you'                     : 'Write something about you (like we care)',
     'date'                                          : 'Date (you will never get one)',
+    'change_password'                               : 'Change Password',
+    'old_password'                                  : 'Old Password',
+    'new_password'                                  : 'New Password',
+    'repeat_password'                               : 'Repeat Password',
 
     // Countries
     'AF': 'Afghanistan',
