@@ -223,7 +223,7 @@ exports.delete = function( req, res ){
 };
 
 function return_activity( res, activity_id ) {
-  Activity.schema.findOne( {'id': activity_id}, '' )
+  Activity.schema.findOne( {'_id': activity_id}, '' )
   .then( function( activity ){
     var activity = Activity.schema.formatActivity( activity );
     res.json( activity );
