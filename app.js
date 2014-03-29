@@ -43,7 +43,7 @@ var db = mongoose.connection;
 var login = require('./routes/login'),
     register = require('./routes/register'),
     profile = require('./routes/profile'),
-    activity = require('./routes/activity'),
+    activities = require('./routes/activities'),
     settings = require('./routes/settings'),
     email_validation = require('./routes/email_validation'),
     reset_password = require('./routes/reset_password');
@@ -92,13 +92,13 @@ trafie.get( '/', profile.get );
  * ACTIVITIES                                                                                                                  *
  ******************************************************************************************************************************/
 
-trafie.get( '/activities', activities.get );
+//trafie.get( '/activities', activities.get );
 
 trafie.post( '/activities', activities.post );
 
 //trafie.put( '/activities', activities.put );
 
-trafie.delete( '/activities', activities.delete );
+//trafie.delete( '/activities', activities.delete );
 
 
 /*******************************************************************************************************************************
