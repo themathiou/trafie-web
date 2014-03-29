@@ -414,6 +414,9 @@ input.btn_blue_2:active {
 }
 .history_line > li .info .editActivity {
   float: right;
+  background-image: url('../images/ui/edit.png');
+  background-repeat: no-repeat;
+  min-width: 18px;
 }
 .history_line > li:nth-child(odd) .info {
   background-color: rgba(0, 0, 0, 0.1);
