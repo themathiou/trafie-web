@@ -101,6 +101,14 @@ exports.post = function( req, res ) {
       }
     }
 
+    if( typeof req.body.language !== 'undefined' ) {
+      if( !Profile.schema.validateLanguage( req.body.language ) ) {
+        errors = true;
+      } else {
+        profile_data.language = req.body.language;
+      }
+    }
+
     if( typeof req.files !== 'undefined' && typeof req.files.profile_pic !== 'undefined' ) {
       // Read the image file
       fs.readFile( req.files.profile_pic.path, function ( err, data ) {
@@ -164,7 +172,7 @@ exports.post = function( req, res ) {
 
 
 function render( res, user_id, error_messages ) {
-  Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline about male country birthday picture')
+  Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline about male country birthday picture language')
   .then( function( response ) {
     if( typeof response.first_name === 'undefined' ) redirect('/register');
     // Format the data that will go to the front end
@@ -184,6 +192,12 @@ function render( res, user_id, error_messages ) {
 
     var disciplines = ['100m','200m','400m','800m','1500m','3000m','60m_hurdles','100m_hurdles','110m_hurdles','400m_hurdles','3000m_steeple','4x100m_relay','4x400m_relay','marathon','high_jump','long_jump','triple_jump','pole_vault','shot_put','discus','hammer','javelin','pentathlon','heptathlon','decathlon'];
 
+    var languages = {
+      'en': 'English',
+      'el': 'Ελληνικά',
+      'ru': 'Русский'
+    };
+
     var view_data = {
       'profile': {
         'first_name'  : response.first_name,
@@ -193,11 +207,13 @@ function render( res, user_id, error_messages ) {
         'gender'      : gender,
         'country'     : response.country,
         'birthday'    : birthday,
-        'picture'     : picture
+        'picture'     : picture,
+        'language'    : response.language
       },
       'errors'      : error_messages,
       'disciplines' : disciplines,
-      'tr'          : translations['en'].getSettingsTranslations()
+      'languages'   : languages,
+      'tr'          : translations[response.language].getSettingsTranslations()
     };
 
     res.render( 'settings', view_data );
