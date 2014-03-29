@@ -47,20 +47,27 @@ var en = {
     'female'                : 'Female',
     'first_name'            : 'First Name',
     'last_name'             : 'Last Name',
+    'profile_picture'       : 'Profile Settings',
+    'birthday'              : 'Birthday',
+    'gender'                : 'Gender',
+    'main_discipline'       : 'Main Discipline',
+    'country'               : 'Country',
+    'language'              : 'Language',
+    'about_me'              : 'About Me',
 
     // Buttons
     'submit'				: 'Submit',
     'save'					: 'Save',
     'cancel'				: 'Cancel',
     'edit'                  : 'Edit',
+    'logout'                : 'Logout',
 
     // Sections
     'settings'              : 'Settings',
     'statistics'            : 'Statistics',
     'general_settings'      : 'General Settings',
-
-    // UI
-    'logout'                : 'Logout',
+    'profile_settings'      : 'Profile Settings',
+    'account_settings'      : 'Account Settings',
 
     // Messages & Labels
 	'choose_your_discipline'                        : 'Choose your discipline',
@@ -68,8 +75,11 @@ var en = {
     'wrong_password'                                : 'Wrong password',
     'password_should_be_at_least_6_characters_long' : 'Password should be at least 6 characters long',
     'add_new_activity'                              : 'Add New Activity',
-    'choose_your_discipline'                        : 'Choose your discipline',
+    'choose_your_country'                           : 'Choose your country',
+    'choose_your_language'                          : 'Choose your language',
 	'enter_your_performance'                        : 'Enter your performance',
+    'write_something_about_you'                     : 'Write something about you',
+    'date'                                          : 'Date',
 
     // Countries
     'AF': 'Afghanistan',
