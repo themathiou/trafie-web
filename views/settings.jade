@@ -6,21 +6,21 @@ block content
 		div#settingsNav
 			ul
 				li#profileSettingsTab.active
-					a( href="javascript:;" ) tr[profile_settings]
+					a( href="javascript:;" )= tr[profile_settings]
 				li#accountSettingsTab
-					a( href="javascript:;" ) tr[account_settings]
+					a( href="javascript:;" )= tr[account_settings]
 				li.logout
 					a(href="/logout")= tr['logout']
 
 		//PROFILE SETTINGS
 		div#profileSettings.settingsContent
-			h3 tr[profile_settings]
+			h3= tr[profile_settings]
 
 			//PROFILE PIC
 			div.settingsElement
 				form( method="POST" enctype="multipart/form-data" )
 					img( src=profile.picture style="height:80px;")
-					label tr[profile_picture] :
+					label= tr[profile_picture] :
 					span= errors.profile_pic
 					input#upload_profile_pic( name="profile_pic" type="file" accept="image/*")
 					input#submit_profile_pic( type="submit" value=tr['submit'])
@@ -53,7 +53,7 @@ block content
 			//GENDER
 			div.settingsElement
 				form( method="POST")
-					label tr[gender] :
+					label= tr[gender] :
 					span= errors.last_name
 					span#gender_existed= tr[profile.gender] || "undefined"
 					div#gender( hidden )
@@ -78,7 +78,7 @@ block content
 			//AGE
 			div.settingsElement
 				form( method="POST")
-					label tr[birthday] :
+					label= tr[birthday] :
 					span= errors.age
 					span#birthday_existed= profile.birthday.year+'/'+profile.birthday.month+'/'+profile.birthday.day
 					div#birthday( hidden )
@@ -115,7 +115,7 @@ block content
 			//MAIN DISCIPLINE
 			div.settingsElement
 				form( method="POST")
-					label tr[main_discipline] :
+					label= tr[main_discipline] :
 					span= errors.last_name
 					span#main_discipline_existed= tr[profile.discipline] || "undefined"
 					select#main_discipline_input(name="discipline" hidden)
@@ -133,7 +133,7 @@ block content
 			//COUNTRY
 			div.settingsElement
 				form( method="POST")
-					label tr[country] :
+					label= tr[country] :
 					span= errors.country
 					span#country_existed= tr[profile.country] || "undefined"
 					select#country_input(name="country" hidden)
@@ -152,7 +152,7 @@ block content
 			//LANGUAGE
 			div.settingsElement
 				form( method="POST")
-					label tr[language] :
+					label= tr[language] :
 					span= errors.language
 					span#language_existed= languages[profile.language]
 					select#language_input(name="language" hidden)
@@ -171,7 +171,7 @@ block content
 			//ABOUT ME
 			div.settingsElement
 				form( method="POST")
-					label tr[about_me] :
+					label= tr[about_me] :
 					span= errors.about
 					span#about_existed( style="overflow-wrap: break-word;")= profile.about || tr[write_something_about_you]
 					textarea#about_me.textarea( name="about" maxlength="400" hidden)= profile.about
@@ -183,25 +183,25 @@ block content
 
 		//ACCOUNT SETTINGS
 		div#accountSettings.settingsContent( style="display:none;" )
-			h3 tr[account_settings]
+			h3= tr[account_settings]
 
 			div.settingsElement
-				label tr[change_password]
+				label= tr[change_password]
 				a#editPassword.editLink( href="javascript:;" )= tr['edit']
 				div#changePassword.editable( hidden )
 					form#changePasswordForm( method="POST")
 						span.row
-							label( for="old_password" ) tr[old_password] :
+							label( for="old_password" )= tr[old_password] :
 							span= errors.first_name
 							input#old_password( name="old_password" type="password")
 
 						span.row
-							label( for="password" ) tr[new_password] :
+							label( for="password" )= tr[new_password] :
 							span= errors.first_name
 							input#new_password( name="password" type="password")
 
 						span.row
-							label( for="repeat_password" ) tr[repeat_new_password] :
+							label( for="repeat_password" )= tr[repeat_new_password] :
 							span= errors.first_name
 							input#repeat_new_password( name="repeat_password" type="password")
 
