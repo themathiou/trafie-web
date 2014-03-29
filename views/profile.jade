@@ -131,8 +131,10 @@ block content
 					li
 						div.icon_back
 						div.icon XX
-						div.info
-							div#activity_menu
+						div.info( data-activity-id=activity._id )
+							a.editActivity( href="#" ) Edit Activity
+							a.deleteActivity( href="#" ) Delete Activity
+							//div#activity_menu
 								ul
 									li
 										a( href="#" ) &nbsp;

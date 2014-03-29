@@ -127,11 +127,18 @@ function submit_form(form, callback) {
 	var data = '';
 	for( var i in form.elements) {
 		if ( form.elements.hasOwnProperty(i) ) {
-			data += '\"'+form.elements[i].name + '\":\"' + form.elements[i].value + '\",';
+			data += '\"'+form.elements[i].name + '\":\"' + form.elements[i].value + '\"';
+		}
+
+		if (i < form.elements.length) {
+			data = data + ',';
 		}
 	}
 
-	data = '{' + data.replace( ',\"undefined\":\"undefined\",' , '' ) + '}';
+	data = '{' + data + '}';
+
+	console.log(data);
+
 	try {
 	  JSON.parse(data);
 	} catch (e) {
