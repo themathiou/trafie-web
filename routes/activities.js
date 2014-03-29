@@ -46,10 +46,10 @@ exports.post = function( req, res ) {
   var user_id = req.session.user_id;
   // If there is no user id, redirect to login
   if(!user_id) {
-    return_activity( res, '' );
+    return_activity( res, '', 'en' );
   } else {
     // Find the profile
-    Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline country male birthday picture')
+    Profile.schema.findOne({ '_id': user_id }, 'first_name language')
     .then( function( profile_data ) {
       // If the profile doesn't exist, redirect
       if( typeof profile_data.first_name === 'undefined' ) redirect('/register');
@@ -121,16 +121,16 @@ exports.post = function( req, res ) {
         var activity = new Activity( new_activity );
         // Save the activity
         activity.save(function ( err, activity ) {
-          return_activity( res, activity._id );
+          return_activity( res, activity._id, profile_data.language );
         });
       } else {
-        return_activity( res, '' );
+        return_activity( res, '', 'en' );
       }
     });
   }
 };
 
-function return_activity( res, activity_id ) {
+function return_activity( res, activity_id, language ) {
   if( !activity_id) {
     res.statusCode = 400;
     res.json( null );
@@ -140,7 +140,7 @@ function return_activity( res, activity_id ) {
   .then( function( activity ) {
     var activity = Activity.schema.formatActivity( activity );
 
-    var tr = translations['en'].getProfileTranslations();
+    var tr = translations[language].getProfileTranslations();
     activity.discipline = tr[activity.discipline];
 
     res.statusCode = 201;

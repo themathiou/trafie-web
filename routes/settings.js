@@ -101,6 +101,14 @@ exports.post = function( req, res ) {
       }
     }
 
+    if( typeof req.body.language !== 'undefined' ) {
+      if( !Profile.schema.validateLanguage( req.body.language ) ) {
+        errors = true;
+      } else {
+        profile_data.language = req.body.language;
+      }
+    }
+
     if( typeof req.files !== 'undefined' && typeof req.files.profile_pic !== 'undefined' ) {
       // Read the image file
       fs.readFile( req.files.profile_pic.path, function ( err, data ) {
@@ -164,7 +172,7 @@ exports.post = function( req, res ) {
 
 
 function render( res, user_id, error_messages ) {
-  Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline about male country birthday picture')
+  Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline about male country birthday picture language')
   .then( function( response ) {
     if( typeof response.first_name === 'undefined' ) redirect('/register');
     // Format the data that will go to the front end
@@ -197,7 +205,7 @@ function render( res, user_id, error_messages ) {
       },
       'errors'      : error_messages,
       'disciplines' : disciplines,
-      'tr'          : translations['en'].getSettingsTranslations()
+      'tr'          : translations[response.language].getSettingsTranslations()
     };
 
     res.render( 'settings', view_data );
