@@ -137,13 +137,6 @@ function submit_form(form, callback) {
 
 	data = '{' + data + '}';
 
-	console.log(data);
-
-	try {
-	  JSON.parse(data);
-	} catch (e) {
-	  console.error("Parsing json from submit form error:", e);
-	}
 
 	var method = form.attributes.method.value;
 	switch(method){
@@ -161,12 +154,10 @@ function post(data, url, callback) {
 
 	xhr.addEventListener('load', function (e) {
 	    callback( xhr.responseText );
-	    console.log(xhr.responseText);
 	}, false);
 
 	xhr.setRequestHeader('Content-Type', 'application/json');
 
-	console.log( data );
 	xhr.send(data);
 }
 

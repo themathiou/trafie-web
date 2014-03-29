@@ -14,14 +14,14 @@ block content
 
 
 		div#history_container
-			ul.history_line
+			ul#history_line.history_line
 
 				li
 					div.icon_back
 					div.icon +
 					div#slider( class="info add_activity" )
 						a#add_activity_link( href="javascript:;" )= tr['add_new_activity']
-						form#add_activity_form( method="POST" action="/activity")
+						form#add_activity_form( method="POST" action="/activities")
 							select#discipline_input( name="discipline" )
 								- for( var category in disciplines ) {
 									-for( var i in disciplines[category]) {
@@ -127,6 +127,16 @@ block content
 							//div.row
 								input.btn_blue_2(type="submit" name="new_competition" value="Submit")
 
+				li#newActivityTemplate( style="display:none;" )
+					div.icon_back
+					div.icon NEW
+					div.info( data-activity-id)
+						a.editActivity( href="#" ) Edit Activity
+						a.deleteActivity( href="#" ) Delete Activity
+						div.performance
+						div.discipline
+						div.date
+
 				each activity in activities
 					li
 						div.icon_back
@@ -155,6 +165,7 @@ block content
 					div.icon *
 					div.end
 						div.discipline everything started here
+
 
 	//scripts
 	script(type='text/javascript', src='/javascripts/profile.js')
