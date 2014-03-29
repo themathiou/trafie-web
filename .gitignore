@@ -2,13 +2,7 @@
 
 *.DS_Store
 
-
-
-
-
-
-
-
+.settings
 
 .project
 

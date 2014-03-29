@@ -78,7 +78,7 @@ function render( res, user_id, profile_data ) {
       },
       'disciplines' : disciplines,
       'activities'  : activities,
-      'tr'          : translations[profile_data.language].getProfileTranslations()
+      'tr'          : translations[profile_data.language]
     };
 
     res.render( 'profile', view_data );
