@@ -80,6 +80,10 @@ var en = {
 	'enter_your_performance'                        : 'Enter your performance',
     'write_something_about_you'                     : 'Write something about you',
     'date'                                          : 'Date',
+    'change_password'                               : 'Change Password',
+    'old_password'                                  : 'Old Password',
+    'new_password'                                  : 'New Password',
+    'repeat_password'                               : 'Repeat Password',
 
     // Countries
     'AF': 'Afghanistan',

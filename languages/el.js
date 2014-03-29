@@ -80,6 +80,10 @@ var el = {
     'enter_your_performance'                        : 'Βάλε την επίδοσή σου',
     'write_something_about_you'                     : 'Γράψε κάτι για εσένα',
     'date'                                          : 'Ημερομηνία',
+    'change_password'                               : 'Αλλαγή Κωδικού',
+    'old_password'                                  : 'Παλιός Κωδικός',
+    'new_password'                                  : 'Καινούριος Κωδικός',
+    'repeat_password'                               : 'Επανέλαβε τον Κωδικό',
 
     // Countries
     'AF': 'Afghanistan',
