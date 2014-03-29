@@ -3,9 +3,7 @@ var fs = require('fs'),
     root_dir = path.dirname( require.main.filename );
 
 // Initialize translations
-var translations = [];
-translations['en'] = require('../languages/en.js');
-translations['gr'] = require('../languages/gr.js');
+var translations = require('../languages/translations.js');
 
 var User = require('../models/user.js');
 var Profile = require('../models/profile.js');

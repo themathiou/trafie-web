@@ -43,6 +43,7 @@ var db = mongoose.connection;
 var login = require('./routes/login'),
     register = require('./routes/register'),
     profile = require('./routes/profile'),
+    activities = require('./routes/activities'),
     settings = require('./routes/settings'),
     email_validation = require('./routes/email_validation'),
     reset_password = require('./routes/reset_password');
@@ -86,11 +87,18 @@ if ('development' == trafie.get('env')) {
 
 trafie.get( '/', profile.get );
 
-trafie.post( '/activity', profile.post );
 
-//trafie.put( '/activity', profile.put );
+/*******************************************************************************************************************************
+ * ACTIVITIES                                                                                                                  *
+ ******************************************************************************************************************************/
 
-trafie.delete( '/activity', profile.delete );
+//trafie.get( '/activities', activities.get );
+
+trafie.post( '/activities', activities.post );
+
+//trafie.put( '/activities', activities.put );
+
+//trafie.delete( '/activities', activities.delete );
 
 
 /*******************************************************************************************************************************
@@ -168,7 +176,6 @@ trafie.post( '/reset_password/:hash', reset_password.post );
  trafie.use(function(req, res, next){
   res.status(404);
 
-  // default to plain-text. send()
   res.type('html').send('People are often unreasonable, illogical, and self-centered;<br><b>Forgive</b> them anyway.<br>If you are kind, people may accuse you of selfish, ulterior motives;<br><b>Be kind</b> anyway.<br>If you are successful, you will win some false friends and some true enemies;<br><b>Succeed</b> anyway.<br>If you are honest and frank, people may cheat you;<br><b>Be honest and frank</b> anyway.<br>What you spend years building, someone could destroy overnight;<br><b>Build</b> anyway.<br>If you find serenity and happiness, they may be jealous;<br><b>Be happy</b> anyway.<br>The good you do today, people will often forget tomorrow;<br><b>Do good</b> anyway.<br>Give the world the best you have and it may just never be enough;<br><b>Give the world the best you have</b> anyway.<br>You see, in the final analysis, it’s all between you and God;<br>It was never between you and them anyway.<br><a href="javascript:history.back();">Go Back</a>');
 });
 
