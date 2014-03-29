@@ -200,7 +200,8 @@ function profileHandlers() {
 	var editLinks = document.getElementsByClassName('editActivity');
 	for (var i in editLinks) {
 		editLinks[i].onclick  = function() {
-			alert(this.parentNode.getAttribute('data-activity-id').replace(/\"/g, ''));
+			var id = this.parentNode.getAttribute('data-activity-id');
+			document.querySelectorAll("[data-activity-id=id]").style.display = 'none' ;
 		}
 	}
 
