@@ -125,12 +125,12 @@ var xhr = new XMLHttpRequest();
 
 function submit_form(form, callback) {
 	var data = '';
-	for( var i in form.elements) {
+	for( var i=0, length = form.elements.length; i < length; i++) {
 		if ( form.elements.hasOwnProperty(i) ) {
 			data += '\"'+form.elements[i].name + '\":\"' + form.elements[i].value + '\"';
 		}
 
-		if (i < form.elements.length) {
+		if (i < length - 1) {
 			data = data + ',';
 		}
 	}
@@ -158,7 +158,6 @@ function submit_form(form, callback) {
 
 function post(data, url, callback) {
 	xhr.open('POST', url);
-	console.log( data );
 
 	xhr.addEventListener('load', function (e) {
 	    callback( xhr.responseText );
@@ -167,6 +166,7 @@ function post(data, url, callback) {
 
 	xhr.setRequestHeader('Content-Type', 'application/json');
 
+	console.log( data );
 	xhr.send(data);
 }
 
