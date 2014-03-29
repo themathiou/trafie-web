@@ -135,14 +135,14 @@ block content
 				form( method="POST")
 					label Country :
 					span= errors.country
-					span#country_existed= tr['countries'][profile.country] || "undefined"
+					span#country_existed= countries[profile.country] || "undefined"
 					select#country_input(name="country" hidden)
 							option(value="no-selection" selected) Choose your country
-							- for( var i in tr['countries'] ) {
-								if tr['countries'][profile.country] == tr['countries'][i]
-									option( value=i selected)= tr['countries'][i]
+							- for( var i in countries ) {
+								if countries[profile.country] == countries[i]
+									option( value=i selected) = countries[i]
 								else
-									option( value=i )= tr['countries'][i]
+									option( value=i ) = countries[i]
 							- }
 					div#settingsCountryButtons.formButtons(hidden)
 						input#submitCountry.btn_green( type="submit" value=tr['submit'])
@@ -154,7 +154,7 @@ block content
 				form( method="POST")
 					label Language :
 					span= errors.language
-					span#language_existed languages[profile.language]
+					span#language_existed= languages[profile.language]
 					select#language_input(name="language" hidden)
 							option(value="no-selection" selected) Choose your Language
 							- for( var i in languages ) {

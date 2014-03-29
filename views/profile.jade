@@ -131,19 +131,18 @@ block content
 					div.icon_back
 					div.icon NEW
 					div.info( data-activity-id)
-						a.editActivity( href="#" ) Edit Activity
-						a.deleteActivity( href="#" ) Delete Activity
+						a.deleteActivity( href="#" ) &nbsp;
 						div.performance
 						div.discipline
 						div.date
+						a.editActivity( href="#" ) Edit Activity
 
 				each activity in activities
 					li
 						div.icon_back
 						div.icon XX
 						div.info( data-activity-id=activity._id )
-							a.editActivity( href="#" ) Edit Activity
-							a.deleteActivity( href="#" ) Delete Activity
+							a.deleteActivity( href="#" ) &nbsp;
 							//div#activity_menu
 								ul
 									li
@@ -159,6 +158,7 @@ block content
 							div.performance= activity.performance
 							div.discipline= tr[activity.discipline]
 							div.date= activity.date.toString().split(' GMT')[0]
+							a.editActivity( href="#" ) Edit Activity
 
 				li
 					div.icon_back

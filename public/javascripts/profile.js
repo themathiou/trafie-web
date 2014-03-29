@@ -202,9 +202,9 @@ function profileHandlers() {
 				new_activity.style.display = 'block';
 				new_activity.removeAttribute('id');
 				new_activity.children[2].setAttribute('data-activity-id', res._id.replace(/\"/g, '') );
-				new_activity.children[2].children[2].innerHTML = res.performance;
-				new_activity.children[2].children[3].innerHTML = res.discipline;
-				new_activity.children[2].children[4].innerHTML = res.date.toString().split(' GMT')[0];
+				new_activity.children[2].children[1].innerHTML = res.performance;
+				new_activity.children[2].children[2].innerHTML = res.discipline;
+				new_activity.children[2].children[3].innerHTML = res.date.toString().split(' GMT')[0];
 
 				var list = document.getElementById('history_line');
 
