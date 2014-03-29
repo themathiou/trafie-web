@@ -21,7 +21,7 @@ block content
 					div.icon +
 					div#slider( class="info add_activity" )
 						a#add_activity_link( href="javascript:;" )= tr['add_new_activity']
-						form#add_activity_form( method="POST" action="/activity")
+						form#add_activity_form( method="POST" action="/activities")
 							select#discipline_input( name="discipline" )
 								- for( var category in disciplines ) {
 									-for( var i in disciplines[category]) {
