@@ -149,6 +149,21 @@ block content
 						a#cancelEditCountry.cancel_link( href="javascript:;" )= tr['cancel']
 					a#editCountry.editLink( href="javascript:;" )= tr['edit']
 
+			//LANGUAGE
+			div.settingsElement
+				form( method="POST")
+					label Language :
+					span= errors.language
+					span#language_existed English
+					select#language_input(name="language" hidden)
+							option(value="no-selection" selected) Choose your Language
+							option(value="en" selected) English
+							option(value="gr" selected) Ελληνικά
+					div#settingsLanguageButtons.formButtons(hidden)
+						input#submitLanguage.btn_green( type="submit" value=tr['submit'])
+						a#cancelEditLanguage.cancel_link( href="javascript:;" )= tr['cancel']
+					a#editLanguage.editLink( href="javascript:;" )= tr['edit']
+
 			//ABOUT ME
 			div.settingsElement
 				form( method="POST")

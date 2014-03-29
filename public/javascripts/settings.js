@@ -12,8 +12,10 @@ function closeOthers() {
 	cancelEditField('gender_existed', 'gender', 'settingsGenderbuttons', 'editGender');
 	cancelEditField('birthday_existed', 'birthday', 'settingsAgebuttons', 'editAge');
 	cancelEditField('main_discipline_existed', 'main_discipline_input', 'settingsMainDisciplineButtons', 'editMainDiscipline');
+	cancelEditField('language_existed', 'language_input', 'settingsLanguageButtons', 'editLanguage');
 	cancelEditField('country_existed', 'country_input', 'settingsCountryButtons', 'editCountry');
 	cancelEditField('about_existed', 'about_me', 'settingsAboutMeButtons', 'editAboutMe');
+
 }
 
 
@@ -75,6 +77,15 @@ function settingsHandlers() {
 	}
 	document.getElementById("cancelEditMainDiscipline").onclick = function() {
 		cancelEditField('main_discipline_existed', 'main_discipline_input', 'settingsMainDisciplineButtons', 'editMainDiscipline');
+	}
+
+	/* language */
+	document.getElementById("editLanguage").onclick = function() {
+		closeOthers();
+		editField('language_existed', 'language_input', 'settingsLanguageButtons', 'editLanguage');
+	}
+	document.getElementById("cancelEditLanguage").onclick = function() {
+		cancelEditField('language_existed', 'language_input', 'settingsLanguageButtons', 'editLanguage');
 	}
 
 	/* country */

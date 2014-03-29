@@ -192,31 +192,34 @@ function profileHandlers() {
 		if (evt.preventDefault) evt.preventDefault();
 
 		submit_form(this, function(response){
-			var p = document.getElementById("newActivityTemplate");
-			var new_activity = p.cloneNode(true);
+			if(response!='null') {
+				var p = document.getElementById("newActivityTemplate");
+				var new_activity = p.cloneNode(true);
 
-			//make response object
-			var res = JSON.parse(response);
+				//make response object
+				var res = JSON.parse(response);
 
-			new_activity.style.display = 'block';
-			new_activity.removeAttribute('id');
-			new_activity.children[2].setAttribute('data-activity-id', res._id.replace(/\"/g, '') );
-			new_activity.children[2].children[2].innerHTML = res.performance;
-			new_activity.children[2].children[3].innerHTML = res.discipline;
-			new_activity.children[2].children[4].innerHTML = res.date.toString().split(' GMT')[0];
+				new_activity.style.display = 'block';
+				new_activity.removeAttribute('id');
+				new_activity.children[2].setAttribute('data-activity-id', res._id.replace(/\"/g, '') );
+				new_activity.children[2].children[2].innerHTML = res.performance;
+				new_activity.children[2].children[3].innerHTML = res.discipline;
+				new_activity.children[2].children[4].innerHTML = res.date.toString().split(' GMT')[0];
 
-			console.log( new_activity.children[2].getAttribute('data-activity-id') );
+				var list = document.getElementById('history_line');
 
-			var list = document.getElementById('history_line');
+				list.insertBefore( new_activity, list.firstChild.nextSibling );
+				close_new_activity_form();
 
-			list.insertBefore( new_activity, list.firstChild.nextSibling );
-			close_new_activity_form();
+			} else {
+				alert('something went wrong. Please try again');
+				close_new_activity_form();
+			}
 
-			console.log(response);
 		});
 	}
 
-	/* edit activity */
+	/* edit activity links*/
 	var editLinks = document.getElementsByClassName('editActivity');
 	for (var i in editLinks) {
 		editLinks[i].onclick  = function() {
@@ -225,11 +228,16 @@ function profileHandlers() {
 		}
 	}
 
-	/* delete activity */
+	/* delete activity links*/
 	var deleteLinks = document.getElementsByClassName('deleteActivity');
 	for (var i in deleteLinks) {
 		deleteLinks[i].onclick  = function() {
-			alert('Are you fuckin sure you want to delete this motha fuckin activity?');
+			var r = confirm(" Are you sure you want to delete this activity? ");
+			if (r==true)
+			  {
+			  	this.parentNode.style.display = 'none';
+  				console.log(this.parentNode.getAttribute('data-activity-id'));
+			  }
 		}
 	}
 
