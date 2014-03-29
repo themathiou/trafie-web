@@ -196,6 +196,21 @@ function profileHandlers() {
 		});
 	}
 
+	/* edit activity */
+	var editLinks = document.getElementsByClassName('editActivity');
+	for (var i in editLinks) {
+		editLinks[i].onclick  = function() {
+			alert(this.parentNode.parentNode );
+		}
+	}
+
+	/* delete activity */
+	var deleteLinks = document.getElementsByClassName('deleteActivity');
+	for (var i in deleteLinks) {
+		deleteLinks[i].onclick  = function() {
+			alert('Are you fuckin sure you want to delete this motha fuckin activity?');
+		}
+	}
 
 /*
 	show_specific_form('decathlon');

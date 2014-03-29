@@ -646,7 +646,7 @@ input.btn_blue_2:active {
   font-size: 1em;
   line-height: 40px;
   position: absolute;
-  color: #black;
+  color: black;
   background: white;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
