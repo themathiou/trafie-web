@@ -107,7 +107,7 @@ profileSchema.validateDiscipline = function( discipline ) {
 };
 
 profileSchema.validateAbout = function( about ) {
-	return about && about.length <= 400;
+	return about.length <= 400;
 }
 
 var Profile = mongoose.model('Profile', profileSchema);
