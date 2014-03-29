@@ -192,6 +192,26 @@ function profileHandlers() {
 		if (evt.preventDefault) evt.preventDefault();
 
 		submit_form(this, function(response){
+			var p = document.getElementById("newActivityTemplate");
+			var new_activity = p.cloneNode(true);
+
+			//make response object
+			var res = JSON.parse(response);
+
+			new_activity.style.display = 'block';
+			new_activity.removeAttribute('id');
+			new_activity.children[2].setAttribute('data-activity-id', res._id.replace(/\"/g, '') );
+			new_activity.children[2].children[2].innerHTML = res.performance;
+			new_activity.children[2].children[3].innerHTML = res.discipline;
+			new_activity.children[2].children[4].innerHTML = res.date.toString().split(' GMT')[0];
+
+			console.log( new_activity.children[2].getAttribute('data-activity-id') );
+
+			var list = document.getElementById('history_line');
+
+			list.insertBefore( new_activity, list.firstChild.nextSibling );
+			close_new_activity_form();
+
 			console.log(response);
 		});
 	}
@@ -201,7 +221,7 @@ function profileHandlers() {
 	for (var i in editLinks) {
 		editLinks[i].onclick  = function() {
 			var id = this.parentNode.getAttribute('data-activity-id');
-			document.querySelectorAll("[data-activity-id=id]").style.display = 'none' ;
+			console.log(id);
 		}
 	}
 

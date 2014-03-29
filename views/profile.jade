@@ -14,7 +14,7 @@ block content
 
 
 		div#history_container
-			ul.history_line
+			ul#history_line.history_line
 
 				li
 					div.icon_back
@@ -127,6 +127,16 @@ block content
 							//div.row
 								input.btn_blue_2(type="submit" name="new_competition" value="Submit")
 
+				li#newActivityTemplate( style="display:none;" )
+					div.icon_back
+					div.icon NEW
+					div.info( data-activity-id)
+						a.editActivity( href="#" ) Edit Activity
+						a.deleteActivity( href="#" ) Delete Activity
+						div.performance
+						div.discipline
+						div.date
+
 				each activity in activities
 					li
 						div.icon_back
@@ -155,6 +165,7 @@ block content
 					div.icon *
 					div.end
 						div.discipline everything started here
+
 
 	//scripts
 	script(type='text/javascript', src='/javascripts/profile.js')
