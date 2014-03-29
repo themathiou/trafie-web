@@ -137,8 +137,12 @@ function return_activity( res, activity_id ) {
   }
 
   Activity.schema.findOne( {'_id': activity_id}, '' )
-  .then( function( activity ){
+  .then( function( activity ) {
     var activity = Activity.schema.formatActivity( activity );
+
+    var tr = translations['en'].getProfileTranslations();
+    activity.discipline = tr[activity.discipline];
+
     res.statusCode = 201;
     res.json( activity );
   });
