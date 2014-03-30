@@ -135,7 +135,7 @@ function ajax_post(data, url, callback) {
 	xhr.send(data);
 }
 
-function ajax_delete(data, url, callback) {
+function ajax_delete( url, callback) {
 	xhr.open('DELETE', url);
 
 	xhr.addEventListener('load', function (e) {
@@ -144,7 +144,7 @@ function ajax_delete(data, url, callback) {
 
 	xhr.setRequestHeader('Content-Type', 'application/json');
 
-	xhr.send(data);
+	xhr.send();
 }
 
 function submit_form(form, callback) {
@@ -171,11 +171,6 @@ function submit_form(form, callback) {
 			console.log('-get?');
 	}
 
-}
-
-function delete_activity( that, callback ) {
-	callback( ajax_delete(that.parentNode.getAttribute('data-activity-id')) );
-	console.log('delete_activity: ' + this.parentNode.getAttribute('data-activity-id'));
 }
 
 

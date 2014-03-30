@@ -231,26 +231,25 @@ function profileHandlers() {
 
 	/* delete activity links*/
 	var deleteLinks = document.getElementsByClassName('deleteActivity');
+
 	for (var i in deleteLinks) {
 		deleteLinks[i].onclick  = function() {
 			var r = confirm(" Are you sure you want to delete this activity? ");
 			if (r==true)
-			  {
-  				var res = delete_activity( this );
-  				console.log('delete_activity res : ' + res);
-			  	//success case
-			  	if(res == 200) {
-				  	var grandparent = this.parentNode.parentNode;
-				  	grandparent.parentNode.removeChild(grandparent);
-			  	}
-			  	//error case
-			  	else {
-				  	alert('You can\'t delete this activity');
-			  	}
-
-
-
-			  }
+			{
+				ajax_delete(this.getAttribute('href'), function(res){
+					console.log('delete_activity res : ' + res);
+					//success case
+					if(res == 200) {
+						var grandparent = this.parentNode.parentNode;
+						grandparent.parentNode.removeChild(grandparent);
+					}
+					//error case
+					else {
+						alert('You can\'t delete this activity');
+					}
+				});
+			}
 		}
 	}
 
