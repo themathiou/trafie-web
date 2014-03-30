@@ -386,7 +386,7 @@ input.btn_blue_2:active {
   margin: 0 0 15px 12%;
   background-color: #f6f6f6;
   color: #333333;
-  padding: 1em;
+  padding: 10px 10px 30px 15px;
   font-weight: 300;
   line-height: 1.4;
   position: relative;

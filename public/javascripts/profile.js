@@ -1,8 +1,42 @@
+//GENERAL VIARABLES
+var disciplines = {
+      'time': [
+        '100m',
+        '200m',
+        '400m',
+        '800m',
+        '1500m',
+        '3000m',
+        '60m_hurdles',
+        '100m_hurdles',
+        '110m_hurdles',
+        '400m_hurdles',
+        '3000m_steeple',
+        '4x100m_relay',
+        '4x400m_relay',
+        'marathon'
+      ],
+      'distance': [
+        'high_jump',
+        'long_jump',
+        'triple_jump',
+        'pole_vault',
+        'shot_put',
+        'discus',
+        'hammer',
+        'javelin'
+      ],
+      'points': [
+        'pentathlon',
+        'heptathlon',
+        'decathlon'
+      ]
+    };
+
+
 /********************************************/
 /* 				EVENTS HANDLERS				*/
 /********************************************/
-
-/* document.getElementById("id").event = function() { doSomething(); } */
 
 /**
  * number0to59() : checking values between 0-60 (i.e minutes)
@@ -187,6 +221,43 @@ function profileHandlers() {
 		}
 	}
 
+	var edit_handler = function() {
+			var  node = this.parentNode.firstChild;
+
+			while( node && node.nodeType === 1 && node !== this ) {
+			    node.style.display = 'none';
+			    if( node.getAttribute('class') == 'discipline') {
+			    	//distance disciplines
+			    	if( disciplines.distance.indexOf(node.getAttribute('data-value')) > -1 ) {
+				    	var p = document.getElementById("editDistanceActivityTemplate");
+						var edit_activity = p.cloneNode(true);
+						edit_activity.style.display = 'block' ;
+						this.parentNode.appendChild(edit_activity);
+			    	}
+			    	//time disciplines
+			    	if( disciplines.time.indexOf(node.getAttribute('data-value')) > -1 ) {
+				    	var p = document.getElementById("editTimeActivityTemplate");
+						var edit_activity = p.cloneNode(true);
+						edit_activity.style.display = 'block' ;
+						this.parentNode.appendChild(edit_activity);
+			    	}
+			    	//points disciplines
+			    	if( disciplines.points.indexOf(node.getAttribute('data-value')) > -1 ) {
+				    	var p = document.getElementById("editPointsActivityTemplate");
+						var edit_activity = p.cloneNode(true);
+						edit_activity.style.display = 'block' ;
+						this.parentNode.appendChild(edit_activity);
+			    	}
+			    }
+
+
+			    node = node.nextElementSibling || node.nextSibling;
+			}
+
+
+		}
+
+
 
 	//HANDLERS
 
@@ -236,6 +307,7 @@ function profileHandlers() {
 				new_activity.children[2].children[1].innerHTML = res.performance;
 				new_activity.children[2].children[2].innerHTML = res.discipline;
 				new_activity.children[2].children[3].innerHTML = res.date.toString().split(' GMT')[0];
+				new_activity.children[2].children[3].onclick = edit_handler;
 
 				var list = document.getElementById('history_line');
 
@@ -261,16 +333,7 @@ function profileHandlers() {
 	/* EDIT activity links*/
 	var editLinks = document.getElementsByClassName('editActivity');
 	for (var i in editLinks) {
-		editLinks[i].onclick  = function() {
-			var  node = this.parentNode.firstChild;
-
-			while( node && node.nodeType === 1 && node !== this ) {
-			    node.style.display = 'none';
-			    node = node.nextElementSibling || node.nextSibling;
-			}
-
-
-		}
+		editLinks[i].onclick  = edit_handler;
 	}
 
 
