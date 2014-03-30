@@ -123,7 +123,7 @@ function setSmall( year ) {
 
 var xhr = new XMLHttpRequest();
 
-function post(data, url, callback) {
+function ajax_post(data, url, callback) {
 	xhr.open('POST', url);
 
 	xhr.addEventListener('load', function (e) {
@@ -135,7 +135,7 @@ function post(data, url, callback) {
 	xhr.send(data);
 }
 
-function delete(data, url, callback) {
+function ajax_delete(data, url, callback) {
 	xhr.open('DELETE', url);
 
 	xhr.addEventListener('load', function (e) {
@@ -165,7 +165,7 @@ function submit_form(form, callback) {
 	var method = form.attributes.method.value;
 	switch(method){
 		case 'POST':
-			post(data, form.attributes.action.value, callback);
+			ajax_post(data, form.attributes.action.value, callback);
 			break;
 		case 'GET' :
 			console.log('-get?');
@@ -174,7 +174,7 @@ function submit_form(form, callback) {
 }
 
 function delete_activity( that, callback ) {
-	callback ( delete(that.parentNode.getAttribute('data-activity-id')); );
+	callback( ajax_delete(that.parentNode.getAttribute('data-activity-id')) );
 	console.log('delete_activity: ' + this.parentNode.getAttribute('data-activity-id'));
 }
 
