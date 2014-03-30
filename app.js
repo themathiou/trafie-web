@@ -98,7 +98,7 @@ trafie.post( '/activities', activities.post );
 
 //trafie.put( '/activities', activities.put );
 
-//trafie.delete( '/activities', activities.delete );
+trafie.delete( '/activities/:activity_id', activities.delete );
 
 
 /*******************************************************************************************************************************
