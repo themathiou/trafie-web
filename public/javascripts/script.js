@@ -156,9 +156,11 @@ function submit_form(form, callback) {
 			data += '\"'+form.elements[i].name + '\":\"' + form.elements[i].value + '\"';
 		}
 
+		/*
 		if (i < length - 1) {
-			data = data + ',';
-		}
+					data = data + ',';
+				}
+		*/
 	}
 
 	data = '{' + data + '}';
