@@ -121,9 +121,10 @@ function setSmall( year ) {
 /* 				REST CALLS 					*/
 /********************************************/
 
-var xhr = new XMLHttpRequest();
+
 
 function ajax_post(data, url, callback) {
+	var xhr = new XMLHttpRequest();
 	xhr.open('POST', url);
 
 	xhr.addEventListener('load', function (e) {
@@ -136,6 +137,7 @@ function ajax_post(data, url, callback) {
 }
 
 function ajax_delete( url, callback) {
+	var xhr = new XMLHttpRequest();
 	xhr.open('DELETE', url);
 
 	xhr.addEventListener('load', function (e) {

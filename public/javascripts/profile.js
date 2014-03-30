@@ -162,6 +162,34 @@ function close_new_activity_form() {
  * profileHandlers() : handlers in profile page
  */
 function profileHandlers() {
+
+	//VARIABLES
+	var delete_handler = function(e) {
+		var evt = e ? e : window.event;
+		if (evt.preventDefault) evt.preventDefault();
+
+		var r = confirm(" Are you sure you want to delete this activity? ");
+		if (r==true)
+		{
+			var that = this;
+			ajax_delete(this.getAttribute('href'), function(res_status, res_text){
+				console.log('delete_activity res : ',  res_status,  res_text );
+				//success case
+				if(res_status == 200) {
+					var grandparent = that.parentNode.parentNode;
+					grandparent.parentNode.removeChild(grandparent);
+				}
+				//error case
+				else {
+					alert('You can\'t delete this activity');
+				}
+			});
+		}
+	}
+
+
+	//HANDLERS
+
 	document.getElementById("add_activity_link").onclick = function() {
 		open_new_activity_form();
 	}
@@ -203,6 +231,8 @@ function profileHandlers() {
 				new_activity.style.display = 'block';
 				new_activity.removeAttribute('id');
 				new_activity.children[2].setAttribute('data-activity-id', res._id.replace(/\"/g, '') );
+				new_activity.children[2].children[0].setAttribute('href', 'activities/'+res._id.replace(/\"/g, '') );
+				new_activity.children[2].children[0].onclick = delete_handler;
 				new_activity.children[2].children[1].innerHTML = res.performance;
 				new_activity.children[2].children[2].innerHTML = res.discipline;
 				new_activity.children[2].children[3].innerHTML = res.date.toString().split(' GMT')[0];
@@ -232,38 +262,11 @@ function profileHandlers() {
 	/* delete activity links*/
 	var deleteLinks = document.getElementsByClassName('deleteActivity');
 
+	//add handlers for delete
 	for (var i in deleteLinks) {
-		deleteLinks[i].onclick  = function(e) {
-			var evt = e ? e : window.event;
-			if (evt.preventDefault) evt.preventDefault();
-
-			var r = confirm(" Are you sure you want to delete this activity? ");
-			if (r==true)
-			{
-				var that = this;
-				ajax_delete(this.getAttribute('href'), function(res_status, res_text){
-					console.log('delete_activity res : ',  res_status,  res_text );
-					return;
-					//success case
-					if(res_status == 200) {
-						var grandparent = that.parentNode.parentNode;
-						grandparent.parentNode.removeChild(grandparent);
-					}
-					//error case
-					else {
-						alert('You can\'t delete this activity');
-					}
-				});
-			}
-		}
+		deleteLinks[i].onclick  = delete_handler;
 	}
 
-/*
-	show_specific_form('decathlon');
-	var predefined_discipline = document.getElementById("discipline_input");
-	show_specific_form(predefined_discipline.options[predefined_discipline.selectedIndex].value);
-	console.log(predefined_discipline.options[predefined_discipline.selectedIndex].value);
-*/
 
 }
 
