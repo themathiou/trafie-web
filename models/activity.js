@@ -12,6 +12,7 @@ var activitySchema = mongoose.Schema({
   date 			: { type: Date, default: Date.now }
 });
 
+
 /**
 * Find activity by element
 * @param json where({_id:id})
@@ -24,6 +25,7 @@ activitySchema.findOne = function( where, select ) {
 	});
 	return d.promise;
 };
+
 
 /**
 * Find user by element
@@ -56,21 +58,22 @@ activitySchema.getActivitiesOfUser = function( where, select, sort ) {
 	return d.promise;
 };
 
+
 /**
  * Delete an activity
- * @param string hash
- * @param string type (can be 'verify' and 'reset')
+ * @param object where
  */
 activitySchema.delete = function( where ) {
 	var d = q.defer();
 
-		Activity.remove( where, function( err, deleted ){
-			if (err) handleError(err);
-			d.resolve( deleted );
-		});
+	Activity.remove( where, function( err, deleted ){
+		if (err) handleError(err);
+		d.resolve( deleted );
+	});
 
 	return d.promise;
 };
+
 
 /**
  * Converts the activity data to a more readable format
@@ -84,6 +87,11 @@ activitySchema.formatActivities = function( activities ) {
 	return activities;
 };
 
+
+/**
+ * Converts the activity data to a more readable format
+ * @param object activity
+ */
 activitySchema.formatActivity = function( activity ) {
 	switch ( activity.discipline ) {
       case '100m':
@@ -137,6 +145,7 @@ activitySchema.formatActivity = function( activity ) {
 	}
 	return activity;
 }
+
 
 /**
  * Checks time inputs for validity, if they are valid, it adds leading zeros to
@@ -198,6 +207,7 @@ activitySchema.validateTime = function( performance ) {
 	return time;
 };
 
+
 /**
  * Checks distance inputs for validity, if they are valid, it adds leading zeros to
  * single digit values and it creates the performance string, ready to be stored
@@ -226,6 +236,7 @@ activitySchema.validateDistance = function( performance ) {
 
 	return distance;
 };
+
 
 /**
  * Checks points inputs for validity, if they are valid, it adds leading zeros to
