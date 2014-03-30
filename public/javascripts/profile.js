@@ -187,6 +187,7 @@ function profileHandlers() {
 		number0to99(this);
 	}
 
+	/* add activity */
 	document.getElementById("add_activity_form").onsubmit = function (e) {
 		var evt = e ? e : window.event;
 		if (evt.preventDefault) evt.preventDefault();
@@ -235,8 +236,20 @@ function profileHandlers() {
 			var r = confirm(" Are you sure you want to delete this activity? ");
 			if (r==true)
 			  {
-			  	this.parentNode.style.display = 'none';
-  				console.log(this.parentNode.getAttribute('data-activity-id'));
+  				var res = delete_activity( this );
+  				console.log('delete_activity res : ' + res);
+			  	//success case
+			  	if(res == 200) {
+				  	var grandparent = this.parentNode.parentNode;
+				  	grandparent.parentNode.removeChild(grandparent);
+			  	}
+			  	//error case
+			  	else {
+				  	alert('You can\'t delete this activity');
+			  	}
+
+
+
 			  }
 		}
 	}

@@ -123,6 +123,30 @@ function setSmall( year ) {
 
 var xhr = new XMLHttpRequest();
 
+function post(data, url, callback) {
+	xhr.open('POST', url);
+
+	xhr.addEventListener('load', function (e) {
+	    callback( xhr.responseText );
+	}, false);
+
+	xhr.setRequestHeader('Content-Type', 'application/json');
+
+	xhr.send(data);
+}
+
+function delete(data, url, callback) {
+	xhr.open('DELETE', url);
+
+	xhr.addEventListener('load', function (e) {
+	    callback( xhr.responseText );
+	}, false);
+
+	xhr.setRequestHeader('Content-Type', 'application/json');
+
+	xhr.send(data);
+}
+
 function submit_form(form, callback) {
 	var data = '';
 	for( var i=0, length = form.elements.length; i < length; i++) {
@@ -149,17 +173,12 @@ function submit_form(form, callback) {
 
 }
 
-function post(data, url, callback) {
-	xhr.open('POST', url);
-
-	xhr.addEventListener('load', function (e) {
-	    callback( xhr.responseText );
-	}, false);
-
-	xhr.setRequestHeader('Content-Type', 'application/json');
-
-	xhr.send(data);
+function delete_activity( that, callback ) {
+	callback ( delete(that.parentNode.getAttribute('data-activity-id')); );
+	console.log('delete_activity: ' + this.parentNode.getAttribute('data-activity-id'));
 }
+
+
 
 
 
