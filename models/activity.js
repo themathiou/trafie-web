@@ -48,6 +48,7 @@ activitySchema.getActivitiesOfUser = function( where, select, sort ) {
 	      }
 	    },
 		function ( err, activity ) {
+			if (err) handleError(err);
 			d.resolve(activity);
 		}
 	);
@@ -63,8 +64,9 @@ activitySchema.getActivitiesOfUser = function( where, select, sort ) {
 activitySchema.delete = function( where ) {
 	var d = q.defer();
 
-		Activity.remove( where, function( err ){
-			d.resolve( !err );
+		Activity.remove( where, function( err, deleted ){
+			if (err) handleError(err);
+			d.resolve( deleted );
 		});
 
 	return d.promise;

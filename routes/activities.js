@@ -144,14 +144,12 @@ exports.delete = function( req, res ) {
 
   Activity.schema.delete( { '_id': activity_id, 'user_id': user_id } )
   .then( function( deleted ) {
-    console.log( deleted );
     if( deleted ) {
       res.statusCode = 200;
-      res.json( null );
     } else {
       res.statusCode = 403;
-      res.json( null );
     }
+    res.json( null );
   });
 }
 
