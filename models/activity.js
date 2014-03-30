@@ -56,6 +56,21 @@ activitySchema.getActivitiesOfUser = function( where, select, sort ) {
 };
 
 /**
+ * Delete an activity
+ * @param string hash
+ * @param string type (can be 'verify' and 'reset')
+ */
+activitySchema.delete = function( where ) {
+	var d = q.defer();
+
+		Activity.remove( where, function( err ){
+			d.resolve( !err );
+		});
+
+	return d.promise;
+};
+
+/**
  * Converts the activity data to a more readable format
  * @param array activities
  */

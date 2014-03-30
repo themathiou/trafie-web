@@ -130,6 +130,31 @@ exports.post = function( req, res ) {
   }
 };
 
+exports.delete = function( req, res ) {
+  // Get the user id from the session
+  var user_id = req.session.user_id;
+  // Get the activity id from the url
+  var activity_id = req.params.activity_id;
+
+  // If there is no user id, redirect to login
+  if( !user_id || !activity_id ) {
+    res.statusCode = 400;
+    res.json( null );
+  }
+
+  Activity.schema.delete( { '_id': activity_id, 'user_id': user_id } )
+  .then( function( deleted ) {
+    console.log( deleted );
+    if( deleted ) {
+      res.statusCode = 200;
+      res.json( null );
+    } else {
+      res.statusCode = 403;
+      res.json( null );
+    }
+  });
+}
+
 function return_activity( res, activity_id, language ) {
   if( !activity_id) {
     res.statusCode = 400;
