@@ -250,21 +250,27 @@ function profileHandlers() {
 		});
 	}
 
-	/* edit activity links*/
-	var editLinks = document.getElementsByClassName('editActivity');
-	for (var i in editLinks) {
-		editLinks[i].onclick  = function() {
-			var id = this.parentNode.getAttribute('data-activity-id');
-			console.log(id);
-		}
-	}
 
-	/* delete activity links*/
+	/* DELETE activity links*/
 	var deleteLinks = document.getElementsByClassName('deleteActivity');
-
 	//add handlers for delete
 	for (var i in deleteLinks) {
 		deleteLinks[i].onclick  = delete_handler;
+	}
+
+	/* EDIT activity links*/
+	var editLinks = document.getElementsByClassName('editActivity');
+	for (var i in editLinks) {
+		editLinks[i].onclick  = function() {
+			var  node = this.parentNode.firstChild;
+
+			while( node && node.nodeType === 1 && node !== this ) {
+			    node.style.display = 'none';
+			    node = node.nextElementSibling || node.nextSibling;
+			}
+
+
+		}
 	}
 
 
