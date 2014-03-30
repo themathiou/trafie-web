@@ -139,7 +139,7 @@ function ajax_delete( url, callback) {
 	xhr.open('DELETE', url);
 
 	xhr.addEventListener('load', function (e) {
-	    callback( xhr.responseText );
+	    callback( xhr.status , xhr.responseText );
 	}, false);
 
 	xhr.setRequestHeader('Content-Type', 'application/json');

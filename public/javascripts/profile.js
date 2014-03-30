@@ -233,15 +233,20 @@ function profileHandlers() {
 	var deleteLinks = document.getElementsByClassName('deleteActivity');
 
 	for (var i in deleteLinks) {
-		deleteLinks[i].onclick  = function() {
+		deleteLinks[i].onclick  = function(e) {
+			var evt = e ? e : window.event;
+			if (evt.preventDefault) evt.preventDefault();
+
 			var r = confirm(" Are you sure you want to delete this activity? ");
 			if (r==true)
 			{
-				ajax_delete(this.getAttribute('href'), function(res){
-					console.log('delete_activity res : ' + res);
+				var that = this;
+				ajax_delete(this.getAttribute('href'), function(res_status, res_text){
+					console.log('delete_activity res : ',  res_status,  res_text );
+					return;
 					//success case
-					if(res == 200) {
-						var grandparent = this.parentNode.parentNode;
+					if(res_status == 200) {
+						var grandparent = that.parentNode.parentNode;
 						grandparent.parentNode.removeChild(grandparent);
 					}
 					//error case
