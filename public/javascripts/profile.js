@@ -111,7 +111,7 @@ function open_new_activity_form() {
 
     var minheight = 20;
 	var maxheight = 210;
-	var time = 500;
+	var time = 300;
 	var timer = null;
 	var toggled = false;
 
@@ -159,7 +159,7 @@ function close_new_activity_form() {
 
     var minheight = 20;
 	var maxheight = 100;
-	var time = 300;
+	var time = 200;
 	var timer = null;
 	var toggled = true;
 
@@ -223,46 +223,42 @@ function profileHandlers() {
 
 	var edit_handler = function() {
 			var  node = this.parentNode.firstChild;
-
 			while( node && node.nodeType === 1 && node !== this ) {
-			    node.style.display = 'none';
-			    if( node.getAttribute('class') == 'discipline') {
-			    	//distance disciplines
-			    	if( disciplines.distance.indexOf(node.getAttribute('data-value')) > -1 ) {
-				    	var p = document.getElementById("editDistanceActivityTemplate");
-						var edit_activity = p.cloneNode(true);
-						edit_activity.style.display = 'block' ;
-						this.parentNode.appendChild(edit_activity);
-			    	}
-			    	//time disciplines
-			    	if( disciplines.time.indexOf(node.getAttribute('data-value')) > -1 ) {
-				    	var p = document.getElementById("editTimeActivityTemplate");
-						var edit_activity = p.cloneNode(true);
-						edit_activity.style.display = 'block' ;
-						this.parentNode.appendChild(edit_activity);
-			    	}
-			    	//points disciplines
-			    	if( disciplines.points.indexOf(node.getAttribute('data-value')) > -1 ) {
-				    	var p = document.getElementById("editPointsActivityTemplate");
-						var edit_activity = p.cloneNode(true);
-						edit_activity.style.display = 'block' ;
-						this.parentNode.appendChild(edit_activity);
-			    	}
-			    }
-
-
-			    node = node.nextElementSibling || node.nextSibling;
+			node.style.display = 'none';
+			if( node.getAttribute('class') == 'discipline') {
+				//distance disciplines
+			if( disciplines.distance.indexOf(node.getAttribute('data-value')) > -1 ) {
+					var p = document.getElementById("editDistanceActivityTemplate");
+					var edit_activity = p.cloneNode(true);
+					edit_activity.style.display = 'block' ;
+					this.parentNode.appendChild(edit_activity);
+				}
+				//time disciplines
+				if( disciplines.time.indexOf(node.getAttribute('data-value')) > -1 ) {
+					var p = document.getElementById("editTimeActivityTemplate");
+					var edit_activity = p.cloneNode(true);
+					edit_activity.style.display = 'block' ;
+					this.parentNode.appendChild(edit_activity);
+				}
+		    	//points disciplines
+		    	if( disciplines.points.indexOf(node.getAttribute('data-value')) > -1 ) {
+					var p = document.getElementById("editPointsActivityTemplate");
+					var edit_activity = p.cloneNode(true);
+					edit_activity.style.display = 'block' ;
+					this.parentNode.appendChild(edit_activity);
+				}
 			}
-
-
+			node = node.nextElementSibling || node.nextSibling;
 		}
+	}
 
 
-
-	//HANDLERS
-
+	//ATTACH HANDLERS
 	document.getElementById("add_activity_link").onclick = function() {
 		open_new_activity_form();
+	}
+	document.getElementById("cancel_activity_link").onclick = function() {
+		close_new_activity_form();
 	}
 
 	document.getElementById("discipline_input").onchange = function() {
@@ -286,7 +282,7 @@ function profileHandlers() {
 		number0to99(this);
 	}
 
-	/* add activity */
+	/* ADD activity form*/
 	document.getElementById("add_activity_form").onsubmit = function (e) {
 		var evt = e ? e : window.event;
 		if (evt.preventDefault) evt.preventDefault();
@@ -322,18 +318,40 @@ function profileHandlers() {
 		});
 	}
 
-
-	/* DELETE activity links*/
+	/*-- DELETE activity links --*/
 	var deleteLinks = document.getElementsByClassName('deleteActivity');
-	//add handlers for delete
 	for (var i in deleteLinks) {
+		deleteLinks[i].onmouseover = function() {
+			this.parentNode.style.border = '1px solid #B43419';
+		}
+
+		deleteLinks[i].onmouseout = function() {
+			this.parentNode.style.border = '1px solid white';
+		}
+
 		deleteLinks[i].onclick  = delete_handler;
 	}
 
-	/* EDIT activity links*/
+	/*-- EDIT activity links --*/
 	var editLinks = document.getElementsByClassName('editActivity');
 	for (var i in editLinks) {
+		editLinks[i].onmouseover = function() {
+			this.parentNode.style.border = '1px solid #F4B510';
+		}
+
+		editLinks[i].onmouseout = function() {
+			this.parentNode.style.border = '1px solid white';
+		}
+
 		editLinks[i].onclick  = edit_handler;
+	}
+
+	var cancelEditLinks = document.getElementsByClassName('cancel_edit_activity');
+	for (var i in cancelEditLinks) {
+		cancelEditLinks[i].onclick = function() {
+			var grandparent = this.parentNode.parentNode;
+			grandparent.parentNode.removeChild(grandparent);
+		}
 	}
 
 

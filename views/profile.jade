@@ -117,7 +117,7 @@ block content
 							//submit
 							div#submit_buttons.row.submit_buttons
 								input.btn_green(type="submit" name="new_competition" value=tr['save'])
-								a#cancel_activity_link.cancel_link( onclick="close_new_activity_form();" href="javascript:;")= tr['cancel']
+								a#cancel_activity_link.cancel_link( href="javascript:;")= tr['cancel']
 							//div.row
 								input.btn_neutral_gray(type="submit" name="new_competition" value="Submit")
 							//div.row
@@ -149,6 +149,9 @@ block content
 					div.row
 						label(for="datepicker_distance")= tr['date'] + ':'
 						input#datepicker_distance( name="datepicker_distance" type="text" )
+					div#submit_buttons.row.submit_buttons
+						input.btn_green(type="submit" name="new_competition" value=tr['save'])
+						a#cancel_edit_activity.cancel_link( href="javascript:;")= tr['cancel']
 
 				div#editTimeActivityTemplate.data_entry.row( style="display:none;" )= tr['enter_your_performance'] +':'
 					br
@@ -167,6 +170,9 @@ block content
 					div.row
 						label(for="datepicker_time")= tr['date'] + ':'
 						input#datepicker_time( name="datepicker_time" type="text" )
+					div#submit_buttons.row.submit_buttons
+						input.btn_green(type="submit" name="new_competition" value=tr['save'])
+						a#cancel_edit_activity.cancel_link( href="javascript:;")= tr['cancel']
 
 				div#editPointsActivityTemplate.data_entry.row( style="display:none;" )= tr['enter_your_performance'] +':'
 					br
@@ -175,6 +181,9 @@ block content
 					div.row
 						label(for="datepicker_point")= tr['date'] + ':'
 						input#datepicker_point( name="datepicker_point" type="text" )
+					div#submit_buttons.row.submit_buttons
+						input.btn_green(type="submit" name="new_competition" value=tr['save'])
+						a#cancel_edit_activity.cancel_link( href="javascript:;")= tr['cancel']
 
 
 				each activity in activities
