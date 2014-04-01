@@ -151,7 +151,7 @@ block content
 						input#datepicker_distance( name="datepicker_distance" type="text" )
 					div#submit_buttons.row.submit_buttons
 						input.btn_green(type="submit" name="new_competition" value=tr['save'])
-						a#cancel_edit_activity.cancel_link( href="javascript:;")= tr['cancel']
+						a.cancel_edit_activity.cancel_link( href="javascript:;")= tr['cancel']
 
 				div#editTimeActivityTemplate.data_entry.row( style="display:none;" )= tr['enter_your_performance'] +':'
 					br
@@ -172,7 +172,7 @@ block content
 						input#datepicker_time( name="datepicker_time" type="text" )
 					div#submit_buttons.row.submit_buttons
 						input.btn_green(type="submit" name="new_competition" value=tr['save'])
-						a#cancel_edit_activity.cancel_link( href="javascript:;")= tr['cancel']
+						a.cancel_edit_activity.cancel_link( href="javascript:;")= tr['cancel']
 
 				div#editPointsActivityTemplate.data_entry.row( style="display:none;" )= tr['enter_your_performance'] +':'
 					br
@@ -183,7 +183,7 @@ block content
 						input#datepicker_point( name="datepicker_point" type="text" )
 					div#submit_buttons.row.submit_buttons
 						input.btn_green(type="submit" name="new_competition" value=tr['save'])
-						a#cancel_edit_activity.cancel_link( href="javascript:;")= tr['cancel']
+						a.cancel_edit_activity.cancel_link( href="javascript:;")= tr['cancel']
 
 
 				each activity in activities
@@ -191,22 +191,23 @@ block content
 						div.icon_back
 						div.icon XX
 						div.info( data-activity-id=activity._id )
-							a.deleteActivity( href='activities/' + activity._id  ) &nbsp;
-							//div#activity_menu
-								ul
-									li
-										a( href="#" ) &nbsp;
-										ul
-											li
-												a.editActivity( href="#" ) Edit Activity
-												a.deleteActivity( href="#" ) Delete Activity
+							div.current_data
+								a.deleteActivity( href='activities/' + activity._id  ) &nbsp;
+								//div#activity_menu
+									ul
+										li
+											a( href="#" ) &nbsp;
+											ul
+												li
+													a.editActivity( href="#" ) Edit Activity
+													a.deleteActivity( href="#" ) Delete Activity
 
-							//div.ribbon.ribbon-yellow
-								div.banner
-									div.text Personal Best
-							div.performance( data-value=activity.performance )= activity.performance
-							div.discipline( data-value=activity.discipline )= tr[activity.discipline]
-							div.date( data-value=activity.date )= activity.date.toString().split(' GMT')[0]
+								//div.ribbon.ribbon-yellow
+									div.banner
+										div.text Personal Best
+								div.performance( data-value=activity.performance )= activity.performance
+								div.discipline( data-value=activity.discipline )= tr[activity.discipline]
+								div.date( data-value=activity.date )= activity.date.toString().split(' GMT')[0]
 							a.editActivity( href="#" ) &nbsp;
 
 				li

@@ -222,34 +222,57 @@ function profileHandlers() {
 	}
 
 	var edit_handler = function() {
-			var  node = this.parentNode.firstChild;
-			while( node && node.nodeType === 1 && node !== this ) {
-			node.style.display = 'none';
-			if( node.getAttribute('class') == 'discipline') {
-				//distance disciplines
-			if( disciplines.distance.indexOf(node.getAttribute('data-value')) > -1 ) {
-					var p = document.getElementById("editDistanceActivityTemplate");
-					var edit_activity = p.cloneNode(true);
-					edit_activity.style.display = 'block' ;
-					this.parentNode.appendChild(edit_activity);
+		var parent = this.parentNode;
+		var existed_activity = parent.querySelector('.current_data');
+		existed_activity.style.display = 'none';
+
+		var this_performance = existed_activity.querySelector('.discipline').getAttribute('data-value');
+			//distance disciplines
+			if( disciplines.distance.indexOf(this_performance) > -1 ) {
+				var p = document.getElementById("editDistanceActivityTemplate");
+				var edit_activity = p.cloneNode(true);
+				edit_activity.style.display = 'block' ;
+				this.parentNode.appendChild(edit_activity);
+
+				edit_activity.querySelector('.cancel_edit_activity').onclick = function() {
+					console.log('shit fuck shit');
+					var grandparent = this.parentNode.parentNode;
+					grandparent.parentNode.removeChild(grandparent);
+					edit_activity.style.display = 'none' ;
+					existed_activity.style.display = 'block';
 				}
-				//time disciplines
-				if( disciplines.time.indexOf(node.getAttribute('data-value')) > -1 ) {
-					var p = document.getElementById("editTimeActivityTemplate");
-					var edit_activity = p.cloneNode(true);
-					edit_activity.style.display = 'block' ;
-					this.parentNode.appendChild(edit_activity);
-				}
-		    	//points disciplines
-		    	if( disciplines.points.indexOf(node.getAttribute('data-value')) > -1 ) {
-					var p = document.getElementById("editPointsActivityTemplate");
-					var edit_activity = p.cloneNode(true);
-					edit_activity.style.display = 'block' ;
-					this.parentNode.appendChild(edit_activity);
+
+			}
+			//time disciplines
+			if( disciplines.time.indexOf(this_performance) > -1 ) {
+				var p = document.getElementById("editTimeActivityTemplate");
+				var edit_activity = p.cloneNode(true);
+				edit_activity.style.display = 'block' ;
+				this.parentNode.appendChild(edit_activity);
+
+				edit_activity.querySelector('.cancel_edit_activity').onclick = function() {
+					console.log('shit fuck shit');
+					var grandparent = this.parentNode.parentNode;
+					grandparent.parentNode.removeChild(grandparent);
+					edit_activity.style.display = 'none' ;
+					existed_activity.style.display = 'block';
 				}
 			}
-			node = node.nextElementSibling || node.nextSibling;
-		}
+	    	//points disciplines
+	    	if( disciplines.points.indexOf(this_performance) > -1 ) {
+				var p = document.getElementById("editPointsActivityTemplate");
+				var edit_activity = p.cloneNode(true);
+				edit_activity.style.display = 'block' ;
+				this.parentNode.appendChild(edit_activity);
+
+				edit_activity.querySelector('.cancel_edit_activity').onclick = function() {
+					console.log('shit fuck shit');
+					var grandparent = this.parentNode.parentNode;
+					grandparent.parentNode.removeChild(grandparent);
+					edit_activity.style.display = 'none' ;
+					existed_activity.style.display = 'block';
+				}
+			}
 	}
 
 
@@ -322,11 +345,11 @@ function profileHandlers() {
 	var deleteLinks = document.getElementsByClassName('deleteActivity');
 	for (var i in deleteLinks) {
 		deleteLinks[i].onmouseover = function() {
-			this.parentNode.style.border = '1px solid #B43419';
+			this.parentNode.parentNode.style.border = '1px solid #B43419';
 		}
 
 		deleteLinks[i].onmouseout = function() {
-			this.parentNode.style.border = '1px solid white';
+			this.parentNode.parentNode.style.border = '1px solid white';
 		}
 
 		deleteLinks[i].onclick  = delete_handler;
@@ -345,15 +368,6 @@ function profileHandlers() {
 
 		editLinks[i].onclick  = edit_handler;
 	}
-
-	var cancelEditLinks = document.getElementsByClassName('cancel_edit_activity');
-	for (var i in cancelEditLinks) {
-		cancelEditLinks[i].onclick = function() {
-			var grandparent = this.parentNode.parentNode;
-			grandparent.parentNode.removeChild(grandparent);
-		}
-	}
-
 
 }
 
