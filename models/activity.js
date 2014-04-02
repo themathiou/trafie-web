@@ -124,7 +124,7 @@ activitySchema.formatActivity = function( activity ) {
 		// Joining the parts with :
 		var performance = performance_parts.join(':');
 		// Joining with the centiseconds
-		activity.performance = performance + '.' + centiseconds;
+		activity.formatted_performance = performance + '.' + centiseconds;
         break;
       case 'high_jump':
       case 'long_jump':
@@ -135,7 +135,7 @@ activitySchema.formatActivity = function( activity ) {
       case 'hammer':
       case 'javelin':
       	// Converting the distance back to meters
-        activity.performance = (activity.performance / 10000).toFixed(2);
+        activity.formatted_performance = (activity.performance / 10000).toFixed(2);
         break;
       case 'pentathlon':
       case 'heptathlon':
