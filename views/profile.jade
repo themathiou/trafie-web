@@ -21,7 +21,7 @@ block content
 					div.icon +
 					div#slider( class="info add_activity" )
 						a#add_activity_link( href="javascript:;" )= tr['add_new_activity']
-						form#add_activity_form( method="POST" action="/activities")
+						form#add_activity_form( method="POST" action="/user/"+profile.id+"/activities")
 							select#discipline_input( name="discipline" )
 								- for( var category in disciplines ) {
 									-for( var i in disciplines[category]) {
@@ -132,11 +132,11 @@ block content
 					div.icon_back
 					div.icon ΧΧ
 					div.info( data-activity-id)
-						a.deleteActivity( href="#" ) &nbsp;
+						a.deleteActivity( href="javascript:;" ) &nbsp;
 						div.performance
 						div.discipline
 						div.date
-						a.editActivity( href="#" ) &nbsp;
+						a.editActivity( href="javascript:;" ) &nbsp;
 
 				div#editDistanceActivityTemplate.data_entry.row( style="display:none;" )= tr['enter_your_performance'] +':'
 					br
@@ -208,7 +208,7 @@ block content
 								div.performance( data-value=activity.performance )= activity.performance
 								div.discipline( data-value=activity.discipline )= tr[activity.discipline]
 								div.date( data-value=activity.date )= activity.date.toString().split(' GMT')[0]
-							a.editActivity( href="#" ) &nbsp;
+							a.editActivity( href="javascript:;" ) &nbsp;
 
 				li
 					div.icon_back

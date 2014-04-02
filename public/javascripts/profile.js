@@ -218,13 +218,18 @@ function profileHandlers() {
 					alert('You can\'t delete this activity');
 				}
 			});
+		} else {
+			this.parentNode.parentNode.style.border = '1px solid white';
 		}
 	}
 
 	var edit_handler = function() {
+		this.parentNode.style.border = '1px solid #F4B510';
+
 		var parent = this.parentNode;
 		var existed_activity = parent.querySelector('.current_data');
 		existed_activity.style.display = 'none';
+
 
 		var this_performance = existed_activity.querySelector('.discipline').getAttribute('data-value');
 			//distance disciplines
@@ -235,7 +240,7 @@ function profileHandlers() {
 				this.parentNode.appendChild(edit_activity);
 
 				edit_activity.querySelector('.cancel_edit_activity').onclick = function() {
-					console.log('shit fuck shit');
+					this.parentNode.style.border = '1px solid white';
 					var grandparent = this.parentNode.parentNode;
 					grandparent.parentNode.removeChild(grandparent);
 					edit_activity.style.display = 'none' ;
@@ -251,7 +256,7 @@ function profileHandlers() {
 				this.parentNode.appendChild(edit_activity);
 
 				edit_activity.querySelector('.cancel_edit_activity').onclick = function() {
-					console.log('shit fuck shit');
+					this.parentNode.style.border = '1px solid white';
 					var grandparent = this.parentNode.parentNode;
 					grandparent.parentNode.removeChild(grandparent);
 					edit_activity.style.display = 'none' ;
@@ -266,13 +271,22 @@ function profileHandlers() {
 				this.parentNode.appendChild(edit_activity);
 
 				edit_activity.querySelector('.cancel_edit_activity').onclick = function() {
-					console.log('shit fuck shit');
+					this.parentNode.style.border = '1px solid white';
 					var grandparent = this.parentNode.parentNode;
 					grandparent.parentNode.removeChild(grandparent);
 					edit_activity.style.display = 'none' ;
 					existed_activity.style.display = 'block';
 				}
 			}
+
+		this.onclick = function() {
+			this.parentNode.style.border = '1px solid white';
+			edit_activity.style.display = 'none' ;
+			existed_activity.style.display = 'block';
+
+			this.onclick = edit_handler;
+		}
+
 	}
 
 
@@ -344,28 +358,12 @@ function profileHandlers() {
 	/*-- DELETE activity links --*/
 	var deleteLinks = document.getElementsByClassName('deleteActivity');
 	for (var i in deleteLinks) {
-		deleteLinks[i].onmouseover = function() {
-			this.parentNode.parentNode.style.border = '1px solid #B43419';
-		}
-
-		deleteLinks[i].onmouseout = function() {
-			this.parentNode.parentNode.style.border = '1px solid white';
-		}
-
 		deleteLinks[i].onclick  = delete_handler;
 	}
 
 	/*-- EDIT activity links --*/
 	var editLinks = document.getElementsByClassName('editActivity');
 	for (var i in editLinks) {
-		editLinks[i].onmouseover = function() {
-			this.parentNode.style.border = '1px solid #F4B510';
-		}
-
-		editLinks[i].onmouseout = function() {
-			this.parentNode.style.border = '1px solid white';
-		}
-
 		editLinks[i].onclick  = edit_handler;
 	}
 
