@@ -140,7 +140,7 @@ exports.put = function( req, res ) {
   var activity_id = req.params.activity_id;
 
   // If there is no user id, redirect to login
-  if( !user_id || !activity_id ) {
+  if( !user_id || !activity_id || ( user_id !== req.params.user_id ) ) {
     res.statusCode = 400;
     res.json( null );
   } else {

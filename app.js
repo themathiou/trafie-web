@@ -103,7 +103,7 @@ trafie.get( '/', profile.get );
 
 trafie.post( '/user/:user_id/activities', activities.post );
 
-//trafie.put( '/activities', activities.put );
+trafie.put( '/user/:user_id/activities/:activity_id', activities.put );
 
 trafie.delete( '/user/:user_id/activities/:activity_id', activities.delete );
 
