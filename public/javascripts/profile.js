@@ -231,13 +231,21 @@ function profileHandlers() {
 		existed_activity.style.display = 'none';
 
 
-		var this_performance = existed_activity.querySelector('.discipline').getAttribute('data-value');
+		var this_discipline = existed_activity.querySelector('.discipline').getAttribute('data-value');
+		var this_performance = existed_activity.querySelector('.performance').getAttribute('data-value');
+		console.log(this_discipline, this_performance);
 			//distance disciplines
-			if( disciplines.distance.indexOf(this_performance) > -1 ) {
+			if( disciplines.distance.indexOf(this_discipline) > -1 ) {
 				var p = document.getElementById("editDistanceActivityTemplate");
 				var edit_activity = p.cloneNode(true);
 				edit_activity.style.display = 'block' ;
 				this.parentNode.appendChild(edit_activity);
+
+				var temp_m = parseInt(this_performance/10000);
+				var temp_cm = ((this_performance/10000)%temp_m).toFixed(2) * 100;
+
+				edit_activity.querySelector('#distance_1_input').value = temp_m;
+				edit_activity.querySelector('#distance_2_input').value = temp_cm;
 
 				edit_activity.querySelector('.cancel_edit_activity').onclick = function() {
 					this.parentNode.style.border = '1px solid white';
@@ -249,11 +257,16 @@ function profileHandlers() {
 
 			}
 			//time disciplines
-			if( disciplines.time.indexOf(this_performance) > -1 ) {
+			if( disciplines.time.indexOf(this_discipline) > -1 ) {
 				var p = document.getElementById("editTimeActivityTemplate");
 				var edit_activity = p.cloneNode(true);
 				edit_activity.style.display = 'block' ;
 				this.parentNode.appendChild(edit_activity);
+
+				edit_activity.querySelector('#hours_input').value = this_performance.split(':')[0];
+				edit_activity.querySelector('#minutes_input').value = this_performance.split(':')[1];
+				edit_activity.querySelector('#seconds_input').value = this_performance.split(':')[2].split('.')[0];
+				edit_activity.querySelector('#centiseconds_input').value = this_performance.split(':')[2].split('.')[1];
 
 				edit_activity.querySelector('.cancel_edit_activity').onclick = function() {
 					this.parentNode.style.border = '1px solid white';
@@ -264,11 +277,13 @@ function profileHandlers() {
 				}
 			}
 	    	//points disciplines
-	    	if( disciplines.points.indexOf(this_performance) > -1 ) {
+	    	if( disciplines.points.indexOf(this_discipline) > -1 ) {
 				var p = document.getElementById("editPointsActivityTemplate");
 				var edit_activity = p.cloneNode(true);
 				edit_activity.style.display = 'block' ;
 				this.parentNode.appendChild(edit_activity);
+
+				edit_activity.querySelector('#points_input').value = this_performance;
 
 				edit_activity.querySelector('.cancel_edit_activity').onclick = function() {
 					this.parentNode.style.border = '1px solid white';
