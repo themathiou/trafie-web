@@ -74,7 +74,7 @@ function render( res, user_id, profile_data ) {
     // The data that will go to the front end
     var view_data = {
       'profile': {
-        'id'          : user_id,
+        '_id'         : user_id,
         'first_name'  : profile_data.first_name,
         'last_name'   : profile_data.last_name,
         'discipline'  : profile_data.discipline,
