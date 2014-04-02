@@ -233,11 +233,11 @@ function profileHandlers() {
 
 		var this_discipline = existed_activity.querySelector('.discipline').getAttribute('data-value');
 		var this_performance = existed_activity.querySelector('.performance').getAttribute('data-value');
-		console.log(this_discipline, this_performance);
 			//distance disciplines
 			if( disciplines.distance.indexOf(this_discipline) > -1 ) {
 				var p = document.getElementById("editDistanceActivityTemplate");
 				var edit_activity = p.cloneNode(true);
+				edit_activity.querySelector('#edit_activity_form').setAttribute('action', edit_activity.querySelector('#edit_activity_form').getAttribute('action') + parent.getAttribute('data-activity-id').replace(/\"/g, '') );
 				edit_activity.style.display = 'block' ;
 				this.parentNode.appendChild(edit_activity);
 
@@ -255,11 +255,48 @@ function profileHandlers() {
 					existed_activity.style.display = 'block';
 				}
 
+				edit_activity.querySelector('#edit_activity_form').onsubmit = function (e) {
+					var evt = e ? e : window.event;
+					if (evt.preventDefault) evt.preventDefault();
+
+					submit_form(this, function(response){
+						if(response!='null') {
+							var p = document.getElementById("newActivityTemplate");
+							var new_activity = p.cloneNode(true);
+
+							//make response object
+							var res = JSON.parse(response);
+
+							new_activity.style.display = 'block';
+							new_activity.removeAttribute('id');
+							new_activity.children[2].setAttribute('data-activity-id', res._id.replace(/\"/g, '') );
+							new_activity.children[2].children[0].setAttribute('href', new_activity.children[2].children[0].getAttribute('href') + res._id.replace(/\"/g, '') );
+							new_activity.children[2].children[0].onclick = delete_handler;
+							new_activity.children[2].children[1].innerHTML = res.performance;
+							new_activity.children[2].children[2].innerHTML = res.discipline;
+							new_activity.children[2].children[3].innerHTML = res.date.toString().split(' GMT')[0];
+							new_activity.children[2].children[3].onclick = edit_handler;
+
+							var list = document.getElementById('history_line');
+
+							list.insertBefore( new_activity, list.firstChild.nextSibling );
+
+
+						} else {
+							alert('something went wrong. Please try again');
+							close_new_activity_form();
+						}
+
+					});
+				}
+
+
 			}
 			//time disciplines
 			if( disciplines.time.indexOf(this_discipline) > -1 ) {
 				var p = document.getElementById("editTimeActivityTemplate");
 				var edit_activity = p.cloneNode(true);
+				edit_activity.querySelector('#edit_activity_form').setAttribute('action', edit_activity.querySelector('#edit_activity_form').getAttribute('action') + parent.getAttribute('data-activity-id').replace(/\"/g, '') );
 				edit_activity.style.display = 'block' ;
 				this.parentNode.appendChild(edit_activity);
 
@@ -275,11 +312,48 @@ function profileHandlers() {
 					edit_activity.style.display = 'none' ;
 					existed_activity.style.display = 'block';
 				}
+
+				edit_activity.querySelector('#edit_activity_form').onsubmit = function (e) {
+					var evt = e ? e : window.event;
+					if (evt.preventDefault) evt.preventDefault();
+
+					submit_form(this, function(response){
+						if(response!='null') {
+							var p = document.getElementById("newActivityTemplate");
+							var new_activity = p.cloneNode(true);
+
+							//make response object
+							var res = JSON.parse(response);
+
+							new_activity.style.display = 'block';
+							new_activity.removeAttribute('id');
+							new_activity.children[2].setAttribute('data-activity-id', res._id.replace(/\"/g, '') );
+							new_activity.children[2].children[0].setAttribute('href', new_activity.children[2].children[0].getAttribute('href') + res._id.replace(/\"/g, '') );
+							new_activity.children[2].children[0].onclick = delete_handler;
+							new_activity.children[2].children[1].innerHTML = res.performance;
+							new_activity.children[2].children[2].innerHTML = res.discipline;
+							new_activity.children[2].children[3].innerHTML = res.date.toString().split(' GMT')[0];
+							new_activity.children[2].children[3].onclick = edit_handler;
+
+							var list = document.getElementById('history_line');
+
+							list.insertBefore( new_activity, list.firstChild.nextSibling );
+
+
+						} else {
+							alert('something went wrong. Please try again');
+							close_new_activity_form();
+						}
+
+					});
+				}
+
 			}
 	    	//points disciplines
 	    	if( disciplines.points.indexOf(this_discipline) > -1 ) {
 				var p = document.getElementById("editPointsActivityTemplate");
 				var edit_activity = p.cloneNode(true);
+				edit_activity.querySelector('#edit_activity_form').setAttribute('action', edit_activity.querySelector('#edit_activity_form').getAttribute('action') + parent.getAttribute('data-activity-id').replace(/\"/g, '') );
 				edit_activity.style.display = 'block' ;
 				this.parentNode.appendChild(edit_activity);
 
@@ -292,6 +366,42 @@ function profileHandlers() {
 					edit_activity.style.display = 'none' ;
 					existed_activity.style.display = 'block';
 				}
+
+				edit_activity.querySelector('#edit_activity_form').onsubmit = function (e) {
+					var evt = e ? e : window.event;
+					if (evt.preventDefault) evt.preventDefault();
+
+					submit_form(this, function(response){
+						if(response!='null') {
+							var p = document.getElementById("newActivityTemplate");
+							var new_activity = p.cloneNode(true);
+
+							//make response object
+							var res = JSON.parse(response);
+
+							new_activity.style.display = 'block';
+							new_activity.removeAttribute('id');
+							new_activity.children[2].setAttribute('data-activity-id', res._id.replace(/\"/g, '') );
+							new_activity.children[2].children[0].setAttribute('href', new_activity.children[2].children[0].getAttribute('href') + res._id.replace(/\"/g, '') );
+							new_activity.children[2].children[0].onclick = delete_handler;
+							new_activity.children[2].children[1].innerHTML = res.performance;
+							new_activity.children[2].children[2].innerHTML = res.discipline;
+							new_activity.children[2].children[3].innerHTML = res.date.toString().split(' GMT')[0];
+							new_activity.children[2].children[3].onclick = edit_handler;
+
+							var list = document.getElementById('history_line');
+
+							list.insertBefore( new_activity, list.firstChild.nextSibling );
+
+
+						} else {
+							alert('something went wrong. Please try again');
+							close_new_activity_form();
+						}
+
+					});
+				}
+
 			}
 
 		this.onclick = function() {

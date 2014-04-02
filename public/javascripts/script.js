@@ -133,6 +133,22 @@ function ajax_post(data, url, callback) {
 	xhr.send(data);
 }
 
+function ajax_put(data, url, callback) {
+	var xhr = new XMLHttpRequest();
+	xhr.open('PUT', url);
+
+
+
+	xhr.addEventListener('load', function (e) {
+		console.log(data);
+	    callback( xhr.responseText );
+	}, false);
+
+	xhr.setRequestHeader('Content-Type', 'application/json');
+
+	xhr.send(data);
+}
+
 function ajax_delete( url, callback) {
 	var xhr = new XMLHttpRequest();
 	xhr.open('DELETE', url);
@@ -162,9 +178,13 @@ function submit_form(form, callback) {
 
 
 	var method = form.attributes.method.value;
+
 	switch(method){
 		case 'POST':
 			ajax_post(data, form.attributes.action.value, callback);
+			break;
+		case 'PUT':
+			ajax_put(data, form.attributes.action.value, callback);
 			break;
 		case 'GET' :
 			console.log('-get?');
