@@ -21,7 +21,7 @@ block content
 					div.icon +
 					div#slider( class="info add_activity" )
 						a#add_activity_link( href="javascript:;" )= tr['add_new_activity']
-						form#add_activity_form( method="POST" action="/user/"+profile.id+"/activities")
+						form#add_activity_form( method="POST" action="/user/"+profile._id+"/activities")
 							select#discipline_input( name="discipline" )
 								- for( var category in disciplines ) {
 									-for( var i in disciplines[category]) {
@@ -192,7 +192,7 @@ block content
 						div.icon XX
 						div.info( data-activity-id=activity._id )
 							div.current_data
-								a.deleteActivity( href='activities/' + activity._id  ) &nbsp;
+								a.deleteActivity( href='/user/'+profile._id+'/activities/' + activity._id  ) &nbsp;
 								//div#activity_menu
 									ul
 										li
