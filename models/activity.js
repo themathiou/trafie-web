@@ -140,7 +140,7 @@ activitySchema.formatActivity = function( activity ) {
       case 'pentathlon':
       case 'heptathlon':
       case 'decathlon':
-       	
+       	activity.formatted_performance = activity.performance;
         break;
 	}
 	return activity;

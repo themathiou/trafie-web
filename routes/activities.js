@@ -211,15 +211,11 @@ exports.put = function( req, res ) {
       // If there is a valid performance value
       if( performance !== null ) {
         // Create the record that will be inserted in the db
-        var new_activity = {
-          'user_id': user_id,
-          'discipline': discipline,
+        var activity = {
           'performance': performance
         };
 
-        var activity = new Activity( new_activity );
-        // Save the activity
-        activity.save(function ( err, activity ) {
+        Activity.findByIdAndUpdate( activity_id, activity, '', function ( err, activity ) {
           return_activity( res, activity._id, profile_data.language );
         });
       } else {
