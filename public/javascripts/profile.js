@@ -335,7 +335,7 @@ function profileHandlers() {
 				new_activity.style.display = 'block';
 				new_activity.removeAttribute('id');
 				new_activity.children[2].setAttribute('data-activity-id', res._id.replace(/\"/g, '') );
-				new_activity.children[2].children[0].setAttribute('href', 'activities/'+res._id.replace(/\"/g, '') );
+				new_activity.children[2].children[0].setAttribute('href', new_activity.children[2].children[0].getAttribute('href') + res._id.replace(/\"/g, '') );
 				new_activity.children[2].children[0].onclick = delete_handler;
 				new_activity.children[2].children[1].innerHTML = res.performance;
 				new_activity.children[2].children[2].innerHTML = res.discipline;

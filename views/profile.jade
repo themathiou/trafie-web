@@ -132,7 +132,7 @@ block content
 					div.icon_back
 					div.icon ΧΧ
 					div.info( data-activity-id)
-						a.deleteActivity( href="javascript:;" ) &nbsp;
+						a.deleteActivity( href='/user/'+profile._id+'/activities/' ) &nbsp;
 						div.performance
 						div.discipline
 						div.date
@@ -205,7 +205,7 @@ block content
 								//div.ribbon.ribbon-yellow
 									div.banner
 										div.text Personal Best
-								div.performance( data-value=activity.performance )= activity.performance
+								div.performance( data-value=activity.performance )= activity.formated_performance
 								div.discipline( data-value=activity.discipline )= tr[activity.discipline]
 								div.date( data-value=activity.date )= activity.date.toString().split(' GMT')[0]
 							a.editActivity( href="javascript:;" ) &nbsp;
