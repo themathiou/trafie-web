@@ -99,7 +99,7 @@ trafie.get( '/', profile.get );
  * ACTIVITIES                                                                                                                  *
  ******************************************************************************************************************************/
 
-//trafie.get( '/activities', activities.get );
+trafie.get( '/user/:user_id/activities/:activity_id?', activities.get );
 
 trafie.post( '/user/:user_id/activities', activities.post );
 

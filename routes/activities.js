@@ -11,31 +11,26 @@ var translations = require('../languages/translations.js');
 /**
  * Activities - GET
  */
-/*exports.get = function( req, res ){
+exports.get = function( req, res ){
   var user_id = req.session.user_id;
 
-  if(!user_id) {
-	  res.redirect('/register');
+  if( !user_id || ( user_id !== req.params.user_id ) ) {
+	  return_activity( res, 403, '', 'en' );
   } else {
-    Profile.schema.findOne( { '_id': user_id }, 'first_name' )
+    // Find the profile
+    Profile.schema.findOne({ '_id': user_id }, 'language')
     .then( function( profile_data ) {
-      // If the user was found
-      if( typeof profile_data.first_name !== 'undefined' ) {
-        if( req.body.discipline )
-        return user_id;
-      // If the user wasn't found
-      } else {
-        res.json( null );
-      }
-    })
-    .then( Activity.schema.findOne( { '_id': user_id }, 'first_name last_name discipline country male birthday picture' )
+      // If the profile doesn't exist, return an empty json
+      if( typeof profile_data.language === 'undefined' ) return_activity( res, 404, '', 'en' );
 
-    })
-    .then( function( profile_data ) {
-    
+      if( typeof req.params.activity_id !== 'undefined' ) {
+        return_activity( res, 200, req.params.activity_id, profile_data.language );
+      } else {
+        return_activities( res, 200, { 'user_id': user_id }, profile_data.language );
+      }
     });
   }
-};*/
+};
 
 
 /**
@@ -46,13 +41,13 @@ exports.post = function( req, res ) {
   var user_id = req.session.user_id;
   // If there is no user id, redirect to login
   if( !user_id || ( user_id !== req.params.user_id ) ) {
-    return_activity( res, '', 'en' );
+    return_activity( res, 403, '', 'en' );
   } else {
     // Find the profile
     Profile.schema.findOne({ '_id': user_id }, 'first_name language')
     .then( function( profile_data ) {
       // If the profile doesn't exist, redirect
-      if( typeof profile_data.first_name === 'undefined' ) redirect('/register');
+      if( typeof profile_data.first_name === 'undefined' ) return_activity( res, 404, '', 'en' );
       var discipline = typeof req.body.discipline !== 'undefined' ? req.body.discipline : '';
       var performance = {};
       
@@ -121,10 +116,10 @@ exports.post = function( req, res ) {
         var activity = new Activity( new_activity );
         // Save the activity
         activity.save(function ( err, activity ) {
-          return_activity( res, activity._id, profile_data.language );
+          return_activity( res, 201, activity._id, profile_data.language );
         });
       } else {
-        return_activity( res, '', 'en' );
+        return_activity( res, 400, '', profile_data.language );
       }
     });
   }
@@ -141,17 +136,14 @@ exports.put = function( req, res ) {
 
   // If there is no user id, redirect to login
   if( !user_id || !activity_id || ( user_id !== req.params.user_id ) ) {
-    res.statusCode = 400;
-    res.json( null );
+    return_activity( res, 403, '', 'en' );
   } else {
     // Find the profile
     Profile.schema.findOne({ '_id': user_id }, 'language')
     .then( function( profile_data ) {
       // If the profile doesn't exist, redirect
-      if( typeof profile_data.language === 'undefined' ) {
-        res.statusCode = 404;
-        res.json( null ); 
-      }
+      if( typeof profile_data.language === 'undefined' ) return_activity( res, 404, '', 'en' );
+
       var discipline = typeof req.body.discipline !== 'undefined' ? req.body.discipline : '';
       var performance = {};
       
@@ -216,10 +208,10 @@ exports.put = function( req, res ) {
         };
 
         Activity.findByIdAndUpdate( activity_id, activity, '', function ( err, activity ) {
-          return_activity( res, activity._id, profile_data.language );
+          return_activity( res, 200, activity._id, profile_data.language );
         });
       } else {
-        return_activity( res, '', 'en' );
+        return_activity( res, 400, '', profile_data.language );
       }
     });
   }
@@ -234,11 +226,8 @@ exports.delete = function( req, res ) {
   // Get the activity id from the url
   var activity_id = req.params.activity_id;
 
-  // If there is no user id, redirect to login
-  if( !user_id || !activity_id  || ( user_id !== req.params.user_id ) ) {
-    res.statusCode = 400;
-    res.json( null );
-  }
+  // If there is no user id, return an empty json
+  if( !user_id || !activity_id  || ( user_id !== req.params.user_id ) ) return_activity( res, 403, '', 'en' );
 
   Activity.schema.delete( { '_id': activity_id, 'user_id': user_id } ).then( function( deleted ) {
     if( deleted ) {
@@ -250,18 +239,29 @@ exports.delete = function( req, res ) {
   });
 }
 
-function return_activity( res, activity_id, language ) {
+function return_activity( res, status_code, activity_id, language ) {
   if( !activity_id) {
     res.statusCode = 400;
     res.json( null );
   }
+  res.statusCode = status_code;
 
   Activity.schema.findOne( {'_id': activity_id}, '' ).then( function( activity ) {
     var activity = Activity.schema.formatActivity( activity );
 
     activity.discipline = translations[language][activity.discipline];
 
-    res.statusCode = 201;
     res.json( activity );
+  });
+}
+
+function return_activities( res, status_code, where, language ) {
+  Activity.schema.getActivitiesOfUser( where, '', -1 ).then( function( activities ) {
+    for( var i in activities ) {
+      activities[i].discipline = translations[language][activities[i].discipline];
+    }
+    res.statusCode = status_code;
+
+    res.json( activities );
   });
 }
