@@ -45,7 +45,7 @@ exports.post = function( req, res ) {
   // Get the user id from the session
   var user_id = req.session.user_id;
   // If there is no user id, redirect to login
-  if(!user_id) {
+  if( !user_id || ( user_id !== req.params.user_id ) ) {
     return_activity( res, '', 'en' );
   } else {
     // Find the profile
@@ -133,7 +133,7 @@ exports.post = function( req, res ) {
 /**
  * Activities - PUT
  */
-exports.PUT = function( req, res ) {
+exports.put = function( req, res ) {
   // Get the user id from the session
   var user_id = req.session.user_id;
   // Get the activity id from the url
@@ -239,7 +239,7 @@ exports.delete = function( req, res ) {
   var activity_id = req.params.activity_id;
 
   // If there is no user id, redirect to login
-  if( !user_id || !activity_id ) {
+  if( !user_id || !activity_id  || ( user_id !== req.params.user_id ) ) {
     res.statusCode = 400;
     res.json( null );
   }
