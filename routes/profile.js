@@ -11,6 +11,10 @@ var translations = require('../languages/translations.js');
 exports.get = function( req, res ){
   var user_id = req.session.user_id;
 
+  if( typeof req.params.user_id !== 'undefined' ) {
+    console.log( req.params.user_id );
+  }
+
   if(!user_id) {
 	  res.redirect('/register');
   } else {
@@ -70,6 +74,7 @@ function render( res, user_id, profile_data ) {
     // The data that will go to the front end
     var view_data = {
       'profile': {
+        'id'          : user_id,
         'first_name'  : profile_data.first_name,
         'last_name'   : profile_data.last_name,
         'discipline'  : profile_data.discipline,

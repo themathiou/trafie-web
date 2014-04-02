@@ -89,16 +89,23 @@ trafie.get( '/', profile.get );
 
 
 /*******************************************************************************************************************************
+ * USER                                                                                                                        *
+ ******************************************************************************************************************************/
+
+//trafie.get( '/user', profile.get );
+
+
+/*******************************************************************************************************************************
  * ACTIVITIES                                                                                                                  *
  ******************************************************************************************************************************/
 
 //trafie.get( '/activities', activities.get );
 
-trafie.post( '/activities', activities.post );
+trafie.post( '/user/:user_id/activities', activities.post );
 
 //trafie.put( '/activities', activities.put );
 
-trafie.delete( '/activities/:activity_id', activities.delete );
+trafie.delete( '/user/:user_id/activities/:activity_id', activities.delete );
 
 
 /*******************************************************************************************************************************
@@ -175,8 +182,7 @@ trafie.post( '/reset_password/:hash', reset_password.post );
 
  trafie.use(function(req, res, next){
   res.status(404);
-
-  res.type('html').send('OUR FIRST FULLY RESPONSIVE PAGE!!!!<br><br>The 404 or Not Found error message is a HTTP standard response code indicating that the client was able to communicate with the server, but the server could not find what was requested.The web site hosting server will typically generate a "404 Not Found" web page when a user attempts to follow a broken or dead link; hence the 404 error is one of the most recognizable errors users can find on the web.A 404 error should not be confused with "server not found" or similar errors, in which a connection to the destination server could not be made at all. A 404 error indicates that the requested resource may be available again in the future; however, the fact does not guarantee the same content.<br><br><a href="javascript:history.back();">Ok ok... Take me back please!</a>');
+  res.sendfile('./views/four_oh_four.html');
 });
 
 
@@ -191,6 +197,13 @@ trafie.get('/logout', function( req, res ) {
   req.session.destroy();
   res.redirect('/');
 });
+
+
+/*******************************************************************************************************************************
+ * PROFILE                                                                                                                     *
+ ******************************************************************************************************************************/
+
+trafie.get( '/:user_id', profile.get );
 
 
 /*******************************************************************************************************************************
