@@ -449,21 +449,20 @@ input.btn_blue_2 {
 	}
 
 
-
-/* Right content */
-
 	/* post */
 	& > li .info {
 		margin: 0 0 15px 12%;
 		background-color: @light_gray;
 		color: @dark_gray;
-		padding: 10px 10px 30px 15px;
+		padding: 10px 10px 10px 15px;
 		font-weight: 300;
 		line-height: 1.4;
 		position: relative;
 		.rounded_corners(5px);
 		border: 1px solid white;
 		box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.2), 0 0 16px 4px rgba(255, 255, 255, 0.6) inset;
+		display: inline-block;
+		width:100%;
 		/* 		text-shadow: 0px 0px 4px #000; */
 
 		.performance {
@@ -555,9 +554,36 @@ input.btn_blue_2 {
 			}
 
 			.submit_buttons {
-				text-align:right;
 			}
 		}
+
+	}
+
+	/* EDIT activity */
+	#edit_activity_form {
+			color: black;
+			position: relative;
+
+			div {
+				float:left;
+			}
+
+			label {
+				font-size: 0.8em;
+				padding:0px;
+				margin:0px;
+			}
+
+			input {
+				.rounded_corners(5px);
+				box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2) inset;
+				border:1px white solid;
+				padding: 6px;
+				text-align: center;
+			}
+
+			.submit_buttons {
+			}
 
 	}
 
@@ -585,6 +611,7 @@ input.btn_blue_2 {
 		padding: 0 0 10px 0;
 		border-bottom: 1px solid rgba(255,255,255,0.4);
 	}
+
 
 
 

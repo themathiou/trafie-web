@@ -138,9 +138,9 @@ block content
 						div.date
 						a.editActivity( href="javascript:;" ) &nbsp;
 
-				div#editDistanceActivityTemplate.data_entry.row( style="display:none;" )= tr['enter_your_performance'] +':'
+				div#editDistanceActivityTemplate.row( style="display:none;" )= tr['enter_your_performance'] +':'
 					br
-					form#edit_activity_form( method="PUT" action="/user/"+profile._id+"/activities/")
+					form#edit_activity_form.data_entry( method="PUT" action="/user/"+profile._id+"/activities/")
 						div
 							label(for="distance_1_input")= tr['meters_short'] + ':'
 							input#distance_1_input( name="distance_1" size="3" maxlength="2").
@@ -154,9 +154,9 @@ block content
 							input.btn_green(type="submit" name="new_competition" value=tr['save'])
 							a.cancel_edit_activity.cancel_link( href="javascript:;")= tr['cancel']
 
-				div#editTimeActivityTemplate.data_entry.row( style="display:none;" )= tr['enter_your_performance'] +':'
+				div#editTimeActivityTemplate.row( style="display:none;" )= tr['enter_your_performance'] +':'
 					br
-					form#edit_activity_form( method="PUT" action="/user/"+profile._id+"/activities/")
+					form#edit_activity_form.data_entry( method="PUT" action="/user/"+profile._id+"/activities/")
 						div
 							label(for="hours_input")= tr['hours_short'] + ':'
 							input#hours_input(name="hours" size="3" maxlength="2" )
@@ -176,9 +176,9 @@ block content
 							input.btn_green(type="submit" name="new_competition" value=tr['save'])
 							a.cancel_edit_activity.cancel_link( href="javascript:;")= tr['cancel']
 
-				div#editPointsActivityTemplate.data_entry.row( style="display:none;" )= tr['enter_your_performance'] +':'
+				div#editPointsActivityTemplate.row( style="display:none;" )= tr['enter_your_performance'] +':'
 					br
-					form#edit_activity_form( method="PUT" action="/user/"+profile._id+"/activities/")
+					form#edit_activity_form.data_entry( method="PUT" action="/user/"+profile._id+"/activities/")
 						label(for="points_input")= tr['points'] + ':'
 						input#points_input(type="text" name="points" size="7" maxlength="5")
 						div.row

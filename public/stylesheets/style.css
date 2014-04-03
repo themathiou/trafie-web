@@ -357,8 +357,6 @@ input.btn_blue_2:active {
   width: 450px;
   /*line*/
 
-  /* Right content */
-
   /* post */
 
   /* odd post */
@@ -366,6 +364,8 @@ input.btn_blue_2:active {
   /* info end point (left) */
 
   /* ADD activity */
+
+  /* EDIT activity */
 
   /* The icons */
 
@@ -386,7 +386,7 @@ input.btn_blue_2:active {
   margin: 0 0 15px 12%;
   background-color: #f6f6f6;
   color: #333333;
-  padding: 10px 10px 30px 15px;
+  padding: 10px 10px 10px 15px;
   font-weight: 300;
   line-height: 1.4;
   position: relative;
@@ -397,6 +397,8 @@ input.btn_blue_2:active {
   border-radius: 5px;
   border: 1px solid white;
   box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.2), 0 0 16px 4px rgba(255, 255, 255, 0.6) inset;
+  display: inline-block;
+  width: 100%;
   /* 		text-shadow: 0px 0px 4px #000; */
 
 }
@@ -474,8 +476,28 @@ input.btn_blue_2:active {
   padding: 6px;
   text-align: center;
 }
-.history_line > li .add_activity .data_entry .submit_buttons {
-  text-align: right;
+.history_line #edit_activity_form {
+  color: black;
+  position: relative;
+}
+.history_line #edit_activity_form div {
+  float: left;
+}
+.history_line #edit_activity_form label {
+  font-size: 0.8em;
+  padding: 0px;
+  margin: 0px;
+}
+.history_line #edit_activity_form input {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2) inset;
+  border: 1px white solid;
+  padding: 6px;
+  text-align: center;
 }
 .history_line > li .end {
   width: 200px;
