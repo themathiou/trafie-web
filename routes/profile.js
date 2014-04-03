@@ -85,7 +85,7 @@ function render( res, user_id, profile_data ) {
       'activities'  : activities,
       'tr'          : translations[profile_data.language]
     };
-    
+    console.log( activities );
     res.render( 'profile', view_data );
   });
 }
