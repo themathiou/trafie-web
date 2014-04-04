@@ -237,7 +237,7 @@ function profileHandlers() {
 			if( disciplines.distance.indexOf(this_discipline) > -1 ) {
 
 				//date picker for editable field
-				var picker_point = new Pikaday({field: document.getElementById('datepicker_point'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date('2020-12-31'), yearRange: [2000,2020]})
+				var picker_point = new Pikaday({field: document.getElementById('edit_datepicker'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date('2020-12-31'), yearRange: [2000,2020]})
 
 
 				var p = document.getElementById("editDistanceActivityTemplate");
