@@ -40,7 +40,7 @@ var el = {
     'meters_short'          : 'μ',
     'centimeters'           : 'Εκατοστά',
     'centimeters_short'     : 'εκ',
-    'points'                : 'Πόντοι',
+    'points'                : 'πόντοι',
 
     // User Data
     'male'                  : 'Άνδρας',

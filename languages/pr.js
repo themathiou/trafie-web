@@ -40,7 +40,7 @@ var pr = {
     'meters_short'			: 'm',
     'centimeters'			: 'Centimeters',
     'centimeters_short'		: 'cm',
-    'points'				: 'Points',
+    'points'				: 'points',
 
     // User Data
     'male'                  : 'Dick',

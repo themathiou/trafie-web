@@ -143,7 +143,7 @@ activitySchema.formatActivity = function( activity, language ) {
       case 'pentathlon':
       case 'heptathlon':
       case 'decathlon':
-       	activity.formatted_performance = activity.performance + translations[language]['points'];
+       	activity.formatted_performance = activity.performance + ' ' + translations[language]['points'];
         break;
 	}
 
