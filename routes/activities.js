@@ -257,9 +257,14 @@ function return_activity( res, status_code, activity_id, language ) {
   res.statusCode = status_code;
 
   Activity.schema.findOne( {'_id': activity_id}, '' ).then( function( activity ) {
-    var activity = Activity.schema.formatActivity( activity );
+    activity = {
+      '_id'                   : activity._id,
+      'discipline'            : activity.discipline,
+      'performance'           : activity.performance,
+      'date'                  : activity.date
+    }
 
-    activity.discipline = translations[language][activity.discipline];
+    activity = Activity.schema.formatActivity( activity, language );
 
     res.json( activity );
   });
@@ -268,8 +273,15 @@ function return_activity( res, status_code, activity_id, language ) {
 function return_activities( res, status_code, where, language ) {
   Activity.schema.getActivitiesOfUser( where, '', -1 ).then( function( activities ) {
     for( var i in activities ) {
-      activities[i].discipline = translations[language][activities[i].discipline];
+      activities[i] = {
+        '_id'                   : activities[i]._id,
+        'discipline'            : activities[i].discipline,
+        'performance'           : activities[i].performance,
+        'date'                  : activities[i].date
+      }
     }
+    activities = Activity.schema.formatActivities( activities, language );
+
     res.statusCode = status_code;
 
     res.json( activities );
