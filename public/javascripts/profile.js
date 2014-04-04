@@ -242,7 +242,7 @@ function profileHandlers() {
 				this.parentNode.appendChild(edit_activity);
 
 				var temp_m = parseInt(this_performance/10000);
-				var temp_cm = ((this_performance/10000)%temp_m).toFixed(2) * 100;
+				var temp_cm = parseInt(((this_performance/10000)%temp_m) * 100);
 
 				edit_activity.querySelector('#distance_1_input').value = temp_m;
 				edit_activity.querySelector('#distance_2_input').value = temp_cm;
@@ -272,19 +272,18 @@ function profileHandlers() {
 							new_activity.children[2].setAttribute('data-activity-id', res._id.replace(/\"/g, '') );
 							new_activity.children[2].children[0].setAttribute('href', new_activity.children[2].children[0].getAttribute('href') + res._id.replace(/\"/g, '') );
 							new_activity.children[2].children[0].onclick = delete_handler;
-							new_activity.children[2].children[1].innerHTML = res.performance;
-							new_activity.children[2].children[2].innerHTML = res.discipline;
+							new_activity.children[2].children[1].innerHTML = res.formatted_performance;
+							new_activity.children[2].children[2].innerHTML = res.formatted_discipline;
 							new_activity.children[2].children[3].innerHTML = res.date.toString().split(' GMT')[0];
 							new_activity.children[2].children[3].onclick = edit_handler;
 
 							var list = document.getElementById('history_line');
 
 							list.insertBefore( new_activity, list.firstChild.nextSibling );
-
+							parent.parentNode.removeChild(parent);
 
 						} else {
 							alert('something went wrong. Please try again');
-							close_new_activity_form();
 						}
 
 					});
@@ -330,8 +329,8 @@ function profileHandlers() {
 							new_activity.children[2].setAttribute('data-activity-id', res._id.replace(/\"/g, '') );
 							new_activity.children[2].children[0].setAttribute('href', new_activity.children[2].children[0].getAttribute('href') + res._id.replace(/\"/g, '') );
 							new_activity.children[2].children[0].onclick = delete_handler;
-							new_activity.children[2].children[1].innerHTML = res.performance;
-							new_activity.children[2].children[2].innerHTML = res.discipline;
+							new_activity.children[2].children[1].innerHTML = res.formatted_performance;
+							new_activity.children[2].children[2].innerHTML = res.formatted_discipline;
 							new_activity.children[2].children[3].innerHTML = res.date.toString().split(' GMT')[0];
 							new_activity.children[2].children[3].onclick = edit_handler;
 
@@ -384,8 +383,8 @@ function profileHandlers() {
 							new_activity.children[2].setAttribute('data-activity-id', res._id.replace(/\"/g, '') );
 							new_activity.children[2].children[0].setAttribute('href', new_activity.children[2].children[0].getAttribute('href') + res._id.replace(/\"/g, '') );
 							new_activity.children[2].children[0].onclick = delete_handler;
-							new_activity.children[2].children[1].innerHTML = res.performance;
-							new_activity.children[2].children[2].innerHTML = res.discipline;
+							new_activity.children[2].children[1].innerHTML = res.formatted_performance;
+							new_activity.children[2].children[2].innerHTML = res.formatted_discipline;
 							new_activity.children[2].children[3].innerHTML = res.date.toString().split(' GMT')[0];
 							new_activity.children[2].children[3].onclick = edit_handler;
 
@@ -462,8 +461,8 @@ function profileHandlers() {
 				new_activity.children[2].setAttribute('data-activity-id', res._id.replace(/\"/g, '') );
 				new_activity.children[2].children[0].setAttribute('href', new_activity.children[2].children[0].getAttribute('href') + res._id.replace(/\"/g, '') );
 				new_activity.children[2].children[0].onclick = delete_handler;
-				new_activity.children[2].children[1].innerHTML = res.performance;
-				new_activity.children[2].children[2].innerHTML = res.discipline;
+				new_activity.children[2].children[1].innerHTML = res.formatted_performance;
+				new_activity.children[2].children[2].innerHTML = res.formatted_discipline;
 				new_activity.children[2].children[3].innerHTML = res.date.toString().split(' GMT')[0];
 				new_activity.children[2].children[3].onclick = edit_handler;
 
