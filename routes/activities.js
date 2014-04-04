@@ -134,6 +134,8 @@ exports.put = function( req, res ) {
   // Get the activity id from the url
   var activity_id = req.params.activity_id;
 
+  var language = '';
+
   // If there is no user id, redirect to login
   if( !user_id || !activity_id || ( user_id !== req.params.user_id ) ) {
     return_activity( res, 403, '', 'en' );
@@ -144,7 +146,15 @@ exports.put = function( req, res ) {
       // If the profile doesn't exist, redirect
       if( typeof profile_data.language === 'undefined' ) return_activity( res, 404, '', 'en' );
 
-      var discipline = typeof req.body.discipline !== 'undefined' ? req.body.discipline : '';
+      language = profile_data.language;
+
+      return Activity.schema.findOne( {'_id': activity_id}, '' );
+    })
+    .then( function( activity ) {
+
+      if( typeof activity._id == 'undefined' ) return_activity( res, 404, '', language );
+
+      var discipline = activity.discipline;
       var performance = {};
       
       switch ( discipline ) {
@@ -208,10 +218,10 @@ exports.put = function( req, res ) {
         };
 
         Activity.findByIdAndUpdate( activity_id, activity, '', function ( err, activity ) {
-          return_activity( res, 200, activity._id, profile_data.language );
+          return_activity( res, 200, activity._id, language );
         });
       } else {
-        return_activity( res, 400, '', profile_data.language );
+        return_activity( res, 400, '', language );
       }
     });
   }

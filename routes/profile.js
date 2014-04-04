@@ -11,6 +11,7 @@ var translations = require('../languages/translations.js');
 exports.get = function( req, res ){
   var user_id = req.session.user_id;
 
+  // When there is a username in the url
   if( typeof req.params.user_id !== 'undefined' ) {
     console.log( req.params.user_id );
   }
@@ -85,7 +86,7 @@ function render( res, user_id, profile_data ) {
       'activities'  : activities,
       'tr'          : translations[profile_data.language]
     };
-    console.log( activities );
+
     res.render( 'profile', view_data );
   });
 }
