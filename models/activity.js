@@ -4,6 +4,9 @@ var mongoose = require('mongoose');
 var db = mongoose.connection;
 var q = require('q');
 
+// Initialize translations
+var translations = require('../languages/translations.js');
+
 //Define User SCHEMA
 var activitySchema = mongoose.Schema({
   user_id		: { type: String, required: true, index: true },
@@ -79,10 +82,10 @@ activitySchema.delete = function( where ) {
  * Converts the activity data to a more readable format
  * @param array activities
  */
-activitySchema.formatActivities = function( activities ) {
+activitySchema.formatActivities = function( activities, language ) {
 	var activities_count = activities.length;
 	for( var i=0 ; i<activities_count ; i++ ) {
-		activities[i] = activitySchema.formatActivity( activities[i] );
+		activities[i] = activitySchema.formatActivity( activities[i], language );
 	}
 	return activities;
 };
@@ -92,7 +95,7 @@ activitySchema.formatActivities = function( activities ) {
  * Converts the activity data to a more readable format
  * @param object activity
  */
-activitySchema.formatActivity = function( activity ) {
+activitySchema.formatActivity = function( activity, language ) {
 	switch ( activity.discipline ) {
       case '100m':
       case '200m':
@@ -135,14 +138,17 @@ activitySchema.formatActivity = function( activity ) {
       case 'hammer':
       case 'javelin':
       	// Converting the distance back to meters
-        activity.formatted_performance = (activity.performance / 10000).toFixed(2);
+        activity.formatted_performance = (activity.performance / 10000).toFixed(2) + translations[language]['meters_short'];
         break;
       case 'pentathlon':
       case 'heptathlon':
       case 'decathlon':
-       	activity.formatted_performance = activity.performance;
+       	activity.formatted_performance = activity.performance + ' ' + translations[language]['points'];
         break;
 	}
+
+	activity.formatted_discipline = translations[language][activity.discipline];
+
 	return activity;
 }
 

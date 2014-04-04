@@ -35,7 +35,7 @@ function render( res, user_id, profile_data ) {
   Activity.schema.getActivitiesOfUser( { 'user_id': user_id }, null, -1 )
   .then( function( activities ) {
     // Format the activity data
-    var activities = Activity.schema.formatActivities( activities );
+    var activities = Activity.schema.formatActivities( activities, profile_data.language );
     var disciplines = {
       'time': [
         '100m',

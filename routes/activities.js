@@ -49,6 +49,7 @@ exports.post = function( req, res ) {
       // If the profile doesn't exist, redirect
       if( typeof profile_data.first_name === 'undefined' ) return_activity( res, 404, '', 'en' );
       var discipline = typeof req.body.discipline !== 'undefined' ? req.body.discipline : '';
+      //var date = typeof req.body.date !== 'undefined' ? req.body.date : Date.now;
       var performance = {};
       
       switch ( discipline ) {
@@ -106,11 +107,15 @@ exports.post = function( req, res ) {
 
       // If there is a valid performance value
       if( performance !== null ) {
+
+        console.log( date );
+
         // Create the record that will be inserted in the db
         var new_activity = {
-          'user_id': user_id,
-          'discipline': discipline,
-          'performance': performance
+          'user_id'     : user_id,
+          'discipline'  : discipline,
+          'performance' : performance//,
+          //'date'        : date
         };
 
         var activity = new Activity( new_activity );
@@ -257,9 +262,14 @@ function return_activity( res, status_code, activity_id, language ) {
   res.statusCode = status_code;
 
   Activity.schema.findOne( {'_id': activity_id}, '' ).then( function( activity ) {
-    var activity = Activity.schema.formatActivity( activity );
+    activity = {
+      '_id'                   : activity._id,
+      'discipline'            : activity.discipline,
+      'performance'           : activity.performance,
+      'date'                  : activity.date
+    }
 
-    activity.discipline = translations[language][activity.discipline];
+    activity = Activity.schema.formatActivity( activity, language );
 
     res.json( activity );
   });
@@ -268,8 +278,15 @@ function return_activity( res, status_code, activity_id, language ) {
 function return_activities( res, status_code, where, language ) {
   Activity.schema.getActivitiesOfUser( where, '', -1 ).then( function( activities ) {
     for( var i in activities ) {
-      activities[i].discipline = translations[language][activities[i].discipline];
+      activities[i] = {
+        '_id'                   : activities[i]._id,
+        'discipline'            : activities[i].discipline,
+        'performance'           : activities[i].performance,
+        'date'                  : activities[i].date
+      }
     }
+    activities = Activity.schema.formatActivities( activities, language );
+
     res.statusCode = status_code;
 
     res.json( activities );
