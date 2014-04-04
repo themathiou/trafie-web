@@ -69,34 +69,34 @@ function show_specific_form(choice) {
         document.getElementById('submit_buttons').style.display = 'block';
 
         document.getElementById('slider').style.height = '210px';
-        document.getElementById('time_activity').style.display = 'none';
-        document.getElementById('distance_activity').style.display = 'block';
-        document.getElementById('point_activity').style.display = 'none';
+        document.getElementById('add_time_activity_form').style.display = 'none';
+        document.getElementById('add_distance_activity_form').style.display = 'block';
+        document.getElementById('add_points_activity_form').style.display = 'none';
 
     }
     else if ( time.indexOf(choice.value) > -1 ) {
         document.getElementById('submit_buttons').style.display = 'block';
 
         document.getElementById('slider').style.height = '210px';
-        document.getElementById('time_activity').style.display = 'block';
-        document.getElementById('distance_activity').style.display = 'none';
-        document.getElementById('point_activity').style.display = 'none';
+        document.getElementById('add_time_activity_form').style.display = 'block';
+        document.getElementById('add_distance_activity_form').style.display = 'none';
+        document.getElementById('add_points_activity_form').style.display = 'none';
     }
     else if ( points.indexOf(choice.value) > -1 ) {
         document.getElementById('submit_buttons').style.display = 'block';
 
         document.getElementById('slider').style.height = '210px';
-        document.getElementById('time_activity').style.display = 'none';
-        document.getElementById('distance_activity').style.display = 'none';
-        document.getElementById('point_activity').style.display = 'block';
+        document.getElementById('add_time_activity_form').style.display = 'none';
+        document.getElementById('add_distance_activity_form').style.display = 'none';
+        document.getElementById('add_points_activity_form').style.display = 'block';
     }
     else{
         document.getElementById('submit_buttons').style.display = 'none';
 
         document.getElementById('slider').style.height = '60px';
-        document.getElementById('time_activity').style.display = 'none';
-        document.getElementById('distance_activity').style.display = 'none';
-        document.getElementById('point_activity').style.display = 'none';
+        document.getElementById('add_time_activity_form').style.display = 'none';
+        document.getElementById('add_distance_activity_form').style.display = 'none';
+        document.getElementById('add_points_activity_form').style.display = 'none';
     }
 }
 
@@ -237,7 +237,7 @@ function profileHandlers() {
 			if( disciplines.distance.indexOf(this_discipline) > -1 ) {
 
 				//date picker for editable field
-				var picker_point = new Pikaday({field: document.getElementById('edit_datepicker'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date('2020-12-31'), yearRange: [2000,2020]})
+				var picker_point = new Pikaday({field: document.getElementById('edit_datepicker'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date('2020-12-31'), yearRange: [2000,2020]});
 
 
 				var p = document.getElementById("editDistanceActivityTemplate");
@@ -449,7 +449,77 @@ function profileHandlers() {
 	}
 
 	/* ADD activity form*/
-	document.getElementById("add_activity_form").onsubmit = function (e) {
+	document.getElementById("add_time_activity_form").onsubmit = function (e) {
+		var evt = e ? e : window.event;
+		if (evt.preventDefault) evt.preventDefault();
+
+		submit_form(this, function(response){
+			if(response!='null') {
+				var p = document.getElementById("newActivityTemplate");
+				var new_activity = p.cloneNode(true);
+
+				//make response object
+				var res = JSON.parse(response);
+
+				new_activity.style.display = 'block';
+				new_activity.removeAttribute('id');
+				new_activity.children[2].setAttribute('data-activity-id', res._id.replace(/\"/g, '') );
+				new_activity.children[2].children[0].setAttribute('href', new_activity.children[2].children[0].getAttribute('href') + res._id.replace(/\"/g, '') );
+				new_activity.children[2].children[0].onclick = delete_handler;
+				new_activity.children[2].children[1].innerHTML = res.formatted_performance;
+				new_activity.children[2].children[2].innerHTML = res.formatted_discipline;
+				new_activity.children[2].children[3].innerHTML = res.date.toString().split(' GMT')[0];
+				new_activity.children[2].children[3].onclick = edit_handler;
+
+				var list = document.getElementById('history_line');
+
+				list.insertBefore( new_activity, list.firstChild.nextSibling );
+				close_new_activity_form();
+
+			} else {
+				alert('something went wrong. Please try again');
+				close_new_activity_form();
+			}
+
+		});
+	}
+
+	document.getElementById("add_distance_activity_form").onsubmit = function (e) {
+		var evt = e ? e : window.event;
+		if (evt.preventDefault) evt.preventDefault();
+
+		submit_form(this, function(response){
+			if(response!='null') {
+				var p = document.getElementById("newActivityTemplate");
+				var new_activity = p.cloneNode(true);
+
+				//make response object
+				var res = JSON.parse(response);
+
+				new_activity.style.display = 'block';
+				new_activity.removeAttribute('id');
+				new_activity.children[2].setAttribute('data-activity-id', res._id.replace(/\"/g, '') );
+				new_activity.children[2].children[0].setAttribute('href', new_activity.children[2].children[0].getAttribute('href') + res._id.replace(/\"/g, '') );
+				new_activity.children[2].children[0].onclick = delete_handler;
+				new_activity.children[2].children[1].innerHTML = res.formatted_performance;
+				new_activity.children[2].children[2].innerHTML = res.formatted_discipline;
+				new_activity.children[2].children[3].innerHTML = res.date.toString().split(' GMT')[0];
+				new_activity.children[2].children[3].onclick = edit_handler;
+
+				var list = document.getElementById('history_line');
+
+				list.insertBefore( new_activity, list.firstChild.nextSibling );
+				close_new_activity_form();
+
+			} else {
+				alert('something went wrong. Please try again');
+				close_new_activity_form();
+			}
+
+		});
+	}
+
+	document.getElementById("add_point_activity_form").onsubmit = function (e) {
 		var evt = e ? e : window.event;
 		if (evt.preventDefault) evt.preventDefault();
 
