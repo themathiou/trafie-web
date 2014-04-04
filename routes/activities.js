@@ -108,7 +108,7 @@ exports.post = function( req, res ) {
       // If there is a valid performance value
       if( performance !== null ) {
 
-        console.log( date );
+        //console.log( date );
 
         // Create the record that will be inserted in the db
         var new_activity = {
