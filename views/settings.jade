@@ -168,6 +168,22 @@ block content
 						a#cancelEditLanguage.cancel_link( href="javascript:;" )= tr['cancel']
 					a#editLanguage.editLink( href="javascript:;" )= tr['edit']
 
+			//DATE FORMAT
+			div.settingsElement
+				form( method="POST")
+					label= tr['date_format'] + ':'
+					span= errors.data_format
+					span#date_format_existed= tr[profile.date_format]
+					select#date_format_input( name='date_format' hidden )
+						option( value='d-m-y' )= tr[d-m-y]
+						option( value='m-d-y' )= tr[m-d-y]
+					div#settingsDateFormatButtons.formButtons(hidden)
+						input#submitDateFormat.btn_green( type="submit" value=tr['submit'])
+						a#cancelEditDateFormat.cancel_link( href="javascript:;" )= tr['cancel']
+					a#editDateFormat.editLink( href="javascript:;" )= tr['edit']
+
+
+
 			//ABOUT ME
 			div.settingsElement
 				form( method="POST")
