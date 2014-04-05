@@ -428,6 +428,10 @@ function profileHandlers() {
 	}
 
 	document.getElementById("discipline_input").onchange = function() {
+		var disciplines_in_activity_forms = document.getElementsByClassName('new_activity_discipline');
+		for( var i=0, length=disciplines_in_activity_forms.length; i<length; i++) {
+			disciplines_in_activity_forms[i].setAttribute( 'value', this.value );
+		}
 		show_specific_form(this);
 	}
 

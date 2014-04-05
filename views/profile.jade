@@ -52,7 +52,7 @@ block content
 									div.row
 										label(for="datepicker_time")= tr['date'] + ':'
 										input#datepicker_time( name="date" type="text" )
-										input( name="discipline" hidden value=profile.discipline )
+										input.new_activity_discipline( name="discipline" hidden value=profile.discipline )
 								//submit
 								div#submit_buttons.row.submit_buttons
 									input.btn_green(type="submit" name="new_competition" value=tr['save'])
@@ -76,7 +76,7 @@ block content
 									div.row
 										label(for="datepicker_time")= tr['date'] + ':'
 										input#datepicker_time( name="date" type="text" )
-										input( name="discipline" hidden value=profile.discipline )
+										input.new_activity_discipline( name="discipline" hidden value=profile.discipline )
 								//submit
 								div#submit_buttons.row.submit_buttons
 									input.btn_green(type="submit" name="new_competition" value=tr['save'])
@@ -96,7 +96,7 @@ block content
 									div.row
 										label(for="datepicker_distance")= tr['date'] + ':'
 										input#datepicker_distance( name="date" type="text" )
-										input( name="discipline" hidden value=profile.discipline )
+										input.new_activity_discipline( name="discipline" hidden value=profile.discipline )
 								//submit
 								div#submit_buttons.row.submit_buttons
 									input.btn_green(type="submit" name="new_competition" value=tr['save'])
@@ -114,7 +114,7 @@ block content
 									div.row
 										label(for="datepicker_distance")= tr['date'] + ':'
 										input#datepicker_distance( name="date" type="text" )
-										input( name="discipline" hidden value=profile.discipline )
+										input.new_activity_discipline( name="discipline" hidden value=profile.discipline )
 								//submit
 								div#submit_buttons.row.submit_buttons
 									input.btn_green(type="submit" name="new_competition" value=tr['save'])
@@ -130,7 +130,7 @@ block content
 									div.row
 										label(for="datepicker_point")= tr['date'] + ':'
 										input#datepicker_point( name="date" type="text" )
-										input( name="discipline" hidden value=profile.discipline )
+										input.new_activity_discipline( name="discipline" hidden value=profile.discipline )
 								//submit
 								div#submit_buttons.row.submit_buttons
 									input.btn_green(type="submit" name="new_competition" value=tr['save'])
@@ -144,7 +144,7 @@ block content
 									div.row
 										label(for="datepicker_point")= tr['date'] + ':'
 										input#datepicker_point( name="date" type="text" )
-										input( name="discipline" hidden value=profile.discipline )
+										input.new_activity_discipline( name="discipline" hidden value=profile.discipline )
 								//submit
 								div#submit_buttons.row.submit_buttons
 									input.btn_green(type="submit" name="new_competition" value=tr['save'])
@@ -259,9 +259,7 @@ block content
 		var picker_time = new Pikaday({field: document.getElementById('datepicker_time'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date('2020-12-31'), yearRange: [2000,2020]})
 
 		var picker_distance = new Pikaday({field: document.getElementById('datepicker_distance'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date('2020-12-31'), yearRange: [2000,2020]})
-		picker_distance.toString('YYYY-MM-DD')
 
 		var picker_point = new Pikaday({field: document.getElementById('datepicker_point'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date('2020-12-31'), yearRange: [2000,2020]})
 	script.
-
 		profileHandlers();

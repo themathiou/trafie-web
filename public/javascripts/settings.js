@@ -13,8 +13,10 @@ function closeOthers() {
 	cancelEditField('birthday_existed', 'birthday', 'settingsAgebuttons', 'editAge');
 	cancelEditField('main_discipline_existed', 'main_discipline_input', 'settingsMainDisciplineButtons', 'editMainDiscipline');
 	cancelEditField('language_existed', 'language_input', 'settingsLanguageButtons', 'editLanguage');
+	cancelEditField('date_format_existed', 'date_format_input', 'settingsDateFormatButtons', 'editDateFormat');
 	cancelEditField('country_existed', 'country_input', 'settingsCountryButtons', 'editCountry');
 	cancelEditField('about_existed', 'about_me', 'settingsAboutMeButtons', 'editAboutMe');
+
 
 }
 
@@ -86,6 +88,15 @@ function settingsHandlers() {
 	}
 	document.getElementById("cancelEditLanguage").onclick = function() {
 		cancelEditField('language_existed', 'language_input', 'settingsLanguageButtons', 'editLanguage');
+	}
+
+	/* date format */
+	document.getElementById("editDateFormat").onclick = function() {
+		closeOthers();
+		editField('date_format_existed', 'date_format_input', 'settingsDateFormatButtons', 'editDateFormat');
+	}
+	document.getElementById("cancelEditDateFormat").onclick = function() {
+		cancelEditField('date_format_existed', 'date_format_input', 'settingsDateFormatButtons', 'editDateFormat');
 	}
 
 	/* country */
