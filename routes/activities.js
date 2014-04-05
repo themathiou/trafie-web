@@ -109,8 +109,6 @@ exports.post = function( req, res ) {
       // If there is a valid performance value
       if( performance !== null ) {
 
-        console.log( date );
-
         // Create the record that will be inserted in the db
         var new_activity = {
           'user_id'     : user_id,
@@ -255,7 +253,7 @@ exports.delete = function( req, res ) {
     }
     res.json( null );
   });
-}
+};
 
 function return_activity( res, status_code, activity_id, language, date_format ) {
   if( !activity_id) {
@@ -270,10 +268,9 @@ function return_activity( res, status_code, activity_id, language, date_format )
       'discipline'            : activity.discipline,
       'performance'           : activity.performance,
       'date'                  : activity.date
-    }
+    };
 
     activity = Activity.schema.formatActivity( activity, language, date_format );
-console.log(activity);
     res.json( activity );
   });
 }
@@ -286,12 +283,11 @@ function return_activities( res, status_code, where, language, date_format ) {
         'discipline'            : activities[i].discipline,
         'performance'           : activities[i].performance,
         'date'                  : activities[i].date
-      }
+      };
     }
     activities = Activity.schema.formatActivities( activities, language, date_format );
 
     res.statusCode = status_code;
-console.log(activities);
     res.json( activities );
   });
 }
