@@ -280,7 +280,7 @@ function profileHandlers() {
 							new_activity.children[2].children[1].innerHTML = res.formatted_performance;
 							new_activity.children[2].children[2].innerHTML = res.formatted_discipline;
 							new_activity.children[2].children[3].innerHTML = res.formatted_date;
-							new_activity.children[2].children[3].onclick = edit_handler;
+							new_activity.children[2].children[4].onclick = edit_handler;
 
 							var list = document.getElementById('history_line');
 
@@ -337,7 +337,7 @@ function profileHandlers() {
 							new_activity.children[2].children[1].innerHTML = res.formatted_performance;
 							new_activity.children[2].children[2].innerHTML = res.formatted_discipline;
 							new_activity.children[2].children[3].innerHTML = res.formatted_date;
-							new_activity.children[2].children[3].onclick = edit_handler;
+							new_activity.children[2].children[4].onclick = edit_handler;
 
 							var list = document.getElementById('history_line');
 
@@ -391,7 +391,7 @@ function profileHandlers() {
 							new_activity.children[2].children[1].innerHTML = res.formatted_performance;
 							new_activity.children[2].children[2].innerHTML = res.formatted_discipline;
 							new_activity.children[2].children[3].innerHTML = res.formatted_date;
-							new_activity.children[2].children[3].onclick = edit_handler;
+							new_activity.children[2].children[4].onclick = edit_handler;
 
 							var list = document.getElementById('history_line');
 
