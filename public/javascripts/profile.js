@@ -279,7 +279,7 @@ function profileHandlers() {
 							new_activity.children[2].children[0].onclick = delete_handler;
 							new_activity.children[2].children[1].innerHTML = res.formatted_performance;
 							new_activity.children[2].children[2].innerHTML = res.formatted_discipline;
-							new_activity.children[2].children[3].innerHTML = res.date.toString().split(' GMT')[0];
+							new_activity.children[2].children[3].innerHTML = res.formatted_date;
 							new_activity.children[2].children[3].onclick = edit_handler;
 
 							var list = document.getElementById('history_line');
@@ -336,7 +336,7 @@ function profileHandlers() {
 							new_activity.children[2].children[0].onclick = delete_handler;
 							new_activity.children[2].children[1].innerHTML = res.formatted_performance;
 							new_activity.children[2].children[2].innerHTML = res.formatted_discipline;
-							new_activity.children[2].children[3].innerHTML = res.date.toString().split(' GMT')[0];
+							new_activity.children[2].children[3].innerHTML = res.formatted_date;
 							new_activity.children[2].children[3].onclick = edit_handler;
 
 							var list = document.getElementById('history_line');
@@ -390,7 +390,7 @@ function profileHandlers() {
 							new_activity.children[2].children[0].onclick = delete_handler;
 							new_activity.children[2].children[1].innerHTML = res.formatted_performance;
 							new_activity.children[2].children[2].innerHTML = res.formatted_discipline;
-							new_activity.children[2].children[3].innerHTML = res.date.toString().split(' GMT')[0];
+							new_activity.children[2].children[3].innerHTML = res.formatted_date;
 							new_activity.children[2].children[3].onclick = edit_handler;
 
 							var list = document.getElementById('history_line');
@@ -472,7 +472,7 @@ function profileHandlers() {
 				new_activity.children[2].children[0].onclick = delete_handler;
 				new_activity.children[2].children[1].innerHTML = res.formatted_performance;
 				new_activity.children[2].children[2].innerHTML = res.formatted_discipline;
-				new_activity.children[2].children[3].innerHTML = res.date.toString().split(' GMT')[0];
+				new_activity.children[2].children[3].innerHTML = res.formatted_date;
 				new_activity.children[2].children[3].onclick = edit_handler;
 
 				var list = document.getElementById('history_line');
@@ -507,7 +507,7 @@ function profileHandlers() {
 				new_activity.children[2].children[0].onclick = delete_handler;
 				new_activity.children[2].children[1].innerHTML = res.formatted_performance;
 				new_activity.children[2].children[2].innerHTML = res.formatted_discipline;
-				new_activity.children[2].children[3].innerHTML = res.date.toString().split(' GMT')[0];
+				new_activity.children[2].children[3].innerHTML = res.formatted_date;
 				new_activity.children[2].children[3].onclick = edit_handler;
 
 				var list = document.getElementById('history_line');
@@ -542,7 +542,7 @@ function profileHandlers() {
 				new_activity.children[2].children[0].onclick = delete_handler;
 				new_activity.children[2].children[1].innerHTML = res.formatted_performance;
 				new_activity.children[2].children[2].innerHTML = res.formatted_discipline;
-				new_activity.children[2].children[3].innerHTML = res.date.toString().split(' GMT')[0];
+				new_activity.children[2].children[3].innerHTML = res.formatted_date;
 				new_activity.children[2].children[3].onclick = edit_handler;
 
 				var list = document.getElementById('history_line');
