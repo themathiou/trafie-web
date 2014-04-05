@@ -519,7 +519,7 @@ function profileHandlers() {
 		});
 	}
 
-	document.getElementById("add_point_activity_form").onsubmit = function (e) {
+	document.getElementById("add_points_activity_form").onsubmit = function (e) {
 		var evt = e ? e : window.event;
 		if (evt.preventDefault) evt.preventDefault();
 
