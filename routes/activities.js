@@ -48,8 +48,12 @@ exports.post = function( req, res ) {
     .then( function( profile_data ) {
       // If the profile doesn't exist, redirect
       if( typeof profile_data.first_name === 'undefined' ) return_activity( res, 404, '', 'en' );
+
       var discipline = typeof req.body.discipline !== 'undefined' ? req.body.discipline : '';
-      //var date = typeof req.body.date !== 'undefined' ? req.body.date : Date.now;
+      var date = typeof req.body.date !== 'undefined' && req.body.date ? req.body.date : new Date();
+
+      console.log( req.body.date );
+
       var performance = {};
       
       switch ( discipline ) {
@@ -114,8 +118,8 @@ exports.post = function( req, res ) {
         var new_activity = {
           'user_id'     : user_id,
           'discipline'  : discipline,
-          'performance' : performance//,
-          //'date'        : date
+          'performance' : performance,
+          'date'        : date
         };
 
         var activity = new Activity( new_activity );
