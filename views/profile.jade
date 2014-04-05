@@ -52,7 +52,7 @@ block content
 									div.row
 										label(for="datepicker_time")= tr['date'] + ':'
 										input#datepicker_time( name="date" type="text" )
-										input( name="discipline" hidden )= profile.discipline
+										input( name="discipline" hidden value=profile.discipline )
 								//submit
 								div#submit_buttons.row.submit_buttons
 									input.btn_green(type="submit" name="new_competition" value=tr['save'])
@@ -76,7 +76,7 @@ block content
 									div.row
 										label(for="datepicker_time")= tr['date'] + ':'
 										input#datepicker_time( name="date" type="text" )
-										input( name="discipline" hidden )= profile.discipline
+										input( name="discipline" hidden value=profile.discipline )
 								//submit
 								div#submit_buttons.row.submit_buttons
 									input.btn_green(type="submit" name="new_competition" value=tr['save'])
@@ -96,7 +96,7 @@ block content
 									div.row
 										label(for="datepicker_distance")= tr['date'] + ':'
 										input#datepicker_distance( name="date" type="text" )
-										input( name="discipline" hidden )= profile.discipline
+										input( name="discipline" hidden value=profile.discipline )
 								//submit
 								div#submit_buttons.row.submit_buttons
 									input.btn_green(type="submit" name="new_competition" value=tr['save'])
@@ -114,7 +114,7 @@ block content
 									div.row
 										label(for="datepicker_distance")= tr['date'] + ':'
 										input#datepicker_distance( name="date" type="text" )
-										input( name="discipline" hidden )= profile.discipline
+										input( name="discipline" hidden value=profile.discipline )
 								//submit
 								div#submit_buttons.row.submit_buttons
 									input.btn_green(type="submit" name="new_competition" value=tr['save'])
@@ -130,7 +130,7 @@ block content
 									div.row
 										label(for="datepicker_point")= tr['date'] + ':'
 										input#datepicker_point( name="date" type="text" )
-										input( name="discipline" hidden )= profile.discipline
+										input( name="discipline" hidden value=profile.discipline )
 								//submit
 								div#submit_buttons.row.submit_buttons
 									input.btn_green(type="submit" name="new_competition" value=tr['save'])
@@ -144,7 +144,7 @@ block content
 									div.row
 										label(for="datepicker_point")= tr['date'] + ':'
 										input#datepicker_point( name="date" type="text" )
-										input( name="discipline" hidden )= profile.discipline
+										input( name="discipline" hidden value=profile.discipline )
 								//submit
 								div#submit_buttons.row.submit_buttons
 									input.btn_green(type="submit" name="new_competition" value=tr['save'])
