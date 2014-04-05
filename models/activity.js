@@ -82,10 +82,10 @@ activitySchema.delete = function( where ) {
  * Converts the activity data to a more readable format
  * @param array activities
  */
-activitySchema.formatActivities = function( activities, language ) {
+activitySchema.formatActivities = function( activities, language, date_format ) {
 	var activities_count = activities.length;
 	for( var i=0 ; i<activities_count ; i++ ) {
-		activities[i] = activitySchema.formatActivity( activities[i], language );
+		activities[i] = activitySchema.formatActivity( activities[i], language, date_format );
 	}
 	return activities;
 };
@@ -95,7 +95,7 @@ activitySchema.formatActivities = function( activities, language ) {
  * Converts the activity data to a more readable format
  * @param object activity
  */
-activitySchema.formatActivity = function( activity, language ) {
+activitySchema.formatActivity = function( activity, language, date_format ) {
 	switch ( activity.discipline ) {
       case '100m':
       case '200m':
@@ -148,6 +148,17 @@ activitySchema.formatActivity = function( activity, language ) {
 	}
 
 	activity.formatted_discipline = translations[language][activity.discipline];
+
+	// Adjusting the time to the user's timezone
+	activity.date.setHours( activity.date.getHours() + 3 );
+	switch( date_format ) {
+		case 'd-m-y':
+			activity.formatted_date = activity.date.getDate() + '-' + ( activity.date.getMonth() + 1 ) + '-' + activity.date.getFullYear();
+			break;
+		case 'm-d-y':
+			activity.formatted_date = ( activity.date.getMonth() + 1 ) + '-' + activity.date.getDate() + '-' + activity.date.getFullYear();
+			break;
+	}
 
 	return activity;
 }
