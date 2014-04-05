@@ -95,7 +95,7 @@ activitySchema.formatActivities = function( activities, language ) {
  * Converts the activity data to a more readable format
  * @param object activity
  */
-activitySchema.formatActivity = function( activity, language ) {
+activitySchema.formatActivity = function( activity, language, date_format ) {
 	switch ( activity.discipline ) {
       case '100m':
       case '200m':

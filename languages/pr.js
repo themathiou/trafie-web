@@ -84,6 +84,9 @@ var pr = {
     'old_password'                                  : 'Old Password',
     'new_password'                                  : 'New Password',
     'repeat_password'                               : 'Repeat Password',
+    'date_format'                                   : 'Date Format',
+    'd-m-y'                                         : 'Day-Month-Year',
+    'm-d-y'                                         : 'Month-Day-Year',
 
     // Countries
     'AF': 'Afghanistan',

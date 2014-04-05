@@ -109,6 +109,14 @@ exports.post = function( req, res ) {
       }
     }
 
+    if( typeof req.body.date_format !== 'undefined' ) {
+      if( !Profile.schema.validateDateFormat( req.body.date_format ) ) {
+        errors = true;
+      } else {
+        profile_data.date_format = req.body.date_format;
+      }
+    }
+
     if( typeof req.files !== 'undefined' && typeof req.files.profile_pic !== 'undefined' ) {
       // Read the image file
       fs.readFile( req.files.profile_pic.path, function ( err, data ) {
@@ -172,7 +180,7 @@ exports.post = function( req, res ) {
 
 
 function render( res, user_id, errors ) {
-  Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline about male country birthday picture language')
+  Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline about male country birthday picture language date_format')
   .then( function( response ) {
     if( typeof response.first_name === 'undefined' ) redirect('/register');
     // Format the data that will go to the front end
@@ -208,7 +216,8 @@ function render( res, user_id, errors ) {
         'country'     : response.country,
         'birthday'    : birthday,
         'picture'     : picture,
-        'language'    : response.language
+        'language'    : response.language,
+        'date_format' : response.date_format
       },
       'errors'      : errors,
       'disciplines' : disciplines,

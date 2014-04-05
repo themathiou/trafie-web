@@ -84,6 +84,9 @@ var el = {
     'old_password'                                  : 'Παλιός Κωδικός',
     'new_password'                                  : 'Καινούριος Κωδικός',
     'repeat_password'                               : 'Επανέλαβε τον Κωδικό',
+    'date_format'                                   : 'Μορφή Ημερομηνίας',
+    'd-m-y'                                         : 'Ημέρα-Μήνας-Έτος',
+    'm-d-y'                                         : 'Μήνας-Ημέρα-Έτος',
 
     // Countries
     'AF': 'Afghanistan',

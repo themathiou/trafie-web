@@ -17,6 +17,7 @@ var profileSchema = mongoose.Schema({
   about 		: { type: String, required: false, default: '' },
   country 		: { type: String, required: false, default: '' },
   picture 		: { type: String, required: false, default: '' },
+  date_format 	: { type: String, required: true, default: 'd-m-y' },
   language 		: { type: String, required: true, default: 'en' }
 });
 
@@ -108,6 +109,10 @@ profileSchema.validateDiscipline = function( discipline ) {
 
 profileSchema.validateAbout = function( about ) {
 	return about.length <= 400;
+}
+
+profileSchema.validateDateFormat = function( date_format ) {
+	return date_format == 'd-m-y' || date_format == 'm-d-y';
 }
 
 var Profile = mongoose.model('Profile', profileSchema);

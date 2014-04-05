@@ -15,18 +15,18 @@ exports.get = function( req, res ){
   var user_id = req.session.user_id;
 
   if( !user_id || ( user_id !== req.params.user_id ) ) {
-	  return_activity( res, 403, '', 'en' );
+	  return_activity( res, 403, '', 'en', 'd-m-y' );
   } else {
     // Find the profile
-    Profile.schema.findOne({ '_id': user_id }, 'language')
+    Profile.schema.findOne({ '_id': user_id }, 'language date_format')
     .then( function( profile_data ) {
       // If the profile doesn't exist, return an empty json
-      if( typeof profile_data.language === 'undefined' ) return_activity( res, 404, '', 'en' );
+      if( typeof profile_data.language === 'undefined' ) return_activity( res, 404, '', 'en', 'd-m-y' );
 
       if( typeof req.params.activity_id !== 'undefined' ) {
-        return_activity( res, 200, req.params.activity_id, profile_data.language );
+        return_activity( res, 200, req.params.activity_id, profile_data.language, profile_data.date_format );
       } else {
-        return_activities( res, 200, { 'user_id': user_id }, profile_data.language );
+        return_activities( res, 200, { 'user_id': user_id }, profile_data.language, profile_data.date_format );
       }
     });
   }
@@ -41,13 +41,13 @@ exports.post = function( req, res ) {
   var user_id = req.session.user_id;
   // If there is no user id, redirect to login
   if( !user_id || ( user_id !== req.params.user_id ) ) {
-    return_activity( res, 403, '', 'en' );
+    return_activity( res, 403, '', 'en', 'd-m-y' );
   } else {
     // Find the profile
-    Profile.schema.findOne({ '_id': user_id }, 'first_name language')
+    Profile.schema.findOne({ '_id': user_id }, 'language date_format')
     .then( function( profile_data ) {
       // If the profile doesn't exist, redirect
-      if( typeof profile_data.first_name === 'undefined' ) return_activity( res, 404, '', 'en' );
+      if( typeof profile_data.language === 'undefined' ) return_activity( res, 404, '', 'en', 'd-m-y' );
 
       var discipline = typeof req.body.discipline !== 'undefined' ? req.body.discipline : '';
       var date = typeof req.body.date !== 'undefined' && req.body.date ? Activity.schema.parseDate( req.body.date ) : new Date();
@@ -122,10 +122,10 @@ exports.post = function( req, res ) {
         var activity = new Activity( new_activity );
         // Save the activity
         activity.save(function ( err, activity ) {
-          return_activity( res, 201, activity._id, profile_data.language );
+          return_activity( res, 201, activity._id, profile_data.language, profile_data.date_format );
         });
       } else {
-        return_activity( res, 400, '', profile_data.language );
+        return_activity( res, 400, '', profile_data.language, profile_data.date_format );
       }
     });
   }
@@ -141,24 +141,26 @@ exports.put = function( req, res ) {
   var activity_id = req.params.activity_id;
 
   var language = '';
+  var date_format = '';
 
   // If there is no user id, redirect to login
   if( !user_id || !activity_id || ( user_id !== req.params.user_id ) ) {
     return_activity( res, 403, '', 'en' );
   } else {
     // Find the profile
-    Profile.schema.findOne({ '_id': user_id }, 'language')
+    Profile.schema.findOne({ '_id': user_id }, 'language date_format')
     .then( function( profile_data ) {
       // If the profile doesn't exist, redirect
-      if( typeof profile_data.language === 'undefined' ) return_activity( res, 404, '', 'en' );
+      if( typeof profile_data.language === 'undefined' ) return_activity( res, 404, '', 'en', 'd-m-y' );
 
       language = profile_data.language;
+      date_format = profile_data.date_format;
 
       return Activity.schema.findOne( {'_id': activity_id}, '' );
     })
     .then( function( activity ) {
 
-      if( typeof activity._id == 'undefined' ) return_activity( res, 404, '', language );
+      if( typeof activity._id == 'undefined' ) return_activity( res, 404, '', language, date_format );
 
       var discipline = activity.discipline;
       var performance = {};
@@ -224,10 +226,10 @@ exports.put = function( req, res ) {
         };
 
         Activity.findByIdAndUpdate( activity_id, activity, '', function ( err, activity ) {
-          return_activity( res, 200, activity._id, language );
+          return_activity( res, 200, activity._id, language, date_format );
         });
       } else {
-        return_activity( res, 400, '', language );
+        return_activity( res, 400, '', language, date_format );
       }
     });
   }
@@ -255,7 +257,7 @@ exports.delete = function( req, res ) {
   });
 }
 
-function return_activity( res, status_code, activity_id, language ) {
+function return_activity( res, status_code, activity_id, language, date_format ) {
   if( !activity_id) {
     res.statusCode = 400;
     res.json( null );
@@ -270,13 +272,13 @@ function return_activity( res, status_code, activity_id, language ) {
       'date'                  : activity.date
     }
 
-    activity = Activity.schema.formatActivity( activity, language );
+    activity = Activity.schema.formatActivity( activity, language, date_format );
 
     res.json( activity );
   });
 }
 
-function return_activities( res, status_code, where, language ) {
+function return_activities( res, status_code, where, language, date_format ) {
   Activity.schema.getActivitiesOfUser( where, '', -1 ).then( function( activities ) {
     for( var i in activities ) {
       activities[i] = {
@@ -286,7 +288,7 @@ function return_activities( res, status_code, where, language ) {
         'date'                  : activities[i].date
       }
     }
-    activities = Activity.schema.formatActivities( activities, language );
+    activities = Activity.schema.formatActivities( activities, language, date_format );
 
     res.statusCode = status_code;
 
