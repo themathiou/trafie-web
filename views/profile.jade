@@ -21,20 +21,21 @@ block content
 					div.icon +
 					div#slider( class="info add_activity" )
 						a#add_activity_link( href="javascript:;" )= tr['add_new_activity']
-						form#add_activity_form( method="POST" action="/user/"+profile._id+"/activities")
-							select#discipline_input( name="discipline" )
-								- for( var category in disciplines ) {
-									-for( var i in disciplines[category]) {
-										if profile.discipline == disciplines[category][i]
-											option( value=disciplines[category][i] selected)= tr[disciplines[category][i]]
-										else
-											option( value=disciplines[category][i] )= tr[disciplines[category][i]]
-									-}
-								- }
+
+						select#discipline_input( name="discipline" )
+							- for( var category in disciplines ) {
+								-for( var i in disciplines[category]) {
+									if profile.discipline == disciplines[category][i]
+										option( value=disciplines[category][i] selected)= tr[disciplines[category][i]]
+									else
+										option( value=disciplines[category][i] )= tr[disciplines[category][i]]
+								-}
+							- }
 
 							//time measure
-							if disciplines.time.indexOf(profile.discipline) > -1
-								div#time_activity.data_entry.row= tr['enter_your_performance'] +':'
+						if disciplines.time.indexOf(profile.discipline) > -1
+							form#add_time_activity_form( method="POST" action="/user/"+profile._id+"/activities")
+								div.data_entry.row= tr['enter_your_performance'] +':'
 									br
 									div
 										label(for="hours_input")= tr['hours_short'] + ':'
@@ -51,8 +52,13 @@ block content
 									div.row
 										label(for="datepicker_time")= tr['date'] + ':'
 										input#datepicker_time( name="date" type="text" )
-							else
-								div#time_activity.data_entry.row( style="display:none;" )= tr['enter_your_performance'] +':'
+								//submit
+								div#submit_buttons.row.submit_buttons
+									input.btn_green(type="submit" name="new_competition" value=tr['save'])
+									a#cancel_activity_link.cancel_link( href="javascript:;")= tr['cancel']
+						else
+							form#add_time_activity_form( method="POST" style="display:none;" action="/user/"+profile._id+"/activities")
+								div.data_entry.row= tr['enter_your_performance'] +':'
 									br
 									div
 										label(for="hours_input")= tr['hours_short'] + ':'
@@ -69,10 +75,15 @@ block content
 									div.row
 										label(for="datepicker_time")= tr['date'] + ':'
 										input#datepicker_time( name="date" type="text" )
+								//submit
+								div#submit_buttons.row.submit_buttons
+									input.btn_green(type="submit" name="new_competition" value=tr['save'])
+									a#cancel_activity_link.cancel_link( href="javascript:;")= tr['cancel']
 
 							//distance measure
-							if disciplines.distance.indexOf(profile.discipline) > -1
-								div#distance_activity.data_entry.row= tr['enter_your_performance'] +':'
+						if disciplines.distance.indexOf(profile.discipline) > -1
+							form#add_distance_activity_form( method="POST" action="/user/"+profile._id+"/activities")
+								div.data_entry.row= tr['enter_your_performance'] +':'
 									br
 									div
 										label(for="distance_1_input")= tr['meters_short'] + ':'
@@ -83,8 +94,13 @@ block content
 									div.row
 										label(for="datepicker_distance")= tr['date'] + ':'
 										input#datepicker_distance( name="date" type="text" )
-							else
-								div#distance_activity.data_entry.row( style="display:none;" )= tr['enter_your_performance'] +':'
+								//submit
+								div#submit_buttons.row.submit_buttons
+									input.btn_green(type="submit" name="new_competition" value=tr['save'])
+									a#cancel_activity_link.cancel_link( href="javascript:;")= tr['cancel']
+						else
+							form#add_distance_activity_form( method="POST" style="display:none;" action="/user/"+profile._id+"/activities")
+								div.data_entry.row= tr['enter_your_performance'] +':'
 									br
 									div
 										label(for="distance_1_input")= tr['meters_short'] + ':'
@@ -95,29 +111,39 @@ block content
 									div.row
 										label(for="datepicker_distance")= tr['date'] + ':'
 										input#datepicker_distance( name="date" type="text" )
+								//submit
+								div#submit_buttons.row.submit_buttons
+									input.btn_green(type="submit" name="new_competition" value=tr['save'])
+									a#cancel_activity_link.cancel_link( href="javascript:;")= tr['cancel']
 
 							// points measure
-							if disciplines.points.indexOf(profile.discipline) > -1
-								div#point_activity.data_entry.row= tr['enter_your_performance'] +':'
+						if disciplines.points.indexOf(profile.discipline) > -1
+							form#add_points_activity_form( method="POST" action="/user/"+profile._id+"/activities")
+								div.data_entry.row= tr['enter_your_performance'] +':'
 									br
 									label(for="points_input")= tr['points'] + ':'
 									input#points_input(type="text" name="points" size="7" maxlength="5")
 									div.row
 										label(for="datepicker_point")= tr['date'] + ':'
 										input#datepicker_point( name="date" type="text" )
-							else
-								div#point_activity.data_entry.row( style="display:none;" )= tr['enter_your_performance'] +':'
+								//submit
+								div#submit_buttons.row.submit_buttons
+									input.btn_green(type="submit" name="new_competition" value=tr['save'])
+									a#cancel_activity_link.cancel_link( href="javascript:;")= tr['cancel']
+						else
+							form#add_points_activity_form( method="POST" style="display:none;" action="/user/"+profile._id+"/activities")
+								div.data_entry.row= tr['enter_your_performance'] +':'
 									br
 									label(for="points_input")= tr['points'] + ':'
 									input#points_input(type="text" name="points" size="7" maxlength="5")
 									div.row
 										label(for="datepicker_point")= tr['date'] + ':'
 										input#datepicker_point( name="date" type="text" )
+								//submit
+								div#submit_buttons.row.submit_buttons
+									input.btn_green(type="submit" name="new_competition" value=tr['save'])
+									a#cancel_activity_link.cancel_link( href="javascript:;")= tr['cancel']
 
-							//submit
-							div#submit_buttons.row.submit_buttons
-								input.btn_green(type="submit" name="new_competition" value=tr['save'])
-								a#cancel_activity_link.cancel_link( href="javascript:;")= tr['cancel']
 							//div.row
 								input.btn_neutral_gray(type="submit" name="new_competition" value="Submit")
 							//div.row
@@ -227,6 +253,7 @@ block content
 		var picker_time = new Pikaday({field: document.getElementById('datepicker_time'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date('2020-12-31'), yearRange: [2000,2020]})
 
 		var picker_distance = new Pikaday({field: document.getElementById('datepicker_distance'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date('2020-12-31'), yearRange: [2000,2020]})
+		picker_distance.toString('YYYY-MM-DD')
 
 		var picker_point = new Pikaday({field: document.getElementById('datepicker_point'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date('2020-12-31'), yearRange: [2000,2020]})
 	script.
