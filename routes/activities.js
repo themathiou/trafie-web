@@ -273,7 +273,7 @@ function return_activity( res, status_code, activity_id, language, date_format )
     }
 
     activity = Activity.schema.formatActivity( activity, language, date_format );
-
+console.log(activity);
     res.json( activity );
   });
 }
@@ -291,7 +291,7 @@ function return_activities( res, status_code, where, language, date_format ) {
     activities = Activity.schema.formatActivities( activities, language, date_format );
 
     res.statusCode = status_code;
-
+console.log(activities);
     res.json( activities );
   });
 }
