@@ -236,14 +236,14 @@ function profileHandlers() {
 			//distance disciplines
 			if( disciplines.distance.indexOf(this_discipline) > -1 ) {
 
-				//date picker for editable field
-				var picker_point = new Pikaday({field: document.getElementById('edit_datepicker'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date('2020-12-31'), yearRange: [2000,2020]});
-
-
 				var p = document.getElementById("editDistanceActivityTemplate");
 				var edit_activity = p.cloneNode(true);
 				edit_activity.querySelector('#edit_activity_form').setAttribute('action', edit_activity.querySelector('#edit_activity_form').getAttribute('action') + parent.getAttribute('data-activity-id').replace(/\"/g, '') );
 				edit_activity.style.display = 'block' ;
+
+				//date picker for editable field
+				var date_picker = new Pikaday({field: edit_activity.querySelector('#edit_datepicker'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date('2020-12-31'), yearRange: [2000,2020]});
+
 				this.parentNode.appendChild(edit_activity);
 
 				var temp_m = parseInt(this_performance/10000);
@@ -253,7 +253,7 @@ function profileHandlers() {
 				edit_activity.querySelector('#distance_2_input').value = temp_cm;
 
 				edit_activity.querySelector('.cancel_edit_activity').onclick = function() {
-					this.parentNode.style.border = '1px solid white';
+					edit_activity.parentNode.style.border = '1px solid white';
 					var grandparent = this.parentNode.parentNode;
 					grandparent.parentNode.removeChild(grandparent);
 					edit_activity.style.display = 'none' ;
@@ -302,6 +302,11 @@ function profileHandlers() {
 				var edit_activity = p.cloneNode(true);
 				edit_activity.querySelector('#edit_activity_form').setAttribute('action', edit_activity.querySelector('#edit_activity_form').getAttribute('action') + parent.getAttribute('data-activity-id').replace(/\"/g, '') );
 				edit_activity.style.display = 'block' ;
+
+				//date picker for editable field
+				var date_picker = new Pikaday({field: edit_activity.querySelector('#edit_datepicker'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date('2020-12-31'), yearRange: [2000,2020]});
+
+
 				this.parentNode.appendChild(edit_activity);
 
 				edit_activity.querySelector('#hours_input').value = this_performance.split(':')[0];
@@ -310,7 +315,7 @@ function profileHandlers() {
 				edit_activity.querySelector('#centiseconds_input').value = this_performance.split(':')[2].split('.')[1];
 
 				edit_activity.querySelector('.cancel_edit_activity').onclick = function() {
-					this.parentNode.style.border = '1px solid white';
+					edit_activity.parentNode.style.border = '1px solid white';
 					var grandparent = this.parentNode.parentNode;
 					grandparent.parentNode.removeChild(grandparent);
 					edit_activity.style.display = 'none' ;
@@ -359,12 +364,16 @@ function profileHandlers() {
 				var edit_activity = p.cloneNode(true);
 				edit_activity.querySelector('#edit_activity_form').setAttribute('action', edit_activity.querySelector('#edit_activity_form').getAttribute('action') + parent.getAttribute('data-activity-id').replace(/\"/g, '') );
 				edit_activity.style.display = 'block' ;
+
+				//date picker for editable field
+				var date_picker = new Pikaday({field: edit_activity.querySelector('#edit_datepicker'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date('2020-12-31'), yearRange: [2000,2020]});
+
 				this.parentNode.appendChild(edit_activity);
 
 				edit_activity.querySelector('#points_input').value = this_performance;
 
 				edit_activity.querySelector('.cancel_edit_activity').onclick = function() {
-					this.parentNode.style.border = '1px solid white';
+					edit_activity.parentNode.style.border = '1px solid white';
 					var grandparent = this.parentNode.parentNode;
 					grandparent.parentNode.removeChild(grandparent);
 					edit_activity.style.display = 'none' ;
@@ -473,7 +482,7 @@ function profileHandlers() {
 				new_activity.children[2].children[1].innerHTML = res.formatted_performance;
 				new_activity.children[2].children[2].innerHTML = res.formatted_discipline;
 				new_activity.children[2].children[3].innerHTML = res.formatted_date;
-				new_activity.children[2].children[3].onclick = edit_handler;
+				new_activity.children[2].children[4].onclick = edit_handler;
 
 				var list = document.getElementById('history_line');
 
@@ -508,7 +517,7 @@ function profileHandlers() {
 				new_activity.children[2].children[1].innerHTML = res.formatted_performance;
 				new_activity.children[2].children[2].innerHTML = res.formatted_discipline;
 				new_activity.children[2].children[3].innerHTML = res.formatted_date;
-				new_activity.children[2].children[3].onclick = edit_handler;
+				new_activity.children[2].children[4].onclick = edit_handler;
 
 				var list = document.getElementById('history_line');
 
@@ -543,7 +552,7 @@ function profileHandlers() {
 				new_activity.children[2].children[1].innerHTML = res.formatted_performance;
 				new_activity.children[2].children[2].innerHTML = res.formatted_discipline;
 				new_activity.children[2].children[3].innerHTML = res.formatted_date;
-				new_activity.children[2].children[3].onclick = edit_handler;
+				new_activity.children[2].children[4].onclick = edit_handler;
 
 				var list = document.getElementById('history_line');
 
