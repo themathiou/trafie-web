@@ -161,7 +161,7 @@ activitySchema.formatActivity = function( activity, language, date_format ) {
 	}
 
 	return activity;
-}
+};
 
 
 /**
@@ -284,7 +284,7 @@ activitySchema.parseDate = function( date ) {
 		var parsed_date = new Date( date[3], months.indexOf( date[1] ), date[2] );
 		return parsed_date < current_date ? parsed_date : current_date;
 	}
-}
+};
 
 var Activity = mongoose.model( 'Activity', activitySchema );
 
