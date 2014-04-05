@@ -261,6 +261,20 @@ activitySchema.validatePoints = function( performance ) {
 	return points;
 };
 
+activitySchema.parseDate = function( date ) {
+	var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+	date = date.split(' ');
+	var current_date = new Date();
+
+	if( date.length != 4 || months.indexOf( date[1] ) < 0 || !parseInt(date[2]) || date[2] < 1 || date[2] > 31 || !parseInt(date[3]) || date[3] < 1900 || date[3] > current_date.getFullYear() ) {
+		return current_date;
+	} else {
+		var parsed_date = new Date( date[3], months.indexOf( date[1] ), date[2] );
+		return parsed_date < current_date ? parsed_date : current_date;
+	}
+}
+
 var Activity = mongoose.model( 'Activity', activitySchema );
 
 module.exports = Activity;
