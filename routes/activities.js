@@ -50,10 +50,7 @@ exports.post = function( req, res ) {
       if( typeof profile_data.first_name === 'undefined' ) return_activity( res, 404, '', 'en' );
 
       var discipline = typeof req.body.discipline !== 'undefined' ? req.body.discipline : '';
-      var date = typeof req.body.date !== 'undefined' && req.body.date ? req.body.date : new Date();
-
-      console.log( req.body.date );
-
+      var date = typeof req.body.date !== 'undefined' && req.body.date ? Activity.schema.parseDate( req.body.date ) : new Date();
       var performance = {};
       
       switch ( discipline ) {
@@ -112,7 +109,7 @@ exports.post = function( req, res ) {
       // If there is a valid performance value
       if( performance !== null ) {
 
-        //console.log( date );
+        console.log( date );
 
         // Create the record that will be inserted in the db
         var new_activity = {
