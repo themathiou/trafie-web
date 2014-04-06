@@ -164,10 +164,11 @@ block content
 					div.icon_back
 					div.icon ΧΧ
 					div.info( data-activity-id)
-						a.deleteActivity( href='/user/'+profile._id+'/activities/' ) &nbsp;
-						div.performance
-						div.discipline
-						div.date
+						div.current_data
+							a.deleteActivity( href='/user/'+profile._id+'/activities/' ) &nbsp;
+							div.performance
+							div.discipline
+							div.date
 						a.editActivity( href="javascript:;" ) &nbsp;
 
 				div#editDistanceActivityTemplate.row( style="display:none;" )= tr['enter_your_performance'] +':'

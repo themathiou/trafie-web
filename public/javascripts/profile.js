@@ -266,26 +266,17 @@ function profileHandlers() {
 
 					submit_form(this, function(response){
 						if(response!='null') {
-							var p = document.getElementById("newActivityTemplate");
-							var new_activity = p.cloneNode(true);
-
-							//make response object
 							var res = JSON.parse(response);
+							edit_activity.style.display = 'none' ;
+							edit_activity.parentNode.style.border = '1px solid white';
 
-							new_activity.style.display = 'block';
-							new_activity.removeAttribute('id');
-							new_activity.children[2].setAttribute('data-activity-id', res._id.replace(/\"/g, '') );
-							new_activity.children[2].children[0].setAttribute('href', new_activity.children[2].children[0].getAttribute('href') + res._id.replace(/\"/g, '') );
-							new_activity.children[2].children[0].onclick = delete_handler;
-							new_activity.children[2].children[1].innerHTML = res.formatted_performance;
-							new_activity.children[2].children[2].innerHTML = res.formatted_discipline;
-							new_activity.children[2].children[3].innerHTML = res.formatted_date;
-							new_activity.children[2].children[4].onclick = edit_handler;
+							existed_activity.style.display = 'block';
+							existed_activity.querySelector('.performance').innerHTML = res.formatted_performance;
+							existed_activity.querySelector('.discipline').innerHTML = res.formatted_discipline;
+							existed_activity.querySelector('.date').innerHTML = res.formatted_date;
 
-							var list = document.getElementById('history_line');
+							existed_activity.querySelector('.performance').setAttribute('data-value', res.performance);
 
-							list.insertBefore( new_activity, list.firstChild.nextSibling );
-							parent.parentNode.removeChild(parent);
 
 						} else {
 							alert('something went wrong. Please try again');
@@ -328,25 +319,16 @@ function profileHandlers() {
 
 					submit_form(this, function(response){
 						if(response!='null') {
-							var p = document.getElementById("newActivityTemplate");
-							var new_activity = p.cloneNode(true);
-
-							//make response object
 							var res = JSON.parse(response);
+							edit_activity.style.display = 'none' ;
+							edit_activity.parentNode.style.border = '1px solid white';
 
-							new_activity.style.display = 'block';
-							new_activity.removeAttribute('id');
-							new_activity.children[2].setAttribute('data-activity-id', res._id.replace(/\"/g, '') );
-							new_activity.children[2].children[0].setAttribute('href', new_activity.children[2].children[0].getAttribute('href') + res._id.replace(/\"/g, '') );
-							new_activity.children[2].children[0].onclick = delete_handler;
-							new_activity.children[2].children[1].innerHTML = res.formatted_performance;
-							new_activity.children[2].children[2].innerHTML = res.formatted_discipline;
-							new_activity.children[2].children[3].innerHTML = res.formatted_date;
-							new_activity.children[2].children[4].onclick = edit_handler;
+							existed_activity.style.display = 'block';
+							existed_activity.querySelector('.performance').innerHTML = res.formatted_performance;
+							existed_activity.querySelector('.discipline').innerHTML = res.formatted_discipline;
+							existed_activity.querySelector('.date').innerHTML = res.formatted_date;
 
-							var list = document.getElementById('history_line');
-
-							list.insertBefore( new_activity, list.firstChild.nextSibling );
+							existed_activity.querySelector('.performance').setAttribute('data-value', res.performance);
 
 
 						} else {
@@ -386,25 +368,16 @@ function profileHandlers() {
 
 					submit_form(this, function(response){
 						if(response!='null') {
-							var p = document.getElementById("newActivityTemplate");
-							var new_activity = p.cloneNode(true);
-
-							//make response object
 							var res = JSON.parse(response);
+							edit_activity.style.display = 'none' ;
+							edit_activity.parentNode.style.border = '1px solid white';
 
-							new_activity.style.display = 'block';
-							new_activity.removeAttribute('id');
-							new_activity.children[2].setAttribute('data-activity-id', res._id.replace(/\"/g, '') );
-							new_activity.children[2].children[0].setAttribute('href', new_activity.children[2].children[0].getAttribute('href') + res._id.replace(/\"/g, '') );
-							new_activity.children[2].children[0].onclick = delete_handler;
-							new_activity.children[2].children[1].innerHTML = res.formatted_performance;
-							new_activity.children[2].children[2].innerHTML = res.formatted_discipline;
-							new_activity.children[2].children[3].innerHTML = res.formatted_date;
-							new_activity.children[2].children[4].onclick = edit_handler;
+							existed_activity.style.display = 'block';
+							existed_activity.querySelector('.performance').innerHTML = res.formatted_performance;
+							existed_activity.querySelector('.discipline').innerHTML = res.formatted_discipline;
+							existed_activity.querySelector('.date').innerHTML = res.formatted_date;
 
-							var list = document.getElementById('history_line');
-
-							list.insertBefore( new_activity, list.firstChild.nextSibling );
+							existed_activity.querySelector('.performance').setAttribute('data-value', res.performance);
 
 
 						} else {
@@ -477,12 +450,12 @@ function profileHandlers() {
 				new_activity.style.display = 'block';
 				new_activity.removeAttribute('id');
 				new_activity.children[2].setAttribute('data-activity-id', res._id.replace(/\"/g, '') );
-				new_activity.children[2].children[0].setAttribute('href', new_activity.children[2].children[0].getAttribute('href') + res._id.replace(/\"/g, '') );
-				new_activity.children[2].children[0].onclick = delete_handler;
-				new_activity.children[2].children[1].innerHTML = res.formatted_performance;
-				new_activity.children[2].children[2].innerHTML = res.formatted_discipline;
-				new_activity.children[2].children[3].innerHTML = res.formatted_date;
-				new_activity.children[2].children[4].onclick = edit_handler;
+				new_activity.children[2].children[0].children[0].setAttribute('href', new_activity.children[2].children[0].children[0].getAttribute('href') + res._id.replace(/\"/g, '') );
+				new_activity.children[2].children[0].children[0].onclick = delete_handler;
+				new_activity.children[2].children[0].children[1].innerHTML = res.formatted_performance;
+				new_activity.children[2].children[0].children[2].innerHTML = res.formatted_discipline;
+				new_activity.children[2].children[0].children[3].innerHTML = res.formatted_date;
+				new_activity.children[2].children[1].onclick = edit_handler;
 
 				var list = document.getElementById('history_line');
 
@@ -512,12 +485,15 @@ function profileHandlers() {
 				new_activity.style.display = 'block';
 				new_activity.removeAttribute('id');
 				new_activity.children[2].setAttribute('data-activity-id', res._id.replace(/\"/g, '') );
-				new_activity.children[2].children[0].setAttribute('href', new_activity.children[2].children[0].getAttribute('href') + res._id.replace(/\"/g, '') );
-				new_activity.children[2].children[0].onclick = delete_handler;
-				new_activity.children[2].children[1].innerHTML = res.formatted_performance;
-				new_activity.children[2].children[2].innerHTML = res.formatted_discipline;
-				new_activity.children[2].children[3].innerHTML = res.formatted_date;
-				new_activity.children[2].children[4].onclick = edit_handler;
+				new_activity.children[2].children[0].children[0].setAttribute('href', new_activity.children[2].children[0].children[0].getAttribute('href') + res._id.replace(/\"/g, '') );
+				new_activity.children[2].children[0].children[0].onclick = delete_handler;
+				new_activity.children[2].children[0].children[1].innerHTML = res.formatted_performance;
+				new_activity.children[2].children[0].children[1].setAttribute('data-value', res.performance);
+				new_activity.children[2].children[0].children[2].innerHTML = res.formatted_discipline;
+				new_activity.children[2].children[0].children[2].setAttribute('data-value', res.discipline);
+				new_activity.children[2].children[0].children[3].innerHTML = res.formatted_date;
+				new_activity.children[2].children[0].children[3].setAttribute('data-value',res.date );
+				new_activity.children[2].children[1].onclick = edit_handler;
 
 				var list = document.getElementById('history_line');
 
@@ -547,12 +523,12 @@ function profileHandlers() {
 				new_activity.style.display = 'block';
 				new_activity.removeAttribute('id');
 				new_activity.children[2].setAttribute('data-activity-id', res._id.replace(/\"/g, '') );
-				new_activity.children[2].children[0].setAttribute('href', new_activity.children[2].children[0].getAttribute('href') + res._id.replace(/\"/g, '') );
-				new_activity.children[2].children[0].onclick = delete_handler;
-				new_activity.children[2].children[1].innerHTML = res.formatted_performance;
-				new_activity.children[2].children[2].innerHTML = res.formatted_discipline;
-				new_activity.children[2].children[3].innerHTML = res.formatted_date;
-				new_activity.children[2].children[4].onclick = edit_handler;
+				new_activity.children[2].children[0].children[0].setAttribute('href', new_activity.children[2].children[0].children[0].getAttribute('href') + res._id.replace(/\"/g, '') );
+				new_activity.children[2].children[0].children[0].onclick = delete_handler;
+				new_activity.children[2].children[0].children[1].innerHTML = res.formatted_performance;
+				new_activity.children[2].children[0].children[2].innerHTML = res.formatted_discipline;
+				new_activity.children[2].children[0].children[3].innerHTML = res.formatted_date;
+				new_activity.children[2].children[1].onclick = edit_handler;
 
 				var list = document.getElementById('history_line');
 
