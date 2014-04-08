@@ -27,8 +27,8 @@ exports.get = function( req, res ){
         return_activity( res, 200, req.params.activity_id, profile_data.language, profile_data.date_format );
       } else {
         var where = {};
-        if( discipline in req.params ) {
-          where.discipline = req.params.discipline;
+        if( typeof req.query.discipline !== 'undefined' ) {
+          where.discipline = req.query.discipline;
         }
         where.user_id = user_id;
         return_activities( res, 200, where, profile_data.language, profile_data.date_format );
