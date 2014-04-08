@@ -26,7 +26,12 @@ exports.get = function( req, res ){
       if( typeof req.params.activity_id !== 'undefined' ) {
         return_activity( res, 200, req.params.activity_id, profile_data.language, profile_data.date_format );
       } else {
-        return_activities( res, 200, { 'user_id': user_id }, profile_data.language, profile_data.date_format );
+        var where = {};
+        if( discipline in req.params ) {
+          where.discipline = req.params.discipline;
+        }
+        where.user_id = user_id;
+        return_activities( res, 200, where, profile_data.language, profile_data.date_format );
       }
     });
   }
