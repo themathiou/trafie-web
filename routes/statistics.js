@@ -32,15 +32,15 @@ exports.get = function( req, res ){
 };
 
 function render( res, user_id, profile_data ) {
-  Activity.schema.getActivitiesOfUser( { 'user_id': user_id }, null, -1 )
-  .then( function( activities ) {
-
+  Activity.schema.getDisciplinesPerformedByUser( { 'user_id': user_id } )
+  .then( function( disciplines_of_user ) {
     // The data that will go to the front end
     var view_data = {
       'profile': {
-        '_id'         : user_id,
-        'first_name'  : profile_data.first_name,
-        'discipline'  : profile_data.discipline
+        '_id'                   : user_id,
+        'first_name'            : profile_data.first_name,
+        'discipline'            : profile_data.discipline,
+        'disciplines_of_user'   : disciplines_of_user
       },
       'tr'          : translations[profile_data.language]
     };

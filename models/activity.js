@@ -63,6 +63,24 @@ activitySchema.getActivitiesOfUser = function( where, select, sort ) {
 
 
 /**
+* Find user by element
+* @param json where({email:someone@trafie.com})
+* @param String select
+* @param int sort (-1 == descending)
+*/
+activitySchema.getDisciplinesPerformedByUser = function( where ) {
+	var d = q.defer();
+	Activity.distinct( 'discipline', where, function ( err, activity ) {
+			if (err) handleError(err);
+			d.resolve(activity);
+		}
+	);
+
+	return d.promise;
+};
+
+
+/**
  * Delete an activity
  * @param object where
  */
