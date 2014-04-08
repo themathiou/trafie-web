@@ -19,7 +19,7 @@ exports.get = function( req, res ){
   if(!user_id) {
 	  res.redirect('/register');
   } else {
-    Profile.schema.findOne( { '_id': user_id }, 'first_name last_name discipline country male birthday picture language date_format' ).then( function( profile_data ) {
+    Profile.schema.findOne( { '_id': user_id }, 'first_name last_name discipline country male birthday picture language' ).then( function( profile_data ) {
       // If the user was found
       if( typeof profile_data.first_name !== 'undefined' ) {
         render( res, user_id, profile_data );
@@ -35,7 +35,7 @@ function render( res, user_id, profile_data ) {
   Activity.schema.getActivitiesOfUser( { 'user_id': user_id }, null, -1 )
   .then( function( activities ) {
     // Format the activity data
-    var activities = Activity.schema.formatActivities( activities, profile_data.language, profile_data.date_format );
+    var activities = Activity.schema.formatActivities( activities, profile_data.language );
     var disciplines = {
       'time': [
         '100m',
