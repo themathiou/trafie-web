@@ -120,6 +120,19 @@ function setSmall( year ) {
 /********************************************/
 /* 				REST CALLS 					*/
 /********************************************/
+function ajax_get(data, url, callback) {
+	var xhr = new XMLHttpRequest();
+	xhr.open('GET', url);
+
+	xhr.addEventListener('load', function (e) {
+	    callback( xhr.responseText );
+	}, false);
+
+	xhr.setRequestHeader('Content-Type', 'application/json');
+
+	xhr.send(data);
+}
+
 function ajax_post(data, url, callback) {
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', url);
