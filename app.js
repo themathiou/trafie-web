@@ -44,6 +44,7 @@ var login = require('./routes/login'),
     register = require('./routes/register'),
     profile = require('./routes/profile'),
     activities = require('./routes/activities'),
+    statistics = require('./routes/statistics'),
     settings = require('./routes/settings'),
     email_validation = require('./routes/email_validation'),
     reset_password = require('./routes/reset_password');
@@ -133,6 +134,13 @@ trafie.post( '/register', register.post );
 trafie.get( '/login', login.get );
 
 trafie.post( '/login', login.post );
+
+
+/*******************************************************************************************************************************
+ * STATISTICS                                                                                                                  *
+ ******************************************************************************************************************************/
+
+trafie.get( '/statistics', statistics.get );
 
 
 /*******************************************************************************************************************************
