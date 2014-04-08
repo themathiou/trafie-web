@@ -1,7 +1,5 @@
-/*
 google.load("visualization", "1", {packages:["corechart"]});
 google.setOnLoadCallback(drawChart);
-*/
 
 function drawChart( user_id, discipline ) {
 	var data = { discipline: discipline };
