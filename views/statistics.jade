@@ -4,13 +4,18 @@ block content
 	div#main_content
 		br
 		br
-		br
 		h4= profile.first_name
+		ul
+			-for( var i in profile.disciplines_of_user) {
+				li
+					a(onclick="drawChart('"+profile._id+"','"+profile.disciplines_of_user[i]+"')")= tr[profile.disciplines_of_user[i]]
+			-}
 		div#chart_div( style="width: 900px; height: 500px;" )
 
 
 
-//scripts
-script(type='text/javascript' src='https://www.google.com/jsapi')
+	//scripts
+	script(type='text/javascript' src='https://www.google.com/jsapi')
+	script(type='text/javascript', src='/javascripts/statistics.js')
 
 

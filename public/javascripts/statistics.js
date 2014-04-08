@@ -1,12 +1,15 @@
+/*
 google.load("visualization", "1", {packages:["corechart"]});
 google.setOnLoadCallback(drawChart);
+*/
 
 function drawChart( user_id, discipline ) {
-	var data = '{"discipline":"' + discipline + '"}';
+	var data = { discipline: discipline };
 	ajax_get( data, '/user/' + user_id + '/activities', function( res_status, res_data ){
-		console.log(res_data);
+		console.log(res_data, data);
 	});
 
+/*
 	var data = google.visualization.arrayToDataTable([
 	  ['Year', 'Sales', 'Expenses'],
 	  ['2013',  1000,      400],
@@ -23,4 +26,5 @@ function drawChart( user_id, discipline ) {
 
 	var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
 	chart.draw(data, options);
+*/
 }
