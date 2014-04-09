@@ -46,7 +46,7 @@ exports.post = function( req, res ) {
     if( typeof req.body.first_name !== 'undefined' ) {
       profile_data.first_name = req.body.first_name;
       if( !Profile.schema.validateName( profile_data.first_name ) ) {
-        error_messages.first_name = 'Invalid name';
+        error_messages.first_name = 'invalid_name';
         errors = true;
       }
     }
@@ -54,7 +54,7 @@ exports.post = function( req, res ) {
     if( typeof req.body.last_name !== 'undefined' ) {
       profile_data.last_name = req.body.last_name;
       if( !Profile.schema.validateName( profile_data.last_name ) ) {
-        error_messages.last_name = 'Invalid name';
+        error_messages.last_name = 'invalid_name';
         errors = true;
       }
     }
@@ -122,15 +122,32 @@ exports.post = function( req, res ) {
       fs.readFile( req.files.profile_pic.path, function ( err, data ) {
         // Get the file extension
         var extension = req.files.profile_pic.name.split('.')[1];
-        profile_data.picture = '/images/profile_pics/' + user_id + '.' + extension;
 
-        // Save the file in the images folder
-        fs.writeFile( root_dir + '/public' + profile_data.picture, data, function ( err ) {
-          // Update the database
-          Profile.update({ '_id': user_id }, { $set: profile_data }, { upsert: true }, function( error ) {
-            render( res, user_id, error_messages );
+        var accepted_file_types = ['image/jpeg', 'image/png'];
+        // File size in MB
+        var accepted_file_size = 5;
+
+        if( req.files.profile_pic.size > 5 * 1048576 ) {
+          errors = true;
+          error_messages.profile_pic = 'uploaded_image_too_large';
+        }
+
+        if( accepted_file_types.indexOf( req.files.profile_pic.type ) < 0 ) {
+          errors = true;
+          error_messages.profile_pic = 'uploaded_image_wrong_type';
+        }
+
+        if( !errors ) {
+          profile_data.picture = '/images/profile_pics/' + user_id + '.' + extension;
+
+          // Save the file in the images folder
+          fs.writeFile( root_dir + '/public' + profile_data.picture, data, function ( err ) {
+            // Update the database
+            Profile.update({ '_id': user_id }, { $set: profile_data }, { upsert: true }, function( error ) {
+              render( res, user_id, error_messages );
+            });
           });
-        });
+        }
 
       });
     }
