@@ -274,8 +274,8 @@ function return_activity( res, status_code, activity_id, language, date_format )
       'performance'           : activity.performance,
       'date'                  : activity.date
     };
-
     activity = Activity.schema.formatActivity( activity, language, date_format );
+    
     res.json( activity );
   });
 }
