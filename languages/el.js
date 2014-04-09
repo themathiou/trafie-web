@@ -88,6 +88,30 @@ var el = {
     'd-m-y'                                         : 'Ημέρα-Μήνας-Έτος',
     'm-d-y'                                         : 'Μήνας-Ημέρα-Έτος',
 
+    // Messages & Labels
+    'choose_your_discipline'                        : 'Διάλεξε άθλημα',
+    'add_new_activity'                              : 'Προσθήκη νέας δραστηριότητας',
+    'choose_your_country'                           : 'Διάλεξε χώρα',
+    'choose_your_language'                          : 'Διάλεξε γλώσσα',
+    'enter_your_performance'                        : 'Βάλε την επίδοσή σου',
+    'write_something_about_you'                     : 'Γράψε κάτι για εσένα',
+    'date'                                          : 'Ημερομηνία',
+    'change_password'                               : 'Αλλαγή Κωδικού',
+    'old_password'                                  : 'Παλιός Κωδικός',
+    'new_password'                                  : 'Καινούριος Κωδικός',
+    'repeat_password'                               : 'Επανέλαβε τον Κωδικό',
+    'date_format'                                   : 'Μορφή Ημερομηνίας',
+    'd-m-y'                                         : 'Ημέρα-Μήνας-Έτος',
+    'm-d-y'                                         : 'Μήνας-Ημέρα-Έτος',
+
+    // Errors
+    'invalid_name'                                  : 'Μη αποδεκτό όνομα',
+    'passwords_do_not_match'                        : 'Οι κωδικοί δεν ταιριάζουν',
+    'wrong_password'                                : 'Λάθος κωδικός',
+    'password_should_be_at_least_6_characters_long' : 'Ο κωδικός πρέπει να έχει τουλάχιστον 6 χαρακτήρες',
+    'uploaded_image_too_large'                      : 'Το μέγεθος της φωτογραφίας είναι πολύ μεγάλο',
+    'uploaded_image_wrong_type'                     : 'Ο τύπος του αρχείου είναι λανθασμένος',
+
     // Countries
     'AF': 'Afghanistan',
     'AX': 'Aland Islands',

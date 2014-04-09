@@ -88,6 +88,30 @@ var pr = {
     'd-m-y'                                         : 'Day-Month-Year',
     'm-d-y'                                         : 'Month-Day-Year',
 
+    // Messages & Labels
+    'choose_your_discipline'                        : 'Choose your fuckin\' discipline',
+    'add_new_activity'                              : 'Add your sad Activity',
+    'choose_your_country'                           : 'Choose your fuckin\' country',
+    'choose_your_language'                          : 'Choose your fuckin\' language',
+    'enter_your_performance'                        : 'Enter your pitiful performance',
+    'write_something_about_you'                     : 'Write something about you (like we care)',
+    'date'                                          : 'Date (you will never get one)',
+    'change_password'                               : 'Change Password',
+    'old_password'                                  : 'Old Password',
+    'new_password'                                  : 'New Password',
+    'repeat_password'                               : 'Repeat Password',
+    'date_format'                                   : 'Date Format',
+    'd-m-y'                                         : 'Day-Month-Year',
+    'm-d-y'                                         : 'Month-Day-Year',
+
+    // Errors
+    'invalid_name'                                  : 'Is that even a name?',
+    'passwords_do_not_match'                        : 'Passwords do not fuckin\' match',
+    'wrong_password'                                : 'You\'ve got the wrong fucking password',
+    'password_should_be_at_least_6_characters_long' : 'Password should be at least 6 fucking characters long',
+    'uploaded_image_too_large'                      : 'Get your fat image back',
+    'uploaded_image_wrong_type'                     : 'Wrong fuckin\' file type',
+
     // Countries
     'AF': 'Afghanistan',
     'AX': 'Aland Islands',

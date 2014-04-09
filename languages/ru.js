@@ -1,46 +1,46 @@
-var ru = {
+var en = {
 
-	// Disciplines
-	'100m'					: '100m',
-    '200m'					: '200m',
-    '400m'					: '400m',
-    '800m'					: '800m',
-    '1500m'					: '1500m',
-    '3000m'					: '3000m',
-    '60m_hurdles'			: '60m Hurdles',
-    '100m_hurdles'			: '100m Hurdles',
-    '110m_hurdles'			: '100m Hurdles',
-    '400m_hurdles'			: '400m Hurdles',
-    '3000m_steeple'			: '3000m Steeple',
-    '4x100m_relay'			: '4x100m Relay',
-    '4x400m_relay'			: '4x400m Relay',
-    'marathon'				: 'Marathon',
-    'high_jump'				: 'High Jump',
-    'long_jump'				: 'Long Jump',
-    'triple_jump'			: 'Triple Jump',
-    'pole_vault'			: 'Pole Vault',
-    'shot_put'				: 'Shot Put',
-    'discus'				: 'Discus',
-    'hammer'				: 'Hammer',
-    'javelin'				: 'Javelin',
-    'pentathlon'			: 'Pentathlon',
-    'heptathlon'			: 'Heptathlon',
-    'decathlon'				: 'Decathlon',
+    // Disciplines
+    '100m'                  : '100m',
+    '200m'                  : '200m',
+    '400m'                  : '400m',
+    '800m'                  : '800m',
+    '1500m'                 : '1500m',
+    '3000m'                 : '3000m',
+    '60m_hurdles'           : '60m Hurdles',
+    '100m_hurdles'          : '100m Hurdles',
+    '110m_hurdles'          : '100m Hurdles',
+    '400m_hurdles'          : '400m Hurdles',
+    '3000m_steeple'         : '3000m Steeple',
+    '4x100m_relay'          : '4x100m Relay',
+    '4x400m_relay'          : '4x400m Relay',
+    'marathon'              : 'Marathon',
+    'high_jump'             : 'High Jump',
+    'long_jump'             : 'Long Jump',
+    'triple_jump'           : 'Triple Jump',
+    'pole_vault'            : 'Pole Vault',
+    'shot_put'              : 'Shot Put',
+    'discus'                : 'Discus',
+    'hammer'                : 'Hammer',
+    'javelin'               : 'Javelin',
+    'pentathlon'            : 'Pentathlon',
+    'heptathlon'            : 'Heptathlon',
+    'decathlon'             : 'Decathlon',
 
     // Measurements
-    'hours'					: 'Hours',
-    'hours_short'			: 'hours',
-    'minutes' 				: 'Minutes',
-    'minutes_short' 		: 'min',
-    'seconds'				: 'Seconds',
-    'seconds_short'			: 'sec',
-    'centiseconds' 			: 'Centiseconds',
-    'centiseconds_short' 	: 'csec',
-    'meters'				: 'Meters',
-    'meters_short'			: 'm',
-    'centimeters'			: 'Centimeters',
-    'centimeters_short'		: 'cm',
-    'points'				: 'points',
+    'hours'                 : 'Hours',
+    'hours_short'           : 'hours',
+    'minutes'               : 'Minutes',
+    'minutes_short'         : 'min',
+    'seconds'               : 'Seconds',
+    'seconds_short'         : 'sec',
+    'centiseconds'          : 'Centiseconds',
+    'centiseconds_short'    : 'csec',
+    'meters'                : 'Meters',
+    'meters_short'          : 'm',
+    'centimeters'           : 'Centimeters',
+    'centimeters_short'     : 'cm',
+    'points'                : 'points',
 
     // User Data
     'male'                  : 'Male',
@@ -56,9 +56,9 @@ var ru = {
     'about_me'              : 'About Me',
 
     // Buttons
-    'submit'				: 'Submit',
-    'save'					: 'Save',
-    'cancel'				: 'Cancel',
+    'submit'                : 'Submit',
+    'save'                  : 'Save',
+    'cancel'                : 'Cancel',
     'edit'                  : 'Edit',
     'logout'                : 'Logout',
 
@@ -70,14 +70,11 @@ var ru = {
     'account_settings'      : 'Account Settings',
 
     // Messages & Labels
-	'choose_your_discipline'                        : 'Choose your discipline',
-    'passwords_do_not_match'                        : 'Passwords do not match',
-    'wrong_password'                                : 'Wrong password',
-    'password_should_be_at_least_6_characters_long' : 'Password should be at least 6 characters long',
+    'choose_your_discipline'                        : 'Choose your discipline',
     'add_new_activity'                              : 'Add New Activity',
     'choose_your_country'                           : 'Choose your country',
     'choose_your_language'                          : 'Choose your language',
-	'enter_your_performance'                        : 'Enter your performance',
+    'enter_your_performance'                        : 'Enter your performance',
     'write_something_about_you'                     : 'Write something about you',
     'date'                                          : 'Date',
     'change_password'                               : 'Change Password',
@@ -87,6 +84,14 @@ var ru = {
     'date_format'                                   : 'Date Format',
     'd-m-y'                                         : 'Day-Month-Year',
     'm-d-y'                                         : 'Month-Day-Year',
+
+    // Errors
+    'invalid_name'                                  : 'Invalid name',
+    'passwords_do_not_match'                        : 'Passwords do not match',
+    'wrong_password'                                : 'Wrong password',
+    'password_should_be_at_least_6_characters_long' : 'Password should be at least 6 characters long',
+    'uploaded_image_too_large'                      : 'The uploaded image is too large',
+    'uploaded_image_wrong_type'                     : 'The type of the uploaded file is wrong',
 
     // Countries
     'AF': 'Afghanistan',
@@ -340,4 +345,4 @@ var ru = {
     'ZW': 'Zimbabwe'
 };
 
-module.exports = ru;
+module.exports = en;
