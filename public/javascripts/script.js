@@ -120,7 +120,7 @@ function setSmall( year ) {
 /********************************************/
 /* 				REST CALLS 					*/
 /********************************************/
-function ajax_get(data, url, callback) {
+function ajax_get(url, callback) {
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET', url);
 
@@ -130,7 +130,7 @@ function ajax_get(data, url, callback) {
 
 	xhr.setRequestHeader('Content-Type', 'application/json');
 
-	xhr.send(data);
+	xhr.send();
 }
 
 function ajax_post(data, url, callback) {
