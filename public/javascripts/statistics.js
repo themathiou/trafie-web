@@ -36,19 +36,18 @@ var disciplines = {
     };
 
 google.load("visualization", "1", {packages:["corechart"]});
-google.setOnLoadCallback(drawChart);
+
 
 
 /*********************************/
-/* 		GENERAL VARIABLES		 */
+/* 		Draw Chart Functions	 */
 /*********************************/
 
-function drawChart( user_id, discipline ) {
+function drawSimpleChart( user_id, discipline ) {
 
 	ajax_get( '/user/' + user_id + '/activities?discipline='+discipline, function( response ){
 
 		var res = JSON.parse(response);
-		console.log( res );
 
 		var data = {
 		  "cols": [
@@ -62,7 +61,7 @@ function drawChart( user_id, discipline ) {
 			// TIME DISCIPLINE i.e : performance: "00:00:20.09"
 			if( disciplines.time.indexOf(discipline) > -1 ) {
 				for( var i in res ) {
-					console.log(i, res[i]);
+					//console.log(i, res[i]);
 					var performance = res[i].performance.split(':')[0]*360000 + res[i].performance.split(':')[1]*6000
 						+ res[i].performance.split(':')[2].split('.')[0]*100 + res[i].performance.split(':')[2].split('.')[1];
 					var temp = {"c":[{"v":"Date("+Date.parse(res[i].date)+")"},{"v":performance, "f":res[i].formatted_performance}]};
@@ -72,7 +71,7 @@ function drawChart( user_id, discipline ) {
 			// DISTANCE DISCIPLINE
 			else if( disciplines.distance.indexOf(discipline) > -1 ) {
 				for( var i in res ) {
-					console.log(i, res[i]);
+					//console.log(i, res[i]);
 					var temp = {"c":[{"v":"Date("+Date.parse(res[i].date)+")"},{"v":(res[i].performance / 10000), "f":res[i].formatted_performance}]};
 					data.rows.push(temp);
 				}
@@ -81,7 +80,7 @@ function drawChart( user_id, discipline ) {
 			// POINTS DISCIPLINE
 			else if( disciplines.points.indexOf(discipline) > -1 ) {
 				for( var i in res ) {
-					console.log(i, res[i]);
+					//console.log(i, res[i]);
 					var temp = {"c":[{"v":"Date("+Date.parse(res[i].date)+")"},{"v":(res[i].performance), "f":res[i].formatted_performance}]};
 					data.rows.push(temp);
 				}
@@ -92,7 +91,6 @@ function drawChart( user_id, discipline ) {
 				console.log('- error in drawChart(). Unknown discipline:' + discipline);
 			}
 
-		console.log(temp);
 		var data_table = new google.visualization.DataTable(data);
 
 		// Set chart options
@@ -108,3 +106,37 @@ function drawChart( user_id, discipline ) {
 	});
 
 }
+
+
+
+/*********************************/
+/* 			Handlers			 */
+/*********************************/
+
+function setDisciplineButtonHandler( user_id , main_discipline, main_discipline_exists ) {
+
+	var discipline_buttons = document.getElementsByClassName('discipline_button');
+	for (var i = 0, length = discipline_buttons.length; i < length; i++) {
+		var discipline = discipline_buttons[i].getAttribute('data-discipline');
+
+		(function(user_id, discipline) {
+			document.getElementById(discipline+'_button').onclick  = function() {
+				drawSimpleChart( user_id, discipline );
+				}
+		})( user_id, discipline );
+	}
+
+	if(main_discipline_exists){
+		google.setOnLoadCallback(drawSimpleChart( user_id, main_discipline ));
+	}
+
+}
+
+
+
+
+
+
+
+
+
