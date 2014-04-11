@@ -92,6 +92,9 @@ var en = {
     'password_should_be_at_least_6_characters_long' : 'Password should be at least 6 characters long',
     'uploaded_image_too_large'                      : 'The uploaded image is too large',
     'uploaded_image_wrong_type'                     : 'The type of the uploaded file is wrong',
+    'invalid_performance'                           : 'Invalid performance',
+    'wrong_date_format'                             : 'Wrong date format',
+    'date_is_required'                              : 'Date is required',
 
     // Countries
     'AF': 'Afghanistan',

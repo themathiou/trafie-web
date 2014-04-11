@@ -54,8 +54,21 @@ exports.post = function( req, res ) {
       // If the profile doesn't exist, redirect
       if( typeof profile_data.language === 'undefined' ) return_activity( res, 404, '', 'en', 'd-m-y' );
 
+      var errors = false;
+      var error_messages = {};
       var discipline = typeof req.body.discipline !== 'undefined' ? req.body.discipline : '';
-      var date = typeof req.body.date !== 'undefined' && req.body.date ? Activity.schema.parseDate( req.body.date ) : new Date();
+
+      if( typeof req.body.date !== 'undefined' && req.body.date ) {
+        var date = Activity.schema.parseDate( req.body.date );
+        if( !date ) {
+          errors = true;
+          error_messages.date = 'wrong_date_format';
+        }
+      } else {
+        errors = true;
+        error_messages.date = 'date_is_required';
+      }
+
       var performance = {};
       
       switch ( discipline ) {
@@ -111,8 +124,13 @@ exports.post = function( req, res ) {
           break;
       }
 
+      if( performance === null ) {
+        errors = true;
+        error_messages.performance = 'invalid_performance';
+      }
+
       // If there is a valid performance value
-      if( performance !== null ) {
+      if( !errors ) {
 
         // Create the record that will be inserted in the db
         var new_activity = {
@@ -128,7 +146,7 @@ exports.post = function( req, res ) {
           return_activity( res, 201, activity._id, profile_data.language, profile_data.date_format );
         });
       } else {
-        return_activity( res, 400, '', profile_data.language, profile_data.date_format );
+        return_activity( res, 400, '', profile_data.language, profile_data.date_format, error_messages );
       }
     });
   }
@@ -148,7 +166,7 @@ exports.put = function( req, res ) {
 
   // If there is no user id, redirect to login
   if( !user_id || !activity_id || ( user_id !== req.params.user_id ) ) {
-    return_activity( res, 403, '', 'en' );
+    return_activity( res, 403, '', 'en', 'd-m-y' );
   } else {
     // Find the profile
     Profile.schema.findOne({ '_id': user_id }, 'language date_format')
@@ -164,6 +182,20 @@ exports.put = function( req, res ) {
     .then( function( activity ) {
 
       if( typeof activity._id == 'undefined' ) return_activity( res, 404, '', language, date_format );
+
+      var errors = false;
+      var error_messages = {};
+
+      if( typeof req.body.date !== 'undefined' && req.body.date ) {
+        var date = Activity.schema.parseDate( req.body.date );
+        if( !date ) {
+          errors = true;
+          error_messages.date = 'wrong_date_format';
+        }
+      } else {
+        errors = true;
+        error_messages.date = 'date_is_required';
+      }
 
       var discipline = activity.discipline;
       var performance = {};
@@ -221,18 +253,24 @@ exports.put = function( req, res ) {
           break;
       }
 
+      if( performance === null ) {
+        errors = true;
+        error_messages.performance = 'invalid_performance';
+      }
+
       // If there is a valid performance value
-      if( performance !== null ) {
+      if( !errors ) {
         // Create the record that will be inserted in the db
         var activity = {
-          'performance': performance
+          'performance' : performance,
+          'date'        : date
         };
 
         Activity.findByIdAndUpdate( activity_id, activity, '', function ( err, activity ) {
           return_activity( res, 200, activity._id, language, date_format );
         });
       } else {
-        return_activity( res, 400, '', language, date_format );
+        return_activity( res, 400, '', language, date_format, error_messages );
       }
     });
   }
@@ -260,10 +298,14 @@ exports.delete = function( req, res ) {
   });
 };
 
-function return_activity( res, status_code, activity_id, language, date_format ) {
-  if( !activity_id) {
+function return_activity( res, status_code, activity_id, language, date_format, error_messages ) {
+  if( !activity_id ) {
     res.statusCode = 400;
-    res.json( null );
+    if( typeof error_messages !== 'undefined' ) {
+      res.json( { 'errors': error_messages } );
+    } else {
+      res.json( null );
+    }
   }
   res.statusCode = status_code;
 
