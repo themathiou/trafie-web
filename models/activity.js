@@ -1,5 +1,3 @@
-// The User Model
-
 var mongoose = require('mongoose');
 var db = mongoose.connection;
 var q = require('q');
@@ -17,10 +15,10 @@ var activitySchema = mongoose.Schema({
 
 
 /**
-* Find activity by element
-* @param json where({_id:id})
-* @param String select
-*/
+ * Find activity by element
+ * @param json where( { _id: id } )
+ * @param String select
+ */
 activitySchema.findOne = function( where, select ) {
 	var d = q.defer();
 	Activity.findOne(where, select, function ( err, activity ) {
@@ -31,11 +29,11 @@ activitySchema.findOne = function( where, select ) {
 
 
 /**
-* Find user by element
-* @param json where({email:someone@trafie.com})
-* @param String select
-* @param int sort (-1 == descending)
-*/
+ * Find user by element
+ * @param json where( { email: someone@trafie.com } )
+ * @param String select
+ * @param number sort (-1 == descending)
+ */
 activitySchema.getActivitiesOfUser = function( where, select, sort ) {
 	var d = q.defer();
 	Activity.find(
@@ -63,11 +61,10 @@ activitySchema.getActivitiesOfUser = function( where, select, sort ) {
 
 
 /**
-* Find user by element
-* @param json where({email:someone@trafie.com})
-* @param String select
-* @param int sort (-1 == descending)
-*/
+ * Returns all the names of the disciplines, that are included
+ * in the user's activities
+ * @param json where( { user_id: hash } )
+ */
 activitySchema.getDisciplinesPerformedByUser = function( where ) {
 	var d = q.defer();
 	Activity.distinct( 'discipline', where, function ( err, activity ) {
@@ -82,7 +79,7 @@ activitySchema.getDisciplinesPerformedByUser = function( where ) {
 
 /**
  * Delete an activity
- * @param object where
+ * @param json where
  */
 activitySchema.delete = function( where ) {
 	var d = q.defer();
@@ -99,6 +96,8 @@ activitySchema.delete = function( where ) {
 /**
  * Converts the activity data to a more readable format
  * @param array activities
+ * @param string language
+ * @param string date_format
  */
 activitySchema.formatActivities = function( activities, language, date_format ) {
 	var activities_count = activities.length;
@@ -112,6 +111,8 @@ activitySchema.formatActivities = function( activities, language, date_format ) 
 /**
  * Converts the activity data to a more readable format
  * @param object activity
+ * @param string language
+ * @param string date_format
  */
 activitySchema.formatActivity = function( activity, language, date_format ) {
 	switch ( activity.discipline ) {
@@ -191,25 +192,31 @@ activitySchema.formatActivity = function( activity, language, date_format ) {
  */
 activitySchema.validateTime = function( performance ) {
 	var valid = true;
-	var time = null;
+	var time = '';
 
+	// Validating hours
 	if( typeof performance.hours !== 'string' || parseInt( performance.hours ) != performance.hours || performance.hours.length > 2 || performance.hours < 0 ) {
 		valid = false;
 	}
+	// Validating minutes
 	else if( typeof performance.minutes !== 'string' || parseInt( performance.minutes ) != performance.minutes || performance.minutes.length > 2 || performance.minutes > 59 || performance.minutes < 0 ) {
 		valid = false;
 	}
+	// Validating seconds
 	else if( typeof performance.seconds !== 'string' || parseInt( performance.seconds ) != performance.seconds || performance.seconds.length > 2 || performance.seconds > 59 || performance.seconds < 0 ) {
 		valid = false;
 	}
+	// Validating centiseconds
 	else if( typeof performance.centiseconds !== 'string' || parseInt( performance.centiseconds ) != performance.centiseconds || performance.centiseconds.length > 2 || performance.centiseconds < 0 ) {
 		valid = false;
 	}
 
+	// If the time is zero in total, it's invalid
 	if( performance.hours == 0 && performance.minutes == 0 && performance.seconds == 0 && performance.centiseconds == 0 ) {
 		valid = false;
 	}
 
+	// Sanitizing the data if it's valid
 	if( valid ) {
 		if( performance.hours.length == 1 ) {
 			performance.hours = '0' + performance.hours;
@@ -244,27 +251,30 @@ activitySchema.validateTime = function( performance ) {
 
 
 /**
- * Checks distance inputs for validity, if they are valid, it adds leading zeros to
- * single digit values and it creates the performance string, ready to be stored
- * If the values are invalid, it returns an empty string
+ * Checks distance inputs for validity
+ * If the values are invalid, it returns zero
  * @param object performance
- * @return string
+ * @return number
  */
 activitySchema.validateDistance = function( performance ) {
 	var valid = true;
-	var distance = null;
+	var distance = 0;
 
+	// Validating the first part of the measurement
 	if( typeof performance.distance_1 !== 'string' || parseInt( performance.distance_1 ) != performance.distance_1 || performance.distance_1.length > 2 || performance.distance_1 < 0 ) {
 		valid = false;
 	}
+	// Validating the second part of the measurement
 	else if( typeof performance.distance_2 !== 'string' || parseInt( performance.distance_2 ) != performance.distance_2 || performance.distance_2.length > 2 || performance.distance_2 < 0 ) {
 		valid = false;
 	}
 
+	// If the total distance was 0, it's invalid
 	if( performance.distance_1 == 0 && performance.distance_2 == 0 ) {
 		valid = false;
 	}
 
+	// Convertin the distance to a value that can be easily changed between meters and feet
 	if( valid ) {
 		distance = performance.distance_1 * 10000 + performance.distance_2 * 100;
 	}
@@ -274,14 +284,13 @@ activitySchema.validateDistance = function( performance ) {
 
 
 /**
- * Checks points inputs for validity, if they are valid, it adds leading zeros to
- * single digit values and it creates the performance string, ready to be stored
+ * Checks points inputs for validity
  * If the values are invalid, it returns an empty string
  * @param object performance
  * @return string
  */
 activitySchema.validatePoints = function( performance ) {
-	var points = null;
+	var points = '';
 
 	if( typeof performance.points === 'string' && parseInt( performance.points ) == performance.points && performance.points.length <= 5 && performance.points > 0 ) {
 		points = performance.points;
@@ -290,15 +299,23 @@ activitySchema.validatePoints = function( performance ) {
 	return points;
 };
 
+
+/**
+ * Parses the given date, from format "Thu Apr 11 2014" to
+ * to a JavaScript date object
+ * @param string date
+ */
 activitySchema.parseDate = function( date ) {
 	var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
 	date = date.split(' ');
 	var current_date = new Date();
 
+	// If the date is invalid, return an empty string
 	if( date.length != 4 || months.indexOf( date[1] ) < 0 || !parseInt(date[2]) || date[2] < 1 || date[2] > 31 || !parseInt(date[3]) || date[3] < 1900 || date[3] > current_date.getFullYear() ) {
 		return '';
 	} else {
+		// Create the date object
 		var parsed_date = new Date( date[3], months.indexOf( date[1] ), date[2] );
 		return parsed_date < current_date ? parsed_date : current_date;
 	}

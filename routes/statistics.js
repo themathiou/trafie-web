@@ -11,7 +11,7 @@ var translations = require('../languages/translations.js');
 exports.get = function( req, res ){
   var user_id = req.session.user_id;
 
-  // When there is a username in the url
+  // If there is a user id in the request (NOT IMPLEMENTED YET)
   if( typeof req.params.user_id !== 'undefined' ) {
     console.log( req.params.user_id );
   }
@@ -31,6 +31,12 @@ exports.get = function( req, res ){
   }
 };
 
+/**
+ * Renders the statistics page
+ * @param object  res           (the express response object)
+ * @param string  user_id       (the user_id)
+ * @param json    profile_data  (data of the profile of the user)
+ */
 function render( res, user_id, profile_data ) {
   Activity.schema.getDisciplinesPerformedByUser( { 'user_id': user_id } )
   .then( function( disciplines_of_user ) {

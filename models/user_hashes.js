@@ -31,8 +31,8 @@ userHashSchema.findUserIdByHash = function( hash, type ) {
 
 
 /**
- * Returns the user id of the user to whom the hash was sent
- * @param string hash
+ * Returns the validation hash that was sent to the given user
+ * @param string user_id
  */
 userHashSchema.findValidationHashByUserId = function( user_id ) {
 	var d = q.defer();

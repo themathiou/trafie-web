@@ -15,7 +15,7 @@ var userSchema = mongoose.Schema({
 
 /**
 * Find user by element
-* @param json where({email:someone@trafie.com})
+* @param json where( { email: someone@trafie.com } )
 * @param String select
 */
 userSchema.findOne = function( where, select ) {
@@ -40,6 +40,8 @@ userSchema.encryptPassword = function ( password ) {
 
 /**
  * Checks email for validity
+ * @param string email
+ * @return boolean
  */
 userSchema.validateEmail = function( email ) {
 	 return /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test( email );
@@ -47,6 +49,8 @@ userSchema.validateEmail = function( email ) {
 
 /**
  * Checks password for validity
+ * @param string password
+ * @return boolean
  */
 userSchema.validatePassword = function( password ) {
 	 // The password should have at least 6 characters
@@ -55,6 +59,7 @@ userSchema.validatePassword = function( password ) {
 
 /**
  * Checks if the email exists in the database
+ * @param email
  */
 userSchema.emailIsUnique = function( email ) {
 	var d = q.defer();
@@ -66,6 +71,7 @@ userSchema.emailIsUnique = function( email ) {
 
 /**
  * Makes the user valid
+ * @param string user_id
  */
 userSchema.validateUser = function( user_id ) {
 	var d = q.defer();
@@ -77,6 +83,8 @@ userSchema.validateUser = function( user_id ) {
 
 /**
  * Resets user's password
+ * @param string user_id
+ * @param string password
  */
 userSchema.resetPassword = function( user_id, password ) {
 	var d = q.defer();

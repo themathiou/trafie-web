@@ -23,16 +23,22 @@ exports.get = function( req, res ){
       // If the profile doesn't exist, return an empty json
       if( typeof profile_data.language === 'undefined' ) return_activity( res, 404, '', 'en', 'd-m-y' );
 
+      // If the activity id was specified, try to find the activity
       if( typeof req.params.activity_id !== 'undefined' ) {
         return_activity( res, 200, req.params.activity_id, profile_data.language, profile_data.date_format );
       } else {
+        // If the activity id wasn't specified, try to fetch all the activities of the user
         var where = {};
+        // If there was a discipline in the parameters of the GET request,
+        // fetch the activities only of this discipline
         if( typeof req.query.discipline !== 'undefined' ) {
           where.discipline = req.query.discipline;
         }
         where.user_id = user_id;
+
         return_activities( res, 200, where, profile_data.language, profile_data.date_format );
       }
+
     });
   }
 };
@@ -44,20 +50,21 @@ exports.get = function( req, res ){
 exports.post = function( req, res ) {
   // Get the user id from the session
   var user_id = req.session.user_id;
-  // If there is no user id, redirect to login
+  // If there is no user id, or the user id is different than the one in the session
   if( !user_id || ( user_id !== req.params.user_id ) ) {
     return_activity( res, 403, '', 'en', 'd-m-y' );
   } else {
     // Find the profile
     Profile.schema.findOne({ '_id': user_id }, 'language date_format')
     .then( function( profile_data ) {
-      // If the profile doesn't exist, redirect
+      // If the profile doesn't exist, send an empty json
       if( typeof profile_data.language === 'undefined' ) return_activity( res, 404, '', 'en', 'd-m-y' );
 
       var errors = false;
       var error_messages = {};
       var discipline = typeof req.body.discipline !== 'undefined' ? req.body.discipline : '';
 
+      // Checking if there are any errors in the date value
       if( typeof req.body.date !== 'undefined' && req.body.date ) {
         var date = Activity.schema.parseDate( req.body.date );
         if( !date ) {
@@ -129,9 +136,8 @@ exports.post = function( req, res ) {
         error_messages.performance = 'invalid_performance';
       }
 
-      // If there is a valid performance value
+      // If there are no errors
       if( !errors ) {
-
         // Create the record that will be inserted in the db
         var new_activity = {
           'user_id'     : user_id,
@@ -146,11 +152,13 @@ exports.post = function( req, res ) {
           return_activity( res, 201, activity._id, profile_data.language, profile_data.date_format );
         });
       } else {
+        // If there are errors, send the error messages to the client
         return_activity( res, 400, '', profile_data.language, profile_data.date_format, error_messages );
       }
     });
   }
 };
+
 
 /**
  * Activities - PUT
@@ -186,6 +194,7 @@ exports.put = function( req, res ) {
       var errors = false;
       var error_messages = {};
 
+      // Checking if the date value is valid
       if( typeof req.body.date !== 'undefined' && req.body.date ) {
         var date = Activity.schema.parseDate( req.body.date );
         if( !date ) {
@@ -258,7 +267,7 @@ exports.put = function( req, res ) {
         error_messages.performance = 'invalid_performance';
       }
 
-      // If there is a valid performance value
+      // If there are no errors
       if( !errors ) {
         // Create the record that will be inserted in the db
         var activity = {
@@ -270,11 +279,13 @@ exports.put = function( req, res ) {
           return_activity( res, 200, activity._id, language, date_format );
         });
       } else {
+        // If there are errors, send the error messages to the client
         return_activity( res, 400, '', language, date_format, error_messages );
       }
     });
   }
 };
+
 
 /**
  * Activites - DELETE
@@ -298,30 +309,55 @@ exports.delete = function( req, res ) {
   });
 };
 
+
+/**
+ * Returns the activity as a json object
+ * @param object res            (response object of express)
+ * @param number status_code    (status code that will be send with the response)
+ * @param string activity_id    (activity id of the activity that will be returned)
+ * @param string language       (language code of the translations)
+ * @param string date_format    (date format that will be used for the dates of the activity)
+ * @param json   error_messages (error messages that will be mapped to the input fields in the ui)
+ */
 function return_activity( res, status_code, activity_id, language, date_format, error_messages ) {
+  // If an activity id wasn't supplied
   if( !activity_id ) {
     res.statusCode = 400;
+    // If there are error messages, send them
     if( typeof error_messages !== 'undefined' ) {
       res.json( { 'errors': error_messages } );
     } else {
       res.json( null );
     }
   }
+
   res.statusCode = status_code;
 
-  Activity.schema.findOne( {'_id': activity_id}, '' ).then( function( activity ) {
+  // Find the activity and return it
+  Activity.schema.findOne( { '_id': activity_id }, '' ).then( function( activity ) {
     activity = {
       '_id'                   : activity._id,
       'discipline'            : activity.discipline,
       'performance'           : activity.performance,
       'date'                  : activity.date
     };
+
+    // Format the date of the activity
     activity = Activity.schema.formatActivity( activity, language, date_format );
     
     res.json( activity );
   });
 }
 
+/**
+ * Returns the activities as an array of json objects
+ * @param object res            (response object of express)
+ * @param number status_code    (status code that will be send with the response)
+ * @param json   where          (the where conditions of the query (usually provides the user id))
+ * @param string language       (language code of the translations)
+ * @param string date_format    (date format that will be used for the dates of the activity)
+ * @param json   error_messages (error messages that will be mapped to the input fields in the ui)
+ */
 function return_activities( res, status_code, where, language, date_format ) {
   Activity.schema.getActivitiesOfUser( where, '', -1 ).then( function( activities ) {
     for( var i in activities ) {
@@ -332,6 +368,8 @@ function return_activities( res, status_code, where, language, date_format ) {
         'date'                  : activities[i].date
       };
     }
+
+    // Format the date of the activities
     activities = Activity.schema.formatActivities( activities, language, date_format );
 
     res.statusCode = status_code;
