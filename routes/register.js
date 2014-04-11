@@ -100,7 +100,6 @@ exports.post = function( req, res ) {
       Profile.schema.save(profile)
       .then( function(profile){return UserHashes.schema.createVerificationHash(new_user.email, user._id);})
       .then( function( email_hash ) {
-        console.log( Email );
         Email.send_verification_email( new_user.email, new_profile.first_name, new_profile.last_name, email_hash, req.headers.host );
 
   			// Redirecting to the profile

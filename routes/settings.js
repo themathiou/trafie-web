@@ -43,6 +43,7 @@ exports.post = function( req, res ) {
     var user_data = {};
     var errors = false;
 
+    // Validating first name
     if( typeof req.body.first_name !== 'undefined' ) {
       profile_data.first_name = req.body.first_name;
       if( !Profile.schema.validateName( profile_data.first_name ) ) {
@@ -51,6 +52,7 @@ exports.post = function( req, res ) {
       }
     }
 
+    // Validating last name
     if( typeof req.body.last_name !== 'undefined' ) {
       profile_data.last_name = req.body.last_name;
       if( !Profile.schema.validateName( profile_data.last_name ) ) {
@@ -59,6 +61,7 @@ exports.post = function( req, res ) {
       }
     }
 
+    // Validating birthday
     if( typeof req.body.birthday_day !== 'undefined' && typeof req.body.birthday_month !== 'undefined' && typeof req.body.birthday_year !== 'undefined' ) {
       profile_data.birthday = {};
       profile_data.birthday.day = req.body.birthday_day;
@@ -69,6 +72,7 @@ exports.post = function( req, res ) {
       }
     }
 
+    // Validating gender
     if( typeof req.body.gender !== 'undefined' ) {
       if( !Profile.schema.validateGender( req.body.gender ) ) {
         errors = true;
@@ -77,6 +81,7 @@ exports.post = function( req, res ) {
       }
     }
 
+    // Validating country
     if( typeof req.body.country !== 'undefined' ) {
       if( !Profile.schema.validateCountry( req.body.country ) ) {
         errors = true;
@@ -85,6 +90,7 @@ exports.post = function( req, res ) {
       }
     }
 
+    // Validating discipline
     if( typeof req.body.discipline !== 'undefined' ) {
       if( !Profile.schema.validateDiscipline( req.body.discipline ) ) {
         errors = true;
@@ -93,6 +99,7 @@ exports.post = function( req, res ) {
       }
     }
 
+    // Validating the about me text
     if( typeof req.body.about !== 'undefined' ) {
       if( !Profile.schema.validateAbout( req.body.about ) ) {
         errors = true;
@@ -101,6 +108,7 @@ exports.post = function( req, res ) {
       }
     }
 
+    // Validating language
     if( typeof req.body.language !== 'undefined' ) {
       if( !Profile.schema.validateLanguage( req.body.language ) ) {
         errors = true;
@@ -109,6 +117,7 @@ exports.post = function( req, res ) {
       }
     }
 
+    // Validating date format
     if( typeof req.body.date_format !== 'undefined' ) {
       if( !Profile.schema.validateDateFormat( req.body.date_format ) ) {
         errors = true;
@@ -117,6 +126,7 @@ exports.post = function( req, res ) {
       }
     }
 
+    // Checking if the uploaded file is a valid image file
     if( typeof req.files !== 'undefined' && typeof req.files.profile_pic !== 'undefined' ) {
       // Read the image file
       fs.readFile( req.files.profile_pic.path, function ( err, data ) {
@@ -127,11 +137,13 @@ exports.post = function( req, res ) {
         // File size in MB
         var accepted_file_size = 5;
 
-        if( req.files.profile_pic.size > 5 * 1048576 ) {
+        // If the file size is acceptable
+        if( req.files.profile_pic.size > accepted_file_size * 1048576 ) {
           errors = true;
           error_messages.profile_pic = 'uploaded_image_too_large';
         }
 
+        // If the file type is acceptable
         if( accepted_file_types.indexOf( req.files.profile_pic.type ) < 0 ) {
           errors = true;
           error_messages.profile_pic = 'uploaded_image_wrong_type';
@@ -152,13 +164,15 @@ exports.post = function( req, res ) {
       });
     }
 
+    // Validating the reset password request
     if( typeof req.body.old_password !== 'undefined' && typeof req.body.password !== 'undefined' && req.body.repeat_password ) {
+      // Find the old password of the user
       User.schema.findOne({ '_id': user_id }, 'password')
       .then( function( response ) {
         if( typeof response.password === 'undefined' ) {
           redirect('/register');
-        }
-        else { 
+        } else { 
+          // Generating errors
           if( req.body.password !== req.body.repeat_password ) {
             errors = true;
             error_messages.repeat_password = 'passwords_do_not_match';
@@ -174,6 +188,7 @@ exports.post = function( req, res ) {
           if( errors ) {
             render( res, user_id, error_messages );
           } else {
+            // If there are no errors, the password gets reset
             User.schema.resetPassword( user_id, req.body.password )
             .then( function(){
               render( res, user_id, error_messages );
@@ -199,7 +214,9 @@ exports.post = function( req, res ) {
 function render( res, user_id, errors ) {
   Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline about male country birthday picture language date_format')
   .then( function( response ) {
+    // If the profile wasn't found, redirect
     if( typeof response.first_name === 'undefined' ) redirect('/register');
+
     // Format the data that will go to the front end
     var gender = '';
     if( response.male === true ) {
@@ -208,6 +225,7 @@ function render( res, user_id, errors ) {
     else if( response.male === false ) {
       gender = 'female';
     }
+    
     var birthday = {};
     birthday.day = response.birthday.day ? response.birthday.day : '';
     birthday.month = response.birthday.month ? response.birthday.month : '';
