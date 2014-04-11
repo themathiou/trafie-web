@@ -111,6 +111,9 @@ var pr = {
     'password_should_be_at_least_6_characters_long' : 'Password should be at least 6 fucking characters long',
     'uploaded_image_too_large'                      : 'Get your fat image back',
     'uploaded_image_wrong_type'                     : 'Wrong fuckin\' file type',
+    'invalid_performance'                           : 'Invalid fuckin\' performance',
+    'wrong_date_format'                             : 'Wrong fuckin\' date format',
+    'date_is_required'                              : 'Date is fuckin\' required',
 
     // Countries
     'AF': 'Afghanistan',
