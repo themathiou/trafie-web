@@ -197,8 +197,10 @@ function close_new_activity_form() {
  */
 function profileHandlers() {
 
-	//VARIABLES
+	// Handlers defined as variables in order to be called in for loop for different elements
+	// Delete handler is used to delete each activity
 	var delete_handler = function(e) {
+		//prevent default behavior of page redirection. We want to stay in the same page.
 		var evt = e ? e : window.event;
 		if (evt.preventDefault) evt.preventDefault();
 
@@ -206,8 +208,8 @@ function profileHandlers() {
 		if (r==true)
 		{
 			var that = this;
+			//delete activity with ajax call.
 			ajax_delete(this.getAttribute('href'), function(res_status, res_text){
-				console.log('delete_activity res : ',  res_status,  res_text );
 				//success case
 				if(res_status == 200) {
 					var grandparent = that.parentNode.parentNode;
@@ -223,6 +225,7 @@ function profileHandlers() {
 		}
 	}
 
+	// Edit handler is used to transform activities to aditable with existed values in fields
 	var edit_handler = function() {
 		this.parentNode.style.border = '1px solid #F4B510';
 
@@ -401,14 +404,18 @@ function profileHandlers() {
 	}
 
 
-	//ATTACH HANDLERS
+	// ATTACH HANDLERS
+	// Handler for add activity link. calls function to OPEN the slider for adding activity
 	document.getElementById("add_activity_link").onclick = function() {
 		open_new_activity_form();
 	}
+
+	// Handler for cancel adding activity link. calls function to CLOSE the slider for adding activity
 	document.getElementById("cancel_activity_link").onclick = function() {
 		close_new_activity_form();
 	}
 
+	// Handler for option-list with different disciplines in add activity.
 	document.getElementById("discipline_input").onchange = function() {
 		var disciplines_in_activity_forms = document.getElementsByClassName('new_activity_discipline');
 		for( var i=0, length=disciplines_in_activity_forms.length; i<length; i++) {
@@ -417,6 +424,7 @@ function profileHandlers() {
 		show_specific_form(this);
 	}
 
+	// Handlers to limit time values in expected values. Use number0to59() and number0to99() functions
 	document.getElementById("hours_input").onkeyup = function() {
 		number0to59(this);
 	}
@@ -430,11 +438,13 @@ function profileHandlers() {
 		number0to99(this);
 	}
 
+	// Handlers to limit distance values in expected values. Use number0to99()
 	document.getElementById("distance_2_input").onkeyup = function() {
 		number0to99(this);
 	}
 
-	/* ADD activity form*/
+	// ADD activity forms handlers. Three different handlers for the three different cases
+	// Handler for time activity
 	document.getElementById("add_time_activity_form").onsubmit = function (e) {
 		var evt = e ? e : window.event;
 		if (evt.preventDefault) evt.preventDefault();
@@ -469,7 +479,7 @@ function profileHandlers() {
 
 		});
 	}
-
+	// Handler for distance activity
 	document.getElementById("add_distance_activity_form").onsubmit = function (e) {
 		var evt = e ? e : window.event;
 		if (evt.preventDefault) evt.preventDefault();
@@ -507,7 +517,7 @@ function profileHandlers() {
 
 		});
 	}
-
+	// Handler for point activity
 	document.getElementById("add_points_activity_form").onsubmit = function (e) {
 		var evt = e ? e : window.event;
 		if (evt.preventDefault) evt.preventDefault();
@@ -543,13 +553,13 @@ function profileHandlers() {
 		});
 	}
 
-	/*-- DELETE activity links --*/
+	// DELETE activity links
 	var deleteLinks = document.getElementsByClassName('deleteActivity');
 	for (var i in deleteLinks) {
 		deleteLinks[i].onclick  = delete_handler;
 	}
 
-	/*-- EDIT activity links --*/
+	// EDIT activity links
 	var editLinks = document.getElementsByClassName('editActivity');
 	for (var i in editLinks) {
 		editLinks[i].onclick  = edit_handler;
