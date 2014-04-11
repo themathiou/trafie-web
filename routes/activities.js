@@ -15,17 +15,17 @@ exports.get = function( req, res ){
   var user_id = req.session.user_id;
 
   if( !user_id || ( user_id !== req.params.user_id ) ) {
-	  return_activity( res, 403, '', 'en', 'd-m-y' );
+	  return_activity( res, 403, {}, 'en', 'd-m-y' );
   } else {
     // Find the profile
     Profile.schema.findOne({ '_id': user_id }, 'language date_format')
     .then( function( profile_data ) {
       // If the profile doesn't exist, return an empty json
-      if( typeof profile_data.language === 'undefined' ) return_activity( res, 404, '', 'en', 'd-m-y' );
+      if( typeof profile_data.language === 'undefined' ) return_activity( res, 404, {}, 'en', 'd-m-y' );
 
       // If the activity id was specified, try to find the activity
       if( typeof req.params.activity_id !== 'undefined' ) {
-        return_activity( res, 200, req.params.activity_id, profile_data.language, profile_data.date_format );
+        return_activity( res, 200, { '_id': req.params.activity_id, 'user_id': user_id }, profile_data.language, profile_data.date_format );
       } else {
         // If the activity id wasn't specified, try to fetch all the activities of the user
         var where = {};
@@ -52,13 +52,13 @@ exports.post = function( req, res ) {
   var user_id = req.session.user_id;
   // If there is no user id, or the user id is different than the one in the session
   if( !user_id || ( user_id !== req.params.user_id ) ) {
-    return_activity( res, 403, '', 'en', 'd-m-y' );
+    return_activity( res, 403, {}, 'en', 'd-m-y' );
   } else {
     // Find the profile
     Profile.schema.findOne({ '_id': user_id }, 'language date_format')
     .then( function( profile_data ) {
       // If the profile doesn't exist, send an empty json
-      if( typeof profile_data.language === 'undefined' ) return_activity( res, 404, '', 'en', 'd-m-y' );
+      if( typeof profile_data.language === 'undefined' ) return_activity( res, 404, {}, 'en', 'd-m-y' );
 
       var errors = false;
       var error_messages = {};
@@ -149,11 +149,11 @@ exports.post = function( req, res ) {
         var activity = new Activity( new_activity );
         // Save the activity
         activity.save(function ( err, activity ) {
-          return_activity( res, 201, activity._id, profile_data.language, profile_data.date_format );
+          return_activity( res, 201, { '_id': activity._id, 'user_id': user_id }, profile_data.language, profile_data.date_format );
         });
       } else {
         // If there are errors, send the error messages to the client
-        return_activity( res, 400, '', profile_data.language, profile_data.date_format, error_messages );
+        return_activity( res, 400, {}, profile_data.language, profile_data.date_format, error_messages );
       }
     });
   }
@@ -174,13 +174,13 @@ exports.put = function( req, res ) {
 
   // If there is no user id, redirect to login
   if( !user_id || !activity_id || ( user_id !== req.params.user_id ) ) {
-    return_activity( res, 403, '', 'en', 'd-m-y' );
+    return_activity( res, 403, {}, 'en', 'd-m-y' );
   } else {
     // Find the profile
     Profile.schema.findOne({ '_id': user_id }, 'language date_format')
     .then( function( profile_data ) {
       // If the profile doesn't exist, redirect
-      if( typeof profile_data.language === 'undefined' ) return_activity( res, 404, '', 'en', 'd-m-y' );
+      if( typeof profile_data.language === 'undefined' ) return_activity( res, 404, {}, 'en', 'd-m-y' );
 
       language = profile_data.language;
       date_format = profile_data.date_format;
@@ -189,7 +189,7 @@ exports.put = function( req, res ) {
     })
     .then( function( activity ) {
 
-      if( typeof activity._id == 'undefined' ) return_activity( res, 404, '', language, date_format );
+      if( typeof activity._id == 'undefined' ) return_activity( res, 404, {}, language, date_format );
 
       var errors = false;
       var error_messages = {};
@@ -276,11 +276,11 @@ exports.put = function( req, res ) {
         };
 
         Activity.findByIdAndUpdate( activity_id, activity, '', function ( err, activity ) {
-          return_activity( res, 200, activity._id, language, date_format );
+          return_activity( res, 200, { '_id': activity._id, 'user_id': user_id }, language, date_format );
         });
       } else {
         // If there are errors, send the error messages to the client
-        return_activity( res, 400, '', language, date_format, error_messages );
+        return_activity( res, 400, {}, language, date_format, error_messages );
       }
     });
   }
@@ -319,9 +319,9 @@ exports.delete = function( req, res ) {
  * @param string date_format    (date format that will be used for the dates of the activity)
  * @param json   error_messages (error messages that will be mapped to the input fields in the ui)
  */
-function return_activity( res, status_code, activity_id, language, date_format, error_messages ) {
+function return_activity( res, status_code, where, language, date_format, error_messages ) {
   // If an activity id wasn't supplied
-  if( !activity_id ) {
+  if( typeof where._id == 'undefined' ) {
     res.statusCode = 400;
     // If there are error messages, send them
     if( typeof error_messages !== 'undefined' ) {
@@ -334,7 +334,7 @@ function return_activity( res, status_code, activity_id, language, date_format, 
   res.statusCode = status_code;
 
   // Find the activity and return it
-  Activity.schema.findOne( { '_id': activity_id }, '' ).then( function( activity ) {
+  Activity.schema.findOne( where, '' ).then( function( activity ) {
     activity = {
       '_id'                   : activity._id,
       'discipline'            : activity.discipline,
