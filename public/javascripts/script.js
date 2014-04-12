@@ -120,6 +120,11 @@ function setSmall( year ) {
 /********************************************/
 /* 				REST CALLS 					*/
 /********************************************/
+/**
+ * ajax_get() : called for making GET ajax calls
+ * @param url : the target url for the ajax call
+ * @param callback : the callback function
+ */
 function ajax_get(url, callback) {
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET', url);
@@ -133,6 +138,12 @@ function ajax_get(url, callback) {
 	xhr.send();
 }
 
+/**
+ * ajax_post() : called for making POST ajax calls
+ * @param data : the data(parameters) we pass to the request
+ * @param url : the target url for the ajax call
+ * @param callback : the callback function
+ */
 function ajax_post(data, url, callback) {
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', url);
@@ -146,6 +157,12 @@ function ajax_post(data, url, callback) {
 	xhr.send(data);
 }
 
+/**
+ * ajax_put() : called for making PUT ajax calls
+ * @param data : the data(parameters) we pass to the request
+ * @param url : the target url for the ajax call
+ * @param callback : the callback function
+ */
 function ajax_put(data, url, callback) {
 	var xhr = new XMLHttpRequest();
 	xhr.open('PUT', url);
@@ -162,6 +179,11 @@ function ajax_put(data, url, callback) {
 	xhr.send(data);
 }
 
+/**
+ * ajax_delete() : called for making DELETE ajax calls
+ * @param url : the target url for the ajax call
+ * @param callback : the callback function
+ */
 function ajax_delete( url, callback) {
 	var xhr = new XMLHttpRequest();
 	xhr.open('DELETE', url);
@@ -175,8 +197,16 @@ function ajax_delete( url, callback) {
 	xhr.send();
 }
 
+
+/**
+ * submit_form() : serialize the form and creates a json with "name":"value" combinations
+ * @param form : the form we submit
+ * @param callback : the callback function
+ */
 function submit_form(form, callback) {
 	var data = '';
+	//for-loop that reads the form elements and their values and creates the
+	//"name":"value" combinations
 	for( var i=0, length = form.elements.length; i < length; i++) {
 		if ( form.elements.hasOwnProperty(i) ) {
 			data += '\"'+form.elements[i].name + '\":\"' + form.elements[i].value + '\"';
@@ -187,11 +217,14 @@ function submit_form(form, callback) {
 		}
 	}
 
+	//add {} around the data
 	data = '{' + data + '}';
 
-
+	//get the method of the form
 	var method = form.attributes.method.value;
 
+	//case conditions for separating the method we use in the specific form
+	// cases : POST - PUT -GET
 	switch(method){
 		case 'POST':
 			ajax_post(data, form.attributes.action.value, callback);

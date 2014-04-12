@@ -3,8 +3,10 @@
 /********************************************/
 
 /* document.getElementById("id").event = function() { doSomething(); } */
+
 /**
- * settingsHandlers() : the handlers for the buttons in settings
+ * closeOthers() : when we choose to edit a field
+ *all others should be in their un-editable format
  */
 function closeOthers() {
 	cancelEditField('first_name_existed', 'first_name', 'settingsFirstNameButtons', 'editFirstName');

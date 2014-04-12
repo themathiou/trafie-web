@@ -1,6 +1,8 @@
 /*********************************/
 /* 		GENERAL VARIABLES		 */
 /*********************************/
+
+//object with disciplines grouped in categories
 var disciplines = {
       'time': [
         '100m',
@@ -35,6 +37,7 @@ var disciplines = {
       ]
     };
 
+//initialize the object for the vizualization
 google.load("visualization", "1", {packages:["corechart"]});
 
 
@@ -43,12 +46,21 @@ google.load("visualization", "1", {packages:["corechart"]});
 /* 		Draw Chart Functions	 */
 /*********************************/
 
+/**
+ * drawSimpleChart() : called for drawing the chart for a discipline of the specific user
+ * @param user_id : the user id
+ * @param discipline : the discipline we want to show
+ */
 function drawSimpleChart( user_id, discipline ) {
 
+	//call ajax_get (defined in script.js) in order to fetch the specific performances
 	ajax_get( '/user/' + user_id + '/activities?discipline='+discipline, function( response ){
 
+		//parse responce as JSON
 		var res = JSON.parse(response);
 
+		//create a 2-dimension chart with y-axis:performance(number) and x-axis:date(date)
+		//
 		var data = {
 		  "cols": [
 		        {"id":"","label":"Date","pattern":"","type":"date"},
@@ -57,6 +69,8 @@ function drawSimpleChart( user_id, discipline ) {
 		  "rows": []
 		}
 
+
+			// add rows to chart based on the discipline
 
 			// TIME DISCIPLINE i.e : performance: "00:00:20.09"
 			if( disciplines.time.indexOf(discipline) > -1 ) {
@@ -91,6 +105,7 @@ function drawSimpleChart( user_id, discipline ) {
 				console.log('- error in drawChart(). Unknown discipline:' + discipline);
 			}
 
+		//create table object for the visualization
 		var data_table = new google.visualization.DataTable(data);
 
 		// Set chart options
@@ -113,7 +128,13 @@ function drawSimpleChart( user_id, discipline ) {
 /* 			Handlers			 */
 /*********************************/
 
-function setDisciplineButtonHandler( user_id , main_discipline, main_discipline_exists ) {
+/**
+ * setDisciplineButtonHandler() : add handlers in the buttons with the disciplines in order to show specific chart
+ * @param user_id : the user id
+ * @param main_discipline : user's main discipline in order to show
+ * @param main_discipline_exists :
+ */
+function setDisciplineButtonHandler( user_id , main_discipline ) {
 
 	var discipline_buttons = document.getElementsByClassName('discipline_button');
 	for (var i = 0, length = discipline_buttons.length; i < length; i++) {
@@ -126,7 +147,7 @@ function setDisciplineButtonHandler( user_id , main_discipline, main_discipline_
 		})( user_id, discipline );
 	}
 
-	if(main_discipline_exists){
+	if( main_discipline != 'undefined' ){
 		google.setOnLoadCallback(drawSimpleChart( user_id, main_discipline ));
 	}
 

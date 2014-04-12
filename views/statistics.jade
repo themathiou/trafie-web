@@ -18,11 +18,14 @@ block content
 	script(type='text/javascript' src='https://www.google.com/jsapi')
 	script(type='text/javascript', src='/javascripts/statistics.js')
 	script(type='text/javascript').
-		var main_discipline_exists = false
 		if( #{profile.disciplines_of_user.indexOf(profile.discipline)} > -1 )
 		{
-			main_discipline_exists = true
+			document.ready = setDisciplineButtonHandler( '#{profile._id}' , '#{profile.discipline}' )
 		}
-		document.ready = setDisciplineButtonHandler( '#{profile._id}' , '#{profile.discipline}', main_discipline_exists )
+		else
+		{
+			document.ready = setDisciplineButtonHandler( '#{profile._id}' , 'undefined' )
+		}
+
 
 
