@@ -10,7 +10,11 @@ block content
 				li
 					a( href="javascript:;" id=profile.disciplines_of_user[i]+'_button' class="discipline_button" data-user-id=profile._id data-discipline=profile.disciplines_of_user[i] )= tr[profile.disciplines_of_user[i]]
 			-}
-		div#chart_div( style="width: 900px; height: 500px;" )
+
+		div#dashboard
+			div#chart_div( style="width: 915px; height: 300px;" )
+			div#control( style='width: 915px; height: 50px;' )
+
 
 
 

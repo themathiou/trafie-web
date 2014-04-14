@@ -443,9 +443,13 @@ function profileHandlers() {
 	}
 
 	// Handler for cancel adding activity link. calls function to CLOSE the slider for adding activity
-	document.getElementById("cancel_activity_link").onclick = function() {
-		close_new_activity_form();
+	var cancelAddActivityLinks = document.getElementsByClassName('cancel_link');
+	for( var i in cancelAddActivityLinks ) {
+		cancelAddActivityLinks[i].onclick = function() {
+			close_new_activity_form();
+		}
 	}
+
 
 	// Handler for option-list with different disciplines in add activity.
 	document.getElementById("discipline_input").onchange = function() {

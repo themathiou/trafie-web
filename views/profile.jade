@@ -56,7 +56,7 @@ block content
 								//submit
 								div#submit_buttons.row.submit_buttons
 									input.btn_green(type="submit" name="new_competition" value=tr['save'])
-									a#cancel_activity_link.cancel_link( href="javascript:;")= tr['cancel']
+									a.cancel_link( href="javascript:;")= tr['cancel']
 						else
 							form#add_time_activity_form( method="POST" style="display:none;" action="/user/"+profile._id+"/activities")
 								div.data_entry.row= tr['enter_your_performance'] +':'
@@ -80,7 +80,7 @@ block content
 								//submit
 								div#submit_buttons.row.submit_buttons
 									input.btn_green(type="submit" name="new_competition" value=tr['save'])
-									a#cancel_activity_link.cancel_link( href="javascript:;")= tr['cancel']
+									a.cancel_link( href="javascript:;")= tr['cancel']
 
 							//distance measure
 						if disciplines.distance.indexOf(profile.discipline) > -1
@@ -100,7 +100,7 @@ block content
 								//submit
 								div#submit_buttons.row.submit_buttons
 									input.btn_green(type="submit" name="new_competition" value=tr['save'])
-									a#cancel_activity_link.cancel_link( href="javascript:;")= tr['cancel']
+									a.cancel_link( href="javascript:;")= tr['cancel']
 						else
 							form#add_distance_activity_form( method="POST" style="display:none;" action="/user/"+profile._id+"/activities")
 								div.data_entry.row= tr['enter_your_performance'] +':'
@@ -118,7 +118,7 @@ block content
 								//submit
 								div#submit_buttons.row.submit_buttons
 									input.btn_green(type="submit" name="new_competition" value=tr['save'])
-									a#cancel_activity_link.cancel_link( href="javascript:;")= tr['cancel']
+									a.cancel_link( href="javascript:;")= tr['cancel']
 
 							// points measure
 						if disciplines.points.indexOf(profile.discipline) > -1
@@ -134,7 +134,7 @@ block content
 								//submit
 								div#submit_buttons.row.submit_buttons
 									input.btn_green(type="submit" name="new_competition" value=tr['save'])
-									a#cancel_activity_link.cancel_link( href="javascript:;")= tr['cancel']
+									a.cancel_link( href="javascript:;")= tr['cancel']
 						else
 							form#add_points_activity_form( method="POST" style="display:none;" action="/user/"+profile._id+"/activities")
 								div.data_entry.row= tr['enter_your_performance'] +':'
@@ -148,7 +148,7 @@ block content
 								//submit
 								div#submit_buttons.row.submit_buttons
 									input.btn_green(type="submit" name="new_competition" value=tr['save'])
-									a#cancel_activity_link.cancel_link( href="javascript:;")= tr['cancel']
+									a.cancel_link( href="javascript:;")= tr['cancel']
 
 							//div.row
 								input.btn_neutral_gray(type="submit" name="new_competition" value="Submit")
