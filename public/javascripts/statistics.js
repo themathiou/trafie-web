@@ -67,7 +67,7 @@ function drawSimpleChart( user_id, discipline ) {
 		var data = {
 		  "cols": [
 		        {"id":"","label":"Date","pattern":"","type":"date"},
-		        {"id":"","label":"performance","pattern":"","type":"number"}
+		        {"id":"","label":"Performance","pattern":"","type":"number"}
 		      ],
 		  "rows": []
 		}
@@ -107,17 +107,6 @@ function drawSimpleChart( user_id, discipline ) {
 			console.log('- error in drawChart(). Unknown discipline:' + discipline);
 		}
 
-		//create table object for the visualization
-		var data_table = new google.visualization.DataTable(data);
-
-		// Set chart options
-	    var options = { 'title': discipline ,
-	    			   /* 'curveType': 'function', */
-					   /*'backgroundColor': 'black', */
-	    			   'dataOpacity':'0.3',
-	                   /* 'width':1200, */
-	                   'height':400};
-
 		//------CONTROL-----
 		var control = new google.visualization.ControlWrapper({
 		     'controlType': 'ChartRangeFilter',
@@ -141,21 +130,20 @@ function drawSimpleChart( user_id, discipline ) {
 		       }
 		     },
 		     // Initial range: 2012-02-09 to 2012-03-20.
-		     'state': {'range': {'start': new Date(2013, 1, 9), 'end': new Date(2014, 6, 20)}}
+		     'state': {'range': {'start': new Date(2014, 1, 1), 'end': new Date()}}
 		   });
 
 		//---CHART
 		var chart = new google.visualization.ChartWrapper({
-           'chartType': 'AreaChart',
+           'chartType': 'LineChart',
            'containerId': 'chart_div',
            'options': {
+       		'title': discipline,
+       		'dataOpacity':'0.7',
              // Use the same chart area width as the control for axis alignment.
              'chartArea': {'height': '80%', 'width': '90%'}
-             /*
-				 'hAxis': {'slantedText': false},
-				 'vAxis': {'viewWindow': {'min': 0, 'max': 2000}
-
-             }*/
+			 ,'hAxis': {'slantedText': false}
+				 /*',vAxis': {'viewWindow': {'min': 0, 'max': 2000}}*/
            },
            // Convert the first column from 'date' to 'string'.
            'view': {
@@ -165,16 +153,18 @@ function drawSimpleChart( user_id, discipline ) {
                    return dataTable.getFormattedValue(rowIndex, 0);
                  },
                  'type': 'string'
-               },1 ]
+               }, 1 ]
            }
          });
 
+		//We need to reverse the order of the elements in rows for
+		//the dashboard.
+ 		data.rows.reverse();
 
-/* 		var chart = new google.visualization.AreaChart(document.getElementById('chart_div')); */
 
 		var dashboard = new google.visualization.Dashboard(document.getElementById('dashboard'));
 		dashboard.bind(control, chart);
-		dashboard.draw(data_table);
+		dashboard.draw(data);
 /* 		chart.draw(data_table, options); */
 	});
 
