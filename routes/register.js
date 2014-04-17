@@ -17,7 +17,7 @@ exports.post = function( req, res ) {
   // Initializing the input values
   var first_name = typeof req.body.first_name !== 'undefined' ? req.body.first_name.trim() : '';
   var last_name = typeof req.body.last_name !== 'undefined' ? req.body.last_name.trim() : '';
-  var email = typeof req.body.email !== 'undefined' ? req.body.email.trim() : '';
+  var email = typeof req.body.email !== 'undefined' ? req.body.email.trim().toLowerCase() : '';
   var password = typeof req.body.password !== 'undefined' ? req.body.password : '';
   var repeat_password = typeof req.body.repeat_password !== 'undefined' ? req.body.repeat_password : '';
 

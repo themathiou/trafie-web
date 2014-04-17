@@ -5,7 +5,7 @@ exports.get = function( req, res ) {
 };
 
 exports.post = function( req, res ) {
-  var email = req.body.email;
+  var email = req.body.email.toLowerCase();
   var password = User.schema.encryptPassword(req.body.password);
 
   // Find user by id and password
