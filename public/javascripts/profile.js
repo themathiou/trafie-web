@@ -239,6 +239,8 @@ function profileHandlers() {
 
 		var this_discipline = existed_activity.querySelector('.discipline').getAttribute('data-value');
 		var this_performance = existed_activity.querySelector('.performance').getAttribute('data-value');
+		//"2014-03-14T01:00:00.000Z" -> split in T and remove the first \"
+		var this_date = existed_activity.querySelector('.date').getAttribute('data-value').split('T')[0].split('\"')[1];
 			//distance disciplines
 			if( disciplines.distance.indexOf(this_discipline) > -1 ) {
 
@@ -250,8 +252,10 @@ function profileHandlers() {
 				//show editable activities
 				edit_activity.style.display = 'block' ;
 
+				console.log(this_date);
+
 				//date picker for editable field
-				var date_picker = new Pikaday({field: edit_activity.querySelector('#edit_datepicker'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date('2020-12-31'), yearRange: [2000,2020]});
+				var date_picker = new Pikaday({field: edit_activity.querySelector('#edit_datepicker'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date('2020-12-31'), yearRange: [2000,2020], defaultDate: new Date(this_date), setDefaultDate: new Date(this_date)});
 
 				//include the edit activity in the parent div
 				this.parentNode.appendChild(edit_activity);

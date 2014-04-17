@@ -9,7 +9,7 @@ head
 	link(rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/icons/trafie_144.png")
 
 	link(rel='stylesheet', href='/stylesheets/reset.css')
-	link(rel='stylesheet', media='all and (min-width: 901px)', href='/stylesheets/style.css')
+	link(rel='stylesheet', href='/stylesheets/style.css')
 
 
 	meta(name="apple-mobile-web-app-capable" content="yes")
@@ -25,11 +25,11 @@ body
 			a.logo(href="/")
 			ul.dropdown
 				li
-					a(href="/")= profile.first_name
+					a.menu_profile(href="/")= profile.first_name
 				li
-					a(href="/statistics")= tr['statistics']
+					a.menu_statistics(href="/statistics")= tr['statistics']
 				li
-					a(href="/settings")= tr['settings']
+					a.menu_settings(href="/settings")= tr['settings']
 block content
 
 

@@ -24,601 +24,281 @@
 
 
 
-
-
-
-/*******************************************************************************************************************************************************/
-/* Desktops and laptops 		************************************************************************************************************************/
-/*******************************************************************************************************************************************************/
-@media only screen
-and (min-width : 1224px) {
-
-	/* GENERAL */
-	body
-	{
-		margin: 0;
-		padding: 0;
-		color: #555;
-		font: 300 1em Open Sans,Arial,Helvetica,sans-serif;
-		background: white;
-	}
-
-	#content
-	{
-	    padding: 0;
-	    margin-top: 40px;
-	}
-
-	#main_content
-	{
-		max-width: 950px;
-		min-width: 950px;
-		width: 80%;
-		margin: 0px auto;
-		padding: 50px auto;
-		background-color: none;
-		border: 1px solid @light_gray;
-		border-top: none;
-		border-bottom: none;
-	}
-
-	/* HISTORY */
-	#slider {
-		height: 20px;
-	}
-
-	#add_activity_link {
-		width:100%;
-		float:left;
-	}
-
-	.history_line {
-		margin: 0 auto;
-		padding: 0;
-		list-style: none;
-		position: relative;
-		width:450px;
-
-		/*line*/
-		&:before {
-			content: '';
-			position: absolute;
-			top: 0;
-			bottom: 0;
-			width: 10px;
-			background: @red;
-			left: 5%;
-			margin-left: -14px;
-			z-index: 0;
-			box-shadow: 0px 0px 4px 2px rgba(255, 255, 255, 0.2), 0 0 2px 3px rgba(255, 255, 255, 0.2) inset;
-		}
-
-
-		/* post */
-		& > li .info {
-			margin: 0 0 15px 12%;
-			background-color: @light_gray;
-			color: @dark_gray;
-			padding: 10px 10px 10px 15px;
-			font-weight: 300;
-			line-height: 1.4;
-			position: relative;
-			.rounded_corners(5px);
-			border: 1px solid white;
-			box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.2), 0 0 16px 4px rgba(255, 255, 255, 0.6) inset;
-			display: inline-block;
-			width:100%;
-			/* 		text-shadow: 0px 0px 4px #000; */
-
-			.performance {
-				font-size: 2.4em;
-				font-weight: 100;
-			}
-
-			.date {
-				font-style: italic;
-			}
-
-			.discipline {
-			}
-
-			.deleteActivity {
-				float: right;
-				background-image: url('../images/ui/delete.png');
-				background-repeat: no-repeat;
-				min-width: 16px;
-			}
-
-			.editActivity {
-				float: right;
-				background-image: url('../images/ui/edit.png');
-				background-repeat: no-repeat;
-				min-width: 18px;
-			}
-		}
-
-		/* odd post */
-		& > li:nth-child(odd) .info {
-			background-color: @lightgray ;
-		}
-
-		/* info end point (left) */
-		& > li .info:after {
-			right: 100%;
-			border: solid transparent;
-			content: " ";
-			height: 0;
-			width: 0;
-			position: absolute;
-			pointer-events: none;
-			border-right-color: @light_gray;
-			border-width: 10px;
-			top: 10px;
-		}
-
-		& > li:nth-child(odd) .info:after {
-			border-right-color: @lightgray;
-		}
-
-
-		/* ADD activity */
-		& > li .add_activity{
-			background: @lightgray !important;
-			color: #fff;
-			padding: 0.4em;
-			font-size: 1.1em;
-			position: relative;
-			border-radius: 5px;
-			border:1px solid @lightgray;
-			border-left: none;
-			margin-bottom: 30px;
-			text-align: right;
-			overflow: hidden;
-			text-align: left;
-			text-shadow: none;
-
-			.data_entry {
-				color: black;
-
-				div {
-					float:left;
-				}
-
-				label {
-					font-size: 0.8em;
-					padding:0px;
-					margin:0px;
-				}
-
-				input {
-					.rounded_corners(5px);
-					box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2) inset;
-					border:1px white solid;
-					padding: 6px;
-					text-align: center;
-				}
-
-				.submit_buttons {
-				}
-			}
-
-		}
-
-		/* EDIT activity */
-		#edit_activity_form {
-				color: black;
-				position: relative;
-
-				div {
-					float:left;
-				}
-
-				label {
-					font-size: 0.8em;
-					padding:0px;
-					margin:0px;
-				}
-
-				input {
-					.rounded_corners(5px);
-					box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2) inset;
-					border:1px white solid;
-					padding: 6px;
-					text-align: center;
-				}
-
-				.submit_buttons {
-				}
-
-		}
-
-		& > li .end {
-			width:200px;
-			margin: 0 0 15px 10%;
-			line-height: 1.2;
-			position: relative;
-			border-radius: 5px;
-			background-color: @mediumgray;
-			color: white;
-			padding: 0.5em;
-			font-size: 1em;
-			font-style: italic;
-			position: relative;
-			border-radius: 5px;
-			border:1px solid @lightgray;
-			margin-bottom: 30px;
-			text-align: center;
-		}
-
-
-		& > li .info h2 {
-			margin-top: 0px;
-			padding: 0 0 10px 0;
-			border-bottom: 1px solid rgba(255,255,255,0.4);
-		}
-
-
-
-
-	/* The icons */
-		& > li .icon_back {
-			width: 40px;
-			height: 40px;
-			font-size: 1em;
-			line-height: 40px;
-			position: absolute;
-			background: none;
-			.rounded_corners(50%);
-			box-shadow: 0 0 0 8px @dark_gray;
-			text-align: center;
-			left: 5%;
-			/*top: 0;*/
-			z-index: -5; /* has to be < 0 for being under the history line */
-			margin: 0 0 0 -6.5%;
-		}
-
-			& > li .icon {
-			width: 40px;
-			height: 40px;
-			font-style: normal;
-			font-weight: normal;
-			font-variant: normal;
-			text-transform: none;
-			font-size: 1em;
-			line-height: 40px;
-			position: absolute;
-			color: black;
-			background: white;
-			.rounded_corners(50%);
-			text-align: center;
-			left: 5%;
-			/*top: 0;*/
-			margin: 0 0 0 -6.5%;
-			.background_shadow();
-		}
-	}
-}
-
-/******************************************************************************************************************************************************/
-/* Smartphones (portrait and landscape)   *********************************************************************************************************** */
-/******************************************************************************************************************************************************/
-@media only screen
-and (min-device-width : 320px)
-and (max-device-width : 480px) {
-	body
-	{
-		margin: 0;
-		padding: 0;
-		color: #555;
-		font: 300 1em Open Sans,Arial,Helvetica,sans-serif;
-		background: blue;
-	}
-
-	#content
-	{
-	    padding: 0;
-	    margin-top: 40px;
-	}
-
-	#main_content
-	{
-		max-width: 950px;
-		min-width: 950px;
-		width: 80%;
-		margin: 0px auto;
-		padding: 50px auto;
-		background-color: none;
-		border: 1px solid @light_gray;
-		border-top: none;
-		border-bottom: none;
-	}
-}
-
-
-/*******************************************************************************************************************************************************/
-/* iPads (portrait and landscape) 	 ***************************************************************************************************************** */
-/*******************************************************************************************************************************************************/
-@media only screen
-and (min-device-width : 768px)
-and (max-device-width : 1024px) {
-	body
-	{
-		margin: 0;
-		padding: 0;
-		color: #555;
-		font: 300 1em Open Sans,Arial,Helvetica,sans-serif;
-		background: red;
-	}
-
-	#content
-	{
-	    padding: 0;
-	    margin-top: 40px;
-	}
-
-	#main_content
-	{
-		max-width: 950px;
-		min-width: 950px;
-		width: 80%;
-		margin: 0px auto;
-		padding: 50px auto;
-		background-color: none;
-		border: 1px solid @light_gray;
-		border-top: none;
-		border-bottom: none;
-	}
-
-}
-
-/********************************************************************************************************************************************************/
-/* iOS - retina		 ************************************************************************************************************************** */
-/********************************************************************************************************************************************************/
-@media
-only screen and (-webkit-min-device-pixel-ratio : 1.5),
-only screen and (min-device-pixel-ratio : 1.5) {
-	/* GENERAL */
-	body
-	{
-		margin: 0;
-		padding: 0;
-		color: #555;
-		font: 300 1em Open Sans,Arial,Helvetica,sans-serif;
-		background: gray;
-	}
-
-	#content
-	{
-	    padding: 0;
-	    margin-top: 40px;
-	}
-
-	#main_content
-	{
-		width: 90%;
-		margin: 0px auto;
-		padding: 50px auto;
-		background-color: none;
-		border: 1px solid @light_gray;
-		border-top: none;
-		border-bottom: none;
-	}
-
-	/* HISTORY */
-	#slider {
-		height: 20px;
-	}
-
-	#add_activity_link {
-		width:100%;
-		float:left;
-	}
-
-	.history_line {
-		margin: 0 auto;
-		padding: 0;
-		list-style: none;
-		position: relative;
-		width:100%;
-
-		/*line*/
-		&:before {
-			content: '';
-			position: absolute;
-			top: 0;
-			bottom: 0;
-			width: 10px;
-			background: @red;
-			left: 5%;
-			margin-left: -14px;
-			z-index: 0;
-			box-shadow: 0px 0px 4px 2px rgba(255, 255, 255, 0.2), 0 0 2px 3px rgba(255, 255, 255, 0.2) inset;
-		}
-
-
-		/* activity post */
-		& > li .info {
-			margin: 0 0 15px 1%;
-			background-color: @light_gray;
-			color: @dark_gray;
-			padding: 10px 10px 10px 15px;
-			font-weight: 300;
-			line-height: 1.4;
-			position: relative;
-			.rounded_corners(5px);
-			border: 1px solid white;
-			box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.2), 0 0 16px 4px rgba(255, 255, 255, 0.6) inset;
-			display: inline-block;
-			width:100%;
-			/* 		text-shadow: 0px 0px 4px #000; */
-
-			.performance {
-				font-size: 2.4em;
-				font-weight: 100;
-			}
-
-			.date {
-				font-style: italic;
-			}
-
-			.discipline {
-			}
-
-			.deleteActivity {
-				float: right;
-				background-image: url('../images/ui/delete.png');
-				background-repeat: no-repeat;
-				min-width: 16px;
-			}
-
-			.editActivity {
-				float: right;
-				background-image: url('../images/ui/edit.png');
-				background-repeat: no-repeat;
-				min-width: 18px;
-			}
-		}
-
-		/* odd post */
-		& > li:nth-child(odd) .info {
-			background-color: @lightgray ;
-		}
-
-		/* info end point (left) */
-		& > li .info:after {
-			right: 100%;
-			border: solid transparent;
-			content: " ";
-			height: 0;
-			width: 0;
-			position: absolute;
-			pointer-events: none;
-			border-right-color: @light_gray;
-			border-width: 10px;
-			top: 10px;
-		}
-
-		& > li:nth-child(odd) .info:after {
-			border-right-color: @lightgray;
-		}
-
-
-		/* ADD activity */
-		& > li .add_activity{
-			background: @lightgray !important;
-			color: #fff;
-			padding: 0.4em;
-			font-size: 1.1em;
-			position: relative;
-			border-radius: 5px;
-			border:1px solid @lightgray;
-			border-left: none;
-			margin-bottom: 30px;
-			text-align: right;
-			overflow: hidden;
-			text-align: left;
-			text-shadow: none;
-
-			.data_entry {
-				color: black;
-
-				div {
-					float:left;
-				}
-
-				label {
-					font-size: 0.8em;
-					padding:0px;
-					margin:0px;
-				}
-
-				input {
-					.rounded_corners(5px);
-					box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2) inset;
-					border:1px white solid;
-					padding: 6px;
-					text-align: center;
-				}
-
-				.submit_buttons {
-				}
-			}
-
-		}
-
-		/* EDIT activity */
-		#edit_activity_form {
-				color: black;
-				position: relative;
-
-				div {
-					float:left;
-				}
-
-				label {
-					font-size: 0.8em;
-					padding:0px;
-					margin:0px;
-				}
-
-				input {
-					.rounded_corners(5px);
-					box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2) inset;
-					border:1px white solid;
-					padding: 6px;
-					text-align: center;
-				}
-
-				.submit_buttons {
-				}
-
-		}
-
-		& > li .end {
-			width:200px;
-			margin: 0 0 15px 10%;
-			line-height: 1.2;
-			position: relative;
-			border-radius: 5px;
-			background-color: @mediumgray;
-			color: white;
-			padding: 0.5em;
-			font-size: 1em;
-			font-style: italic;
-			position: relative;
-			border-radius: 5px;
-			border:1px solid @lightgray;
-			margin-bottom: 30px;
-			text-align: center;
-		}
-
-
-		& > li .info h2 {
-			margin-top: 0px;
-			padding: 0 0 10px 0;
-			border-bottom: 1px solid rgba(255,255,255,0.4);
-		}
-
-
-
-
-	/* The icons */
-		& > li .icon_back {
-			display : none;
-		}
-
-			& > li .icon {
-			display: none;
-		}
-	}
-}
-
-
-
 /*******************************************************************************************************************************
  * 							                                                                      GENERAL                      *
  ******************************************************************************************************************************/
+/* GENERAL */
+body
+{
+	margin: 0;
+	padding: 0;
+	color: #555;
+	font: 300 1em Open Sans,Arial,Helvetica,sans-serif;
+	background: white;
+}
 
+#content
+{
+    padding: 0;
+    margin-top: 40px;
+}
+
+#main_content
+{
+	max-width: 950px;
+	min-width: 950px;
+	width: 80%;
+	margin: 0px auto;
+	padding: 50px auto;
+	background-color: none;
+	border: 1px solid @light_gray;
+	border-top: none;
+	border-bottom: none;
+}
+
+/* MENU ITEMS */
+.menu_profile{}
+
+.menu_statistics{}
+
+.menu_settings{}
+
+
+/* HISTORY */
+#slider {
+	height: 20px;
+}
+
+#add_activity_link {
+	width:100%;
+	float:left;
+}
+
+.history_line {
+	margin: 0 auto;
+	padding: 0;
+	list-style: none;
+	position: relative;
+	width:450px;
+
+	/*line*/
+	&:before {
+		content: '';
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		width: 10px;
+		background: @red;
+		left: 5%;
+		margin-left: -14px;
+		z-index: 0;
+		box-shadow: 0px 0px 4px 2px rgba(255, 255, 255, 0.2), 0 0 2px 3px rgba(255, 255, 255, 0.2) inset;
+	}
+
+
+	/* post */
+	& > li .info {
+		margin: 0 0 15px 12%;
+		background-color: @light_gray;
+		color: @dark_gray;
+		padding: 10px 10px 10px 15px;
+		font-weight: 300;
+		line-height: 1.4;
+		position: relative;
+		.rounded_corners(5px);
+		border: 1px solid white;
+		box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.2), 0 0 16px 4px rgba(255, 255, 255, 0.6) inset;
+		display: inline-block;
+		width:100%;
+		/* 		text-shadow: 0px 0px 4px #000; */
+
+		.performance {
+			font-size: 2.4em;
+			font-weight: 100;
+		}
+
+		.date {
+			font-style: italic;
+		}
+
+		.discipline {
+		}
+
+		.deleteActivity {
+			float: right;
+			background-image: url('../images/ui/delete.png');
+			background-repeat: no-repeat;
+			min-width: 16px;
+		}
+
+		.editActivity {
+			float: right;
+			background-image: url('../images/ui/edit.png');
+			background-repeat: no-repeat;
+			min-width: 18px;
+		}
+	}
+
+	/* odd post */
+	& > li:nth-child(odd) .info {
+		background-color: @lightgray ;
+	}
+
+	/* info end point (left) */
+	& > li .info:after {
+		right: 100%;
+		border: solid transparent;
+		content: " ";
+		height: 0;
+		width: 0;
+		position: absolute;
+		pointer-events: none;
+		border-right-color: @light_gray;
+		border-width: 10px;
+		top: 10px;
+	}
+
+	& > li:nth-child(odd) .info:after {
+		border-right-color: @lightgray;
+	}
+
+
+	/* ADD activity */
+	& > li .add_activity{
+		background: @lightgray !important;
+		color: #fff;
+		padding: 0.4em;
+		font-size: 1.1em;
+		position: relative;
+		border-radius: 5px;
+		border:1px solid @lightgray;
+		border-left: none;
+		margin-bottom: 30px;
+		text-align: right;
+		overflow: hidden;
+		text-align: left;
+		text-shadow: none;
+
+		.data_entry {
+			color: black;
+
+			div {
+				float:left;
+			}
+
+			label {
+				font-size: 0.8em;
+				padding:0px;
+				margin:0px;
+			}
+
+			input {
+				.rounded_corners(5px);
+				box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2) inset;
+				border:1px white solid;
+				padding: 6px;
+				text-align: center;
+			}
+
+			.submit_buttons {
+			}
+		}
+
+	}
+
+	/* EDIT activity */
+	#edit_activity_form {
+			color: black;
+			position: relative;
+
+			div {
+				float:left;
+			}
+
+			label {
+				font-size: 0.8em;
+				padding:0px;
+				margin:0px;
+			}
+
+			input {
+				.rounded_corners(5px);
+				box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2) inset;
+				border:1px white solid;
+				padding: 6px;
+				text-align: center;
+			}
+
+			.submit_buttons {
+			}
+
+	}
+
+	& > li .end {
+		width:200px;
+		margin: 0 0 15px 10%;
+		line-height: 1.2;
+		position: relative;
+		border-radius: 5px;
+		background-color: @mediumgray;
+		color: white;
+		padding: 0.5em;
+		font-size: 1em;
+		font-style: italic;
+		position: relative;
+		border-radius: 5px;
+		border:1px solid @lightgray;
+		margin-bottom: 30px;
+		text-align: center;
+	}
+
+
+	& > li .info h2 {
+		margin-top: 0px;
+		padding: 0 0 10px 0;
+		border-bottom: 1px solid rgba(255,255,255,0.4);
+	}
+
+
+
+
+/* The icons */
+	& > li .icon_back {
+		width: 40px;
+		height: 40px;
+		font-size: 1em;
+		line-height: 40px;
+		position: absolute;
+		background: none;
+		.rounded_corners(50%);
+		box-shadow: 0 0 0 8px @dark_gray;
+		text-align: center;
+		left: 5%;
+		/*top: 0;*/
+		z-index: -5; /* has to be < 0 for being under the history line */
+		margin: 0 0 0 -6.5%;
+	}
+
+		& > li .icon {
+		width: 40px;
+		height: 40px;
+		font-style: normal;
+		font-weight: normal;
+		font-variant: normal;
+		text-transform: none;
+		font-size: 1em;
+		line-height: 40px;
+		position: absolute;
+		color: black;
+		background: white;
+		.rounded_corners(50%);
+		text-align: center;
+		left: 5%;
+		/*top: 0;*/
+		margin: 0 0 0 -6.5%;
+		.background_shadow();
+	}
+}
 
 
 #footer
@@ -673,7 +353,9 @@ a
 
 
 
-/*********************************************************** /GENERAL ***************************************/
+
+
+
 
 
 /*******************************************************************************************************************************
@@ -874,7 +556,13 @@ input.btn_blue_2 {
 	font-weight: 400;
 }
 
- /*********************************************************** /ACTION BUTTONS  ***************************************/
+
+
+
+
+
+
+
 
 /*******************************************************************************************************************************
  * 							                                                                      MAIN MENU                    *
@@ -892,7 +580,7 @@ input.btn_blue_2 {
 #mainmenu
 {
 	margin: 0 auto;
-	width: 950px;
+	max-width: 950px;
 	text-align:right;
 	z-index: 100;
 
@@ -932,7 +620,15 @@ input.btn_blue_2 {
 	}
 }
 
-/*********************************************************** /MAIN MENU ***************************************/
+
+
+
+
+
+
+
+
+
 
 
 /*******************************************************************************************************************************
@@ -986,10 +682,6 @@ input.btn_blue_2 {
 		}
 	}
 }
-
-/*********************************************************** /PROFILE ***************************************/
-
-
 
 /*********************************************************** /PROFILE ***************************************/
 
@@ -1123,7 +815,16 @@ input.btn_blue_2 {
 
 }
 
-/*********************************************************** /SETTINGS ***************************************/
+
+
+
+
+
+
+
+
+
+
 
 
 /******************************************************/
@@ -1309,7 +1010,10 @@ input.btn_blue_2 {
     opacity: .3;
 }
 
-/*********************************************************** /DATEPICKER ***************************************/
+
+
+
+
 
 
 /*******************************************************************************************************************************
@@ -1467,7 +1171,229 @@ input.btn_blue_2 {
 	background-color: #ee5f5b;
 }
 
-/*********************************************************** /RIBBONS ***************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/******************************************************/
+/*			MULTIPLE DEVICES SUPPORT				  */
+/******************************************************/
+
+/******************************************************************************************************************************************************/
+/* Smartphones (portrait and landscape)   *********************************************************************************************************** */
+/******************************************************************************************************************************************************/
+/*
+@media screen and (max-width : 767px) {
+	body
+	{
+		background: rgba(0, 0, 0, 0.4);
+	}
+
+}
+*/
+
+/*******************************************************************************************************************************************************/
+/* Tablet 	 ***************************************************************************************************************** */
+/*******************************************************************************************************************************************************/
+@media screen and (min-width : 100px) and (max-width : 992px) {
+	body
+	{
+		background: rgba(0,0,0, 0.3);
+	}
+
+	#content
+	{
+	}
+
+	#main_content
+	{
+		max-width: 990px;
+		min-width: 420px;
+		width: 100%;
+		margin: 0px auto;
+		padding: 50px auto;
+		background-color: none;
+		border: none;
+	}
+
+	/* MENU ITEMS */
+	.menu_profile{}
+
+	.menu_statistics{
+			display : none;
+	}
+
+	.menu_settings{}
+
+
+
+	//------SETTINGS
+	#settingsNav {
+		border-right: none;
+		padding-top:60px;
+		width:100%;
+
+		ul {
+			list-style: none;
+			padding-left: 0px;
+			border-top: 1px solid rgba(0,0,0,0.2);
+
+			li {
+				border-left: 1px solid rgba(0,0,0,0.2);
+				border-right: 1px solid rgba(0,0,0,0.2);
+				padding:5px;
+				float:left;
+				width: 40%;
+				text-align: center;
+
+				&:hover {
+					background-color: @light_gray;
+				}
+			}
+
+
+			.active {
+				background-color: @selectedOptionBackground;
+			}
+
+			.logout {
+				border-top: none;
+				margin-top: 0px;
+				text-align: center;
+				float:right;
+				width : 10%;
+			}
+		}
+	}
+
+
+	.settingsContent {
+		float:right;
+		width:100%;
+		padding-left:10px;
+		padding-top: 60px;
+
+		h3 {
+			width: 100%;
+			text-align: center;
+		}
+
+		form {
+			width:100%;
+			display: inline-block;
+			margin: 0px;
+			padding: 3px 0px;
+
+			label {
+				font-size: 1em;
+				float:left;
+			}
+
+			.textarea {
+				width: 550px;
+				max-width: 550px;
+			}
+
+		}
+
+		.settingsElement {
+			border-bottom: 1px solid @lightgray;
+			padding: 10px 5px;
+
+			input {
+				border: none;
+				font-size: 1em;
+
+				&[type="radio"] {
+					-webkit-appearance: radio;
+				}
+			}
+
+			textarea {
+				border: none;
+				font-size: 1em;
+			}
+
+			.existed {
+				display: inline-block;
+			}
+
+			&:hover{
+				background-color: @light_gray;
+			}
+		}
+
+		.editable {
+			background-color: @light_gray;
+
+			input {
+				.rounded_corners(5px);
+				box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2) inset;
+				border:1px white solid;
+			}
+
+			textarea {
+				.rounded_corners(5px);
+				box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2) inset;
+				border:1px white solid;
+			}
+		}
+
+		.submitButtonsVisible {
+			display: block;
+			width:150px;
+		}
+
+		.submitButtonsHide {
+			visibility: hidden;
+		}
+
+
+		.editLink {
+			float:right;
+		}
+
+	}
+
+
+}
+
+
+/********************************************************************************************************************************************************/
+/* iOS - retina		 ************************************************************************************************************************** */
+/********************************************************************************************************************************************************/
+/*
+@media
+only screen and (-webkit-min-device-pixel-ratio : 1.5),
+only screen and (min-device-pixel-ratio : 1.5) {
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /******************************************************/
 /*					FUNCTIONS		 				  */
@@ -1495,6 +1421,5 @@ input.btn_blue_2 {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f6f6f6',GradientType=1 ); /* IE6-8 */
 
 }
-
 
 
