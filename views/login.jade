@@ -16,10 +16,14 @@ block content
 				label(for="password_input") Password:
 				input#password_input.textfield(name="password" type="password" value="123123")
 				br
-				input.button_green(type="submit", value="Login")
+				input#submit_button.button_green(type="submit", value="Login")
 				div
 					p.switch_login_register_message Not a member?
 						a(href="/register") Register
 				div
 					p.switch_login_register_message Forgot Password?
 						a(href="/reset_password_request") Reset Here
+	//scripts
+	script(type='text/javascript', src='/javascripts/login.js')
+	script.
+		loginHandlers();
