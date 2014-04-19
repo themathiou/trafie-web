@@ -15,8 +15,10 @@ function loginHandlers() {
 	document.getElementById("email_input").onblur = function() {
 		if( /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test( this.value ) ) {
 			console.log( 'valid email' );
+			document.getElementById("email_error").innerHTML = "";
 			this.style.borderColor = 'white';
 		} else {
+			document.getElementById("email_error").innerHTML = "Are you sure that this is a valid email?";
 			this.style.borderColor = 'red';
 		}
 	}
@@ -44,8 +46,10 @@ function registerHandlers() {
 	document.getElementById("first_name").onblur = function() {
 		if(  /^[A-Za-z ]+$/.test( this.value ) ) {
 			console.log( 'valid first name' );
-			this.style.borderColor = 'white';
+			document.getElementById("first_name_error").innerHTML = "";
+			this.style.borderColor = 'green';
 		} else {
+			document.getElementById("first_name_error").innerHTML = "First name can contain only latin characters";
 			this.style.borderColor = 'red';
 		}
 	}
@@ -54,8 +58,10 @@ function registerHandlers() {
 	document.getElementById("last_name").onblur = function() {
 		if(  /^[A-Za-z ]+$/.test( this.value ) ) {
 			console.log( 'valid last name' );
-			this.style.borderColor = 'white';
+			document.getElementById("last_name_error").innerHTML = "";
+			this.style.borderColor = 'green';
 		} else {
+			document.getElementById("last_name_error").innerHTML = "Last name can contain only latin characters";
 			this.style.borderColor = 'red';
 		}
 	}
@@ -64,8 +70,10 @@ function registerHandlers() {
 	document.getElementById("email").onblur = function() {
 		if( /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test( this.value ) ) {
 			console.log( 'valid email' );
-			this.style.borderColor = 'white';
+			document.getElementById("email_error").innerHTML = "";
+			this.style.borderColor = 'green';
 		} else {
+			document.getElementById("email_error").innerHTML = "Are you sure that this is a valid email?";
 			this.style.borderColor = 'red';
 		}
 	}
@@ -74,18 +82,22 @@ function registerHandlers() {
 	document.getElementById("password").onblur = function() {
 		if( this.value.length > 5 ) {
 			console.log( 'valid email' );
-			this.style.borderColor = 'white';
+			document.getElementById("password_error").innerHTML = "";
+			this.style.borderColor = 'green';
 		} else {
+			document.getElementById("password_error").innerHTML = "Password must be at least 6 characters long";
 			this.style.borderColor = 'red';
 		}
 	}
 
 	// Handler for repeat password input field when loses focus
 	document.getElementById("repeat_password").onblur = function() {
-		if( this.value == document.getElementById("password")  ) {
+		if( this.value == document.getElementById("password").value  ) {
 			console.log( 'valid pass combination' );
-			this.style.borderColor = 'white';
+			document.getElementById("repeat_password_error").innerHTML = "";
+			this.style.borderColor = 'green';
 		} else {
+			document.getElementById("repeat_password_error").innerHTML = "Passwords doesn't match";
 			this.style.borderColor = 'red';
 		}
 	}

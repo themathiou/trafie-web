@@ -16,6 +16,14 @@ body {
   padding: 3px 3px;
   text-align: left;
 }
+/*warning message - text width - right of the label*/
+.warning_message {
+  color: white;
+  background-color: #e87600;
+  /* 	padding: 3px 3px; */
+
+  text-align: left;
+}
 /*error message - full width red*/
 .green_message {
   color: green;

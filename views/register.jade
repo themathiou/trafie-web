@@ -11,14 +11,17 @@ block content
 				label(for="first_name") First Name
 					if errors.first_name
 						span.error_message= errors.first_name
+				span#first_name_error.warning_message
 				input#first_name.textfield(type="text" name="first_name" placeholder="" value=fields.first_name)
 				label(for="last_name") Last Name
 					if errors.last_name
 						span.error_message= errors.last_name
+				span#last_name_error.warning_message
 				input#last_name.textfield(type="text" name="last_name" placeholder="" value=fields.last_name)
 				label(for="email") Email
 					if errors.email
 						span.error_message= errors.email
+				span#email_error.warning_message
 				input#email.textfield(type="text" name="email" placeholder="" value=fields.email)
 
 				if errors.password
@@ -26,14 +29,16 @@ block content
 				if errors.repeat_password
 						div.error_message= errors.repeat_password
 				label(for="password") Password
+				span#password_error.warning_message
 				input#password.textfield(type="password" name="password" value="123123")
 				label(for="repeat_password") Repeat Password
+				span#repeat_password_error.warning_message
 				input#repeat_password.textfield(type="password" name="repeat_password" value="123123")
 
 				div
 					p.information_message all fields are required
 
-				input.button_green(type="submit" name="sign_up" value="Register")
+				input#register_button.button_green(type="submit" name="sign_up" value="Register")
 				div
 					p.switch_login_register_message Already a member?
 						a(href="/login") Login
