@@ -9,19 +9,22 @@ block content
 		div.forms
 			form#register.welcome_form(method="post")
 				label(for="first_name") First Name
+					span#first_name_error.info - must contain only latin characters
 					if errors.first_name
 						span.error_message= errors.first_name
-				span#first_name_error.warning_message
 				input#first_name.textfield(type="text" name="first_name" placeholder="" value=fields.first_name)
+
 				label(for="last_name") Last Name
+					span#last_name_error.info - must contain only latin characters
 					if errors.last_name
 						span.error_message= errors.last_name
-				span#last_name_error.warning_message
 				input#last_name.textfield(type="text" name="last_name" placeholder="" value=fields.last_name)
+
 				label(for="email") Email
-					if errors.email
-						span.error_message= errors.email
+					span.info - i.e someone@somewhere.xom
 				span#email_error.warning_message
+				if errors.email
+					span.error_message= errors.email
 				input#email.textfield(type="text" name="email" placeholder="" value=fields.email)
 
 				if errors.password
@@ -29,10 +32,11 @@ block content
 				if errors.repeat_password
 						div.error_message= errors.repeat_password
 				label(for="password") Password
-				span#password_error.warning_message
+					span#password_error.info - must be at least 6 characters long
 				input#password.textfield(type="password" name="password" value="123123")
+
 				label(for="repeat_password") Repeat Password
-				span#repeat_password_error.warning_message
+					span#repeat_password_error.warning_message
 				input#repeat_password.textfield(type="password" name="repeat_password" value="123123")
 
 				div

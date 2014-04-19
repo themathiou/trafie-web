@@ -46,10 +46,10 @@ function registerHandlers() {
 	document.getElementById("first_name").onblur = function() {
 		if(  /^[A-Za-z ]+$/.test( this.value ) ) {
 			console.log( 'valid first name' );
-			document.getElementById("first_name_error").innerHTML = "";
+			document.getElementById("first_name_error").className = "info";
 			this.style.borderColor = 'green';
 		} else {
-			document.getElementById("first_name_error").innerHTML = "First name can contain only latin characters";
+			document.getElementById("first_name_error").className = "warning_message";
 			this.style.borderColor = 'red';
 		}
 	}
@@ -58,10 +58,10 @@ function registerHandlers() {
 	document.getElementById("last_name").onblur = function() {
 		if(  /^[A-Za-z ]+$/.test( this.value ) ) {
 			console.log( 'valid last name' );
-			document.getElementById("last_name_error").innerHTML = "";
+			document.getElementById("last_name_error").className = "info";
 			this.style.borderColor = 'green';
 		} else {
-			document.getElementById("last_name_error").innerHTML = "Last name can contain only latin characters";
+			document.getElementById("last_name_error").className = "warning_message";
 			this.style.borderColor = 'red';
 		}
 	}
@@ -82,16 +82,16 @@ function registerHandlers() {
 	document.getElementById("password").onblur = function() {
 		if( this.value.length > 5 ) {
 			console.log( 'valid email' );
-			document.getElementById("password_error").innerHTML = "";
+			document.getElementById("password_error").className = "info";
 			this.style.borderColor = 'green';
 		} else {
-			document.getElementById("password_error").innerHTML = "Password must be at least 6 characters long";
+			document.getElementById("password_error").className = "warning_message";
 			this.style.borderColor = 'red';
 		}
 	}
 
 	// Handler for repeat password input field when loses focus
-	document.getElementById("repeat_password").onblur = function() {
+	document.getElementById("repeat_password").onkeyup = function() {
 		if( this.value == document.getElementById("password").value  ) {
 			console.log( 'valid pass combination' );
 			document.getElementById("repeat_password_error").innerHTML = "";

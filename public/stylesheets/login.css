@@ -18,8 +18,8 @@ body {
 }
 /*warning message - text width - right of the label*/
 .warning_message {
-  color: white;
-  background-color: #e87600;
+  color: #e87600;
+  background-color: none;
   /* 	padding: 3px 3px; */
 
   text-align: left;
