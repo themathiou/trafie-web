@@ -257,10 +257,12 @@ block content
 	script(type='text/javascript', src='/javascripts/profile.js')
 	script( type='text/javascript', src='/javascripts/pikaday.min.js')
 	script.
-		var picker_time = new Pikaday({field: document.getElementById('datepicker_time'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date('2020-12-31'), yearRange: [2000,2020], defaultDate: new Date(), setDefaultDate: new Date() })
+		//maxdate AND default day are TODAY. User can't add an activity for future event.
+		var picker_time = new Pikaday({field: document.getElementById('datepicker_time'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date(), yearRange: [2000,2020], defaultDate: new Date(), setDefaultDate: new Date() })
 
-		var picker_distance = new Pikaday({field: document.getElementById('datepicker_distance'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date('2020-12-31'), yearRange: [2000,2020], defaultDate: new Date(), setDefaultDate: new Date() })
+		var picker_distance = new Pikaday({field: document.getElementById('datepicker_distance'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date(), yearRange: [2000,2020], defaultDate: new Date(), setDefaultDate: new Date() })
 
-		var picker_point = new Pikaday({field: document.getElementById('datepicker_point'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date('2020-12-31'), yearRange: [2000,2020], defaultDate: new Date(), setDefaultDate: new Date() })
+		var picker_point = new Pikaday({field: document.getElementById('datepicker_point'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date(), yearRange: [2000,2020], defaultDate: new Date(), setDefaultDate: new Date() })
+
 	script.
 		profileHandlers();
