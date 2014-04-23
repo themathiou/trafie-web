@@ -30,7 +30,7 @@ block content
 				form( method="POST")
 					label= tr['username'] + ' : '
 					span= errors.username
-					span#username_existed.existed= profile.nickname
+					span#username_existed.existed= profile.username
 					input#username( name="username" value=profile.username hidden)
 					div#settingsUsernameButtons.formButtons(hidden)
 						input#submitUsername.btn_green( type="submit" value=tr['submit'])
