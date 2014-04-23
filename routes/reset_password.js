@@ -12,6 +12,10 @@ exports.request = {};
  * Reset Password Request - GET
  */
 exports.request.get = function( req, res ) {
+  if( typeof req.session.user_id !== 'undefined' ) {
+    res.redirect('/');
+  }
+
   var view_data = {
     'error': ''
   };
@@ -23,6 +27,10 @@ exports.request.get = function( req, res ) {
  * Reset Password Request - POST
  */
 exports.request.post = function( req, res ) {
+  if( typeof req.session.user_id !== 'undefined' ) {
+    res.redirect('/');
+  }
+  
   var email = req.body.email;
   var user_id = '';
   var first_name = '';

@@ -6,11 +6,19 @@ var Email = require('../libs/email');
 
 
 exports.get = function( req, res ) {
+  if( typeof req.session.user_id !== 'undefined' ) {
+    res.redirect('/');
+  }
+
   res.render( 'register', { errors: {}, fields: { 'first_name': '', 'last_name': '', 'email': '' } } );
 };
 
 
 exports.post = function( req, res ) {
+  if( typeof req.session.user_id !== 'undefined' ) {
+    res.redirect('/');
+  }
+  
   var error_messages = {};
   var errors = false;
 
