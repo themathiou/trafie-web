@@ -47,6 +47,7 @@ var en = {
     'female'                : 'Female',
     'first_name'            : 'First Name',
     'last_name'             : 'Last Name',
+    'username'              : 'Username',
     'profile_picture'       : 'Profile Settings',
     'birthday'              : 'Birthday',
     'gender'                : 'Gender',
@@ -87,6 +88,7 @@ var en = {
 
     // Errors
     'invalid_name'                                  : 'Invalid name',
+    'invalid_username'                              : 'Invalid username',
     'passwords_do_not_match'                        : 'Passwords do not match',
     'wrong_password'                                : 'Wrong password',
     'password_should_be_at_least_6_characters_long' : 'Password should be at least 6 characters long',

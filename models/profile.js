@@ -7,6 +7,7 @@ var q = require('q');
 var profileSchema = mongoose.Schema({
   first_name	: { type: String, required: true },
   last_name		: { type: String, required: true },
+  username 		: { type: String, required: false, default: null },
   male			: { type: Boolean, required: false, default: null },
   birthday		: {
   					day: 	{ type: Number, required: false, default: null },
@@ -54,6 +55,14 @@ profileSchema.save = function( profile ) {
  */
 profileSchema.validateName = function( name ) {
 	return /^[A-Za-z ]+$/.test( name );
+};
+
+/**
+ * Checks username for validity
+ * @param string name
+ */
+profileSchema.validateUsername = function( username ) {
+	return /^[A-Za-z_.0-9]+$/.test( username );
 };
 
 /**

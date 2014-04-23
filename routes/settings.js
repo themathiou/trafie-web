@@ -126,8 +126,39 @@ exports.post = function( req, res ) {
       }
     }
 
+    // Validating date format
+    if( typeof req.body.username !== 'undefined' ) {
+      if( !req.body.username || !Profile.schema.validateUsername( req.body.username ) ) {
+        errors = true;
+        error_messages.username = 'invalid_username';
+      } else {
+        Profile.schema.findOne({ 'username': req.body.username }, '_id')
+        .then( function( response ) {
+          if( response == null ) {
+            profile_data.username = req.body.username;
+          } 
+          else {
+            errors = true;
+            if( response._id != user_id ) {
+              error_messages.username = 'username_exists';
+            }
+          }
+
+          if( errors ) {
+            render( res, user_id, error_messages );
+          } else {
+            Profile.update({ '_id': user_id }, { $set: profile_data }, { upsert: true }, function( error ) {
+              render( res, user_id, error_messages );
+            });
+          }
+
+        });
+      }
+      render( res, user_id, error_messages );
+    }
+
     // Checking if the uploaded file is a valid image file
-    if( typeof req.files !== 'undefined' && typeof req.files.profile_pic !== 'undefined' ) {
+    else if( typeof req.files !== 'undefined' && typeof req.files.profile_pic !== 'undefined' ) {
       // Read the image file
       fs.readFile( req.files.profile_pic.path, function ( err, data ) {
         // Get the file extension
@@ -165,7 +196,7 @@ exports.post = function( req, res ) {
     }
 
     // Validating the reset password request
-    if( typeof req.body.old_password !== 'undefined' && typeof req.body.password !== 'undefined' && req.body.repeat_password ) {
+    else if( typeof req.body.old_password !== 'undefined' && typeof req.body.password !== 'undefined' && req.body.repeat_password ) {
       // Find the old password of the user
       User.schema.findOne({ '_id': user_id }, 'password')
       .then( function( response ) {
@@ -212,7 +243,7 @@ exports.post = function( req, res ) {
 
 
 function render( res, user_id, errors ) {
-  Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline about male country birthday picture language date_format')
+  Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline about male country birthday picture language date_format username')
   .then( function( response ) {
     // If the profile wasn't found, redirect
     if( typeof response.first_name === 'undefined' ) redirect('/register');
@@ -252,7 +283,8 @@ function render( res, user_id, errors ) {
         'birthday'    : birthday,
         'picture'     : picture,
         'language'    : response.language,
-        'date_format' : response.date_format
+        'date_format' : response.date_format,
+        'username'    : response.username
       },
       'errors'      : errors,
       'disciplines' : disciplines,

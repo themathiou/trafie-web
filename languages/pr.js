@@ -47,6 +47,7 @@ var pr = {
     'female'                : 'Pussy',
     'first_name'            : 'First Name',
     'last_name'             : 'Last Name',
+    'username'              : 'Username',
     'profile_picture'       : 'Your ugly face',
     'birthday'              : 'Birthday',
     'gender'                : 'Sex',
@@ -106,6 +107,7 @@ var pr = {
 
     // Errors
     'invalid_name'                                  : 'Is that even a name?',
+    'invalid_username'                              : 'Wtf?',
     'passwords_do_not_match'                        : 'Passwords do not fuckin\' match',
     'wrong_password'                                : 'You\'ve got the wrong fucking password',
     'password_should_be_at_least_6_characters_long' : 'Password should be at least 6 fucking characters long',
