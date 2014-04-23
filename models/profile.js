@@ -7,7 +7,7 @@ var q = require('q');
 var profileSchema = mongoose.Schema({
   first_name	: { type: String, required: true },
   last_name		: { type: String, required: true },
-  username 		: { type: String, required: false },
+  username 		: { type: String, required: false, default: null },
   male			: { type: Boolean, required: false, default: null },
   birthday		: {
   					day: 	{ type: Number, required: false, default: null },

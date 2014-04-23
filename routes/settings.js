@@ -128,19 +128,29 @@ exports.post = function( req, res ) {
 
     // Validating date format
     if( typeof req.body.username !== 'undefined' ) {
-      if( !Profile.schema.validateUsername( req.body.username ) ) {
+      if( !req.body.username || !Profile.schema.validateUsername( req.body.username ) ) {
         errors = true;
         error_messages.username = 'invalid_username';
       } else {
-        User.schema.findOne({ 'username': username }, '_id')
+        Profile.schema.findOne({ 'username': req.body.username }, '_id')
         .then( function( response ) {
-          if( typeof response._id === 'undefined' ) {
+          console.log( response );
+          if( response == null ) {
             profile_data.username = req.body.username;
           } 
           else if( response._id !== user_id ) {
             errors = true;
             error_messages.username = 'username_exists';
           }
+
+          if( errors ) {
+            render( res, user_id, error_messages );
+          } else {
+            Profile.update({ '_id': user_id }, { $set: profile_data }, { upsert: true }, function( error ) {
+              render( res, user_id, error_messages );
+            });
+          }
+
         });
       }
     }
@@ -231,7 +241,7 @@ exports.post = function( req, res ) {
 
 
 function render( res, user_id, errors ) {
-  Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline about male country birthday picture language date_format')
+  Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline about male country birthday picture language date_format username')
   .then( function( response ) {
     // If the profile wasn't found, redirect
     if( typeof response.first_name === 'undefined' ) redirect('/register');
