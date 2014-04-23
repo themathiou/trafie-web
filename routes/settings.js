@@ -271,7 +271,7 @@ function render( res, user_id, errors ) {
       'el': 'Ελληνικά',
       'ru': 'Русский'
     };
-    
+
     var view_data = {
       'profile': {
         'first_name'  : response.first_name,
@@ -290,7 +290,8 @@ function render( res, user_id, errors ) {
       'disciplines' : disciplines,
       'languages'   : languages,
       'countries'   : countries,
-      'tr'          : translations[response.language]
+      'tr'          : translations[response.language],
+      'section'     : 'settings'
     };
 
     res.render( 'settings', view_data );

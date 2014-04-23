@@ -48,7 +48,8 @@ function render( res, user_id, profile_data ) {
         'discipline'            : profile_data.discipline,
         'disciplines_of_user'   : disciplines_of_user
       },
-      'tr'          : translations[profile_data.language]
+      'tr'          : translations[profile_data.language],
+      'section'     : 'statistics'
     };
 
     res.render( 'statistics', view_data );
