@@ -25,7 +25,7 @@ block content
 					input#upload_profile_pic( name="profile_pic" type="file" accept="image/*")
 					input#submit_profile_pic( type="submit" value=tr['submit'])
 
-			//nickname
+			//NICKNAME
 			div.settingsElement
 				form( method="POST")
 					label= tr['username'] + ' : '
@@ -215,6 +215,19 @@ block content
 						input#submitAboutMe.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditAboutMe.cancel_link( href="javascript:;" )= tr['cancel']
 					a#editAboutMe.editLink( href="javascript:;" )= tr['edit']
+
+			//TEST
+			div.settingsElement
+				form( method="POST")
+					label= tr['username'] + ' : '
+					span= errors.username
+					span#username_existed.existed.non_editable= profile.username
+					input#username.editable( name="username" value=profile.first)
+					div#settingsUsernameButtons.formButtons.editable
+						input#submitUsername.btn_green( type="submit" value=tr['submit'])
+						a#cancelEditUsername.cancel_link( href="javascript:;" )= tr['cancel']
+
+					a#editUsername.editLink.non_editable( href="javascript:;" )= tr['edit']
 
 
 		//ACCOUNT SETTINGS
