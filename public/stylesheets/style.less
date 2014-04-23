@@ -63,7 +63,77 @@ body
 	border-bottom: none;
 }
 
-/* HORIZONTAL BAR & MENU ITEMS */
+
+.menu_profile{}
+
+.menu_statistics{}
+
+.menu_settings{}
+
+
+
+
+
+
+
+
+
+
+/*******************************************************************************************************************************
+ * 							                                                                      MAIN MENU                    *
+ ******************************************************************************************************************************/
+#mainmenu_container
+{
+	background:white url(../images/bar_back.png) repeat-x left top;
+	width:100%;
+	position:fixed;
+	top:0;
+	height:40px;
+	z-index: 100;
+}
+
+#mainmenu
+{
+	margin: 0 auto;
+	max-width: 950px;
+	text-align:right;
+	z-index: 100;
+
+	.logo
+	{
+		background-image: url(../images/logo.png);
+		background-repeat: no-repeat;
+		background-position: 0 2px;
+		float:left;
+		padding:20px 36px;
+	}
+
+	ul
+	{
+		padding:10px 16px;
+		margin:0px;
+		 li
+		{
+			display: inline;
+
+			a
+			{
+				color:#ffffff;
+				background-color:transparent;
+				text-decoration:none;
+				padding:12px 12px 7px 12px;
+				font-size: 0.9em;
+			}
+
+			a:hover, a.active
+			{
+				border-bottom: white 4px solid;
+			}
+
+		}
+
+	}
+}
 
 #search {
 	display: block;
@@ -102,11 +172,11 @@ body
 }
 
 
-.menu_profile{}
 
-.menu_statistics{}
 
-.menu_settings{}
+
+
+
 
 
 /* HISTORY */
@@ -605,65 +675,6 @@ input.btn_blue_2 {
 
 
 
-
-
-
-
-/*******************************************************************************************************************************
- * 							                                                                      MAIN MENU                    *
- ******************************************************************************************************************************/
-#mainmenu_container
-{
-	background:white url(../images/bar_back.png) repeat-x left top;
-	width:100%;
-	position:fixed;
-	top:0;
-	height:40px;
-	z-index: 100;
-}
-
-#mainmenu
-{
-	margin: 0 auto;
-	max-width: 950px;
-	text-align:right;
-	z-index: 100;
-
-	.logo
-	{
-		background-image: url(../images/logo.png);
-		background-repeat: no-repeat;
-		background-position: 0 2px;
-		float:left;
-		padding:20px 36px;
-	}
-
-	ul
-	{
-		padding:10px 16px;
-		margin:0px;
-		 li
-		{
-			display: inline;
-
-			a
-			{
-				color:#ffffff;
-				background-color:transparent;
-				text-decoration:none;
-				padding:12px 12px 7px 12px;
-				font-size: 0.9em;
-			}
-
-			a:hover, a.active
-			{
-				border-bottom: white 4px solid;
-			}
-
-		}
-
-	}
-}
 
 
 

@@ -219,11 +219,11 @@ block content
 			//TEST
 			div.settingsElement
 				form( method="POST")
-					label= tr['username'] + ' : '
-					span= errors.username
-					span#username_existed.existed.non_editable= profile.username
-					input#username.editable( name="username" value=profile.first)
-					div#settingsUsernameButtons.formButtons.editable
+					label Test
+					span error_message
+					span.existed.non_editable test_existed value
+					input.editable( name="username" value="test existed value")
+					div.formButtons.editable
 						input#submitUsername.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditUsername.cancel_link( href="javascript:;" )= tr['cancel']
 
