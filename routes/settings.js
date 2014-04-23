@@ -128,9 +128,10 @@ exports.post = function( req, res ) {
 
     // Validating date format
     if( typeof req.body.username !== 'undefined' ) {
-      if( !req.body.username || !Profile.schema.validateUsername( req.body.username ) ) {
+      if( !Profile.schema.validateUsername( req.body.username ) ) {
         errors = true;
         error_messages.username = 'invalid_username';
+        render( res, user_id, error_messages );
       } else {
         Profile.schema.findOne({ 'username': req.body.username }, '_id')
         .then( function( response ) {
@@ -154,7 +155,6 @@ exports.post = function( req, res ) {
 
         });
       }
-      render( res, user_id, error_messages );
     }
 
     // Checking if the uploaded file is a valid image file
@@ -290,7 +290,8 @@ function render( res, user_id, errors ) {
       'disciplines' : disciplines,
       'languages'   : languages,
       'countries'   : countries,
-      'tr'          : translations[response.language]
+      'tr'          : translations[response.language],
+      'section'     : 'settings'
     };
 
     res.render( 'settings', view_data );
