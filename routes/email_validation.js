@@ -11,6 +11,10 @@ var Email = require('../libs/email');
  * in order to validate their account
  */
 exports.validation_email_sent = function( req, res ) {
+  if( typeof req.session.user_id !== 'undefined' ) {
+    res.redirect('/');
+  }
+
   var user_id = req.params.user_id;
   User.schema.findOne({ '_id': user_id }, 'email valid')
   .then(function(response) {
@@ -27,7 +31,11 @@ exports.validation_email_sent = function( req, res ) {
  * Validate - GET
  * Validates the newly created user
  */
-exports.validate = function( req,res ){
+exports.validate = function( req,res ) {
+  if( typeof req.session.user_id !== 'undefined' ) {
+    res.redirect('/');
+  }
+
   var user_id = '';
   // Find the user to whom the hash belongs
   UserHashes.schema.findUserIdByHash( req.params.hash, 'verify' )
@@ -54,6 +62,10 @@ exports.validate = function( req,res ){
  * Resends the validation email
  */
 exports.resend_validation_email = function( req, res ) {
+  if( typeof req.session.user_id !== 'undefined' ) {
+    res.redirect('/');
+  }
+  
   var email = '';
   var first_name = '';
   var last_name = '';

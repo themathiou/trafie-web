@@ -1,10 +1,18 @@
 var User = require('../models/user.js');
 
 exports.get = function( req, res ) {
+  if( typeof req.session.user_id !== 'undefined' ) {
+    res.redirect('/');
+  }
+  
   res.render('login', { 'errors': {} } );
 };
 
 exports.post = function( req, res ) {
+  if( typeof req.session.user_id !== 'undefined' ) {
+    res.redirect('/');
+  }
+
   var email = req.body.email.toLowerCase();
   var password = User.schema.encryptPassword(req.body.password);
 
