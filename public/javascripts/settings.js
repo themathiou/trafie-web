@@ -35,6 +35,15 @@ function settingsHandlers() {
 	}
 
 	/* -- Profile Settings */
+	/* username */
+	document.getElementById("editUsername").onclick = function() {
+		closeOthers();
+		editField('username_existed', 'username', 'settingsUsernameButtons', 'editUsername');
+	}
+	document.getElementById("cancelEditUsername").onclick = function() {
+		cancelEditField('username_existed', 'username', 'settingsUsernameButtons', 'editUsername');
+	}
+
 	/* first name */
 	document.getElementById("editFirstName").onclick = function() {
 		closeOthers();
