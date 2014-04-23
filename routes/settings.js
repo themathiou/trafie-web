@@ -134,13 +134,14 @@ exports.post = function( req, res ) {
       } else {
         Profile.schema.findOne({ 'username': req.body.username }, '_id')
         .then( function( response ) {
-          console.log( response );
           if( response == null ) {
             profile_data.username = req.body.username;
           } 
-          else if( response._id !== user_id ) {
+          else {
             errors = true;
-            error_messages.username = 'username_exists';
+            if( response._id != user_id ) {
+              error_messages.username = 'username_exists';
+            }
           }
 
           if( errors ) {
@@ -153,10 +154,11 @@ exports.post = function( req, res ) {
 
         });
       }
+      render( res, user_id, error_messages );
     }
 
     // Checking if the uploaded file is a valid image file
-    if( typeof req.files !== 'undefined' && typeof req.files.profile_pic !== 'undefined' ) {
+    else if( typeof req.files !== 'undefined' && typeof req.files.profile_pic !== 'undefined' ) {
       // Read the image file
       fs.readFile( req.files.profile_pic.path, function ( err, data ) {
         // Get the file extension
@@ -194,7 +196,7 @@ exports.post = function( req, res ) {
     }
 
     // Validating the reset password request
-    if( typeof req.body.old_password !== 'undefined' && typeof req.body.password !== 'undefined' && req.body.repeat_password ) {
+    else if( typeof req.body.old_password !== 'undefined' && typeof req.body.password !== 'undefined' && req.body.repeat_password ) {
       // Find the old password of the user
       User.schema.findOne({ '_id': user_id }, 'password')
       .then( function( response ) {
@@ -281,7 +283,8 @@ function render( res, user_id, errors ) {
         'birthday'    : birthday,
         'picture'     : picture,
         'language'    : response.language,
-        'date_format' : response.date_format
+        'date_format' : response.date_format,
+        'username'    : response.username
       },
       'errors'      : errors,
       'disciplines' : disciplines,
