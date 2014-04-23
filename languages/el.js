@@ -47,6 +47,7 @@ var el = {
     'female'                : 'Γυναίκα',
     'first_name'            : 'Όνομα',
     'last_name'             : 'Επίθετο',
+    'username'              : 'Όνομα Χρήστη',
     'profile_picture'       : 'Ρυθμίσεις Προφίλ',
     'birthday'              : 'Ημ. Γέννησης',
     'gender'                : 'Φύλο',
@@ -106,6 +107,7 @@ var el = {
 
     // Errors
     'invalid_name'                                  : 'Μη αποδεκτό όνομα',
+    'invalid_username'                              : 'Μη αποδεκτό όνομα χρήστη',
     'passwords_do_not_match'                        : 'Οι κωδικοί δεν ταιριάζουν',
     'wrong_password'                                : 'Λάθος κωδικός',
     'password_should_be_at_least_6_characters_long' : 'Ο κωδικός πρέπει να έχει τουλάχιστον 6 χαρακτήρες',

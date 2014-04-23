@@ -126,6 +126,25 @@ exports.post = function( req, res ) {
       }
     }
 
+    // Validating date format
+    if( typeof req.body.username !== 'undefined' ) {
+      if( !Profile.schema.validateUsername( req.body.username ) ) {
+        errors = true;
+        error_messages.username = 'invalid_username';
+      } else {
+        User.schema.findOne({ 'username': username }, '_id')
+        .then( function( response ) {
+          if( typeof response._id === 'undefined' ) {
+            profile_data.username = req.body.username;
+          } 
+          else if( response._id !== user_id ) {
+            errors = true;
+            error_messages.username = 'username_exists';
+          }
+        });
+      }
+    }
+
     // Checking if the uploaded file is a valid image file
     if( typeof req.files !== 'undefined' && typeof req.files.profile_pic !== 'undefined' ) {
       // Read the image file
