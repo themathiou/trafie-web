@@ -13,11 +13,13 @@ exports.get = function( req, res ){
 
   // When there is a username in the url
   if( typeof req.params.user_id !== 'undefined' ) {
+    // Find user by id
     Profile.schema.findOne({ '_id': req.params.user_id }, '_id')
     .then( function( response ) {
       if( response !== null && response !== undefined ) {
         prerender_other_profile( res, user_id, response._id );
       } else {
+        // Find user by username
         Profile.schema.findOne({ 'username': req.params.user_id }, '_id')
         .then( function( response ) {
           if( response !== null && response !== undefined ) {
@@ -29,18 +31,24 @@ exports.get = function( req, res ){
       }
     });
   }
-  else if(!user_id) {
-	  res.redirect('/register');
-  } else {
+  else if( user_id ) {
     prerender_my_profile( res, user_id );
+  } else {
+	  res.redirect('/register');
   }
 };
 
 function prerender_my_profile( res, user_id ) {
-  Profile.schema.findOne( { '_id': user_id }, 'first_name last_name discipline country male birthday picture language date_format' ).then( function( profile_data ) {
+  Profile.schema.findOne( { '_id': user_id }, '_id first_name last_name discipline country male picture language date_format' ).then( function( profile_data ) {
     // If the user was found
     if( typeof profile_data.first_name !== 'undefined' ) {
-      render( res, user_id, profile_data)
+      var user_data = {
+        '_id'         : profile_data._id,
+        'first_name'  : profile_data.first_name,
+        'language'    : profile_data.language,
+        'date_format' : profile_data.date_format
+      };
+      render( res, profile_data, user_data );
     // If the user wasn't found
     } else {
       res.redirect('/login');
@@ -49,10 +57,21 @@ function prerender_my_profile( res, user_id ) {
 }
 
 function prerender_other_profile( res, user_id, profile_id ) {
-  Profile.schema.findOne( { '_id': user_id }, 'first_name last_name picture language date_format' ).then( function( my_profile_data ) {
+  var profile_data = null;
+  Profile.schema.findOne( { '_id': profile_id }, '_id first_name last_name discipline country male picture' )
+  .then( function( other_profile_data ) {
+    profile_data = other_profile_data;
+    return Profile.schema.findOne( { '_id': user_id }, '_id first_name language date_format' ) })
+  .then( function( db_user_data ) {
     // If the user was found
-    if( typeof profile_data.first_name !== 'undefined' ) {
-      render( res, user_id, profile_data)
+    if( typeof db_user_data.first_name !== 'undefined' ) {
+      var user_data = {
+        '_id'         : db_user_data._id,
+        'first_name'  : db_user_data.first_name,
+        'language'    : db_user_data.language,
+        'date_format' : db_user_data.date_format
+      };
+      render( res, profile_data, user_data );
     // If the user wasn't found
     } else {
       res.redirect('/login');
@@ -60,11 +79,11 @@ function prerender_other_profile( res, user_id, profile_id ) {
   });
 }
 
-function render( res, user_id, profile_data ) {
-  Activity.schema.getActivitiesOfUser( { 'user_id': user_id }, null, -1 )
+function render( res, profile_data, user_data ) {
+  Activity.schema.getActivitiesOfUser( { 'user_id': profile_data._id }, null, -1 )
   .then( function( activities ) {
     // Format the activity data
-    var activities = Activity.schema.formatActivities( activities, profile_data.language, profile_data.date_format );
+    var activities = Activity.schema.formatActivities( activities, user_data.language, user_data.date_format );
     var disciplines = {
       'time': [
         '100m',
@@ -104,16 +123,20 @@ function render( res, user_id, profile_data ) {
     // The data that will go to the front end
     var view_data = {
       'profile': {
-        '_id'         : user_id,
+        '_id'         : profile_data._id,
         'first_name'  : profile_data.first_name,
         'last_name'   : profile_data.last_name,
         'discipline'  : profile_data.discipline,
         'country'     : profile_data.country,
         'picture'     : picture
       },
+      'user': {
+        '_id'         : user_data._id,
+        'first_name'  : user_data.first_name
+      },
       'disciplines' : disciplines,
       'activities'  : activities,
-      'tr'          : translations[profile_data.language],
+      'tr'          : translations[user_data.language],
       'section'     : 'profile'
     };
 
