@@ -25,51 +25,51 @@ block content
 					input#upload_profile_pic( name="profile_pic" type="file" accept="image/*")
 					input#submit_profile_pic( type="submit" value=tr['submit'])
 
-			//NICKNAME
+			//USERNAME
 			div.settingsElement
 				form( method="POST")
 					label= tr['username'] + ' : '
 					span= errors.username
-					span#username_existed.existed= profile.username
-					input#username( name="username" value=profile.username hidden)
-					div#settingsUsernameButtons.formButtons(hidden)
+					span.existed.non_editable= profile.username
+					input.editable( name="username" value=profile.username hidden)
+					div.formButtons.editable
 						input#submitUsername.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditUsername.cancel_link( href="javascript:;" )= tr['cancel']
 
-					a#editUsername.editLink( href="javascript:;" )= tr['edit']
+					a#editUsername.editLink.non_editable( href="javascript:;" )= tr['edit']
 
 			//FIRST NAME
 			div.settingsElement
 				form( method="POST")
 					label= tr['first_name'] + ' : '
 					span= errors.first_name
-					span#first_name_existed.existed= profile.first_name
-					input#first_name( name="first_name" value=profile.first_name hidden)
-					div#settingsFirstNameButtons.formButtons(hidden)
+					span.existed.non_editable= profile.first_name
+					input.editable( name="first_name" value=profile.first_name hidden)
+					div.formButtons.editable
 						input#submitFirstName.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditFirstName.cancel_link( href="javascript:;" )= tr['cancel']
 
-					a#editFirstName.editLink( href="javascript:;" )= tr['edit']
+					a#editFirstName.editLink.non_editable( href="javascript:;" )= tr['edit']
 
 			//LAST NAME
 			div.settingsElement
 				form( method="POST")
 					label= tr['last_name'] + ' : '
 					span= errors.last_name
-					span#last_name_existed.existed= profile.last_name
-					input#last_name( name="last_name" value=profile.last_name hidden )
-					div#settingsLastNamebuttons.formButtons(hidden)
+					span.existed.non_editable= profile.last_name
+					input.editable( name="last_name" value=profile.last_name hidden )
+					div.formButtons.editable
 						input#submitLastName.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditLastName.cancel_link( href="javascript:;" )= tr['cancel']
-					a#editLastName.editLink( href="javascript:;" )= tr['edit']
+					a#editLastName.editLink.non_editable( href="javascript:;" )= tr['edit']
 
 			//GENDER
 			div.settingsElement
 				form( method="POST")
 					label= tr['gender'] + ':'
 					span= errors.last_name
-					span#gender_existed= tr[profile.gender] || "undefined"
-					div#gender( hidden )
+					span.non_editable= tr[profile.gender] || "undefined"
+					div#gender.editable
 						if profile.gender == 'male'
 							input(id="male" name="gender" type="radio" value="male" checked)
 							label(for="male" class="clearfloat" )= tr['male']
@@ -83,18 +83,18 @@ block content
 							input(id="female" name="gender" type="radio" value="female")
 							label(for="female" class="clearfloat" )= tr['female']
 
-					div#settingsGenderbuttons.formButtons(hidden)
+					div.formButtons.editable
 						input#submitGender.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditGender.cancel_link( href="javascript:;" )= tr['cancel']
-					a#editGender.editLink( href="javascript:;" )= tr['edit']
+					a#editGender.editLink.non_editable( href="javascript:;" )= tr['edit']
 
 			//AGE
 			div.settingsElement
 				form( method="POST")
 					label= tr['birthday'] + ':'
 					span= errors.age
-					span#birthday_existed= profile.birthday.year+'/'+profile.birthday.month+'/'+profile.birthday.day
-					div#birthday( hidden )
+					span.non_editable= profile.birthday.year+'/'+profile.birthday.month+'/'+profile.birthday.day
+					div#birthday.editable
 						select#birthday_year( name="birthday_year" onChange="setLeap(this.value)" )
 							- for (var i = 2010; i > 1900; i--) {
 									if i == profile.birthday.year
@@ -120,36 +120,36 @@ block content
 								option#m29( value="29" ) 29
 								option#m30( value="30" ) 30
 								option#m31( value="31" ) 31
-					div#settingsAgebuttons.formButtons(hidden)
+					div.formButtons.editable
 						input#submitAge.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditAge.cancel_link( href="javascript:;" )= tr['cancel']
-					a#editAge.editLink( href="javascript:;" )= tr['edit']
+					a#editAge.editLink.non_editable( href="javascript:;" )= tr['edit']
 
 			//MAIN DISCIPLINE
 			div.settingsElement
 				form( method="POST")
 					label= tr['main_discipline'] + ':'
 					span= errors.last_name
-					span#main_discipline_existed= tr[profile.discipline] || "undefined"
-					select#main_discipline_input(name="discipline" hidden)
+					span.non_editable= tr[profile.discipline] || "undefined"
+					select#main_discipline_input.editable(name="discipline" )
 						- for( var i in disciplines ) {
 							if profile.discipline == disciplines[i]
 								option( value=disciplines[i] selected)= tr[disciplines[i]]
 							else
 								option( value=disciplines[i] )= tr[disciplines[i]]
 						- }
-					div#settingsMainDisciplineButtons.formButtons(hidden)
+					div.formButtons.editable
 						input#submitMainDiscipline.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditMainDiscipline.cancel_link( href="javascript:;" )= tr['cancel']
-					a#editMainDiscipline.editLink( href="javascript:;" )= tr['edit']
+					a#editMainDiscipline.editLink.non_editable( href="javascript:;" )= tr['edit']
 
 			//COUNTRY
 			div.settingsElement
 				form( method="POST")
 					label= tr['country'] + ':'
 					span= errors.country
-					span#country_existed= tr[profile.country] || "undefined"
-					select#country_input(name="country" hidden)
+					span.non_editable= tr[profile.country] || "undefined"
+					select.editable(name="country" )
 							option(value="no-selection" selected)= tr['choose_your_country']
 							- for( var i in countries ) {
 								if profile.country == countries[i]
@@ -157,18 +157,18 @@ block content
 								else
 									option( value=countries[i] )= tr[countries[i]]
 							- }
-					div#settingsCountryButtons.formButtons(hidden)
+					div.formButtons.editable
 						input#submitCountry.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditCountry.cancel_link( href="javascript:;" )= tr['cancel']
-					a#editCountry.editLink( href="javascript:;" )= tr['edit']
+					a#editCountry.editLink.non_editable( href="javascript:;" )= tr['edit']
 
 			//LANGUAGE
 			div.settingsElement
 				form( method="POST")
 					label= tr['language'] + ':'
 					span= errors.language
-					span#language_existed= languages[profile.language]
-					select#language_input(name="language" hidden)
+					span.non_editable= languages[profile.language]
+					select.editable(name="language" hidden)
 							option(value="no-selection" selected)= tr['choose_your_language']
 							- for( var i in languages ) {
 								if languages[profile.language] == languages[i]
@@ -176,18 +176,18 @@ block content
 								else
 									option( value=i )= languages[i]
 							- }
-					div#settingsLanguageButtons.formButtons(hidden)
+					div.formButtons.editable
 						input#submitLanguage.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditLanguage.cancel_link( href="javascript:;" )= tr['cancel']
-					a#editLanguage.editLink( href="javascript:;" )= tr['edit']
+					a#editLanguage.editLink.non_editable( href="javascript:;" )= tr['edit']
 
 			//DATE FORMAT
 			div.settingsElement
 				form( method="POST")
 					label= tr['date_format'] + ':'
 					span= errors.data_format
-					span#date_format_existed= tr[profile.date_format]
-					select#date_format_input( name='date_format' hidden )
+					span.non_editable= tr[profile.date_format]
+					select.editable( name='date_format' )
 						if profile.date_format == 'd-m-y'
 							option( value='d-m-y' selected )= tr['d-m-y']
 						else
@@ -197,10 +197,10 @@ block content
 							option( value='m-d-y' selected)= tr['m-d-y']
 						else
 							option( value='m-d-y' )= tr['m-d-y']
-					div#settingsDateFormatButtons.formButtons(hidden)
+					div.formButtons.editable
 						input#submitDateFormat.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditDateFormat.cancel_link( href="javascript:;" )= tr['cancel']
-					a#editDateFormat.editLink( href="javascript:;" )= tr['edit']
+					a#editDateFormat.editLink.non_editable( href="javascript:;" )= tr['edit']
 
 
 
@@ -209,25 +209,12 @@ block content
 				form( method="POST")
 					label= tr['about_me'] + ':'
 					span= errors.about
-					span#about_existed( style="overflow-wrap: break-word;")= profile.about || tr['write_something_about_you']
-					textarea#about_me.textarea( name="about" maxlength="400" hidden)= profile.about
-					div#settingsAboutMeButtons.formButtons(hidden)
+					span.non_editable( style="overflow-wrap: break-word;")= profile.about || tr['write_something_about_you']
+					textarea.textarea.editable( name="about" maxlength="400" )= profile.about
+					div.formButtons.editable
 						input#submitAboutMe.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditAboutMe.cancel_link( href="javascript:;" )= tr['cancel']
-					a#editAboutMe.editLink( href="javascript:;" )= tr['edit']
-
-			//TEST
-			div.settingsElement
-				form( method="POST")
-					label Test
-					span error_message
-					span.existed.non_editable test_existed value
-					input.editable( name="username" value="test existed value")
-					div.formButtons.editable
-						input#submitUsername.btn_green( type="submit" value=tr['submit'])
-						a#cancelEditUsername.cancel_link( href="javascript:;" )= tr['cancel']
-
-					a#editUsername.editLink.non_editable( href="javascript:;" )= tr['edit']
+					a#editAboutMe.editLink.non_editable( href="javascript:;" )= tr['edit']
 
 
 		//ACCOUNT SETTINGS

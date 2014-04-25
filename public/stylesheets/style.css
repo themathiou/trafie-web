@@ -93,7 +93,7 @@ body {
   padding: 0px;
   padding-left: 5px;
   height: 25px;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.2);
   border: 0;
   border-radius: 3px;
   letter-spacing: -1px;
@@ -734,6 +734,12 @@ input.btn_blue_2:active {
 }
 .settingsContent .settingsElement:hover {
   background-color: #f6f6f6;
+}
+.settingsContent .non_editable {
+  display: block;
+}
+.settingsContent .editable {
+  display: none;
 }
 .settingsContent .submitButtonsVisible {
   display: block;

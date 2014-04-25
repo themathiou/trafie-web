@@ -18,8 +18,6 @@ function closeOthers() {
 	cancelEditField('date_format_existed', 'date_format_input', 'settingsDateFormatButtons', 'editDateFormat');
 	cancelEditField('country_existed', 'country_input', 'settingsCountryButtons', 'editCountry');
 	cancelEditField('about_existed', 'about_me', 'settingsAboutMeButtons', 'editAboutMe');
-
-
 }
 
 
@@ -37,47 +35,47 @@ function settingsHandlers() {
 	/* -- Profile Settings */
 	/* username */
 	document.getElementById("editUsername").onclick = function() {
-		closeOthers();
-		editField('username_existed', 'username', 'settingsUsernameButtons', 'editUsername');
+		/* closeOthers(); */
+		editField( this.parentNode );
 	}
 	document.getElementById("cancelEditUsername").onclick = function() {
-		cancelEditField('username_existed', 'username', 'settingsUsernameButtons', 'editUsername');
+		cancelEditField(this.parentNode.parentNode);
 	}
 
 	/* first name */
 	document.getElementById("editFirstName").onclick = function() {
-		closeOthers();
-		editField('first_name_existed', 'first_name', 'settingsFirstNameButtons', 'editFirstName');
+		/* closeOthers(); */
+		editField( this.parentNode );
 	}
 	document.getElementById("cancelEditFirstName").onclick = function() {
-		cancelEditField('first_name_existed', 'first_name', 'settingsFirstNameButtons', 'editFirstName');
+		cancelEditField( this.parentNode.parentNode );
 	}
 
 	/* last name */
 	document.getElementById("editLastName").onclick = function() {
-		closeOthers();
-		editField('last_name_existed', 'last_name', 'settingsLastNamebuttons', 'editLastName');
+		/* closeOthers(); */
+		editField( this.parentNode );
 	}
 	document.getElementById("cancelEditLastName").onclick = function() {
-		cancelEditField('last_name_existed', 'last_name', 'settingsLastNamebuttons', 'editLastName');
+		cancelEditField( this.parentNode.parentNode );
 	}
 
 	/* gender */
 	document.getElementById("editGender").onclick = function() {
-		closeOthers();
-		editField('gender_existed', 'gender', 'settingsGenderbuttons', 'editGender');
+		/* closeOthers(); */
+		editField( this.parentNode );
 	}
 	document.getElementById("cancelEditGender").onclick = function() {
-		cancelEditField('gender_existed', 'gender', 'settingsGenderbuttons', 'editGender');
+		cancelEditField( this.parentNode.parentNode );
 	}
 
 	/* age */
 	document.getElementById("editAge").onclick = function() {
-		closeOthers();
-		editField('birthday_existed', 'birthday', 'settingsAgebuttons', 'editAge');
+		/* closeOthers(); */
+		editField( this.parentNode );
 	}
 	document.getElementById("cancelEditAge").onclick = function() {
-		cancelEditField('birthday_existed', 'birthday', 'settingsAgebuttons', 'editAge');
+		cancelEditField( this.parentNode.parentNode );
 	}
 
 	/* main discipline */
@@ -85,56 +83,61 @@ function settingsHandlers() {
 		show_specific_form(this);
 	}
 	document.getElementById("editMainDiscipline").onclick = function() {
-		closeOthers();
-		editField('main_discipline_existed', 'main_discipline_input', 'settingsMainDisciplineButtons', 'editMainDiscipline');
+		/* closeOthers(); */
+		editField( this.parentNode );
 	}
 	document.getElementById("cancelEditMainDiscipline").onclick = function() {
-		cancelEditField('main_discipline_existed', 'main_discipline_input', 'settingsMainDisciplineButtons', 'editMainDiscipline');
+		cancelEditField( this.parentNode.parentNode );
 	}
 
 	/* language */
 	document.getElementById("editLanguage").onclick = function() {
-		closeOthers();
-		editField('language_existed', 'language_input', 'settingsLanguageButtons', 'editLanguage');
+		/* closeOthers(); */
+		editField( this.parentNode );
 	}
 	document.getElementById("cancelEditLanguage").onclick = function() {
-		cancelEditField('language_existed', 'language_input', 'settingsLanguageButtons', 'editLanguage');
+		cancelEditField( this.parentNode.parentNode );
 	}
 
 	/* date format */
 	document.getElementById("editDateFormat").onclick = function() {
-		closeOthers();
-		editField('date_format_existed', 'date_format_input', 'settingsDateFormatButtons', 'editDateFormat');
+		/* closeOthers(); */
+		editField( this.parentNode );
 	}
 	document.getElementById("cancelEditDateFormat").onclick = function() {
-		cancelEditField('date_format_existed', 'date_format_input', 'settingsDateFormatButtons', 'editDateFormat');
+		cancelEditField( this.parentNode.parentNode );
 	}
 
 	/* country */
 	document.getElementById("editCountry").onclick = function() {
-		closeOthers();
-		editField('country_existed', 'country_input', 'settingsCountryButtons', 'editCountry');
+		/* closeOthers(); */
+		editField( this.parentNode );
 	}
 	document.getElementById("cancelEditCountry").onclick = function() {
-		cancelEditField('country_existed', 'country_input', 'settingsCountryButtons', 'editCountry');
+		cancelEditField( this.parentNode.parentNode );
 	}
 
 	/* about */
 	document.getElementById("editAboutMe").onclick = function() {
-		closeOthers();
-		editField('about_existed', 'about_me', 'settingsAboutMeButtons', 'editAboutMe');
+		/* closeOthers(); */
+		editField( this.parentNode );
 	}
 	document.getElementById("cancelEditAboutMe").onclick = function() {
-		cancelEditField('about_existed', 'about_me', 'settingsAboutMeButtons', 'editAboutMe');
+		cancelEditField( this.parentNode.parentNode );
 	}
 
-	/* -- Account Settings */
+
+
+
+
+	/* -- Account Settings -- */
 	document.getElementById("editPassword").onclick = function() {
 		editHiddenField('changePassword', 'editPassword');
 	}
 	document.getElementById("cancelNewPassword").onclick = function() {
 		cancelEditHiddenField('changePassword', 'editPassword');
 	}
+
 }
 
 

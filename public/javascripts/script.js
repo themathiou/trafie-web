@@ -3,21 +3,32 @@
 /********************************************/
 
 /**
- * editField() : shows the elements for editing a field
- * @param existedID : the span that contains the existed value
- * @param fieldID : the field we want to make editable
- * @param saveID : the 'save' button id for show/hide
- * @param cancelID : the 'cancel' button id for show/hide
- * @param editID : the 'edit' button id for show/hide
+ * editAbstractField() : shows the elements for editing a field
+ * @param form_node : the form with all the fields
  */
-function editField( existedID, fieldID, saveID, editID ) {
-	document.getElementById(existedID).style.display = 'none';
-    document.getElementById(fieldID).style.display = 'block';
+function editField( parent_node ) {
+	var noneditables = parent_node.querySelectorAll('.non_editable');
+	var editables = parent_node.querySelectorAll('.editable');
 
-    document.getElementById(saveID).className = 'submitButtonsVisible';
-    document.getElementById(editID).style.display = 'none';
-    document.getElementById(editID).parentNode.parentNode.className = 'settingsElement editable' ;
+	for(var i=0, length=noneditables.length; i<length; i++) { noneditables[i].style.display = 'none'; }
+	for(var i=0, length=editables.length; i<length; i++) { editables[i].style.display = 'block'; }
 }
+
+/**
+ * cancelEditAbstractField() : hides the elements for editing a field (reverse action of editField )
+ * @param existedID :
+ */
+function cancelEditField( parent_node ) {
+	var noneditables = parent_node.querySelectorAll('.non_editable');
+	var editables = parent_node.querySelectorAll('.editable');
+
+	for(var i=0, length=noneditables.length; i<length; i++) { noneditables[i].style.display = 'inline-block'; }
+	for(var i=0, length=editables.length; i<length; i++) { editables[i].style.display = 'none'; }
+}
+
+
+
+
 
 /**
  * editHiddenField() : shows the elements for editing a field
@@ -27,23 +38,6 @@ function editField( existedID, fieldID, saveID, editID ) {
 function editHiddenField( hiddenFieldID, editID) {
 	document.getElementById(hiddenFieldID).style.display = 'block';
 	document.getElementById(editID).style.display = 'none';
-}
-
-/**
- * cancelEditField() : hides the elements for editing a field (reverse action of editField )
- * @param existedID : the span that contains the existed value
- * @param fieldID : the field we want to make editable
- * @param saveID : the 'save' button id for show/hide
- * @param cancelID : the 'cancel' button id for show/hide
- * @param editID : the 'edit' button id for show/hide
- */
-function cancelEditField (existedID, fieldID, saveID, editID ) {
-	document.getElementById(existedID).style.display = 'inline-block';
-    document.getElementById(fieldID).style.display = 'none';
-
-    document.getElementById(saveID).className = 'submitButtonsHide';
-    document.getElementById(editID).style.display = 'block';
-    document.getElementById(editID).parentNode.parentNode.className = 'settingsElement' ;
 }
 
 /**
