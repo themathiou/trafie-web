@@ -13,23 +13,52 @@ exports.get = function( req, res ){
 
   // When there is a username in the url
   if( typeof req.params.user_id !== 'undefined' ) {
-    console.log( req.params.user_id );
-  }
-
-  if(!user_id) {
-	  res.redirect('/register');
-  } else {
-    Profile.schema.findOne( { '_id': user_id }, 'first_name last_name discipline country male birthday picture language date_format' ).then( function( profile_data ) {
-      // If the user was found
-      if( typeof profile_data.first_name !== 'undefined' ) {
-        render( res, user_id, profile_data );
-      // If the user wasn't found
+    Profile.schema.findOne({ '_id': req.params.user_id }, '_id')
+    .then( function( response ) {
+      if( response !== null && response !== undefined ) {
+        prerender_other_profile( res, user_id, response._id );
       } else {
-        res.redirect('/login');
+        Profile.schema.findOne({ 'username': req.params.user_id }, '_id')
+        .then( function( response ) {
+          if( response !== null && response !== undefined ) {
+            prerender_other_profile( res, user_id, response._id );
+          } else {
+            res.redirect('/');
+          }
+        });
       }
     });
   }
+  else if(!user_id) {
+	  res.redirect('/register');
+  } else {
+    prerender_my_profile( res, user_id );
+  }
 };
+
+function prerender_my_profile( res, user_id ) {
+  Profile.schema.findOne( { '_id': user_id }, 'first_name last_name discipline country male birthday picture language date_format' ).then( function( profile_data ) {
+    // If the user was found
+    if( typeof profile_data.first_name !== 'undefined' ) {
+      render( res, user_id, profile_data)
+    // If the user wasn't found
+    } else {
+      res.redirect('/login');
+    }
+  });
+}
+
+function prerender_other_profile( res, user_id, profile_id ) {
+  Profile.schema.findOne( { '_id': user_id }, 'first_name last_name picture language date_format' ).then( function( my_profile_data ) {
+    // If the user was found
+    if( typeof profile_data.first_name !== 'undefined' ) {
+      render( res, user_id, profile_data)
+    // If the user wasn't found
+    } else {
+      res.redirect('/login');
+    }
+  });
+}
 
 function render( res, user_id, profile_data ) {
   Activity.schema.getActivitiesOfUser( { 'user_id': user_id }, null, -1 )
