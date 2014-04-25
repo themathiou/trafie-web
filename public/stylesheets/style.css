@@ -44,7 +44,48 @@ body {
   border-top: none;
   border-bottom: none;
 }
-/* HORIZONTAL BAR & MENU ITEMS */
+/*******************************************************************************************************************************
+ * 							                                                                      MAIN MENU                    *
+ ******************************************************************************************************************************/
+#mainmenu_container {
+  background: #ffffff url(../images/bar_back.png) repeat-x left top;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  height: 40px;
+  z-index: 100;
+}
+#mainmenu {
+  margin: 0 auto;
+  max-width: 950px;
+  text-align: right;
+  z-index: 100;
+}
+#mainmenu .logo {
+  background-image: url(../images/logo.png);
+  background-repeat: no-repeat;
+  background-position: 0 2px;
+  float: left;
+  padding: 20px 36px;
+}
+#mainmenu ul {
+  padding: 10px 16px;
+  margin: 0px;
+}
+#mainmenu ul li {
+  display: inline;
+}
+#mainmenu ul li a {
+  color: #ffffff;
+  background-color: transparent;
+  text-decoration: none;
+  padding: 12px 12px 7px 12px;
+  font-size: 0.9em;
+}
+#mainmenu ul li a:hover,
+#mainmenu ul li a.active {
+  border-bottom: white 4px solid;
+}
 #search {
   display: block;
   float: left;
@@ -543,48 +584,6 @@ input.btn_blue_2:active {
   font-weight: 400;
 }
 /*******************************************************************************************************************************
- * 							                                                                      MAIN MENU                    *
- ******************************************************************************************************************************/
-#mainmenu_container {
-  background: #ffffff url(../images/bar_back.png) repeat-x left top;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  height: 40px;
-  z-index: 100;
-}
-#mainmenu {
-  margin: 0 auto;
-  max-width: 950px;
-  text-align: right;
-  z-index: 100;
-}
-#mainmenu .logo {
-  background-image: url(../images/logo.png);
-  background-repeat: no-repeat;
-  background-position: 0 2px;
-  float: left;
-  padding: 20px 36px;
-}
-#mainmenu ul {
-  padding: 10px 16px;
-  margin: 0px;
-}
-#mainmenu ul li {
-  display: inline;
-}
-#mainmenu ul li a {
-  color: #ffffff;
-  background-color: transparent;
-  text-decoration: none;
-  padding: 12px 12px 7px 12px;
-  font-size: 0.9em;
-}
-#mainmenu ul li a:hover,
-#mainmenu ul li a.active {
-  border-bottom: white 4px solid;
-}
-/*******************************************************************************************************************************
  * 							                                                                      PROFILE                      *
  ******************************************************************************************************************************/
 /*profile container (profile pic and full name)*/
@@ -677,6 +676,24 @@ input.btn_blue_2:active {
   width: 730px;
   padding-left: 10px;
   padding-top: 60px;
+  /*
+		.editable {
+			background-color: @light_gray;
+
+			input {
+				.rounded_corners(5px);
+				box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2) inset;
+				border:1px white solid;
+			}
+
+			textarea {
+				.rounded_corners(5px);
+				box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2) inset;
+				border:1px white solid;
+			}
+		}
+	*/
+
 }
 .settingsContent h3 {
   width: 100%;
@@ -717,27 +734,6 @@ input.btn_blue_2:active {
 }
 .settingsContent .settingsElement:hover {
   background-color: #f6f6f6;
-}
-.settingsContent .editable {
-  background-color: #f6f6f6;
-}
-.settingsContent .editable input {
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
-  border-radius: 5px;
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2) inset;
-  border: 1px white solid;
-}
-.settingsContent .editable textarea {
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
-  border-radius: 5px;
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2) inset;
-  border: 1px white solid;
 }
 .settingsContent .submitButtonsVisible {
   display: block;

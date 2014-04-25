@@ -42,25 +42,27 @@ function loginHandlers() {
  */
 function registerHandlers() {
 
-	// Handler for first name input field when loses focus
-	document.getElementById("first_name").onblur = function() {
+	// Handler for first name input field
+	document.getElementById("first_name").onkeyup = function() {
 		if(  /^[A-Za-z ]+$/.test( this.value ) ) {
 			console.log( 'valid first name' );
-			document.getElementById("first_name_error").className = "info";
+			document.getElementById("first_name_error").innerHTML = "";
 			this.style.borderColor = 'green';
 		} else {
+			document.getElementById("first_name_error").innerHTML = " - must contain only latin characters";
 			document.getElementById("first_name_error").className = "warning_message";
 			this.style.borderColor = 'red';
 		}
 	}
 
-	// Handler for last name input field when loses focus
-	document.getElementById("last_name").onblur = function() {
+	// Handler for last name input field
+	document.getElementById("last_name").onkeyup = function() {
 		if(  /^[A-Za-z ]+$/.test( this.value ) ) {
 			console.log( 'valid last name' );
-			document.getElementById("last_name_error").className = "info";
+			document.getElementById("last_name_error").innerHTML = "";
 			this.style.borderColor = 'green';
 		} else {
+			document.getElementById("last_name_error").innerHTML = " - must contain only latin characters";
 			document.getElementById("last_name_error").className = "warning_message";
 			this.style.borderColor = 'red';
 		}
@@ -79,12 +81,13 @@ function registerHandlers() {
 	}
 
 	// Handler for password input field when loses focus
-	document.getElementById("password").onblur = function() {
+	document.getElementById("password").onkeyup = function() {
 		if( this.value.length > 5 ) {
 			console.log( 'valid email' );
-			document.getElementById("password_error").className = "info";
+			document.getElementById("password_error").innerHTML = "";
 			this.style.borderColor = 'green';
 		} else {
+			document.getElementById("password_error").innerHTML = " - must be at least 6 characters long";
 			document.getElementById("password_error").className = "warning_message";
 			this.style.borderColor = 'red';
 		}

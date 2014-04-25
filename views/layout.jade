@@ -26,11 +26,21 @@ body
 			input#search( name="search" placeholder="Search here" )
 			ul.dropdown
 				li
-					a.menu_profile(href="/")= profile.first_name
+					if section == 'profile'
+						a.menu_profile.active(href="/")= profile.first_name
+					else
+						a.menu_profile(href="/")= profile.first_name
+
 				li
-					a.menu_statistics(href="/statistics")= tr['statistics']
+					if section == 'statistics'
+						a.menu_statistics.active(href="/statistics")= tr['statistics']
+					else
+						a.menu_statistics(href="/statistics")= tr['statistics']
 				li
-					a.menu_settings(href="/settings")= tr['settings']
+					if section == 'settings'
+						a.menu_settings.active(href="/settings")= tr['settings']
+					else
+						a.menu_settings(href="/settings")= tr['settings']
 block content
 
 
