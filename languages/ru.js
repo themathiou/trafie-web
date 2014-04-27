@@ -48,7 +48,7 @@ var en = {
     'first_name'            : 'First Name',
     'last_name'             : 'Last Name',
     'username'              : 'Username',
-    'profile_picture'       : 'Profile Settings',
+    'profile_picture'       : 'Profile Picture',
     'birthday'              : 'Birthday',
     'gender'                : 'Gender',
     'main_discipline'       : 'Main Discipline',

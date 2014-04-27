@@ -48,7 +48,7 @@ var el = {
     'first_name'            : 'Όνομα',
     'last_name'             : 'Επίθετο',
     'username'              : 'Όνομα Χρήστη',
-    'profile_picture'       : 'Ρυθμίσεις Προφίλ',
+    'profile_picture'       : 'Εικόνα Προφίλ',
     'birthday'              : 'Ημ. Γέννησης',
     'gender'                : 'Φύλο',
     'main_discipline'       : 'Κύριο Άθλημα',

@@ -33,49 +33,58 @@ function settingsHandlers() {
 	}
 
 	/* -- Profile Settings */
+	/* profile pic */
+	document.getElementById("editProfilePicture").onclick = function() {
+		/* closeOthers(); */
+		editField( document.getElementById('profilePicDiv') );
+	}
+	document.getElementById("cancelEditProfilePicture").onclick = function() {
+		cancelEditField( document.getElementById('profilePicDiv') );
+	}
+
 	/* username */
 	document.getElementById("editUsername").onclick = function() {
 		/* closeOthers(); */
-		editField( this.parentNode );
+		editField( document.getElementById('usernameDiv') );
 	}
 	document.getElementById("cancelEditUsername").onclick = function() {
-		cancelEditField(this.parentNode.parentNode);
+		cancelEditField( document.getElementById('usernameDiv') );
 	}
 
 	/* first name */
 	document.getElementById("editFirstName").onclick = function() {
 		/* closeOthers(); */
-		editField( this.parentNode );
+		editField( document.getElementById('firstNameDiv') );
 	}
 	document.getElementById("cancelEditFirstName").onclick = function() {
-		cancelEditField( this.parentNode.parentNode );
+		cancelEditField( document.getElementById('firstNameDiv') );
 	}
 
 	/* last name */
 	document.getElementById("editLastName").onclick = function() {
 		/* closeOthers(); */
-		editField( this.parentNode );
+		editField( document.getElementById('lastNameDiv') );
 	}
 	document.getElementById("cancelEditLastName").onclick = function() {
-		cancelEditField( this.parentNode.parentNode );
+		cancelEditField( document.getElementById('lastNameDiv') );
 	}
 
 	/* gender */
 	document.getElementById("editGender").onclick = function() {
 		/* closeOthers(); */
-		editField( this.parentNode );
+		editField( document.getElementById('genderDiv') );
 	}
 	document.getElementById("cancelEditGender").onclick = function() {
-		cancelEditField( this.parentNode.parentNode );
+		cancelEditField( document.getElementById('genderDiv') );
 	}
 
 	/* age */
 	document.getElementById("editAge").onclick = function() {
 		/* closeOthers(); */
-		editField( this.parentNode );
+		editField( document.getElementById('ageDiv') );
 	}
 	document.getElementById("cancelEditAge").onclick = function() {
-		cancelEditField( this.parentNode.parentNode );
+		cancelEditField( document.getElementById('ageDiv') );
 	}
 
 	/* main discipline */
@@ -84,46 +93,46 @@ function settingsHandlers() {
 	}
 	document.getElementById("editMainDiscipline").onclick = function() {
 		/* closeOthers(); */
-		editField( this.parentNode );
+		editField( document.getElementById('mainDisciplineDiv') );
 	}
 	document.getElementById("cancelEditMainDiscipline").onclick = function() {
-		cancelEditField( this.parentNode.parentNode );
+		cancelEditField( document.getElementById('mainDisciplineDiv') );
 	}
 
 	/* language */
 	document.getElementById("editLanguage").onclick = function() {
 		/* closeOthers(); */
-		editField( this.parentNode );
+		editField( document.getElementById('languageDiv') );
 	}
 	document.getElementById("cancelEditLanguage").onclick = function() {
-		cancelEditField( this.parentNode.parentNode );
+		cancelEditField( document.getElementById('languageDiv') );
 	}
 
 	/* date format */
 	document.getElementById("editDateFormat").onclick = function() {
 		/* closeOthers(); */
-		editField( this.parentNode );
+		editField( document.getElementById('dateFormatDiv') );
 	}
 	document.getElementById("cancelEditDateFormat").onclick = function() {
-		cancelEditField( this.parentNode.parentNode );
+		cancelEditField( document.getElementById('dateFormatDiv') );
 	}
 
 	/* country */
 	document.getElementById("editCountry").onclick = function() {
 		/* closeOthers(); */
-		editField( this.parentNode );
+		editField( document.getElementById('countryDiv') );
 	}
 	document.getElementById("cancelEditCountry").onclick = function() {
-		cancelEditField( this.parentNode.parentNode );
+		cancelEditField( document.getElementById('countryDiv') );
 	}
 
 	/* about */
 	document.getElementById("editAboutMe").onclick = function() {
 		/* closeOthers(); */
-		editField( this.parentNode );
+		editField( document.getElementById('aboutMeDiv') );
 	}
 	document.getElementById("cancelEditAboutMe").onclick = function() {
-		cancelEditField( this.parentNode.parentNode );
+		cancelEditField( document.getElementById('aboutMeDiv') );
 	}
 
 
@@ -132,10 +141,10 @@ function settingsHandlers() {
 
 	/* -- Account Settings -- */
 	document.getElementById("editPassword").onclick = function() {
-		editHiddenField('changePassword', 'editPassword');
+		editField( document.getElementById('changePasswordDiv') );
 	}
 	document.getElementById("cancelNewPassword").onclick = function() {
-		cancelEditHiddenField('changePassword', 'editPassword');
+		cancelEditField( document.getElementById('changePasswordDiv') );
 	}
 
 }

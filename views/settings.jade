@@ -17,21 +17,24 @@ block content
 			h3= tr['profile_settings']
 
 			//PROFILE PIC
-			div.settingsElement
+			div#profilePicDiv.settingsElement
 				form( method="POST" enctype="multipart/form-data" )
-					img( src=profile.picture style="height:80px;")
 					label= tr['profile_picture'] + ':'
+					img( src=profile.picture style="height:80px;")
 					span= errors.profile_pic
-					input#upload_profile_pic( name="profile_pic" type="file" accept="image/*")
-					input#submit_profile_pic( type="submit" value=tr['submit'])
+					input#upload_profile_pic.editable( name="profile_pic" type="file" accept="image/*")
+					input#submit_profile_pic.editable( type="submit" value=tr['submit'])
+					a#cancelEditProfilePicture.cancel_link.editable( href="javascript:;" )= tr['cancel']
+
+					a#editProfilePicture.editLink.non_editable( href="javascript:;" )= tr['edit']
 
 			//USERNAME
-			div.settingsElement
+			div#usernameDiv.settingsElement
 				form( method="POST")
 					label= tr['username'] + ' : '
 					span= errors.username
 					span.existed.non_editable= profile.username
-					input.editable( name="username" value=profile.username hidden)
+					input.editable( name="username" value=profile.username )
 					div.formButtons.editable
 						input#submitUsername.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditUsername.cancel_link( href="javascript:;" )= tr['cancel']
@@ -39,12 +42,12 @@ block content
 					a#editUsername.editLink.non_editable( href="javascript:;" )= tr['edit']
 
 			//FIRST NAME
-			div.settingsElement
+			div#firstNameDiv.settingsElement
 				form( method="POST")
 					label= tr['first_name'] + ' : '
 					span= errors.first_name
 					span.existed.non_editable= profile.first_name
-					input.editable( name="first_name" value=profile.first_name hidden)
+					input.editable( name="first_name" value=profile.first_name )
 					div.formButtons.editable
 						input#submitFirstName.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditFirstName.cancel_link( href="javascript:;" )= tr['cancel']
@@ -52,19 +55,19 @@ block content
 					a#editFirstName.editLink.non_editable( href="javascript:;" )= tr['edit']
 
 			//LAST NAME
-			div.settingsElement
+			div#lastNameDiv.settingsElement
 				form( method="POST")
 					label= tr['last_name'] + ' : '
 					span= errors.last_name
 					span.existed.non_editable= profile.last_name
-					input.editable( name="last_name" value=profile.last_name hidden )
+					input.editable( name="last_name" value=profile.last_name )
 					div.formButtons.editable
 						input#submitLastName.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditLastName.cancel_link( href="javascript:;" )= tr['cancel']
 					a#editLastName.editLink.non_editable( href="javascript:;" )= tr['edit']
 
 			//GENDER
-			div.settingsElement
+			div#genderDiv.settingsElement
 				form( method="POST")
 					label= tr['gender'] + ':'
 					span= errors.last_name
@@ -89,7 +92,7 @@ block content
 					a#editGender.editLink.non_editable( href="javascript:;" )= tr['edit']
 
 			//AGE
-			div.settingsElement
+			div#ageDiv.settingsElement
 				form( method="POST")
 					label= tr['birthday'] + ':'
 					span= errors.age
@@ -126,7 +129,7 @@ block content
 					a#editAge.editLink.non_editable( href="javascript:;" )= tr['edit']
 
 			//MAIN DISCIPLINE
-			div.settingsElement
+			div#mainDisciplineDiv.settingsElement
 				form( method="POST")
 					label= tr['main_discipline'] + ':'
 					span= errors.last_name
@@ -144,7 +147,7 @@ block content
 					a#editMainDiscipline.editLink.non_editable( href="javascript:;" )= tr['edit']
 
 			//COUNTRY
-			div.settingsElement
+			div#countryDiv.settingsElement
 				form( method="POST")
 					label= tr['country'] + ':'
 					span= errors.country
@@ -163,7 +166,7 @@ block content
 					a#editCountry.editLink.non_editable( href="javascript:;" )= tr['edit']
 
 			//LANGUAGE
-			div.settingsElement
+			div#languageDiv.settingsElement
 				form( method="POST")
 					label= tr['language'] + ':'
 					span= errors.language
@@ -182,7 +185,7 @@ block content
 					a#editLanguage.editLink.non_editable( href="javascript:;" )= tr['edit']
 
 			//DATE FORMAT
-			div.settingsElement
+			div#dateFormatDiv.settingsElement
 				form( method="POST")
 					label= tr['date_format'] + ':'
 					span= errors.data_format
@@ -205,7 +208,7 @@ block content
 
 
 			//ABOUT ME
-			div.settingsElement
+			div#aboutMeDiv.settingsElement
 				form( method="POST")
 					label= tr['about_me'] + ':'
 					span= errors.about
@@ -221,25 +224,25 @@ block content
 		div#accountSettings.settingsContent( style="display:none;" )
 			h3= tr['account_settings']
 
-			div.settingsElement
+			div#changePasswordDiv.settingsElement
 				label= tr['change_password']
-				a#editPassword.editLink( href="javascript:;" )= tr['edit']
-				div#changePassword.editable( hidden )
-					form#changePasswordForm( method="POST")
+				a#editPassword.editLink.non_editable( href="javascript:;" )= tr['edit']
+				div#changePassword.editable
+					form( method="POST")
 						span.row
 							label( for="old_password" )= tr['old_password'] + ':'
 							span= errors.first_name
-							input#old_password( name="old_password" type="password")
+							input( name="old_password" type="password")
 
 						span.row
 							label( for="password" )= tr['new_password'] + ':'
 							span= errors.first_name
-							input#new_password( name="password" type="password")
+							input( name="password" type="password")
 
 						span.row
 							label( for="repeat_password" )= tr['repeat_password'] + ':'
 							span= errors.first_name
-							input#repeat_new_password( name="repeat_password" type="password")
+							input( name="repeat_password" type="password")
 
 						div#settingsAboutMeButtons
 							input#submitNewPassword.btn_green( type="submit" value=tr['submit'])
