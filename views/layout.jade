@@ -24,23 +24,30 @@ body
 			div
 			a.logo(href="/")
 			input#search( name="search" placeholder="Search here" )
-			ul.dropdown
-				li
-					if section == 'profile'
-						a.menu_profile.active(href="/")= user.first_name
-					else
-						a.menu_profile(href="/")= user.first_name
+			if user._id
+				ul.dropdown
+					li
+						if section == 'profile'
+							a.menu_profile.active(href="/")= user.first_name
+						else
+							a.menu_profile(href="/")= user.first_name
+					li
+						if section == 'statistics'
+							a.menu_statistics.active(href="/statistics")= tr['statistics']
+						else
+							a.menu_statistics(href="/statistics")= tr['statistics']
+					li
+						if section == 'settings'
+							a.menu_settings.active(href="/settings")= tr['settings']
+						else
+							a.menu_settings(href="/settings")= tr['settings']
+			else
+				ul.dropdown
+					li
+						a.menu_profile(href="/register") Register
+					li
+						a.menu_statistics(href="/login") Login
 
-				li
-					if section == 'statistics'
-						a.menu_statistics.active(href="/statistics")= tr['statistics']
-					else
-						a.menu_statistics(href="/statistics")= tr['statistics']
-				li
-					if section == 'settings'
-						a.menu_settings.active(href="/settings")= tr['settings']
-					else
-						a.menu_settings(href="/settings")= tr['settings']
 block content
 
 
