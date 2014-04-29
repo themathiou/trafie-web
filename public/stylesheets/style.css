@@ -15,6 +15,34 @@
  * 							                                                                      GENERAL                      *
  ******************************************************************************************************************************/
 /* GENERAL */
+/*error message - text width - right of the label*/
+.error_message {
+  color: white;
+  background-color: #d14337;
+  padding: 3px 3px;
+  text-align: left;
+}
+/*warning message - text width - right of the label*/
+.warning_message {
+  color: #e87600;
+  background-color: none;
+  /* 	padding: 3px 3px; */
+
+  text-align: left;
+}
+/*error message - full width red*/
+.green_message {
+  color: green;
+  background-color: #c6fdbc;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  margin: 3px 0px;
+  padding: 3px 3px;
+  text-align: left;
+}
 body {
   margin: 0;
   padding: 0;

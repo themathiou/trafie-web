@@ -27,9 +27,9 @@ body
 			ul.dropdown
 				li
 					if section == 'profile'
-						a.menu_profile.active(href="/")= profile.first_name
+						a.menu_profile.active(href="/")= user.first_name
 					else
-						a.menu_profile(href="/")= profile.first_name
+						a.menu_profile(href="/")= user.first_name
 
 				li
 					if section == 'statistics'

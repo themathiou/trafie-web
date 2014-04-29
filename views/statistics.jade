@@ -4,11 +4,11 @@ block content
 	div#main_content
 		br
 		br
-		h4= profile.first_name
+		h4= user.first_name
 		ul
-			-for( var i in profile.disciplines_of_user) {
+			-for( var i in user.disciplines_of_user) {
 				li
-					a( href="javascript:;" id=profile.disciplines_of_user[i]+'_button' class="discipline_button" data-user-id=profile._id data-discipline=profile.disciplines_of_user[i] )= tr[profile.disciplines_of_user[i]]
+					a( href="javascript:;" id=user.disciplines_of_user[i]+'_button' class="discipline_button" data-user-id=user._id data-discipline=user.disciplines_of_user[i] )= tr[user.disciplines_of_user[i]]
 			-}
 
 		div#dashboard
@@ -22,13 +22,13 @@ block content
 	script(type='text/javascript' src='https://www.google.com/jsapi')
 	script(type='text/javascript', src='/javascripts/statistics.js')
 	script(type='text/javascript').
-		if( #{profile.disciplines_of_user.indexOf(profile.discipline)} > -1 )
+		if( #{user.disciplines_of_user.indexOf(user.discipline)} > -1 )
 		{
-			document.ready = setDisciplineButtonHandler( '#{profile._id}' , '#{profile.discipline}' )
+			document.ready = setDisciplineButtonHandler( '#{user._id}' , '#{user.discipline}' )
 		}
 		else
 		{
-			document.ready = setDisciplineButtonHandler( '#{profile._id}' , 'undefined' )
+			document.ready = setDisciplineButtonHandler( '#{user._id}' , 'undefined' )
 		}
 
 
