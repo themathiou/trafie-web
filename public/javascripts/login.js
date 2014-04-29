@@ -45,7 +45,6 @@ function registerHandlers() {
 	// Handler for first name input field
 	document.getElementById("first_name").onkeyup = function() {
 		if(  /^[A-Za-z ]+$/.test( this.value ) ) {
-			console.log( 'valid first name' );
 			document.getElementById("first_name_error").innerHTML = "";
 			this.style.borderColor = 'green';
 		} else {

@@ -50,6 +50,16 @@ function settingsHandlers() {
 	document.getElementById("cancelEditUsername").onclick = function() {
 		cancelEditField( document.getElementById('usernameDiv') );
 	}
+	document.getElementById("username").onkeyup = function() {
+		if(  /^[A-Za-z_.0-9]+$/.test( this.value ) ) {
+			document.getElementById("username_error").innerHTML = "";
+			this.style.borderColor = 'green';
+		} else {
+			document.getElementById("username_error").innerHTML = " - can contain only latin characters, '.' or '_'  ";
+			document.getElementById("username_error").className = "warning_message";
+			this.style.borderColor = 'red';
+		}
+	}
 
 	/* first name */
 	document.getElementById("editFirstName").onclick = function() {
@@ -59,6 +69,16 @@ function settingsHandlers() {
 	document.getElementById("cancelEditFirstName").onclick = function() {
 		cancelEditField( document.getElementById('firstNameDiv') );
 	}
+	document.getElementById("first_name").onkeyup = function() {
+		if(  /^[A-Za-z ]+$/.test( this.value ) ) {
+			document.getElementById("first_name_error").innerHTML = "";
+			this.style.borderColor = 'green';
+		} else {
+			document.getElementById("first_name_error").innerHTML = " - must contain only latin characters";
+			document.getElementById("first_name_error").className = "warning_message";
+			this.style.borderColor = 'red';
+		}
+	}
 
 	/* last name */
 	document.getElementById("editLastName").onclick = function() {
@@ -67,6 +87,16 @@ function settingsHandlers() {
 	}
 	document.getElementById("cancelEditLastName").onclick = function() {
 		cancelEditField( document.getElementById('lastNameDiv') );
+	}
+	document.getElementById("last_name").onkeyup = function() {
+		if(  /^[A-Za-z ]+$/.test( this.value ) ) {
+			document.getElementById("last_name_error").innerHTML = "";
+			this.style.borderColor = 'green';
+		} else {
+			document.getElementById("last_name_error").innerHTML = " - must contain only latin characters";
+			document.getElementById("last_name_error").className = "warning_message";
+			this.style.borderColor = 'red';
+		}
 	}
 
 	/* gender */

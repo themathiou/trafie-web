@@ -5,6 +5,11 @@
 
 @selectedOptionBackground : rgba(0,0,0,0.1);
 
+@orange_message_back : #E87600;
+@red_message_back : #D14337;
+@green_message_back : #C6FDBC;
+
+
 /* PALETTE_1 */
 /*@peanut : #9CFFCE; /* (156,255,206) */
 /*@raf : #9ABBD6; /* (154,187,214) */
@@ -28,6 +33,33 @@
  * 							                                                                      GENERAL                      *
  ******************************************************************************************************************************/
 /* GENERAL */
+
+/*error message - text width - right of the label*/
+.error_message {
+	color: white;
+	background-color: @red_message_back;
+	padding: 3px 3px;
+	text-align: left;
+}
+
+/*warning message - text width - right of the label*/
+.warning_message {
+	color: @orange_message_back;
+	background-color: none;
+/* 	padding: 3px 3px; */
+	text-align: left;
+}
+
+/*error message - full width red*/
+.green_message {
+	color: green;
+	background-color: @green_message_back;
+	.rounded_corners(5px);
+	margin: 3px 0px;
+	padding: 3px 3px;
+	text-align: left;
+}
+
 body
 {
 	margin: 0;
@@ -1480,7 +1512,7 @@ only screen and (min-device-pixel-ratio : 1.5) {
 /******************************************************/
 
 /*rounded corners function : 5px is default radius*/
-.rounded_corners (@radius: 5px) {
+.rounded_corners(@radius: 5px) {
   -webkit-border-radius: @radius;
   -moz-border-radius: @radius;
   -ms-border-radius: @radius;

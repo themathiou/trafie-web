@@ -20,7 +20,7 @@ block content
 			div#profilePicDiv.settingsElement
 				form( method="POST" enctype="multipart/form-data" )
 					label= tr['profile_picture'] + ':'
-					img( src=profile.picture style="height:80px;")
+					img( src=user.picture style="height:80px;")
 					span= errors.profile_pic
 					input#upload_profile_pic.editable( name="profile_pic" type="file" accept="image/*")
 					input#submit_profile_pic.editable( type="submit" value=tr['submit'])
@@ -33,8 +33,10 @@ block content
 				form( method="POST")
 					label= tr['username'] + ' : '
 					span= errors.username
-					span.existed.non_editable= profile.username
-					input.editable( name="username" value=profile.username )
+					span#username_error
+					span.existed.non_editable= user.username
+					label.editable( for="username" ) http://www.trafie.com/
+					input#username.editable( name="username" value=user.username )
 					div.formButtons.editable
 						input#submitUsername.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditUsername.cancel_link( href="javascript:;" )= tr['cancel']
@@ -46,8 +48,9 @@ block content
 				form( method="POST")
 					label= tr['first_name'] + ' : '
 					span= errors.first_name
-					span.existed.non_editable= profile.first_name
-					input.editable( name="first_name" value=profile.first_name )
+					span#first_name_error
+					span.existed.non_editable= user.first_name
+					input#first_name.editable( name="first_name" value=user.first_name )
 					div.formButtons.editable
 						input#submitFirstName.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditFirstName.cancel_link( href="javascript:;" )= tr['cancel']
@@ -59,8 +62,9 @@ block content
 				form( method="POST")
 					label= tr['last_name'] + ' : '
 					span= errors.last_name
-					span.existed.non_editable= profile.last_name
-					input.editable( name="last_name" value=profile.last_name )
+					span#last_name_error
+					span.existed.non_editable= user.last_name
+					input#last_name.editable( name="last_name" value=user.last_name )
 					div.formButtons.editable
 						input#submitLastName.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditLastName.cancel_link( href="javascript:;" )= tr['cancel']
@@ -71,15 +75,15 @@ block content
 				form( method="POST")
 					label= tr['gender'] + ':'
 					span= errors.last_name
-					span.non_editable= tr[profile.gender] || "undefined"
+					span.non_editable= tr[user.gender] || "undefined"
 					div#gender.editable
-						if profile.gender == 'male'
+						if user.gender == 'male'
 							input(id="male" name="gender" type="radio" value="male" checked)
 							label(for="male" class="clearfloat" )= tr['male']
 						else
 							input(id="male" name="gender" type="radio" value="male" )
 							label(for="male" class="clearfloat" )= tr['male']
-						if profile.gender == 'female'
+						if user.gender == 'female'
 							input(id="female" name="gender" type="radio" value="female" checked)
 							label(for="female" class="clearfloat" )= tr['female']
 						else
@@ -96,18 +100,18 @@ block content
 				form( method="POST")
 					label= tr['birthday'] + ':'
 					span= errors.age
-					span.non_editable= profile.birthday.year+'/'+profile.birthday.month+'/'+profile.birthday.day
+					span.non_editable= user.birthday.year+'/'+user.birthday.month+'/'+user.birthday.day
 					div#birthday.editable
 						select#birthday_year( name="birthday_year" onChange="setLeap(this.value)" )
 							- for (var i = 2010; i > 1900; i--) {
-									if i == profile.birthday.year
+									if i == user.birthday.year
 										option( value=i selected)= i
 									else
 										option( value=i )= i
 							- }
 						select#birthday_month( name="birthday_month" onChange="setSmall(this.value)" )
 							- for (var i = 1; i < 13; i++) {
-								if i == profile.birthday.month
+								if i == user.birthday.month
 									option( value=i selected )= i
 								else
 									option( value=i )= i
@@ -115,7 +119,7 @@ block content
 							- }
 						select#birthday_day( name="birthday_day" )
 							- for (var i = 1; i < 29; i++) {
-								if i == profile.birthday.day
+								if i == user.birthday.day
 									option( value=i selected )= i
 								else
 									option( value=i )= i
@@ -133,10 +137,10 @@ block content
 				form( method="POST")
 					label= tr['main_discipline'] + ':'
 					span= errors.last_name
-					span.non_editable= tr[profile.discipline] || "undefined"
+					span.non_editable= tr[user.discipline] || "undefined"
 					select#main_discipline_input.editable(name="discipline" )
 						- for( var i in disciplines ) {
-							if profile.discipline == disciplines[i]
+							if user.discipline == disciplines[i]
 								option( value=disciplines[i] selected)= tr[disciplines[i]]
 							else
 								option( value=disciplines[i] )= tr[disciplines[i]]
@@ -151,11 +155,11 @@ block content
 				form( method="POST")
 					label= tr['country'] + ':'
 					span= errors.country
-					span.non_editable= tr[profile.country] || "undefined"
+					span.non_editable= tr[user.country] || "undefined"
 					select.editable(name="country" )
 							option(value="no-selection" selected)= tr['choose_your_country']
 							- for( var i in countries ) {
-								if profile.country == countries[i]
+								if user.country == countries[i]
 									option( value=countries[i] selected)= tr[countries[i]]
 								else
 									option( value=countries[i] )= tr[countries[i]]
@@ -170,11 +174,11 @@ block content
 				form( method="POST")
 					label= tr['language'] + ':'
 					span= errors.language
-					span.non_editable= languages[profile.language]
+					span.non_editable= languages[user.language]
 					select.editable(name="language" hidden)
 							option(value="no-selection" selected)= tr['choose_your_language']
 							- for( var i in languages ) {
-								if languages[profile.language] == languages[i]
+								if languages[user.language] == languages[i]
 									option( value=i selected)= languages[i]
 								else
 									option( value=i )= languages[i]
@@ -189,14 +193,14 @@ block content
 				form( method="POST")
 					label= tr['date_format'] + ':'
 					span= errors.data_format
-					span.non_editable= tr[profile.date_format]
+					span.non_editable= tr[user.date_format]
 					select.editable( name='date_format' )
-						if profile.date_format == 'd-m-y'
+						if user.date_format == 'd-m-y'
 							option( value='d-m-y' selected )= tr['d-m-y']
 						else
 							option( value='d-m-y' )= tr['d-m-y']
 
-						if profile.date_format == 'm-d-y'
+						if user.date_format == 'm-d-y'
 							option( value='m-d-y' selected)= tr['m-d-y']
 						else
 							option( value='m-d-y' )= tr['m-d-y']
@@ -212,8 +216,8 @@ block content
 				form( method="POST")
 					label= tr['about_me'] + ':'
 					span= errors.about
-					span.non_editable( style="overflow-wrap: break-word;")= profile.about || tr['write_something_about_you']
-					textarea.textarea.editable( name="about" maxlength="400" )= profile.about
+					span.non_editable( style="overflow-wrap: break-word;")= user.about || tr['write_something_about_you']
+					textarea.textarea.editable( name="about" maxlength="400" )= user.about
 					div.formButtons.editable
 						input#submitAboutMe.btn_green( type="submit" value=tr['submit'])
 						a#cancelEditAboutMe.cancel_link( href="javascript:;" )= tr['cancel']
