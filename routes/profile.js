@@ -12,22 +12,22 @@ exports.get = function( req, res ){
   var user_id = req.session.user_id;
 
   // When there is a username in the url
-  if( typeof req.params.user_id !== 'undefined' ) {
-    // Find user by id
-    Profile.schema.findOne({ '_id': req.params.user_id }, '_id')
-    .then( function( response ) {
-      if( response !== null && response !== undefined ) {
-        prerender_other_profile( res, user_id, response._id );
+  if( typeof req.params.profile_id !== 'undefined' ) {
+    // Find the profile by id
+    Profile.schema.findOne({ '_id': req.params.profile_id }, '_id first_name last_name discipline country male picture')
+    .then( function( profile_data ) {
+      if( profile_data !== null && profile_data !== undefined ) {
+        prerender_other_profile( res, user_id, profile_data );
       } else {
         // Find user by username
-        Profile.schema.findOne({ 'username': req.params.user_id }, '_id')
-        .then( function( response ) {
-          if( response !== null && response !== undefined ) {
-            prerender_other_profile( res, user_id, response._id );
-          } else {
-            res.redirect('/');
-          }
-        });
+        return Profile.schema.findOne({ 'username': req.params.profile_id }, '_id first_name last_name discipline country male picture');
+      }
+    })
+    .then( function( profile_data ) {
+      if( profile_data !== null && profile_data !== undefined ) {
+        prerender_other_profile( res, user_id, profile_data );
+      } else {
+        res.redirect('/');
       }
     });
   }
@@ -48,7 +48,7 @@ function prerender_my_profile( res, user_id ) {
         'language'    : profile_data.language,
         'date_format' : profile_data.date_format
       };
-      render( res, profile_data, user_data );
+      render( res, user_data, profile_data );
     // If the user wasn't found
     } else {
       res.redirect('/login');
@@ -56,30 +56,30 @@ function prerender_my_profile( res, user_id ) {
   });
 }
 
-function prerender_other_profile( res, user_id, profile_id ) {
-  var profile_data = null;
-  Profile.schema.findOne( { '_id': profile_id }, '_id first_name last_name discipline country male picture' )
-  .then( function( other_profile_data ) {
-    profile_data = other_profile_data;
-    return Profile.schema.findOne( { '_id': user_id }, '_id first_name language date_format' ) })
-  .then( function( db_user_data ) {
-    // If the user was found
-    if( typeof db_user_data.first_name !== 'undefined' ) {
-      var user_data = {
-        '_id'         : db_user_data._id,
-        'first_name'  : db_user_data.first_name,
-        'language'    : db_user_data.language,
-        'date_format' : db_user_data.date_format
-      };
-      render( res, profile_data, user_data );
-    // If the user wasn't found
-    } else {
-      res.redirect('/login');
-    }
-  });
+function prerender_other_profile( res, user_id, profile_data ) {
+  if( user_id ) {
+    Profile.schema.findOne( { '_id': user_id }, '_id first_name language date_format' ) })
+    .then( function( user_data ) {
+      // If the user was found
+      if( typeof user_data.first_name !== 'undefined' ) {
+        render( res, user_data, profile_data );
+      // If the user wasn't found
+      } else {
+        res.redirect('/login');
+      }
+    });
+  } else {
+    var user_data = {
+      '_id'         : '',
+      'first_name'  : '',
+      'language'    : 'en',
+      'date_format' : 'd-m-y'
+    };
+    render( res, null, profile_data);
+  }
 }
 
-function render( res, profile_data, user_data ) {
+function render( res, user_data, profile_data ) {
   Activity.schema.getActivitiesOfUser( { 'user_id': profile_data._id }, null, -1 )
   .then( function( activities ) {
     // Format the activity data

@@ -42,7 +42,7 @@ function render( res, user_id, profile_data ) {
   .then( function( disciplines_of_user ) {
     // The data that will go to the front end
     var view_data = {
-      'profile': {
+      'user': {
         '_id'                   : user_id,
         'first_name'            : profile_data.first_name,
         'discipline'            : profile_data.discipline,
