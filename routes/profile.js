@@ -16,29 +16,40 @@ exports.get = function( req, res ){
     // Find the profile by id
     Profile.schema.findOne({ '_id': req.params.profile_id }, '_id first_name last_name discipline country male picture')
     .then( function( profile_data ) {
+      // If the profile was found, get the data of the user
       if( profile_data !== null && profile_data !== undefined ) {
         prerender_other_profile( res, user_id, profile_data );
       } else {
-        // Find user by username
+        // If the profile wasn't found, try to find it by username
         return Profile.schema.findOne({ 'username': req.params.profile_id }, '_id first_name last_name discipline country male picture');
       }
     })
     .then( function( profile_data ) {
+      // If the profile was found, get the data of the user
       if( profile_data !== null && profile_data !== undefined ) {
         prerender_other_profile( res, user_id, profile_data );
       } else {
+        // Else, the user was searching for a profile that doesn't exist
         res.redirect('/');
       }
     });
   }
+  // If the user is not searching for a particular profile, he wants to view his own (no parameter "/")
   else if( user_id ) {
     prerender_my_profile( res, user_id );
   } else {
+    // If no user_id was provided, redirect to the registration screen
 	  res.redirect('/register');
   }
 };
 
+/**
+ * Gets data about the user and his profile that is going to be rendered later
+ * @param object res
+ * @param string user_id
+ */
 function prerender_my_profile( res, user_id ) {
+  // Get the user and his profile
   Profile.schema.findOne( { '_id': user_id }, '_id first_name last_name discipline country male picture language date_format' ).then( function( profile_data ) {
     // If the user was found
     if( typeof profile_data.first_name !== 'undefined' ) {
@@ -56,6 +67,13 @@ function prerender_my_profile( res, user_id ) {
   });
 }
 
+/**
+ * Gets data about the user only. The profile data have already been loaded.
+ * In this case, the profile probably belongs to another user
+ * @param object res
+ * @param string user_id
+ * @param object profile_data
+ */
 function prerender_other_profile( res, user_id, profile_data ) {
   if( user_id ) {
     Profile.schema.findOne( { '_id': user_id }, '_id first_name language date_format' )
@@ -69,6 +87,7 @@ function prerender_other_profile( res, user_id, profile_data ) {
       }
     });
   } else {
+    // Load default data for the user
     var user_data = {
       '_id'         : '',
       'first_name'  : '',
@@ -79,6 +98,12 @@ function prerender_other_profile( res, user_id, profile_data ) {
   }
 }
 
+/**
+ * Getting the activities and rendering the profile
+ * @param object res
+ * @param object user_data
+ * @param object profile_data
+ */
 function render( res, user_data, profile_data ) {
   Activity.schema.getActivitiesOfUser( { 'user_id': profile_data._id }, null, -1 )
   .then( function( activities ) {
