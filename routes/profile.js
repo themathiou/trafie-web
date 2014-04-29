@@ -58,7 +58,7 @@ function prerender_my_profile( res, user_id ) {
 
 function prerender_other_profile( res, user_id, profile_data ) {
   if( user_id ) {
-    Profile.schema.findOne( { '_id': user_id }, '_id first_name language date_format' ) })
+    Profile.schema.findOne( { '_id': user_id }, '_id first_name language date_format' )
     .then( function( user_data ) {
       // If the user was found
       if( typeof user_data.first_name !== 'undefined' ) {
@@ -75,7 +75,7 @@ function prerender_other_profile( res, user_id, profile_data ) {
       'language'    : 'en',
       'date_format' : 'd-m-y'
     };
-    render( res, null, profile_data);
+    render( res, user_data, profile_data);
   }
 }
 
