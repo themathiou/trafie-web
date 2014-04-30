@@ -274,6 +274,7 @@ function render( res, user_id, errors ) {
 
     var view_data = {
       'user': {
+        '_id'         : user_id,
         'first_name'  : response.first_name,
         'last_name'   : response.last_name,
         'discipline'  : response.discipline,
