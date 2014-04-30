@@ -20,11 +20,12 @@ block content
 			div#profilePicDiv.settingsElement
 				form( method="POST" enctype="multipart/form-data" )
 					label= tr['profile_picture'] + ':'
-					img( src=user.picture style="height:80px;")
+					img.settings_profile_pic_thumb( src=user.picture )
 					span= errors.profile_pic
 					input#upload_profile_pic.editable( name="profile_pic" type="file" accept="image/*")
-					input#submit_profile_pic.editable( type="submit" value=tr['submit'])
-					a#cancelEditProfilePicture.cancel_link.editable( href="javascript:;" )= tr['cancel']
+					div.formButtons.editable
+						input#submit_profile_pic.btn_green( type="submit" value=tr['submit'])
+						a#cancelEditProfilePicture.cancel_link( href="javascript:;" )= tr['cancel']
 
 					a#editProfilePicture.editLink.non_editable( href="javascript:;" )= tr['edit']
 
@@ -241,12 +242,14 @@ block content
 						span.row
 							label( for="password" )= tr['new_password'] + ':'
 							span= errors.first_name
-							input( name="password" type="password")
+							span#password_error
+							input#password( name="password" type="password")
 
 						span.row
 							label( for="repeat_password" )= tr['repeat_password'] + ':'
 							span= errors.first_name
-							input( name="repeat_password" type="password")
+							span#repeat_password_error.warning_message
+							input#repeat_password( name="repeat_password" type="password")
 
 						div#settingsAboutMeButtons
 							input#submitNewPassword.btn_green( type="submit" value=tr['submit'])

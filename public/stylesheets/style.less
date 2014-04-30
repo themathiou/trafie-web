@@ -153,13 +153,17 @@ body
 				color:#ffffff;
 				background-color:transparent;
 				text-decoration:none;
-				padding:12px 12px 7px 12px;
+				padding:12px 12px 5px 12px;
 				font-size: 0.9em;
+				border-bottom: 5px solid transparent;
+				transition : border 400ms ease-in-out;
+				-webkit-transition: border 400ms ease-in-out;
+			    -moz-transition: border 400ms ease-in-out;
 			}
 
 			a:hover, a.active
 			{
-				border-bottom: white 4px solid;
+				border-bottom: white 5px solid;
 			}
 
 		}
@@ -849,7 +853,6 @@ input.btn_blue_2 {
 
 		label {
 			font-size: 1em;
-			float:left;
 		}
 
 		.textarea {
@@ -884,10 +887,18 @@ input.btn_blue_2 {
 		&:hover{
 			background-color: @light_gray;
 		}
+
+		.settings_profile_pic_thumb {
+			width:40px;
+			height:40px;
+			margin-left: 5px;
+			.rounded_corners();
+			vertical-align: middle;
+		}
 	}
 
 	.non_editable {
-		display: block;
+		display: inline-block;
 	}
 
 	.editable {
