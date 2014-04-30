@@ -228,7 +228,8 @@ block content
 						div.icon XX
 						div.info( data-activity-id=activity._id )
 							div.current_data
-								a.deleteActivity( href='/user/'+profile._id+'/activities/' + activity._id  ) &nbsp;
+								if user._id==profile._id
+									a.deleteActivity( href='/user/'+profile._id+'/activities/' + activity._id  ) &nbsp;
 								//div#activity_menu
 									ul
 										li
@@ -244,7 +245,8 @@ block content
 								div.performance( data-value=activity.performance )= activity.formatted_performance
 								div.discipline( data-value=activity.discipline )= activity.formatted_discipline
 								div.date( data-value=activity.date )= activity.formatted_date
-							a.editActivity( href="javascript:;" ) &nbsp;
+							if user._id==profile._id
+								a.editActivity( href="javascript:;" ) &nbsp;
 
 				li
 					div.icon_back
