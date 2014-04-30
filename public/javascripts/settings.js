@@ -176,6 +176,30 @@ function settingsHandlers() {
 	document.getElementById("cancelNewPassword").onclick = function() {
 		cancelEditField( document.getElementById('changePasswordDiv') );
 	}
+	// Handler for password input field when loses focus
+	document.getElementById("password").onkeyup = function() {
+		if( this.value.length > 5 ) {
+			console.log( 'valid email' );
+			document.getElementById("password_error").innerHTML = "";
+			this.style.borderColor = 'green';
+		} else {
+			document.getElementById("password_error").innerHTML = " - must be at least 6 characters long";
+			document.getElementById("password_error").className = "warning_message";
+			this.style.borderColor = 'red';
+		}
+	}
+
+	// Handler for repeat password input field when loses focus
+	document.getElementById("repeat_password").onkeyup = function() {
+		if( this.value == document.getElementById("password").value  ) {
+			console.log( 'valid pass combination' );
+			document.getElementById("repeat_password_error").innerHTML = "";
+			this.style.borderColor = 'green';
+		} else {
+			document.getElementById("repeat_password_error").innerHTML = "Passwords doesn't match";
+			this.style.borderColor = 'red';
+		}
+	}
 
 }
 
