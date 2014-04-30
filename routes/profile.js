@@ -32,6 +32,9 @@ exports.get = function( req, res ){
         // Else, the user was searching for a profile that doesn't exist
         res.redirect('/');
       }
+    })
+    .fail( function( error ) {
+      send_error_page( error, res );
     });
   }
   // If the user is not searching for a particular profile, he wants to view his own (no parameter "/")
@@ -64,6 +67,9 @@ function prerender_my_profile( res, user_id ) {
     } else {
       res.redirect('/login');
     }
+  })
+  .fail( function( error ) {
+    send_error_page( error, res );
   });
 }
 
@@ -85,6 +91,9 @@ function prerender_other_profile( res, user_id, profile_data ) {
       } else {
         res.redirect('/login');
       }
+    })
+    .fail( function( error ) {
+      send_error_page( error, res );
     });
   } else {
     // Load default data for the user
@@ -166,5 +175,18 @@ function render( res, user_data, profile_data ) {
     };
 
     res.render( 'profile', view_data );
+  })
+  .fail( function( error ) {
+    send_error_page( error, res );
   });
+}
+
+/**
+ * Sends an error page in case a query fails
+ * @param string error
+ * @param object res
+ */
+function send_error_page( error, res ) {
+  res.statusCode = 500;
+  res.sendfile('./views/five_oh_oh.html');
 }

@@ -23,6 +23,9 @@ exports.validation_email_sent = function( req, res ) {
     }
 
     res.render('validation_email_sent', { 'email': response.email, 'resend': req.params.resend, 'user_id': user_id } );
+  })
+  .fail( function( error ) {
+    send_error_page( error, res );
   });
 };
 
@@ -47,12 +50,16 @@ exports.validate = function( req,res ) {
     } else {
       res.redirect('/login');
     }
-  }).then( function(){
+  })
+  .then( function(){
     // Delete the hash after validation
     UserHashes.schema.deleteHash( req.params.hash, 'verify' );
     // Storing the user id in the session
     req.session.user_id = user_id;
     res.redirect('/');
+  })
+  .fail( function( error ) {
+    send_error_page( error, res );
   });
 };
 
@@ -91,5 +98,18 @@ exports.resend_validation_email = function( req, res ) {
     Email.send_verification_email( email, first_name, last_name, response.hash, req.headers.host );
 
     res.redirect('/validation_email_sent/1/' + user_id);
+  })
+  .fail( function( error ) {
+    send_error_page( error, res );
   });
 };
+
+/**
+ * Sends an error page in case a query fails
+ * @param string error
+ * @param object res
+ */
+function send_error_page( error, res ) {
+  res.statusCode = 500;
+  res.sendfile('./views/five_oh_oh.html');
+}

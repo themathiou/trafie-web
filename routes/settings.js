@@ -150,9 +150,15 @@ exports.post = function( req, res ) {
           } else {
             Profile.update({ '_id': user_id }, { $set: profile_data }, { upsert: true }, function( error ) {
               render( res, user_id, error_messages );
+            })
+            .fail( function( error ) {
+              send_error_page( error, res );
             });
           }
 
+        })
+        .fail( function( error ) {
+          send_error_page( error, res );
         });
       }
     }
@@ -188,6 +194,9 @@ exports.post = function( req, res ) {
             // Update the database
             Profile.update({ '_id': user_id }, { $set: profile_data }, { upsert: true }, function( error ) {
               render( res, user_id, error_messages );
+            })
+            .fail( function( error ) {
+              send_error_page( error, res );
             });
           });
         }
@@ -223,6 +232,9 @@ exports.post = function( req, res ) {
             User.schema.resetPassword( user_id, req.body.password )
             .then( function(){
               render( res, user_id, error_messages );
+            })
+            .fail( function( error ) {
+              send_error_page( error, res );
             });
           }
         }
@@ -235,9 +247,15 @@ exports.post = function( req, res ) {
       } else {
         Profile.update({ '_id': user_id }, { $set: profile_data }, { upsert: true }, function( error ) {
           render( res, user_id, error_messages );
+        })
+        .fail( function( error ) {
+          send_error_page( error, res );
         });
       }
     }
+  })
+  .fail( function( error ) {
+    send_error_page( error, res );
   });
 };
 
@@ -296,5 +314,18 @@ function render( res, user_id, errors ) {
     };
 
     res.render( 'settings', view_data );
+  })
+  .fail( function( error ) {
+    send_error_page( error, res );
   });
+}
+
+/**
+ * Sends an error page in case a query fails
+ * @param string error
+ * @param object res
+ */
+function send_error_page( error, res ) {
+  res.statusCode = 500;
+  res.sendfile('./views/five_oh_oh.html');
 }

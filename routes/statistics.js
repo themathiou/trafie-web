@@ -27,6 +27,9 @@ exports.get = function( req, res ){
       } else {
         res.redirect('/login');
       }
+    })
+    .fail( function( error ) {
+      send_error_page( error, res );
     });
   }
 };
@@ -53,5 +56,18 @@ function render( res, user_id, profile_data ) {
     };
 
     res.render( 'statistics', view_data );
+  })
+  .fail( function( error ) {
+    send_error_page( error, res );
   });
+}
+
+/**
+ * Sends an error page in case a query fails
+ * @param string error
+ * @param object res
+ */
+function send_error_page( error, res ) {
+  res.statusCode = 500;
+  res.sendfile('./views/five_oh_oh.html');
 }
