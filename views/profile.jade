@@ -229,15 +229,8 @@ block content
 						div.info( data-activity-id=activity._id )
 							div.current_data
 								if user._id==profile._id
-									a.deleteActivity( href='/user/'+profile._id+'/activities/' + activity._id  ) &nbsp;
-								//div#activity_menu
-									ul
-										li
-											a( href="#" ) &nbsp;
-											ul
-												li
-													a.editActivity( href="#" ) Edit Activity
-													a.deleteActivity( href="#" ) Delete Activity
+									a.deleteActivity( href='/user/'+profile._id+'/activities/' + activity._id  )
+										include partials/delete_activity_svg
 
 								//div.ribbon.ribbon-yellow
 									div.banner
@@ -246,7 +239,8 @@ block content
 								div.discipline( data-value=activity.discipline )= activity.formatted_discipline
 								div.date( data-value=activity.date )= activity.formatted_date
 							if user._id==profile._id
-								a.editActivity( href="javascript:;" ) &nbsp;
+								a.editActivity( href="javascript:;" )
+									include partials/edit_activity_svg
 
 				li
 					div.icon_back

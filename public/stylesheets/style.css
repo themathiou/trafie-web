@@ -61,6 +61,9 @@ body {
   padding: 0;
   margin-top: 40px;
 }
+label {
+  font-weight: 400;
+}
 #main_content {
   max-width: 950px;
   min-width: 950px;
@@ -71,6 +74,31 @@ body {
   border: 1px solid #f6f6f6;
   border-top: none;
   border-bottom: none;
+}
+/************
+* 	SVGs	*
+************/
+.edit_svg {
+  height: 15px;
+  width: 15px;
+  fill: rgba(0, 0, 0, 0.6);
+  transition: fill 0.4s ease-in-out;
+  -webkit-transition: fill 0.4s ease-in-out;
+  -moz-transition: fill 0.4s ease-in-out;
+}
+.edit_svg:hover {
+  fill: #e87600;
+}
+.delete_svg {
+  height: 15px;
+  width: 15px;
+  fill: rgba(0, 0, 0, 0.6);
+  transition: fill 0.4s ease-in-out;
+  -webkit-transition: fill 0.4s ease-in-out;
+  -moz-transition: fill 0.4s ease-in-out;
+}
+.delete_svg:hover {
+  fill: #990100;
 }
 /*******************************************************************************************************************************
  * 							                                                                      MAIN MENU                    *
@@ -221,13 +249,11 @@ body {
 }
 .history_line > li .info .deleteActivity {
   float: right;
-  background-image: url('../images/ui/delete.png');
   background-repeat: no-repeat;
   min-width: 16px;
 }
 .history_line > li .info .editActivity {
   float: right;
-  background-image: url('../images/ui/edit.png');
   background-repeat: no-repeat;
   min-width: 18px;
 }
@@ -708,24 +734,6 @@ input.btn_blue_2:active {
   width: 730px;
   padding-left: 10px;
   padding-top: 60px;
-  /*
-		.editable {
-			background-color: @light_gray;
-
-			input {
-				.rounded_corners(5px);
-				box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2) inset;
-				border:1px white solid;
-			}
-
-			textarea {
-				.rounded_corners(5px);
-				box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2) inset;
-				border:1px white solid;
-			}
-		}
-	*/
-
 }
 .settingsContent h3 {
   width: 100%;
@@ -1179,6 +1187,7 @@ input.btn_blue_2:active {
   .settingsContent .settingsElement {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     padding: 10px 5px;
+    background-color: white;
   }
   .settingsContent .settingsElement input {
     border: none;
@@ -1195,6 +1204,9 @@ input.btn_blue_2:active {
     display: inline-block;
   }
   .settingsContent .settingsElement:hover {
+    background-color: #f6f6f6;
+  }
+  .settingsContent .edit_on {
     background-color: #f6f6f6;
   }
   .settingsContent .editable {
@@ -1241,4 +1253,6 @@ only screen and (min-device-pixel-ratio : 1.5) {
 /******************************************************/
 /*					FUNCTIONS		 				  */
 /******************************************************/
-/*rounded corners function : 5px is default radius*/
+/* rounded corners function : 5px is default radius */
+/* background_shadow() */
+/* transition : function for browsers support*/
