@@ -36,8 +36,17 @@ exports.post = function( req, res ) {
 	    res.render('login', { 'errors': { 'email': 'Email - password combination wasn\'t found' } } );
     }
   })
-	.fail(function(response) {
-		console.log("Error : " + response);
+	.fail( function( error ) {
+    send_error_page( error, res );
   });
-
 };
+
+/**
+ * Sends an error page in case a query fails
+ * @param string error
+ * @param object res
+ */
+function send_error_page( error, res ) {
+  res.statusCode = 500;
+  res.sendfile('./views/five_oh_oh.html');
+}

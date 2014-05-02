@@ -38,7 +38,9 @@ exports.get = function( req, res ){
 
         return_activities( res, 200, where, profile_data.language, profile_data.date_format );
       }
-
+    })
+    .fail( function( error ) {
+      send_error_page( error, res );
     });
   }
 };
@@ -150,6 +152,9 @@ exports.post = function( req, res ) {
         // Save the activity
         activity.save(function ( err, activity ) {
           return_activity( res, 201, { '_id': activity._id, 'user_id': user_id }, profile_data.language, profile_data.date_format );
+        })
+        .fail( function( error ) {
+          send_error_page( error, res );
         });
       } else {
         // If there are errors, send the error messages to the client
@@ -282,6 +287,9 @@ exports.put = function( req, res ) {
         // If there are errors, send the error messages to the client
         return_activity( res, 400, {}, language, date_format, error_messages );
       }
+    })
+    .fail( function( error ) {
+      send_error_page( error, res );
     });
   }
 };
@@ -306,6 +314,9 @@ exports.delete = function( req, res ) {
       res.statusCode = 403;
     }
     res.json( null );
+  })
+  .fail( function( error ) {
+    send_error_page( error, res );
   });
 };
 
@@ -346,6 +357,9 @@ function return_activity( res, status_code, where, language, date_format, error_
     activity = Activity.schema.formatActivity( activity, language, date_format );
     
     res.json( activity );
+  })
+  .fail( function( error ) {
+    send_error_page( error, res );
   });
 }
 
@@ -374,5 +388,18 @@ function return_activities( res, status_code, where, language, date_format ) {
 
     res.statusCode = status_code;
     res.json( activities );
+  })
+  .fail( function( error ) {
+    send_error_page( error, res );
   });
+}
+
+/**
+ * Sends an error page in case a query fails
+ * @param string error
+ * @param object res
+ */
+function send_error_page( error, res ) {
+  res.statusCode = 500;
+  res.json( null );
 }
