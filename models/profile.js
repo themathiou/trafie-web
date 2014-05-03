@@ -23,14 +23,42 @@ var profileSchema = mongoose.Schema({
 });
 
 /**
-* Find user by element
+* Find profile by element
 * @param json where({email:someone@trafie.com})
 * @param String select
 */
 profileSchema.findOne = function( where, select ) {
 	var d = q.defer();
-	Profile.findOne(where, select, function ( err, profile ) {
-		d.resolve(profile);
+	Profile.findOne( where, select, function ( err, profile ) {
+		d.resolve( profile );
+	});
+	return d.promise;
+};
+
+/**
+* Find profile by element
+* @param json where({email:someone@trafie.com})
+* @param String select
+*/
+profileSchema.find = function( where, select, limit ) {
+	var d = q.defer();
+	if( typeof limit == "undefined" ) limit = 0;
+	if( typeof skip == "undefined" ) skip = 0;
+	if( typeof sort == "undefined" ) sort = {};
+
+	Profile.find( where, select,
+		// Other parameters
+	    {
+	      'limit': limit,
+	      'skip': skip,
+	      'sort': sort
+	      /* Sort example
+	      {
+	        // -1 = descending
+	        date: sort
+	      } */
+	    }, function ( err, profile ) {
+		d.resolve( profile );
 	});
 	return d.promise;
 };

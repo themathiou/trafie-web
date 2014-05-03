@@ -44,6 +44,7 @@ var login = require('./routes/login'),
     register = require('./routes/register'),
     profile = require('./routes/profile'),
     activities = require('./routes/activities'),
+    search = require('./routes/search'),
     statistics = require('./routes/statistics'),
     settings = require('./routes/settings'),
     email_validation = require('./routes/email_validation'),
@@ -182,6 +183,13 @@ trafie.get( '/reset_password/:hash', reset_password.get );
 
 // Reset Password - GET
 trafie.post( '/reset_password/:hash', reset_password.post );
+
+
+/*******************************************************************************************************************************
+ * SEARCH                                                                                                                      *
+ ******************************************************************************************************************************/
+
+ trafie.get( '/search', search.get );
 
 
 /*******************************************************************************************************************************
