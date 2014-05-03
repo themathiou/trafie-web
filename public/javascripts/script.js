@@ -7,6 +7,7 @@
  * @param form_node : the form with all the fields
  */
 function editField( parent_node ) {
+	parent_node.style.backgroundColor = '#F6F6F6';
 	var noneditables = parent_node.querySelectorAll('.non_editable');
 	var editables = parent_node.querySelectorAll('.editable');
 
@@ -19,37 +20,12 @@ function editField( parent_node ) {
  * @param existedID :
  */
 function cancelEditField( parent_node ) {
+	parent_node.style.backgroundColor = 'white';
 	var noneditables = parent_node.querySelectorAll('.non_editable');
 	var editables = parent_node.querySelectorAll('.editable');
 
 	for(var i=0, length=noneditables.length; i<length; i++) { noneditables[i].style.display = 'inline-block'; }
 	for(var i=0, length=editables.length; i<length; i++) { editables[i].style.display = 'none'; }
-}
-
-
-
-
-
-/**
- * editHiddenField() : shows the elements for editing a field
- * @param hiddenFieldID : the field we want to make editable
- * @param editID : the 'edit' button id for show/hide
- */
-function editHiddenField( hiddenFieldID, editID) {
-	document.getElementById(hiddenFieldID).style.display = 'block';
-	document.getElementById(editID).style.display = 'none';
-}
-
-/**
- * cancelEditHiddenField() : hides the elements for editing a field (reverse action of editHiddenField )
- * @param fieldID : the field we want to make editable
- * @param saveID : the 'save' button id for show/hide
- * @param cancelID : the 'cancel' button id for show/hide
- * @param editID : the 'edit' button id for show/hide
- */
-function cancelEditHiddenField( hiddenFieldID, editID) {
-	document.getElementById(hiddenFieldID).style.display = 'none';
-	document.getElementById(editID).style.display = 'block';
 }
 
 
@@ -160,7 +136,6 @@ function ajax_post(data, url, callback) {
 function ajax_put(data, url, callback) {
 	var xhr = new XMLHttpRequest();
 	xhr.open('PUT', url);
-
 
 
 	xhr.addEventListener('load', function (e) {

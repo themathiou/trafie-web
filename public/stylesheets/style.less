@@ -82,6 +82,10 @@ body
     margin-top: 40px;
 }
 
+label {
+	font-weight: 400;
+}
+
 #main_content
 {
 	max-width: 950px;
@@ -104,9 +108,30 @@ body
 
 
 
+/************
+* 	SVGs	*
+************/
+.edit_svg {
+	height: 15px;
+	width: 15px;
+	fill: @darkgray;
+	.transition(fill 0.4s ease-in-out);
 
+	&:hover {
+		fill: @orange_message_back;
+	}
+}
 
+.delete_svg {
+	height: 15px;
+	width: 15px;
+	fill: @darkgray;
+	.transition(fill 0.4s ease-in-out);
 
+	&:hover {
+		fill: @red;
+	}
+}
 
 
 
@@ -156,9 +181,7 @@ body
 				padding:12px 12px 5px 12px;
 				font-size: 0.9em;
 				border-bottom: 5px solid transparent;
-				transition : border 400ms ease-in-out;
-				-webkit-transition: border 400ms ease-in-out;
-			    -moz-transition: border 400ms ease-in-out;
+				.transition(border 400ms ease-in-out);
 			}
 
 			a:hover, a.active
@@ -277,17 +300,16 @@ body
 
 		.deleteActivity {
 			float: right;
-			background-image: url('../images/ui/delete.png');
 			background-repeat: no-repeat;
 			min-width: 16px;
 		}
 
 		.editActivity {
 			float: right;
-			background-image: url('../images/ui/edit.png');
 			background-repeat: no-repeat;
 			min-width: 18px;
 		}
+
 	}
 
 	/* odd post */
@@ -904,23 +926,6 @@ input.btn_blue_2 {
 	.editable {
 		display: none;
 	}
-	/*
-		.editable {
-			background-color: @light_gray;
-
-			input {
-				.rounded_corners(5px);
-				box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2) inset;
-				border:1px white solid;
-			}
-
-			textarea {
-				.rounded_corners(5px);
-				box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2) inset;
-				border:1px white solid;
-			}
-		}
-	*/
 
 	.submitButtonsVisible {
 		display: block;
@@ -1432,6 +1437,7 @@ input.btn_blue_2 {
 		.settingsElement {
 			border-bottom: 1px solid @lightgray;
 			padding: 10px 5px;
+			background-color: white;
 
 			input {
 				border: none;
@@ -1455,6 +1461,11 @@ input.btn_blue_2 {
 				background-color: @light_gray;
 			}
 		}
+
+		.edit_on {
+			background-color: @light_gray;
+		}
+
 
 		.editable {
 			background-color: @light_gray;
@@ -1522,7 +1533,7 @@ only screen and (min-device-pixel-ratio : 1.5) {
 /*					FUNCTIONS		 				  */
 /******************************************************/
 
-/*rounded corners function : 5px is default radius*/
+/* rounded corners function : 5px is default radius */
 .rounded_corners(@radius: 5px) {
   -webkit-border-radius: @radius;
   -moz-border-radius: @radius;
@@ -1531,6 +1542,7 @@ only screen and (min-device-pixel-ratio : 1.5) {
   border-radius: @radius;
 }
 
+/* background_shadow() */
 .background_shadow() {
 	background: rgb(255,255,255); /* Old browsers */
 	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
@@ -1543,6 +1555,14 @@ only screen and (min-device-pixel-ratio : 1.5) {
 	background: linear-gradient(to right,  rgba(255,255,255,1) 0%,rgba(241,241,241,1) 39%,rgba(225,225,225,1) 49%,rgba(246,246,246,1) 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f6f6f6',GradientType=1 ); /* IE6-8 */
 
+}
+
+
+/* transition : function for browsers support*/
+.transition(@text) {
+	transition : @text;
+	-webkit-transition: @text;
+	-moz-transition: @text;
 }
 
 
