@@ -5,7 +5,13 @@
 function mainMenuHandlers(){
 	document.getElementById("search").onkeyup = function(){
 		ajax_get('/search/?value='+this.value, function(res){
-			console.log(res);
+			var response = JSON.parse(res);
+
+			if( response.length > 0 ){
+				for( i in response ) {
+					console.log(response[i].first_name+' '+response[i].last_name);
+				}
+			}
 		});
 
 	}
