@@ -38,7 +38,7 @@ exports.get = function( req, res ) {
 		
 
 		var query = { $or: ands };
-		return Profile.schema.find( query, 'first_name last_name discipline country')
+		return Profile.schema.find( query, 'first_name last_name discipline country nickname _id')
 	})
 	.then( function( results ){
 		res.json( results );
