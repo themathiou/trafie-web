@@ -1,4 +1,17 @@
 /********************************************/
+/* 				MAIN MENU 					*/
+/********************************************/
+
+function mainMenuHandlers(){
+	document.getElementById("search").onkeyup = function(){
+		ajax_get('/search/?value='+this.value, function(res){
+			console.log(res);
+		});
+
+	}
+}
+
+/********************************************/
 /* 				SETTINGS 					*/
 /********************************************/
 
