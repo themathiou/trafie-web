@@ -157,6 +157,17 @@ label {
 }
 #mainmenu #search_results li {
   display: block;
+  font-weight: 400;
+}
+#mainmenu #search_results li a {
+  color: #333333;
+  font-weight: 400;
+}
+#mainmenu #search_results li a:hover {
+  font-weight: 600;
+}
+#mainmenu #search_results li:hover {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 #search {
   display: block;
