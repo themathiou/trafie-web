@@ -1,0 +1,62 @@
+li#newActivityTemplate( style="display:none;" )
+	div.icon_back
+	div.icon ΧΧ
+	div.info( data-activity-id)
+		div.current_data
+			a.deleteActivity( href='/user/'+profile._id+'/activities/' )
+				include ../svg/delete_activity_svg
+			div.performance
+			div.discipline
+			div.date
+		a.editActivity( href="javascript:;" )
+			include ../svg/edit_activity_svg
+
+div#editDistanceActivityTemplate.row( style="display:none;" )= tr['enter_your_performance'] +':'
+	br
+	form#edit_activity_form.data_entry( method="PUT" action="/user/"+profile._id+"/activities/")
+		div
+			label(for="distance_1_input")= tr['meters_short'] + ':'
+			input#distance_1_input( name="distance_1" size="3" maxlength="2").
+		div
+			label(for="distance_2_input")= tr['centimeters_short'] + ':'
+			input#distance_2_input( name="distance_2" size="3" maxlength="2" )
+		div.row
+			label(for="datepicker_distance")= tr['date'] + ':'
+			input#edit_datepicker( name="date" type="text" )
+		div#submit_buttons.row.submit_buttons
+			input.btn_green(type="submit" name="new_competition" value=tr['save'])
+			a.cancel_edit_activity.cancel_link( href="javascript:;")= tr['cancel']
+
+div#editTimeActivityTemplate.row( style="display:none;" )= tr['enter_your_performance'] +':'
+	br
+	form#edit_activity_form.data_entry( method="PUT" action="/user/"+profile._id+"/activities/")
+		div
+			label(for="hours_input")= tr['hours_short'] + ':'
+			input#hours_input(name="hours" size="3" maxlength="2" )
+		div
+			label( for="minutes_input" )= tr['minutes_short'] + ':'
+			input#minutes_input(name="minutes" size="3" maxlength="2" )
+		div
+			label( for="seconds_input" )= tr['seconds_short'] + ':'
+			input#seconds_input( name="seconds" size="3" maxlength="2" )
+		div
+			label(for="centiseconds_input")= tr['centiseconds_short'] + ':'
+			input#centiseconds_input( name="centiseconds" size="3" maxlength="2" )
+		div.row
+			label(for="datepicker_time")= tr['date'] + ':'
+			input#edit_datepicker( name="date" type="text" )
+		div#submit_buttons.row.submit_buttons
+			input.btn_green(type="submit" name="new_competition" value=tr['save'])
+			a.cancel_edit_activity.cancel_link( href="javascript:;")= tr['cancel']
+
+div#editPointsActivityTemplate.row( style="display:none;" )= tr['enter_your_performance'] +':'
+	br
+	form#edit_activity_form.data_entry( method="PUT" action="/user/"+profile._id+"/activities/")
+		label(for="points_input")= tr['points'] + ':'
+		input#points_input(type="text" name="points" size="7" maxlength="5")
+		div.row
+			label(for="datepicker_point")= tr['date'] + ':'
+			input#edit_datepicker( name="date" type="text" )
+		div#submit_buttons.row.submit_buttons
+			input.btn_green(type="submit" name="new_competition" value=tr['save'])
+			a.cancel_edit_activity.cancel_link( href="javascript:;")= tr['cancel']

@@ -1,0 +1,87 @@
+h3= tr['account_settings']
+
+//CHANGE PASSWORD
+div#changePasswordDiv.settingsElement
+	label= tr['change_password']
+	a#editPassword.editLink.non_editable( href="javascript:;" )
+		include ../svg/edit_activity_svg
+	div#changePassword.editable
+		form( method="POST")
+			span.row
+				label( for="old_password" )= tr['old_password'] + ': '
+				span= errors.first_name
+				input( name="old_password" type="password")
+
+			span.row
+				label( for="password" )= tr['new_password'] + ': '
+				span= errors.first_name
+				span#password_error
+				input#password( name="password" type="password")
+
+			span.row
+				label( for="repeat_password" )= tr['repeat_password'] + ': '
+				span= errors.first_name
+				span#repeat_password_error.warning_message
+				input#repeat_password( name="repeat_password" type="password")
+
+			div#settingsAboutMeButtons
+				input#submitNewPassword.btn_green( type="submit" value=tr['submit'])
+				a#cancelNewPassword.cancel_link( href="javascript:;" )= tr['cancel']
+
+//USERNAME
+div#usernameDiv.settingsElement
+	form( method="POST")
+		label= tr['username'] + ': '
+		span= errors.username
+		span#username_error
+		span.existed.non_editable= user.username
+		label.editable( for="username" ) http://www.trafie.com/
+		input#username.editable( name="username" value=user.username )
+		div.formButtons.editable
+			input#submitUsername.btn_green( type="submit" value=tr['submit'])
+			a#cancelEditUsername.cancel_link( href="javascript:;" )= tr['cancel']
+
+		a#editUsername.editLink.non_editable( href="javascript:;" )
+			include ../svg/edit_activity_svg
+
+//LANGUAGE
+div#languageDiv.settingsElement
+	form( method="POST")
+		label= tr['language'] + ': '
+		span= errors.language
+		span.non_editable= languages[user.language]
+		select.editable(name="language" hidden)
+				option(value="no-selection" selected)= tr['choose_your_language']
+				- for( var i in languages ) {
+					if languages[user.language] == languages[i]
+						option( value=i selected)= languages[i]
+					else
+						option( value=i )= languages[i]
+				- }
+		div.formButtons.editable
+			input#submitLanguage.btn_green( type="submit" value=tr['submit'])
+			a#cancelEditLanguage.cancel_link( href="javascript:;" )= tr['cancel']
+		a#editLanguage.editLink.non_editable( href="javascript:;" )
+			include ../svg/edit_activity_svg
+
+//DATE FORMAT
+div#dateFormatDiv.settingsElement
+	form( method="POST")
+		label= tr['date_format'] + ': '
+		span= errors.data_format
+		span.non_editable= tr[user.date_format]
+		select.editable( name='date_format' )
+			if user.date_format == 'd-m-y'
+				option( value='d-m-y' selected )= tr['d-m-y']
+			else
+				option( value='d-m-y' )= tr['d-m-y']
+
+			if user.date_format == 'm-d-y'
+				option( value='m-d-y' selected)= tr['m-d-y']
+			else
+				option( value='m-d-y' )= tr['m-d-y']
+		div.formButtons.editable
+			input#submitDateFormat.btn_green( type="submit" value=tr['submit'])
+			a#cancelEditDateFormat.cancel_link( href="javascript:;" )= tr['cancel']
+		a#editDateFormat.editLink.non_editable( href="javascript:;" )
+			include ../svg/edit_activity_svg
