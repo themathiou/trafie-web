@@ -146,6 +146,18 @@ label {
 #mainmenu ul li a.active {
   border-bottom: white 5px solid;
 }
+#mainmenu #search_results {
+  background-color: white;
+  width: 440px;
+  float: left;
+  display: none;
+  margin-left: 105px;
+  margin-top: -10px;
+  text-align: left;
+}
+#mainmenu #search_results li {
+  display: block;
+}
 #search {
   display: block;
   float: left;

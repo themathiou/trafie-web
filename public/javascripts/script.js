@@ -7,10 +7,18 @@ function mainMenuHandlers(){
 		ajax_get('/search/?value='+this.value, function(res){
 			var response = JSON.parse(res);
 
+			document.getElementById("search_results").innerHTML = '';
+
 			if( response.length > 0 ){
+				var resultList = '';
+				document.getElementById("search_results").style.display = 'block';
 				for( i in response ) {
+					resultList += '<li>'+response[i].first_name+' '+response[i].last_name+'</li>'
 					console.log(response[i].first_name+' '+response[i].last_name);
 				}
+				document.getElementById("search_results").innerHTML = resultList;
+			} else {
+				document.getElementById("search_results").style.display = 'none';
 			}
 		});
 
