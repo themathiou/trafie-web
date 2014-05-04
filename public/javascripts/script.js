@@ -3,6 +3,7 @@
 /********************************************/
 
 function mainMenuHandlers(){
+
 	document.getElementById("search").onkeyup = function(){
 		ajax_get('/search/?value='+this.value, function(res){
 			var response = JSON.parse(res);
@@ -22,6 +23,10 @@ function mainMenuHandlers(){
 			}
 		});
 
+	}
+
+	document.getElementById("search").onblur = function(){
+		document.getElementById("search_results").style.display = 'none';
 	}
 }
 
