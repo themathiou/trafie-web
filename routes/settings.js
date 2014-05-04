@@ -155,9 +155,7 @@ exports.post = function( req, res ) {
 							send_error_page( error, res );
 						});
 					}
-				})
-				.fail( function( error ) {
-					send_error_page( error, res );
+					return response;
 				});
 			}
 		}
@@ -193,9 +191,6 @@ exports.post = function( req, res ) {
 						// Update the database
 						Profile.update({ '_id': user_id }, { $set: profile_data }, { upsert: true }, function( error ) {
 							render( res, user_id, error_messages );
-						})
-						.fail( function( error ) {
-							send_error_page( error, res );
 						});
 					});
 				}
