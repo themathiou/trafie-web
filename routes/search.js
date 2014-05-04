@@ -11,17 +11,19 @@ exports.get = function( req, res ) {
 	// Find the profile
 	Profile.schema.findOne({ '_id': req.session.user_id }, 'language date_format')
 	.then( function( profile_data ) {
-		var requested_values = req.query.value.split(' ');
+		var requested_value_string = req.query.value.trim();
+		var requested_values = requested_value_string.split(' ');
 		
 		var query = { $or: [] };
 
 		var requested_values_length = requested_values.length;
 		var ands = [];
 
-		if( requested_values_length == 1 ) {
+		if( requested_value_string && requested_values_length == 1 ) {
 			ands.push({ 'first_name': { $regex: new RegExp("^" + requested_values[0].toLowerCase() + ".*", "i") } });
 			ands.push({ 'last_name': { $regex: new RegExp("^" + requested_values[0].toLowerCase() + ".*", "i") } });			
-		} else {
+		} 
+		else if( requested_value_string ){
 			for( var i=0 ; i<requested_values_length ; i++ ) {
 				for( var j=0; j<requested_values_length ; j++ ) {
 					if( i > j ) {

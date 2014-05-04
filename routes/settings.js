@@ -155,7 +155,6 @@ exports.post = function( req, res ) {
 							send_error_page( error, res );
 						});
 					}
-
 				})
 				.fail( function( error ) {
 					send_error_page( error, res );
