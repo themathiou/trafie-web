@@ -19,8 +19,8 @@ exports.get = function( req, res ) {
 		var ands = [];
 
 		if( requested_values_length == 1 ) {
-			ands.push({ 'first_name': requested_values[0] });
-			ands.push({ 'last_name': requested_values[0] });			
+			ands.push({ 'first_name': { $regex: requested_values[0] + ".*" } });
+			ands.push({ 'last_name': { $regex: requested_values[0] + ".*" } });			
 		} else {
 			for( var i=0 ; i<requested_values_length ; i++ ) {
 				for( var j=0; j<requested_values_length ; j++ ) {
