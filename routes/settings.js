@@ -252,9 +252,6 @@ exports.post = function( req, res ) {
 				});
 			}
 		}
-	})
-	.fail( function( error ) {
-		send_error_page( error, res );
 	});
 };
 
