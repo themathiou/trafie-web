@@ -17,16 +17,23 @@ exports.get = function( req, res ) {
 
 		var requested_values_length = requested_values.length;
 		var ands = [];
-		
-		for( var i=0 ; i<requested_values_length ; i++ ) {
-			for( var j=0; j<requested_values_length ; j++ ) {
-				if( i !== j ) {
-					ands.push( { $and: [{ 'first_name': requested_values[i] }, { 'last_name': requested_values[j] }] } );
+
+		if( requested_values_length == 1 ) {
+			ands.push({ 'first_name': requested_values[0] });
+			ands.push({ 'last_name': requested_values[0] });			
+		} else {
+			for( var i=0 ; i<requested_values_length ; i++ ) {
+				for( var j=0; j<requested_values_length ; j++ ) {
+					if( i > j ) {
+						ands.push( { $and: [{ 'first_name': { $regex: requested_values[i] + ".*" } }, { 'last_name': requested_values[j] }] } );
+					}
+					else if( i < j ) {
+						ands.push( { $and: [{ 'first_name': requested_values[i] }, { 'last_name': { $regex: requested_values[j] + ".*" } }] } );	
+					}
 				}
 			}
-			ands.push({ 'first_name': requested_values[i] });
-			ands.push({ 'last_name': requested_values[i] });			
 		}
+		
 
 		var query = { $or: ands };
 		return Profile.schema.find( query, 'first_name last_name discipline country')
