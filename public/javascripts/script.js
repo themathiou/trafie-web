@@ -4,6 +4,7 @@
 
 function mainMenuHandlers(){
 
+	//search field
 	document.getElementById("search").onkeyup = function(){
 		ajax_get('/search/?value='+this.value, function(res){
 			var response = JSON.parse(res);
@@ -14,8 +15,13 @@ function mainMenuHandlers(){
 				var resultList = '';
 				document.getElementById("search_results").style.display = 'block';
 				for( i in response ) {
-					resultList += '<li>'+response[i].first_name+' '+response[i].last_name+'</li>'
-					console.log(response[i].first_name+' '+response[i].last_name);
+					if( response[i].username ) {
+						resultList += '<li><a href="/'+response[i].username+'">'+response[i].first_name+' '+response[i].last_name+'</a></li>';
+					} else if( response[i]._id ) {
+						resultList += '<li><a href="/'+response[i]._id+'">'+response[i].first_name+' '+response[i].last_name+'</a></li>';
+					}
+
+					console.log(response[i]);
 				}
 				document.getElementById("search_results").innerHTML = resultList;
 			} else {
