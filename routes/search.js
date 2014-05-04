@@ -27,10 +27,10 @@ exports.get = function( req, res ) {
 			for( var i=0 ; i<requested_values_length ; i++ ) {
 				for( var j=0; j<requested_values_length ; j++ ) {
 					if( i > j ) {
-						ands.push( { $and: [{ 'first_name': { $regex: new RegExp("^" + requested_values[i].toLowerCase() + ".*", "i") } }, { 'last_name': requested_values[j] }] } );
+						ands.push( { $and: [{ 'first_name': { $regex: new RegExp("^" + requested_values[i].toLowerCase() + ".*", "i") } }, { 'last_name': { $regex: new RegExp("^" + requested_values[j].toLowerCase() , "i") } }] } );
 					}
 					else if( i < j ) {
-						ands.push( { $and: [{ 'first_name': requested_values[i] }, { 'last_name': { $regex: new RegExp("^" + requested_values[j].toLowerCase() + ".*", "i") } }] } );	
+						ands.push( { $and: [{ 'first_name': { $regex: new RegExp("^" + requested_values[i].toLowerCase(), "i") } }, { 'last_name': { $regex: new RegExp("^" + requested_values[j].toLowerCase() + ".*", "i") } }] } );	
 					}
 				}
 			}
