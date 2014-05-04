@@ -18,19 +18,30 @@ exports.get = function( req, res ){
     .then( function( profile_data ) {
       // If the profile was found, get the data of the user
       if( profile_data !== null && profile_data !== undefined ) {
-        prerender_other_profile( res, user_id, profile_data );
+        if( profile_data._id == user_id ) {
+          prerender_my_profile( res, user_id );
+        } else {
+          prerender_other_profile( res, user_id, profile_data );
+        }
       } else {
         // If the profile wasn't found, try to find it by username
-        return Profile.schema.findOne({ 'username': req.params.profile_id }, '_id first_name last_name discipline country male picture');
-      }
-    })
-    .then( function( profile_data ) {
-      // If the profile was found, get the data of the user
-      if( profile_data !== null && profile_data !== undefined ) {
-        prerender_other_profile( res, user_id, profile_data );
-      } else {
-        // Else, the user was searching for a profile that doesn't exist
-        res.redirect('/');
+        Profile.schema.findOne({ 'username': req.params.profile_id }, '_id first_name last_name discipline country male picture')
+        .then( function( profile_data ) {
+          // If the profile was found, get the data of the user
+          if( profile_data !== null && profile_data !== undefined ) {
+            if( profile_data._id == user_id ) {
+              prerender_my_profile( res, user_id );
+            } else {
+              prerender_other_profile( res, user_id, profile_data );
+            }
+          } else {
+            // Else, the user was searching for a profile that doesn't exist
+            res.redirect('/');
+          }
+        })
+        .fail( function( error ) {
+          send_error_page( error, res );
+        });
       }
     })
     .fail( function( error ) {
