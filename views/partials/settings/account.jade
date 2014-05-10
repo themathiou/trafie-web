@@ -28,22 +28,6 @@ div#changePasswordDiv.settingsElement
 				input#submitNewPassword.btn_green( type="submit" value=tr['submit'])
 				a#cancelNewPassword.cancel_link( href="javascript:;" )= tr['cancel']
 
-//USERNAME
-div#usernameDiv.settingsElement
-	form( method="POST")
-		label= tr['username'] + ': '
-		span= errors.username
-		span#username_error
-		span.existed.non_editable= user.username
-		label.editable( for="username" ) http://www.trafie.com/
-		input#username.editable( name="username" value=user.username )
-		div.formButtons.editable
-			input#submitUsername.btn_green( type="submit" value=tr['submit'])
-			a#cancelEditUsername.cancel_link( href="javascript:;" )= tr['cancel']
-
-		a#editUsername.editLink.non_editable( href="javascript:;" )
-			include ../svg/edit_activity_svg
-
 //LANGUAGE
 div#languageDiv.settingsElement
 	form( method="POST")
@@ -84,4 +68,20 @@ div#dateFormatDiv.settingsElement
 			input#submitDateFormat.btn_green( type="submit" value=tr['submit'])
 			a#cancelEditDateFormat.cancel_link( href="javascript:;" )= tr['cancel']
 		a#editDateFormat.editLink.non_editable( href="javascript:;" )
+			include ../svg/edit_activity_svg
+
+//USERNAME
+div#usernameDiv.settingsElement
+	form( method="POST")
+		//label= tr['username'] + ': '
+		label http://www.trafie.com/
+		span= errors.username
+		span#username_error
+		span.existed.non_editable= user.username || user._id
+		input#username.editable( name="username" value=user.username || user._id )
+		div.formButtons.editable
+			input#submitUsername.btn_green( type="submit" value=tr['submit'])
+			a#cancelEditUsername.cancel_link( href="javascript:;" )= tr['cancel']
+
+		a#editUsername.editLink.non_editable( href="javascript:;" )
 			include ../svg/edit_activity_svg

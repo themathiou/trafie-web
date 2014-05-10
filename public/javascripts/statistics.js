@@ -54,7 +54,6 @@ google.load("visualization", "1", {packages:["corechart","controls"]});
  * @param discipline : the discipline we want to show
  */
 function drawSimpleChart( user_id, discipline ) {
-
 	//call ajax_get (defined in script.js) in order to fetch the specific performances
 	ajax_get( '/user/' + user_id + '/activities?discipline='+discipline, function( response ){
 

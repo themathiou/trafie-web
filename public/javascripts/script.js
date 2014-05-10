@@ -6,34 +6,54 @@ function mainMenuHandlers(){
 
 	//search field
 	document.getElementById("search").onkeyup = function(){
-		ajax_get('/search/?value='+this.value, function(res){
-			var response = JSON.parse(res);
+		var search_text = this.value;
 
-			document.getElementById("search_results").innerHTML = '';
+		if( search_text != '' ) {
+			ajax_get('/search/?value='+this.value, function(res){
+				var response = JSON.parse(res);
 
-			if( response.length > 0 ){
-				var resultList = '';
-				document.getElementById("search_results").style.display = 'block';
-				for( i in response ) {
-					if( response[i].username ) {
-						resultList += '<li><a href="/'+response[i].username+'">'+response[i].first_name+' '+response[i].last_name+'</a></li>';
-					} else if( response[i]._id ) {
-						resultList += '<li><a href="/'+response[i]._id+'">'+response[i].first_name+' '+response[i].last_name+'</a></li>';
+				document.getElementById("search_results").innerHTML = '';
+
+				console.log(response.length, search_text );
+
+				if( response.length > 0 ){
+					var resultList = '';
+					document.getElementById("search_results").style.display = 'block';
+					for( i in response ) {
+						if( response[i].username ) {
+							resultList += '<li><a href="/'+response[i].username+'">'+response[i].first_name+' '+response[i].last_name+'</a></li>';
+						} else if( response[i]._id ) {
+							resultList += '<li><a href="/'+response[i]._id+'">'+response[i].first_name+' '+response[i].last_name+'</a></li>';
+						}
+
+						console.log(response[i]);
 					}
-
-					console.log(response[i]);
+					document.getElementById("search_results").innerHTML = resultList;
 				}
-				document.getElementById("search_results").innerHTML = resultList;
-			} else {
-				document.getElementById("search_results").style.display = 'none';
-			}
-		});
 
+			});
+		} else {
+			document.getElementById("search_results").style.display = 'none';
+		}
 	}
 
+/*
 	document.getElementById("search").onblur = function(){
 		document.getElementById("search_results").style.display = 'none';
 	}
+*/
+}
+
+/********************************************/
+/* 				UI ASSETS 					*/
+/********************************************/
+
+function startLoading() {
+        document.getElementById('loading').style.display = 'block';
+}
+
+function stopLoading() {
+    document.getElementById('loading').style.display = 'none';
 }
 
 /********************************************/
@@ -41,7 +61,7 @@ function mainMenuHandlers(){
 /********************************************/
 
 /**
- * editAbstractField() : shows the elements for editing a field
+ * editField() : shows the elements for editing a field
  * @param form_node : the form with all the fields
  */
 function editField( parent_node ) {
@@ -54,7 +74,7 @@ function editField( parent_node ) {
 }
 
 /**
- * cancelEditAbstractField() : hides the elements for editing a field (reverse action of editField )
+ * cancelEditField() : hides the elements for editing a field (reverse action of editField )
  * @param existedID :
  */
 function cancelEditField( parent_node ) {
@@ -67,23 +87,7 @@ function cancelEditField( parent_node ) {
 }
 
 
-/**
- * showSettingsTab() : show specific tab in settings page
- * @param tab : the specific tab to appear
- */
-function showSettingsTab( tab ) {
-	/* show specific tab content */
-	document.getElementById('profileSettings').style.display = 'none';
-	document.getElementById('accountSettings').style.display = 'none';
-	document.getElementById(tab).style.display = 'block';
 
-	/* change selected button */
-	document.getElementById('profileSettingsTab').className="";
-	document.getElementById('accountSettingsTab').className="";
-	var d = document.getElementById(tab+'Tab')
-	d.className= d.className + " active";
-
-}
 
 /**
  * setLeap() : called when year selected to set the number of days
@@ -134,6 +138,7 @@ function setSmall( year ) {
  * @param callback : the callback function
  */
 function ajax_get(url, callback) {
+	startLoading();
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET', url);
 
@@ -142,6 +147,11 @@ function ajax_get(url, callback) {
 	}, false);
 
 	xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            stopLoading();
+        }
+    }
 
 	xhr.send();
 }
@@ -153,6 +163,7 @@ function ajax_get(url, callback) {
  * @param callback : the callback function
  */
 function ajax_post(data, url, callback) {
+	startLoading();
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', url);
 
@@ -161,6 +172,11 @@ function ajax_post(data, url, callback) {
 	}, false);
 
 	xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            stopLoading();
+        }
+    }
 
 	xhr.send(data);
 }
@@ -172,9 +188,9 @@ function ajax_post(data, url, callback) {
  * @param callback : the callback function
  */
 function ajax_put(data, url, callback) {
+	startLoading();
 	var xhr = new XMLHttpRequest();
 	xhr.open('PUT', url);
-
 
 	xhr.addEventListener('load', function (e) {
 		console.log(data);
@@ -182,6 +198,11 @@ function ajax_put(data, url, callback) {
 	}, false);
 
 	xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            stopLoading();
+        }
+    }
 
 	xhr.send(data);
 }
@@ -192,6 +213,9 @@ function ajax_put(data, url, callback) {
  * @param callback : the callback function
  */
 function ajax_delete( url, callback) {
+
+	startLoading();
+
 	var xhr = new XMLHttpRequest();
 	xhr.open('DELETE', url);
 
@@ -200,6 +224,11 @@ function ajax_delete( url, callback) {
 	}, false);
 
 	xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            stopLoading();
+        }
+    }
 
 	xhr.send();
 }
@@ -244,8 +273,6 @@ function submit_form(form, callback) {
 	}
 
 }
-
-
 
 
 
