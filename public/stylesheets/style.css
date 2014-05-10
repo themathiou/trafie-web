@@ -104,7 +104,7 @@ label {
  * 							                                                                      MAIN MENU                    *
  ******************************************************************************************************************************/
 #mainmenu_container {
-  background: #ffffff url(../images/bar_back.png) repeat-x left top;
+  background: #ffffff url("../images/bar_back.png") repeat-x left top;
   width: 100%;
   position: fixed;
   top: 0;
@@ -118,7 +118,7 @@ label {
   z-index: 100;
 }
 #mainmenu .logo {
-  background-image: url(../images/logo.png);
+  background-image: url("../images/logo.png");
   background-repeat: no-repeat;
   background-position: 0 2px;
   float: left;
@@ -175,7 +175,7 @@ label {
   margin: 7px 0px 10px 30px;
   padding: 0px;
   padding-left: 5px;
-  height: 25px;
+  height: 26px;
   background: rgba(255, 255, 255, 0.2);
   border: 0;
   border-radius: 3px;
@@ -719,6 +719,20 @@ input.btn_blue_2:active {
   float: left;
   padding: 0.5em;
   margin-right: 1em;
+}
+.graphs_loading {
+  display: table;
+  width: 100%;
+  height: 200px;
+  background-image: url("../images/ui/loading.gif");
+  background-repeat: no-repeat;
+  background-position-x: center;
+  text-align: center;
+  padding: 40px 0;
+  margin: 100px auto;
+}
+.graphs_loading p {
+  color: #555;
 }
 #dashboard {
   margin-top: 30px;

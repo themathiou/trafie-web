@@ -209,7 +209,7 @@ function profileHandlers() {
 		{
 			var that = this;
 			//delete activity with ajax call.
-			ajax_delete(this.getAttribute('href'), function(res_status, res_text){
+			ajax_delete(this.getAttribute('href'), 'loading', function(res_status, res_text){
 				//success case
 				if(res_status == 200) {
 					var grandparent = that.parentNode.parentNode;

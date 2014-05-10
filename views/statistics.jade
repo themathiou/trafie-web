@@ -11,9 +11,8 @@ block content
 					a( href="javascript:;" id=user.disciplines_of_user[i]+'_button' class="discipline_button" data-user-id=user._id data-discipline=user.disciplines_of_user[i] )= tr[user.disciplines_of_user[i]]
 			-}
 
-		div#loading
-			img( src="images/ui/loading.gif" )
-			p loading your awesome graphs! please wait...
+		div#loading.graphs_loading
+			p Your awesome history is loading! Please wait...
 
 		div#dashboard
 			div#chart_div( style="width: 915px; height: 300px;" )
