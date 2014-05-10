@@ -9,14 +9,14 @@ function mainMenuHandlers(){
 		var search_text = this.value;
 
 		if( search_text != '' ) {
-			ajax_get('/search/?value='+this.value, 'loading', function(res){
+			ajax_get('/search/?value='+this.value, false, function(res){
 				var response = JSON.parse(res);
 
-				document.getElementById("search_results").innerHTML = '';
+				console.log(response, response.length, search_text );
 
-				console.log(response.length, search_text );
-
-				if( response.length > 0 ){
+				if( response.length == 0 ) { //no results
+					document.getElementById("search_results").innerHTML = '<li> no results found for \"'+ search_text +'\" </li>';
+				} else if( response.length > 0 ){ //results
 					var resultList = '';
 					document.getElementById("search_results").style.display = 'block';
 					for( i in response ) {
@@ -25,10 +25,10 @@ function mainMenuHandlers(){
 						} else if( response[i]._id ) {
 							resultList += '<li><a href="/'+response[i]._id+'">'+response[i].first_name+' '+response[i].last_name+'</a></li>';
 						}
-
-						console.log(response[i]);
 					}
 					document.getElementById("search_results").innerHTML = resultList;
+				} else { //no results
+					document.getElementById("search_results").innerHTML = '<li> no results found for \"'+ search_text +'\" </li>';
 				}
 
 			});
@@ -146,7 +146,8 @@ function setSmall( year ) {
  * @param callback : the callback function
  */
 function ajax_get(url, loading_element, callback) {
-	startLoading( loading_element );
+	if( loading_element )  startLoading( loading_element ); 
+		 
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET', url);
 
@@ -157,7 +158,7 @@ function ajax_get(url, loading_element, callback) {
 	xhr.setRequestHeader('Content-Type', 'application/json');
 	xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
-            stopLoading( loading_element );
+        	if( loading_element ) stopLoading( loading_element );
         }
     }
 
