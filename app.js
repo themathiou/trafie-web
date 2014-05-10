@@ -48,7 +48,8 @@ var login = require('./routes/login'),
     statistics = require('./routes/statistics'),
     settings = require('./routes/settings'),
     email_validation = require('./routes/email_validation'),
-    reset_password = require('./routes/reset_password');
+    reset_password = require('./routes/reset_password'),
+    dummy_data = require('./routes/dummy_data');
 
 
 /*******************************************************************************************************************************
@@ -213,6 +214,16 @@ trafie.get('/logout', function( req, res ) {
   req.session.destroy();
   res.redirect('/');
 });
+
+
+/*******************************************************************************************************************************
+ * DUMMY DATA                                                                                                                  *
+ ******************************************************************************************************************************/
+if( trafie.settings.env === 'development' ) {
+  trafie.get( '/dummy_data', dummy_data.get );
+
+  trafie.post( '/dummy_data', dummy_data.post );
+}
 
 
 /*******************************************************************************************************************************
