@@ -33,7 +33,7 @@ exports.get = function( req, res ) {
 
 		var query = { $and: ands };
 
-		return Profile.schema.find( query, 'first_name last_name discipline country username _id' );
+		return Profile.schema.find( query, 'first_name last_name discipline country username _id', 10 );
 	})
 	.then( function( results ){
 		res.json( results );
