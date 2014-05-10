@@ -55,7 +55,7 @@ google.load("visualization", "1", {packages:["corechart","controls"]});
  */
 function drawSimpleChart( user_id, discipline ) {
 	//call ajax_get (defined in script.js) in order to fetch the specific performances
-	ajax_get( '/user/' + user_id + '/activities?discipline='+discipline, function( response ){
+	ajax_get( '/user/' + user_id + '/activities?discipline='+discipline, 'loading', function( response ){
 
 		//-------CHART-------
 		//parse responce as JSON

@@ -9,7 +9,7 @@ function mainMenuHandlers(){
 		var search_text = this.value;
 
 		if( search_text != '' ) {
-			ajax_get('/search/?value='+this.value, function(res){
+			ajax_get('/search/?value='+this.value, 'loading', function(res){
 				var response = JSON.parse(res);
 
 				document.getElementById("search_results").innerHTML = '';
@@ -48,12 +48,20 @@ function mainMenuHandlers(){
 /* 				UI ASSETS 					*/
 /********************************************/
 
-function startLoading() {
-        document.getElementById('loading').style.display = 'block';
+/**
+ * startLoading() : show a loader
+ * @param element : loading element
+ */
+function startLoading( element ) {
+        document.getElementById( element ).style.display = 'block';
 }
 
-function stopLoading() {
-    document.getElementById('loading').style.display = 'none';
+/**
+ * startLoading() : hides a loader after finish
+ * @param element : loading element
+ */
+function stopLoading( element ) {
+    document.getElementById( element ).style.display = 'none';
 }
 
 /********************************************/
@@ -137,8 +145,8 @@ function setSmall( year ) {
  * @param url : the target url for the ajax call
  * @param callback : the callback function
  */
-function ajax_get(url, callback) {
-	startLoading();
+function ajax_get(url, loading_element, callback) {
+	startLoading( loading_element );
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET', url);
 
@@ -149,7 +157,7 @@ function ajax_get(url, callback) {
 	xhr.setRequestHeader('Content-Type', 'application/json');
 	xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
-            stopLoading();
+            stopLoading( loading_element );
         }
     }
 
@@ -162,8 +170,8 @@ function ajax_get(url, callback) {
  * @param url : the target url for the ajax call
  * @param callback : the callback function
  */
-function ajax_post(data, url, callback) {
-	startLoading();
+function ajax_post(data, url, loading_element, callback) {
+	startLoading( loading_element );
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', url);
 
@@ -174,7 +182,7 @@ function ajax_post(data, url, callback) {
 	xhr.setRequestHeader('Content-Type', 'application/json');
 	xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
-            stopLoading();
+            stopLoading( loading_element );
         }
     }
 
@@ -187,8 +195,8 @@ function ajax_post(data, url, callback) {
  * @param url : the target url for the ajax call
  * @param callback : the callback function
  */
-function ajax_put(data, url, callback) {
-	startLoading();
+function ajax_put(data, url, loading_element, callback) {
+	startLoading( loading_element );
 	var xhr = new XMLHttpRequest();
 	xhr.open('PUT', url);
 
@@ -200,7 +208,7 @@ function ajax_put(data, url, callback) {
 	xhr.setRequestHeader('Content-Type', 'application/json');
 	xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
-            stopLoading();
+            stopLoading( loading_element );
         }
     }
 
@@ -212,9 +220,9 @@ function ajax_put(data, url, callback) {
  * @param url : the target url for the ajax call
  * @param callback : the callback function
  */
-function ajax_delete( url, callback) {
+function ajax_delete( url, loading_element, callback) {
 
-	startLoading();
+	startLoading( loading_element );
 
 	var xhr = new XMLHttpRequest();
 	xhr.open('DELETE', url);
@@ -226,7 +234,7 @@ function ajax_delete( url, callback) {
 	xhr.setRequestHeader('Content-Type', 'application/json');
 	xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
-            stopLoading();
+            stopLoading( loading_element );
         }
     }
 

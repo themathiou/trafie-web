@@ -1,3 +1,6 @@
+@images : '../images/';
+
+
 /* @red:#AE3731; */
 @lightgray : rgba(0,0,0,0.1);
 @mediumgray : rgba(0,0,0,0.3);
@@ -141,7 +144,7 @@ label {
  ******************************************************************************************************************************/
 #mainmenu_container
 {
-	background:white url(../images/bar_back.png) repeat-x left top;
+	background:white url("@{images}bar_back.png") repeat-x left top;
 	width:100%;
 	position:fixed;
 	top:0;
@@ -158,7 +161,7 @@ label {
 
 	.logo
 	{
-		background-image: url(../images/logo.png);
+		background-image: url("@{images}logo.png");
 		background-repeat: no-repeat;
 		background-position: 0 2px;
 		float:left;
@@ -836,6 +839,22 @@ input.btn_blue_2 {
 	float: left;
 	padding: 0.5em;
 	margin-right: 1em;
+}
+
+.graphs_loading {
+	display: table;
+	width:100%;
+	height: 200px;
+	background-image: url("@{images}ui/loading.gif");
+	background-repeat: no-repeat;
+	background-position-x: center;
+	text-align: center;
+	padding: 40px 0;
+	margin:100px auto;
+
+	p {
+		color: #555;
+	}
 }
 
 #dashboard {
