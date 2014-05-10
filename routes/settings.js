@@ -133,10 +133,11 @@ exports.post = function( req, res ) {
 				error_messages.username = 'invalid_username';
 				render( res, user_id, error_messages );
 			} else {
-				Profile.schema.findOne({ 'username': req.body.username }, '_id')
+				var username = req.body.username.toLowerCase();
+				Profile.schema.findOne({ 'username': username }, '_id')
 				.then( function( response ) {
 					if( response == null ) {
-						profile_data.username = req.body.username;
+						profile_data.username = username;
 					} 
 					else {
 						errors = true;

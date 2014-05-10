@@ -14,7 +14,7 @@ exports.get = function( req, res ) {
 		var requested_value_string = req.query.value.trim();
 		var requested_values = requested_value_string.split(' ');
 		var requested_values_length = requested_values.length;
-		
+
 		if( !requested_value_string ) {
 			res.json( [] );
 		}
@@ -33,7 +33,7 @@ exports.get = function( req, res ) {
 
 		var query = { $and: ands };
 
-		return Profile.schema.find( query, 'first_name last_name discipline country username _id' )
+		return Profile.schema.find( query, 'first_name last_name discipline country username _id' );
 	})
 	.then( function( results ){
 		res.json( results );

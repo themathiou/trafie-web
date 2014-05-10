@@ -74,7 +74,19 @@ profileSchema.save = function( profile ) {
 	var d = q.defer();
 
 	profile.save(function ( err, res ) {
-		d.resolve(res);
+		Profile.findOne( { '_id': res.id }, 'first_name last_name', function ( err, profile ) {
+			var names = [];
+			first_names = profile.first_name.split(' ');
+			last_names = profile.last_name.split(' ');
+			names = first_names.concat( last_names );
+			var names_length = names.length;
+			for ( var i=0 ; i<names_length ; i++ ) {
+				names[i] = names[i].toLowerCase();
+			}
+			Profile.update( { '_id': res.id }, { $set: { 'keywords' : { 'names': names } } }, function( error ) {
+				d.resolve( error );
+			});
+		});
 	});
 
 	return d.promise;
