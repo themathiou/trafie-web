@@ -13,32 +13,27 @@ exports.get = function( req, res ) {
 	.then( function( profile_data ) {
 		var requested_value_string = req.query.value.trim();
 		var requested_values = requested_value_string.split(' ');
-		
-		var query = { $or: [] };
-
 		var requested_values_length = requested_values.length;
+
+		if( !requested_value_string ) {
+			res.json( [] );
+		}
+
 		var ands = [];
 
-		if( requested_value_string && requested_values_length == 1 ) {
-			ands.push({ 'first_name': { $regex: new RegExp("^" + requested_values[0].toLowerCase() + ".*", "i") } });
-			ands.push({ 'last_name': { $regex: new RegExp("^" + requested_values[0].toLowerCase() + ".*", "i") } });			
-		} 
-		else if( requested_value_string ){
-			for( var i=0 ; i<requested_values_length ; i++ ) {
-				for( var j=0; j<requested_values_length ; j++ ) {
-					if( i > j ) {
-						ands.push( { $and: [{ 'first_name': { $regex: new RegExp("^" + requested_values[i].toLowerCase() + ".*", "i") } }, { 'last_name': { $regex: new RegExp("^" + requested_values[j].toLowerCase() , "i") } }] } );
-					}
-					else if( i < j ) {
-						ands.push( { $and: [{ 'first_name': { $regex: new RegExp("^" + requested_values[i].toLowerCase(), "i") } }, { 'last_name': { $regex: new RegExp("^" + requested_values[j].toLowerCase() + ".*", "i") } }] } );	
-					}
-				}
+		for( var i=0; i<requested_values_length ; i++ ) {
+			requested_values[i] = requested_values[i].toLowerCase();
+			if( i == requested_values_length-1 ) {
+				ands.push( { 'keywords.names': { $regex: new RegExp("^" + requested_values[i] + ".*") } } );
+			}
+			else {
+				ands.push( { 'keywords.names': requested_values[i] } );
 			}
 		}
-		
 
-		var query = { $or: ands };
-		return Profile.schema.find( query, 'first_name last_name discipline country username _id')
+		var query = { $and: ands };
+
+		return Profile.schema.find( query, 'first_name last_name discipline country username _id' );
 	})
 	.then( function( results ){
 		res.json( results );

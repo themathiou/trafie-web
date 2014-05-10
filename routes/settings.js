@@ -133,10 +133,11 @@ exports.post = function( req, res ) {
 				error_messages.username = 'invalid_username';
 				render( res, user_id, error_messages );
 			} else {
-				Profile.schema.findOne({ 'username': req.body.username }, '_id')
+				var username = req.body.username.toLowerCase();
+				Profile.schema.findOne({ 'username': username }, '_id')
 				.then( function( response ) {
 					if( response == null ) {
-						profile_data.username = req.body.username;
+						profile_data.username = username;
 					} 
 					else {
 						errors = true;
@@ -239,11 +240,9 @@ exports.post = function( req, res ) {
 				render( res, user_id, error_messages );
 			// Else, fetch the first name and the last name of the user from the database
 			} else {
-				Profile.update({ '_id': user_id }, { $set: profile_data }, { upsert: true }, function( error ) {
+				Profile.schema.update({ '_id': user_id }, profile_data )
+				.then( function( response ){
 					render( res, user_id, error_messages );
-				})
-				.fail( function( error ) {
-					send_error_page( error, res );
 				});
 			}
 		}
