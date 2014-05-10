@@ -13,6 +13,9 @@ block content
 					p= ( tr[profile.discipline] || "") + ( tr[profile.country] || "")
 
 
+		div#loading( hidden )
+			img( src="images/ui/loading.gif" )
+
 		div#history_container
 			ul#history_line.history_line
 				if user._id==profile._id

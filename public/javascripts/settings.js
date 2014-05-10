@@ -21,7 +21,7 @@ function closeOthers() {
 }
 
 /**
- * settingsHandlers() : the handlers for the buttons in settings
+ * activeTab() : shows the correct tab in case we define on in url (settings#account)
  */
 function activeTab(){
 	var whichTab = document.URL.split('#')[1];
@@ -32,6 +32,24 @@ function activeTab(){
 		default:
 		    showSettingsTab('profileSettings');
 	}
+}
+
+/**
+ * showSettingsTab() : show specific tab in settings page
+ * @param tab : the specific tab to appear
+ */
+function showSettingsTab( tab ) {
+	/* show specific tab content */
+	document.getElementById('profileSettings').style.display = 'none';
+	document.getElementById('accountSettings').style.display = 'none';
+	document.getElementById( tab ).style.display = 'block';
+
+	/* change selected button */
+	document.getElementById('profileSettingsTab').className="";
+	document.getElementById('accountSettingsTab').className="";
+	var d = document.getElementById(tab+'Tab')
+	d.className= d.className + " active";
+
 }
 
 /**

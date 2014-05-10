@@ -45,11 +45,23 @@ function mainMenuHandlers(){
 }
 
 /********************************************/
+/* 				UI ASSETS 					*/
+/********************************************/
+
+function startLoading() {
+        document.getElementById('loading').style.display = 'block';
+}
+
+function stopLoading() {
+    document.getElementById('loading').style.display = 'none';
+}
+
+/********************************************/
 /* 				SETTINGS 					*/
 /********************************************/
 
 /**
- * editAbstractField() : shows the elements for editing a field
+ * editField() : shows the elements for editing a field
  * @param form_node : the form with all the fields
  */
 function editField( parent_node ) {
@@ -62,7 +74,7 @@ function editField( parent_node ) {
 }
 
 /**
- * cancelEditAbstractField() : hides the elements for editing a field (reverse action of editField )
+ * cancelEditField() : hides the elements for editing a field (reverse action of editField )
  * @param existedID :
  */
 function cancelEditField( parent_node ) {
@@ -75,23 +87,7 @@ function cancelEditField( parent_node ) {
 }
 
 
-/**
- * showSettingsTab() : show specific tab in settings page
- * @param tab : the specific tab to appear
- */
-function showSettingsTab( tab ) {
-	/* show specific tab content */
-	document.getElementById('profileSettings').style.display = 'none';
-	document.getElementById('accountSettings').style.display = 'none';
-	document.getElementById(tab).style.display = 'block';
 
-	/* change selected button */
-	document.getElementById('profileSettingsTab').className="";
-	document.getElementById('accountSettingsTab').className="";
-	var d = document.getElementById(tab+'Tab')
-	d.className= d.className + " active";
-
-}
 
 /**
  * setLeap() : called when year selected to set the number of days
@@ -142,6 +138,7 @@ function setSmall( year ) {
  * @param callback : the callback function
  */
 function ajax_get(url, callback) {
+	startLoading();
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET', url);
 
@@ -150,6 +147,11 @@ function ajax_get(url, callback) {
 	}, false);
 
 	xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            stopLoading();
+        }
+    }
 
 	xhr.send();
 }
@@ -161,6 +163,7 @@ function ajax_get(url, callback) {
  * @param callback : the callback function
  */
 function ajax_post(data, url, callback) {
+	startLoading();
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', url);
 
@@ -169,6 +172,11 @@ function ajax_post(data, url, callback) {
 	}, false);
 
 	xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            stopLoading();
+        }
+    }
 
 	xhr.send(data);
 }
@@ -180,9 +188,9 @@ function ajax_post(data, url, callback) {
  * @param callback : the callback function
  */
 function ajax_put(data, url, callback) {
+	startLoading();
 	var xhr = new XMLHttpRequest();
 	xhr.open('PUT', url);
-
 
 	xhr.addEventListener('load', function (e) {
 		console.log(data);
@@ -190,6 +198,11 @@ function ajax_put(data, url, callback) {
 	}, false);
 
 	xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            stopLoading();
+        }
+    }
 
 	xhr.send(data);
 }
@@ -200,6 +213,9 @@ function ajax_put(data, url, callback) {
  * @param callback : the callback function
  */
 function ajax_delete( url, callback) {
+
+	startLoading();
+
 	var xhr = new XMLHttpRequest();
 	xhr.open('DELETE', url);
 
@@ -208,6 +224,11 @@ function ajax_delete( url, callback) {
 	}, false);
 
 	xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            stopLoading();
+        }
+    }
 
 	xhr.send();
 }
@@ -252,8 +273,6 @@ function submit_form(form, callback) {
 	}
 
 }
-
-
 
 
 
