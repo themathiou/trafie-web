@@ -19,7 +19,10 @@ var profileSchema = mongoose.Schema({
   country 		: { type: String, required: false, default: '' },
   picture 		: { type: String, required: false, default: '' },
   date_format 	: { type: String, required: true, default: 'd-m-y' },
-  language 		: { type: String, required: true, default: 'en' }
+  language 		: { type: String, required: true, default: 'en' },
+  keywords 		: {
+  					names: [ { type: String, required: false, default: '' } ]
+  				  }
 });
 
 /**
@@ -72,6 +75,36 @@ profileSchema.save = function( profile ) {
 
 	profile.save(function ( err, res ) {
 		d.resolve(res);
+	});
+
+	return d.promise;
+};
+
+/**
+* Save user profile
+* @param object profile
+*/
+profileSchema.update = function( where, data ) {
+	var d = q.defer();
+
+	Profile.update( where, { $set: data }, { upsert: true }, function( error ) {
+		if( 'first_name' in data || 'last_name' in data ) {
+			Profile.findOne( where, 'first_name last_name', function ( err, profile ) {
+				var names = [];
+				first_names = profile.first_name.split(' ');
+				last_names = profile.last_name.split(' ');
+				names = first_names.concat( last_names );
+				var names_length = names.length;
+				for ( var i=0 ; i<names_length ; i++ ) {
+					names[i] = names[i].toLowerCase();
+				}
+				Profile.update( where, { $set: { 'keywords' : { 'names': names } } }, function( error ) {
+					d.resolve( error );
+				});
+			});
+		} else {
+			d.resolve( error );
+		}
 	});
 
 	return d.promise;

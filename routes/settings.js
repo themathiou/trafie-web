@@ -239,11 +239,9 @@ exports.post = function( req, res ) {
 				render( res, user_id, error_messages );
 			// Else, fetch the first name and the last name of the user from the database
 			} else {
-				Profile.update({ '_id': user_id }, { $set: profile_data }, { upsert: true }, function( error ) {
+				Profile.schema.update({ '_id': user_id }, profile_data )
+				.then( function( response ){
 					render( res, user_id, error_messages );
-				})
-				.fail( function( error ) {
-					send_error_page( error, res );
 				});
 			}
 		}
