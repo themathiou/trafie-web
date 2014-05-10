@@ -20,11 +20,25 @@ function closeOthers() {
 	cancelEditField('about_existed', 'about_me', 'settingsAboutMeButtons', 'editAboutMe');
 }
 
+/**
+ * settingsHandlers() : the handlers for the buttons in settings
+ */
+function activeTab(){
+	var whichTab = document.URL.split('#')[1];
+	switch(whichTab) {
+		case 'account':
+		    showSettingsTab('accountSettings');
+		    break;
+		default:
+		    showSettingsTab('profileSettings');
+	}
+}
 
 /**
  * settingsHandlers() : the handlers for the buttons in settings
  */
 function settingsHandlers() {
+
 	document.getElementById("profileSettingsTab").onclick = function() {
 		showSettingsTab('profileSettings');
 	}
