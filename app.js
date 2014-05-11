@@ -36,7 +36,9 @@ var express = require('express'),
 var trafie = express();
 
 // Mongo db connection
-mongoose.connect('mongodb://localhost/trafiejs');
+//mongoose.connect('mongodb://localhost/trafiejs');
+mongoose.connect('mongodb://trafie_root:​tr@f!e@lennon.mongohq.com:10076/app19956848');
+
 var db = mongoose.connection;
 
 // Initialize the routes
