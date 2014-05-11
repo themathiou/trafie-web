@@ -238,5 +238,5 @@ trafie.get( '/:profile_id', profile.get );
  ******************************************************************************************************************************/
 
 var port = process.env.PORT || 3000;
-server.listen(port);
+require('http').createServer(trafie).listen(port);
 console.log('Up and running...');
