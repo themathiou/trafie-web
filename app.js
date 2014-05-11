@@ -37,7 +37,9 @@ var trafie = express();
 
 // Mongo db connection
 //mongoose.connect('mongodb://localhost/trafiejs');
-mongoose.connect('mongodb://trafie_root:​my_secret_root_password@lennon.mongohq.com:10076/app19956848');
+//mongoose.connect('mongodb://trafie_root:​my_secret_root_password@lennon.mongohq.com:10076/app19956848');
+var MONGOHQ_URL="mongodb://trafie_root:​my_secret_root_password@lennon.mongohq.com:10076/app19956848";
+mongoose.connect(process.env.MONGOHQ_URL);
 
 var db = mongoose.connection;
 
