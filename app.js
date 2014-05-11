@@ -237,6 +237,6 @@ trafie.get( '/:profile_id', profile.get );
  * SERVER                                                                                                                      *
  ******************************************************************************************************************************/
 
-http.createServer( trafie ).listen( trafie.get('port'), function(){
-  console.log('Express server listening on port ' + trafie.get('port'));
-});
+var port = process.env.PORT || 3000;
+server.listen(port);
+console.log('Up and running...');
