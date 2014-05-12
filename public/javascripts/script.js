@@ -182,7 +182,7 @@ function ajax_post(data, url, loading_element, callback) {
 
 	xhr.setRequestHeader('Content-Type', 'application/json');
 	xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
+        if (xhr.readyState == 4 && xhr.status == 201) {
             stopLoading( loading_element );
         }
     }
@@ -272,10 +272,10 @@ function submit_form(form, callback) {
 	// cases : POST - PUT -GET
 	switch(method){
 		case 'POST':
-			ajax_post(data, form.attributes.action.value, callback);
+			ajax_post(data, form.attributes.action.value, "loading", callback);
 			break;
 		case 'PUT':
-			ajax_put(data, form.attributes.action.value, callback);
+			ajax_put(data, form.attributes.action.value, "loading", callback);
 			break;
 		case 'GET' :
 			console.log('-get?');
