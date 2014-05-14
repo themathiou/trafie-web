@@ -9,10 +9,8 @@ function mainMenuHandlers(){
 		var search_text = this.value;
 
 		if( search_text != '' ) {
-			ajax_get('/search/?value='+this.value, false, function(res){
+			ajax_get_input_field('/search/?value='+this.value, this, function(res){
 				var response = JSON.parse(res);
-
-				console.log(response, response.length, search_text );
 
 				if( response.length == 0 ) { //no results
 					document.getElementById("search_results").innerHTML = '<li> no results found for \"'+ search_text +'\" </li>';
@@ -143,6 +141,7 @@ function setSmall( year ) {
 /**
  * ajax_get() : called for making GET ajax calls
  * @param url : the target url for the ajax call
+ * @param loading_element : the loading element in page
  * @param callback : the callback function
  */
 function ajax_get(url, loading_element, callback) {
@@ -166,9 +165,38 @@ function ajax_get(url, loading_element, callback) {
 }
 
 /**
+ * ajax_get_input_field() : called for making GET ajax calls. 
+ * SAME AS GET BUT loader is in the input field
+ * @param url : the target url for the ajax call
+ * @param callback : the callback function
+ */
+function ajax_get_input_field(url, input_element, callback) {
+	console.log(input_element);
+	input_element.setAttribute("class","loading");
+
+	var xhr = new XMLHttpRequest();
+	xhr.open('GET', url);
+
+	xhr.addEventListener('load', function (e) {
+	    callback( xhr.responseText );
+	}, false);
+
+	xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+      
+        }
+    }
+
+	xhr.send();
+}
+
+
+/**
  * ajax_post() : called for making POST ajax calls
  * @param data : the data(parameters) we pass to the request
  * @param url : the target url for the ajax call
+ * @param loading_element : the loading element in page
  * @param callback : the callback function
  */
 function ajax_post(data, url, loading_element, callback) {
@@ -194,6 +222,7 @@ function ajax_post(data, url, loading_element, callback) {
  * ajax_put() : called for making PUT ajax calls
  * @param data : the data(parameters) we pass to the request
  * @param url : the target url for the ajax call
+ * @param loading_element : the loading element in page
  * @param callback : the callback function
  */
 function ajax_put(data, url, loading_element, callback) {
@@ -219,6 +248,7 @@ function ajax_put(data, url, loading_element, callback) {
 /**
  * ajax_delete() : called for making DELETE ajax calls
  * @param url : the target url for the ajax call
+ * @param loading_element : the loading element in page
  * @param callback : the callback function
  */
 function ajax_delete( url, loading_element, callback) {

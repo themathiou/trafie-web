@@ -186,6 +186,12 @@ label {
 #search:focus {
   background: white;
 }
+#search:focus .loading {
+  background-image: url("../images/ui/loading.gif");
+  background-repeat: no-repeat;
+  background-position: 99% 50%;
+  background-size: 20px;
+}
 #search::-webkit-input-placeholder {
   color: rgba(0, 0, 0, 0.6);
 }

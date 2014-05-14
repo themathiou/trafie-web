@@ -136,9 +136,6 @@ label {
 	}
 }
 
-
-
-
 /*******************************************************************************************************************************
  * 							                                                                      MAIN MENU                    *
  ******************************************************************************************************************************/
@@ -244,6 +241,13 @@ label {
 
 	&:focus {
 		background: white;
+
+		.loading {
+			background-image: url("@{images}ui/loading.gif");
+			background-repeat: no-repeat;
+			background-position: 99% 50%;
+			background-size: 20px;
+		}
 	}
 
 	&::-webkit-input-placeholder {
