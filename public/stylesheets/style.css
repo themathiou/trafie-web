@@ -1,7 +1,5 @@
 /* PALETTE */
-/* (156,255,206) */
 /* (154,187,214) */
-/* (88,142,187) */
 /* (52,85,112) */
 /* (185,56,56) */
 /* MESSAGES */
@@ -66,7 +64,7 @@ label {
   margin: 0px auto;
   padding: 50px auto;
   background-color: none;
-  border: 1px solid #f6f6f6;
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-top: none;
   border-bottom: none;
 }
@@ -191,14 +189,25 @@ select {
 }
 #mainmenu #search_results li {
   display: block;
-  font-weight: 400;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-top: 1em;
+  padding-bottom: 1em;
 }
 #mainmenu #search_results li a {
-  color: #333333;
-  font-weight: 400;
+  color: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  border: none;
+}
+#mainmenu #search_results li a .name {
+  font-weight: 600;
+  font-size: 1.2em;
+}
+#mainmenu #search_results li a .details {
+  font-weight: 300;
+  font-size: 0.8em;
 }
 #mainmenu #search_results li a:hover {
-  font-weight: 600;
+  border: none;
 }
 #mainmenu #search_results li:hover {
   background-color: rgba(0, 0, 0, 0.1);
@@ -285,8 +294,8 @@ select {
 }
 .history_line > li .info {
   margin: 0 0 15px 12%;
-  background-color: #f6f6f6;
-  color: #333333;
+  background-color: rgba(0, 0, 0, 0.1);
+  color: rgba(0, 0, 0, 0.9);
   padding: 10px 10px 10px 15px;
   font-weight: 300;
   line-height: 1.4;
@@ -331,7 +340,7 @@ select {
   width: 0;
   position: absolute;
   pointer-events: none;
-  border-right-color: #f6f6f6;
+  border-right-color: rgba(0, 0, 0, 0.1);
   border-width: 10px;
   top: 10px;
 }
@@ -430,7 +439,7 @@ select {
   -ms-border-radius: 50%;
   -o-border-radius: 50%;
   border-radius: 50%;
-  box-shadow: 0 0 0 8px #333333;
+  box-shadow: 0 0 0 8px rgba(0, 0, 0, 0.6);
   text-align: center;
   left: 5%;
   /*top: 0;*/
@@ -606,7 +615,7 @@ input.btn.green:hover {
 #profile_container #profileFullName {
   text-align: center;
   width: 100%;
-  color: #333333;
+  color: rgba(0, 0, 0, 0.6);
 }
 #profile_container #profileFullName h3 {
   font-weight: 400;
@@ -664,7 +673,7 @@ input.btn.green:hover {
   padding: 5px;
 }
 #settingsNav ul li:hover {
-  background-color: #f6f6f6;
+  background-color: rgba(0, 0, 0, 0.1);
 }
 #settingsNav ul .active {
   background-color: rgba(0, 0, 0, 0.1);
@@ -718,7 +727,7 @@ input.btn.green:hover {
   display: inline-block;
 }
 .settingsContent .settingsElement:hover {
-  background-color: #f6f6f6;
+  background-color: rgba(0, 0, 0, 0.1);
 }
 .settingsContent .settingsElement .settings_profile_pic_thumb {
   width: 40px;
@@ -1095,7 +1104,7 @@ input.btn.green:hover {
     text-align: center;
   }
   #settingsNav ul li:hover {
-    background-color: #f6f6f6;
+    background-color: rgba(0, 0, 0, 0.1);
   }
   #settingsNav ul .active {
     background-color: rgba(0, 0, 0, 0.1);
@@ -1151,13 +1160,13 @@ input.btn.green:hover {
     display: inline-block;
   }
   .settingsContent .settingsElement:hover {
-    background-color: #f6f6f6;
+    background-color: rgba(0, 0, 0, 0.1);
   }
   .settingsContent .edit_on {
-    background-color: #f6f6f6;
+    background-color: rgba(0, 0, 0, 0.1);
   }
   .settingsContent .editable {
-    background-color: #f6f6f6;
+    background-color: rgba(0, 0, 0, 0.1);
   }
   .settingsContent .editable input {
     -webkit-border-radius: 5px;

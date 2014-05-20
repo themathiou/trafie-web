@@ -181,10 +181,10 @@ function drawSimpleChart( user_id, discipline ) {
            'options': {
 	       		'title': discipline,
 	       		'dataOpacity':'0.7',
-			    'curveType': 'function',
-	             // Use the same chart area width as the control for axis alignment.
-	             'chartArea': {'height': '80%', 'width': '90%'}
-				 ,'hAxis': {'slantedText': false}
+			    //'curveType': 'function',
+	            // Use the same chart area width as the control for axis alignment.
+	            'chartArea': {'height': '80%', 'width': '90%'}
+				,'hAxis': {'slantedText': false}
 				/*',vAxis': {'viewWindow': {'min': 0, 'max': 2000}}*/
            },
 

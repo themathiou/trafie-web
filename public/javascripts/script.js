@@ -20,9 +20,9 @@ function mainMenuHandlers(){
 					document.getElementById("search_results").style.display = 'block';
 					for( i in response ) {
 						if( response[i].username ) {
-							resultList += '<li><a href="/'+response[i].username+'">'+response[i].first_name+' '+response[i].last_name+'</a></li>';
+							resultList += '<li><a href="/'+response[i].username+'"><span class="name">'+response[i].first_name+'  '+response[i].last_name+'</span>  <span class="details">'+response[i].formatted_discipline+' '+response[i].formatted_country+'</span></a></li>';
 						} else if( response[i]._id ) {
-							resultList += '<li><a href="/'+response[i]._id+'">'+response[i].first_name+' '+response[i].last_name+'</a></li>';
+							resultList += '<li><a href="/'+response[i]._id+'"><span class="name">'+response[i].first_name+'  '+response[i].last_name+'</span>  <span class="details">'+response[i].formatted_discipline+' '+response[i].formatted_country+'</span></a></li>';
 						}
 					}
 					document.getElementById("search_results").innerHTML = resultList;

@@ -1,13 +1,12 @@
 @images : '../images/';
 
-@lightgray : rgba(0,0,0,0.1);
-@mediumgray : rgba(0,0,0,0.3);
-@darkgray : rgba(0,0,0,0.6);
+@gray_01 : rgba(0,0,0,0.1);
+@gray_03 : rgba(0,0,0,0.3);
+@gray_06 : rgba(0,0,0,0.6);
+@gray_09 : rgba(0,0,0,0.9);
 
 /* PALETTE */
-@light_gray : #F6F6F6; /* (156,255,206) */
 @snow : #E8E8E8; /* (154,187,214) */
-@dark_gray : #333333; /* (88,142,187) */
 @red : #990100; /* (52,85,112) */
 @red_bright : #90504; /* (185,56,56) */
 @selectedOptionBackground : rgba(0,0,0,0.1);
@@ -92,7 +91,7 @@ label {
 	margin: 0px auto;
 	padding: 50px auto;
 	background-color: none;
-	border: 1px solid @light_gray;
+	border: 1px solid @gray_01;
 	border-top: none;
 	border-bottom: none;
 }
@@ -106,7 +105,7 @@ label {
 
 
 select {
-	-webkit-appearance: none; //Safari and Google Chrome fix:
+	-webkit-appearance: none; //Safari and Google Chrome fix
     -webkit-user-select: none;
     -moz-user-select: none;
     -webkit-padding-end: 10px;
@@ -143,7 +142,7 @@ select {
 .edit_svg {
 	height: 15px;
 	width: 15px;
-	fill: @mediumgray ;
+	fill: @gray_03 ;
 	.transition(fill 0.4s ease-in-out);
 
 	&:hover {
@@ -154,7 +153,7 @@ select {
 .delete_svg {
 	height: 15px;
 	width: 15px;
-	fill: @mediumgray;
+	fill: @gray_03;
 	.transition(fill 0.4s ease-in-out);
 
 	&:hover {
@@ -230,21 +229,32 @@ select {
 
 		li {
 			display: block;
-			font-weight: 400;
-
-
+			border-bottom: 1px solid @gray_01;
+			padding-top: 1em;
+			padding-bottom: 1em;
 
 			a {
-				color: @dark_gray;
-				font-weight: 400;
+				color: @gray_06;
+				width:100%;
+				border:none;
+
+				.name {
+					font-weight: 600;
+					font-size: 1.2em;
+				}
+
+				.details {
+					font-weight: 300;
+					font-size: 0.8em;
+				}
 
 				&:hover {
-					font-weight: 600;
+					border:none;
 				}
 			}
 
 			&:hover {
-				background-color: @lightgray;
+				background-color: @gray_01;
 			}
 		}
 
@@ -337,8 +347,8 @@ select {
 	/* post */
 	& > li .info {
 		margin: 0 0 15px 12%;
-		background-color: @light_gray;
-		color: @dark_gray;
+		background-color: @gray_01;
+		color: @gray_09;
 		padding: 10px 10px 10px 15px;
 		font-weight: 300;
 		line-height: 1.4;
@@ -378,7 +388,7 @@ select {
 
 	/* odd post */
 	& > li:nth-child(odd) .info {
-		background-color: @lightgray ;
+		background-color: @gray_01 ;
 	}
 
 	/* info end point (left) */
@@ -390,25 +400,25 @@ select {
 		width: 0;
 		position: absolute;
 		pointer-events: none;
-		border-right-color: @light_gray;
+		border-right-color: @gray_01;
 		border-width: 10px;
 		top: 10px;
 	}
 
 	& > li:nth-child(odd) .info:after {
-		border-right-color: @lightgray;
+		border-right-color: @gray_01;
 	}
 
 
 	/* ADD activity */
 	& > li .add_activity{
-		background: @lightgray !important;
+		background: @gray_01 !important;
 		color: #fff;
 		padding: 0.4em;
 		font-size: 1.1em;
 		position: relative;
 		border-radius: 5px;
-		border:1px solid @lightgray;
+		border:1px solid @gray_01;
 		border-left: none;
 		margin-bottom: 30px;
 		text-align: right;
@@ -477,14 +487,14 @@ select {
 		line-height: 1.2;
 		position: relative;
 		border-radius: 5px;
-		background-color: @mediumgray;
+		background-color: @gray_03;
 		color: white;
 		padding: 0.5em;
 		font-size: 1em;
 		font-style: italic;
 		position: relative;
 		border-radius: 5px;
-		border:1px solid @lightgray;
+		border:1px solid @gray_01;
 		margin-bottom: 30px;
 		text-align: center;
 	}
@@ -508,7 +518,7 @@ select {
 		position: absolute;
 		background: none;
 		.rounded_corners(50%);
-		box-shadow: 0 0 0 8px @dark_gray;
+		box-shadow: 0 0 0 8px @gray_06;
 		text-align: center;
 		left: 5%;
 		/*top: 0;*/
@@ -613,7 +623,7 @@ input.btn {
   text-align: center; /* DELETE WHEN WIDTH AUTO */
   
   &.green {
-    background: none repeat scroll 0 0 @darkgray ;
+    background: none repeat scroll 0 0 @gray_06 ;
     color: white;
     &:hover {
       background: none repeat scroll 0 0 @green;
@@ -668,7 +678,7 @@ input.btn {
 	#profileFullName {
 		text-align: center;
 		width:100%;
-		color: @dark_gray;
+		color: @gray_06;
 
 		h3 {
 			font-weight: 400;
@@ -738,7 +748,7 @@ input.btn {
 			padding:5px;
 
 			&:hover {
-				background-color: @light_gray;
+				background-color: @gray_01;
 			}
 		}
 
@@ -790,7 +800,7 @@ input.btn {
 	}
 
 	.settingsElement {
-		border-bottom: 1px solid @lightgray;
+		border-bottom: 1px solid @gray_01;
 		padding: 10px 5px;
 
 		input {
@@ -812,7 +822,7 @@ input.btn {
 		}
 
 		&:hover{
-			background-color: @light_gray;
+			background-color: @gray_01;
 		}
 
 		.settings_profile_pic_thumb {
@@ -1290,7 +1300,7 @@ input.btn {
 				text-align: center;
 
 				&:hover {
-					background-color: @light_gray;
+					background-color: @gray_01;
 				}
 			}
 
@@ -1340,7 +1350,7 @@ input.btn {
 		}
 
 		.settingsElement {
-			border-bottom: 1px solid @lightgray;
+			border-bottom: 1px solid @gray_01;
 			padding: 10px 5px;
 			background-color: white;
 
@@ -1363,17 +1373,17 @@ input.btn {
 			}
 
 			&:hover{
-				background-color: @light_gray;
+				background-color: @gray_01;
 			}
 		}
 
 		.edit_on {
-			background-color: @light_gray;
+			background-color: @gray_01;
 		}
 
 
 		.editable {
-			background-color: @light_gray;
+			background-color: @gray_01;
 
 			input {
 				.rounded_corners(5px);
