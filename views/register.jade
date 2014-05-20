@@ -27,7 +27,7 @@ block content
 				span#email_error.warning_message
 				if errors.email
 					span.error_message= errors.email
-				input#email.textfield(type="text" name="email" placeholder="" value=fields.email)
+				input#email.textfield(type="email" name="email" placeholder="" value=fields.email)
 
 				//PASSWORDS
 				if errors.password

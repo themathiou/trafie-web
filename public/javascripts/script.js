@@ -13,7 +13,8 @@ function mainMenuHandlers(){
 				var response = JSON.parse(res);
 
 				if( response.length == 0 ) { //no results
-					document.getElementById("search_results").innerHTML = '<li> no results found for \"'+ search_text +'\" </li>';
+					document.getElementById("search_results").style.display = 'none';
+					// document.getElementById("search_results").innerHTML = '<li> no results found for \"'+ search_text +'\" </li>';
 				} else if( response.length > 0 ){ //results
 					var resultList = '';
 					document.getElementById("search_results").style.display = 'block';
@@ -26,7 +27,8 @@ function mainMenuHandlers(){
 					}
 					document.getElementById("search_results").innerHTML = resultList;
 				} else { //no results
-					document.getElementById("search_results").innerHTML = '<li> no results found for \"'+ search_text +'\" </li>';
+					document.getElementById("search_results").style.display = 'none';
+					// document.getElementById("search_results").innerHTML = '<li> no results found for \"'+ search_text +'\" </li>';
 				}
 
 			});
@@ -35,11 +37,11 @@ function mainMenuHandlers(){
 		}
 	}
 
-/*
-	document.getElementById("search").onblur = function(){
-		document.getElementById("search_results").style.display = 'none';
-	}
-*/
+	/*
+		document.getElementById("search").onblur = function(){
+			document.getElementById("search_results").style.display = 'none';
+		}
+	*/
 }
 
 /********************************************/
