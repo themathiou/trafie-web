@@ -34,6 +34,15 @@ exports.get = function( req, res ){
 				if( typeof req.query.discipline !== 'undefined' ) {
 					where.discipline = req.query.discipline;
 				}
+				if( typeof req.query.from !== 'undefined' && typeof req.query.to !== 'undefined' ) {
+					where.date = { "$gte": Activity.schema.parseDbDate( req.query.from ), "$lte": Activity.schema.parseDbDate( req.query.to ) };
+				}
+				else if( typeof req.query.from !== 'undefined' ) {
+					where.date = { "$gte": Activity.schema.parseDbDate( req.query.from ) };
+				}
+				else if( typeof req.query.to !== 'undefined' ) {
+					where.date = { "$lte": Activity.schema.parseDbDate( req.query.to ) };
+				}
 				where.user_id = user_id;
 
 				return_activities( res, 200, where, profile_data.language, profile_data.date_format );

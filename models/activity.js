@@ -321,6 +321,13 @@ activitySchema.parseDate = function( date ) {
 	}
 };
 
+activitySchema.parseDbDate = function( date ) {
+	date = date.split('T')[0];
+	var date_parts = date.split('-');
+
+	return new Date( date_parts[0], date_parts[1]-1, date_parts[2] );
+}
+
 var Activity = mongoose.model( 'Activity', activitySchema );
 
 module.exports = Activity;
