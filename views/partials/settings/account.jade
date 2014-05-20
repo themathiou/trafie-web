@@ -25,7 +25,7 @@ div#changePasswordDiv.settingsElement
 				input#repeat_password( name="repeat_password" type="password")
 
 			div#settingsAboutMeButtons
-				input#submitNewPassword.btn_green( type="submit" value=tr['submit'])
+				input#submitNewPassword.btn.green( type="submit" value=tr['submit'])
 				a#cancelNewPassword.cancel_link( href="javascript:;" )= tr['cancel']
 
 //LANGUAGE
@@ -43,7 +43,7 @@ div#languageDiv.settingsElement
 						option( value=i )= languages[i]
 				- }
 		div.formButtons.editable
-			input#submitLanguage.btn_green( type="submit" value=tr['submit'])
+			input#submitLanguage.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditLanguage.cancel_link( href="javascript:;" )= tr['cancel']
 		a#editLanguage.editLink.non_editable( href="javascript:;" )
 			include ../svg/edit_activity_svg
@@ -65,7 +65,7 @@ div#dateFormatDiv.settingsElement
 			else
 				option( value='m-d-y' )= tr['m-d-y']
 		div.formButtons.editable
-			input#submitDateFormat.btn_green( type="submit" value=tr['submit'])
+			input#submitDateFormat.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditDateFormat.cancel_link( href="javascript:;" )= tr['cancel']
 		a#editDateFormat.editLink.non_editable( href="javascript:;" )
 			include ../svg/edit_activity_svg
@@ -80,7 +80,7 @@ div#usernameDiv.settingsElement
 		span.existed.non_editable= user.username || user._id
 		input#username.editable( name="username" value=user.username || user._id )
 		div.formButtons.editable
-			input#submitUsername.btn_green( type="submit" value=tr['submit'])
+			input#submitUsername.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditUsername.cancel_link( href="javascript:;" )= tr['cancel']
 
 		a#editUsername.editLink.non_editable( href="javascript:;" )

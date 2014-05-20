@@ -24,7 +24,7 @@ div#editDistanceActivityTemplate.row( style="display:none;" )= tr['enter_your_pe
 			label(for="datepicker_distance")= tr['date'] + ':'
 			input#edit_datepicker( name="date" type="text" )
 		div#submit_buttons.row.submit_buttons
-			input.btn_green(type="submit" name="new_competition" value=tr['save'])
+			input.btn.green(type="submit" name="new_competition" value=tr['save'])
 			a.cancel_edit_activity.cancel_link( href="javascript:;")= tr['cancel']
 
 div#editTimeActivityTemplate.row( style="display:none;" )= tr['enter_your_performance'] +':'
@@ -46,7 +46,7 @@ div#editTimeActivityTemplate.row( style="display:none;" )= tr['enter_your_perfor
 			label(for="datepicker_time")= tr['date'] + ':'
 			input#edit_datepicker( name="date" type="text" )
 		div#submit_buttons.row.submit_buttons
-			input.btn_green(type="submit" name="new_competition" value=tr['save'])
+			input.btn.green(type="submit" name="new_competition" value=tr['save'])
 			a.cancel_edit_activity.cancel_link( href="javascript:;")= tr['cancel']
 
 div#editPointsActivityTemplate.row( style="display:none;" )= tr['enter_your_performance'] +':'
@@ -58,5 +58,5 @@ div#editPointsActivityTemplate.row( style="display:none;" )= tr['enter_your_perf
 			label(for="datepicker_point")= tr['date'] + ':'
 			input#edit_datepicker( name="date" type="text" )
 		div#submit_buttons.row.submit_buttons
-			input.btn_green(type="submit" name="new_competition" value=tr['save'])
+			input.btn.green(type="submit" name="new_competition" value=tr['save'])
 			a.cancel_edit_activity.cancel_link( href="javascript:;")= tr['cancel']

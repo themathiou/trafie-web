@@ -8,7 +8,7 @@ div#profilePicDiv.settingsElement
 		span= errors.profile_pic
 		input#upload_profile_pic.editable( name="profile_pic" type="file" accept="image/*")
 		div.formButtons.editable
-			input#submit_profile_pic.btn_green( type="submit" value=tr['submit'])
+			input#submit_profile_pic.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditProfilePicture.cancel_link( href="javascript:;" )= tr['cancel']
 
 		a#editProfilePicture.editLink.non_editable( href="javascript:;" )
@@ -23,7 +23,7 @@ div#firstNameDiv.settingsElement
 		span.existed.non_editable= user.first_name
 		input#first_name.editable( name="first_name" value=user.first_name )
 		div.formButtons.editable
-			input#submitFirstName.btn_green( type="submit" value=tr['submit'])
+			input#submitFirstName.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditFirstName.cancel_link( href="javascript:;" )= tr['cancel']
 
 		a#editFirstName.editLink.non_editable( href="javascript:;" )
@@ -38,7 +38,7 @@ div#lastNameDiv.settingsElement
 		span.existed.non_editable= user.last_name
 		input#last_name.editable( name="last_name" value=user.last_name )
 		div.formButtons.editable
-			input#submitLastName.btn_green( type="submit" value=tr['submit'])
+			input#submitLastName.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditLastName.cancel_link( href="javascript:;" )= tr['cancel']
 		a#editLastName.editLink.non_editable( href="javascript:;" )
 			include ../svg/edit_activity_svg
@@ -57,7 +57,7 @@ div#mainDisciplineDiv.settingsElement
 					option( value=disciplines[i] )= tr[disciplines[i]]
 			- }
 		div.formButtons.editable
-			input#submitMainDiscipline.btn_green( type="submit" value=tr['submit'])
+			input#submitMainDiscipline.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditMainDiscipline.cancel_link( href="javascript:;" )= tr['cancel']
 		a#editMainDiscipline.editLink.non_editable( href="javascript:;" )
 			include ../svg/edit_activity_svg
@@ -83,7 +83,7 @@ div#genderDiv.settingsElement
 				label(for="female" class="clearfloat" )= tr['female']
 
 		div.formButtons.editable
-			input#submitGender.btn_green( type="submit" value=tr['submit'])
+			input#submitGender.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditGender.cancel_link( href="javascript:;" )= tr['cancel']
 		a#editGender.editLink.non_editable( href="javascript:;" )
 			include ../svg/edit_activity_svg
@@ -121,7 +121,7 @@ div#ageDiv.settingsElement
 					option#m30( value="30" ) 30
 					option#m31( value="31" ) 31
 		div.formButtons.editable
-			input#submitAge.btn_green( type="submit" value=tr['submit'])
+			input#submitAge.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditAge.cancel_link( href="javascript:;" )= tr['cancel']
 		a#editAge.editLink.non_editable( href="javascript:;" )
 			include ../svg/edit_activity_svg
@@ -142,7 +142,7 @@ div#countryDiv.settingsElement
 						option( value=countries[i] )= tr[countries[i]]
 				- }
 		div.formButtons.editable
-			input#submitCountry.btn_green( type="submit" value=tr['submit'])
+			input#submitCountry.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditCountry.cancel_link( href="javascript:;" )= tr['cancel']
 		a#editCountry.editLink.non_editable( href="javascript:;" )
 			include ../svg/edit_activity_svg
@@ -157,7 +157,7 @@ div#aboutMeDiv.settingsElement
 		span.non_editable( style="overflow-wrap: break-word;")= user.about || tr['write_something_about_you']
 		textarea.textarea.editable( name="about" maxlength="400" )= user.about
 		div.formButtons.editable
-			input#submitAboutMe.btn_green( type="submit" value=tr['submit'])
+			input#submitAboutMe.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditAboutMe.cancel_link( href="javascript:;" )= tr['cancel']
 		a#editAboutMe.editLink.non_editable( href="javascript:;" )
 			include ../svg/edit_activity_svg
