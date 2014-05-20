@@ -255,7 +255,7 @@ function profileHandlers() {
 				console.log(this_date);
 
 				//date picker for editable field
-				var date_picker = new Pikaday({field: edit_activity.querySelector('#edit_datepicker'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date('2020-12-31'), yearRange: [2000,2020], defaultDate: new Date(this_date), setDefaultDate: new Date(this_date)});
+				var date_picker = new Pikaday({field: edit_activity.querySelector('#edit_datepicker'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date(), yearRange: [2000,2020], defaultDate: new Date(this_date), setDefaultDate: new Date(this_date)});
 
 				//include the edit activity in the parent div
 				this.parentNode.appendChild(edit_activity);
@@ -320,7 +320,7 @@ function profileHandlers() {
 				edit_activity.style.display = 'block' ;
 
 				//date picker for editable field
-				var date_picker = new Pikaday({field: edit_activity.querySelector('#edit_datepicker'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date('2020-12-31'), yearRange: [2000,2020]});
+				var date_picker = new Pikaday({field: edit_activity.querySelector('#edit_datepicker'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date(), yearRange: [2000,2020]});
 
 
 				this.parentNode.appendChild(edit_activity);
@@ -382,7 +382,7 @@ function profileHandlers() {
 				edit_activity.style.display = 'block' ;
 
 				//date picker for editable field
-				var date_picker = new Pikaday({field: edit_activity.querySelector('#edit_datepicker'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date('2020-12-31'), yearRange: [2000,2020]});
+				var date_picker = new Pikaday({field: edit_activity.querySelector('#edit_datepicker'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date(), yearRange: [2000,2020]});
 
 				this.parentNode.appendChild(edit_activity);
 
