@@ -526,7 +526,7 @@ select {
 		margin: 0 0 0 -6.5%;
 	}
 
-		& > li .icon {
+	& > li .icon {
 		width: 40px;
 		height: 40px;
 		font-style: normal;
@@ -765,9 +765,6 @@ input.btn {
 		}
 	}
 
-
-
-
 }
 
 
@@ -857,17 +854,6 @@ input.btn {
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 /******************************************************/
@@ -1055,208 +1041,19 @@ input.btn {
 
 
 
-
-
-
-
-/*******************************************************************************************************************************
- * 							                                                                      RIBBONS                      *
- ******************************************************************************************************************************/
-
-.ribbon {
-	position: absolute;
-	top: 0;
-	right: 0;
-
-	/* reset certain elements (in case of conflicting CSS for classes, links, etc.) */
-	.text, .banner, a {
-		margin: 0;
-	    padding: 0;
-	    border: 0;
-	    outline: 0;
-	    font-size: 100%;
-	    vertical-align: baseline;
-	    background: transparent;
-	}
-
-	a {
-		color: #fff;
-		text-decoration: none;
-	}
-
-	.banner {
-		-webkit-transform: rotate(45deg);
-		-moz-transform: rotate(45deg);
-		-ms-transform: rotate(45deg);
-		-o-transform: rotate(45deg);
-		transform: rotate(45deg);
-		color: #fff;
-		-webkit-font-smoothing: antialiased;
-		display: block;
-		float: right;
-		position: relative;
-		right: -14px;
-		top: 22px;
-		width: 100px;
-
-		&::after, &::before {
-			content: '';
-			display: block;
-			height: 12px;
-			position: absolute;
-			width: 30px;
-		}
-
-		&::before {
-			-webkit-transform: skewY(-45deg) translate(50%,15px);
-			-moz-transform: skewY(-45deg) translate(50%,15px);
-			-ms-transform: skewY(-45deg) translate(50%,15px);
-			-o-transform: skewY(-45deg) translate(50%,15px);
-			-webkit-transform-origin: 100% center;
-			-moz-transform-origin: 100% center;
-			-ms-transform-origin: 100% center;
-			-o-transform-origin: 100% center;
-			left: -45px;
-		}
-
-		&::after {
-			-webkit-transform: translate(100%,-100%) skewY(45deg) translateX(-58%);
-			-moz-transform: translate(100%,-100%) skewY(45deg) translateX(-58%);
-			-ms-transform: translate(100%,-100%) skewY(45deg) translateX(-58%);
-			-o-transform: translate(100%,-100%) skewY(45deg) translateX(-58%);
-			-webkit-transform-origin: 0 center;
-			-moz-transform-origin: 0 center;
-			-ms-transform-origin: 0 center;
-			-o-transform-origin: 0 center;
-			right: -17px;
-		}
-
-
-	}
-
-}
-
-.no-css-transforms .ribbon {
-	font-size: 1em;
-	position: relative;
-	width: 100%;
-}
-
-.no-css-transforms .ribbon .banner {
-	position: static;
-	width: 100%;
-	float: none;
-	font-size: 10px;
-}
-
-.ribbon .text {
-	position: relative;
-	z-index: 2;
-	padding: 6px 0;
-	font-size: 12px;
-	font-weight: bold;
-	min-height: 18px;
-	line-height: 18px;
-	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.20);
-	white-space: nowrap;
-	text-overflow: ellipsis;
-}
-
-.ribbon .text::before,
-.ribbon .text::after {
-	content: '';
-	display: block;
-	height: 30px;
-	position: absolute;
-	top: 0;
-	width: 100%;
-	z-index: -1;
-}
-
-.ribbon .text::before {
-	-webkit-transform: translateX(-15%) skewX(-45deg);
-	-moz-transform: translateX(-15%) skewX(-45deg);
-	-ms-transform: translateX(-15%) skewX(-45deg);
-	-o-transform: translateX(-15%) skewX(-45deg);
-}
-
-.ribbon .text::after {
-	-webkit-transform: translateX(15%) skewX(45deg);
-	-moz-transform: translateX(15%) skewX(45deg);
-	-ms-transform: translateX(15%) skewX(45deg);
-	-o-transform: translateX(15%) skewX(45deg);
-}
-
-.no-css-transforms .ribbon .text {
-	height: 25px;
-	padding: 3px;
-}
-
-/* yellow */
-.ribbon-yellow .banner::after,
-.ribbon-yellow .banner::before {
-	background-color: #f2ba00;
-}
-.ribbon-yellow .text::before,
-.ribbon-yellow .text::after,
-.no-css-transforms .ribbon-yellow .text {
-	background-color: #ffd95e;
-}
-
-/* red */
-.ribbon-red .banner::after,
-.ribbon-red .banner::before {
-	background-color: #bd362f;
-}
-.ribbon-red .text::before,
-.ribbon-red .text::after,
-.no-css-transforms .ribbon-red .text {
-	background-color: #ee5f5b;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /******************************************************/
 /*			MULTIPLE DEVICES SUPPORT				  */
 /******************************************************/
 
-/******************************************************************************************************************************************************/
-/* Smartphones (portrait and landscape)   *********************************************************************************************************** */
-/******************************************************************************************************************************************************/
-/*
-@media screen and (max-width : 767px) {
-	body
-	{
-		background: rgba(0, 0, 0, 0.4);
-	}
-
-}
-*/
-
 /*******************************************************************************************************************************************************/
-/* Tablet 	 ***************************************************************************************************************** */
+/************************** iPad 	 ***************************************************************************************************************** */
 /*******************************************************************************************************************************************************/
-@media screen and (min-width : 100px) and (max-width : 992px) {
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
 	body
-	{
-		background: rgba(0,0,0, 0.3);
-	}
+	{}
 
 	#content
-	{
-	}
+	{}
 
 	#main_content
 	{
@@ -1272,12 +1069,266 @@ input.btn {
 	/* MENU ITEMS */
 	.menu_profile{}
 
-	.menu_statistics{
-			display : none;
-	}
+	.menu_statistics{}
 
 	.menu_settings{}
 
+
+	//----- SVGs
+	.edit_svg {
+		height: 20px;
+		width: 20px;
+		fill: @gray_03 ;
+
+		&:hover {
+			fill: @gray_03 ;
+		}
+	}
+
+	.delete_svg {
+		height: 20px;
+		width: 20px;
+		fill: @gray_03;
+
+		&:hover {
+			fill: @gray_03 ;
+		}
+	}
+
+	//------HISTORY
+	#slider {
+		height: 20px;
+	}
+
+	#add_activity_link {
+		width:100%;
+		float:left;
+	}
+
+	.history_line {
+		margin: 0 auto;
+		padding: 0;
+		list-style: none;
+		position: relative;
+		width:450px;
+
+		/*line*/
+		&:before {
+			content: '';
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			width: 10px;
+			background: @red;
+			left: 5%;
+			margin-left: -14px;
+			z-index: 0;
+			box-shadow: 0px 0px 4px 2px rgba(255, 255, 255, 0.2), 0 0 2px 3px rgba(255, 255, 255, 0.2) inset;
+		}
+
+
+		/* post */
+		& > li .info {
+			margin: 0 0 15px 12%;
+			background-color: @gray_01;
+			color: @gray_09;
+			padding: 10px 10px 10px 15px;
+			font-weight: 300;
+			line-height: 1.4;
+			position: relative;
+			.rounded_corners(5px);
+			border: 1px solid white;
+			box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.2), 0 0 16px 4px rgba(255, 255, 255, 0.6) inset;
+			display: inline-block;
+			width:100%;
+			/* 		text-shadow: 0px 0px 4px #000; */
+
+			.performance {
+				font-size: 2.4em;
+				font-weight: 100;
+			}
+
+			.date {
+				font-style: italic;
+			}
+
+			.discipline {
+			}
+
+			.deleteActivity {
+				float: right;
+				background-repeat: no-repeat;
+				min-width: 16px;
+			}
+
+			.editActivity {
+				float: right;
+				background-repeat: no-repeat;
+				min-width: 18px;
+			}
+
+		}
+
+		/* odd post */
+		& > li:nth-child(odd) .info {
+			background-color: @gray_01 ;
+		}
+
+		/* info end point (left) */
+		& > li .info:after {
+			right: 100%;
+			border: solid transparent;
+			content: " ";
+			height: 0;
+			width: 0;
+			position: absolute;
+			pointer-events: none;
+			border-right-color: @gray_01;
+			border-width: 10px;
+			top: 10px;
+		}
+
+		& > li:nth-child(odd) .info:after {
+			border-right-color: @gray_01;
+		}
+
+
+		/* ADD activity */
+		& > li .add_activity{
+			background: @gray_01 !important;
+			color: #fff;
+			padding: 0.4em;
+			font-size: 1.1em;
+			position: relative;
+			border-radius: 5px;
+			border:1px solid @gray_01;
+			border-left: none;
+			margin-bottom: 30px;
+			text-align: right;
+			overflow: hidden;
+			text-align: left;
+			text-shadow: none;
+
+			.data_entry {
+				color: black;
+
+				div {
+					float:left;
+				}
+
+				label {
+					font-size: 0.8em;
+					padding:0px;
+					margin:0px;
+				}
+
+				input {
+					.rounded_corners(5px);
+					box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2) inset;
+					border:1px white solid;
+					padding: 6px;
+					text-align: center;
+				}
+
+				.submit_buttons {
+				}
+			}
+
+		}
+
+		/* EDIT activity */
+		#edit_activity_form {
+				color: black;
+				position: relative;
+
+				div {
+					float:left;
+				}
+
+				label {
+					font-size: 0.8em;
+					padding:0px;
+					margin:0px;
+				}
+
+				input {
+					.rounded_corners(5px);
+					box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2) inset;
+					border:1px white solid;
+					padding: 6px;
+					text-align: center;
+				}
+
+				.submit_buttons {
+				}
+
+		}
+
+		& > li .end {
+			width:200px;
+			margin: 0 0 15px 10%;
+			line-height: 1.2;
+			position: relative;
+			border-radius: 5px;
+			background-color: @gray_03;
+			color: white;
+			padding: 0.5em;
+			font-size: 1em;
+			font-style: italic;
+			position: relative;
+			border-radius: 5px;
+			border:1px solid @gray_01;
+			margin-bottom: 30px;
+			text-align: center;
+		}
+
+
+		& > li .info h2 {
+			margin-top: 0px;
+			padding: 0 0 10px 0;
+			border-bottom: 1px solid rgba(255,255,255,0.4);
+		}
+
+
+
+
+		/* The icons */
+		& > li .icon_back {
+			width: 40px;
+			height: 40px;
+			font-size: 1em;
+			line-height: 40px;
+			position: absolute;
+			background: none;
+			.rounded_corners(50%);
+			box-shadow: 0 0 0 8px @gray_06;
+			text-align: center;
+			left: 5%;
+			/*top: 0;*/
+			z-index: -5; /* has to be < 0 for being under the history line */
+			margin: 0 0 0 -6.5%;
+		}
+
+		& > li .icon {
+			width: 40px;
+			height: 40px;
+			font-style: normal;
+			font-weight: normal;
+			font-variant: normal;
+			text-transform: none;
+			font-size: 1em;
+			line-height: 40px;
+			position: absolute;
+			color: black;
+			background: white;
+			.rounded_corners(50%);
+			text-align: center;
+			left: 5%;
+			/*top: 0;*/
+			margin: 0 0 0 -6.5%;
+			.background_shadow();
+		}
+	}
 
 
 	//------SETTINGS
@@ -1415,27 +1466,16 @@ input.btn {
 	}
 
 
+	//------STATISTICS
+	#dashboard {
+		margin-top: 30px;
+
+		#control {
+			display: none;
+		}
+	}
+
 }
-
-
-/********************************************************************************************************************************************************/
-/* iOS - retina		 ************************************************************************************************************************** */
-/********************************************************************************************************************************************************/
-/*
-@media
-only screen and (-webkit-min-device-pixel-ratio : 1.5),
-only screen and (min-device-pixel-ratio : 1.5) {
-}
-*/
-
-
-
-
-
-
-
-
-
 
 
 
