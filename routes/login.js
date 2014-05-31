@@ -26,7 +26,7 @@ exports.post = function( req, res ) {
       if( response.valid === true ) {
         // Start the session and log the user in
       	req.session.user_id = response._id;
-  	    res.redirect('/');
+  	    res.redirect('/settings');
       } else {
         // If the user is not valid yet, notify them that there is an email waiting
         res.redirect('/validation_email_sent/1/' + response._id );
