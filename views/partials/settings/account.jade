@@ -37,12 +37,12 @@ div#languageDiv.settingsElement
 			//^ = languages[user.language]
 		select.editable(name="language" hidden)
 				option(value="no-selection" selected)= tr['choose_your_language']
-				- for( var i in languages ) {
-					if languages[user.language] == languages[i]
-						option( value=i selected)= languages[i]
-					else
-						option( value=i )= languages[i]
-				- }
+				//- for( var i in languages ) {
+				//	if languages[user.language] == languages[i]
+				//		option( value=i selected)= languages[i]
+				//	else
+				//	option( value=i )= languages[i]
+				//- }
 		div.formButtons.editable
 			input#submitLanguage.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditLanguage.cancel_link( href="javascript:;" )= tr['cancel']
@@ -57,15 +57,15 @@ div#dateFormatDiv.settingsElement
 		span.non_editable{{user.date_format}}
 			//^ = tr[user.date_format]
 		select.editable( name='date_format' )
-			if user.date_format == 'd-m-y'
-				option( value='d-m-y' selected )= tr['d-m-y']
-			else
-				option( value='d-m-y' )= tr['d-m-y']
+			//if user.date_format == 'd-m-y'
+			//	option( value='d-m-y' selected )= tr['d-m-y']
+			//else
+			//	option( value='d-m-y' )= tr['d-m-y']
 
-			if user.date_format == 'm-d-y'
-				option( value='m-d-y' selected)= tr['m-d-y']
-			else
-				option( value='m-d-y' )= tr['m-d-y']
+			//if user.date_format == 'm-d-y'
+			//	option( value='m-d-y' selected)= tr['m-d-y']
+			//else
+			option( value='m-d-y' )= tr['m-d-y']
 		div.formButtons.editable
 			input#submitDateFormat.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditDateFormat.cancel_link( href="javascript:;" )= tr['cancel']

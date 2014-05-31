@@ -1,5 +1,5 @@
 /*Define ng-app module*/
-var trafie = angular.module('trafie',['ngRoute']);
+var trafie = angular.module('trafie',[ 'ngRoute' , 'ui.bootstrap' ]);
 
 trafie.config(['$locationProvider',
 	function($locationProvider) {
@@ -11,6 +11,10 @@ trafie.config(['$routeProvider',
 	function($routeProvider) {
 		$routeProvider.
 			when('/settings', {
+				templateUrl: '/views/settings.html',
+				controller: 'settingsController'
+			}).
+			when('/statistics', {
 				templateUrl: '/views/settings.html',
 				controller: 'settingsController'
 			}).

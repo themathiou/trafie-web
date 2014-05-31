@@ -1,29 +1,29 @@
-div#settingsNav
-	ul
-		li#profileSettingsTab.active
-			a( href="#profile" )= tr['profile_settings']
-		li#accountSettingsTab
-			a( href="#account" )= tr['account_settings']
-		li.logout
-			a(href="/logout")= tr['logout']
+div(ng-controller="settingsController")
+	div#settingsNav
+		ul
+			li#profileSettingsTab.active
+				a( href="#profile" )= tr['profile_settings']
+			li#accountSettingsTab
+				a( href="#account" )= tr['account_settings']
+			li.logout
+				a(href="/logout")= tr['logout']
 
-//PROFILE SETTINGS
-div#profileSettings.settingsContent
-	include partials/settings/profile
+	//PROFILE SETTINGS
+	div#profileSettings.settingsContent
+		include partials/settings/profile
 
 
-//ACCOUNT SETTINGS
-div#accountSettings.settingsContent( style="display:none;" )
-	include partials/settings/account
+	//ACCOUNT SETTINGS
+	div#accountSettings.settingsContent( style="display:none;" )
+		include partials/settings/account
 
-//temp loading - move to search
-div#loading( hidden )
-	img( src="images/ui/loading.gif" )
+	//temp loading - move to search
+	div#loading( hidden )
+		img( src="images/ui/loading.gif" )
 
-//scripts
-//script(type='text/javascript', src='/javascripts/settings.js')
-script(type='text/javascript', src='/javascripts/controllers/settingsController.js')
-//script.
-	activeTab();
-	settingsHandlers();
+	//scripts
+	//script(type='text/javascript', src='/javascripts/settings.js')
+	//script.
+		activeTab();
+		settingsHandlers();
 

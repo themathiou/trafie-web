@@ -50,13 +50,13 @@ div#mainDisciplineDiv.settingsElement
 		//span= errors.last_name
 		span.non_editable {{ user.discipline }}
 		select#main_discipline_input.editable(name="discipline" )
-			- for( var i in disciplines ) {
+			//- for( var i in disciplines ) {
 
 				//- if user.discipline == disciplines[i]
 				//- 	option( value=disciplines[i] selected)= tr[disciplines[i]]
 				//- else
-				option( value=disciplines[i] )= tr[disciplines[i]]
-			- }
+			//	option( value=disciplines[i] )= tr[disciplines[i]]
+			//- }
 		div.formButtons.editable
 			input#submitMainDiscipline.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditMainDiscipline.cancel_link( href="javascript:;" )= tr['cancel']
@@ -97,34 +97,40 @@ div#genderDiv.settingsElement
 div#ageDiv.settingsElement
 	form( method="POST")
 		label= tr['birthday'] + ': '
+		div.col-md-6
+			p.input-group
+				input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
+				span.input-group-btn
+					button.btn.btn-default(type="button" ng-click="open($event)")
+						i.glyphicon.glyphicon-calendar
 		//span= errors.age
-		span.non_editable {{ user.birthday.year+'/'+user.birthday.month+'/'+user.birthday.day }}
-		div#birthday.editable
-			select#birthday_year( name="birthday_year" onChange="setLeap(this.value)" )
-				- for (var i = 2010; i > 1900; i--) {
-						if i == user.birthday.year
-							option( value=i selected)= i
-						else
-							option( value=i )= i
-				- }
-			select#birthday_month( name="birthday_month" onChange="setSmall(this.value)" )
-				- for (var i = 1; i < 13; i++) {
-					if i == user.birthday.month
-						option( value=i selected )= i
-					else
-						option( value=i )= i
+		//span.non_editable {{ user.birthday.year+'/'+user.birthday.month+'/'+user.birthday.day }}
+		//div#birthday.editable
+			//- select#birthday_year( name="birthday_year" onChange="setLeap(this.value)" )
+			//- 	- for (var i = 2010; i > 1900; i--) {
+			//- 			if i == user.birthday.year
+			//- 				option( value=i selected)= i
+			//- 			else
+			//- 				option( value=i )= i
+			//- 	- }
+			//- select#birthday_month( name="birthday_month" onChange="setSmall(this.value)" )
+			//- 	- for (var i = 1; i < 13; i++) {
+			//- 		if i == user.birthday.month
+			//- 			option( value=i selected )= i
+			//- 		else
+			//- 			option( value=i )= i
 
-				- }
-			select#birthday_day( name="birthday_day" )
-				- for (var i = 1; i < 29; i++) {
-					if i == user.birthday.day
-						option( value=i selected )= i
-					else
-						option( value=i )= i
-				- }
-					option#m29( value="29" ) 29
-					option#m30( value="30" ) 30
-					option#m31( value="31" ) 31
+			//- 	- }
+			//- select#birthday_day( name="birthday_day" )
+			//- 	- for (var i = 1; i < 29; i++) {
+			//- 		if i == user.birthday.day
+			//- 			option( value=i selected )= i
+			//- 		else
+			//- 			option( value=i )= i
+			//- 	- }
+			//- 		option#m29( value="29" ) 29
+			//- 		option#m30( value="30" ) 30
+			//- 		option#m31( value="31" ) 31
 		div.formButtons.editable
 			input#submitAge.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditAge.cancel_link( href="javascript:;" )= tr['cancel']
@@ -140,12 +146,12 @@ div#countryDiv.settingsElement
 		span.non_editable {{user.country}}
 		select.editable(name="country" )
 				option(value="no-selection" selected)= tr['choose_your_country']
-				- for( var i in countries ) {
-					if user.country == countries[i]
-						option( value=countries[i] selected)= tr[countries[i]]
-					else
-						option( value=countries[i] )= tr[countries[i]]
-				- }
+				//- for( var i in countries ) {
+				//	if user.country == countries[i]
+				//		option( value=countries[i] selected)= tr[countries[i]]
+				//	else
+				//	option( value=countries[i] )= tr[countries[i]]
+				//- }
 		div.formButtons.editable
 			input#submitCountry.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditCountry.cancel_link( href="javascript:;" )= tr['cancel']
