@@ -21,6 +21,7 @@ exports.get = function( req, res ){
 	// Else, fetch the first name and the last name of the user from the database
 	Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline about male country birthday picture language date_format username')
 	.then( function( response ) {
+		console.log( response );
 		// If the profile wasn't found, redirect
 		if( typeof response.first_name === 'undefined' ) redirect('/register');
 
@@ -47,15 +48,13 @@ exports.get = function( req, res ){
 				'last_name'   : response.last_name,
 				'discipline'  : response.discipline,
 				'about'       : response.about,
-				'gender'      : gender,
 				'country'     : response.country,
 				'birthday'    : birthday,
 				'picture'     : picture,
 				'language'    : response.language,
 				'date_format' : response.date_format,
 				'username'    : response.username
-			},
-			'errors'      : errors,
+			}
 		};
 
 		res.json( data );

@@ -43,7 +43,8 @@ mongoose.connect('mongodb://localhost/trafiejs');
 var db = mongoose.connection;
 
 // Initialize the routes
-var login = require('./routes/login'),
+var index = require('./routes/index')
+    login = require('./routes/login'),
     register = require('./routes/register'),
     profile = require('./routes/profile'),
     activities = require('./routes/activities'),
@@ -88,6 +89,13 @@ if ('development' == trafie.get('env')) {
 
 
 /*******************************************************************************************************************************
+ * ROUTE                                                                                                                       *
+ ******************************************************************************************************************************/
+
+trafie.get( '/main_data', index.get );
+
+
+/*******************************************************************************************************************************
  * PROFILE                                                                                                                     *
  ******************************************************************************************************************************/
 
@@ -120,9 +128,11 @@ trafie.delete( '/user/:user_id/activities/:activity_id', activities.delete );
 
 trafie.get( '/views/settings.html', settings.get_view );
 
-trafie.get( '/settings', settings.get );
+trafie.get( '/settings', index.get_view );
 
-trafie.post( '/settings', settings.post );
+trafie.get( '/settings_data', settings.get );
+
+trafie.post( '/settings_data', settings.post );
 
 
 /*******************************************************************************************************************************
