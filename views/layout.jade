@@ -1,5 +1,5 @@
 doctype 5
-html
+html(ng-app="trafie")
 head
 	meta(charset="utf-8")
 
@@ -29,11 +29,11 @@ body
 			if user._id
 				ul.dropdown
 					li
-						a.menu_profile(href="/" ng-class="active: section == 'profile' " )= {{user.first_name}}
+						a.menu_profile(href="/" ng-class="{active: section == 'profile'}" ) {{user.first_name}}
 					li
-						a.menu_statistics(href="/statistics" ng-class="active: section == 'statistics' ")= tr[statistics]
+						a.menu_statistics(href="/statistics" ng-class="{active: section == 'statistics'}")= tr['statistics']
 					li
-						a.menu_settings(href="/settings" ng-class="active: section == 'settings' ")= tr[settings]
+						a.menu_settings(href="/settings" ng-class="{active: section == 'settings'}")= tr['settings']
 			else
 				ul.dropdown
 					li

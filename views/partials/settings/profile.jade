@@ -4,7 +4,7 @@ h3= tr['profile_settings']
 div#profilePicDiv.settingsElement
 	form( method="POST" enctype="multipart/form-data" )
 		label= tr['profile_picture'] + ': '
-		img.settings_profile_pic_thumb( src=user.picture )
+		img.settings_profile_pic_thumb( src="{{user.picture}}" )
 		//span= errors.profile_pic
 		input#upload_profile_pic.editable( name="profile_pic" type="file" accept="image/*")
 		div.formButtons.editable
@@ -21,7 +21,7 @@ div#firstNameDiv.settingsElement
 		//span= errors.first_name
 		span#first_name_error
 		span.existed.non_editable {{ user.first_name }}
-		input#first_name.editable( name="first_name" value=user.first_name )
+		input#first_name.editable( name="first_name" value="{{user.first_name}}" )
 		div.formButtons.editable
 			input#submitFirstName.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditFirstName.cancel_link( href="javascript:;" )= tr['cancel']
@@ -36,7 +36,7 @@ div#lastNameDiv.settingsElement
 		//span= errors.last_name
 		span#last_name_error
 		span.existed.non_editable {{user.last_name}}
-		input#last_name.editable( name="last_name" value=user.last_name )
+		input#last_name.editable( name="last_name" value="{{user.last_name}}" )
 		div.formButtons.editable
 			input#submitLastName.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditLastName.cancel_link( href="javascript:;" )= tr['cancel']
@@ -51,10 +51,11 @@ div#mainDisciplineDiv.settingsElement
 		span.non_editable {{ user.discipline }}
 		select#main_discipline_input.editable(name="discipline" )
 			- for( var i in disciplines ) {
-				if user.discipline == disciplines[i]
-					option( value=disciplines[i] selected)= tr[disciplines[i]]
-				else
-					option( value=disciplines[i] )= tr[disciplines[i]]
+
+				//- if user.discipline == disciplines[i]
+				//- 	option( value=disciplines[i] selected)= tr[disciplines[i]]
+				//- else
+				option( value=disciplines[i] )= tr[disciplines[i]]
 			- }
 		div.formButtons.editable
 			input#submitMainDiscipline.btn.green( type="submit" value=tr['submit'])
@@ -69,18 +70,22 @@ div#genderDiv.settingsElement
 		//span= errors.last_name
 		span.non_editable {{ user.gender }}
 		div#gender.editable
-			if user.gender == 'male'
-				input(id="male" name="gender" type="radio" value="male" checked)
-				label(for="male" class="clearfloat" )= tr['male']
-			else
-				input(id="male" name="gender" type="radio" value="male" )
-				label(for="male" class="clearfloat" )= tr['male']
-			if user.gender == 'female'
-				input(id="female" name="gender" type="radio" value="female" checked)
-				label(for="female" class="clearfloat" )= tr['female']
-			else
-				input(id="female" name="gender" type="radio" value="female")
-				label(for="female" class="clearfloat" )= tr['female']
+			//- if user.gender == 'male'
+			//- 	input(id="male" name="gender" type="radio" value="male" checked)
+			//- 	label(for="male" class="clearfloat" )= tr['male']
+			//- else
+			//- 	input(id="male" name="gender" type="radio" value="male" )
+			//- 	label(for="male" class="clearfloat" )= tr['male']
+			//- if user.gender == 'female'
+			//- 	input(id="female" name="gender" type="radio" value="female" checked)
+			//- 	label(for="female" class="clearfloat" )= tr['female']
+			//- else
+			//- 	input(id="female" name="gender" type="radio" value="female")
+			//- 	label(for="female" class="clearfloat" )= tr['female']
+			input(id="male" name="gender" type="radio" value="male")
+			label(for="male" class="clearfloat" )= tr['male']
+			input(id="female" name="gender" type="radio" value="female")
+			label(for="female" class="clearfloat" )= tr['female']
 
 		div.formButtons.editable
 			input#submitGender.btn.green( type="submit" value=tr['submit'])

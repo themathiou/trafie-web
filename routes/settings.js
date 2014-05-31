@@ -10,13 +10,16 @@ var Profile = require('../models/profile.js');
 
 
 exports.get = function( req, res ){
+	// If there is no user id in the session, redirect to register screen
+	if( typeof req.session.user_id === 'undefined') {
+		res.json(null);
+		return false;
+	}
+
 	var first_name, last_name;
 	var user_id = req.session.user_id;
 	var update = '';
 	var error_messages = '';
-
-	// If there is no user id in the session, redirect to register screen
-	if( !user_id ) res.json( null );
 
 	// Else, fetch the first name and the last name of the user from the database
 	Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline about male country birthday picture language date_format username')
@@ -66,10 +69,13 @@ exports.get = function( req, res ){
 
 
 exports.post = function( req, res ) {
-	var user_id = req.session.user_id;
-
 	// If there is no user id in the session, redirect to register screen
-	if(!user_id) res.redirect('/register');
+	if( typeof req.session.user_id === 'undefined') {
+		res.json(null);
+		return false;
+	}
+
+	var user_id = req.session.user_id;
 
 	// Check if the profile really exists
 	Profile.schema.findOne({ '_id': user_id }, 'first_name')
@@ -296,10 +302,13 @@ exports.post = function( req, res ) {
  * @param  {object} res
  */
 exports.get_view = function( req, res ) {
-	var user_id = req.session.user_id;
-
 	// If there is no user id in the session, redirect to register screen
-	if(!user_id) res.send('');
+	if( typeof req.session.user_id === 'undefined') {
+		res.send('');
+		return false;
+	}
+
+	var user_id = req.session.user_id;
 
 	// Check if the profile really exists
 	Profile.schema.findOne({ '_id': user_id }, 'language')
