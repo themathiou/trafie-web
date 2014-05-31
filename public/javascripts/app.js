@@ -27,8 +27,3 @@ trafie.service('sharedProperties',
 	function () {
 	    
 	});
-
-
-
-
-
