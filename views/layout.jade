@@ -5,10 +5,10 @@ head
 
 	//ICONS
 	link(rel="icon" href="/images/icons/trafie_72.png" type="image/x-icon")
-	link(rel="apple-touch-icon-precomposed" sizes="57x57" href="/images/icons/trafie_57.png")
-	link(rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/icons/trafie_72.png")
-	link(rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/icons/trafie_114.png")
-	link(rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/icons/trafie_144.png")
+	//- link(rel="apple-touch-icon-precomposed" sizes="57x57" href="/images/icons/trafie_57.png")
+	//- link(rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/icons/trafie_72.png")
+	//- link(rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/icons/trafie_114.png")
+	//- link(rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/icons/trafie_144.png")
 
 	link(href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600&subset=latin,greek,cyrillic' rel='stylesheet' type='text/css')
 	link(rel='stylesheet', href='/stylesheets/reset.css')
@@ -17,9 +17,6 @@ head
 
 	meta(name="apple-mobile-web-app-capable" content="yes")
 	title trafie
-
-
-script(type='text/javascript', src='/javascripts/script.js')
 
 body
 	div#mainmenu_container
@@ -32,20 +29,11 @@ body
 			if user._id
 				ul.dropdown
 					li
-						if section == 'profile'
-							a.menu_profile.active(href="/")= user.first_name
-						else
-							a.menu_profile(href="/")= user.first_name
+						a.menu_profile(href="/" ng-class="active: section == 'profile' " )= {{user.first_name}}
 					li
-						if section == 'statistics'
-							a.menu_statistics.active(href="/statistics")= tr['statistics']
-						else
-							a.menu_statistics(href="/statistics")= tr['statistics']
+						a.menu_statistics(href="/statistics" ng-class="active: section == 'statistics' ") {{statistics}}
 					li
-						if section == 'settings'
-							a.menu_settings.active(href="/settings")= tr['settings']
-						else
-							a.menu_settings(href="/settings")= tr['settings']
+						a.menu_settings(href="/settings" ng-class="active: section == 'settings' ") {{settings}}
 			else
 				ul.dropdown
 					li
@@ -53,9 +41,15 @@ body
 					li
 						a.menu_statistics(href="/login") Login
 
-block content
-
-script.
+	#content( ng-view )
+	
+	script(type="text/javascript", src="/javascripts/libs/angular.min.js")
+	script(type="text/javascript", src="/javascripts/libs/angular-route.min.js")
+	script(type="text/javascript", src="/javascripts/libs/ui-bootstrap-0.10.0.min.js")
+	script(type='text/javascript', src='/javascripts/scripts/script.js')
+	script(type='text/javascript', src='/javascripts/app.js')
+	script(type='text/javascript', src='/javascripts/controllers/settingsController.js')
+//script.
 	mainMenuHandlers();
 
 

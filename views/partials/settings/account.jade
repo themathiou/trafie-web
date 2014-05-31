@@ -9,18 +9,18 @@ div#changePasswordDiv.settingsElement
 		form( method="POST")
 			span.row
 				label( for="old_password" )= tr['old_password'] + ': '
-				span= errors.first_name
+				//span= errors.first_name
 				input( name="old_password" type="password")
 
 			span.row
 				label( for="password" )= tr['new_password'] + ': '
-				span= errors.first_name
+				//span= errors.first_name
 				span#password_error
 				input#password( name="password" type="password")
 
 			span.row
 				label( for="repeat_password" )= tr['repeat_password'] + ': '
-				span= errors.first_name
+				//span= errors.first_name
 				span#repeat_password_error.warning_message
 				input#repeat_password( name="repeat_password" type="password")
 
@@ -32,8 +32,9 @@ div#changePasswordDiv.settingsElement
 div#languageDiv.settingsElement
 	form( method="POST")
 		label= tr['language'] + ': '
-		span= errors.language
-		span.non_editable= languages[user.language]
+		//span= errors.language
+		span.non_editable{{user.language}} 
+			//^ = languages[user.language]
 		select.editable(name="language" hidden)
 				option(value="no-selection" selected)= tr['choose_your_language']
 				- for( var i in languages ) {
@@ -52,8 +53,9 @@ div#languageDiv.settingsElement
 div#dateFormatDiv.settingsElement
 	form( method="POST")
 		label= tr['date_format'] + ': '
-		span= errors.data_format
-		span.non_editable= tr[user.date_format]
+		//span= errors.data_format
+		span.non_editable{{user.date_format}}
+			//^ = tr[user.date_format]
 		select.editable( name='date_format' )
 			if user.date_format == 'd-m-y'
 				option( value='d-m-y' selected )= tr['d-m-y']
@@ -75,10 +77,11 @@ div#usernameDiv.settingsElement
 	form( method="POST")
 		//label= tr['username'] + ': '
 		label http://www.trafie.com/
-		span= errors.username
+		//span= errors.username
 		span#username_error
-		span.existed.non_editable= user.username || user._id
-		input#username.editable( name="username" value=user.username || user._id )
+		span.existed.non_editable {{user.username || user._id}}
+			//^ = user.username || user._id
+		input#username.editable( name="username" value="{{user.username || user._id}}" )
 		div.formButtons.editable
 			input#submitUsername.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditUsername.cancel_link( href="javascript:;" )= tr['cancel']
