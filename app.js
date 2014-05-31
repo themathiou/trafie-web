@@ -118,6 +118,8 @@ trafie.delete( '/user/:user_id/activities/:activity_id', activities.delete );
  * SETTINGS                                                                                                                    *
  ******************************************************************************************************************************/
 
+trafie.get( '/views/settings.html', settings.get_view );
+
 trafie.get( '/settings', settings.get );
 
 trafie.post( '/settings', settings.post );
