@@ -18,7 +18,7 @@ exports.get = function( req, res ) {
       var data = {
         'user': {
           '_id'       : response._id,
-          'first_name': response.first_name
+          'first_name': response.first_name,
         }
       }
 
