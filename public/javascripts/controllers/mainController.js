@@ -3,9 +3,13 @@ trafie.controller("mainController", function($rootScope, $scope, $http, $routePa
 	.success(function(res){
 		console.log(res);
 		$scope.user = res.user;
+		$rootScope.user_first_name = res.user.first_name;
 	});
 
-	
+
+	/*
+		datepicker bootstrap settings -- > TO CHANGE
+	 */
 	 $scope.today = function() {
 	    $scope.dt = new Date();
 	  };
@@ -40,4 +44,7 @@ trafie.controller("mainController", function($rootScope, $scope, $http, $routePa
 	  $scope.initDate = new Date('2016-15-20');
 	  $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
 	  $scope.format = $scope.formats[0];
+	  /*
+	   end datepicker
+	   */
 });

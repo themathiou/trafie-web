@@ -19,7 +19,7 @@ head
 	meta(name="apple-mobile-web-app-capable" content="yes")
 	title trafie
 
-body( ng-controller="mainController" )
+body( ng-controller="mainController" ng-cloak)
 	div#mainmenu_container
 		div#mainmenu
 			div
@@ -30,7 +30,7 @@ body( ng-controller="mainController" )
 			if user._id
 				ul.dropdown
 					li
-						a.menu_profile(href="/" ng-class="{active: section == 'profile'}" ) {{user.first_name}}
+						a.menu_profile(href="/" ng-class="{active: section == 'profile'}" ) {{user_first_name}}
 					li
 						a.menu_statistics(href="/statistics" ng-class="{active: section == 'statistics'}")= tr['statistics']
 					li
