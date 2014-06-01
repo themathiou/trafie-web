@@ -75,6 +75,7 @@ var en = {
     'add_new_activity'                              : 'Add New Activity',
     'choose_your_country'                           : 'Choose your country',
     'choose_your_language'                          : 'Choose your language',
+    'no_gender_selected'                            : 'No gender selected',
 	'enter_your_performance'                        : 'Enter your performance',
     'write_something_about_you'                     : 'Write something about you',
     'date'                                          : 'Date',
