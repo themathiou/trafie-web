@@ -1,5 +1,5 @@
 div(ng-controller="settingsController")
-	div#settingsNav
+	//div#settingsNav
 		ul
 			li#profileSettingsTab.active
 				a( href="#profile" )= tr['profile_settings']
@@ -8,14 +8,11 @@ div(ng-controller="settingsController")
 			li.logout
 				a(href="/logout")= tr['logout']
 
-	//PROFILE SETTINGS
-	div#profileSettings.settingsContent
-		include partials/settings/profile
-
-
-	//ACCOUNT SETTINGS
-	div#accountSettings.settingsContent( style="display:none;" )
-		include partials/settings/account
+	tabset.settingsContent
+		tab(heading=tr['profile_settings'])
+			include partials/settings/profile
+		tab(heading=tr['account_settings'])
+			include partials/settings/account
 
 	//temp loading - move to search
 	div#loading( hidden )

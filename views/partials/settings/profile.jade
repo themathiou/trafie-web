@@ -1,103 +1,86 @@
 h3= tr['profile_settings']
 
 //PROFILE PIC
-div#profilePicDiv.settingsElement
+div#profilePicDiv.settingsElement( ng-init="edit_profilepic=false;" )
 	form( method="POST" enctype="multipart/form-data" )
 		label= tr['profile_picture'] + ': '
 		img.settings_profile_pic_thumb( src="{{user.picture}}" )
 		//span= errors.profile_pic
-		input#upload_profile_pic.editable( name="profile_pic" type="file" accept="image/*")
-		div.formButtons.editable
+		input#upload_profile_pic( ng-show="edit_profilepic" name="profile_pic" type="file" accept="image/*")
+		div.formButtons( ng-show="edit_profilepic" )
 			input#submit_profile_pic.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditProfilePicture.cancel_link( href="javascript:;" )= tr['cancel']
 
-		a#editProfilePicture.editLink.non_editable( href="javascript:;" )
+		a#editProfilePicture.editLink.non_editable( ng-click="edit_profilepic = !edit_profilepic" )
 			include ../svg/edit_activity_svg
 
 //FIRST NAME
-div#firstNameDiv.settingsElement
+div#firstNameDiv.settingsElement( ng-init="edit_firstname=false;" )
 	form( method="POST")
 		label= tr['first_name'] + ': '
 		//span= errors.first_name
 		span#first_name_error
 		span.existed.non_editable {{ user.first_name }}
-		input#first_name.editable( name="first_name" value="{{user.first_name}}" )
-		div.formButtons.editable
+		input#first_name( ng-show="edit_firstname" name="first_name" value="{{user.first_name}}" )
+		div.formButtons( ng-show="edit_firstname" )
 			input#submitFirstName.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditFirstName.cancel_link( href="javascript:;" )= tr['cancel']
 
-		a#editFirstName.editLink.non_editable( href="javascript:;" )
+		a#editFirstName.editLink.non_editable( ng-click="edit_firstname = !edit_firstname" )
 			include ../svg/edit_activity_svg
 
 //LAST NAME
-div#lastNameDiv.settingsElement
+div#lastNameDiv.settingsElement( ng-init="edit_lastname=false;" )
 	form( method="POST")
 		label= tr['last_name'] + ': '
 		//span= errors.last_name
 		span#last_name_error
 		span.existed.non_editable {{user.last_name}}
-		input#last_name.editable( name="last_name" value="{{user.last_name}}" )
-		div.formButtons.editable
+		input#last_name( ng-show="edit_lastname" name="last_name" value="{{user.last_name}}" )
+		div.formButtons(ng-show="edit_lastname")
 			input#submitLastName.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditLastName.cancel_link( href="javascript:;" )= tr['cancel']
-		a#editLastName.editLink.non_editable( href="javascript:;" )
+		a#editLastName.editLink.non_editable( ng-click="edit_lastname = !edit_lastname" )
 			include ../svg/edit_activity_svg
 
 //MAIN DISCIPLINE
-div#mainDisciplineDiv.settingsElement
+div#mainDisciplineDiv.settingsElement( ng-init="edit_discipline=false;" )
 	form( method="POST")
 		label= tr['main_discipline'] + ': '
 		//span= errors.last_name
 		span.non_editable {{ user.discipline }}
-		select#main_discipline_input.editable(name="discipline" )
-			//- for( var i in disciplines ) {
-
-				//- if user.discipline == disciplines[i]
-				//- 	option( value=disciplines[i] selected)= tr[disciplines[i]]
-				//- else
-			//	option( value=disciplines[i] )= tr[disciplines[i]]
-			//- }
-		div.formButtons.editable
+		select#main_discipline_input( ng-model="user.discipline" ng-show="edit_discipline" name="discipline" )
+			- for( var i in disciplines ) 
+				option( value=disciplines[i] )= tr[disciplines[i]]
+		div.formButtons(ng-show="edit_discipline")
 			input#submitMainDiscipline.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditMainDiscipline.cancel_link( href="javascript:;" )= tr['cancel']
-		a#editMainDiscipline.editLink.non_editable( href="javascript:;" )
+		a#editMainDiscipline.editLink.non_editable( ng-click="edit_discipline = !edit_discipline" )
 			include ../svg/edit_activity_svg
 
 //GENDER
-div#genderDiv.settingsElement
+div#genderDiv.settingsElement( ng-init="edit_gender=false;" )
 	form( method="POST")
 		label= tr['gender'] + ': '
 		//span= errors.last_name
 		span.non_editable {{ user.gender }}
-		div#gender.editable
-			//- if user.gender == 'male'
-			//- 	input(id="male" name="gender" type="radio" value="male" checked)
-			//- 	label(for="male" class="clearfloat" )= tr['male']
-			//- else
-			//- 	input(id="male" name="gender" type="radio" value="male" )
-			//- 	label(for="male" class="clearfloat" )= tr['male']
-			//- if user.gender == 'female'
-			//- 	input(id="female" name="gender" type="radio" value="female" checked)
-			//- 	label(for="female" class="clearfloat" )= tr['female']
-			//- else
-			//- 	input(id="female" name="gender" type="radio" value="female")
-			//- 	label(for="female" class="clearfloat" )= tr['female']
-			input(id="male" name="gender" type="radio" value="male")
+		div#gender( ng-show="edit_gender" )
+			input(id="male" name="gender" type="radio" ng-model="user.gender" value="male")
 			label(for="male" class="clearfloat" )= tr['male']
-			input(id="female" name="gender" type="radio" value="female")
+			input(id="female" name="gender" type="radio" ng-model="user.gender" value="female")
 			label(for="female" class="clearfloat" )= tr['female']
 
-		div.formButtons.editable
+		div.formButtons(ng-show="edit_gender")
 			input#submitGender.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditGender.cancel_link( href="javascript:;" )= tr['cancel']
-		a#editGender.editLink.non_editable( href="javascript:;" )
+		a#editGender.editLink.non_editable( ng-click="edit_gender = !edit_gender" )
 			include ../svg/edit_activity_svg
 
 //AGE
-div#ageDiv.settingsElement
-	form( method="POST")
+div#ageDiv.settingsElement( ng-init="edit_age=false;" )
+	form( method="POST" )
 		label= tr['birthday'] + ': '
-		div.col-md-6
+		div.col-md-6(ng-show="edit_age")
 			p.input-group
 				input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
 				span.input-group-btn
@@ -131,44 +114,41 @@ div#ageDiv.settingsElement
 			//- 		option#m29( value="29" ) 29
 			//- 		option#m30( value="30" ) 30
 			//- 		option#m31( value="31" ) 31
-		div.formButtons.editable
+		div.formButtons(ng-show="edit_age")
 			input#submitAge.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditAge.cancel_link( href="javascript:;" )= tr['cancel']
-		a#editAge.editLink.non_editable( href="javascript:;" )
+		a#editAge.editLink.non_editable( ng-click="edit_age = !edit_age" )
 			include ../svg/edit_activity_svg
 
 
 //COUNTRY
-div#countryDiv.settingsElement
+div#countryDiv.settingsElement( ng-init="edit_country=false;" )
 	form( method="POST")
 		label= tr['country'] + ': '
 		//span= errors.country
 		span.non_editable {{user.country}}
-		select.editable(name="country" )
+		select( ng-show="edit_country" name="country" )
 				option(value="no-selection" selected)= tr['choose_your_country']
-				//- for( var i in countries ) {
-				//	if user.country == countries[i]
-				//		option( value=countries[i] selected)= tr[countries[i]]
-				//	else
-				//	option( value=countries[i] )= tr[countries[i]]
-				//- }
-		div.formButtons.editable
+				- for( var i in countries )
+					option( value=countries[i] )= tr[countries[i]]
+				
+		div.formButtons(ng-show="edit_country")
 			input#submitCountry.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditCountry.cancel_link( href="javascript:;" )= tr['cancel']
-		a#editCountry.editLink.non_editable( href="javascript:;" )
+		a#editCountry.editLink.non_editable( ng-click="edit_country = !edit_country" )
 			include ../svg/edit_activity_svg
 
 
 
 //ABOUT ME
-div#aboutMeDiv.settingsElement
+div#aboutMeDiv.settingsElement( ng-init="edit_aboutme = false;" )
 	form( method="POST")
 		label= tr['about_me'] + ': '
 		//span= errors.about
 		span.non_editable( style="overflow-wrap: break-word;") {{user.about}}
-		textarea.textarea.editable( name="about" maxlength="400" ) {{user.about}}
-		div.formButtons.editable
+		textarea.textarea( ng-show="edit_aboutme" name="about" maxlength="400" ) {{user.about}}
+		div.formButtons(ng-show="edit_aboutme")
 			input#submitAboutMe.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditAboutMe.cancel_link( href="javascript:;" )= tr['cancel']
-		a#editAboutMe.editLink.non_editable( href="javascript:;" )
+		a#editAboutMe.editLink.non_editable( ng-click="edit_aboutme = !edit_aboutme" )
 			include ../svg/edit_activity_svg
