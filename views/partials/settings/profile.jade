@@ -48,7 +48,7 @@ div#mainDisciplineDiv.settingsElement( ng-init="edit_discipline=false;" )
 	form( method="POST")
 		label= tr['main_discipline'] + ': '
 		//span= errors.last_name
-		span.non_editable {{ user.discipline }}
+		span.non_editable {{ user.discipline_formatted }}
 		select#main_discipline_input( ng-model="user.discipline" ng-show="edit_discipline" name="discipline" )
 			- for( var i in disciplines ) 
 				option( value=disciplines[i] )= tr[disciplines[i]]
@@ -63,7 +63,7 @@ div#genderDiv.settingsElement( ng-init="edit_gender=false;" )
 	form( method="POST")
 		label= tr['gender'] + ': '
 		//span= errors.last_name
-		span.non_editable {{ user.gender }}
+		span.non_editable {{ user.gender_formatted }}
 		div#gender( ng-show="edit_gender" )
 			input(id="male" name="gender" type="radio" ng-model="user.gender" value="male")
 			label(for="male" class="clearfloat" )= tr['male']
@@ -126,7 +126,7 @@ div#countryDiv.settingsElement( ng-init="edit_country=false;" )
 	form( method="POST")
 		label= tr['country'] + ': '
 		//span= errors.country
-		span.non_editable {{user.country}}
+		span.non_editable {{user.country_formatted}}
 		select( ng-show="edit_country" name="country" )
 				option(value="no-selection" selected)= tr['choose_your_country']
 				- for( var i in countries )
