@@ -24,7 +24,6 @@ exports.get = function( req, res ){
 	// Else, fetch the first name and the last name of the user from the database
 	Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline about male country birthday picture language date_format username')
 	.then( function( response ) {
-		console.log( response );
 		// If the profile wasn't found, redirect
 		if( typeof response.first_name === 'undefined' ) redirect('/register');
 
@@ -43,23 +42,26 @@ exports.get = function( req, res ){
 		birthday.year = response.birthday.year ? response.birthday.year : '';
 
 		var picture = response.picture ? response.picture : ( response.male ? '/images/profile_pics/default_male.png' : '/images/profile_pics/default_female.png' );
+		var tr = translations[response.language];
 
 		var data = {
 			'user': {
-				'_id'         : user_id,
-				'first_name'  : response.first_name,
-				'last_name'   : response.last_name,
-				'discipline'  : response.discipline,
-				'about'       : response.about,
-				'country'     : response.country,
-				'birthday'    : birthday,
-				'picture'     : picture,
-				'language'    : response.language,
-				'date_format' : response.date_format,
-				'username'    : response.username
+				'_id'         			: user_id,
+				'first_name'  			: response.first_name,
+				'last_name'   			: response.last_name,
+				'discipline'  			: response.discipline,
+				'discipline_formatted' 	: tr[response.discipline],
+				'about'       			: response.about,
+				'country'     			: response.country,
+				'country_formatted'		: tr[response.country],
+				'birthday'    			: birthday,
+				'picture'     			: picture,
+				'language'    			: response.language,
+				'date_format' 			: response.date_format,
+				'username'    			: response.username
 			}
 		};
-
+		
 		res.json( data );
 	})
 	.fail( function( error ) {
