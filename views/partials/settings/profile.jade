@@ -34,7 +34,6 @@ div#firstNameDiv.settingsElement
 div#lastNameDiv.settingsElement
 	form( method="POST" ng-submit="submitChangeSetting('last_name')")
 		label= tr['last_name'] + ': '
-		span#last_name_error
 		span.existed {{user.last_name}}
 		div(ng-show="last_name_msg !=''") {{last_name_msg}}
 		div( ng-show="edit_lastname" )
@@ -46,26 +45,27 @@ div#lastNameDiv.settingsElement
 			include ../svg/edit_activity_svg
 
 //MAIN DISCIPLINE
-div#mainDisciplineDiv.settingsElement( ng-init="edit_discipline=false;" )
+div#mainDisciplineDiv.settingsElement
 	form( method="POST" ng-submit="submitChangeSetting('discipline')")
 		label= tr['main_discipline'] + ': '
-		//span= errors.last_name
 		span {{ user.discipline_formatted }}
-		select#main_discipline_input( ng-model="user.discipline" ng-show="edit_discipline" name="discipline" )
-			- for( var i in disciplines ) 
-				option( value=disciplines[i] )= tr[disciplines[i]]
-		div.formButtons(ng-show="edit_discipline")
-			input#submitMainDiscipline.btn.green( type="submit" value=tr['submit'])
-			a#cancelEditMainDiscipline.cancel_link( ng-click="edit_discipline = !edit_discipline" )= tr['cancel']
-		a#editMainDiscipline.editLink( ng-click="edit_discipline = !edit_discipline" )
+		div(ng-show="discipline_msg !=''") {{discipline_msg}}
+		div(ng-show="edit_discipline")
+			select#main_discipline_input( ng-model="user.discipline" name="discipline" )
+				- for( var i in disciplines ) 
+					option( value=disciplines[i] )= tr[disciplines[i]]
+			div.formButtons
+				input#submitMainDiscipline.btn.green( type="submit" value=tr['submit'])
+				a#cancelEditMainDiscipline.cancel_link( ng-click="showHide('edit_discipline')" )= tr['cancel']
+		a#editMainDiscipline.editLink( ng-click="showHide('edit_discipline')" )
 			include ../svg/edit_activity_svg
 
 //GENDER
-div#genderDiv.settingsElement( ng-init="edit_gender=false;" )
-	form( method="POST")
+div#genderDiv.settingsElement
+	form( method="POST" ng-submit="submitChangeSetting('gender')")
 		label= tr['gender'] + ': '
-		//span= errors.last_name
 		span {{ user.gender_formatted }}
+		div(ng-show="gender_msg !=''") {{gender_msg}}
 		div#gender( ng-show="edit_gender" )
 			input(id="male" name="gender" type="radio" ng-model="user.gender" value="male")
 			label(for="male" class="clearfloat" )= tr['male']
@@ -74,20 +74,18 @@ div#genderDiv.settingsElement( ng-init="edit_gender=false;" )
 
 		div.formButtons(ng-show="edit_gender")
 			input#submitGender.btn.green( type="submit" value=tr['submit'])
-			a#cancelEditGender.cancel_link( ng-click="edit_gender = !edit_gender" )= tr['cancel']
-		a#editGender.editLink( ng-click="edit_gender = !edit_gender" )
+			a#cancelEditGender.cancel_link( ng-click="showHide('edit_gender')" )= tr['cancel']
+		a#editGender.editLink( ng-click="showHide('edit_gender')" )
 			include ../svg/edit_activity_svg
 
 //AGE
 div#ageDiv.settingsElement( ng-init="edit_age=false;" )
 	form( method="POST" )
 		label= tr['birthday'] + ': '
-		div.col-md-6(ng-show="edit_age")
+		span {{ user.birthday.year+'/'+user.birthday.month+'/'+user.birthday.day }}
+		div(ng-show="edit_age")
 			p.input-group
 				input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
-				span.input-group-btn
-					button.btn.btn-default(type="button" ng-click="open($event)")
-						i.glyphicon.glyphicon-calendar
 		//span= errors.age
 		//span {{ user.birthday.year+'/'+user.birthday.month+'/'+user.birthday.day }}
 		//div#birthday.editable
@@ -124,34 +122,35 @@ div#ageDiv.settingsElement( ng-init="edit_age=false;" )
 
 
 //COUNTRY
-div#countryDiv.settingsElement( ng-init="edit_country=false;" )
-	form( method="POST" )
+div#countryDiv.settingsElement
+	form( method="POST" ng-submit="submitChangeSetting('country')")
 		label= tr['country'] + ': '
-		//span= errors.country
 		span {{user.country_formatted}}
-		select( ng-show="edit_country" name="country" )
-				option(value="no-selection" selected)= tr['choose_your_country']
-				- for( var i in countries )
-					option( value=countries[i] )= tr[countries[i]]
+		div(ng-show="country_msg !=''") {{country_msg}}
+		div( ng-show="edit_country"  )
+			select( name="country" ng-model="user.country")
+					option(value="no-selection" selected)= tr['choose_your_country']
+					- for( var i in countries )
+						option( value=countries[i] )= tr[countries[i]]
 				
 		div.formButtons(ng-show="edit_country")
 			input#submitCountry.btn.green( type="submit" value=tr['submit'])
-			a#cancelEditCountry.cancel_link( ng-click="edit_country = !edit_country" )= tr['cancel']
-		a#editCountry.editLink( ng-click="edit_country = !edit_country" )
+			a#cancelEditCountry.cancel_link( ng-click="showHide('edit_country')")= tr['cancel']
+		a#editCountry.editLink( ng-click="showHide('edit_country')" )
 			include ../svg/edit_activity_svg
 
 
-
 //ABOUT ME
-div#aboutMeDiv.settingsElement( ng-init="edit_aboutme = false;" )
-	form( method="POST")
+div#aboutDiv.settingsElement
+	form( method="POST" ng-submit="submitChangeSetting('about')")
 		label= tr['about_me'] + ': '
-		//span= errors.about
 		span( style="overflow-wrap: break-word;") {{user.about}}
-		textarea.textarea( ng-show="edit_aboutme" name="about" maxlength="400" ) {{user.about}}
-		div.formButtons(ng-show="edit_aboutme")
-			input#submitAboutMe.btn.green( type="submit" value=tr['submit'])
-			a#cancelEditAboutMe.cancel_link( ng-click="edit_aboutme = !edit_aboutme" )= tr['cancel']
-		a#editAboutMe.editLink( ng-click="edit_aboutme = !edit_aboutme" )
+		div(ng-show="about_msg !=''") {{about_msg}}
+		div( ng-show="edit_about" )
+			textarea.textarea( name="about" maxlength="400"  ng-model="user.new_about" ) {{user.about}}
+		div.formButtons( ng-show="edit_about" )
+			input#submitAbout.btn.green( type="submit" value=tr['submit'])
+			a#cancelEditAbout.cancel_link( ng-click="showHide('edit_about')" )= tr['cancel']
+		a#editAbout.editLink( ng-click="showHide('edit_about')" )
 			include ../svg/edit_activity_svg
 

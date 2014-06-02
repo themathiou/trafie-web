@@ -17,6 +17,26 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 		//lastname
 		$scope.edit_lastname = false;
 		$scope.last_name_msg = '';
+
+		//discipline
+		$scope.edit_discipline = false;
+		$scope.discipline_msg = '';
+
+		//gender
+		$scope.gender = false;
+		$scope.gender_msg = '';
+
+		//country
+		$scope.country = false;
+		$scope.country_msg = '';
+
+		//age
+		$scope.age = false;
+		$scope.age_msg = '';
+
+		//about
+		$scope.about = false;
+		$scope.about_msg = '';
 	}
 	
 	/**
@@ -46,27 +66,23 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 				console.log(data);
 				$http.post('/settings_data', data)
 				.success(function(res){
-					if( res.success == true ) {
+					if( res.success ) {
 						$scope.user.first_name = res.value;
 						$rootScope.user_first_name = res.value;
 						$scope.first_name_msg='Firstname successfully updated'; //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
 						$scope.showHide('edit_firstname');
-
 						/* after 3 secconds hide the message */
 						$timeout(function(){
 							$scope.first_name_msg = '';
 						}, 3000);
 					}
 					else {
-						$scope.firstname_msg_show = true;
 						$scope.first_name_msg = res.message;
-
 						/* after 3 secconds hide the message */
 						$timeout(function(){
 							$scope.first_name_msg = '';
 						}, 3000);
 					}
-					
 				});
 				break;
 
@@ -75,7 +91,7 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 				console.log(data);
 				$http.post('/settings_data', data)
 				.success(function(res){
-					if( res.success == true ) {
+					if( res.success ) {
 						$scope.user.last_name = res.value;
 						$scope.last_name_msg='Lastname successfully updated'; //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
 						$scope.showHide('edit_lastname');
@@ -86,7 +102,6 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 						}, 3000);
 					}
 					else {
-						$scope.lastname_msg_show = true;
 						$scope.last_name_msg = res.message;
 
 						/* after 3 secconds hide the message */
@@ -94,7 +109,6 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 							$scope.last_name_msg = '';
 						}, 3000);
 					}
-					
 				});
 				break;
 			
@@ -103,21 +117,108 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 				console.log(data);
 				$http.post('/settings_data', data)
 				.success(function(res){
-					console.log(res);
+					if( res.success ) {
+						$scope.user.discipline = res.value;
+						$scope.discipline_msg='Discipline successfully updated'; //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
+						$scope.showHide('edit_discipline');
+
+						/* after 3 secconds hide the message */
+						$timeout(function(){
+							$scope.discipline_msg = '';
+						}, 3000);
+					}
+					else {
+						$scope.discipline_msg = res.message;
+
+						/* after 3 secconds hide the message */
+						$timeout(function(){
+							$scope.discipline_msg = '';
+						}, 3000);
+					}
 					$scope.user.discipline_formatted = res.translated_value;
 				});
 				break;
 
 			case 'gender':
+				data = { "gender" : $scope.user.gender  };
+				console.log(data);
+				$http.post('/settings_data', data)
+				.success(function(res){
+					if( res.success ) {
+						$scope.user.gender = res.value;
+						$scope.gender_msg='Gender successfully updated'; //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
+						$scope.showHide('edit_gender');
+
+						/* after 3 secconds hide the message */
+						$timeout(function(){
+							$scope.gender_msg = '';
+						}, 3000);
+					}
+					else {
+						$scope.gender_msg = res.message;
+
+						/* after 3 secconds hide the message */
+						$timeout(function(){
+							$scope.gender_msg = '';
+						}, 3000);
+					}
+					$scope.user.gender_formatted = res.translated_value;
+				});
 				break;
 
 			case 'age':
 				break;
 
 			case 'country':
+				data = { "country" : $scope.user.country };
+				console.log(data);
+				$http.post('/settings_data', data)
+				.success(function(res){
+					if( res.success ) {
+						$scope.user.country = res.value;
+						$scope.country_msg='Country successfully updated'; //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
+						$scope.showHide('edit_country');
+
+						/* after 3 secconds hide the message */
+						$timeout(function(){
+							$scope.country_msg = '';
+						}, 3000);
+					}
+					else {
+						$scope.country_msg = res.message;
+
+						/* after 3 secconds hide the message */
+						$timeout(function(){
+							$scope.country_msg = '';
+						}, 3000);
+					}
+					$scope.user.country_formatted = res.translated_value;
+				});
 				break;
 
 			case 'about':
+				data = { "about" : $scope.user.new_about };
+				$http.post('/settings_data', data)
+				.success(function(res){
+					if( res.success ) {
+						$scope.user.about = res.value;
+						$scope.about_msg = 'About successfully updated'; //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
+						$scope.showHide('edit_about');
+
+						/* after 3 secconds hide the message */
+						$timeout(function(){
+							$scope.about_msg = '';
+						}, 3000);
+					}
+					else {
+						$scope.about_msg = res.message;
+
+						/* after 3 secconds hide the message */
+						$timeout(function(){
+							$scope.about_msg = '';
+						}, 3000);
+					}
+				});
 				break;
 
 			/*
