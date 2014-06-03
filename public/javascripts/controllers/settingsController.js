@@ -31,8 +31,8 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 		$scope.country_msg = '';
 
 		//age
-		$scope.age = false;
-		$scope.age_msg = '';
+		$scope.birthday = false;
+		$scope.birthday_msg = '';
 
 		//about
 		$scope.about = false;
@@ -166,7 +166,30 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 				});
 				break;
 
-			case 'age':
+			case 'birthday':
+				data = { "birthday" : $scope.user.new_birthday };
+				console.log(data);
+				$http.post('/settings_data', data)
+				.success(function(res){
+					if( res.success ) {
+						$scope.user.birthday = res.value;
+						$scope.birthday_msg='Birthday successfully updated'; //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
+						$scope.showHide('edit_birthday');
+
+						/* after 3 secconds hide the message */
+						$timeout(function(){
+							$scope.birthday_msg = '';
+						}, 3000);
+					}
+					else {
+						$scope.birthday_msg = res.message;
+
+						/* after 3 secconds hide the message */
+						$timeout(function(){
+							$scope.birthday_msg = '';
+						}, 3000);
+					}
+				});
 				break;
 
 			case 'country':

@@ -79,45 +79,18 @@ div#genderDiv.settingsElement
 			include ../svg/edit_activity_svg
 
 //AGE
-div#ageDiv.settingsElement( ng-init="edit_age=false;" )
-	form( method="POST" )
+div#ageDiv.settingsElement
+	form( method="POST" ng-submit="submitChangeSetting('birthday')")
 		label= tr['birthday'] + ': '
-		span {{ user.birthday.year+'/'+user.birthday.month+'/'+user.birthday.day }}
-		div(ng-show="edit_age")
+		span {{ user.birthday.day }} {{ user.birthday.month }} {{ user.birthday.year }}
+		div(ng-show="birthday_msg !=''") {{birthday_msg}}
+		div(ng-show="edit_birthday")
 			p.input-group
-				input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
-		//span= errors.age
-		//span {{ user.birthday.year+'/'+user.birthday.month+'/'+user.birthday.day }}
-		//div#birthday.editable
-			//- select#birthday_year( name="birthday_year" onChange="setLeap(this.value)" )
-			//- 	- for (var i = 2010; i > 1900; i--) {
-			//- 			if i == user.birthday.year
-			//- 				option( value=i selected)= i
-			//- 			else
-			//- 				option( value=i )= i
-			//- 	- }
-			//- select#birthday_month( name="birthday_month" onChange="setSmall(this.value)" )
-			//- 	- for (var i = 1; i < 13; i++) {
-			//- 		if i == user.birthday.month
-			//- 			option( value=i selected )= i
-			//- 		else
-			//- 			option( value=i )= i
-
-			//- 	- }
-			//- select#birthday_day( name="birthday_day" )
-			//- 	- for (var i = 1; i < 29; i++) {
-			//- 		if i == user.birthday.day
-			//- 			option( value=i selected )= i
-			//- 		else
-			//- 			option( value=i )= i
-			//- 	- }
-			//- 		option#m29( value="29" ) 29
-			//- 		option#m30( value="30" ) 30
-			//- 		option#m31( value="31" ) 31
-		div.formButtons(ng-show="edit_age")
+				input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="user.new_birthday" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
+		div.formButtons(ng-show="edit_birthday")
 			input#submitAge.btn.green( type="submit" value=tr['submit'])
-			a#cancelEditAge.cancel_link( ng-click="edit_age = !edit_age" )= tr['cancel']
-		a#editAge.editLink( ng-click="edit_age = !edit_age" )
+			a#cancelEditAge.cancel_link( ng-click="showHide('edit_birthday')" )= tr['cancel']
+		a#editAge.editLink( ng-click="showHide('edit_birthday')" )
 			include ../svg/edit_activity_svg
 
 
