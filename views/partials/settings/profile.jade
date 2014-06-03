@@ -1,17 +1,18 @@
 h3= tr['profile_settings']
 
 //PROFILE PIC
-div#profilePicDiv.settingsElement( ng-init="edit_profilepic=false;" )
-	form( method="POST" enctype="multipart/form-data" )
+div#profilePicDiv.settingsElement
+	form( method="POST" enctype="multipart/form-data" ng-submit="submitChangeSetting('profile_pic')")
 		label= tr['profile_picture'] + ': '
 		img.settings_profile_pic_thumb( src="{{user.picture}}" )
 		//span= errors.profile_pic
-		input#upload_profile_pic( ng-show="edit_profilepic" name="profile_pic" type="file" accept="image/*")
+		div( ng-show="edit_profilepic" )
+			input#upload_profile_pic( name="profile_pic" type="file" accept="image/*")
 		div.formButtons( ng-show="edit_profilepic" )
 			input#submit_profile_pic.btn.green( type="submit" value=tr['submit'])
-			a#cancelEditProfilePicture.cancel_link( ng-click="edit_profilepic = !edit_profilepic" )= tr['cancel']
+			a#cancelEditProfilePicture.cancel_link( ng-click="showHide('edit_profilepic')" )= tr['cancel']
 
-		a#editProfilePicture.editLink( ng-click="edit_profilepic = !edit_profilepic" )
+		a#editProfilePicture.editLink( ng-click="showHide('edit_profilepic')" )
 			include ../svg/edit_activity_svg
 
 //FIRST NAME
@@ -78,15 +79,15 @@ div#genderDiv.settingsElement
 		a#editGender.editLink( ng-click="showHide('edit_gender')" )
 			include ../svg/edit_activity_svg
 
-//AGE
+//BIRTHDAY
 div#ageDiv.settingsElement
 	form( method="POST" ng-submit="submitChangeSetting('birthday')")
 		label= tr['birthday'] + ': '
-		span {{ user.birthday.day }} {{ user.birthday.month }} {{ user.birthday.year }}
+		span {{ user.birthday.day }}.{{ user.birthday.month }}.{{ user.birthday.year }}
 		div(ng-show="birthday_msg !=''") {{birthday_msg}}
 		div(ng-show="edit_birthday")
 			p.input-group
-				input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="user.new_birthday" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
+				input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="user.new_birthday" is-open="opened" min-date="'1970-06-22'" max-date="'2014-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
 		div.formButtons(ng-show="edit_birthday")
 			input#submitAge.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditAge.cancel_link( ng-click="showHide('edit_birthday')" )= tr['cancel']
