@@ -29,14 +29,16 @@ div#changePasswordDiv.settingsElement( ng-init="edit_password=false;" )
 				a#cancelNewPassword.cancel_link( href="javascript:;" )= tr['cancel']
 
 //LANGUAGE
-div#languageDiv.settingsElement( ng-init="edit_language=false;" )
-	form( method="POST")
+div#languageDiv.settingsElement
+	form( method="POST" ng-submit="submitChangeSetting('language')")
 		label= tr['language'] + ': '
-		//span= errors.language
-		span.non_editable{{user.language}} 
-			//^ = languages[user.language]
-		select(name="language" ng-show="edit_language" )
+		span.non_editable{{user.language_formatted}} 
+		div(ng-show="language_msg !=''") {{language_msg}}
+		div( ng-show="edit_language" )	
+			select(name="language" )
 				option(value="no-selection" selected)= tr['choose_your_language']
+				- for( var i in languages )
+						option( value=languages[i] )= tr[languages[i]]
 				//- for( var i in languages ) {
 				//	if languages[user.language] == languages[i]
 				//		option( value=i selected)= languages[i]
