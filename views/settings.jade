@@ -1,12 +1,4 @@
-div(ng-controller="settingsController")
-	//div#settingsNav
-		ul
-			li#profileSettingsTab.active
-				a( href="#profile" )= tr['profile_settings']
-			li#accountSettingsTab
-				a( href="#account" )= tr['account_settings']
-			li.logout
-				a(href="/logout")= tr['logout']
+div( ng-controller="settingsController" ng-init="settingsInit()")
 
 	tabset.settingsContent
 		tab(heading=tr['profile_settings'])
