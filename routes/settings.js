@@ -132,14 +132,11 @@ exports.post = function( req, res ) {
 		}
 
 		// Validating birthday
-		if( typeof req.body.birthday_day !== 'undefined' && typeof req.body.birthday_month !== 'undefined' && typeof req.body.birthday_year !== 'undefined' ) {
-			profile_data.birthday = {};
-			profile_data.birthday.day = req.body.birthday_day;
-			profile_data.birthday.month = req.body.birthday_month;
-			profile_data.birthday.year = req.body.birthday_year;
-			if( !Profile.schema.validateBirthday( profile_data.birthday ) ) {
+		if( typeof req.body.birthday !== 'undefined' ) {
+			if( !Profile.schema.validateBirthday( req.body.birthday ) ) {
 				response.success = false;
 			} else {
+				//profile_data.birthday = req.body.birthday
 				response.value = profile_data.birthday;
 			}
 		}
