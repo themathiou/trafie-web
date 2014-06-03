@@ -141,10 +141,18 @@ profileSchema.validateUsername = function( username ) {
  */
 profileSchema.validateBirthday = function( birthday ) {
 	console.log( birthday );
-	birthday = Date.parse( birthday );
-	console.log( birthday );
-	
-	return false;
+	birthday = new Date( birthday );
+
+	if ( Object.prototype.toString.call( birthday ) === "[object Date]" ) {
+	  	if ( isNaN( birthday.getTime() ) ) {  // d.valueOf() could also work
+	    	return false;
+	 	} else {
+	 		var current_date = new Date();
+			return birthday > current_date ? current_date : birthday;
+		}
+	} else {
+		return false;
+	}
 };
 
 /**
