@@ -299,7 +299,6 @@ activitySchema.validatePoints = function( performance ) {
 	return points;
 };
 
-
 /**
  * Parses the given date, from format "Thu Apr 11 2014" to
  * to a JavaScript date object

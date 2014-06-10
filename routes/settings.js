@@ -43,11 +43,6 @@ exports.get = function( req, res ){
 		else {
 			gender = 'no_gender_selected';
 		}
-		
-		var birthday = {};
-		birthday.day = profile.birthday.day ? profile.birthday.day : '';
-		birthday.month = profile.birthday.month ? profile.birthday.month : '';
-		birthday.year = profile.birthday.year ? profile.birthday.year : '';
 
 		var picture = profile.picture ? profile.picture : ( profile.male ? '/images/profile_pics/default_male.png' : '/images/profile_pics/default_female.png' );
 
@@ -63,7 +58,7 @@ exports.get = function( req, res ){
 				'gender_formatted'		: tr[gender],
 				'country'     			: profile.country,
 				'country_formatted'		: tr[profile.country],
-				'birthday'    			: birthday,
+				'birthday'    			: profile.birthday,
 				'picture'     			: picture,
 				'language'    			: profile.language,
 				'date_format' 			: profile.date_format,
@@ -132,15 +127,13 @@ exports.post = function( req, res ) {
 		}
 
 		// Validating birthday
-		if( typeof req.body.birthday_day !== 'undefined' && typeof req.body.birthday_month !== 'undefined' && typeof req.body.birthday_year !== 'undefined' ) {
-			profile_data.birthday = {};
-			profile_data.birthday.day = req.body.birthday_day;
-			profile_data.birthday.month = req.body.birthday_month;
-			profile_data.birthday.year = req.body.birthday_year;
-			if( !Profile.schema.validateBirthday( profile_data.birthday ) ) {
-				response.success = false;
-			} else {
+		if( typeof req.body.birthday !== 'undefined' ) {
+			var birthday = Profile.schema.validateBirthday( req.body.birthday );
+			if( birthday ) {
+				profile_data.birthday = birthday;
 				response.value = profile_data.birthday;
+			} else {
+				response.success = false;
 			}
 		}
 

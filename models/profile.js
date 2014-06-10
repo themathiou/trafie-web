@@ -5,21 +5,21 @@ var q = require('q');
 
 //Define User SCHEMA
 var profileSchema = mongoose.Schema({
-  first_name	: { type: String, required: true },
-  last_name		: { type: String, required: true },
-  username 		: { type: String, required: false, default: null },
-  male			: { type: Boolean, required: false, default: null },
+  first_name	: { type: String, 	required: true },
+  last_name		: { type: String, 	required: true },
+  username 		: { type: String, 	required: false, 	default: null },
+  male			: { type: Boolean, 	required: false, 	default: null },
   birthday		: {
   					day: 	{ type: Number, required: false, default: null },
   					month: 	{ type: Number, required: false, default: null },
   					year: 	{ type: Number, required: false, default: null } 
    				  },
-  discipline	: { type: String, required: false, default: '' },
-  about 		: { type: String, required: false, default: '' },
-  country 		: { type: String, required: false, default: '' },
-  picture 		: { type: String, required: false, default: '' },
-  date_format 	: { type: String, required: true, default: 'd-m-y' },
-  language 		: { type: String, required: true, default: 'en' },
+  discipline	: { type: String, 	required: false, 	default: '' },
+  about 		: { type: String, 	required: false, 	default: '' },
+  country 		: { type: String, 	required: false, 	default: '' },
+  picture 		: { type: String, 	required: false, 	default: '' },
+  date_format 	: { type: String, 	required: true, 	default: 'd-m-y' },
+  language 		: { type: String, 	required: true, 	default: 'en' },
   keywords 		: {
   					names: [ { type: String, required: false, default: '' } ]
   				  }
@@ -143,26 +143,79 @@ profileSchema.validateUsername = function( username ) {
  * @param json birthday
  * @return boolean
  */
-profileSchema.validateBirthday = function( birthday ) {
-	if( !isPositiveInteger( birthday.day ) || !isPositiveInteger( birthday.month ) || !isPositiveInteger( birthday.year ) ) {
+profileSchema.validateBirthday2 = function( birthday ) {
+	console.log( birthday );
+	birthday = new Date( birthday );
+
+	if ( Object.prototype.toString.call( birthday ) === "[object Date]" ) {
+	  	if ( isNaN( birthday.getTime() ) ) {
+	    	return false;
+	    	console.log( '-1');
+	 	} else {
+	 		var current_date = new Date();
+	 		console.log( '-2');
+	 		console.log( birthday );
+			return birthday > current_date ? current_date : birthday;
+		}
+	} else {
+		console.log( '-3');
 		return false;
 	}
+};
+
+/**
+ * Checks the birthday for validity
+ * @param json birthday
+ * @return boolean
+ */
+profileSchema.validateBirthday = function( birthday ) {
+	if( typeof birthday.day === 'undefined' || !parseInt( birthday.day ) || typeof birthday.month === 'undefined' || !parseInt( birthday.month+1 ) || typeof birthday.year === 'undefined' || !parseInt( birthday.year ) ) {
+		return false;
+	}
+
+	// The month in JavaScript date goes from 0 to 11. Fixed.
+	birthday.month++;
+
+	// Validate month and year
 	if( birthday.year < 1900 || birthday.year > 2010 || birthday.month > 12 ) {
 		return false;
 	}
 	
+	// Check if it's a leap year
 	var leap_year = ( (birthday.year % 4 == 0) && (birthday % 100 != 0) ) || (birthday % 400 == 0);
 
-	if( birthday.day > 31 ) {
+	// Validate day
+	if( birthday.day > 31 || ( [4,6,9,11].indexOf( birthday.month ) >= 0  && birthday.day > 30 ) ) {
 		return false;
 	}
-	if( [4,6,9,11].indexOf( birthday.month ) >= 0  && birthday.day > 30 ) {
-		return false;
-	}
+
+	// Validate day, check Feburary during leap years
 	if( ( birthday.month == 2 && !leap_year && birthday.day > 28 ) || ( birthday.month == 2 && leap_year && birthday.day > 29 ) ) {
 		return false;
 	}
-	return true;
+
+	return birthday;
+};
+
+/**
+ * Parses the given date, from format "Thu Apr 11 2014" to
+ * to a JavaScript date object
+ * @param string date
+ */
+profileSchema.parseDate = function( date ) {
+	var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+	date = date.split(' ');
+	var current_date = new Date();
+
+	// If the date is invalid, return an empty string
+	if( date.length != 4 || months.indexOf( date[1] ) < 0 || !parseInt(date[2]) || date[2] < 1 || date[2] > 31 || !parseInt(date[3]) || date[3] < 1900 || date[3] > current_date.getFullYear() ) {
+		return '';
+	} else {
+		// Create the date object
+		var parsed_date = new Date( date[3], months.indexOf( date[1] ), date[2] );
+		return parsed_date < current_date ? parsed_date : current_date;
+	}
 };
 
 /**
