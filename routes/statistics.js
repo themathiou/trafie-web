@@ -55,6 +55,7 @@ exports.get_view = function( req, res ) {
 		Profile.schema.findOne( { '_id': user_id }, 'first_name last_name discipline country male birthday picture language date_format' ).then( function( profile_data ) {
 			// If the user was found
 			if( typeof profile_data.first_name !== 'undefined' ) {
+				profile = profile_data;
 				return Activity.schema.getDisciplinesPerformedByUser( { 'user_id': user_id } );
 			// If the user wasn't found
 			} else {
@@ -63,24 +64,25 @@ exports.get_view = function( req, res ) {
 			}
 		})
 		.then( function( disciplines_of_user ) {
+			console.log( disciplines_of_user );
 			if( disciplines_of_user ) {
 				// The data that will go to the front end
 				var view_data = {
 					'user': {
 						'_id'                   : user_id,
-						'first_name'            : profile_data.first_name,
-						'discipline'            : profile_data.discipline,
+						'first_name'            : profile.first_name,
+						'discipline'            : profile.discipline,
 						'disciplines_of_user'   : disciplines_of_user
 					},
-					'tr'          : translations[profile_data.language],
+					'tr'          : translations[profile.language],
 					'section'     : 'statistics'
 				};
 
 				res.render( 'statistics', view_data );
-				return;
 			}
 		})
 		.fail( function( error ) {
+			console.log( error );
 			send_error_page( error, res );
 			return;
 		});
