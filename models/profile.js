@@ -9,7 +9,11 @@ var profileSchema = mongoose.Schema({
   last_name		: { type: String, 	required: true },
   username 		: { type: String, 	required: false, 	default: null },
   male			: { type: Boolean, 	required: false, 	default: null },
-  birthday		: { type: Date, 	required: false,	default: null },
+  birthday		: {
+  					day: 	{ type: Number, required: false, default: null },
+  					month: 	{ type: Number, required: false, default: null },
+  					year: 	{ type: Number, required: false, default: null } 
+   				  },
   discipline	: { type: String, 	required: false, 	default: '' },
   about 		: { type: String, 	required: false, 	default: '' },
   country 		: { type: String, 	required: false, 	default: '' },
