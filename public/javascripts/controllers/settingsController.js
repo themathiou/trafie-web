@@ -204,7 +204,7 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 				var selected_date = $scope.user.new_birthday;
 
 				
-				data = { "birthday" : {"day" : selected_date.getDate() , "month":selected_date.get2Month() , "year":selected_date.getFullYear()} };
+				data = { "birthday" : {"day" : selected_date.getDate() , "month":selected_date.getMonth() , "year":selected_date.getFullYear()} };
 
 				console.log(data);
 				$http.post('/settings_data', data)
