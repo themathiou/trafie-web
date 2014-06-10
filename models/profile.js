@@ -139,18 +139,22 @@ profileSchema.validateUsername = function( username ) {
  * @param json birthday
  * @return boolean
  */
-profileSchema.validateBirthday = function( birthday ) {
+profileSchema.validateBirthday2 = function( birthday ) {
 	console.log( birthday );
 	birthday = new Date( birthday );
 
 	if ( Object.prototype.toString.call( birthday ) === "[object Date]" ) {
-	  	if ( isNaN( birthday.getTime() ) ) {  // d.valueOf() could also work
+	  	if ( isNaN( birthday.getTime() ) ) {
 	    	return false;
+	    	console.log( '-1');
 	 	} else {
 	 		var current_date = new Date();
+	 		console.log( '-2');
+	 		console.log( birthday );
 			return birthday > current_date ? current_date : birthday;
 		}
 	} else {
+		console.log( '-3');
 		return false;
 	}
 };
@@ -160,7 +164,7 @@ profileSchema.validateBirthday = function( birthday ) {
  * @param json birthday
  * @return boolean
  */
-profileSchema.validateBirthday2 = function( birthday ) {
+profileSchema.validateBirthday = function( birthday ) {
 	birthday = this.parseDate( birthday );
 
 	if( birthday.year < 1900 || birthday.year > 2010 || birthday.month > 12 ) {
