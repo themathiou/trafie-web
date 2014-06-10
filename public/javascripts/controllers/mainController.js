@@ -47,6 +47,7 @@ trafie.controller("mainController", function($rootScope, $scope, $http, $routePa
 	  };
 
 	  $scope.initDate = new Date();
+	  $scope.showWeeks = false;
 	  $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
 	  $scope.format = $scope.formats[0];
 	  /*
