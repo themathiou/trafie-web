@@ -169,24 +169,32 @@ profileSchema.validateBirthday2 = function( birthday ) {
  * @return boolean
  */
 profileSchema.validateBirthday = function( birthday ) {
-	birthday = this.parseDate( birthday );
+	if( typeof birthday.day === 'undefined' || !parseInt( birthday.day ) || typeof birthday.month === 'undefined' || !parseInt( birthday.month+1 ) || typeof birthday.year === 'undefined' || !parseInt( birthday.year ) ) {
+		return false;
+	}
 
+	// The month in JavaScript date goes from 0 to 11. Fixed.
+	birthday.month++;
+
+	// Validate month and year
 	if( birthday.year < 1900 || birthday.year > 2010 || birthday.month > 12 ) {
 		return false;
 	}
 	
+	// Check if it's a leap year
 	var leap_year = ( (birthday.year % 4 == 0) && (birthday % 100 != 0) ) || (birthday % 400 == 0);
 
-	if( birthday.day > 31 ) {
+	// Validate day
+	if( birthday.day > 31 || ( [4,6,9,11].indexOf( birthday.month ) >= 0  && birthday.day > 30 ) ) {
 		return false;
 	}
-	if( [4,6,9,11].indexOf( birthday.month ) >= 0  && birthday.day > 30 ) {
-		return false;
-	}
+
+	// Validate day, check Feburary during leap years
 	if( ( birthday.month == 2 && !leap_year && birthday.day > 28 ) || ( birthday.month == 2 && leap_year && birthday.day > 29 ) ) {
 		return false;
 	}
-	return true;
+
+	return birthday;
 };
 
 /**
