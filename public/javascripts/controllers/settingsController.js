@@ -201,9 +201,11 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 				//var utc = new Date($scope.user.new_birthday.getUTCFullYear(), $scope.user.new_birthday.getUTCMonth(), $scope.user.new_birthday.getUTCDate(),  $scope.user.new_birthday.getUTCHours(), $scope.user.new_birthday.getUTCMinutes(), $scope.user.new_birthday.getUTCSeconds());;
 				//var iso = $scope.user.new_birthday.toISOString();
 				// $scope.user.new_birthday = bday[0] + ' ' + bday[1] + ' ' + bday[2] + ' ' + bday[3];
-				data = { "birthday" : $scope.user.new_birthday.toString() };
+				var split_date = $scope.user.new_birthday.toString().split(' ');
+				var selected_date = split_date.splice(0,4).join(' '); 
+				data = { "birthday" : selected_date };
 
-				console.log(data);
+				console.log(data, split_date);
 				$http.post('/settings_data', data)
 				.success(function(res){
 					if( res.success ) {
