@@ -7,18 +7,18 @@ div#changePasswordDiv.settingsElement( ng-init="edit_password=false;" )
 		include ../svg/edit_activity_svg
 	div#changePassword( ng-show="edit_password" )
 		form( method="POST")
-			span.row
+			span
 				label( for="old_password" )= tr['old_password'] + ': '
 				//span= errors.first_name
 				input( name="old_password" type="password")
 
-			span.row
+			span
 				label( for="password" )= tr['new_password'] + ': '
 				//span= errors.first_name
 				span#password_error
 				input#password( name="password" type="password")
 
-			span.row
+			span
 				label( for="repeat_password" )= tr['repeat_password'] + ': '
 				//span= errors.first_name
 				span#repeat_password_error.warning_message
