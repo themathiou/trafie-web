@@ -202,7 +202,6 @@ exports.put = function( req, res ) {
 			return Activity.schema.findOne( {'_id': activity_id}, '' );
 		})
 		.then( function( activity ) {
-
 			if( typeof activity._id == 'undefined' ) return_activity( res, 404, {}, language, date_format );
 
 			var errors = false;
