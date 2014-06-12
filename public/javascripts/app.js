@@ -16,7 +16,7 @@ trafie.config(['$routeProvider',
 			}).
 			when('/statistics', {
 				templateUrl: '/views/statistics.html',
-				controller: 'mainController'
+				controller: 'statisticsController'
 			}).
 			otherwise({
 				redirectTo: '/'
