@@ -10,6 +10,11 @@ trafie.config(['$locationProvider',
 trafie.config(['$routeProvider',
 	function($routeProvider) {
 		$routeProvider.
+			when('/', {
+				templateUrl: '/views/profile.html',
+				controller: 'profileController'
+			}).
+
 			when('/settings', {
 				templateUrl: '/views/settings.html',
 				controller: 'settingsController'
