@@ -4,6 +4,90 @@ var Profile = require('../models/profile.js'),
 // Initialize translations
 var translations = require('../languages/translations.js');
 
+/**
+ * Profile - GET
+ */
+exports.get = function( req, res ){
+  if( typeof req.session.user_id === 'undefined' ) {
+    return null;
+  }
+
+  var user_id = req.session.user_id;
+
+  // When there is a username in the url
+  if( typeof req.params.profile_id !== 'undefined' ) {
+    Profile.schema.findOne({ '_id': user_id }, 'language date_format').then( function( user_data ) {
+      // Find the profile by id
+      Profile.schema.findOne({ '_id': req.params.profile_id }, '_id first_name last_name discipline country male picture')
+      .then( function( profile_data ) {
+        // If the profile was found, get the data of the user
+        if( profile_data !== null && profile_data !== undefined ) {
+          send_profile_data( res, profile_data, user_data );
+        } else {
+          // If the profile wasn't found, try to find it by username
+          Profile.schema.findOne({ 'username': req.params.profile_id }, '_id first_name last_name discipline country male picture')
+          .then( function( profile_data ) {
+            // If the profile was found, get the data of the user
+            if( profile_data !== null && profile_data !== undefined ) {
+              send_profile_data( res, profile_data, user_data );
+            } else {
+              // Else, the user was searching for a profile that doesn't exist
+              return null;
+            }
+          })
+          .fail( function( error ) {
+            send_error( res, error );
+          });
+        }
+      })
+      .fail( function( error ) {
+        send_error( res, error );
+      });
+    })
+    .fail( function( error ) {
+        send_error( res, error );
+    });
+  } else {
+    // If no profile id was provided, return null
+	  res.json( null );
+  }
+};
+
+/**
+ * Sends the profile data as a JSON object
+ * @param  object profile_data (the data of the profile before they get formatted according the the user's preferences)
+ * @param  object user_data    (the object that contains the data of the user who is viewing the profile)
+ * @return object              (the profile data as a json object)
+ */
+function send_profile_data( res, profile_data, user_data ) {
+  var tr = translations[user_data.language];
+  var gender = profile_data.male ? tr['male'] : tr['female'];
+  var discipline = profile_data.discipline ? tr[profile_data.discipline] : '';
+  var country = profile_data.country ? tr[profile_data.country] : '';
+
+  var profile = {
+    '_id':        profile_data._id,
+    'first_name': profile_data.first_name,
+    'last_name':  profile_data.last_name,
+    'discipline': discipline,
+    'country':    country,
+    'gender':     gender,
+    'picture':    profile_data.picture
+  }
+
+  res.json( profile );
+}
+
+/**
+ * Sends an error in case a query fails
+ * @param string error
+ * @param object res
+ */
+function send_error( res, error ) {
+  res.statusCode = 500;
+  res.json( null );
+}
+
 exports.get_view = function( req, res ) {
   if( typeof req.session.user_id === 'undefined' ) {
     return null;
@@ -63,119 +147,6 @@ exports.get_view = function( req, res ) {
     send_error_page( error, res );
   });
 };
-
-/**
- * Profile - GET
- */
-exports.get = function( req, res ){
-  var user_id = req.session.user_id;
-
-  // When there is a username in the url
-  if( typeof req.params.profile_id !== 'undefined' ) {
-    // Find the profile by id
-    Profile.schema.findOne({ '_id': req.params.profile_id }, '_id first_name last_name discipline country male picture')
-    .then( function( profile_data ) {
-      // If the profile was found, get the data of the user
-      if( profile_data !== null && profile_data !== undefined ) {
-        if( profile_data._id == user_id ) {
-          prerender_my_profile( res, user_id );
-        } else {
-          prerender_other_profile( res, user_id, profile_data );
-        }
-      } else {
-        // If the profile wasn't found, try to find it by username
-        Profile.schema.findOne({ 'username': req.params.profile_id }, '_id first_name last_name discipline country male picture')
-        .then( function( profile_data ) {
-          // If the profile was found, get the data of the user
-          if( profile_data !== null && profile_data !== undefined ) {
-            if( profile_data._id == user_id ) {
-              prerender_my_profile( res, user_id );
-            } else {
-              prerender_other_profile( res, user_id, profile_data );
-            }
-          } else {
-            // Else, the user was searching for a profile that doesn't exist
-            res.redirect('/');
-          }
-        })
-        .fail( function( error ) {
-          send_error_page( error, res );
-        });
-      }
-    })
-    .fail( function( error ) {
-      send_error_page( error, res );
-    });
-  }
-  // If the user is not searching for a particular profile, he wants to view his own (no parameter "/")
-  else if( user_id ) {
-    prerender_my_profile( res, user_id );
-  } else {
-    // If no user_id was provided, redirect to the registration screen
-	  res.redirect('/register');
-  }
-};
-
-/**
- * Gets data about the user and his profile that is going to be rendered later
- * @param object res
- * @param string user_id
- */
-function prerender_my_profile( res, user_id ) {
-  // Get the user and his profile
-  Profile.schema.findOne( { '_id': user_id }, '_id first_name last_name discipline country male picture language date_format' ).then( function( profile_data ) {
-    // If the user was found
-    if( typeof profile_data.first_name !== 'undefined' ) {
-      var user_data = {
-        '_id'         : profile_data._id,
-        'first_name'  : profile_data.first_name,
-        'language'    : profile_data.language,
-        'date_format' : profile_data.date_format
-      };
-      render( res, user_data, profile_data );
-    // If the user wasn't found
-    } else {
-      res.redirect('/login');
-    }
-  })
-  .fail( function( error ) {
-    send_error_page( error, res );
-  });
-}
-
-/**
- * Gets data about the user only. The profile data have already been loaded.
- * In this case, the profile probably belongs to another user
- * @param object res
- * @param string user_id
- * @param object profile_data
- */
-function prerender_other_profile( res, user_id, profile_data ) {
-  if( user_id ) {
-    Profile.schema.findOne( { '_id': user_id }, '_id first_name language date_format' )
-    .then( function( user_data ) {
-      // If the user was found
-      if( typeof user_data.first_name !== 'undefined' ) {
-        render( res, user_data, profile_data );
-      // If the user wasn't found
-      } else {
-        res.redirect('/login');
-      }
-    })
-    .fail( function( error ) {
-      send_error_page( error, res );
-    });
-  } else {
-    // Load default data for the user
-    var user_data = {
-      '_id'         : '',
-      'first_name'  : '',
-      'language'    : 'en',
-      'date_format' : 'd-m-y'
-    };
-    render( res, user_data, profile_data);
-  }
-}
 
 /**
  * Getting the activities and rendering the profile
