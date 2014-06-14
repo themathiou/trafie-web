@@ -4,11 +4,70 @@ var Profile = require('../models/profile.js'),
 // Initialize translations
 var translations = require('../languages/translations.js');
 
+exports.get_view = function( req, res ) {
+  if( typeof req.session.user_id === 'undefined' ) {
+    return null;
+  }
+
+  var user_id = req.session.user_id;
+
+  // Get the user and his profile
+  Profile.schema.findOne( { '_id': user_id }, 'language date_format' ).then( function( profile_data ) {
+    if( profile_data.language ) {
+      var disciplines = {
+        'time': [
+          '100m',
+          '200m',
+          '400m',
+          '800m',
+          '1500m',
+          '3000m',
+          '60m_hurdles',
+          '100m_hurdles',
+          '110m_hurdles',
+          '400m_hurdles',
+          '3000m_steeple',
+          '4x100m_relay',
+          '4x400m_relay',
+          'marathon'
+        ],
+        'distance': [
+          'high_jump',
+          'long_jump',
+          'triple_jump',
+          'pole_vault',
+          'shot_put',
+          'discus',
+          'hammer',
+          'javelin'
+        ],
+        'points': [
+          'pentathlon',
+          'heptathlon',
+          'decathlon'
+        ]
+      };
+
+      // The data that will go to the front end
+      var view_data = {
+        'disciplines' : disciplines,
+        'tr'          : translations[profile_data.language]
+      };
+
+      res.render( 'profile', view_data );
+    } else {
+      return null;
+    }
+  })
+  .fail( function( error ) {
+    send_error_page( error, res );
+  });
+};
 
 /**
  * Profile - GET
  */
-exports.get_view = function( req, res ){
+exports.get = function( req, res ){
   var user_id = req.session.user_id;
 
   // When there is a username in the url

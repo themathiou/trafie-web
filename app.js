@@ -101,6 +101,8 @@ trafie.get( '/main_data', index.get );
 
 trafie.get( '/', index.get_view );
 
+trafie.get( '/profile/:profile_id', profile.get );
+
 trafie.get( '/views/profile.html', profile.get_view );
 
 
