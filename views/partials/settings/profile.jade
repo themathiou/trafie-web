@@ -87,7 +87,7 @@ div#ageDiv.settingsElement
 		div(ng-show="birthday_msg !=''") {{birthday_msg}}
 		div(ng-show="edit_birthday")
 			p.input-group
-				input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="user.new_birthday" is-open="opened" min-date="'1970-06-22'" max-date="'2014-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
+				input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="user.new_birthday" is-open="opened" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
 		div.formButtons(ng-show="edit_birthday")
 			input#submitAge.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditAge.cancel_link( ng-click="showHide('edit_birthday')" )= tr['cancel']

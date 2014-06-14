@@ -21,18 +21,18 @@ block content
 
 
 
-	//scripts
-	script(type='text/javascript' src='https://www.google.com/jsapi')
-	script(type='text/javascript', src='/javascripts/statistics.js')
-	script(type='text/javascript').
-		if( #{user.disciplines_of_user.indexOf(user.discipline)} > -1 )
-		{
-			document.ready = setDisciplineButtonHandler( '#{user._id}' , '#{user.discipline}' )
-		}
-		else
-		{
-			document.ready = setDisciplineButtonHandler( '#{user._id}' , 'undefined' )
-		}
+	//- scripts
+	//- script(type='text/javascript' src='https://www.google.com/jsapi')
+	//-  script(type='text/javascript', src='/javascripts/statistics.js')
+	//-  script(type='text/javascript').
+	//-  	if( #{user.disciplines_of_user.indexOf(user.discipline)} > -1 )
+	//-  	{
+	//-  		document.ready = setDisciplineButtonHandler( '#{user._id}' , '#{user.discipline}' )
+	//-  	}
+	//-  	else
+	//-  	{
+	//-  		document.ready = setDisciplineButtonHandler( '#{user._id}' , 'undefined' )
+	//-  	}
 
 
 
