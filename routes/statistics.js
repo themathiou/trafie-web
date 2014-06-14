@@ -79,7 +79,6 @@ exports.get_view = function( req, res ) {
 			res.render( 'statistics', view_data );
 		})
 		.fail( function( error ) {
-			console.log( error );
 			send_error_page( error, res );
 			return;
 		});
