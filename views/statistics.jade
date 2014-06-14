@@ -1,22 +1,19 @@
-extends layout
-block content
+div#main_content
+	br
+	br
+	h4= user.first_name
+	ul
+		-for( var i in user.disciplines_of_user) {
+			li
+				a( href="javascript:;" id=user.disciplines_of_user[i]+'_button' class="discipline_button" data-user-id=user._id data-discipline=user.disciplines_of_user[i] )= tr[user.disciplines_of_user[i]]
+		-}
 
-	div#main_content
-		br
-		br
-		h4= user.first_name
-		ul
-			-for( var i in user.disciplines_of_user) {
-				li
-					a( href="javascript:;" id=user.disciplines_of_user[i]+'_button' class="discipline_button" data-user-id=user._id data-discipline=user.disciplines_of_user[i] )= tr[user.disciplines_of_user[i]]
-			-}
+	div#loading.graphs_loading
+		p Your awesome history is loading! Please wait...
 
-		div#loading.graphs_loading
-			p Your awesome history is loading! Please wait...
-
-		div#dashboard
-			div#chart_div( style="width: 100%; height: 300px;" )
-			div#control( style='width: 100%; height: 50px;' )
+	div#dashboard
+		div#chart_div( style="width: 100%; height: 300px;" )
+		div#control( style='width: 100%; height: 50px;' )
 
 
 
