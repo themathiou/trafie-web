@@ -9,17 +9,19 @@ var translations = require('../languages/translations.js');
  */
 exports.get = function( req, res ){
   if( typeof req.session.user_id === 'undefined' ) {
-    return null;
+    res.json( null );
   }
 
   var user_id = req.session.user_id;
 
-  // When there is a username in the url
+  // When there is a profile_id or a username in the url
   if( typeof req.params.profile_id !== 'undefined' ) {
     Profile.schema.findOne({ '_id': user_id }, 'language date_format').then( function( user_data ) {
+
       // Find the profile by id
       Profile.schema.findOne({ '_id': req.params.profile_id }, '_id first_name last_name discipline country male picture')
       .then( function( profile_data ) {
+
         // If the profile was found, get the data of the user
         if( profile_data !== null && profile_data !== undefined ) {
           send_profile_data( res, profile_data, user_data );
@@ -27,22 +29,26 @@ exports.get = function( req, res ){
           // If the profile wasn't found, try to find it by username
           Profile.schema.findOne({ 'username': req.params.profile_id }, '_id first_name last_name discipline country male picture')
           .then( function( profile_data ) {
+
             // If the profile was found, get the data of the user
             if( profile_data !== null && profile_data !== undefined ) {
               send_profile_data( res, profile_data, user_data );
             } else {
               // Else, the user was searching for a profile that doesn't exist
-              return null;
+              res.json( null );
             }
+            
           })
           .fail( function( error ) {
             send_error( res, error );
           });
         }
+
       })
       .fail( function( error ) {
         send_error( res, error );
       });
+
     })
     .fail( function( error ) {
         send_error( res, error );
@@ -55,6 +61,7 @@ exports.get = function( req, res ){
 
 /**
  * Sends the profile data as a JSON object
+ * @param  object res          (the response object)
  * @param  object profile_data (the data of the profile before they get formatted according the the user's preferences)
  * @param  object user_data    (the object that contains the data of the user who is viewing the profile)
  * @return object              (the profile data as a json object)
