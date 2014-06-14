@@ -1,72 +1,69 @@
-extends layout
-block content
-
-	div#main_content
-		div#profile_container
-			div#image_container
-				img( src=profile.picture )
-			div#profileFullName
-				h3= profile.first_name+' '+profile.last_name
-				if  profile.discipline && profile.country
-					p= ( tr[profile.discipline] ) + " - " + ( tr[profile.country] )
-				else
-					p= ( tr[profile.discipline] || "") + ( tr[profile.country] || "")
+div#main_content
+	div#profile_container
+		div#image_container
+			img( src=profile.picture )
+		div#profileFullName
+			h3= profile.first_name+' '+profile.last_name
+			if  profile.discipline && profile.country
+				p= ( tr[profile.discipline] ) + " - " + ( tr[profile.country] )
+			else
+				p= ( tr[profile.discipline] || "") + ( tr[profile.country] || "")
 
 
-		div#loading( hidden )
-			img( src="images/ui/loading.gif" )
+	div#loading( hidden )
+		img( src="images/ui/loading.gif" )
 
-		div#history_container
-			ul#history_line.history_line
-				if user._id==profile._id
-					li
-						div.icon_back
-						div.icon +
-						//ADD ACTIVITY
-						include partials/profile/add_activity
-
-
-					//TEMPLATES
-					include partials/profile/activities_templates
-
-
-				each activity in activities
-					li
-						div.icon_back
-						div.icon XX
-						div.info( data-activity-id=activity._id )
-							div.current_data
-								if user._id==profile._id
-									a.deleteActivity( href='/user/'+profile._id+'/activities/' + activity._id  )
-										include partials/svg/delete_activity_svg
-
-								//div.ribbon.ribbon-yellow
-									div.banner
-										div.text Personal Best
-								div.performance( data-value=activity.performance )= activity.formatted_performance
-								div.discipline( data-value=activity.discipline )= activity.formatted_discipline
-								div.date( data-value=activity.date )= activity.formatted_date
-							if user._id==profile._id
-								a.editActivity( href="javascript:;" )
-									include partials/svg/edit_activity_svg
-
+	div#history_container
+		ul#history_line.history_line
+			if user._id==profile._id
 				li
 					div.icon_back
-					div.icon *
-					div.end
-						div.discipline everything started here
+					div.icon +
+					//ADD ACTIVITY
+					include partials/profile/add_activity
 
 
-	//scripts
-	script(type='text/javascript', src='/javascripts/profile.js')
-	script( type='text/javascript', src='/javascripts/pikaday.min.js')
-	script.
-		//maxdate AND default day are TODAY. User can't add an activity for future event.
-		var picker_time = new Pikaday({field: document.getElementById('datepicker_time'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date(), yearRange: [2000,2020], defaultDate: new Date(), setDefaultDate: new Date() })
+				//TEMPLATES
+				include partials/profile/activities_templates
 
-		var picker_distance = new Pikaday({field: document.getElementById('datepicker_distance'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date(), yearRange: [2000,2020], defaultDate: new Date(), setDefaultDate: new Date() })
 
-		var picker_point = new Pikaday({field: document.getElementById('datepicker_point'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date(), yearRange: [2000,2020], defaultDate: new Date(), setDefaultDate: new Date() })
+			each activity in activities
+				li
+					div.icon_back
+					div.icon XX
+					div.info( data-activity-id=activity._id )
+						div.current_data
+							if user._id==profile._id
+								a.deleteActivity( href='/user/'+profile._id+'/activities/' + activity._id  )
+									include partials/svg/delete_activity_svg
 
-	script.
-		profileHandlers();
+							//div.ribbon.ribbon-yellow
+								div.banner
+									div.text Personal Best
+							div.performance( data-value=activity.performance )= activity.formatted_performance
+							div.discipline( data-value=activity.discipline )= activity.formatted_discipline
+							div.date( data-value=activity.date )= activity.formatted_date
+						if user._id==profile._id
+							a.editActivity( href="javascript:;" )
+								include partials/svg/edit_activity_svg
+
+			li
+				div.icon_back
+				div.icon *
+				div.end
+					div.discipline everything started here
+
+
+// scripts
+// script(type='text/javascript', src='/javascripts/profile.js')
+// script( type='text/javascript', src='/javascripts/pikaday.min.js')
+// script.
+// 	//maxdate AND default day are TODAY. User can't add an activity for future event.
+// 	var picker_time = new Pikaday({field: document.getElementById('datepicker_time'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date(), yearRange: [2000,2020], defaultDate: new Date(), setDefaultDate: new Date() })
+
+// 	var picker_distance = new Pikaday({field: document.getElementById('datepicker_distance'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date(), yearRange: [2000,2020], defaultDate: new Date(), setDefaultDate: new Date() })
+
+// 	var picker_point = new Pikaday({field: document.getElementById('datepicker_point'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date(), yearRange: [2000,2020], defaultDate: new Date(), setDefaultDate: new Date() })
+
+// script.
+// 	profileHandlers();
