@@ -8,7 +8,7 @@ var translations = require('../languages/translations.js');
 /**
  * Profile - GET
  */
-exports.get_view = function( req, res ){
+exports.get = function( req, res ){
   var user_id = req.session.user_id;
 
   // When there is a username in the url

@@ -64,22 +64,19 @@ exports.get_view = function( req, res ) {
 			}
 		})
 		.then( function( disciplines_of_user ) {
-			console.log( disciplines_of_user );
-			if( disciplines_of_user ) {
-				// The data that will go to the front end
-				var view_data = {
-					'user': {
-						'_id'                   : user_id,
-						'first_name'            : profile.first_name,
-						'discipline'            : profile.discipline,
-						'disciplines_of_user'   : disciplines_of_user
-					},
-					'tr'          : translations[profile.language],
-					'section'     : 'statistics'
-				};
+			// The data that will go to the front end
+			var view_data = {
+				'user': {
+					'_id'                   : user_id,
+					'first_name'            : profile.first_name,
+					'discipline'            : profile.discipline,
+					'disciplines_of_user'   : disciplines_of_user
+				},
+				'tr'          : translations[profile.language],
+				'section'     : 'statistics'
+			};
 
-				res.render( 'statistics', view_data );
-			}
+			res.render( 'statistics', view_data );
 		})
 		.fail( function( error ) {
 			console.log( error );
