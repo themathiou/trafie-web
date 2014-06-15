@@ -12,60 +12,59 @@ accordion( class="info add_activity" )
 		//- 		-}
 		//- 	- }
 
-		select( ng-model="selected_discipline" ng-repeat="discipline in disciplines.time" )
-			option( value="" ) choose discipline
+		select( ng-model="selected_discipline" ng-options="discipline.name for discipline in disciplines_options " )
 
-		p( ng-repeat=" key in disciplines.time") {{key}} 
+		p( ng-show="disciplines.time.indexOf(selected_discipline.id) > -1" style="color:red;") {{selected_discipline}}
 
 			//time measure
 		//if disciplines.time.indexOf(profile.discipline) > -1
-			form( ng-show="{{disciplines.time.indexOf(selected_discipline) > -1}}" method="POST" action="/user/"+profile._id+"/activities")
-				div.data_entry.row= tr['enter_your_performance'] +':'
-					br
-					div
-						label(for="hours_input")= tr['hours_short'] + ':'
-						input#hours_input(name="hours" size="3" maxlength="2" )
-					div
-						label(for="minutes_input")= tr['minutes_short'] + ':'
-						input#minutes_input(name="minutes" size="3" maxlength="2" )
-					div
-						label(for="seconds_input")= tr['seconds_short'] + ':'
-						input#seconds_input(name="seconds" size="3" maxlength="2" )
-					div
-						label(for="centiseconds_input")= tr['centiseconds_short'] + ':'
-						input#centiseconds_input(name="centiseconds" size="3" maxlength="2" )
-					div.row
-						label(for="datepicker_time")= tr['date'] + ':'
-						input#datepicker_time( name="date" type="text" )
-						input.new_activity_discipline( name="discipline" hidden value=profile.discipline )
-				//submit
-				div#submit_buttons.row.submit_buttons
-					input.btn.green(type="submit" name="new_competition" value=tr['save'])
-					a.cancel_link( href="javascript:;")= tr['cancel']
-		//else
-			form( ng-show="{{!(disciplines.time.indexOf(selected_discipline) > -1)}}" method="POST" style="display:none;" action="/user/"+profile._id+"/activities")
-				div.data_entry.row= tr['enter_your_performance'] +':'
-					br
-					div
-						label(for="hours_input")= tr['hours_short'] + ':'
-						input#hours_input(name="hours" size="3" maxlength="2" )
-					div
-						label( for="minutes_input" )= tr['minutes_short'] + ':'
-						input#minutes_input(name="minutes" size="3" maxlength="2" )
-					div
-						label( for="seconds_input" )= tr['seconds_short'] + ':'
-						input#seconds_input( name="seconds" size="3" maxlength="2" )
-					div
-						label(for="centiseconds_input")= tr['centiseconds_short'] + ':'
-						input#centiseconds_input( name="centiseconds" size="3" maxlength="2" )
-					div.row
-						label(for="datepicker_time")= tr['date'] + ':'
-						input#datepicker_time( name="date" type="text" )
-						input.new_activity_discipline( name="discipline" hidden value=profile.discipline )
-				//submit
-				div#submit_buttons.row.submit_buttons
-					input.btn.green(type="submit" name="new_competition" value=tr['save'])
-					a.cancel_link( href="javascript:;")= tr['cancel']
+		form( ng-show="disciplines.time.indexOf(selected_discipline.id) > -1" method="POST" action="/user/"+profile._id+"/activities")
+			div.data_entry.row= tr['enter_your_performance'] +':'
+				br
+				div
+					label(for="hours_input")= tr['hours_short'] + ':'
+					input#hours_input(name="hours" size="3" maxlength="2" )
+				div
+					label(for="minutes_input")= tr['minutes_short'] + ':'
+					input#minutes_input(name="minutes" size="3" maxlength="2" )
+				div
+					label(for="seconds_input")= tr['seconds_short'] + ':'
+					input#seconds_input(name="seconds" size="3" maxlength="2" )
+				div
+					label(for="centiseconds_input")= tr['centiseconds_short'] + ':'
+					input#centiseconds_input(name="centiseconds" size="3" maxlength="2" )
+				div.row
+					label(for="datepicker_time")= tr['date'] + ':'
+					input#datepicker_time( name="date" type="text" )
+					input.new_activity_discipline( name="discipline" hidden value=profile.discipline )
+			//submit
+			div#submit_buttons.row.submit_buttons
+				input.btn.green(type="submit" name="new_competition" value=tr['save'])
+				a.cancel_link( href="javascript:;")= tr['cancel']
+	//else
+		form( ng-show="!(disciplines.time.indexOf(selected_discipline.id) > -1)" method="POST" style="display:none;" action="/user/"+profile._id+"/activities")
+			div.data_entry.row= tr['enter_your_performance'] +':'
+				br
+				div
+					label(for="hours_input")= tr['hours_short'] + ':'
+					input#hours_input(name="hours" size="3" maxlength="2" )
+				div
+					label( for="minutes_input" )= tr['minutes_short'] + ':'
+					input#minutes_input(name="minutes" size="3" maxlength="2" )
+				div
+					label( for="seconds_input" )= tr['seconds_short'] + ':'
+					input#seconds_input( name="seconds" size="3" maxlength="2" )
+				div
+					label(for="centiseconds_input")= tr['centiseconds_short'] + ':'
+					input#centiseconds_input( name="centiseconds" size="3" maxlength="2" )
+				div.row
+					label(for="datepicker_time")= tr['date'] + ':'
+					input#datepicker_time( name="date" type="text" )
+					input.new_activity_discipline( name="discipline" hidden value=profile.discipline )
+			//submit
+			div#submit_buttons.row.submit_buttons
+				input.btn.green(type="submit" name="new_competition" value=tr['save'])
+				a.cancel_link( href="javascript:;")= tr['cancel']
 
 
 			//distance measure
