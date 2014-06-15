@@ -26,3 +26,14 @@ trafie.config(['$routeProvider',
 				redirectTo: '/'
 			});
 	}]);
+
+
+// Initialization
+trafie.run(function ($rootScope, $http) {
+    $http.get('/main_data')
+		.success(function(res){
+			console.log('run' , res);
+			$rootScope.user = res.user;
+			$rootScope.user_first_name = res.user.first_name;
+		});
+});

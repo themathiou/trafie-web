@@ -4,12 +4,12 @@ div#main_content( ng-init="initProfile()")
 			img( src="{{profile.picture}}" )
 		div#profileFullName
 			h3 {{profile.first_name}} {{profile.last_name}}
-			p {{profile.discipline}} 
+			p {{profile.formatted_discipline}} 
 				span( ng-show="user.discipline && user.country" ) - 
 				{{profile.country}} {{profile.disciplines_of_user}}
 	ul
-		li( ng-repeat="discipline in user.disciplines_of_user")
-			a( ng-click="getActivities(user._id,discipline)" ) {{discipline}}
+		li( ng-repeat="(key, value) in user.disciplines_of_user")
+			a( ng-click="getActivities( user._id, key )" ) {{value}}
 
 	div#loading( hidden )
 		img( src="images/ui/loading.gif" )

@@ -2,9 +2,10 @@ div#main_content( ng-init="statisticsInit(user._id,user.discipline)" )
 	br
 	br
 	h4= user.first_name
+	
 	ul
-		li( ng-repeat="discipline in user.disciplines_of_user")
-			a( ng-click="drawSimpleChart(user._id,discipline)" class="discipline_button" ) {{discipline}}
+		li( ng-repeat="(key, value) in user.disciplines_of_user")
+			a( ng-click="drawSimpleChart( user._id, key )" ) {{value}}
 
 	div#loading.graphs_loading( ng-show="loading")
 		p Your awesome history is loading! Please wait...

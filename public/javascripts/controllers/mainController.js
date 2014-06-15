@@ -1,12 +1,7 @@
 trafie.controller("mainController", function($rootScope, $scope, $http, $routeParams, $location){
 	
 	$scope.appInit = function(){
-		$http.get('/main_data')
-		.success(function(res){
-			console.log(res);
-			$rootScope.user = res.user;
-			$rootScope.user_first_name = res.user.first_name;
-		});
+		console.log('appInit', $rootScope.user);
 	};
 	
 

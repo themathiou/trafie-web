@@ -2,17 +2,20 @@ accordion( class="info add_activity" )
 	accordion-group( heading=tr['add_new_activity'])
 		//a#add_activity_link( href="javascript:;" )= tr['add_new_activity']
 
-		select( ng-model="selected_discipline" )
-			- for( var category in disciplines ) {
-				-for( var i in disciplines[category]) {
-					if profile.discipline == disciplines[category][i]
-						option( value=disciplines[category][i] selected)= tr[disciplines[category][i]]
-					else
-						option( value=disciplines[category][i] )= tr[disciplines[category][i]]
-				-}
-			- }
+		//- select( ng-model="selected_discipline" )
+		//- 	- for( var category in disciplines ) {
+		//- 		-for( var i in disciplines[category]) {
+		//- 			if profile.discipline == disciplines[category][i]
+		//- 				option( value=disciplines[category][i] selected)= tr[disciplines[category][i]]
+		//- 			else
+		//- 				option( value=disciplines[category][i] )= tr[disciplines[category][i]]
+		//- 		-}
+		//- 	- }
 
-		p {{selected_discipline}}
+		select( ng-model="selected_discipline" ng-repeat="discipline in disciplines.time" )
+			option( value="" ) choose discipline
+
+		p( ng-repeat=" key in disciplines.time") {{key}} 
 
 			//time measure
 		//if disciplines.time.indexOf(profile.discipline) > -1
