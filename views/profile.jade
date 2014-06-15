@@ -1,49 +1,47 @@
 div#main_content
 	div#profile_container
 		div#image_container
-			img( src=profile.picture )
+			img( src="{{user.picture}}" )
 		div#profileFullName
-			h3 {{profile.first_name}} {{profile.last_name}}
-			p {{profile.discipline}} 
-				span( ng-show="profile.discipline && profile.country" )
-				{{profile.country}}
+			h3 {{user.first_name}} {{user.last_name}}
+			p {{user.discipline}} 
+				span( ng-show="user.discipline && user.country" ) - 
+				{{user.country}}
 
 	div#loading( hidden )
 		img( src="images/ui/loading.gif" )
 
 	div#history_container
 		ul#history_line.history_line
-			if user._id==profile._id
-				li
-					div.icon_back
-					div.icon +
-					//ADD ACTIVITY
-					include partials/profile/add_activity
+			//if user._id==profile._id
+			li
+				div.icon_back
+				div.icon +
+				//ADD ACTIVITY
+				include partials/profile/add_activity
 
 
-				//TEMPLATES
-				include partials/profile/activities_templates
+			//TEMPLATES
+			include partials/profile/activities_templates
 
+			li( ng-repeat="activity in activities" )
+				div.icon_back
+				div.icon XX
+				div.info( data-activity-id="{{activity._id}}" )
+					div.current_data
+						//if user._id==profile._id
+							a.deleteActivity( href="/user/{{user._id}}/activities/ {{activity._id}}"  )
+								include partials/svg/delete_activity_svg
 
-			each activity in activities
-				li
-					div.icon_back
-					div.icon XX
-					div.info( data-activity-id=activity._id )
-						div.current_data
-							if user._id==profile._id
-								a.deleteActivity( href='/user/'+profile._id+'/activities/' + activity._id  )
-									include partials/svg/delete_activity_svg
-
-							//div.ribbon.ribbon-yellow
-								div.banner
-									div.text Personal Best
-							div.performance( data-value=activity.performance )= activity.formatted_performance
-							div.discipline( data-value=activity.discipline )= activity.formatted_discipline
-							div.date( data-value=activity.date )= activity.formatted_date
-						if user._id==profile._id
-							a.editActivity( href="javascript:;" )
-								include partials/svg/edit_activity_svg
+						//div.ribbon.ribbon-yellow
+							div.banner
+								div.text Personal Best
+						div.performance( data-value="{{activity.performance}}" ) {{activity.formatted_performance}}
+						div.discipline( data-value="{{activity.discipline}}" ) {{activity.formatted_discipline}}
+						div.date( data-value="{{activity.date}}" ) {{activity.formatted_date}}
+					//if user._id==profile._id
+						a.editActivity( href="javascript:;" )
+							include partials/svg/edit_activity_svg
 
 			li
 				div.icon_back

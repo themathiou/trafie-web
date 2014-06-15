@@ -45,7 +45,6 @@ trafie.controller("statisticsController", function( $scope, $http, $timeout ) {
     	// we use a callback for the load to force it use append rather than doc.write
     	$timeout(function(){ 
     		google.load('visualization', '1', {'callback':function(){
-	    		console.log(google);
 	    		$scope.drawSimpleChart( user_id, discipline );
 	    	}, 'packages':['corechart','controls']});
     	}, 1)
@@ -57,7 +56,6 @@ trafie.controller("statisticsController", function( $scope, $http, $timeout ) {
     /*********************************/
     /* 		Draw Chart Functions	 */
     /*********************************/
-
     /**
      * drawSimpleChart() : called for drawing the chart for a discipline of the specific user
      * @param user_id : the user id
@@ -65,6 +63,9 @@ trafie.controller("statisticsController", function( $scope, $http, $timeout ) {
      */
     
     $scope.drawSimpleChart = function( user_id, discipline ){
+    	//start loading indicator
+    	$scope.loading = true;
+
         //call ajax_get (defined in script.js) in order to fetch the specific performances
         $http.get('/user/' + user_id + '/activities?discipline=' + discipline)
         .success(function(response){
