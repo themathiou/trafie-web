@@ -19,14 +19,14 @@ exports.get = function( req, res ) {
     user_data = response;
     return Activity.schema.getDisciplinesPerformedByUser( { 'user_id': user_id } );
   })
-  .then( function( disciplines_of_user ) {
+  .then( function( disciplines_of_user_raw ) {
     if( user_data.first_name ) {
 
       var tr = translations[user_data.language];
-      var formated_disciplines_of_user = [];
-      var disciplines_of_user_count = disciplines_of_user.length;
+      var disciplines_of_user = {};
+      var disciplines_of_user_count = disciplines_of_user_raw.length;
       for( var i = 0; i < disciplines_of_user_count ; i++ ) {
-        formated_disciplines_of_user.push( tr[disciplines_of_user[i]] );
+        disciplines_of_user[disciplines_of_user_raw] = tr[disciplines_of_user_raw];
       }
 
       var data = {
@@ -35,8 +35,7 @@ exports.get = function( req, res ) {
           'first_name':                     user_data.first_name,
           'discipline':                     user_data.discipline,
           'formated_discipline':            tr[user_data.discipline],
-          'disciplines_of_user':            disciplines_of_user,
-          'formated_disciplines_of_user':   formated_disciplines_of_user
+          'disciplines_of_user':            disciplines_of_user
         }
       };
 
