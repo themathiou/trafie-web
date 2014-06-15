@@ -69,17 +69,18 @@ exports.get = function( req, res ){
 function send_profile_data( res, profile_data, user_data ) {
   var tr = translations[user_data.language];
   var gender = profile_data.male ? tr['male'] : tr['female'];
-  var discipline = profile_data.discipline ? tr[profile_data.discipline] : '';
+  var formatted_discipline = profile_data.discipline ? tr[profile_data.discipline] : '';
   var country = profile_data.country ? tr[profile_data.country] : '';
 
   var profile = {
-    '_id':        profile_data._id,
-    'first_name': profile_data.first_name,
-    'last_name':  profile_data.last_name,
-    'discipline': discipline,
-    'country':    country,
-    'gender':     gender,
-    'picture':    profile_data.picture
+    '_id':                  profile_data._id,
+    'first_name':           profile_data.first_name,
+    'last_name':            profile_data.last_name,
+    'discipline':           profile_data.discipline,
+    'formatted_discipline': formatted_discipline,
+    'country':              country,
+    'gender':               gender,
+    'picture':              profile_data.picture
   }
 
   res.json( profile );
