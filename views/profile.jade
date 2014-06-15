@@ -3,12 +3,10 @@ div#main_content
 		div#image_container
 			img( src=profile.picture )
 		div#profileFullName
-			h3= profile.first_name+' '+profile.last_name
-			if  profile.discipline && profile.country
-				p= ( tr[profile.discipline] ) + " - " + ( tr[profile.country] )
-			else
-				p= ( tr[profile.discipline] || "") + ( tr[profile.country] || "")
-
+			h3 {{profile.first_name}} {{profile.last_name}}
+			p {{profile.discipline}} 
+				span( ng-show="profile.discipline && profile.country" )
+				{{profile.country}}
 
 	div#loading( hidden )
 		img( src="images/ui/loading.gif" )
