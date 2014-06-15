@@ -1,4 +1,4 @@
-trafie.controller("statisticsController", function( $scope, $http, $timeout ) {
+trafie.controller("statisticsController", function( $rootScope, $scope, $http, $timeout ) {
 	
 	$scope.loading = true;
 
@@ -43,7 +43,8 @@ trafie.controller("statisticsController", function( $scope, $http, $timeout ) {
     	// with the callback option [google.load doc](https://developers.google.com/loader/)
     	//- google.load is adding the script to the page using a document.write() and wipes out the html.
     	// we use a callback for the load to force it use append rather than doc.write
-    	$timeout(function(){ 
+    	console.log('init', user_id, discipline);
+        $timeout(function(){ 
     		google.load('visualization', '1', {'callback':function(){
 	    		$scope.drawSimpleChart( user_id, discipline );
 	    	}, 'packages':['corechart','controls']});
@@ -66,6 +67,7 @@ trafie.controller("statisticsController", function( $scope, $http, $timeout ) {
     	//start loading indicator
     	$scope.loading = true;
 
+        console.log('draw', user_id, discipline);
         //call ajax_get (defined in script.js) in order to fetch the specific performances
         $http.get('/user/' + user_id + '/activities?discipline=' + discipline)
         .success(function(response){

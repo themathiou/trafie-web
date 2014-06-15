@@ -1,15 +1,20 @@
-div#main_content
+div#main_content( ng-init="initProfile()")
 	div#profile_container
 		div#image_container
-			img( src="{{user.picture}}" )
+			img( src="{{profile.picture}}" )
 		div#profileFullName
-			h3 {{user.first_name}} {{user.last_name}}
-			p {{user.discipline}} 
+			h3 {{profile.first_name}} {{profile.last_name}}
+			p {{profile.discipline}} 
 				span( ng-show="user.discipline && user.country" ) - 
-				{{user.country}}
+				{{profile.country}} {{profile.disciplines_of_user}}
+	ul
+		li( ng-repeat="discipline in user.disciplines_of_user")
+			a( ng-click="getActivities(user._id,discipline)" ) {{discipline}}
 
 	div#loading( hidden )
 		img( src="images/ui/loading.gif" )
+
+
 
 	div#history_container
 		ul#history_line.history_line

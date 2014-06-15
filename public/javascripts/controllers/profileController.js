@@ -1,4 +1,4 @@
-trafie.controller("profileController", function( $scope, $http ){
+trafie.controller("profileController", function( $rootScope, $scope, $http ){
 	//GENERAL VIARABLES
 	$scope.disciplines = {
       'time': [
@@ -34,16 +34,24 @@ trafie.controller("profileController", function( $scope, $http ){
       ]
     };
 
-	$http.get('/profile/'+ $scope.user._id)
-	.success(function(res){
-		console.log(res);
-		$scope.user = res;
-	});
+    $scope.initProfile = function(){
+    	$http.get('/profile/'+ $rootScope.user._id)
+		.success(function(res){
+			console.log(res);
+			$scope.profile = res;
+			$scope.getActivities( $rootScope.user._id, $scope.profile.discipline);
+		});
+    }
+
+	
 
 
-	$http.get('/user/' + $scope.user._id + '/activities?discipline=high_jump')
-	.success(function(res){
-		$scope.activities = res;
-	});
+	$scope.getActivities = function(user_id, discipline){
+		$http.get('/user/' + user_id + '/activities?discipline=' + discipline)
+		.success(function(res){
+			$scope.activities = res;
+		});
+	};
+	
 
 });
