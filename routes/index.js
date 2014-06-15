@@ -24,18 +24,17 @@ exports.get = function( req, res ) {
 
       var tr = translations[user_data.language];
       var disciplines_of_user = {};
-      var disciplines_of_user_count = disciplines_of_user_raw.length;
-      for( var i = 0; i < disciplines_of_user_count ; i++ ) {
-        disciplines_of_user[disciplines_of_user_raw] = tr[disciplines_of_user_raw];
+      for( var i in disciplines_of_user_raw ) {
+        disciplines_of_user[disciplines_of_user_raw[i]] = tr[disciplines_of_user_raw[i]];
       }
 
       var data = {
         'user': {
-          '_id':                            user_data._id,
-          'first_name':                     user_data.first_name,
-          'discipline':                     user_data.discipline,
-          'formated_discipline':            tr[user_data.discipline],
-          'disciplines_of_user':            disciplines_of_user
+          '_id':                  user_data._id,
+          'first_name':           user_data.first_name,
+          'discipline':           user_data.discipline,
+          'formatted_discipline': tr[user_data.discipline],
+          'disciplines_of_user':  disciplines_of_user
         }
       };
 
