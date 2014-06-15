@@ -1,38 +1,9 @@
 var Profile = require('../models/profile.js'),
-		Activity = require('../models/activity.js');
+	Activity = require('../models/activity.js');
 
 // Initialize translations
 var translations = require('../languages/translations.js');
 
-
-/**
- * Profile - GET
- */
-/*exports.get = function( req, res ){
-	var user_id = req.session.user_id;
-
-	// If there is a user id in the request (NOT IMPLEMENTED YET)
-	if( typeof req.params.user_id !== 'undefined' ) {
-		console.log( req.params.user_id );
-	}
-
-	if(!user_id) {
-		res.redirect('/register');
-	} else {
-		Profile.schema.findOne( { '_id': user_id }, 'first_name last_name discipline country male birthday picture language date_format' ).then( function( profile_data ) {
-			// If the user was found
-			if( typeof profile_data.first_name !== 'undefined' ) {
-				render( res, user_id, profile_data );
-			// If the user wasn't found
-			} else {
-				res.redirect('/login');
-			}
-		})
-		.fail( function( error ) {
-			send_error_page( error, res );
-		});
-	}
-};*/
 
 /**
  * Renders the statistics page
@@ -51,32 +22,25 @@ exports.get_view = function( req, res ) {
 	if(!user_id) {
 		res.redirect('/register');
 	} else {
-		var profile;
 		Profile.schema.findOne( { '_id': user_id }, 'first_name last_name discipline country male birthday picture language date_format' ).then( function( profile_data ) {
 			// If the user was found
 			if( typeof profile_data.first_name !== 'undefined' ) {
-				profile = profile_data;
-				return Activity.schema.getDisciplinesPerformedByUser( { 'user_id': user_id } );
-			// If the user wasn't found
+				// The data that will go to the front end
+				var view_data = {
+					'user': {
+						'_id'                   : user_id,
+						'first_name'            : profile_data.first_name,
+						'discipline'            : profile_data.discipline
+					},
+					'tr'          				: translations[profile_data.language]
+				};
+
+				res.render( 'statistics', view_data );
 			} else {
+				// If the user wasn't found
 				res.redirect('/login');
 				return false;
 			}
-		})
-		.then( function( disciplines_of_user ) {
-			// The data that will go to the front end
-			var view_data = {
-				'user': {
-					'_id'                   : user_id,
-					'first_name'            : profile.first_name,
-					'discipline'            : profile.discipline,
-					'disciplines_of_user'   : disciplines_of_user
-				},
-				'tr'          : translations[profile.language],
-				'section'     : 'statistics'
-			};
-
-			res.render( 'statistics', view_data );
 		})
 		.fail( function( error ) {
 			send_error_page( error, res );
