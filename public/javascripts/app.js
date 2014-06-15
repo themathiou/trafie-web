@@ -14,7 +14,6 @@ trafie.config(['$routeProvider',
 				templateUrl: '/views/profile.html',
 				controller: 'profileController'
 			}).
-
 			when('/settings', {
 				templateUrl: '/views/settings.html',
 				controller: 'settingsController'
@@ -27,12 +26,3 @@ trafie.config(['$routeProvider',
 				redirectTo: '/'
 			});
 	}]);
-
-
-
-
-/* Shared Properties Service */
-trafie.service('sharedProperties',
-	function () {
-	    
-	});
