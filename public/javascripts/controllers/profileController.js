@@ -44,8 +44,6 @@ trafie.controller("profileController", function( $rootScope, $scope, $http ){
 				var temp = { name: res.disciplines[i] , id: i };
 				$scope.disciplines_options.push(temp);
 			}
-			
-			console.log($scope.disciplines_options);
 
 			$scope.getActivities( $rootScope.user._id, $scope.profile.discipline);
 		});
