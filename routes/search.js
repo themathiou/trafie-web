@@ -1,7 +1,9 @@
+// Loading models
 var Profile = require('../models/profile.js');
 
 // Initialize translations
 var translations = require('../languages/translations.js');
+
 
 exports.get = function( req, res ) {
 	if( typeof req.session.user_id === 'undefined' || typeof req.query.value === 'undefined' ) {

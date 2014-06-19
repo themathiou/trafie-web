@@ -1,7 +1,13 @@
-var User = require('../models/user.js');
-var Profile = require('../models/profile.js');
-var UserHashes = require('../models/user_hashes.js');
+// Loading models
+var User = require('../models/user.js'),
+    Profile = require('../models/profile.js'),
+    UserHashes = require('../models/user_hashes.js');
 
+// Loading helpers
+var profileHelper = require('../helpers/profile.js'),
+    userHelper = require('../helpers/user.js');
+
+// Loading libraries
 var Email = require('../libs/email');
 
 
@@ -34,7 +40,7 @@ exports.post = function( req, res ) {
     error_messages.password = 'Password is required';
     errors = true;
   }
-  else if( !errors && !User.schema.validatePassword( password ) ) {
+  else if( !errors && !userHelper.validatePassword( password ) ) {
     error_messages.password = 'Password should be at least 6 characters long';
     errors = true;
   }
@@ -50,7 +56,7 @@ exports.post = function( req, res ) {
     error_messages.email = 'Email is required';
     errors = true;
   }
-  else if( !User.schema.validateEmail( email ) ) {
+  else if( !userHelper.validateEmail( email ) ) {
     error_messages.email = 'Email is not valid';
     errors = true;
   }
@@ -58,7 +64,7 @@ exports.post = function( req, res ) {
     error_messages.first_name = 'First name is required';
     errors = true;
   }
-  else if( !Profile.schema.validateName( first_name ) ) {
+  else if( !profileHelper.validateName( first_name ) ) {
     error_messages.first_name = 'First name can only have latin characters';
     errors = true;
   }
@@ -66,7 +72,7 @@ exports.post = function( req, res ) {
     error_messages.last_name = 'Last name is required';
     errors = true;
   }
-  else if( !Profile.schema.validateName( last_name ) ) {
+  else if( !profileHelper.validateName( last_name ) ) {
     error_messages.last_name = 'Last name can only have latin characters';
     errors = true;
   }
@@ -86,7 +92,7 @@ exports.post = function( req, res ) {
     }
 
     // Encrypting the password
-    password = User.schema.encryptPassword(password);
+    password = userHelper.encryptPassword( password );
 
     var new_user = {
       'email': email,

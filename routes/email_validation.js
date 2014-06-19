@@ -1,6 +1,10 @@
+// Loading models
 var User = require('../models/user.js');
-var Profile = require('../models/profile.js');
-var UserHashes = require('../models/user_hashes.js');
+    Profile = require('../models/profile.js');
+    UserHashes = require('../models/user_hashes.js');
+
+// Loading helpers
+var userHelper = require('../helpers/user.js');
 
 var Email = require('../libs/email');
 
@@ -46,7 +50,7 @@ exports.validate = function( req,res ) {
     if( response ) {
       user_id = response.user_id;
       // Validate the user
-      return User.schema.validateUser( response.user_id );
+      return userHelper.validateUser( response.user_id );
     } else {
       res.redirect('/login');
     }

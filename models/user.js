@@ -1,9 +1,9 @@
 // The User Model
-
-var mongoose = require('mongoose');
-var q = require('q');
-var crypto = require('crypto');
-var db = mongoose.connection;
+var mongoose = require('mongoose'),
+	q = require('q'),
+	crypto = require('crypto'),
+	userHelper = require('../helpers/user.js');
+	db = mongoose.connection;
 
 
 //Define User SCHEMA
@@ -27,34 +27,17 @@ userSchema.findOne = function( where, select ) {
 };
 
 /**
-* Encrypt password using sha512_hash
-* @param String password
-*/
-userSchema.encryptPassword = function ( password ) {
-	var sha512Hash = crypto.createHash('sha512');
-	sha512Hash.update('23tR@Ck@nDF!3lD04' + password);
-
-	// Return the encrypted password
-	return sha512Hash.digest('hex');
-};
-
-/**
- * Checks email for validity
- * @param string email
- * @return boolean
- */
-userSchema.validateEmail = function( email ) {
-	 return /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test( email );
-};
-
-/**
- * Checks password for validity
+ * Resets user's password
+ * @param string user_id
  * @param string password
- * @return boolean
  */
-userSchema.validatePassword = function( password ) {
-	 // The password should have at least 6 characters
-	 return password.length >= 6
+userSchema.resetPassword = function( user_id, password ) {
+	var d = q.defer();
+	password = userHelper.encryptPassword( password );
+	User.findByIdAndUpdate( user_id, { password: password }, '', function ( err, user ) {
+		d.resolve(user);
+	});
+	return d.promise;
 };
 
 /**
@@ -65,32 +48,6 @@ userSchema.emailIsUnique = function( email ) {
 	var d = q.defer();
 	User.findOne({'email': email}, '_id', function ( err, user ) {
 		d.resolve(!user);
-	});
-	return d.promise;
-};
-
-/**
- * Makes the user valid
- * @param string user_id
- */
-userSchema.validateUser = function( user_id ) {
-	var d = q.defer();
-	User.findByIdAndUpdate( user_id, { valid: true }, '', function ( err, user ) {
-		d.resolve(!user);
-	});
-	return d.promise;
-};
-
-/**
- * Resets user's password
- * @param string user_id
- * @param string password
- */
-userSchema.resetPassword = function( user_id, password ) {
-	var d = q.defer();
-	password = this.encryptPassword( password );
-	User.findByIdAndUpdate( user_id, { password: password }, '', function ( err, user ) {
-		d.resolve(user);
 	});
 	return d.promise;
 };

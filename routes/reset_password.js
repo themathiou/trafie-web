@@ -1,7 +1,13 @@
-var User = require('../models/user.js');
-var Profile = require('../models/profile.js');
-var UserHashes = require('../models/user_hashes.js');
+// Loading models
+var User = require('../models/user.js'),
+	Profile = require('../models/profile.js'),
+	UserHashes = require('../models/user_hashes.js');
 
+// Loading helpers
+var profileHelper = require('../helpers/profile.js'),
+	userHelper = require('../helpers/user.js');
+
+// Loading libraries
 var Email = require('../libs/email');
 
 
@@ -115,7 +121,7 @@ exports.post = function( req, res ) {
 	var user_id = '';
 
 	// Generate post error messages
-	if( !User.schema.validatePassword( password ) ) {
+	if( !userHelper.validatePassword( password ) ) {
 		errors = true;
 		view_data.errors.password = 'Password should be at least 6 characters long';
 	}

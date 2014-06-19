@@ -1,4 +1,9 @@
+// Loading models
 var User = require('../models/user.js');
+
+// Loading helpers
+var userHelper = require('../helpers/user.js');
+
 
 exports.get = function( req, res ) {
   if( typeof req.session.user_id !== 'undefined' ) {
@@ -14,7 +19,7 @@ exports.post = function( req, res ) {
   }
 
   var email = req.body.email.toLowerCase();
-  var password = User.schema.encryptPassword(req.body.password);
+  var password = userHelper.encryptPassword(req.body.password);
 
   // Find user by id and password
   User.schema.findOne({ 'email': email, 'password': password, }, '_id valid')

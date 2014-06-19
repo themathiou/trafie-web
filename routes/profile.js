@@ -1,5 +1,9 @@
+// Loading models
 var Profile = require('../models/profile.js'),
     Activity = require('../models/activity.js');
+
+// Loading helpers
+var activityHelper = require('../helpers/activity.js');
 
 // Initialize translations
 var translations = require('../languages/translations.js');
@@ -195,7 +199,7 @@ function render( res, user_data, profile_data ) {
   Activity.schema.getActivitiesOfUser( { 'user_id': profile_data._id }, null, -1 )
   .then( function( activities ) {
     // Format the activity data
-    var activities = Activity.schema.formatActivities( activities, user_data.language, user_data.date_format );
+    var activities = activityHelper.formatActivities( activities, user_data.language, user_data.date_format );
     var disciplines = {
       'time': [
         '100m',

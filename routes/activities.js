@@ -1,8 +1,13 @@
+// Loading modules
 var path = require('path'),
-		root_dir = path.dirname( require.main.filename );
+	root_dir = path.dirname( require.main.filename );
 
+// Loading models
 var Profile = require('../models/profile.js'),
-		Activity = require('../models/activity.js');
+	Activity = require('../models/activity.js');
+
+// Loading helpers
+var activityHelper = require('../helpers/activities.js');
 
 // Initialize translations
 var translations = require('../languages/translations.js');
@@ -35,13 +40,13 @@ exports.get = function( req, res ){
 					where.discipline = req.query.discipline;
 				}
 				if( typeof req.query.from !== 'undefined' && typeof req.query.to !== 'undefined' ) {
-					where.date = { "$gte": Activity.schema.parseDbDate( req.query.from ), "$lte": Activity.schema.parseDbDate( req.query.to ) };
+					where.date = { "$gte": activityHelper.parseDbDate( req.query.from ), "$lte": activityHelper.parseDbDate( req.query.to ) };
 				}
 				else if( typeof req.query.from !== 'undefined' ) {
-					where.date = { "$gte": Activity.schema.parseDbDate( req.query.from ) };
+					where.date = { "$gte": activityHelper.parseDbDate( req.query.from ) };
 				}
 				else if( typeof req.query.to !== 'undefined' ) {
-					where.date = { "$lte": Activity.schema.parseDbDate( req.query.to ) };
+					where.date = { "$lte": activityHelper.parseDbDate( req.query.to ) };
 				}
 				where.user_id = user_id;
 
@@ -75,9 +80,9 @@ exports.post = function( req, res ) {
 			var error_messages = {};
 			var discipline = typeof req.body.discipline !== 'undefined' ? req.body.discipline : '';
 
-			// Checking if there are any errors in the date value
+			// Validating date
 			if( typeof req.body.date !== 'undefined' && req.body.date ) {
-				var date = Activity.schema.parseDate( req.body.date );
+				var date = activityHelper.parseDate( req.body.date );
 				if( !date ) {
 					errors = true;
 					error_messages.date = 'wrong_date_format';
@@ -89,6 +94,7 @@ exports.post = function( req, res ) {
 
 			var performance = {};
 			
+			// Validating discipline and performance
 			switch ( discipline ) {
 				case '100m':
 				case '200m':
@@ -110,7 +116,7 @@ exports.post = function( req, res ) {
 					performance.seconds = typeof req.body.seconds !== 'undefined' && req.body.seconds != '' ? req.body.seconds: '00';
 					performance.centiseconds = typeof req.body.centiseconds !== 'undefined' && req.body.centiseconds != '' ? req.body.centiseconds : '00';
 					// Format the performance
-					performance = Activity.schema.validateTime( performance );
+					performance = activityHelper.validateTime( performance );
 
 					break;
 				case 'high_jump':
@@ -126,7 +132,7 @@ exports.post = function( req, res ) {
 					performance.distance_2 = typeof req.body.distance_2 !== 'undefined' && req.body.distance_2 != '' ? req.body.distance_2: '0';
 
 					// Format the performance
-					performance = Activity.schema.validateDistance( performance );
+					performance = activityHelper.validateDistance( performance );
 					break;
 				case 'pentathlon':
 				case 'heptathlon':
@@ -135,7 +141,7 @@ exports.post = function( req, res ) {
 					performance.points = typeof req.body.points !== 'undefined' ? req.body.points : null;
 
 					// Format the performance
-					performance = Activity.schema.validatePoints( performance );
+					performance = activityHelper.validatePoints( performance );
 					break;
 				default:
 					performance = null;
@@ -209,7 +215,7 @@ exports.put = function( req, res ) {
 
 			// Checking if the date value is valid
 			if( typeof req.body.date !== 'undefined' && req.body.date ) {
-				var date = Activity.schema.parseDate( req.body.date );
+				var date = activityHelper.parseDate( req.body.date );
 				if( !date ) {
 					errors = true;
 					error_messages.date = 'wrong_date_format';
@@ -243,7 +249,7 @@ exports.put = function( req, res ) {
 					performance.seconds = typeof req.body.seconds !== 'undefined' && req.body.seconds != '' ? req.body.seconds: '00';
 					performance.centiseconds = typeof req.body.centiseconds !== 'undefined' && req.body.centiseconds != '' ? req.body.centiseconds : '00';
 					// Format the performance
-					performance = Activity.schema.validateTime( performance );
+					performance = activityHelper.validateTime( performance );
 
 					break;
 				case 'high_jump':
@@ -259,7 +265,7 @@ exports.put = function( req, res ) {
 					performance.distance_2 = typeof req.body.distance_2 !== 'undefined' && req.body.distance_2 != '' ? req.body.distance_2: '0';
 
 					// Format the performance
-					performance = Activity.schema.validateDistance( performance );
+					performance = activityHelper.validateDistance( performance );
 					break;
 				case 'pentathlon':
 				case 'heptathlon':
@@ -268,7 +274,7 @@ exports.put = function( req, res ) {
 					performance.points = typeof req.body.points !== 'undefined' ? req.body.points : null;
 
 					// Format the performance
-					performance = Activity.schema.validatePoints( performance );
+					performance = activityHelper.validatePoints( performance );
 					break;
 				default:
 					performance = null;
@@ -362,7 +368,7 @@ function return_activity( res, status_code, where, language, date_format, error_
 		};
 
 		// Format the date of the activity
-		activity = Activity.schema.formatActivity( activity, language, date_format );
+		activity = activityHelper.formatActivity( activity, language, date_format );
 		
 		res.json( activity );
 	})
@@ -392,7 +398,7 @@ function return_activities( res, status_code, where, language, date_format ) {
 		}
 
 		// Format the date of the activities
-		activities = Activity.schema.formatActivities( activities, language, date_format );
+		activities = activityHelper.formatActivities( activities, language, date_format );
 
 		res.statusCode = status_code;
 		res.json( activities );

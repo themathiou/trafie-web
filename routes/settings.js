@@ -1,12 +1,17 @@
 var fs = require('fs'),
-		path = require('path'),
-		root_dir = path.dirname( require.main.filename );
+	path = require('path'),
+	root_dir = path.dirname( require.main.filename );
+
+// Loading models
+var User = require('../models/user.js'),
+	Profile = require('../models/profile.js');
+
+// Loading helpers
+var profileHelper = require('../helpers/profile.js'),
+    userHelper = require('../helpers/user.js');
 
 // Initialize translations
 var translations = require('../languages/translations.js');
-
-var User = require('../models/user.js');
-var Profile = require('../models/profile.js');
 
 
 exports.get = function( req, res ){
@@ -106,7 +111,7 @@ exports.post = function( req, res ) {
 
 		// Validating first name
 		if( typeof req.body.first_name !== 'undefined' ) {
-			if( !Profile.schema.validateName( req.body.first_name ) ) {
+			if( !profileHelper.validateName( req.body.first_name ) ) {
 				response.success = false;
 				response.message = tr['invalid_name'];
 			} else {
@@ -117,7 +122,7 @@ exports.post = function( req, res ) {
 
 		// Validating last name
 		if( typeof req.body.last_name !== 'undefined' ) {
-			if( !Profile.schema.validateName( req.body.last_name ) ) {
+			if( !profileHelper.validateName( req.body.last_name ) ) {
 				response.success = false;
 				response.message = tr['invalid_name'];
 			} else {
@@ -128,7 +133,7 @@ exports.post = function( req, res ) {
 
 		// Validating birthday
 		if( typeof req.body.birthday !== 'undefined' ) {
-			var birthday = Profile.schema.validateBirthday( req.body.birthday );
+			var birthday = profileHelper.validateBirthday( req.body.birthday );
 			if( birthday ) {
 				profile_data.birthday = birthday;
 				response.value = profile_data.birthday;
@@ -139,7 +144,7 @@ exports.post = function( req, res ) {
 
 		// Validating gender
 		if( typeof req.body.gender !== 'undefined' ) {
-			if( !Profile.schema.validateGender( req.body.gender ) ) {
+			if( !profileHelper.validateGender( req.body.gender ) ) {
 				response.success = false;
 			} else {
 				profile_data.male = req.body.gender == 'male';
@@ -150,7 +155,7 @@ exports.post = function( req, res ) {
 
 		// Validating country
 		if( typeof req.body.country !== 'undefined' ) {
-			if( !Profile.schema.validateCountry( req.body.country ) ) {
+			if( !profileHelper.validateCountry( req.body.country ) ) {
 				response.success = false;
 			} else {
 				profile_data.country = req.body.country;
@@ -161,7 +166,7 @@ exports.post = function( req, res ) {
 
 		// Validating discipline
 		if( typeof req.body.discipline !== 'undefined' ) {
-			if( !Profile.schema.validateDiscipline( req.body.discipline ) ) {
+			if( !profileHelper.validateDiscipline( req.body.discipline ) ) {
 				response.success = false;
 			} else {
 				profile_data.discipline = req.body.discipline;
@@ -172,7 +177,7 @@ exports.post = function( req, res ) {
 
 		// Validating the about me text
 		if( typeof req.body.about !== 'undefined' ) {
-			if( !Profile.schema.validateAbout( req.body.about ) ) {
+			if( !profileHelper.validateAbout( req.body.about ) ) {
 				response.success = false;
 			} else {
 				profile_data.about = req.body.about;
@@ -183,7 +188,7 @@ exports.post = function( req, res ) {
 
 		// Validating language
 		if( typeof req.body.language !== 'undefined' ) {
-			if( !Profile.schema.validateLanguage( req.body.language ) ) {
+			if( !profileHelper.validateLanguage( req.body.language ) ) {
 				response.success = false;
 			} else {
 				profile_data.language = req.body.language;
@@ -194,7 +199,7 @@ exports.post = function( req, res ) {
 
 		// Validating date format
 		if( typeof req.body.date_format !== 'undefined' ) {
-			if( !Profile.schema.validateDateFormat( req.body.date_format ) ) {
+			if( !profileHelper.validateDateFormat( req.body.date_format ) ) {
 				response.success = false;
 			} else {
 				profile_data.date_format = req.body.date_format;
@@ -205,7 +210,7 @@ exports.post = function( req, res ) {
 
 		// Validating date format
 		if( typeof req.body.username !== 'undefined' ) {
-			if( !Profile.schema.validateUsername( req.body.username ) ) {
+			if( !profileHelper.validateUsername( req.body.username ) ) {
 				response.success = false;
 				response.message = tr['invalid_username'];
 				res.json( response );
@@ -287,11 +292,11 @@ exports.post = function( req, res ) {
 						response.success = false;
 						response.message = tr['passwords_do_not_match'];
 					}
-					if( user.password !== User.schema.encryptPassword( req.body.old_password ) ) {
+					if( user.password !== userHelper.encryptPassword( req.body.old_password ) ) {
 						response.success = false;
 						response.message = tr['wrong_password'];
 					}
-					if( !User.schema.validatePassword( req.body.password ) ) {
+					if( !userHelper.validatePassword( req.body.password ) ) {
 						response.success = false;
 						response.message = tr['password_should_be_at_least_6_characters_long'];
 					}
