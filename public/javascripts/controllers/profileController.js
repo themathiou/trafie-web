@@ -34,8 +34,10 @@ trafie.controller("profileController", function( $rootScope, $scope, $http ){
       ]
     };
 
-    //variable for add activity form. Open/Close
-    $scope.isOpen = false;
+    //variable for Open/Close accordions
+    $scope.accordions = {
+    	addActivity : false
+    }
 
     //time form
     $scope.newActivityForm = {};
@@ -73,21 +75,23 @@ trafie.controller("profileController", function( $rootScope, $scope, $http ){
 				var data = $scope.newActivityForm;
 				data.discipline = data.selected_discipline.id;
 				/* TO BE REMOVED - ADDS A TEMP TODAY DATE */
-				var tmp = new Date();
-				var splitDate = tmp.toString().split(' ');
+				// var tmp = new Date();
+				var splitDate = data.date.toString().split(' ');
 				data.date = splitDate[0] + ' ' + splitDate[1] + ' ' +splitDate[2] + ' ' +splitDate[3]; 
 
 				console.log(data);
 				
 				$http.post('/user/' + $rootScope.user._id + '/activities', data)
 				.success(function(res){
-					console.log(res);
-					$scope.isOpen = false;
-					$scope.activities.push(res);
+					$scope.accordions.addActivity = false;
+					$scope.activities.unshift(res);
 				})
 				.error(function(e){});
 	}
 
+	/*
+		deleteActivity function : deletes a specific activity in profile
+	 */
 	$scope.deleteActivity = function( activity_id ){
 		$http.delete( '/user/' + $rootScope.user._id +'/activities/' + activity_id )
 		.success(function(res){
@@ -98,7 +102,14 @@ trafie.controller("profileController", function( $rootScope, $scope, $http ){
 				}
 			}
 		})
-		.error(function(e){})
+		.error(function(e){})	
+	}
+
+	/*
+		editActivity function : edit a specific activity
+	 */
+	$scope.editActivity = function( activity_id ){
 		
 	}
+
 });

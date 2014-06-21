@@ -7,8 +7,10 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
 			p {{profile.formatted_discipline}} 
 				span( ng-show="user.discipline && user.country" ) - 
 				{{profile.country}} {{profile.disciplines_of_user}}
-	ul
-		li( ng-repeat="(key, value) in user.disciplines_of_user")
+	
+	//REMOVE STYLE FROM BOTH UL and LI
+	ul(style="margin-bottom: 40px;")
+		li( ng-repeat="(key, value) in user.disciplines_of_user" style="float:left;")
 			a( ng-click="getActivities( user._id, key )" ) {{value}}
 
 	div#loading( hidden )
@@ -25,15 +27,11 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
 				//ADD ACTIVITY
 				include partials/profile/add_activity
 
-
-			//TEMPLATES
-			include partials/profile/activities_templates
-
 			li( ng-repeat="activity in activities" )
 				div.icon_back
 				div.icon XX
 				div.info( data-activity-id="{{activity._id}}" )
-					div.current_data
+					div.current_data( ng-show="!show_this_activity" )
 						//if user._id==profile._id
 						a.deleteActivity( ng-click="deleteActivity(activity._id)" )
 							include partials/svg/delete_activity_svg
@@ -45,8 +43,11 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
 						div.discipline( data-value="{{activity.discipline}}" ) {{activity.formatted_discipline}}
 						div.date( data-value="{{activity.date}}" ) {{activity.formatted_date}}
 					//if user._id==profile._id
-					a.editActivity( href="javascript:;" )
+					a.editActivity( ng-click="show_this_activity  = !show_this_activity" )
 						include partials/svg/edit_activity_svg
+
+					//edit activity templates
+					include partials/profile/activities_templates
 
 			li
 				div.icon_back
