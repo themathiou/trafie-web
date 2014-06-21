@@ -34,8 +34,10 @@ trafie.controller("profileController", function( $rootScope, $scope, $http ){
       ]
     };
 
-    //variable for add activity form. Open/Close
-    $scope.isOpen = false;
+    //variable for Open/Close accordions
+    $scope.accordions = {
+    	addActivity : false
+    }
 
     //time form
     $scope.newActivityForm = {};
@@ -81,9 +83,8 @@ trafie.controller("profileController", function( $rootScope, $scope, $http ){
 				
 				$http.post('/user/' + $rootScope.user._id + '/activities', data)
 				.success(function(res){
-					console.log(res);
-					$scope.isOpen = false;
-					$scope.activities.push(res);
+					$scope.accordions.addActivity = false;
+					$scope.activities.unshift(res);
 				})
 				.error(function(e){});
 	}

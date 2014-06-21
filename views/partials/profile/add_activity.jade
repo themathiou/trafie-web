@@ -1,8 +1,8 @@
 accordion( class="info add_activity" )
-	accordion-group( heading=tr['add_new_activity'] is-open="isOpen")
+	accordion-group( heading=tr['add_new_activity'] is-open="accordions.addActivity")
 		select( ng-model="newActivityForm.selected_discipline" ng-options="discipline.name for discipline in disciplines_options " ng-init="selected_discipline = disciplines_options[0].name" )
 			option( value="")= tr['choose_your_discipline']
-		//p( style="color:red;") {{selected_discipline}} {{isOpen}}
+		//p( style="color:red;") {{selected_discipline}} {{accordions.addActivity}}
 	
 		//time measure
 		form( ng-show="disciplines.time.indexOf(newActivityForm.selected_discipline.id) > -1" ng-submit="submitNewActivity()" )
@@ -23,11 +23,10 @@ accordion( class="info add_activity" )
 				div
 					label(for="datepicker_time")= tr['date'] + ':'
 					input#datepicker_time( name="date" type="text" ng-model="newActivityForm.date")
-					//input.new_activity_discipline( name="discipline" hidden value=profile.discipline )
 			//submit
 			div#submit_buttons.row.submit_buttons
 				input.btn.green(type="submit" name="new_competition" value=tr['save'])
-				a.cancel_link( ng-click="isOpen = !isOpen" )= tr['cancel']
+				a.cancel_link( ng-click="accordions.addActivity = !accordions.addActivity" )= tr['cancel']
 
 		//distance measure
 		form#add_distance_activity_form( ng-show="disciplines.distance.indexOf(newActivityForm.selected_discipline.id) > -1" ng-submit="submitNewActivity()" )
@@ -42,11 +41,10 @@ accordion( class="info add_activity" )
 				div
 					label(for="datepicker_distance")= tr['date'] + ':'
 					input#datepicker_distance( name="date" type="text" ng-model="newActivityForm.date")
-					//input.new_activity_discipline( name="discipline" hidden value=profile.discipline )
 			//submit
 			div#submit_buttons.row.submit_buttons
 				input.btn.green(type="submit" name="new_competition" value=tr['save'])
-				a.cancel_link( ng-click="isOpen = !isOpen" )= tr['cancel']
+				a.cancel_link( ng-click="accordions.addActivity = !accordions.addActivity" )= tr['cancel']
 
 		// points measure
 		form#add_points_activity_form( ng-show="disciplines.points.indexOf(newActivityForm.selected_discipline.id) > -1" ng-submit="submitNewActivity()" )
@@ -57,9 +55,8 @@ accordion( class="info add_activity" )
 				div
 					label(for="datepicker_point")= tr['date'] + ':'
 					input#datepicker_point( name="date" type="text" ng-model="newActivityForm.date")
-					//input.new_activity_discipline( name="discipline" hidden value=profile.discipline )
 			//submit
 			div#submit_buttons.row.submit_buttons
 				input.btn.green(type="submit" name="new_competition" value=tr['save'])
-				a.cancel_link( ng-click="isOpen = !isOpen" )= tr['cancel']
+				a.cancel_link( ng-click="accordions.addActivity = !accordions.addActivity" )= tr['cancel']
 		
