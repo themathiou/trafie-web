@@ -1,3 +1,6 @@
+// Initialize translations
+var translations = require('../languages/translations.js');
+
 var activityHelper = {};
 
 /**
@@ -22,6 +25,8 @@ activityHelper.formatActivities = function( activities, language, dateFormat ) {
  * @param string date_format
  */
 activityHelper.formatActivity = function( activity, language, dateFormat ) {
+	if( !activity.discipline || !activity.performance ) return null;
+	
 	switch ( activity.discipline ) {
       case '100m':
       case '200m':

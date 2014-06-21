@@ -7,7 +7,7 @@ var Profile = require('../models/profile.js'),
 	Activity = require('../models/activity.js');
 
 // Loading helpers
-var activityHelper = require('../helpers/activities.js');
+var activityHelper = require('../helpers/activity.js');
 
 // Initialize translations
 var translations = require('../languages/translations.js');
@@ -366,10 +366,10 @@ function return_activity( res, status_code, where, language, date_format, error_
 			'performance'           : activity.performance,
 			'date'                  : activity.date
 		};
-
+		
 		// Format the date of the activity
 		activity = activityHelper.formatActivity( activity, language, date_format );
-		
+
 		res.json( activity );
 	})
 	.fail( function( error ) {
@@ -399,7 +399,7 @@ function return_activities( res, status_code, where, language, date_format ) {
 
 		// Format the date of the activities
 		activities = activityHelper.formatActivities( activities, language, date_format );
-
+		
 		res.statusCode = status_code;
 		res.json( activities );
 	})

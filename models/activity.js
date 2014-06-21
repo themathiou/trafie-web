@@ -2,9 +2,6 @@ var mongoose = require('mongoose');
 var db = mongoose.connection;
 var q = require('q');
 
-// Initialize translations
-var translations = require('../languages/translations.js');
-
 //Define User SCHEMA
 var activitySchema = mongoose.Schema({
   user_id		: { type: String, required: true, index: true },
