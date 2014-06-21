@@ -75,8 +75,8 @@ trafie.controller("profileController", function( $rootScope, $scope, $http ){
 				var data = $scope.newActivityForm;
 				data.discipline = data.selected_discipline.id;
 				/* TO BE REMOVED - ADDS A TEMP TODAY DATE */
-				var tmp = new Date();
-				var splitDate = tmp.toString().split(' ');
+				// var tmp = new Date();
+				var splitDate = data.date.toString().split(' ');
 				data.date = splitDate[0] + ' ' + splitDate[1] + ' ' +splitDate[2] + ' ' +splitDate[3]; 
 
 				console.log(data);

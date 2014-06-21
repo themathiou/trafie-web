@@ -7,8 +7,10 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
 			p {{profile.formatted_discipline}} 
 				span( ng-show="user.discipline && user.country" ) - 
 				{{profile.country}} {{profile.disciplines_of_user}}
-	ul
-		li( ng-repeat="(key, value) in user.disciplines_of_user")
+	
+	//REMOVE STYLE FROM BOTH UL and LI
+	ul(style="margin-bottom: 40px;")
+		li( ng-repeat="(key, value) in user.disciplines_of_user" style="float:left;")
 			a( ng-click="getActivities( user._id, key )" ) {{value}}
 
 	div#loading( hidden )

@@ -314,8 +314,6 @@ label {
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-left: none;
   margin-bottom: 30px;
-  text-align: right;
-  overflow: hidden;
   text-align: left;
   text-shadow: none;
 }
