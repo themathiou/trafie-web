@@ -194,7 +194,6 @@ activityHelper.validateDistance = function( performance ) {
 	return distance;
 };
 
-
 /**
  * Checks points inputs for validity
  * If the values are invalid, it returns an empty string
@@ -202,7 +201,7 @@ activityHelper.validateDistance = function( performance ) {
  * @return string
  */
 activityHelper.validatePoints = function( performance ) {
-	var points = '';
+	var points = 0;
 
 	if( typeof performance.points === 'string' && parseInt( performance.points ) == performance.points && performance.points.length <= 5 && performance.points > 0 ) {
 		points = performance.points;

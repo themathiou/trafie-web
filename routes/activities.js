@@ -36,10 +36,10 @@ exports.get = function( req, res ){
 				var where = {};
 				// If there was a discipline in the parameters of the GET request,
 				// fetch the activities only of this discipline
-				if( typeof req.query.discipline !== 'undefined' ) {
+				if( typeof req.query.discipline !== 'undefined' && req.query.discipline ) {
 					where.discipline = req.query.discipline;
 				}
-				if( typeof req.query.from !== 'undefined' && typeof req.query.to !== 'undefined' ) {
+				if( typeof req.query.from !== 'undefined' && req.query.from && typeof req.query.to !== 'undefined' && req.query.to ) {
 					where.date = { "$gte": activityHelper.parseDbDate( req.query.from ), "$lte": activityHelper.parseDbDate( req.query.to ) };
 				}
 				else if( typeof req.query.from !== 'undefined' ) {
@@ -399,7 +399,7 @@ function return_activities( res, status_code, where, language, date_format ) {
 
 		// Format the date of the activities
 		activities = activityHelper.formatActivities( activities, language, date_format );
-		
+
 		res.statusCode = status_code;
 		res.json( activities );
 	})
