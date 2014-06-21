@@ -22,7 +22,7 @@ accordion( class="info add_activity" )
 					input#centiseconds_input(name="centiseconds" size="3" maxlength="2" ng-model="newActivityForm.centiseconds")
 				div
 					label(for="datepicker_time")= tr['date'] + ':'
-					input#datepicker_time( name="date" type="text" ng-model="newActivityForm.date")
+					input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="newActivityForm.date" is-open="opened" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
 			//submit
 			div#submit_buttons.row.submit_buttons
 				input.btn.green(type="submit" name="new_competition" value=tr['save'])
@@ -40,7 +40,6 @@ accordion( class="info add_activity" )
 					input#distance_2_input(name="distance_2" size="3" maxlength="2" ng-model="newActivityForm.distance_2")
 				div
 					label(for="datepicker_distance")= tr['date'] + ':'
-					//input#datepicker_distance( name="date" type="text" ng-model="newActivityForm.date")
 					input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="newActivityForm.date" is-open="opened" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
 			//submit
 			div#submit_buttons.row.submit_buttons
@@ -55,7 +54,7 @@ accordion( class="info add_activity" )
 				input#points_input(type="text" name="points" size="7" maxlength="5" ng-model="newActivityForm.points")
 				div
 					label(for="datepicker_point")= tr['date'] + ':'
-					input#datepicker_point( name="date" type="text" ng-model="newActivityForm.date")
+					input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="newActivityForm.date" is-open="opened" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
 			//submit
 			div#submit_buttons.row.submit_buttons
 				input.btn.green(type="submit" name="new_competition" value=tr['save'])

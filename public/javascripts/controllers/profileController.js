@@ -89,6 +89,9 @@ trafie.controller("profileController", function( $rootScope, $scope, $http ){
 				.error(function(e){});
 	}
 
+	/*
+		deleteActivity function : deletes a specific activity in profile
+	 */
 	$scope.deleteActivity = function( activity_id ){
 		$http.delete( '/user/' + $rootScope.user._id +'/activities/' + activity_id )
 		.success(function(res){
@@ -99,7 +102,14 @@ trafie.controller("profileController", function( $rootScope, $scope, $http ){
 				}
 			}
 		})
-		.error(function(e){})
+		.error(function(e){})	
+	}
+
+	/*
+		editActivity function : edit a specific activity
+	 */
+	$scope.editActivity = function( activity_id ){
 		
 	}
+
 });

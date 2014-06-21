@@ -11,6 +11,7 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 	 */
 	$scope.settingsInit = function(){
 		//profile_pic
+		$scope.user.new_profile_pic = 'motherhacker';
 		$scope.edit_profile_pic = false;
 		$scope.profile_pic_msg = '';
 
@@ -55,6 +56,11 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 	}
 
 
+	$scope.filesChanged = function( element ){
+		$scope.file = element.file;
+		$scope.$apply();
+	}
+
 	/**
 	 * [Posting the changes in settings]
 	 * @param string setting : which setting we change
@@ -69,9 +75,10 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 			 */
 			case 'profile_pic':
 				data = { "profile_pic" : $scope.user.new_profile_pic };
-				console.log(data);
+				console.log($scope.user.new_profile_pic);
 				$http.post('/settings_data', data)
 				.success(function(res){
+					console.log(res);
 					if( res.success ) {
 						$scope.user.profile_pic = res.value;
 						$scope.profile_pic_msg='Profile pic successfully updated'; //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
