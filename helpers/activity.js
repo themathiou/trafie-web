@@ -26,7 +26,7 @@ activityHelper.formatActivities = function( activities, language, dateFormat ) {
  */
 activityHelper.formatActivity = function( activity, language, dateFormat ) {
 	if( !activity.discipline || !activity.performance ) return null;
-	
+
 	switch ( activity.discipline ) {
       case '100m':
       case '200m':
@@ -56,9 +56,9 @@ activityHelper.formatActivity = function( activity, language, dateFormat ) {
 		}
 
 		// Joining the parts with :
-		var performance = performanceParts.join(':');
+		var performance = performance_parts.join(':');
 		// Joining with the centiseconds
-		activity.formattedPerformance = performance + '.' + centiseconds;
+		activity.formatted_performance = performance + '.' + centiseconds;
         break;
       case 'high_jump':
       case 'long_jump':
@@ -69,25 +69,25 @@ activityHelper.formatActivity = function( activity, language, dateFormat ) {
       case 'hammer':
       case 'javelin':
       	// Converting the distance back to meters
-        activity.formattedPerformance = (activity.performance / 10000).toFixed(2) + translations[language]['meters_short'];
+        activity.formatted_performance = (activity.performance / 10000).toFixed(2) + translations[language]['meters_short'];
         break;
       case 'pentathlon':
       case 'heptathlon':
       case 'decathlon':
-       	activity.formattedPerformance = activity.performance + ' ' + translations[language]['points'];
+       	activity.formatted_performance = activity.performance + ' ' + translations[language]['points'];
         break;
 	}
 
-	activity.formattedDiscipline = translations[language][activity.discipline];
+	activity.formatted_discipline = translations[language][activity.discipline];
 
 	// Adjusting the time to the user's timezone
 	activity.date.setHours( activity.date.getHours() + 3 );
 	switch( dateFormat ) {
 		case 'd-m-y':
-			activity.formattedDate = activity.date.getDate() + '-' + ( activity.date.getMonth() + 1 ) + '-' + activity.date.getFullYear();
+			activity.formatted_date = activity.date.getDate() + '-' + ( activity.date.getMonth() + 1 ) + '-' + activity.date.getFullYear();
 			break;
 		case 'm-d-y':
-			activity.formattedDate = ( activity.date.getMonth() + 1 ) + '-' + activity.date.getDate() + '-' + activity.date.getFullYear();
+			activity.formatted_date = ( activity.date.getMonth() + 1 ) + '-' + activity.date.getDate() + '-' + activity.date.getFullYear();
 			break;
 	}
 
