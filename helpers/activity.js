@@ -24,7 +24,7 @@ activityHelper.formatActivities = function( activities, language, dateFormat ) {
  * @param string language
  * @param string date_format
  */
-activityHelper.formatActivity = function( activity, language, dateFormat ) {
+activityHelper.formatActivity = function( activity, language, date_format ) {
 	if( !activity.discipline || !activity.performance ) return null;
 
 	switch ( activity.discipline ) {
@@ -45,11 +45,11 @@ activityHelper.formatActivity = function( activity, language, dateFormat ) {
       	// Getting the centiseconds
 		var centiseconds = activity.performance.split('.')[1];
 		// Getting the rest of the performance parts
-		var performanceParts = activity.performance.split('.')[0].split(':');
+		var performance_parts = activity.performance.split('.')[0].split(':');
 		// If the first part of the time is 0, remove it (affects hours and minutes)
 		for( var j=0 ; j<2 ; j++ ) {
-			if( performanceParts[0] == 0 ) {
-				performanceParts.splice( 0, 1 );
+			if( performance_parts[0] == 0 ) {
+				performance_parts.splice( 0, 1 );
 			} else {
 				break;
 			}
@@ -57,6 +57,7 @@ activityHelper.formatActivity = function( activity, language, dateFormat ) {
 
 		// Joining the parts with :
 		var performance = performance_parts.join(':');
+
 		// Joining with the centiseconds
 		activity.formatted_performance = performance + '.' + centiseconds;
         break;
@@ -82,7 +83,7 @@ activityHelper.formatActivity = function( activity, language, dateFormat ) {
 
 	// Adjusting the time to the user's timezone
 	activity.date.setHours( activity.date.getHours() + 3 );
-	switch( dateFormat ) {
+	switch( date_format ) {
 		case 'd-m-y':
 			activity.formatted_date = activity.date.getDate() + '-' + ( activity.date.getMonth() + 1 ) + '-' + activity.date.getFullYear();
 			break;
@@ -90,7 +91,7 @@ activityHelper.formatActivity = function( activity, language, dateFormat ) {
 			activity.formatted_date = ( activity.date.getMonth() + 1 ) + '-' + activity.date.getDate() + '-' + activity.date.getFullYear();
 			break;
 	}
-
+	
 	return activity;
 };
 

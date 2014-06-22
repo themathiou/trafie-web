@@ -1,6 +1,8 @@
 var activityController = require('../../routes/activities.js');
  
 describe("/user/:user_id/activites", function () {
+
+	// Mock request object
 	var req = {
 		session: {
 			user_id: '538e07387e263e4e19000001'
@@ -13,13 +15,14 @@ describe("/user/:user_id/activites", function () {
 			from: 			'',
 			to: 				''
 		}
-	}
+	};
 
+	// Mock response object
 	var res = {
 		json: function( json ) {
 			return json;
 		}
-	}
+	};
 
 /*	beforeEach(function() {
 		performance
