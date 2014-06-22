@@ -74,8 +74,7 @@ trafie.controller("profileController", function( $rootScope, $scope, $http ){
 				
 				var data = $scope.newActivityForm;
 				data.discipline = data.selected_discipline.id;
-				/* TO BE REMOVED - ADDS A TEMP TODAY DATE */
-				// var tmp = new Date();
+				
 				var splitDate = data.date.toString().split(' ');
 				data.date = splitDate[0] + ' ' + splitDate[1] + ' ' +splitDate[2] + ' ' +splitDate[3]; 
 
@@ -107,26 +106,23 @@ trafie.controller("profileController", function( $rootScope, $scope, $http ){
 
 
 	/*
-		initEditableActivity function : initalizes variables
+		initEditableActivity function : initializes variables for editing an existing activity
 	 */
 	$scope.initEditableActivity = function( activity ){
-
 		$scope.updateActivityForm = {};
-
 		if( $scope.disciplines.time.indexOf( activity.discipline ) > -1) {
 			var splitted_performance = activity.performance.split(':');
 			//we get the existed performance in hh:mm:ss.cc format.
 				//We split it and add each part to the specific element
-			$scope.updateActivityForm.hours = splitted_performance[0];
-			$scope.updateActivityForm.minutes = splitted_performance[1];
-			$scope.updateActivityForm.seconds = splitted_performance[2].split('.')[0];
-			$scope.updateActivityForm.centiseconds = splitted_performance[2].split('.')[1];
+			$scope.updateActivityForm.hours = splitted_performance[0].toString();
+			$scope.updateActivityForm.minutes = splitted_performance[1].toString();
+			$scope.updateActivityForm.seconds = splitted_performance[2].split('.')[0].toString();
+			$scope.updateActivityForm.centiseconds = splitted_performance[2].split('.')[1].toString();
 
 		}
 		else if( $scope.disciplines.distance.indexOf( activity.discipline ) > -1 ) {
-			$scope.updateActivityForm.performance_m = parseInt(activity.performance/10000);
-			$scope.updateActivityForm.performance_cm = parseInt( ( (activity.performance/10000) % $scope.updateActivityForm.performance_m ) * 100 );
-			console.log($scope.updateActivityForm);
+			$scope.updateActivityForm.distance_1 = (parseInt( activity.performance/10000 )).toString();
+			$scope.updateActivityForm.distance_2 = (parseInt( ( (activity.performance/10000) % $scope.updateActivityForm.distance_1 ) * 100 )).toString();
 		}
 		else if( $scope.disciplines.points.indexOf( activity.discipline ) > -1 ){
 			$scope.updateActivityForm.points = activity.performance;
@@ -143,21 +139,17 @@ trafie.controller("profileController", function( $rootScope, $scope, $http ){
 		updateActivity function : edit a specific activity
 	 */
 	$scope.updateActivity = function( activity ){
+		var data = $scope.updateActivityForm;
+		var splitDate = data.date.toString().split(' ');
+		data.date = splitDate[0] + ' ' + splitDate[1] + ' ' +splitDate[2] + ' ' +splitDate[3];
+		
+		console.log('data', data);
+		$http.put( "/user/" + $rootScope.user._id + "/activities/" + activity._id, data)
+		.success( function(res){
+			console.log('res', res);
+		})
 
-		if( $scope.disciplines.time.indexOf( activity.discipline ) > -1) {
 
-		}
-		else if( $scope.disciplines.distance.indexOf( activity.discipline ) > -1 ) {
-			
-		}
-		else if( $scope.disciplines.points.indexOf( activity.discipline ) > -1 ){
-
-		}
-		else{
-			console.log('activity belongs to undefined type. WTF?');
-		}
-
-		//method="PUT" action="/user/"+profile._id+"/activities/"
 	}
 
 
