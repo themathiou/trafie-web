@@ -3,50 +3,50 @@ div( ng-show="show_this_activity" )
 	{{activity}}
 	div#editDistanceActivityTemplate.row( ng-if="disciplines.distance.indexOf(activity.discipline) > -1 " )= tr['enter_your_performance'] +':'
 		br
-		form#edit_activity_form.data_entry( method="PUT" action="/user/"+profile._id+"/activities/")
+		form#edit_activity_form.data_entry( ng-submit="updateActivity(activity)")
 			div
 				label(for="distance_1_input")= tr['meters_short'] + ':'
-				input#distance_1_input( name="distance_1" size="3" maxlength="2")
+				input#distance_1_input( name="distance_1" size="3" maxlength="2" ng-model="updateActivityForm.performance_m" )
 			div
 				label(for="distance_2_input")= tr['centimeters_short'] + ':'
-				input#distance_2_input( name="distance_2" size="3" maxlength="2" )
+				input#distance_2_input( name="distance_2" size="3" maxlength="2" ng-model="updateActivityForm.performance_cm" )
 			div.row
 				label(for="datepicker_distance")= tr['date'] + ':'
-				input#edit_datepicker( name="date" type="text" )
+				input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="updateActivityForm.date" is-open="opened" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
 			div#submit_buttons.row.submit_buttons
 				input.btn.green(type="submit" name="new_competition" value=tr['save'])
 				a.cancel_edit_activity.cancel_link( ng-click="show_this_activity  = !show_this_activity" )= tr['cancel']
 
 	div#editTimeActivityTemplate.row( ng-if="disciplines.time.indexOf(activity.discipline) > -1 " )= tr['enter_your_performance'] +':'
 		br
-		form#edit_activity_form.data_entry( method="PUT" action="/user/"+profile._id+"/activities/")
+		form#edit_activity_form.data_entry( ng-submit="updateActivity(activity._id)")
 			div
 				label(for="hours_input")= tr['hours_short'] + ':'
-				input#hours_input(name="hours" size="3" maxlength="2" )
+				input#hours_input(name="hours" size="3" maxlength="2" ng-model="updateActivityForm.hours")
 			div
 				label( for="minutes_input" )= tr['minutes_short'] + ':'
-				input#minutes_input(name="minutes" size="3" maxlength="2" )
+				input#minutes_input(name="minutes" size="3" maxlength="2" ng-model="updateActivityForm.minutes")
 			div
 				label( for="seconds_input" )= tr['seconds_short'] + ':'
-				input#seconds_input( name="seconds" size="3" maxlength="2" )
+				input#seconds_input( name="seconds" size="3" maxlength="2" ng-model="updateActivityForm.seconds")
 			div
 				label(for="centiseconds_input")= tr['centiseconds_short'] + ':'
-				input#centiseconds_input( name="centiseconds" size="3" maxlength="2" )
+				input#centiseconds_input( name="centiseconds" size="3" maxlength="2" ng-model="updateActivityForm.centiseconds")
 			div.row
 				label(for="datepicker_time")= tr['date'] + ':'
-				input#edit_datepicker( name="date" type="text" )
+				input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="updateActivityForm.date" is-open="opened" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
 			div#submit_buttons.row.submit_buttons
 				input.btn.green(type="submit" name="new_competition" value=tr['save'])
 				a.cancel_edit_activity.cancel_link( ng-click="show_this_activity  = !show_this_activity" )= tr['cancel']
 
 	div#editPointsActivityTemplate.row( ng-if="disciplines.points.indexOf(activity.discipline) > -1 " )= tr['enter_your_performance'] +':'
 		br
-		form#edit_activity_form.data_entry( method="PUT" action="/user/"+profile._id+"/activities/")
+		form#edit_activity_form.data_entry( ng-submit="updateActivity(activity._id)")
 			label(for="points_input")= tr['points'] + ':'
-			input#points_input(type="text" name="points" size="7" maxlength="5")
+			input#points_input(type="text" name="points" size="7" maxlength="5" ng-model="updateActivityForm.points")
 			div.row
 				label(for="datepicker_point")= tr['date'] + ':'
-				input#edit_datepicker( name="date" type="text" )
+				input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="updateActivityForm.date" is-open="opened" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
 			div#submit_buttons.row.submit_buttons
 				input.btn.green(type="submit" name="new_competition" value=tr['save'])
 				a.cancel_edit_activity.cancel_link( ng-click="show_this_activity  = !show_this_activity" )= tr['cancel']

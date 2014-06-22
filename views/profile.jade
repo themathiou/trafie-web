@@ -43,7 +43,7 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
 						div.discipline( data-value="{{activity.discipline}}" ) {{activity.formatted_discipline}}
 						div.date( data-value="{{activity.date}}" ) {{activity.formatted_date}}
 					//if user._id==profile._id
-					a.editActivity( ng-click="show_this_activity  = !show_this_activity" )
+					a.editActivity( ng-click="show_this_activity  = !show_this_activity ; initEditableActivity(activity)" )
 						include partials/svg/edit_activity_svg
 
 					//edit activity templates

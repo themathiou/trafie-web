@@ -52,17 +52,17 @@ function mainMenuHandlers(){
  * startLoading() : show a loader
  * @param element : loading element
  */
-function startLoading( element ) {
-        document.getElementById( element ).style.display = 'block';
-}
+// function startLoading( element ) {
+//         document.getElementById( element ).style.display = 'block';
+// }
 
 /**
  * startLoading() : hides a loader after finish
  * @param element : loading element
  */
-function stopLoading( element ) {
-    document.getElementById( element ).style.display = 'none';
-}
+// function stopLoading( element ) {
+//     document.getElementById( element ).style.display = 'none';
+// }
 
 /********************************************/
 /* 				SETTINGS 					*/
@@ -72,27 +72,27 @@ function stopLoading( element ) {
  * editField() : shows the elements for editing a field
  * @param form_node : the form with all the fields
  */
-function editField( parent_node ) {
-	parent_node.style.backgroundColor = '#F6F6F6';
-	var noneditables = parent_node.querySelectorAll('.non_editable');
-	var editables = parent_node.querySelectorAll('.editable');
+// function editField( parent_node ) {
+// 	parent_node.style.backgroundColor = '#F6F6F6';
+// 	var noneditables = parent_node.querySelectorAll('.non_editable');
+// 	var editables = parent_node.querySelectorAll('.editable');
 
-	for(var i=0, length=noneditables.length; i<length; i++) { noneditables[i].style.display = 'none'; }
-	for(var i=0, length=editables.length; i<length; i++) { editables[i].style.display = 'block'; }
-}
+// 	for(var i=0, length=noneditables.length; i<length; i++) { noneditables[i].style.display = 'none'; }
+// 	for(var i=0, length=editables.length; i<length; i++) { editables[i].style.display = 'block'; }
+// }
 
 /**
  * cancelEditField() : hides the elements for editing a field (reverse action of editField )
  * @param existedID :
  */
-function cancelEditField( parent_node ) {
-	parent_node.style.backgroundColor = 'white';
-	var noneditables = parent_node.querySelectorAll('.non_editable');
-	var editables = parent_node.querySelectorAll('.editable');
+// function cancelEditField( parent_node ) {
+// 	parent_node.style.backgroundColor = 'white';
+// 	var noneditables = parent_node.querySelectorAll('.non_editable');
+// 	var editables = parent_node.querySelectorAll('.editable');
 
-	for(var i=0, length=noneditables.length; i<length; i++) { noneditables[i].style.display = 'inline-block'; }
-	for(var i=0, length=editables.length; i<length; i++) { editables[i].style.display = 'none'; }
-}
+// 	for(var i=0, length=noneditables.length; i<length; i++) { noneditables[i].style.display = 'inline-block'; }
+// 	for(var i=0, length=editables.length; i<length; i++) { editables[i].style.display = 'none'; }
+// }
 
 
 
@@ -101,41 +101,41 @@ function cancelEditField( parent_node ) {
  * setLeap() : called when year selected to set the number of days
  * @param year : the selected year
  */
-function setLeap( year ) {
-	console.log(year);
+// function setLeap( year ) {
+// 	console.log(year);
 
-	if ( ( (year % 4 == 0) && (year % 100 != 0) ) || (year % 400 == 0) ){
-		document.getElementById('m29').style.display = "none";
-		document.getElementById('m30').style.display = "none";
-		console.log('if');
-	}
-	else {
-		document.getElementById('m29').style.display = "block";
-		document.getElementById('m30').style.display = "block";
-		console.log('else');
+// 	if ( ( (year % 4 == 0) && (year % 100 != 0) ) || (year % 400 == 0) ){
+// 		document.getElementById('m29').style.display = "none";
+// 		document.getElementById('m30').style.display = "none";
+// 		console.log('if');
+// 	}
+// 	else {
+// 		document.getElementById('m29').style.display = "block";
+// 		document.getElementById('m30').style.display = "block";
+// 		console.log('else');
 
-	}
+// 	}
 
-}
+// }
 
 /**
  * setSmall() : called when month selected to set the number of days
  * @param year : the selected year
  */
-function setSmall( year ) {
-	console.log(year + '- 31' );
+// function setSmall( year ) {
+// 	console.log(year + '- 31' );
 
-	if ( ( (year % 4 == 0) && (year % 100 != 0) ) || (year % 400 == 0) ){
-		document.getElementById('m31').style.display = "none";
-		console.log('if-31');
-	}
-	else {
-		document.getElementById('m31').style.display = "block";
-		console.log('else-31');
+// 	if ( ( (year % 4 == 0) && (year % 100 != 0) ) || (year % 400 == 0) ){
+// 		document.getElementById('m31').style.display = "none";
+// 		console.log('if-31');
+// 	}
+// 	else {
+// 		document.getElementById('m31').style.display = "block";
+// 		console.log('else-31');
 
-	}
+// 	}
 
-}
+// }
 
 /********************************************/
 /* 				REST CALLS 					*/
@@ -146,25 +146,25 @@ function setSmall( year ) {
  * @param loading_element : the loading element in page
  * @param callback : the callback function
  */
-function ajax_get(url, loading_element, callback) {
-	if( loading_element )  startLoading( loading_element ); 
+// function ajax_get(url, loading_element, callback) {
+// 	if( loading_element )  startLoading( loading_element ); 
 		 
-	var xhr = new XMLHttpRequest();
-	xhr.open('GET', url);
+// 	var xhr = new XMLHttpRequest();
+// 	xhr.open('GET', url);
 
-	xhr.addEventListener('load', function (e) {
-	    callback( xhr.responseText );
-	}, false);
+// 	xhr.addEventListener('load', function (e) {
+// 	    callback( xhr.responseText );
+// 	}, false);
 
-	xhr.setRequestHeader('Content-Type', 'application/json');
-	xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-        	if( loading_element ) stopLoading( loading_element );
-        }
-    }
+// 	xhr.setRequestHeader('Content-Type', 'application/json');
+// 	xhr.onreadystatechange = function () {
+//         if (xhr.readyState == 4 && xhr.status == 200) {
+//         	if( loading_element ) stopLoading( loading_element );
+//         }
+//     }
 
-	xhr.send();
-}
+// 	xhr.send();
+// }
 
 /**
  * ajax_get_input_field() : called for making GET ajax calls. 
@@ -172,26 +172,26 @@ function ajax_get(url, loading_element, callback) {
  * @param url : the target url for the ajax call
  * @param callback : the callback function
  */
-function ajax_get_input_field(url, input_element, callback) {
-	console.log(input_element);
-	input_element.setAttribute("class","loading");
+// function ajax_get_input_field(url, input_element, callback) {
+// 	console.log(input_element);
+// 	input_element.setAttribute("class","loading");
 
-	var xhr = new XMLHttpRequest();
-	xhr.open('GET', url);
+// 	var xhr = new XMLHttpRequest();
+// 	xhr.open('GET', url);
 
-	xhr.addEventListener('load', function (e) {
-	    callback( xhr.responseText );
-	}, false);
+// 	xhr.addEventListener('load', function (e) {
+// 	    callback( xhr.responseText );
+// 	}, false);
 
-	xhr.setRequestHeader('Content-Type', 'application/json');
-	xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
+// 	xhr.setRequestHeader('Content-Type', 'application/json');
+// 	xhr.onreadystatechange = function () {
+//         if (xhr.readyState == 4 && xhr.status == 200) {
       
-        }
-    }
+//         }
+//     }
 
-	xhr.send();
-}
+// 	xhr.send();
+// }
 
 
 /**
@@ -201,24 +201,24 @@ function ajax_get_input_field(url, input_element, callback) {
  * @param loading_element : the loading element in page
  * @param callback : the callback function
  */
-function ajax_post(data, url, loading_element, callback) {
-	startLoading( loading_element );
-	var xhr = new XMLHttpRequest();
-	xhr.open('POST', url);
+// function ajax_post(data, url, loading_element, callback) {
+// 	startLoading( loading_element );
+// 	var xhr = new XMLHttpRequest();
+// 	xhr.open('POST', url);
 
-	xhr.addEventListener('load', function (e) {
-	    callback( xhr.responseText );
-	}, false);
+// 	xhr.addEventListener('load', function (e) {
+// 	    callback( xhr.responseText );
+// 	}, false);
 
-	xhr.setRequestHeader('Content-Type', 'application/json');
-	xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 201) {
-            stopLoading( loading_element );
-        }
-    }
+// 	xhr.setRequestHeader('Content-Type', 'application/json');
+// 	xhr.onreadystatechange = function () {
+//         if (xhr.readyState == 4 && xhr.status == 201) {
+//             stopLoading( loading_element );
+//         }
+//     }
 
-	xhr.send(data);
-}
+// 	xhr.send(data);
+// }
 
 /**
  * ajax_put() : called for making PUT ajax calls
@@ -227,25 +227,25 @@ function ajax_post(data, url, loading_element, callback) {
  * @param loading_element : the loading element in page
  * @param callback : the callback function
  */
-function ajax_put(data, url, loading_element, callback) {
-	startLoading( loading_element );
-	var xhr = new XMLHttpRequest();
-	xhr.open('PUT', url);
+// function ajax_put(data, url, loading_element, callback) {
+// 	startLoading( loading_element );
+// 	var xhr = new XMLHttpRequest();
+// 	xhr.open('PUT', url);
 
-	xhr.addEventListener('load', function (e) {
-		console.log(data);
-	    callback( xhr.responseText );
-	}, false);
+// 	xhr.addEventListener('load', function (e) {
+// 		console.log(data);
+// 	    callback( xhr.responseText );
+// 	}, false);
 
-	xhr.setRequestHeader('Content-Type', 'application/json');
-	xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            stopLoading( loading_element );
-        }
-    }
+// 	xhr.setRequestHeader('Content-Type', 'application/json');
+// 	xhr.onreadystatechange = function () {
+//         if (xhr.readyState == 4 && xhr.status == 200) {
+//             stopLoading( loading_element );
+//         }
+//     }
 
-	xhr.send(data);
-}
+// 	xhr.send(data);
+// }
 
 /**
  * ajax_delete() : called for making DELETE ajax calls
@@ -253,26 +253,26 @@ function ajax_put(data, url, loading_element, callback) {
  * @param loading_element : the loading element in page
  * @param callback : the callback function
  */
-function ajax_delete( url, loading_element, callback) {
+// function ajax_delete( url, loading_element, callback) {
 
-	startLoading( loading_element );
+// 	startLoading( loading_element );
 
-	var xhr = new XMLHttpRequest();
-	xhr.open('DELETE', url);
+// 	var xhr = new XMLHttpRequest();
+// 	xhr.open('DELETE', url);
 
-	xhr.addEventListener('load', function (e) {
-	    callback( xhr.status , xhr.responseText );
-	}, false);
+// 	xhr.addEventListener('load', function (e) {
+// 	    callback( xhr.status , xhr.responseText );
+// 	}, false);
 
-	xhr.setRequestHeader('Content-Type', 'application/json');
-	xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            stopLoading( loading_element );
-        }
-    }
+// 	xhr.setRequestHeader('Content-Type', 'application/json');
+// 	xhr.onreadystatechange = function () {
+//         if (xhr.readyState == 4 && xhr.status == 200) {
+//             stopLoading( loading_element );
+//         }
+//     }
 
-	xhr.send();
-}
+// 	xhr.send();
+// }
 
 
 /**
@@ -280,40 +280,40 @@ function ajax_delete( url, loading_element, callback) {
  * @param form : the form we submit
  * @param callback : the callback function
  */
-function submit_form(form, callback) {
-	var data = '';
-	//for-loop that reads the form elements and their values and creates the
-	//"name":"value" combinations
-	for( var i=0, length = form.elements.length; i < length; i++) {
-		if ( form.elements.hasOwnProperty(i) ) {
-			data += '\"'+form.elements[i].name + '\":\"' + form.elements[i].value + '\"';
-		}
+// function submit_form(form, callback) {
+// 	var data = '';
+// 	//for-loop that reads the form elements and their values and creates the
+// 	//"name":"value" combinations
+// 	for( var i=0, length = form.elements.length; i < length; i++) {
+// 		if ( form.elements.hasOwnProperty(i) ) {
+// 			data += '\"'+form.elements[i].name + '\":\"' + form.elements[i].value + '\"';
+// 		}
 
-		if (i < length - 1) {
-			data = data + ',';
-		}
-	}
+// 		if (i < length - 1) {
+// 			data = data + ',';
+// 		}
+// 	}
 
-	//add {} around the data
-	data = '{' + data + '}';
+// 	//add {} around the data
+// 	data = '{' + data + '}';
 
-	//get the method of the form
-	var method = form.attributes.method.value;
+// 	//get the method of the form
+// 	var method = form.attributes.method.value;
 
-	//case conditions for separating the method we use in the specific form
-	// cases : POST - PUT -GET
-	switch(method){
-		case 'POST':
-			ajax_post(data, form.attributes.action.value, "loading", callback);
-			break;
-		case 'PUT':
-			ajax_put(data, form.attributes.action.value, "loading", callback);
-			break;
-		case 'GET' :
-			console.log('-get?');
-	}
+// 	//case conditions for separating the method we use in the specific form
+// 	// cases : POST - PUT -GET
+// 	switch(method){
+// 		case 'POST':
+// 			ajax_post(data, form.attributes.action.value, "loading", callback);
+// 			break;
+// 		case 'PUT':
+// 			ajax_put(data, form.attributes.action.value, "loading", callback);
+// 			break;
+// 		case 'GET' :
+// 			console.log('-get?');
+// 	}
 
-}
+// }
 
 
 

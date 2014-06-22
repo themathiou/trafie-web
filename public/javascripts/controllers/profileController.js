@@ -105,11 +105,89 @@ trafie.controller("profileController", function( $rootScope, $scope, $http ){
 		.error(function(e){})	
 	}
 
+
 	/*
-		editActivity function : edit a specific activity
+		initEditableActivity function : initalizes variables
 	 */
-	$scope.editActivity = function( activity_id ){
-		
+	$scope.initEditableActivity = function( activity ){
+
+		$scope.updateActivityForm = {};
+
+		if( $scope.disciplines.time.indexOf( activity.discipline ) > -1) {
+			var splitted_performance = activity.performance.split(':');
+			//we get the existed performance in hh:mm:ss.cc format.
+				//We split it and add each part to the specific element
+			$scope.updateActivityForm.hours = splitted_performance[0];
+			$scope.updateActivityForm.minutes = splitted_performance[1];
+			$scope.updateActivityForm.seconds = splitted_performance[2].split('.')[0];
+			$scope.updateActivityForm.centiseconds = splitted_performance[2].split('.')[1];
+
+		}
+		else if( $scope.disciplines.distance.indexOf( activity.discipline ) > -1 ) {
+			$scope.updateActivityForm.performance_m = parseInt(activity.performance/10000);
+			$scope.updateActivityForm.performance_cm = parseInt( ( (activity.performance/10000) % $scope.updateActivityForm.performance_m ) * 100 );
+			console.log($scope.updateActivityForm);
+		}
+		else if( $scope.disciplines.points.indexOf( activity.discipline ) > -1 ){
+			$scope.updateActivityForm.points = activity.performance;
+		}
+		else{
+			console.log('activity belongs to undefined type. WTF?');
+		}
+
+		$scope.updateActivityForm.date = activity.date;
 	}
 
+
+	/*
+		updateActivity function : edit a specific activity
+	 */
+	$scope.updateActivity = function( activity ){
+
+		if( $scope.disciplines.time.indexOf( activity.discipline ) > -1) {
+
+		}
+		else if( $scope.disciplines.distance.indexOf( activity.discipline ) > -1 ) {
+			
+		}
+		else if( $scope.disciplines.points.indexOf( activity.discipline ) > -1 ){
+
+		}
+		else{
+			console.log('activity belongs to undefined type. WTF?');
+		}
+
+		//method="PUT" action="/user/"+profile._id+"/activities/"
+	}
+
+
+
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
