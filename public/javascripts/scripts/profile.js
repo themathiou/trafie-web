@@ -192,233 +192,233 @@ function profileHandlers() {
 	// }
 
 	// Edit handler is used to transform activities to aditable with existed values in fields
-	var edit_handler = function() {
-		//color the border of the editable box
-		this.parentNode.style.border = '1px solid #F4B510';
+	// var edit_handler = function() {
+	// 	//color the border of the editable box
+	// 	this.parentNode.style.border = '1px solid #F4B510';
 
-		var parent = this.parentNode;
-		//take the existed activity element in order to get the existed values and put them in editable fields
-		var existed_activity = parent.querySelector('.current_data');
-		//hide existed activity
-		existed_activity.style.display = 'none';
-
-
-		var this_discipline = existed_activity.querySelector('.discipline').getAttribute('data-value');
-		var this_performance = existed_activity.querySelector('.performance').getAttribute('data-value');
-		//"2014-03-14T01:00:00.000Z" -> split in T and remove the first \"
-		var this_date = existed_activity.querySelector('.date').getAttribute('data-value').split('T')[0].split('\"')[1];
-			//distance disciplines
-			if( disciplines.distance.indexOf(this_discipline) > -1 ) {
-
-				//get and clone activity template
-				var p = document.getElementById("editDistanceActivityTemplate");
-				var edit_activity = p.cloneNode(true);
-				//set action to edit activity button
-				edit_activity.querySelector('#edit_activity_form').setAttribute('action', edit_activity.querySelector('#edit_activity_form').getAttribute('action') + parent.getAttribute('data-activity-id').replace(/\"/g, '') );
-				//show editable activities
-				edit_activity.style.display = 'block' ;
-
-				console.log(this_date);
-
-				//date picker for editable field
-				var date_picker = new Pikaday({field: edit_activity.querySelector('#edit_datepicker'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date(), yearRange: [2000,2020], defaultDate: new Date(this_date), setDefaultDate: new Date(this_date)});
-
-				//include the edit activity in the parent div
-				this.parentNode.appendChild(edit_activity);
-
-				//@variable temp_m we divided performance with 10000. i.e (hj:2.23) 23300/10000 = 2.3300
-				var temp_m = parseInt(this_performance/10000);
-				//@variable temp_cm we get the modulo of (performance/10000) and temp_m * 100.
-				//i.e we get the .23 of 2.23 in hj
-				var temp_cm = parseInt(((this_performance/10000)%temp_m) * 100);
-
-				//add existed values in editable fields
-				edit_activity.querySelector('#distance_1_input').value = temp_m;
-				edit_activity.querySelector('#distance_2_input').value = temp_cm;
-
-				//handler for cancel button
-				edit_activity.querySelector('.cancel_edit_activity').onclick = function() {
-					edit_activity.parentNode.style.border = '1px solid white';
-					var grandparent = this.parentNode.parentNode;
-					grandparent.parentNode.removeChild(grandparent);
-					edit_activity.style.display = 'none' ;
-					existed_activity.style.display = 'block';
-				}
-
-				//handler for submiting the editable forms
-				edit_activity.querySelector('#edit_activity_form').onsubmit = function (e) {
-					var evt = e ? e : window.event;
-					if (evt.preventDefault) evt.preventDefault();
-
-					//call submit_form() function (defined in script.js) and passing the response
-					//in order to show the updated activity
-					submit_form(this, function(response){
-						if(response!='null') {
-							var res = JSON.parse(response);
-							edit_activity.style.display = 'none' ;
-							edit_activity.parentNode.style.border = '1px solid white';
-
-							existed_activity.style.display = 'block';
-							existed_activity.querySelector('.performance').innerHTML = res.formatted_performance;
-							existed_activity.querySelector('.discipline').innerHTML = res.formatted_discipline;
-							existed_activity.querySelector('.date').innerHTML = res.formatted_date;
-
-							existed_activity.querySelector('.performance').setAttribute('data-value', res.performance);
+	// 	var parent = this.parentNode;
+	// 	//take the existed activity element in order to get the existed values and put them in editable fields
+	// 	var existed_activity = parent.querySelector('.current_data');
+	// 	//hide existed activity
+	// 	existed_activity.style.display = 'none';
 
 
-						} else {
-							alert('something went wrong. Please try again');
-						}
+	// 	var this_discipline = existed_activity.querySelector('.discipline').getAttribute('data-value');
+	// 	var this_performance = existed_activity.querySelector('.performance').getAttribute('data-value');
+	// 	//"2014-03-14T01:00:00.000Z" -> split in T and remove the first \"
+	// 	var this_date = existed_activity.querySelector('.date').getAttribute('data-value').split('T')[0].split('\"')[1];
+	// 		//distance disciplines
+	// 		if( disciplines.distance.indexOf(this_discipline) > -1 ) {
 
-					});
-				}
+	// 			//get and clone activity template
+	// 			var p = document.getElementById("editDistanceActivityTemplate");
+	// 			var edit_activity = p.cloneNode(true);
+	// 			//set action to edit activity button
+	// 			edit_activity.querySelector('#edit_activity_form').setAttribute('action', edit_activity.querySelector('#edit_activity_form').getAttribute('action') + parent.getAttribute('data-activity-id').replace(/\"/g, '') );
+	// 			//show editable activities
+	// 			edit_activity.style.display = 'block' ;
 
+	// 			console.log(this_date);
 
-			}
-			//time disciplines
-			if( disciplines.time.indexOf(this_discipline) > -1 ) {
-				//get template for time activity and clone it
-				var p = document.getElementById("editTimeActivityTemplate");
-				var edit_activity = p.cloneNode(true);
-				//set action attributes for the edit-activity-form
-				edit_activity.querySelector('#edit_activity_form').setAttribute('action', edit_activity.querySelector('#edit_activity_form').getAttribute('action') + parent.getAttribute('data-activity-id').replace(/\"/g, '') );
-				//show the edit-activity-form
-				edit_activity.style.display = 'block' ;
+	// 			//date picker for editable field
+	// 			var date_picker = new Pikaday({field: edit_activity.querySelector('#edit_datepicker'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date(), yearRange: [2000,2020], defaultDate: new Date(this_date), setDefaultDate: new Date(this_date)});
 
-				//date picker for editable field
-				var date_picker = new Pikaday({field: edit_activity.querySelector('#edit_datepicker'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date(), yearRange: [2000,2020]});
+	// 			//include the edit activity in the parent div
+	// 			this.parentNode.appendChild(edit_activity);
 
+	// 			//@variable temp_m we divided performance with 10000. i.e (hj:2.23) 23300/10000 = 2.3300
+	// 			var temp_m = parseInt(this_performance/10000);
+	// 			//@variable temp_cm we get the modulo of (performance/10000) and temp_m * 100.
+	// 			//i.e we get the .23 of 2.23 in hj
+	// 			var temp_cm = parseInt(((this_performance/10000)%temp_m) * 100);
 
-				this.parentNode.appendChild(edit_activity);
+	// 			//add existed values in editable fields
+	// 			edit_activity.querySelector('#distance_1_input').value = temp_m;
+	// 			edit_activity.querySelector('#distance_2_input').value = temp_cm;
 
-				//we get the existed performance in hh:mm:ss.cc format.
-				//We split it and add each part to the specific element
-				edit_activity.querySelector('#hours_input').value = this_performance.split(':')[0];
-				edit_activity.querySelector('#minutes_input').value = this_performance.split(':')[1];
-				edit_activity.querySelector('#seconds_input').value = this_performance.split(':')[2].split('.')[0];
-				edit_activity.querySelector('#centiseconds_input').value = this_performance.split(':')[2].split('.')[1];
+	// 			//handler for cancel button
+	// 			edit_activity.querySelector('.cancel_edit_activity').onclick = function() {
+	// 				edit_activity.parentNode.style.border = '1px solid white';
+	// 				var grandparent = this.parentNode.parentNode;
+	// 				grandparent.parentNode.removeChild(grandparent);
+	// 				edit_activity.style.display = 'none' ;
+	// 				existed_activity.style.display = 'block';
+	// 			}
 
-				//add handler to cancel activity button
-				edit_activity.querySelector('.cancel_edit_activity').onclick = function() {
-					edit_activity.parentNode.style.border = '1px solid white';
-					var grandparent = this.parentNode.parentNode;
-					grandparent.parentNode.removeChild(grandparent);
-					edit_activity.style.display = 'none' ;
-					existed_activity.style.display = 'block';
-				}
+	// 			//handler for submiting the editable forms
+	// 			edit_activity.querySelector('#edit_activity_form').onsubmit = function (e) {
+	// 				var evt = e ? e : window.event;
+	// 				if (evt.preventDefault) evt.preventDefault();
 
-				//add handler for submiting the edit-activity-form
-				edit_activity.querySelector('#edit_activity_form').onsubmit = function (e) {
-					var evt = e ? e : window.event;
-					if (evt.preventDefault) evt.preventDefault();
+	// 				//call submit_form() function (defined in script.js) and passing the response
+	// 				//in order to show the updated activity
+	// 				submit_form(this, function(response){
+	// 					if(response!='null') {
+	// 						var res = JSON.parse(response);
+	// 						edit_activity.style.display = 'none' ;
+	// 						edit_activity.parentNode.style.border = '1px solid white';
 
-					//call the submit_form function(defined in script.js) and we get the response
-					//in order to update the existed activity
-					submit_form(this, function(response){
-						if(response!='null') {
-							var res = JSON.parse(response);
-							edit_activity.style.display = 'none' ;
-							edit_activity.parentNode.style.border = '1px solid white';
+	// 						existed_activity.style.display = 'block';
+	// 						existed_activity.querySelector('.performance').innerHTML = res.formatted_performance;
+	// 						existed_activity.querySelector('.discipline').innerHTML = res.formatted_discipline;
+	// 						existed_activity.querySelector('.date').innerHTML = res.formatted_date;
 
-							existed_activity.style.display = 'block';
-							existed_activity.querySelector('.performance').innerHTML = res.formatted_performance;
-							existed_activity.querySelector('.discipline').innerHTML = res.formatted_discipline;
-							existed_activity.querySelector('.date').innerHTML = res.formatted_date;
-
-							existed_activity.querySelector('.performance').setAttribute('data-value', res.performance);
-
-
-						} else {
-							alert('something went wrong. Please try again');
-							close_new_activity_form();
-						}
-
-					});
-				}
-
-			}
-	    	//points disciplines
-	    	if( disciplines.points.indexOf(this_discipline) > -1 ) {
-	    		//get template for points activity and clone it
-				var p = document.getElementById("editPointsActivityTemplate");
-				var edit_activity = p.cloneNode(true);
-				//set action attributes for the edit-activity-form
-				edit_activity.querySelector('#edit_activity_form').setAttribute('action', edit_activity.querySelector('#edit_activity_form').getAttribute('action') + parent.getAttribute('data-activity-id').replace(/\"/g, '') );
-				//show the edit-activity-form
-				edit_activity.style.display = 'block' ;
-
-				//date picker for editable field
-				var date_picker = new Pikaday({field: edit_activity.querySelector('#edit_datepicker'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date(), yearRange: [2000,2020]});
-
-				this.parentNode.appendChild(edit_activity);
-
-				//we get the existed performance and add it to the specific element
-				edit_activity.querySelector('#points_input').value = this_performance;
-
-				//add handler to cancel activity button
-				edit_activity.querySelector('.cancel_edit_activity').onclick = function() {
-					edit_activity.parentNode.style.border = '1px solid white';
-					var grandparent = this.parentNode.parentNode;
-					grandparent.parentNode.removeChild(grandparent);
-					edit_activity.style.display = 'none' ;
-					existed_activity.style.display = 'block';
-				}
-
-				//add handler for submiting the edit-activity-form
-				edit_activity.querySelector('#edit_activity_form').onsubmit = function (e) {
-					var evt = e ? e : window.event;
-					if (evt.preventDefault) evt.preventDefault();
-
-					//call the submit_form function(defined in script.js) and we get the response
-					//in order to update the existed activity
-					submit_form(this, function(response){
-						if(response!='null') {
-							var res = JSON.parse(response);
-							edit_activity.style.display = 'none' ;
-							edit_activity.parentNode.style.border = '1px solid white';
-
-							existed_activity.style.display = 'block';
-							existed_activity.querySelector('.performance').innerHTML = res.formatted_performance;
-							existed_activity.querySelector('.discipline').innerHTML = res.formatted_discipline;
-							existed_activity.querySelector('.date').innerHTML = res.formatted_date;
-
-							existed_activity.querySelector('.performance').setAttribute('data-value', res.performance);
+	// 						existed_activity.querySelector('.performance').setAttribute('data-value', res.performance);
 
 
-						} else {
-							alert('something went wrong. Please try again');
-							close_new_activity_form();
-						}
+	// 					} else {
+	// 						alert('something went wrong. Please try again');
+	// 					}
 
-					});
-				}
-
-			a}
-
-		this.onclick = function() {
-			this.parentNode.style.border = '1px solid white';
-			edit_activity.style.display = 'none' ;
-			existed_activity.style.display = 'block';
-
-			this.onclick = edit_handler;
-		}
-
-	}
+	// 				});
+	// 			}
 
 
-	// ATTACH HANDLERS
-	// Handler for add activity link. calls function to OPEN the slider for adding activity
-	document.getElementById("add_activity_link").onclick = function() {
-		open_new_activity_form();
-	}
+	// 		}
+	// 		//time disciplines
+	// 		if( disciplines.time.indexOf(this_discipline) > -1 ) {
+	// 			//get template for time activity and clone it
+	// 			var p = document.getElementById("editTimeActivityTemplate");
+	// 			var edit_activity = p.cloneNode(true);
+	// 			//set action attributes for the edit-activity-form
+	// 			edit_activity.querySelector('#edit_activity_form').setAttribute('action', edit_activity.querySelector('#edit_activity_form').getAttribute('action') + parent.getAttribute('data-activity-id').replace(/\"/g, '') );
+	// 			//show the edit-activity-form
+	// 			edit_activity.style.display = 'block' ;
 
-	// Handler for cancel adding activity link. calls function to CLOSE the slider for adding activity
-	var cancelAddActivityLinks = document.getElementsByClassName('cancel_link');
-	for( var i in cancelAddActivityLinks ) {
-		cancelAddActivityLinks[i].onclick = function() {
-			close_new_activity_form();
-		}
-	}
+	// 			//date picker for editable field
+	// 			var date_picker = new Pikaday({field: edit_activity.querySelector('#edit_datepicker'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date(), yearRange: [2000,2020]});
+
+
+	// 			this.parentNode.appendChild(edit_activity);
+
+	// 			//we get the existed performance in hh:mm:ss.cc format.
+	// 			//We split it and add each part to the specific element
+	// 			edit_activity.querySelector('#hours_input').value = this_performance.split(':')[0];
+	// 			edit_activity.querySelector('#minutes_input').value = this_performance.split(':')[1];
+	// 			edit_activity.querySelector('#seconds_input').value = this_performance.split(':')[2].split('.')[0];
+	// 			edit_activity.querySelector('#centiseconds_input').value = this_performance.split(':')[2].split('.')[1];
+
+	// 			//add handler to cancel activity button
+	// 			edit_activity.querySelector('.cancel_edit_activity').onclick = function() {
+	// 				edit_activity.parentNode.style.border = '1px solid white';
+	// 				var grandparent = this.parentNode.parentNode;
+	// 				grandparent.parentNode.removeChild(grandparent);
+	// 				edit_activity.style.display = 'none' ;
+	// 				existed_activity.style.display = 'block';
+	// 			}
+
+	// 			//add handler for submiting the edit-activity-form
+	// 			edit_activity.querySelector('#edit_activity_form').onsubmit = function (e) {
+	// 				var evt = e ? e : window.event;
+	// 				if (evt.preventDefault) evt.preventDefault();
+
+	// 				//call the submit_form function(defined in script.js) and we get the response
+	// 				//in order to update the existed activity
+	// 				submit_form(this, function(response){
+	// 					if(response!='null') {
+	// 						var res = JSON.parse(response);
+	// 						edit_activity.style.display = 'none' ;
+	// 						edit_activity.parentNode.style.border = '1px solid white';
+
+	// 						existed_activity.style.display = 'block';
+	// 						existed_activity.querySelector('.performance').innerHTML = res.formatted_performance;
+	// 						existed_activity.querySelector('.discipline').innerHTML = res.formatted_discipline;
+	// 						existed_activity.querySelector('.date').innerHTML = res.formatted_date;
+
+	// 						existed_activity.querySelector('.performance').setAttribute('data-value', res.performance);
+
+
+	// 					} else {
+	// 						alert('something went wrong. Please try again');
+	// 						close_new_activity_form();
+	// 					}
+
+	// 				});
+	// 			}
+
+	// 		}
+	//     	//points disciplines
+	//     	if( disciplines.points.indexOf(this_discipline) > -1 ) {
+	//     		//get template for points activity and clone it
+	// 			var p = document.getElementById("editPointsActivityTemplate");
+	// 			var edit_activity = p.cloneNode(true);
+	// 			//set action attributes for the edit-activity-form
+	// 			edit_activity.querySelector('#edit_activity_form').setAttribute('action', edit_activity.querySelector('#edit_activity_form').getAttribute('action') + parent.getAttribute('data-activity-id').replace(/\"/g, '') );
+	// 			//show the edit-activity-form
+	// 			edit_activity.style.display = 'block' ;
+
+	// 			//date picker for editable field
+	// 			var date_picker = new Pikaday({field: edit_activity.querySelector('#edit_datepicker'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date(), yearRange: [2000,2020]});
+
+	// 			this.parentNode.appendChild(edit_activity);
+
+	// 			//we get the existed performance and add it to the specific element
+	// 			edit_activity.querySelector('#points_input').value = this_performance;
+
+	// 			//add handler to cancel activity button
+	// 			edit_activity.querySelector('.cancel_edit_activity').onclick = function() {
+	// 				edit_activity.parentNode.style.border = '1px solid white';
+	// 				var grandparent = this.parentNode.parentNode;
+	// 				grandparent.parentNode.removeChild(grandparent);
+	// 				edit_activity.style.display = 'none' ;
+	// 				existed_activity.style.display = 'block';
+	// 			}
+
+	// 			//add handler for submiting the edit-activity-form
+	// 			edit_activity.querySelector('#edit_activity_form').onsubmit = function (e) {
+	// 				var evt = e ? e : window.event;
+	// 				if (evt.preventDefault) evt.preventDefault();
+
+	// 				//call the submit_form function(defined in script.js) and we get the response
+	// 				//in order to update the existed activity
+	// 				submit_form(this, function(response){
+	// 					if(response!='null') {
+	// 						var res = JSON.parse(response);
+	// 						edit_activity.style.display = 'none' ;
+	// 						edit_activity.parentNode.style.border = '1px solid white';
+
+	// 						existed_activity.style.display = 'block';
+	// 						existed_activity.querySelector('.performance').innerHTML = res.formatted_performance;
+	// 						existed_activity.querySelector('.discipline').innerHTML = res.formatted_discipline;
+	// 						existed_activity.querySelector('.date').innerHTML = res.formatted_date;
+
+	// 						existed_activity.querySelector('.performance').setAttribute('data-value', res.performance);
+
+
+	// 					} else {
+	// 						alert('something went wrong. Please try again');
+	// 						close_new_activity_form();
+	// 					}
+
+	// 				});
+	// 			}
+
+	// 		a}
+
+	// 	this.onclick = function() {
+	// 		this.parentNode.style.border = '1px solid white';
+	// 		edit_activity.style.display = 'none' ;
+	// 		existed_activity.style.display = 'block';
+
+	// 		this.onclick = edit_handler;
+	// 	}
+
+	// }
+
+
+	// // ATTACH HANDLERS
+	// // Handler for add activity link. calls function to OPEN the slider for adding activity
+	// document.getElementById("add_activity_link").onclick = function() {
+	// 	open_new_activity_form();
+	// }
+
+	// // Handler for cancel adding activity link. calls function to CLOSE the slider for adding activity
+	// var cancelAddActivityLinks = document.getElementsByClassName('cancel_link');
+	// for( var i in cancelAddActivityLinks ) {
+	// 	cancelAddActivityLinks[i].onclick = function() {
+	// 		close_new_activity_form();
+	// 	}
+	// }
 
 
 	// Handler for option-list with different disciplines in add activity.

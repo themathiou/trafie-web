@@ -45,6 +45,7 @@ trafie.controller("profileController", function( $rootScope, $scope, $http ){
 
 
     $scope.initProfile = function(){
+
     	$http.get('/profile/'+ $rootScope.user._id)
 		.success(function(res){
 			console.log(res);
@@ -109,6 +110,9 @@ trafie.controller("profileController", function( $rootScope, $scope, $http ){
 		initEditableActivity function : initializes variables for editing an existing activity
 	 */
 	$scope.initEditableActivity = function( activity ){
+
+		activity.show_this = !activity.show_this;
+
 		$scope.updateActivityForm = {};
 		if( $scope.disciplines.time.indexOf( activity.discipline ) > -1) {
 			var splitted_performance = activity.performance.split(':');
@@ -140,8 +144,8 @@ trafie.controller("profileController", function( $rootScope, $scope, $http ){
 	 */
 	$scope.updateActivity = function( activity ){
 		var data = $scope.updateActivityForm;
+		console.log('clean', data);
 		
-		//DATE NEED TO BE FIXED
 		data.date = new Date(data.date.toString().split('T')[0]);
 		var splitDate = data.date.toString().split(' ');
 		data.date = splitDate[0] + ' ' + splitDate[1] + ' ' +splitDate[2] + ' ' +splitDate[3];
@@ -151,6 +155,10 @@ trafie.controller("profileController", function( $rootScope, $scope, $http ){
 		$http.put( "/user/" + $rootScope.user._id + "/activities/" + activity._id, data)
 		.success( function(res){
 			console.log('res', res);
+			activity.formatted_performance = res.formatted_performance;
+			activity.formatted_date = res.formatted_date;
+			activity.show_this = !activity.show_this;
+
 		})
 
 

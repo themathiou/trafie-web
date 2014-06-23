@@ -10,6 +10,7 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 	 * @return {[type]}
 	 */
 	$scope.settingsInit = function(){
+		/* --- profile --- */
 		//profile_pic
 		$scope.user.new_profile_pic = 'motherhacker';
 		$scope.edit_profile_pic = false;
@@ -42,6 +43,12 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 		//about
 		$scope.about = false;
 		$scope.about_msg = '';
+
+
+		/* --- account --- */
+		//language
+		$scope.edit_language = false;
+		$scope.language_msg = '';
 
 		
 	}
@@ -293,6 +300,30 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 				Account Settings
 			 */
 			case 'language':
+				data = { "language" : $scope.user.language  };
+				console.log(data);
+				$http.post('/settings_data', data)
+				.success(function(res){
+					if( res.success ) {
+						$scope.user.language = res.value;
+						$scope.discipline_msg='Discipline successfully updated'; //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
+						$scope.showHide('edit_discipline');
+
+						/* after 3 secconds hide the message */
+						$timeout(function(){
+							$scope.language_msg = '';
+						}, 3000);
+					}
+					else {
+						$scope.language_msg = res.message;
+
+						/* after 3 secconds hide the message */
+						$timeout(function(){
+							$scope.language_msg = '';
+						}, 3000);
+					}
+					$scope.user.language = res.translated_value;
+				});
 				break;
 
 			case 'dateformat':

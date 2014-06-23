@@ -31,7 +31,7 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
 				div.icon_back
 				div.icon XX
 				div.info( data-activity-id="{{activity._id}}" )
-					div.current_data( ng-show="!show_this_activity" )
+					div.current_data( ng-show="!activity.show_this" )
 						//if user._id==profile._id
 						a.deleteActivity( ng-click="deleteActivity(activity._id)" )
 							include partials/svg/delete_activity_svg
@@ -43,7 +43,7 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
 						div.discipline( data-value="{{activity.discipline}}" ) {{activity.formatted_discipline}}
 						div.date( data-value="{{activity.date}}" ) {{activity.formatted_date}}
 					//if user._id==profile._id
-					a.editActivity( ng-click="show_this_activity  = !show_this_activity ; initEditableActivity(activity)" )
+					a.editActivity( ng-click="initEditableActivity(activity)" )
 						include partials/svg/edit_activity_svg
 
 					//edit activity templates

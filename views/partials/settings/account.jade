@@ -28,17 +28,19 @@ div#changePasswordDiv.settingsElement( ng-init="edit_password=false;" )
 				input#submitNewPassword.btn.green( type="submit" value=tr['submit'])
 				a#cancelNewPassword.cancel_link( href="javascript:;" )= tr['cancel']
 
-//LANGUAGE
+//LANGUAGE -- PENDING
 div#languageDiv.settingsElement
+	a#editLanguage.editLink.non_editable( ng-click="edit_language = !edit_language" )
+			include ../svg/edit_activity_svg
 	form( method="POST" ng-submit="submitChangeSetting('language')")
 		label= tr['language'] + ': '
 		span.non_editable{{user.language_formatted}} 
 		div(ng-show="language_msg !=''") {{language_msg}}
-		div( ng-show="edit_language" )	
-			select(name="language" )
+		div( ng-show="edit_language" )
+			select(name="language" ng-model="user.language")
 				option(value="no-selection" selected)= tr['choose_your_language']
 				- for( var i in languages )
-						option( value=languages[i] )= tr[languages[i]]
+						option( value=languages[i] )= languages[i]
 				//- for( var i in languages ) {
 				//	if languages[user.language] == languages[i]
 				//		option( value=i selected)= languages[i]
@@ -48,11 +50,11 @@ div#languageDiv.settingsElement
 		div.formButtons( ng-show="edit_language" )
 			input#submitLanguage.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditLanguage.cancel_link( href="javascript:;" )= tr['cancel']
-		a#editLanguage.editLink.non_editable( ng-click="edit_language = !edit_language" )
-			include ../svg/edit_activity_svg
 
 //DATE FORMAT
 div#dateFormatDiv.settingsElement( ng-init="edit_dateformat=false;" )
+	a#editDateFormat.editLink.non_editable( ng-click="edit_dateformat = !edit_dateformat" )
+			include ../svg/edit_activity_svg
 	form( method="POST")
 		label= tr['date_format'] + ': '
 		//span= errors.data_format
@@ -71,11 +73,11 @@ div#dateFormatDiv.settingsElement( ng-init="edit_dateformat=false;" )
 		div.formButtons( ng-show="edit_dateformat" )
 			input#submitDateFormat.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditDateFormat.cancel_link( href="javascript:;" )= tr['cancel']
-		a#editDateFormat.editLink.non_editable( ng-click="edit_dateformat = !edit_dateformat" )
-			include ../svg/edit_activity_svg
 
 //USERNAME
 div#usernameDiv.settingsElement( ng-init="edit_username=false;" )
+	a#editUsername.editLink.non_editable( ng-click="edit_username = !edit_username" )
+			include ../svg/edit_activity_svg
 	form( method="POST")
 		//label= tr['username'] + ': '
 		label http://www.trafie.com/
@@ -88,5 +90,4 @@ div#usernameDiv.settingsElement( ng-init="edit_username=false;" )
 			input#submitUsername.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditUsername.cancel_link( href="javascript:;" )= tr['cancel']
 
-		a#editUsername.editLink.non_editable( ng-click="edit_username = !edit_username" )
-			include ../svg/edit_activity_svg
+		

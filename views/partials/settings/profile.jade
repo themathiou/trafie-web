@@ -2,6 +2,8 @@ h3= tr['profile_settings']
 
 //PROFILE PIC
 div#profilePicDiv.settingsElement
+	a#editProfilePicture.editLink( ng-click="showHide('edit_profilepic')" )
+			include ../svg/edit_activity_svg
 	form( method="POST" enctype="multipart/form-data" ng-submit="submitChangeSetting('profile_pic')")
 		label= tr['profile_picture'] + ': '
 		img.settings_profile_pic_thumb( src="{{user.picture}}" )
@@ -12,12 +14,12 @@ div#profilePicDiv.settingsElement
 			input#submit_profile_pic.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditProfilePicture.cancel_link( ng-click="showHide('edit_profilepic')" )= tr['cancel']
 
-		a#editProfilePicture.editLink( ng-click="showHide('edit_profilepic')" )
-			include ../svg/edit_activity_svg
+		
 
 //FIRST NAME
 div#firstNameDiv.settingsElement
-	
+	a#editFirstName.editLink( ng-click="showHide('edit_firstname')" )
+			include ../svg/edit_activity_svg
 	form( method="POST" ng-submit="submitChangeSetting('first_name')")
 		label= tr['first_name'] + ': '
 		span.existed {{ user.first_name }}
@@ -28,11 +30,12 @@ div#firstNameDiv.settingsElement
 			input#submitFirstName.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditFirstName.cancel_link( ng-click="showHide('edit_firstname')" )= tr['cancel']
 
-		a#editFirstName.editLink( ng-click="showHide('edit_firstname')" )
-			include ../svg/edit_activity_svg
+		
 
 //LAST NAME
 div#lastNameDiv.settingsElement
+	a#editLastName.editLink( ng-click="showHide('edit_lastname')" )
+			include ../svg/edit_activity_svg
 	form( method="POST" ng-submit="submitChangeSetting('last_name')")
 		label= tr['last_name'] + ': '
 		span.existed {{user.last_name}}
@@ -42,11 +45,12 @@ div#lastNameDiv.settingsElement
 		div.formButtons(ng-show="edit_lastname")
 			input#submitLastName.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditLastName.cancel_link( ng-click="showHide('edit_lastname')")= tr['cancel']
-		a#editLastName.editLink( ng-click="showHide('edit_lastname')" )
-			include ../svg/edit_activity_svg
+		
 
 //MAIN DISCIPLINE
 div#mainDisciplineDiv.settingsElement
+	a#editMainDiscipline.editLink( ng-click="showHide('edit_discipline')" )
+			include ../svg/edit_activity_svg
 	form( method="POST" ng-submit="submitChangeSetting('discipline')")
 		label= tr['main_discipline'] + ': '
 		span {{ user.discipline_formatted }}
@@ -58,11 +62,12 @@ div#mainDisciplineDiv.settingsElement
 			div.formButtons
 				input#submitMainDiscipline.btn.green( type="submit" value=tr['submit'])
 				a#cancelEditMainDiscipline.cancel_link( ng-click="showHide('edit_discipline')" )= tr['cancel']
-		a#editMainDiscipline.editLink( ng-click="showHide('edit_discipline')" )
-			include ../svg/edit_activity_svg
+		
 
 //GENDER
 div#genderDiv.settingsElement
+	a#editGender.editLink( ng-click="showHide('edit_gender')" )
+			include ../svg/edit_activity_svg
 	form( method="POST" ng-submit="submitChangeSetting('gender')")
 		label= tr['gender'] + ': '
 		span {{ user.gender_formatted }}
@@ -76,11 +81,12 @@ div#genderDiv.settingsElement
 		div.formButtons(ng-show="edit_gender")
 			input#submitGender.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditGender.cancel_link( ng-click="showHide('edit_gender')" )= tr['cancel']
-		a#editGender.editLink( ng-click="showHide('edit_gender')" )
-			include ../svg/edit_activity_svg
+		
 
 //BIRTHDAY
 div#ageDiv.settingsElement
+	a#editAge.editLink( ng-click="showHide('edit_birthday')" )
+			include ../svg/edit_activity_svg
 	form( method="POST" ng-submit="submitChangeSetting('birthday')")
 		label= tr['birthday'] + ': '
 		span {{ user.birthday.day }}.{{ user.birthday.month }}.{{ user.birthday.year }}
@@ -91,12 +97,13 @@ div#ageDiv.settingsElement
 		div.formButtons(ng-show="edit_birthday")
 			input#submitAge.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditAge.cancel_link( ng-click="showHide('edit_birthday')" )= tr['cancel']
-		a#editAge.editLink( ng-click="showHide('edit_birthday')" )
-			include ../svg/edit_activity_svg
+		
 
 
 //COUNTRY
 div#countryDiv.settingsElement
+	a#editCountry.editLink( ng-click="showHide('edit_country')" )
+			include ../svg/edit_activity_svg
 	form( method="POST" ng-submit="submitChangeSetting('country')")
 		label= tr['country'] + ': '
 		span {{user.country_formatted}}
@@ -110,12 +117,13 @@ div#countryDiv.settingsElement
 		div.formButtons(ng-show="edit_country")
 			input#submitCountry.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditCountry.cancel_link( ng-click="showHide('edit_country')")= tr['cancel']
-		a#editCountry.editLink( ng-click="showHide('edit_country')" )
-			include ../svg/edit_activity_svg
+		
 
 
 //ABOUT ME
 div#aboutDiv.settingsElement
+	a#editAbout.editLink( ng-click="showHide('edit_about')" )
+			include ../svg/edit_activity_svg
 	form( method="POST" ng-submit="submitChangeSetting('about')")
 		label= tr['about_me'] + ': '
 		span( style="overflow-wrap: break-word;") {{user.about}}
@@ -125,6 +133,5 @@ div#aboutDiv.settingsElement
 		div.formButtons( ng-show="edit_about" )
 			input#submitAbout.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditAbout.cancel_link( ng-click="showHide('edit_about')" )= tr['cancel']
-		a#editAbout.editLink( ng-click="showHide('edit_about')" )
-			include ../svg/edit_activity_svg
+		
 
