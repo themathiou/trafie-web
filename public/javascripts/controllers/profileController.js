@@ -74,7 +74,7 @@ trafie.controller("profileController", function( $rootScope, $scope, $http ){
 				
 				var data = $scope.newActivityForm;
 				data.discipline = data.selected_discipline.id;
-				console.log('add', data.date);
+				console.log('add activity: ', data.date);
 				var splitDate = data.date.toString().split(' ');
 				data.date = splitDate[0] + ' ' + splitDate[1] + ' ' +splitDate[2] + ' ' +splitDate[3]; 
 
@@ -140,7 +140,6 @@ trafie.controller("profileController", function( $rootScope, $scope, $http ){
 	 */
 	$scope.updateActivity = function( activity ){
 		var data = $scope.updateActivityForm;
-		console.log('update', data.date);
 		
 		//DATE NEED TO BE FIXED
 		data.date = new Date(data.date.toString().split('T')[0]);
@@ -148,9 +147,7 @@ trafie.controller("profileController", function( $rootScope, $scope, $http ){
 		data.date = splitDate[0] + ' ' + splitDate[1] + ' ' +splitDate[2] + ' ' +splitDate[3];
 
 		data.discipline = activity.discipline;
-
-		// console.log( data.date.getDate(), data.date.getDay(), data.date.getFullYear(), data.date.getMonth() );
-		console.log('data', data);
+		console.log('update activity: ', data);
 		$http.put( "/user/" + $rootScope.user._id + "/activities/" + activity._id, data)
 		.success( function(res){
 			console.log('res', res);
