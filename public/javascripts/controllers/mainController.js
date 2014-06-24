@@ -3,7 +3,7 @@ trafie.controller("mainController", function($rootScope, $scope, $http, $routePa
 		console.log('appInit', $rootScope.user);
 	};
     
-    /**
+   /**
 	 * [Syncs show and hide of elements]
 	 * @param  String element_variable
 	 * @return {[type]}
@@ -12,8 +12,30 @@ trafie.controller("mainController", function($rootScope, $scope, $http, $routePa
 		$scope[element_variable] = !$scope[element_variable];
 	}
 	
-	/*
-		datepicker bootstrap settings -- > TO CHANGE
+	/**
+	 * []
+	 *@param
+	*/
+	$scope.searchUser = function(val) {
+		console.log(val);
+    return $http.get( '/search/?value='+ val )
+		.then(function(res){
+      var results = [];
+			console.log(res);
+      angular.forEach(res.data, function(tmp_user){
+				var tmp = tmp_user.first_name + ' ' + tmp_user.last_name;
+				//var tmp = '<a href="/'+tmp_user._id+'\">'+tmp_user.first_name + ' ' + tmp_user.last_name + '</a>';
+        results.push(tmp);
+      });
+			console.log('results', results);
+      return results;
+    });
+  };
+	
+	
+	
+	/**
+	 * datepicker bootstrap settings -- > TO CHANGE
 	 */
 	 $scope.today = function() {
 	    $scope.dt = new Date();

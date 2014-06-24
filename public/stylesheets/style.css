@@ -113,14 +113,14 @@ label {
   float: left;
   padding: 20px 36px;
 }
-#mainmenu ul {
+#mainmenu ul.navigation_menu {
   padding: 10px 16px;
   margin: 0px;
 }
-#mainmenu ul li {
+#mainmenu ul.navigation_menu li {
   display: inline;
 }
-#mainmenu ul li a {
+#mainmenu ul.navigation_menu li a {
   color: #ffffff;
   background-color: transparent;
   text-decoration: none;
@@ -131,8 +131,8 @@ label {
   -webkit-transition: border 400ms ease-in-out;
   -moz-transition: border 400ms ease-in-out;
 }
-#mainmenu ul li a:hover,
-#mainmenu ul li a.active {
+#mainmenu ul.navigation_menu li a:hover,
+#mainmenu ul.navigation_menu li a.active {
   border-bottom: white 5px solid;
 }
 #mainmenu #search_results {
