@@ -1,11 +1,17 @@
-trafie.controller("mainController", function($rootScope, $scope, $http, $routeParams, $location){
-	
-	$scope.appInit = function(){
+trafie.controller("mainController", function($rootScope, $scope, $http, $routeParams, $location) {
+	$scope.appInit = function() {
 		console.log('appInit', $rootScope.user);
 	};
+    
+    /**
+	 * [Syncs show and hide of elements]
+	 * @param  String element_variable
+	 * @return {[type]}
+	 */
+	$scope.showHide = function( element_variable ){
+		$scope[element_variable] = !$scope[element_variable];
+	}
 	
-
-
 	/*
 		datepicker bootstrap settings -- > TO CHANGE
 	 */
@@ -14,7 +20,7 @@ trafie.controller("mainController", function($rootScope, $scope, $http, $routePa
 	  };
 	  $scope.today();
 
-	  $scope.clear = function () {
+	  $scope.clear = function() {
 	    $scope.dt = null;
 	  };
 

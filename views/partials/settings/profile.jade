@@ -4,14 +4,15 @@ h3= tr['profile_settings']
 div#profilePicDiv.settingsElement
 	a#editProfilePicture.editLink( ng-click="showHide('edit_profilepic')" )
 			include ../svg/edit_activity_svg
-	form( method="POST" enctype="multipart/form-data" ng-submit="submitChangeSetting('profile_pic')")
+	form()
 		label= tr['profile_picture'] + ': '
 		img.settings_profile_pic_thumb( src="{{user.picture}}" )
 		//span= errors.profile_pic
 		div( ng-show="edit_profilepic" )
-			input#upload_profile_pic( name="profile_pic" type="file" accept="image/*")
+			input#upload_profile_pic( type="file" file-input="files" accept="image/*" multiple)
+			p {{files}}
 		div.formButtons( ng-show="edit_profilepic" )
-			input#submit_profile_pic.btn.green( type="submit" value=tr['submit'])
+			button#submit_profile_pic.btn.green( ng-click="upload()" )= tr['submit']
 			a#cancelEditProfilePicture.cancel_link( ng-click="showHide('edit_profilepic')" )= tr['cancel']
 
 		

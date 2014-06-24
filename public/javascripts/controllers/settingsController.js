@@ -49,24 +49,34 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 		//language
 		$scope.edit_language = false;
 		$scope.language_msg = '';
-
-		
 	}
 	
-	/**
-	 * [Syncs show and hide of elements]
-	 * @param  String element_variable
-	 * @return {[type]}
-	 */
-	$scope.showHide = function( element_variable ){
-		$scope[element_variable] = !$scope[element_variable];
-	}
+    /**
+    * [upload a file. - profile pic for now]
+    */
+    $scope.upload = function(){
+        //data = { "profile_pic" : $scope.file };
+				
+				var fd = new FormData();
+				angular.forEach($scope.files, function(file){
+					fd.append('file', file)
+				})
+				
+				console.log(fd);
+        $http.post('/settings_data', fd, { headers:{transformRequest:angular.identity, 'Content-Type':undefined} })
+        .success(function(res){
+            console.log(res);
+        }); 
+    }
 
-
-	$scope.filesChanged = function( element ){
-		$scope.file = element.file;
-		$scope.$apply();
-	}
+    /**
+    * [called when file changed in file input field - profile pic for now]
+    */
+    $scope.fileChanged = function( elm ) {
+				console.log('fileChanged', elm);
+        $scope.files = elm.files;
+        $scope.$apply();
+    }
 
 	/**
 	 * [Posting the changes in settings]

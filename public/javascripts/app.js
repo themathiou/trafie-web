@@ -1,4 +1,5 @@
-/*Define ng-app module*/
+//Define ng-app module
+//---
 var trafie = angular.module('trafie',[ 'ngRoute' , 'ui.bootstrap' ]);
 
 trafie.config(['$locationProvider',
@@ -6,7 +7,8 @@ trafie.config(['$locationProvider',
 		$locationProvider.html5Mode(true)
 	}]);
 
-/*Routing*/
+//Routing
+//---
 trafie.config(['$routeProvider',
 	function($routeProvider) {
 		$routeProvider.
@@ -28,7 +30,8 @@ trafie.config(['$routeProvider',
 	}]);
 
 
-// Initialization
+//Initialization
+//---
 trafie.run(function ($rootScope, $http) {
     $http.get('/main_data')
 		.success(function(res){
@@ -37,3 +40,35 @@ trafie.run(function ($rootScope, $http) {
 			$rootScope.user_first_name = res.user.first_name;
 		});
 });
+
+
+//Custom directives
+//---
+
+//Upload file
+trafie.directive('fileInput',[ '$parse', function($parse){
+    var directive = { 
+        restrict : 'A', 
+				link: function(scope, elm, attrs){
+						elm.bind('change', function(){
+						$parse(attrs.fileInput)
+						.assign(scope, elm);
+
+						scope.$apply();
+						})
+				}
+		}
+    return directive;
+}])
+
+
+
+
+
+
+
+
+
+
+
+
