@@ -162,7 +162,7 @@ exports.post = function( req, res ) {
 					'performance' : performance,
 					'date'        : date
 				};
-				
+
 				var activity = new Activity( new_activity );
 				// Save the activity
 				activity.save(function ( err, activity ) {

@@ -9,8 +9,7 @@
     "express": "3.4.1",
     "jade": "*",
     "nodemailer": "*",
-    "q": "*",
-    "jasmine-node": "*"
+    "q": "*"
   }
 }
         

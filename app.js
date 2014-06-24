@@ -43,29 +43,29 @@ mongoose.connect('mongodb://localhost/trafiejs');
 var db = mongoose.connection;
 
 // Initialize the routes
-var index = require('./routes/index')
-    login = require('./routes/login'),
-    register = require('./routes/register'),
-    profile = require('./routes/profile'),
-    activities = require('./routes/activities'),
-    search = require('./routes/search'),
-    statistics = require('./routes/statistics'),
-    settings = require('./routes/settings'),
-    email_validation = require('./routes/email_validation'),
-    reset_password = require('./routes/reset_password'),
-    dummy_data = require('./routes/dummy_data');
+var index = require('./app/routes/index')
+    login = require('./app/routes/login'),
+    register = require('./app/routes/register'),
+    profile = require('./app/routes/profile'),
+    activities = require('./app/routes/activities'),
+    search = require('./app/routes/search'),
+    statistics = require('./app/routes/statistics'),
+    settings = require('./app/routes/settings'),
+    email_validation = require('./app/routes/email_validation'),
+    reset_password = require('./app/routes/reset_password'),
+    dummy_data = require('./app/routes/dummy_data');
 
 // Initialize the helpers
-var activityHelper = require('./helpers/activity.js'),
-    profileHelper = require('./helpers/profile.js'),
-    userHelper = require('./helpers/user.js');
+var activityHelper = require('./app/helpers/activity.js'),
+    profileHelper = require('./app/helpers/profile.js'),
+    userHelper = require('./app/helpers/user.js');
 
 
 /*******************************************************************************************************************************
  * LIBRARIES                                                                                                                   *
  ******************************************************************************************************************************/
 
-var Email = require('./libs/email');
+var Email = require('./app/libs/email');
 
 
 /*******************************************************************************************************************************
@@ -73,7 +73,7 @@ var Email = require('./libs/email');
  ******************************************************************************************************************************/
 
 trafie.set('port', process.env.PORT || 3000);
-trafie.set('views', path.join(__dirname, 'views'));
+trafie.set('views', path.join(__dirname, 'app/views'));
 trafie.set('view engine', 'jade');
 trafie.set('view cache', true);
 trafie.set('env', 'development');
@@ -218,7 +218,7 @@ trafie.post( '/reset_password/:hash', reset_password.post );
 
  trafie.use(function(req, res, next){
   res.status(404);
-  res.sendfile('./views/four_oh_four.html');
+  res.sendfile('./app/views/four_oh_four.html');
 });
 
 
