@@ -28,7 +28,7 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
 			ul#search_results
 
 			if user._id
-				ul.dropdown
+				ul
 					li
 						a.menu_profile(href="/" ng-class="{active: section == 'profile'}" ) {{user_first_name}}
 					li
@@ -36,7 +36,7 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
 					li
 						a.menu_settings(href="/settings" ng-class="{active: section == 'settings'}")= tr['settings']
 			else
-				ul.dropdown
+				ul
 					li
 						a.menu_profile(href="/register") Register
 					li
