@@ -24,11 +24,10 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
 		div#mainmenu
 			div
 			a.logo(href="/")
-			input#search( name="search" placeholder="Search here..." autocomplete="off" )
-			ul#search_results
+			input#search( type="text" ng-model="asyncSelected" placeholder="search for those mother fuckers!" typeahead-on-select="onSelect($item, $model, $label)" typeahead="result.label for result in searchUser($viewValue)" typeahead-loading="loadingLocations" class="form-control" autocomplete="off" )
 
 			if user._id
-				ul
+				ul.navigation_menu
 					li
 						a.menu_profile(href="/" ng-class="{active: section == 'profile'}" ) {{user_first_name}}
 					li
@@ -36,7 +35,7 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
 					li
 						a.menu_settings(href="/settings" ng-class="{active: section == 'settings'}")= tr['settings']
 			else
-				ul
+				ul.navigation_menu
 					li
 						a.menu_profile(href="/register") Register
 					li
@@ -45,9 +44,11 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
 	#content.col-md-8( ng-view )
 	
 	script(type="text/javascript", src="/javascripts/libs/angular.min.js")
+	script(type='text/javascript', src='/javascripts/libs/angular-cookies.min.js')
 	script(type="text/javascript", src="/javascripts/libs/angular-route.min.js")
 	script(type="text/javascript", src="/javascripts/libs/ui-bootstrap-0.10.0.min.js")
 	script(type='text/javascript', src='/javascripts/scripts/script.js')
+	
 	script(type='text/javascript', src='/javascripts/app.js')
 	script(type='text/javascript', src='/javascripts/controllers/mainController.js')
 	script(type='text/javascript', src='/javascripts/controllers/profileController.js')

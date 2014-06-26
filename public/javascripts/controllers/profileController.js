@@ -1,4 +1,4 @@
-trafie.controller("profileController", function( $rootScope, $scope, $http ){
+trafie.controller("profileController", function( $rootScope, $scope, $http, $routeParams ){
 	//GENERAL VARIABLES
 	$scope.disciplines = {
       'time': [
@@ -45,26 +45,30 @@ trafie.controller("profileController", function( $rootScope, $scope, $http ){
 
 
     $scope.initProfile = function(){
+			
+			//--- USE THEM FOR LOGIC OF VISITING OTHERS USERS PAGE
+			console.log( $routeParams.userID, $rootScope.user._id );
+			
+			
+			$http.get('/profile/'+ $rootScope.user._id)
+			.success(function(res){
+				console.log(res);
+				$scope.profile = res;
+				$scope.disciplines_options = [];
+				for( i in res.disciplines ) {
+					var temp = { name: res.disciplines[i] , id: i };
+					$scope.disciplines_options.push(temp);
+				}
 
-    	$http.get('/profile/'+ $rootScope.user._id)
-		.success(function(res){
-			console.log(res);
-			$scope.profile = res;
-			$scope.disciplines_options = [];
-			for( i in res.disciplines ) {
-				var temp = { name: res.disciplines[i] , id: i };
-				$scope.disciplines_options.push(temp);
+				$scope.getActivities( $rootScope.user._id, $scope.profile.discipline);
+			});
 			}
 
-			$scope.getActivities( $rootScope.user._id, $scope.profile.discipline);
-		});
-    }
-
-	$scope.getActivities = function(user_id, discipline){
-		$http.get('/user/' + user_id + '/activities?discipline=' + discipline)
-		.success(function(res){
-			$scope.activities = res;
-		});
+		$scope.getActivities = function(user_id, discipline){
+			$http.get('/user/' + user_id + '/activities?discipline=' + discipline)
+			.success(function(res){
+				$scope.activities = res;
+			});
 	};
 	
 	/*

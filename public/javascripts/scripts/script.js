@@ -1,48 +1,48 @@
 /********************************************/
 /* 				MAIN MENU 					*/
 /********************************************/
-
-function mainMenuHandlers(){
-
-	//search field
-	document.getElementById("search").onkeyup = function(){
-		var search_text = this.value;
-
-		if( search_text != '' ) {
-			ajax_get_input_field('/search/?value='+this.value, this, function(res){
-				var response = JSON.parse(res);
-
-				if( response.length == 0 ) { //no results
-					document.getElementById("search_results").style.display = 'none';
-					// document.getElementById("search_results").innerHTML = '<li> no results found for \"'+ search_text +'\" </li>';
-				} else if( response.length > 0 ){ //results
-					var resultList = '';
-					document.getElementById("search_results").style.display = 'block';
-					for( i in response ) {
-						if( response[i].username ) {
-							resultList += '<li><a href="/'+response[i].username+'"><span class="name">'+response[i].first_name+'  '+response[i].last_name+'</span>  <span class="details">'+response[i].formatted_discipline+' '+response[i].formatted_country+'</span></a></li>';
-						} else if( response[i]._id ) {
-							resultList += '<li><a href="/'+response[i]._id+'"><span class="name">'+response[i].first_name+'  '+response[i].last_name+'</span>  <span class="details">'+response[i].formatted_discipline+' '+response[i].formatted_country+'</span></a></li>';
-						}
-					}
-					document.getElementById("search_results").innerHTML = resultList;
-				} else { //no results
-					document.getElementById("search_results").style.display = 'none';
-					// document.getElementById("search_results").innerHTML = '<li> no results found for \"'+ search_text +'\" </li>';
-				}
-
-			});
-		} else {
-			document.getElementById("search_results").style.display = 'none';
-		}
-	}
-
-	/*
-		document.getElementById("search").onblur = function(){
-			document.getElementById("search_results").style.display = 'none';
-		}
-	*/
-}
+//
+//function mainMenuHandlers(){
+//
+//	//search field
+//	document.getElementById("search").onkeyup = function(){
+//		var search_text = this.value;
+//
+//		if( search_text != '' ) {
+//			ajax_get_input_field('/search/?value='+this.value, this, function(res){
+//				var response = JSON.parse(res);
+//
+//				if( response.length == 0 ) { //no results
+//					document.getElementById("search_results").style.display = 'none';
+//					// document.getElementById("search_results").innerHTML = '<li> no results found for \"'+ search_text +'\" </li>';
+//				} else if( response.length > 0 ){ //results
+//					var resultList = '';
+//					document.getElementById("search_results").style.display = 'block';
+//					for( i in response ) {
+//						if( response[i].username ) {
+//							resultList += '<li><a href="/'+response[i].username+'"><span class="name">'+response[i].first_name+'  '+response[i].last_name+'</span>  <span class="details">'+response[i].formatted_discipline+' '+response[i].formatted_country+'</span></a></li>';
+//						} else if( response[i]._id ) {
+//							resultList += '<li><a href="/'+response[i]._id+'"><span class="name">'+response[i].first_name+'  '+response[i].last_name+'</span>  <span class="details">'+response[i].formatted_discipline+' '+response[i].formatted_country+'</span></a></li>';
+//						}
+//					}
+//					document.getElementById("search_results").innerHTML = resultList;
+//				} else { //no results
+//					document.getElementById("search_results").style.display = 'none';
+//					// document.getElementById("search_results").innerHTML = '<li> no results found for \"'+ search_text +'\" </li>';
+//				}
+//
+//			});
+//		} else {
+//			document.getElementById("search_results").style.display = 'none';
+//		}
+//	}
+//
+//	/*
+//		document.getElementById("search").onblur = function(){
+//			document.getElementById("search_results").style.display = 'none';
+//		}
+//	*/
+//}
 
 /********************************************/
 /* 				UI ASSETS 					*/

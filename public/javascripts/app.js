@@ -16,6 +16,10 @@ trafie.config(['$routeProvider',
 				templateUrl: '/views/profile.html',
 				controller: 'profileController'
 			}).
+			when('/:userID', {
+				templateUrl: '/views/profile.html',
+				controller: 'profileController'
+			}).
 			when('/settings', {
 				templateUrl: '/views/settings.html',
 				controller: 'settingsController'
