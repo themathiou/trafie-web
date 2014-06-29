@@ -1,6 +1,6 @@
 trafie.controller("mainController", function($rootScope, $scope, $http, $routeParams, $location) {
 	$scope.appInit = function() {
-		console.log('appInit', $rootScope.user);
+		console.log( 'appInit', $rootScope.user );
 	};
     
    /**
@@ -38,6 +38,7 @@ trafie.controller("mainController", function($rootScope, $scope, $http, $routePa
 	$scope.onSelect = function ($item, $model, $label) {
 		$location.path('/' + $item._id);
 	};
+
 	
 	/**
 	 * datepicker bootstrap settings -- > TO CHANGE

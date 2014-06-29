@@ -45,12 +45,23 @@ trafie.controller("profileController", function( $rootScope, $scope, $http, $rou
 
 
     $scope.initProfile = function(){
-			
-			//--- USE THEM FOR LOGIC OF VISITING OTHERS USERS PAGE
-			console.log( $routeParams.userID, $rootScope.user._id );
-			
-			
-			$http.get('/profile/'+ $rootScope.user._id)
+		$scope.thisID = '';
+		$scope.self = false;
+
+		if( $routeParams.userID === undefined || $routeParams.userID == $rootScope.user._id){
+				$scope.thisID = $rootScope.user._id;
+				$scope.self = true;
+				$scope.getProfile( $scope.thisID );
+		}
+		else{
+			$scope.thisID = $routeParams.userID;
+			$scope.self = false;
+			$scope.getProfile( $scope.thisID );
+		}
+	}
+
+		$scope.getProfile = function( user_id ){
+			$http.get('/profile/'+ user_id)
 			.success(function(res){
 				console.log(res);
 				$scope.profile = res;
@@ -60,16 +71,19 @@ trafie.controller("profileController", function( $rootScope, $scope, $http, $rou
 					$scope.disciplines_options.push(temp);
 				}
 
-				$scope.getActivities( $rootScope.user._id, $scope.profile.discipline);
+				console.log($scope.profile);
+				$scope.getActivities( user_id , $scope.profile.discipline);
 			});
-			}
-
+		}
+		
 		$scope.getActivities = function(user_id, discipline){
-			$http.get('/user/' + user_id + '/activities?discipline=' + discipline)
+			var url =  '';
+			discipline != '' ? url = '/user/' + user_id + '/activities?discipline=' + discipline : url = '/user/' + user_id + '/activities';
+			$http.get(url)
 			.success(function(res){
 				$scope.activities = res;
 			});
-	};
+		};
 	
 	/*
 	submitNewActivity function : creates the object for new activity submission and makes the ajax call (POST)

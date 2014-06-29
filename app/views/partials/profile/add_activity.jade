@@ -1,4 +1,4 @@
-accordion( class="info add_activity" )
+accordion( class="info add_activity" ng-show="self")
 	accordion-group( heading=tr['add_new_activity'] is-open="accordions.addActivity")
 		select( ng-model="newActivityForm.selected_discipline" ng-options="discipline.name for discipline in disciplines_options " ng-init="selected_discipline = disciplines_options[0].name" )
 			option( value="")= tr['choose_your_discipline']

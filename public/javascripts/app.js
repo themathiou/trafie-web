@@ -49,6 +49,7 @@ trafie.run(function ($rootScope, $http) {
 //Custom directives
 //---
 
+
 //Upload file
 trafie.directive('fileInput',[ '$parse', function($parse){
     var directive = { 

@@ -24,7 +24,8 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
 		div#mainmenu
 			div
 			a.logo(href="/")
-			input#search( type="text" ng-model="asyncSelected" placeholder="search for those mother fuckers!" typeahead-on-select="onSelect($item, $model, $label)" typeahead="result.label for result in searchUser($viewValue)" typeahead-loading="loadingLocations" class="form-control" autocomplete="off" )
+			input#search( type="text" ng-model="asyncSelected" placeholder="search for athletes!" typeahead-on-select="onSelect($item, $model, $label)" typeahead="result.label for result in searchUser($viewValue)" typeahead-loading="loadingLocations" class="form-control" autocomplete="off" )
+
 
 			if user._id
 				ul.navigation_menu
@@ -44,7 +45,6 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
 	#content.col-md-8( ng-view )
 	
 	script(type="text/javascript", src="/javascripts/libs/angular.min.js")
-	script(type='text/javascript', src='/javascripts/libs/angular-cookies.min.js')
 	script(type="text/javascript", src="/javascripts/libs/angular-route.min.js")
 	script(type="text/javascript", src="/javascripts/libs/ui-bootstrap-0.10.0.min.js")
 	script(type='text/javascript', src='/javascripts/scripts/script.js')
