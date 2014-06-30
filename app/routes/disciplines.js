@@ -20,18 +20,17 @@ exports.get = function( req, res ){
 			return Activity.schema.getDisciplinesPerformedByUser( { 'user_id': user_id } );
 		})
 		.then( function( disciplines ) {
-			var formatted_disciplines = [];
+			var response = [];
 			var disciplines_length = disciplines.length;
 			var tr = translations[user_data.language];
 
 			for( var i=0 ; i<disciplines_length ; i++ ) {
-				formatted_disciplines[i] = tr[disciplines[i]];
+				response[i] = {
+					'discipline': 			disciplines[i],
+					'formatted_discipline': tr[disciplines[i]]
+				};
 			}
-
-			var response = {
-				'disciplines': 				disciplines,
-				'formatted_disciplines': 	formatted_disciplines
-			}
+			
 			res.json( response );
 		})
 		.fail( function( error ) {
