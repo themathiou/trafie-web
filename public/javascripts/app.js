@@ -16,6 +16,10 @@ trafie.config(['$routeProvider',
 				templateUrl: '/views/profile.html',
 				controller: 'profileController'
 			}).
+			when('/:userID', {
+				templateUrl: '/views/profile.html',
+				controller: 'profileController'
+			}).
 			when('/settings', {
 				templateUrl: '/views/settings.html',
 				controller: 'settingsController'
@@ -44,6 +48,7 @@ trafie.run(function ($rootScope, $http) {
 
 //Custom directives
 //---
+
 
 //Upload file
 trafie.directive('fileInput',[ '$parse', function($parse){

@@ -52,7 +52,7 @@ body {
   float: left;
 }
 #welcome_container {
-  background: rgba(0, 0, 0, 0.2);
+  background-image: url('../images/welcome/01.jpg');
   background-repeat: no-repeat;
   background-position: center center;
   background-attachment: fixed;
