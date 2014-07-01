@@ -45,7 +45,7 @@ trafie.run(function ($rootScope, $http) {
 			$rootScope.user_first_name = res.user.first_name;
 
 			//the user we visit. Is the same at login
-			$rootScope.visited_user = res.user;
+			$rootScope.current_user = res.user;
 		});
 });
 

@@ -60,30 +60,46 @@ trafie.controller("profileController", function( $rootScope, $scope, $http, $rou
 		}
 	}
 
-		$scope.getProfile = function( user_id ){
-			$http.get('/profile/'+ user_id)
-			.success(function(res){
-				$rootScope.visited_user = res;
-				$scope.disciplines_options = [];
-				for( i in res.disciplines ) {
-					var temp = { name: res.disciplines[i] , id: i };
-					$scope.disciplines_options.push(temp);
-				}
+	$scope.getProfile = function( user_id ){
+		$http.get('/profile/'+ user_id)
+		.success(function(res){
+			$rootScope.current_user = res;
+			$scope.disciplines_options = [];
+			for( i in res.disciplines ) {
+				var temp = { name: res.disciplines[i] , id: i };
+				$scope.disciplines_options.push(temp);
+			}
 
-				console.log( 'appInit', $rootScope.user, $rootScope.visited_user );
+			console.log( 'user', $rootScope.user );
+			console.log( 'visited-user', $rootScope.current_user );
 
-				$scope.getActivities( user_id , $rootScope.visited_user.discipline);
-			});
-		}
-		
-		$scope.getActivities = function(user_id, discipline){
-			var url =  '';
-			discipline != '' ? url = '/user/' + user_id + '/activities?discipline=' + discipline : url = '/user/' + user_id + '/activities';
-			$http.get(url)
-			.success(function(res){
-				$scope.activities = res;
-			});
-		};
+			//get user's activities
+			$scope.getActivities( user_id , $rootScope.current_user.discipline);
+			//get user's disciplines for filtering
+			$scope.getDisciplinesOfActivities( user_id );
+		});
+	}
+	
+	$scope.getActivities = function(user_id, discipline){
+		var url =  '';
+		discipline != '' ? url = '/user/' + user_id + '/activities?discipline=' + discipline : url = '/user/' + user_id + '/activities';
+		$http.get(url)
+		.success(function(res){
+			$scope.activities = res;
+		})
+	}
+
+	$scope.getDisciplinesOfActivities = function( user_id ){
+		var url = '/user/' + user_id + '/disciplines';
+		$scope.disciplinesOfActivities = '';
+		$http.get(url)
+		.success(function(res){
+			$scope.disciplinesOfActivities = res;
+
+			console.log( user_id );
+			console.log( $scope.disciplinesOfActivities, res );
+		})
+	}
 	
 	/*
 	submitNewActivity function : creates the object for new activity submission and makes the ajax call (POST)

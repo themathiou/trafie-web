@@ -1,12 +1,12 @@
 div#main_content( ng-init="initProfile()"  ng-cloak)
 	div#profile_container
 		div#image_container
-			img( src="{{profile.picture}}" )
+			img( src="{{current_user.picture}}" )
 		div#profileFullName
-			h3 {{profile.first_name}} {{profile.last_name}}
-			p {{profile.formatted_discipline}} 
+			h3 {{current_user.first_name}} {{current_user.last_name}}
+			p {{current_user.formatted_discipline}} 
 				span( ng-show="user.discipline && user.country" ) - 
-				{{profile.country}} {{profile.disciplines_of_user}}
+				{{current_user.country}} {{current_user.disciplines_of_user}}
 	
 	//REMOVE STYLE FROM BOTH UL and LI
 	// I NEED AN ARRAY WITH USER_DISCIPLINES OF OTHER USERS.
