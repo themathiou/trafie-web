@@ -48,6 +48,7 @@ var index = require('./app/routes/index')
     register = require('./app/routes/register'),
     profile = require('./app/routes/profile'),
     activities = require('./app/routes/activities'),
+    disciplines = require('./app/routes/disciplines'),
     search = require('./app/routes/search'),
     statistics = require('./app/routes/statistics'),
     settings = require('./app/routes/settings'),
@@ -122,6 +123,8 @@ trafie.post( '/user/:user_id/activities', activities.post );
 trafie.put( '/user/:user_id/activities/:activity_id', activities.put );
 
 trafie.delete( '/user/:user_id/activities/:activity_id', activities.delete );
+
+trafie.get( '/user/:user_id/disciplines', disciplines.get );
 
 
 /*******************************************************************************************************************************
