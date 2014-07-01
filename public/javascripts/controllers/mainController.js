@@ -1,6 +1,5 @@
 trafie.controller("mainController", function($rootScope, $scope, $http, $routeParams, $location) {
 	$scope.appInit = function() {
-		console.log( 'appInit', $rootScope.user );
 	};
     
    /**
@@ -18,15 +17,14 @@ trafie.controller("mainController", function($rootScope, $scope, $http, $routePa
 	*/
 	$scope.searchUser = function(val) {
 		console.log(val);
-    return $http.get( '/search/?value='+ val )
+    	return $http.get( '/search/?value='+ val )
 		.then(function(res){
-      var results = [];
-			console.log(res);
-      angular.forEach(res.data, function(tmp_user){
-				tmp_user.label = tmp_user.first_name + ' ' + tmp_user.last_name + ' ' + tmp_user.formatted_country;
-        results.push(tmp_user);
-      });
-			console.log('results', results);
+	      var results = [];
+				console.log(res);
+	      angular.forEach(res.data, function(tmp_user){
+					tmp_user.label = tmp_user.first_name + ' ' + tmp_user.last_name + ' ' + tmp_user.formatted_country;
+	        results.push(tmp_user);
+	      });
       return results;
     });
   };

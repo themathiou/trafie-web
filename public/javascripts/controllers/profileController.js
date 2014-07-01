@@ -63,16 +63,16 @@ trafie.controller("profileController", function( $rootScope, $scope, $http, $rou
 		$scope.getProfile = function( user_id ){
 			$http.get('/profile/'+ user_id)
 			.success(function(res){
-				console.log(res);
-				$scope.profile = res;
+				$rootScope.visited_user = res;
 				$scope.disciplines_options = [];
 				for( i in res.disciplines ) {
 					var temp = { name: res.disciplines[i] , id: i };
 					$scope.disciplines_options.push(temp);
 				}
 
-				console.log($scope.profile);
-				$scope.getActivities( user_id , $scope.profile.discipline);
+				console.log( 'appInit', $rootScope.user, $rootScope.visited_user );
+
+				$scope.getActivities( user_id , $rootScope.visited_user.discipline);
 			});
 		}
 		
