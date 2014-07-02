@@ -5,15 +5,18 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
 		div#profileFullName
 			h3 {{current_user.first_name}} {{current_user.last_name}}
 			p {{current_user.formatted_discipline}} 
-				span( ng-show="user.discipline && user.country" ) - 
-				{{current_user.country}} {{current_user.disciplines_of_user}}
+				span( ng-show="current_user.discipline && current_user.country" ) - 
+				{{current_user.country}} {{current_user.discipline}}
 	
 	//REMOVE STYLE FROM BOTH UL and LI
 	// I NEED AN ARRAY WITH USER_DISCIPLINES OF OTHER USERS.
 	// NEED IT ALSO FOR STATISTICS
-	ul(style="margin-bottom: 40px;")
-		li( ng-repeat="(key, value) in user.disciplines_of_user" style="float:left;")
-			a( ng-click="getActivities( user._id, key )" ) {{value}}
+	//- ul(style="margin-bottom: 40px;")
+	//- 	li( ng-repeat="(key, value) in user.disciplines_of_user" style="float:left;")
+	//- 		a( ng-click="getActivities( user._id, key )" ) {{value}}
+
+	active-disciplines( user_id="{{current_user._id}}" )
+
 
 	div#loading( hidden )
 		img( src="images/ui/loading.gif" )

@@ -16,10 +16,6 @@ trafie.config(['$routeProvider',
 				templateUrl: '/views/profile.html',
 				controller: 'profileController'
 			}).
-			when('/:userID', {
-				templateUrl: '/views/profile.html',
-				controller: 'profileController'
-			}).
 			when('/settings', {
 				templateUrl: '/views/settings.html',
 				controller: 'settingsController'
@@ -27,6 +23,10 @@ trafie.config(['$routeProvider',
 			when('/statistics', {
 				templateUrl: '/views/statistics.html',
 				controller: 'statisticsController'
+			}).
+			when('/:userID', {
+				templateUrl: '/views/profile.html',
+				controller: 'profileController'
 			}).
 			otherwise({
 				redirectTo: '/'
@@ -52,25 +52,23 @@ trafie.run(function ($rootScope, $http) {
 
 //Custom directives
 //---
+//Disciplines of the user
+trafie.directive("activeDisciplines", function( $http ){
+	return {
+		restrict:'E',
+		scope:{
+			user_id:'=user_id'
+		},
+		link: function(scope, element, attrs){
+			$http.get('/user/'+scope.user_id+'/disciplines')
+			.success(function(res){
+				console.log('that bitchesss:', res);
+			})
+		},
+		template: '<ul><li ng-repeat="(key, value) in user.disciplines_of_user" style="float:left;" ><a ng-click="getActivities( user._id, key )">{{value}}</a></li></ul>'
+	}
 
-
-//Upload file
-trafie.directive('fileInput',[ '$parse', function($parse){
-    var directive = { 
-        restrict : 'A', 
-				link: function(scope, elm, attrs){
-						elm.bind('change', function(){
-						$parse(attrs.fileInput)
-						.assign(scope, elm);
-
-						scope.$apply();
-						})
-				}
-		}
-    return directive;
-}])
-
-
+})
 
 
 
