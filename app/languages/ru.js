@@ -96,6 +96,8 @@ var en = {
     'uploaded_image_too_large'                      : 'The uploaded image is too large',
     'uploaded_image_wrong_type'                     : 'The type of the uploaded file is wrong',
     'invalid_performance'                           : 'Invalid performance',
+    'too_long_text'                                 : 'Text is too long',
+    'invalid_place'                                 : 'Invalid place value',
     'wrong_date_format'                             : 'Wrong date format',
     'date_is_required'                              : 'Date is required',
 

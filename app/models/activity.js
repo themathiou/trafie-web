@@ -7,7 +7,11 @@ var activitySchema = mongoose.Schema({
   user_id		: { type: String, required: true, index: true },
   discipline	: { type: String, required: true },
   performance	: { type: String },
-  date 			: { type: Date, default: Date.now }
+  date 			: { type: Date, default: Date.now },
+  place 		: { type: Number },
+  location 		: { type: String },
+  competition 	: { type: String },
+  notes 		: { type: String }
 });
 
 /**
