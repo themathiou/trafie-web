@@ -99,6 +99,8 @@ var el = {
     'uploaded_image_too_large'                      : 'Το μέγεθος της φωτογραφίας είναι πολύ μεγάλο',
     'uploaded_image_wrong_type'                     : 'Ο τύπος του αρχείου είναι λανθασμένος',
     'invalid_performance'                           : 'Μη έγκυρη επίδοση',
+    'too_long_text'                                 : 'Πολύ μεγάλο κείμενο',
+    'invalid_place'                                 : 'Μη έγκυρη θέση',
     'wrong_date_format'                             : 'Η μορφή ημερομηνίας είναι λανθασμένη',
     'date_is_required'                              : 'Η ημερομηνία είναι υποχρεωτική',
 

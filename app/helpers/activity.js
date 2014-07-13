@@ -233,6 +233,42 @@ activityHelper.parseDate = function( date ) {
 };
 
 /**
+ * Checks if the length of the location string is acceptable
+ * @param  string  location
+ * @return boolean
+ */
+activityHelper.locationIsValid = function( location ) {
+	return typeof location === 'string' && location.length < 120;
+}
+
+/**
+ * Checks if the place if it's a valid integer
+ * @param  number  place
+ * @return boolean
+ */
+activityHelper.placeIsValid = function( place ) {
+	return isPositiveInteger( place );
+}
+
+/**
+ * Checks if the length of the competition string is acceptable
+ * @param  string  competition
+ * @return boolean
+ */
+activityHelper.competitionIsValid = function( competition ) {
+	return typeof competition === 'string' && competition.length < 120;
+}
+
+/**
+ * Checks if the length of the notes string is acceptable
+ * @param  string  location
+ * @return boolean
+ */
+activityHelper.notesAreValid = function( notes ) {
+	return typeof notes === 'string' && notes.length < 1000;
+}
+
+/**
  * Parses the dates as they are stored in the db
  * @param  string 		date
  * @return date object
@@ -243,5 +279,14 @@ activityHelper.parseDbDate = function( date ) {
 
 	return new Date( dateParts[0], dateParts[1]-1, dateParts[2] );
 }
+
+/**
+ * Checks if the given value is a positive integer number
+ * @param number value
+ * @return boolean
+ */
+function isPositiveInteger( value ) {
+	return typeof value !== 'undefined' && !isNaN( parseInt(value) ) && isFinite( value ) && value > 0 && value % 1 === 0;
+};
 
 module.exports = activityHelper;

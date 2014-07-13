@@ -76,9 +76,15 @@ exports.post = function( req, res ) {
 			// If the profile doesn't exist, send an empty json
 			if( typeof profile_data.language === 'undefined' ) return_activity( res, 404, '', 'en', 'd-m-y' );
 
-			var errors = false;
-			var error_messages = {};
-			var discipline = typeof req.body.discipline !== 'undefined' ? req.body.discipline : '';
+			var errors = false,
+				error_messages = {},
+				discipline = typeof req.body.discipline !== 'undefined' ? req.body.discipline : '',
+				performance = {},
+				location = '',
+				place = 0,
+				competition = '',
+				notes = '',
+				tr = translations[profile_data.language];
 
 			// Validating date
 			if( typeof req.body.date !== 'undefined' && req.body.date ) {
@@ -92,8 +98,6 @@ exports.post = function( req, res ) {
 				error_messages.date = 'date_is_required';
 			}
 
-			var performance = {};
-			
 			// Validating discipline and performance
 			switch ( discipline ) {
 				case '100m':
@@ -150,17 +154,57 @@ exports.post = function( req, res ) {
 
 			if( performance === null ) {
 				errors = true;
-				error_messages.performance = 'invalid_performance';
+				error_messages.performance = tr['invalid_performance'];
+			}
+
+			if( typeof req.body.location !== 'undefined' ) {
+				if( activityHelper.locationIsValid( req.body.location ) ) {
+					location = req.body.location;
+				} else {
+					errors = true;
+					error_messages.location = tr['too_long_text'];
+				}
+			}
+
+			if( typeof req.body.place !== 'undefined' ) {
+				if( activityHelper.placeIsValid( req.body.place ) ) {
+					place = req.body.place;
+				} else {
+					errors = true;
+					error_messages.place = tr['invalid_place'];
+				}
+			}
+
+			if( typeof req.body.competition !== 'undefined' ) {
+				if( activityHelper.competitionIsValid( req.body.competition ) ) {
+					competition = req.body.competition;
+				} else {
+					errors = true;
+					error_messages.competition = tr['too_long_text'];
+				}
+			}
+
+			if( typeof req.body.notes !== 'undefined' ) {
+				if( activityHelper.notesAreValid( req.body.note ) ) {
+					notes = req.body.notes;
+				} else {
+					errors = true;
+					error_messages.notes = tr['too_long_text'];
+				}
 			}
 
 			// If there are no errors
 			if( !errors ) {
 				// Create the record that will be inserted in the db
 				var new_activity = {
-					'user_id'     : user_id,
-					'discipline'  : discipline,
-					'performance' : performance,
-					'date'        : date
+					'user_id'     	: user_id,
+					'discipline'  	: discipline,
+					'performance' 	: performance,
+					'date'        	: date,
+					'place'			: place,
+					'location'		: location,
+					'competition'	: competition,
+					'notes'			: notes
 				};
 
 				var activity = new Activity( new_activity );
@@ -189,8 +233,8 @@ exports.put = function( req, res ) {
 	// Get the activity id from the url
 	var activity_id = req.params.activity_id;
 
-	var language = '';
-	var date_format = '';
+	var language = '',
+		date_format = '';
 
 	// If there is no user id, redirect to login
 	if( !user_id || !activity_id || ( user_id !== req.params.user_id ) ) {
@@ -210,8 +254,13 @@ exports.put = function( req, res ) {
 		.then( function( activity ) {
 			if( typeof activity._id == 'undefined' ) return_activity( res, 404, '', language, date_format );
 
-			var errors = false;
-			var error_messages = {};
+			var errors = false,
+				error_messages = {},
+				location = '',
+				place = 0,
+				competition = '',
+				notes = '',
+				tr = translations[language];
 
 			// Checking if the date value is valid
 			if( typeof req.body.date !== 'undefined' && req.body.date ) {
@@ -283,15 +332,55 @@ exports.put = function( req, res ) {
 
 			if( performance === null ) {
 				errors = true;
-				error_messages.performance = 'invalid_performance';
+				error_messages.performance = tr['invalid_performance'];
+			}
+
+			if( typeof req.body.location !== 'undefined' ) {
+				if( activityHelper.locationIsValid( req.body.location ) ) {
+					location = req.body.location;
+				} else {
+					errors = true;
+					error_messages.location = tr['too_long_text'];
+				}
+			}
+
+			if( typeof req.body.place !== 'undefined' ) {
+				if( activityHelper.placeIsValid( req.body.place ) ) {
+					place = req.body.place;
+				} else {
+					errors = true;
+					error_messages.place = tr['invalid_place'];
+				}
+			}
+
+			if( typeof req.body.competition !== 'undefined' ) {
+				if( activityHelper.competitionIsValid( req.body.competition ) ) {
+					competition = req.body.competition;
+				} else {
+					errors = true;
+					error_messages.competition = tr['too_long_text'];
+				}
+			}
+
+			if( typeof req.body.notes !== 'undefined' ) {
+				if( activityHelper.notesAreValid( req.body.note ) ) {
+					notes = req.body.notes;
+				} else {
+					errors = true;
+					error_messages.notes = tr['too_long_text'];
+				}
 			}
 
 			// If there are no errors
 			if( !errors ) {
 				// Create the record that will be inserted in the db
 				var activity = {
-					'performance' : performance,
-					'date'        : date
+					'performance' 	: performance,
+					'date'        	: date,
+					'place'			: place,
+					'location'		: location,
+					'competition'	: competition,
+					'notes'			: notes
 				};
 
 				Activity.findByIdAndUpdate( activity_id, activity, '', function ( err, activity ) {
@@ -364,7 +453,11 @@ function return_activity( res, status_code, _id, language, date_format, error_me
 			'_id'                   : activity._id,
 			'discipline'            : activity.discipline,
 			'performance'           : activity.performance,
-			'date'                  : activity.date
+			'date'                  : activity.date,
+			'place' 				: activity.place,
+			'location'				: activity.location,
+			'competition'			: activity.competition,
+			'notes'					: activity.notes
 		};
 
 		// Format the date of the activity
@@ -393,7 +486,11 @@ function return_activities( res, status_code, where, language, date_format ) {
 				'_id'                   : activities[i]._id,
 				'discipline'            : activities[i].discipline,
 				'performance'           : activities[i].performance,
-				'date'                  : activities[i].date
+				'date'                  : activities[i].date,
+				'place' 				: activities[i].place,
+				'location'				: activities[i].location,
+				'competition'			: activities[i].competition,
+				'notes'					: activities[i].notes
 			};
 		}
 

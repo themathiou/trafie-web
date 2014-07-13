@@ -99,6 +99,8 @@ var pr = {
     'uploaded_image_too_large'                      : 'Get your fat image back',
     'uploaded_image_wrong_type'                     : 'Wrong fuckin\' file type',
     'invalid_performance'                           : 'Invalid fuckin\' performance',
+    'too_long_text'                                 : 'Text is too long',
+    'invalid_place'                                 : 'Invalid place value',
     'wrong_date_format'                             : 'Wrong fuckin\' date format',
     'date_is_required'                              : 'Date is fuckin\' required',
 
