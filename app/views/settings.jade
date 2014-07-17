@@ -7,8 +7,8 @@ div( ng-controller="settingsController" ng-init="settingsInit()")
 			include partials/settings/account
 
 	//temp loading - move to search
-	div#loading( hidden )
-		img( src="images/ui/loading.gif" )
+	div
+		a( ng-click="logout()" ) tr['logout']
 
 	//scripts
 	//script(type='text/javascript', src='/javascripts/settings.js')

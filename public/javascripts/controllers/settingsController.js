@@ -1,4 +1,4 @@
-trafie.controller("settingsController", function($rootScope, $timeout, $scope, $http, $routeParams, $location){
+trafie.controller("settingsController", function($rootScope, $timeout, $scope, $window, $http, $routeParams, $location){
 	$http.get('/settings_data')
 	.success(function(res){
 		console.log(res);
@@ -346,5 +346,16 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 				console.log('default switch case');
 		}
 	}
+
+
+
+	/**
+	 * [Logs out]
+	 */
+	$scope.logout = function(){
+		$rootScope.user = {};
+		$window.location.href = '/login';
+	}
+
 
 });
