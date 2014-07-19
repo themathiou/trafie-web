@@ -54,25 +54,7 @@ trafie.run(function ($rootScope, $http) {
 });
 
 
-//Custom directives
-//---
-//Disciplines of the user
-trafie.directive("activeDisciplines", function( $http ){
-	return {
-		restrict:'E',
-		scope:{
-			user_id:'=user_id'
-		},
-		link: function(scope, element, attrs){
-			$http.get('/user/'+scope.user_id+'/disciplines')
-			.success(function(res){
-				console.log('that bitchesss:', res);
-			})
-		},
-		template: '<ul><li ng-repeat="(key, value) in user.disciplines_of_user" style="float:left;" ><a ng-click="getActivities( user._id, key )">{{value}}</a></li></ul>'
-	}
 
-})
 
 
 

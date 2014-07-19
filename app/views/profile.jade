@@ -15,8 +15,7 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
 	//- 	li( ng-repeat="(key, value) in user.disciplines_of_user" style="float:left;")
 	//- 		a( ng-click="getActivities( user._id, key )" ) {{value}}
 
-	active-disciplines( user_id="{{current_user._id}}" )
-
+	trf-active-disciplines( user_id="{{current_user._id}}" )
 
 	div#loading( hidden )
 		img( src="images/ui/loading.gif" )
