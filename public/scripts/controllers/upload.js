@@ -1,12 +1,7 @@
-"use strict";
-
-
-angular.module('fileUpload', [ 'angularFileUpload' ]);
-
-var uploadUrl = 'http://angular-file-upload-cors-srv.appspot.com/upload';
-window.uploadUrl = window.uploadUrl || 'upload';
+// var uploadUrl = 'http://angular-file-upload-cors-srv.appspot.com/upload';
+// window.uploadUrl = window.uploadUrl || 'upload';
 	
-var MyCtrl = [ '$scope', '$http', '$timeout', '$upload', function($scope, $http, $timeout, $upload) {
+trafie.controller( "MyCtrl", function($scope, $http, $timeout, $upload) {
 	$scope.usingFlash = FileAPI && FileAPI.upload != null;
 	$scope.fileReaderSupported = window.FileReader != null && (window.FileAPI == null || FileAPI.html5 != false);
 	$scope.uploadRightAway = true;
@@ -94,7 +89,7 @@ var MyCtrl = [ '$scope', '$http', '$timeout', '$upload', function($scope, $http,
 				$scope.progress[index] = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
 			});
 			$scope.upload[index].xhr(function(xhr){
-//				xhr.upload.addEventListener('abort', function() {console.log('abort complete')}, false);
+			//xhr.upload.addEventListener('abort', function() {console.log('abort complete')}, false);
 			});
 		} else {
 			var fileReader = new FileReader();
@@ -131,4 +126,4 @@ var MyCtrl = [ '$scope', '$http', '$timeout', '$upload', function($scope, $http,
 		}
 		return hasFile ? "dragover" : "dragover-err";
 	};
-} ];
+});

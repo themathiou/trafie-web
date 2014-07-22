@@ -8,13 +8,17 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
 				span( ng-show="current_user.discipline && current_user.country" ) - 
 				{{current_user.country}} {{current_user.discipline}}
 	
+	div( ng-controller="MyCtrl" )
+		input( type="text" ng-model="myModelObj")
+		input( type="file" ng-file-select="onFileSelect($files)" )
+		button( ng-click="upload.abort()" ) Cancel Upload
+		
 	ul(style="margin-bottom: 40px;")
 		li( ng-repeat="(key, value) in user.disciplines_of_user" style="float:left;")
 			a( ng-click="getActivities( user._id, key )" ) {{value}}
 
 	div#loading( hidden )
 		img( src="images/ui/loading.gif" )
-
 
 	div#history_container
 		ul#history_line.history_line
