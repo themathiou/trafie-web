@@ -54,354 +54,135 @@ trafie.run(function ($rootScope, $http) {
 });
 
 
-
-
-
-
 //inject angular file upload directives and service.
-var MyCtrl = [ '$scope', '$upload', function($scope, $upload) {
-  $scope.onFileSelect = function($files) {
-    //$files: an array of files selected, each file has name, size, and type.
-    for (var i = 0; i < $files.length; i++) {
-      var file = $files[i];
-      $scope.upload = $upload.upload({
-        url: 'server/upload/url', //upload.php script, node.js route, or servlet url
-        //method: 'POST' or 'PUT',
-        //headers: {'header-key': 'header-value'},
-        //withCredentials: true,
-        data: {myObj: $scope.myModelObj},
-        file: file, // or list of files ($files) for html5 only
-        //fileName: 'doc.jpg' or ['1.jpg', '2.jpg', ...] // to modify the name of the file(s)
-        // customize file formData name ('Content-Desposition'), server side file variable name. 
-        //fileFormDataName: myFile, //or a list of names for multiple files (html5). Default is 'file' 
-        // customize how data is added to formData. See #40#issuecomment-28612000 for sample code
-        //formDataAppender: function(formData, key, val){}
-      }).progress(function(evt) {
-        console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
-      }).success(function(data, status, headers, config) {
-        // file is uploaded successfully
-        console.log(data);
-      });
-      //.error(...)
-      //.then(success, error, progress); 
-      // access or attach event listeners to the underlying XMLHttpRequest.
-      //.xhr(function(xhr){xhr.upload.addEventListener(...)})
-    }
-    /* alternative way of uploading, send the file binary with the file's content-type.
-       Could be used to upload files to CouchDB, imgur, etc... html5 FileReader is needed. 
-       It could also be used to monitor the progress of a normal http post/put request with large data*/
-    // $scope.upload = $upload.http({...})  see 88#issuecomment-31366487 for sample code.
-  };
-}];
-
-
-
-
-//upload file service and directive
-trafie.service('$upload', ['$http', '$q', '$timeout', function($http, $q, $timeout) {
-	function sendHttp(config) {
-		config.method = config.method || 'POST';
-		config.headers = config.headers || {};
-		config.transformRequest = config.transformRequest || function(data, headersGetter) {
-			if (window.ArrayBuffer && data instanceof window.ArrayBuffer) {
-				return data;
+var MyCtrl = [ '$scope', '$http', '$timeout', '$upload', function($scope, $http, $timeout, $upload) {
+	$scope.usingFlash = false; //FileAPI && FileAPI.upload != null;
+	$scope.fileReaderSupported = false; //window.FileReader != null && (window.FileAPI == null || FileAPI.html5 != false);
+	$scope.uploadRightAway = false;
+	$scope.changeAngularVersion = function() {
+		window.location.hash = $scope.angularVersion;
+		window.location.reload(true);
+	};
+	$scope.hasUploader = function(index) {
+		return $scope.upload[index] != null;
+	};
+	$scope.abort = function(index) {
+		$scope.upload[index].abort(); 
+		$scope.upload[index] = null;
+	};
+	$scope.angularVersion = window.location.hash.length > 1 ? (window.location.hash.indexOf('/') === 1 ? 
+			window.location.hash.substring(2): window.location.hash.substring(1)) : '1.2.20';
+	$scope.onFileSelect = function($files) {
+		$scope.selectedFiles = [];
+		$scope.progress = [];
+		if ($scope.upload && $scope.upload.length > 0) {
+			for (var i = 0; i < $scope.upload.length; i++) {
+				if ($scope.upload[i] != null) {
+					$scope.upload[i].abort();
+				}
 			}
-			return $http.defaults.transformRequest[0](data, headersGetter);
-		};
-		var deferred = $q.defer();
-
-		if (window.XMLHttpRequest.__isShim) {
-			config.headers['__setXHR_'] = function() {
-				return function(xhr) {
-					if (!xhr) return;
-					config.__XHR = xhr;
-					config.xhrFn && config.xhrFn(xhr);
-					xhr.upload.addEventListener('progress', function(e) {
-						deferred.notify(e);
-					}, false);
-					//fix for firefox not firing upload progress end, also IE8-9
-					xhr.upload.addEventListener('load', function(e) {
-						if (e.lengthComputable) {
-							deferred.notify(e);
-						}
-					}, false);
-				};
-			};
 		}
-
-		$http(config).then(function(r){deferred.resolve(r)}, function(e){deferred.reject(e)}, function(n){deferred.notify(n)});
-		
-		var promise = deferred.promise;
-		promise.success = function(fn) {
-			promise.then(function(response) {
-				fn(response.data, response.status, response.headers, config);
+		$scope.upload = [];
+		$scope.uploadResult = [];
+		$scope.selectedFiles = $files;
+		$scope.dataUrls = [];
+		for ( var i = 0; i < $files.length; i++) {
+			var $file = $files[i];
+			if ($scope.fileReaderSupported && $file.type.indexOf('image') > -1) {
+				var fileReader = new FileReader();
+				fileReader.readAsDataURL($files[i]);
+				var loadFile = function(fileReader, index) {
+					fileReader.onload = function(e) {
+						$timeout(function() {
+							$scope.dataUrls[index] = e.target.result;
+						});
+					}
+				}(fileReader, i);
+			}
+			$scope.progress[i] = -1;
+			if ($scope.uploadRightAway) {
+				$scope.start(i);
+			}
+		}
+	};
+	
+	$scope.start = function(index) {
+		$scope.progress[index] = 0;
+		$scope.errorMsg = null;
+		if ($scope.howToSend == 1) {
+			$scope.upload[index] = $upload.upload({
+				url: uploadUrl,
+				method: $scope.httpMethod,
+				headers: {'my-header': 'my-header-value'},
+				data : {
+					myModel : $scope.myModel
+				},
+				/* formDataAppender: function(fd, key, val) {
+					if (angular.isArray(val)) {
+                        angular.forEach(val, function(v) {
+                          fd.append(key, v);
+                        });
+                      } else {
+                        fd.append(key, val);
+                      }
+				}, */
+				/* transformRequest: [function(val, h) {
+					console.log(val, h('my-header')); return val + '-modified';
+				}], */
+				file: $scope.selectedFiles[index],
+				fileFormDataName: 'myFile'
 			});
-			return promise;
-		};
-
-		promise.error = function(fn) {
-			promise.then(null, function(response) {
-				fn(response.data, response.status, response.headers, config);
-			});
-			return promise;
-		};
-
-		promise.progress = function(fn) {
-			promise.then(null, null, function(update) {
-				fn(update);
-			});
-			return promise;
-		};
-		promise.abort = function() {
-			if (config.__XHR) {
+			$scope.upload[index].then(function(response) {
 				$timeout(function() {
-					config.__XHR.abort();
+					$scope.uploadResult.push(response.data);
 				});
-			}
-			return promise;
-		};
-		promise.xhr = function(fn) {
-			config.xhrFn = (function(origXhrFn) {
-				return function() {
-					origXhrFn && origXhrFn.apply(promise, arguments);
-					fn.apply(promise, arguments);
-				}
-			})(config.xhrFn);
-			return promise;
-		};
-		
-		return promise;
-	}
-
-	this.upload = function(config) {
-		config.headers = config.headers || {};
-		config.headers['Content-Type'] = undefined;
-		config.transformRequest = config.transformRequest || $http.defaults.transformRequest;
-		var formData = new FormData();
-		var origTransformRequest = config.transformRequest;
-		var origData = config.data;
-		config.transformRequest = function(formData, headerGetter) {
-			if (origData) {
-				if (config.formDataAppender) {
-					for (var key in origData) {
-						var val = origData[key];
-						config.formDataAppender(formData, key, val);
-					}
-				} else {
-					for (var key in origData) {
-						var val = origData[key];
-						if (typeof origTransformRequest == 'function') {
-							val = origTransformRequest(val, headerGetter);
-						} else {
-							for (var i = 0; i < origTransformRequest.length; i++) {
-								var transformFn = origTransformRequest[i];
-								if (typeof transformFn == 'function') {
-									val = transformFn(val, headerGetter);
-								}
-							}
-						}
-						formData.append(key, val);
-					}
-				}
-			}
-
-			if (config.file != null) {
-				var fileFormName = config.fileFormDataName || 'file';
-
-				if (Object.prototype.toString.call(config.file) === '[object Array]') {
-					var isFileFormNameString = Object.prototype.toString.call(fileFormName) === '[object String]';
-					for (var i = 0; i < config.file.length; i++) {
-						formData.append(isFileFormNameString ? fileFormName : fileFormName[i], config.file[i], 
-								(config.fileName && config.fileName[i]) || config.file[i].name);
-					}
-				} else {
-					formData.append(fileFormName, config.file, config.fileName || config.file.name);
-				}
-			}
-			return formData;
-		};
-
-		config.data = formData;
-
-		return sendHttp(config);
-	};
-
-	this.http = function(config) {
-		return sendHttp(config);
-	}
-}]);
-
-trafie.directive('ngFileSelect', [ '$parse', '$timeout', function($parse, $timeout) {
-	return function(scope, elem, attr) {
-		var fn = $parse(attr['ngFileSelect']);
-		if (elem[0].tagName.toLowerCase() !== 'input' || (elem.attr('type') && elem.attr('type').toLowerCase()) !== 'file') {
-			var fileElem = angular.element('<input type="file">')
-			for (var i = 0; i < elem[0].attributes.length; i++) {
-				fileElem.attr(elem[0].attributes[i].name, elem[0].attributes[i].value);
-			}
-			if (elem.attr("data-multiple")) fileElem.attr("multiple", "true");
-			fileElem.css("top", 0).css("bottom", 0).css("left", 0).css("right", 0).css("width", "100%").
-					css("opacity", 0).css("position", "absolute").css('filter', 'alpha(opacity=0)');
-			elem.append(fileElem);
-			if (elem.css("position") === '' || elem.css("position") === 'static') {
-				elem.css("position", "relative");
-			}
-			elem = fileElem;
-		}
-		elem.bind('change', function(evt) {
-			var files = [], fileList, i;
-			fileList = evt.__files_ || evt.target.files;
-			if (fileList != null) {
-				for (i = 0; i < fileList.length; i++) {
-					files.push(fileList.item(i));
-				}
-			}
-			$timeout(function() {
-				fn(scope, {
-					$files : files,
-					$event : evt
-				});
+			}, function(response) {
+				if (response.status > 0) $scope.errorMsg = response.status + ': ' + response.data;
+			}, function(evt) {
+				// Math.min is to fix IE which reports 200% sometimes
+				$scope.progress[index] = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
 			});
-		});
-			// removed this since it was confusing if the user click on browse and then cancel #181
-	//		elem.bind('click', function(){
-	//			this.value = null;
-	//		});
-
-			// removed because of #253 bug
-			// touch screens
-	//		if (('ontouchstart' in window) ||
-	//				(navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)) {
-	//			elem.bind('touchend', function(e) {
-	//				e.preventDefault();
-	//				e.target.click();
-	//			});
-	//		}
-	};
-} ]);
-
-trafie.directive('ngFileDropAvailable', [ '$parse', '$timeout', function($parse, $timeout) {
-	return function(scope, elem, attr) {
-		if ('draggable' in document.createElement('span')) {
-			var fn = $parse(attr['ngFileDropAvailable']);
-			$timeout(function() {
-				fn(scope);
+			$scope.upload[index].xhr(function(xhr){
+	//				xhr.upload.addEventListener('abort', function() {console.log('abort complete')}, false);
 			});
+		} else {
+			var fileReader = new FileReader();
+            fileReader.onload = function(e) {
+		        $scope.upload[index] = $upload.http({
+		        	url: uploadUrl,
+					headers: {'Content-Type': $scope.selectedFiles[index].type},
+					data: e.target.result
+		        }).then(function(response) {
+					$scope.uploadResult.push(response.data);
+				}, function(response) {
+					if (response.status > 0) $scope.errorMsg = response.status + ': ' + response.data;
+				}, function(evt) {
+					// Math.min is to fix IE which reports 200% sometimes
+					$scope.progress[index] = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+				});
+            }
+	        fileReader.readAsArrayBuffer($scope.selectedFiles[index]);
 		}
 	};
-} ]);
-
-trafie.directive('ngFileDrop', [ '$parse', '$timeout', '$location', function($parse, $timeout, $location) {
-	return function(scope, elem, attr) {
-		if ('draggable' in document.createElement('span')) {
-			var leaveTimeout = null;
-			elem[0].addEventListener("dragover", function(evt) {
-				evt.stopPropagation();
-				evt.preventDefault();
-				$timeout.cancel(leaveTimeout);
-				if (!elem[0].__drag_over_class_) {
-					var dragOverClassFn = $parse(attr['ngFileDragOverClass']);
-					if (dragOverClassFn instanceof Function) {
-						var dragOverClass = dragOverClassFn(scope, {
-							$event : evt
-						});					
-						elem[0].__drag_over_class_ = dragOverClass; 
-					} else {
-						elem[0].__drag_over_class_ = attr['ngFileDragOverClass'] || "dragover";
-					}
-				}
-				elem.addClass(elem[0].__drag_over_class_);
-			}, false);
-			elem[0].addEventListener("dragenter", function(evt) {
-				evt.stopPropagation();
-				evt.preventDefault();
-			}, false);
-			elem[0].addEventListener("dragleave", function(evt) {
-				leaveTimeout = $timeout(function() {
-					elem.removeClass(elem[0].__drag_over_class_);
-					elem[0].__drag_over_class_ = null;
-				});
-			}, false);
-			var fn = $parse(attr['ngFileDrop']);
-			elem[0].addEventListener("drop", function(evt) {
-				evt.stopPropagation();
-				evt.preventDefault();
-				elem.removeClass(elem[0].__drag_over_class_);
-				elem[0].__drag_over_class_ = null;
-				extractFiles(evt, function(files) {
-					fn(scope, {
-						$files : files,
-						$event : evt
-					});					
-				});
-			}, false);
-						
-			function isASCII(str) {
-				return /^[\000-\177]*$/.test(str);
-			}
-
-			function extractFiles(evt, callback) {
-				var files = [], items = evt.dataTransfer.items;
-				if (items && items.length > 0 && items[0].webkitGetAsEntry && $location.protocol() != 'file' && 
-						items[0].webkitGetAsEntry().isDirectory) {
-					for (var i = 0; i < items.length; i++) {
-						var entry = items[i].webkitGetAsEntry();
-						if (entry != null) {
-							//fix for chrome bug https://code.google.com/p/chromium/issues/detail?id=149735
-							if (isASCII(entry.name)) {
-								traverseFileTree(files, entry);
-							} else {
-								files.push(items[i].getAsFile());
-							}
-						}
-					}
-				} else {
-					var fileList = evt.dataTransfer.files;
-					if (fileList != null) {
-						for (var i = 0; i < fileList.length; i++) {
-							files.push(fileList.item(i));
-						}
-					}
-				}
-				(function waitForProcess(delay) {
-					$timeout(function() {
-						if (!processing) {
-							callback(files);
-						} else {
-							waitForProcess(10);
-						}
-					}, delay || 0)
-				})();
-			}
-			
-			var processing = 0;
-			function traverseFileTree(files, entry) {
-				if (entry != null) {
-					if (entry.isDirectory) {
-						var dirReader = entry.createReader();
-						processing++;
-						dirReader.readEntries(function(entries) {
-							for (var i = 0; i < entries.length; i++) {
-								traverseFileTree(files, entries[i]);
-							}
-							processing--;
-						});
-					} else {
-						processing++;
-						entry.file(function(file) {
-							processing--;
-							files.push(file);
-						});
-					}
+	
+	$scope.dragOverClass = function($event) {
+		var items = $event.dataTransfer.items;
+		var hasFile = false;
+		if (items != null) {
+			for (var i = 0 ; i < items.length; i++) {
+				if (items[i].kind == 'file') {
+					hasFile = true;
+					break;
 				}
 			}
+		} else {
+			hasFile = true;
 		}
+		return hasFile ? "dragover" : "dragover-err";
 	};
-} ]);
+} ];
 
 
 
 
-
-
-
+//upload file service and directive (angular-file-upload.js)
