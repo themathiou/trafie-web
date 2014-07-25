@@ -59,6 +59,9 @@ var MyCtrl = [ '$scope', '$http', '$timeout', '$upload', function($scope, $http,
 	$scope.usingFlash = false; //FileAPI && FileAPI.upload != null;
 	$scope.fileReaderSupported = false; //window.FileReader != null && (window.FileAPI == null || FileAPI.html5 != false);
 	$scope.uploadRightAway = false;
+
+	$scope.uploadUrl = 'settings_data';
+
 	$scope.changeAngularVersion = function() {
 		window.location.hash = $scope.angularVersion;
 		window.location.reload(true);
@@ -111,7 +114,7 @@ var MyCtrl = [ '$scope', '$http', '$timeout', '$upload', function($scope, $http,
 		$scope.errorMsg = null;
 		if ($scope.howToSend == 1) {
 			$scope.upload[index] = $upload.upload({
-				url: uploadUrl,
+				url: $scope.uploadUrl,
 				method: $scope.httpMethod,
 				headers: {'my-header': 'my-header-value'},
 				data : {
@@ -149,7 +152,7 @@ var MyCtrl = [ '$scope', '$http', '$timeout', '$upload', function($scope, $http,
 			var fileReader = new FileReader();
             fileReader.onload = function(e) {
 		        $scope.upload[index] = $upload.http({
-		        	url: uploadUrl,
+		        	url: $scope.uploadUrl,
 					headers: {'Content-Type': $scope.selectedFiles[index].type},
 					data: e.target.result
 		        }).then(function(response) {
