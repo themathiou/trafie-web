@@ -51,32 +51,6 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 		$scope.language_msg = '';
 	}
 	
-    /**
-    * [upload a file. - profile pic for now]
-    */
-    $scope.upload = function(){
-        //data = { "profile_pic" : $scope.file };
-				
-				var fd = new FormData();
-				angular.forEach($scope.files, function(file){
-					fd.append('file', file)
-				})
-				
-				console.log(fd);
-        $http.post('/settings_data', fd, { headers:{transformRequest:angular.identity, 'Content-Type':undefined} })
-        .success(function(res){
-            console.log(res);
-        }); 
-    }
-
-    /**
-    * [called when file changed in file input field - profile pic for now]
-    */
-    $scope.fileChanged = function( elm ) {
-				console.log('fileChanged', elm);
-        $scope.files = elm.files;
-        $scope.$apply();
-    }
 
 	/**
 	 * [Posting the changes in settings]

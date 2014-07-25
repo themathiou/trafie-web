@@ -112,6 +112,7 @@ var MyCtrl = [ '$scope', '$http', '$timeout', '$upload', function($scope, $http,
 	$scope.start = function(index) {
 		$scope.progress[index] = 0;
 		$scope.errorMsg = null;
+		$scope.howToSend = 1;
 		if ($scope.howToSend == 1) {
 			$scope.upload[index] = $upload.upload({
 				url: $scope.uploadUrl,
@@ -133,7 +134,7 @@ var MyCtrl = [ '$scope', '$http', '$timeout', '$upload', function($scope, $http,
 					console.log(val, h('my-header')); return val + '-modified';
 				}], */
 				file: $scope.selectedFiles[index],
-				fileFormDataName: 'myFile'
+				fileFormDataName: 'profile_pic'
 			});
 			$scope.upload[index].then(function(response) {
 				$timeout(function() {
