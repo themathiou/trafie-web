@@ -53,8 +53,12 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
 	script(type="text/javascript", src="/scripts/libs/ui-bootstrap-0.10.0.min.js")
 	script(type='text/javascript', src='/scripts/app.js')
 
+	//services
+	script(type='text/javascript', src='/scripts/services/upload.js')
+	
 	//directives
-	script(type='text/javascript', src='/scripts/directives/angular-file-upload.js')
+	// script(type='text/javascript', src='/scripts/directives/angular-file-upload.js')
+	script(type='text/javascript', src='/scripts/directives/file-select.js')
 
 	//controllers
 	script(type='text/javascript', src='/scripts/controllers/mainController.js')
