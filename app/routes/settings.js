@@ -87,7 +87,6 @@ exports.post = function( req, res ) {
 	}
 
 	var user_id = req.session.user_id;
-	console.log( req.files );
 
 	// Check if the profile really exists
 	Profile.schema.findOne( { '_id': user_id }, 'first_name language' )
@@ -237,8 +236,6 @@ exports.post = function( req, res ) {
 
 		// Checking if the uploaded file is a valid image file
 		else if( typeof req.files !== 'undefined' && typeof req.files.profile_pic !== 'undefined' ) {
-			console.log( req.files.profile_pic );
-			console.log( req.files.profile_pic.path );
 			// Read the image file
 			fs.readFile( req.files.profile_pic.path, function ( err, data ) {
 				// Get the file extension
@@ -250,14 +247,16 @@ exports.post = function( req, res ) {
 
 				// If the file size is acceptable
 				if( req.files.profile_pic.size > accepted_file_size * 1048576 ) {
-					response.success = false;
 					response.message = tr['uploaded_image_too_large'];
+				} else {
+					response.success = true;
 				}
 
 				// If the file type is acceptable
 				if( accepted_file_types.indexOf( req.files.profile_pic.type ) < 0 ) {
-					response.success = false;
 					response.message = tr['uploaded_image_wrong_type'];
+				} else {
+					response.success = true;
 				}
 
 				if( response.success ) {
