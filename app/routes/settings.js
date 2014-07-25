@@ -87,6 +87,7 @@ exports.post = function( req, res ) {
 	}
 
 	var user_id = req.session.user_id;
+	console.log( req.files );
 
 	// Check if the profile really exists
 	Profile.schema.findOne( { '_id': user_id }, 'first_name language' )
@@ -103,7 +104,7 @@ exports.post = function( req, res ) {
 			user_data = {},
 			tr = translations[profile.language],
 			response = {
-				'success'			: true,
+				'success'			: false,
 				'value'				: '',
 				'translated_value'	: '',
 				'message'			: ''
@@ -112,9 +113,9 @@ exports.post = function( req, res ) {
 		// Validating first name
 		if( typeof req.body.first_name !== 'undefined' ) {
 			if( !profileHelper.validateName( req.body.first_name ) ) {
-				response.success = false;
 				response.message = tr['invalid_name'];
 			} else {
+				response.success = true;
 				profile_data.first_name = req.body.first_name;
 				response.value = req.body.first_name;
 			}
@@ -123,9 +124,9 @@ exports.post = function( req, res ) {
 		// Validating last name
 		if( typeof req.body.last_name !== 'undefined' ) {
 			if( !profileHelper.validateName( req.body.last_name ) ) {
-				response.success = false;
 				response.message = tr['invalid_name'];
 			} else {
+				response.success = true;
 				profile_data.last_name = req.body.last_name;
 				response.value = req.body.last_name;
 			}
@@ -137,16 +138,14 @@ exports.post = function( req, res ) {
 			if( birthday ) {
 				profile_data.birthday = birthday;
 				response.value = profile_data.birthday;
-			} else {
-				response.success = false;
+				response.success = true;
 			}
 		}
 
 		// Validating gender
 		if( typeof req.body.gender !== 'undefined' ) {
-			if( !profileHelper.validateGender( req.body.gender ) ) {
-				response.success = false;
-			} else {
+			if( profileHelper.validateGender( req.body.gender ) ) {
+				response.success = true;
 				profile_data.male = req.body.gender == 'male';
 				response.value = req.body.gender;
 				response.translated_value = tr[req.body.gender];
@@ -155,9 +154,8 @@ exports.post = function( req, res ) {
 
 		// Validating country
 		if( typeof req.body.country !== 'undefined' ) {
-			if( !profileHelper.validateCountry( req.body.country ) ) {
-				response.success = false;
-			} else {
+			if( profileHelper.validateCountry( req.body.country ) ) {
+				response.success = true;
 				profile_data.country = req.body.country;
 				response.value = req.body.country;
 				response.translated_value = tr[req.body.country];
@@ -166,9 +164,8 @@ exports.post = function( req, res ) {
 
 		// Validating discipline
 		if( typeof req.body.discipline !== 'undefined' ) {
-			if( !profileHelper.validateDiscipline( req.body.discipline ) ) {
-				response.success = false;
-			} else {
+			if( profileHelper.validateDiscipline( req.body.discipline ) ) {
+				response.success = true;
 				profile_data.discipline = req.body.discipline;
 				response.value = req.body.discipline;
 				response.translated_value = tr[req.body.discipline];
@@ -177,9 +174,8 @@ exports.post = function( req, res ) {
 
 		// Validating the about me text
 		if( typeof req.body.about !== 'undefined' ) {
-			if( !profileHelper.validateAbout( req.body.about ) ) {
-				response.success = false;
-			} else {
+			if( profileHelper.validateAbout( req.body.about ) ) {
+				response.success = true;
 				profile_data.about = req.body.about;
 				response.value = req.body.about;
 				response.translated_value = tr[req.body.about];
@@ -188,9 +184,8 @@ exports.post = function( req, res ) {
 
 		// Validating language
 		if( typeof req.body.language !== 'undefined' ) {
-			if( !profileHelper.validateLanguage( req.body.language ) ) {
-				response.success = false;
-			} else {
+			if( profileHelper.validateLanguage( req.body.language ) ) {
+				response.success = true;
 				profile_data.language = req.body.language;
 				response.value = req.body.about;
 				response.translated_value = tr[req.body.about];
@@ -242,6 +237,8 @@ exports.post = function( req, res ) {
 
 		// Checking if the uploaded file is a valid image file
 		else if( typeof req.files !== 'undefined' && typeof req.files.profile_pic !== 'undefined' ) {
+			console.log( req.files.profile_pic );
+			console.log( req.files.profile_pic.path );
 			// Read the image file
 			fs.readFile( req.files.profile_pic.path, function ( err, data ) {
 				// Get the file extension
