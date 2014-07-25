@@ -193,9 +193,8 @@ exports.post = function( req, res ) {
 
 		// Validating date format
 		if( typeof req.body.date_format !== 'undefined' ) {
-			if( !profileHelper.validateDateFormat( req.body.date_format ) ) {
-				response.success = false;
-			} else {
+			if( profileHelper.validateDateFormat( req.body.date_format ) ) {
+				response.success = true;
 				profile_data.date_format = req.body.date_format;
 				response.value = req.body.date_format;
 				response.translated_value = tr[req.body.date_format];
@@ -205,7 +204,6 @@ exports.post = function( req, res ) {
 		// Validating date format
 		if( typeof req.body.username !== 'undefined' ) {
 			if( !profileHelper.validateUsername( req.body.username ) ) {
-				response.success = false;
 				response.message = tr['invalid_username'];
 				res.json( response );
 			} else {
@@ -215,6 +213,7 @@ exports.post = function( req, res ) {
 					if( profile == null ) {
 						profile_data.username = username;
 						response.value = username;
+						response.success = true;
 						Profile.update({ '_id': user_id }, { $set: profile_data }, { upsert: true }, function( error ) {
 							res.json( response );
 							return;
@@ -224,7 +223,6 @@ exports.post = function( req, res ) {
 							return
 						});
 					} else {
-						response.success = false;
 						if( profile._id !== user_id ) {
 							response.message = tr['username_exists'];
 						}
@@ -245,27 +243,33 @@ exports.post = function( req, res ) {
 				// File size in MB
 				var accepted_file_size = 5;
 
+				var accepted_size = false;
+				var accepted_type = false;
+
 				// If the file size is acceptable
 				if( req.files.profile_pic.size > accepted_file_size * 1048576 ) {
 					response.message = tr['uploaded_image_too_large'];
 				} else {
-					response.success = true;
+					accepted_size = true;
 				}
 
 				// If the file type is acceptable
 				if( accepted_file_types.indexOf( req.files.profile_pic.type ) < 0 ) {
 					response.message = tr['uploaded_image_wrong_type'];
 				} else {
-					response.success = true;
+					accepted_type = true;
 				}
 
-				if( response.success ) {
+
+
+				if( accepted_type && accepted_size ) {
 					profile_data.picture = '/images/profile_pics/' + user_id + '.' + extension;
 
 					// Save the file in the images folder
 					fs.writeFile( root_dir + '/public' + profile_data.picture, data, function ( err ) {
 						// Update the database
 						Profile.update({ '_id': user_id }, { $set: profile_data }, { upsert: true }, function( error ) {
+							response.success = true;
 							res.json( response );
 						});
 					});
@@ -280,9 +284,9 @@ exports.post = function( req, res ) {
 			User.schema.findOne({ '_id': user_id }, 'password')
 			.then( function( user ) {
 				if( typeof user.password === 'undefined' ) {
-					response.success = false;
 					res.json( response );
-				} else { 
+				} else {
+					response.success = true;
 					// Generating errors
 					if( req.body.password !== req.body.repeat_password ) {
 						response.success = false;
