@@ -4,15 +4,23 @@ h3= tr['profile_settings']
 div#profilePicDiv.settingsElement
 	a#editProfilePicture.editLink( ng-click="showHide('edit_profilepic')" )
 			include ../svg/edit_activity_svg
-	form()
 		label= tr['profile_picture'] + ': '
 		img.settings_profile_pic_thumb( src="{{user.picture}}" )
 		//span= errors.profile_pic
 		div( ng-show="edit_profilepic" )
-			input#upload_profile_pic( type="file" file-input="files" accept="image/*" multiple)
-			p {{files}}
+			div
+				input( type="file" ng-file-select="onFileSelect($files)" )
+				button( ng-click="upload.abort()" ) Cancel Upload
+				div( ng-show="selectedFiles != null")
+					div( class="sel-file" ng-repeat="f in selectedFiles")
+						{{($index + 1) + '.'}}
+						img( ng-show="dataUrls[$index]" ng-src="{{dataUrls[$index]}}" )
+						button.btn.green( ng-click="start($index)" ng-show="progress[$index] < 0") Start
+						span( class="progress" ng-show="progress[$index] >= 0" )						
+							div( style="width:{{progress[$index]}}%") {{progress[$index]}}%
+						button( class="button" ng-click="abort($index)" ng-show="hasUploader($index) && progress[$index] < 100") Abort 
+						{{f.name}} - size: {{f.size}}B - type: {{f.type}}
 		div.formButtons( ng-show="edit_profilepic" )
-			button#submit_profile_pic.btn.green( ng-click="upload()" )= tr['submit']
 			a#cancelEditProfilePicture.cancel_link( ng-click="showHide('edit_profilepic')" )= tr['cancel']
 
 		

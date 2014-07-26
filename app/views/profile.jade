@@ -8,20 +8,6 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
 				span( ng-show="current_user.discipline && current_user.country" ) - 
 				{{current_user.country}} {{current_user.discipline}}
 	
-	div
-		input( type="file" ng-file-select="onFileSelect($files)" )
-		button( ng-click="upload.abort()" ) Cancel Upload
-		div( ng-show="selectedFiles != null")
-			div( class="sel-file" ng-repeat="f in selectedFiles")
-				{{($index + 1) + '.'}}
-				img( ng-show="dataUrls[$index]" ng-src="{{dataUrls[$index]}}" )
-				button( class="button" ng-click="start($index)" ng-show="progress[$index] < 0") Start
-				span( class="progress" ng-show="progress[$index] >= 0" )						
-					div( style="width:{{progress[$index]}}%") {{progress[$index]}}%
-				button( class="button" ng-click="abort($index)" ng-show="hasUploader($index) && progress[$index] < 100") Abort 
-				{{f.name}} - size: {{f.size}}B - type: {{f.type}}
-
-
 	ul(style="margin-bottom: 40px;")
 		li( ng-repeat="(key, value) in user.disciplines_of_user" style="float:left;")
 			a( ng-click="getActivities( user._id, key )" ) {{value}}
