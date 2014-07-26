@@ -29,9 +29,9 @@ trafie.config(['$routeProvider',
 				controller: 'profileController'
 			}).
 			//probably useless
-			when('/logout', {
-				redirectTo:'/login'
-			}).
+			// when('/logout', {
+			// 	redirectTo:'/logout'
+			// }).
 			otherwise({
 				redirectTo: '/'
 			});

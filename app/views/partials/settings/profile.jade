@@ -16,30 +16,27 @@ div#profilePicDiv.settingsElement
 						{{($index + 1) + '.'}}
 						img( ng-show="dataUrls[$index]" ng-src="{{dataUrls[$index]}}" )
 						button.btn.green( ng-click="start($index)" ng-show="progress[$index] < 0") Start
-						span( class="progress" ng-show="progress[$index] >= 0" )						
+						span( class="progress" ng-show="progress[$index] >= 0" )
 							div( style="width:{{progress[$index]}}%") {{progress[$index]}}%
-						button( class="button" ng-click="abort($index)" ng-show="hasUploader($index) && progress[$index] < 100") Abort 
+						button( class="button" ng-click="abort($index)" ng-show="hasUploader($index) && progress[$index] < 100") Abort
 						{{f.name}} - size: {{f.size}}B - type: {{f.type}}
 		div.formButtons( ng-show="edit_profilepic" )
 			a#cancelEditProfilePicture.cancel_link( ng-click="showHide('edit_profilepic')" )= tr['cancel']
 
-		
 
 //FIRST NAME
 div#firstNameDiv.settingsElement
-	a#editFirstName.editLink( ng-click="showHide('edit_firstname')" )
+	a#editFirstName.editLink( ng-click="showHide('edit_fname')" )
 			include ../svg/edit_activity_svg
 	form( method="POST" ng-submit="submitChangeSetting('first_name')")
 		label= tr['first_name'] + ': '
 		span.existed {{ user.first_name }}
-		div(ng-show="first_name_msg !=''") {{first_name_msg}}
-		div( ng-show="edit_firstname" )
+		div( ng-show="first_name_msg !=''") {{first_name_msg}}
+		div( ng-show="edit_fname" )
 			input#first_name( ng-model="user.new_first_name" name="first_name" value="{{user.first_name}}" )
-		div.formButtons( ng-show="edit_firstname" )
+		div.formButtons( ng-show="edit_fname" )
 			input#submitFirstName.btn.green( type="submit" value=tr['submit'])
-			a#cancelEditFirstName.cancel_link( ng-click="showHide('edit_firstname')" )= tr['cancel']
-
-		
+			a#cancelEditFirstName.cancel_link( ng-click="showHide('edit_fname')" )= tr['cancel']
 
 //LAST NAME
 div#lastNameDiv.settingsElement
@@ -54,7 +51,6 @@ div#lastNameDiv.settingsElement
 		div.formButtons(ng-show="edit_lastname")
 			input#submitLastName.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditLastName.cancel_link( ng-click="showHide('edit_lastname')")= tr['cancel']
-		
 
 //MAIN DISCIPLINE
 div#mainDisciplineDiv.settingsElement
@@ -65,13 +61,11 @@ div#mainDisciplineDiv.settingsElement
 		span {{ user.discipline_formatted }}
 		div(ng-show="discipline_msg !=''") {{discipline_msg}}
 		div(ng-show="edit_discipline")
-			select#main_discipline_input( ng-model="user.discipline" name="discipline" )
-				- for( var i in disciplines ) 
-					option( value=disciplines[i] )= tr[disciplines[i]]
+			select( ng-model="user.new_main_discipline" ng-options="discipline.name for discipline in disciplines_options " ng-init="selected_discipline = disciplines_options[0].name" )
+				option( value="")= tr['choose_your_discipline']
 			div.formButtons
 				input#submitMainDiscipline.btn.green( type="submit" value=tr['submit'])
 				a#cancelEditMainDiscipline.cancel_link( ng-click="showHide('edit_discipline')" )= tr['cancel']
-		
 
 //GENDER
 div#genderDiv.settingsElement
@@ -90,7 +84,7 @@ div#genderDiv.settingsElement
 		div.formButtons(ng-show="edit_gender")
 			input#submitGender.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditGender.cancel_link( ng-click="showHide('edit_gender')" )= tr['cancel']
-		
+
 
 //BIRTHDAY
 div#ageDiv.settingsElement
@@ -106,8 +100,6 @@ div#ageDiv.settingsElement
 		div.formButtons(ng-show="edit_birthday")
 			input#submitAge.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditAge.cancel_link( ng-click="showHide('edit_birthday')" )= tr['cancel']
-		
-
 
 //COUNTRY
 div#countryDiv.settingsElement
@@ -119,15 +111,13 @@ div#countryDiv.settingsElement
 		div(ng-show="country_msg !=''") {{country_msg}}
 		div( ng-show="edit_country"  )
 			select( name="country" ng-model="user.country")
-					option(value="no-selection" selected)= tr['choose_your_country']
-					- for( var i in countries )
-						option( value=countries[i] )= tr[countries[i]]
-				
+				option(value="no-selection" selected)= tr['choose_your_country']
+				- for( var i in countries )
+					option( value=countries[i] )= tr[countries[i]]
+
 		div.formButtons(ng-show="edit_country")
 			input#submitCountry.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditCountry.cancel_link( ng-click="showHide('edit_country')")= tr['cancel']
-		
-
 
 //ABOUT ME
 div#aboutDiv.settingsElement
@@ -142,5 +132,5 @@ div#aboutDiv.settingsElement
 		div.formButtons( ng-show="edit_about" )
 			input#submitAbout.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditAbout.cancel_link( ng-click="showHide('edit_about')" )= tr['cancel']
-		
+
 

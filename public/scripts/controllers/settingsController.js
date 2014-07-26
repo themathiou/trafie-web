@@ -1,4 +1,4 @@
-trafie.controller("settingsController", function($rootScope, $timeout, $scope, $window, $http, $routeParams, $location){
+trafie.controller("settingsController", function($rootScope, $timeout, $scope, $window, $http ){
 	$http.get('/settings_data')
 	.success(function(res){
 		console.log(res);
@@ -13,44 +13,35 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 		/* --- profile --- */
 		//profile_pic
 		$scope.user.new_profile_pic = 'motherhacker';
-		$scope.edit_profile_pic = false;
 		$scope.profile_pic_msg = '';
 
 		//firstname
-		$scope.edit_firstname = false;
 		$scope.first_name_msg = '';
 
 		//lastname
-		$scope.edit_lastname = false;
 		$scope.last_name_msg = '';
 
 		//discipline
-		$scope.edit_discipline = false;
 		$scope.discipline_msg = '';
 
 		//gender
-		$scope.gender = false;
 		$scope.gender_msg = '';
 
 		//country
-		$scope.country = false;
 		$scope.country_msg = '';
 
 		//birthday
-		$scope.birthday = false;
 		$scope.birthday_msg = '';
 
 		//about
-		$scope.about = false;
 		$scope.about_msg = '';
 
 
 		/* --- account --- */
 		//language
-		$scope.edit_language = false;
 		$scope.language_msg = '';
 	}
-	
+
 
 	/**
 	 * [Posting the changes in settings]
@@ -99,7 +90,7 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 						$scope.user.first_name = res.value;
 						$rootScope.user_first_name = res.value;
 						$scope.first_name_msg='Firstname successfully updated'; //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
-						$scope.showHide('edit_firstname');
+						$scope.showHide('edit_fname');
 						/* after 3 secconds hide the message */
 						$timeout(function(){
 							$scope.first_name_msg = '';
@@ -114,7 +105,6 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 					}
 				});
 				break;
-
 			case 'last_name':
 				data = { "last_name" : $scope.user.new_last_name  };
 				console.log(data);
@@ -140,15 +130,16 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 					}
 				});
 				break;
-			
 			case 'discipline':
-				data = { "discipline" : $scope.user.discipline  };
+				data = { "discipline" : $scope.user.new_main_discipline.id };
 				console.log(data);
 				$http.post('/settings_data', data)
 				.success(function(res){
 					if( res.success ) {
 						$scope.user.discipline = res.value;
-						$scope.discipline_msg='Discipline successfully updated'; //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
+						$scope.user.discipline_formatted = res.value;
+						//SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
+						$scope.discipline_msg='Discipline successfully updated';
 						$scope.showHide('edit_discipline');
 
 						/* after 3 secconds hide the message */
@@ -201,7 +192,7 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 				// $scope.user.new_birthday = bday[0] + ' ' + bday[1] + ' ' + bday[2] + ' ' + bday[3];
 				var selected_date = $scope.user.new_birthday;
 
-				
+
 				data = { "birthday" : {"day" : selected_date.getDate() , "month":selected_date.getMonth() , "year":selected_date.getFullYear()} };
 
 				console.log(data);
@@ -315,20 +306,18 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 			case 'username':
 				break;
 
-			
+
 			default:
 				console.log('default switch case');
 		}
 	}
-
-
 
 	/**
 	 * [Logs out]
 	 */
 	$scope.logout = function(){
 		$rootScope.user = {};
-		$window.location.href = '/login';
+		$window.location.href = '/logout';
 	}
 
 

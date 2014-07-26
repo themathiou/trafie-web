@@ -64,10 +64,10 @@ trafie.controller("profileController", function( $rootScope, $scope, $http, $rou
 		$http.get('/profile/'+ user_id)
 		.success(function(res){
 			$rootScope.current_user = res;
-			$scope.disciplines_options = [];
+			$rootScope.disciplines_options = [];
 			for( i in res.disciplines ) {
 				var temp = { name: res.disciplines[i] , id: i };
-				$scope.disciplines_options.push(temp);
+				$rootScope.disciplines_options.push(temp);
 			}
 
 			console.log( 'user', $rootScope.user );
