@@ -3,7 +3,7 @@ h3= tr['account_settings']
 //CHANGE PASSWORD
 div#changePasswordDiv.settingsElement( ng-init="edit_password=false;" )
 	label= tr['change_password']
-	a#editPassword.editLink.non_editable( ng-click="edit_password = !edit_password" )
+	a#editPassword.editLink.non_editable( ng-click="showHide('edit_password')" )
 		include ../svg/edit_activity_svg
 	div#changePassword( ng-show="edit_password" )
 		form( method="POST")
@@ -26,68 +26,54 @@ div#changePasswordDiv.settingsElement( ng-init="edit_password=false;" )
 
 			div#settingsAboutMeButtons
 				input#submitNewPassword.btn.green( type="submit" value=tr['submit'])
-				a#cancelNewPassword.cancel_link( href="javascript:;" )= tr['cancel']
+				a#cancelNewPassword.cancel_link( ng-click="showHide('edit_password')" )= tr['cancel']
 
-//LANGUAGE -- PENDING
+//LANGUAGE
 div#languageDiv.settingsElement
-	a#editLanguage.editLink.non_editable( ng-click="edit_language = !edit_language" )
+	a#editLanguage.editLink.non_editable( ng-click="showHide('edit_language')" )
 			include ../svg/edit_activity_svg
 	form( method="POST" ng-submit="submitChangeSetting('language')")
 		label= tr['language'] + ': '
-		span.non_editable{{user.language_formatted}} 
+		span {{user.language}}
 		div(ng-show="language_msg !=''") {{language_msg}}
 		div( ng-show="edit_language" )
 			select(name="language" ng-model="user.language")
 				option(value="no-selection" selected)= tr['choose_your_language']
 				- for( var i in languages )
-						option( value=languages[i] )= languages[i]
-				//- for( var i in languages ) {
-				//	if languages[user.language] == languages[i]
-				//		option( value=i selected)= languages[i]
-				//	else
-				//	option( value=i )= languages[i]
-				//- }
+						option( value=i )= languages[i]
 		div.formButtons( ng-show="edit_language" )
 			input#submitLanguage.btn.green( type="submit" value=tr['submit'])
-			a#cancelEditLanguage.cancel_link( href="javascript:;" )= tr['cancel']
+			a#cancelEditLanguage.cancel_link( ng-click="showHide('edit_language')" )= tr['cancel']
 
 //DATE FORMAT
-div#dateFormatDiv.settingsElement( ng-init="edit_dateformat=false;" )
-	a#editDateFormat.editLink.non_editable( ng-click="edit_dateformat = !edit_dateformat" )
+div#dateFormatDiv.settingsElement
+	a#editDateFormat.editLink( ng-click="showHide('edit_dateformat')")
 			include ../svg/edit_activity_svg
-	form( method="POST")
+	form( method="POST" ng-submit="submitChangeSetting('date-format')")
 		label= tr['date_format'] + ': '
-		//span= errors.data_format
-		span.non_editable{{user.date_format}}
-			//^ = tr[user.date_format]
-		select( ng-show="edit_language" name='date_format' )
-			//if user.date_format == 'd-m-y'
-			//	option( value='d-m-y' selected )= tr['d-m-y']
-			//else
-			//	option( value='d-m-y' )= tr['d-m-y']
-
-			//if user.date_format == 'm-d-y'
-			//	option( value='m-d-y' selected)= tr['m-d-y']
-			//else
-			option( value='m-d-y' )= tr['m-d-y']
+		span {{user.date_format}}
+		div(ng-show="dateformat_msg !=''") {{dateformat_msg}}
+		div( ng-show="edit_dateformat" )
+			select( name='date_format' ng-model="user.date_format")
+				option( value='m-d-y' )= tr['m-d-y']
+				option( value='d-m-y' )= tr['d-m-y']
 		div.formButtons( ng-show="edit_dateformat" )
 			input#submitDateFormat.btn.green( type="submit" value=tr['submit'])
-			a#cancelEditDateFormat.cancel_link( href="javascript:;" )= tr['cancel']
+			a#cancelEditDateFormat.cancel_link( ng-click="showHide('edit_dateformat')" )= tr['cancel']
 
 //USERNAME - PENDING
-div#usernameDiv.settingsElement( ng-init="edit_username=false;" )
-	a#editUsername.editLink.non_editable( ng-click="edit_username = !edit_username" )
+div#usernameDiv.settingsElement
+	a#editUsername.editLink( ng-click="showHide('edit_username')")
 			include ../svg/edit_activity_svg
 	form( method="POST")
 		//label= tr['username'] + ': '
 		label http://www.trafie.com/
 		//span= errors.username
 		span#username_error
-		span.existed.non_editable( ng-show="!edit_username" ) {{user.username || user._id}}
+		span.existed( ng-show="!edit_username" ) {{user.username || user._id}}
 			//^ = user.username || user._id
 		input#username( name="username" value="{{user.username || user._id}}" ng-show="edit_username" )
 		div.formButtons( ng-show="edit_username" )
 			input#submitUsername.btn.green( type="submit" value=tr['submit'])
-			a#cancelEditUsername.cancel_link( href="javascript:;" )= tr['cancel']
+			a#cancelEditUsername.cancel_link( ng-click="showHide('edit_username')" )= tr['cancel']
 
-		

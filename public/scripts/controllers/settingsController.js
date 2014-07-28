@@ -158,7 +158,6 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 					$scope.user.discipline_formatted = res.translated_value;
 				});
 				break;
-
 			case 'gender':
 				data = { "gender" : $scope.user.gender  };
 				console.log(data);
@@ -185,7 +184,6 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 					$scope.user.gender_formatted = res.translated_value;
 				});
 				break;
-
 			case 'birthday':
 				//var utc = new Date($scope.user.new_birthday.getUTCFullYear(), $scope.user.new_birthday.getUTCMonth(), $scope.user.new_birthday.getUTCDate(),  $scope.user.new_birthday.getUTCHours(), $scope.user.new_birthday.getUTCMinutes(), $scope.user.new_birthday.getUTCSeconds());;
 				//var iso = $scope.user.new_birthday.toISOString();
@@ -218,7 +216,6 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 					}
 				});
 				break;
-
 			case 'country':
 				data = { "country" : $scope.user.country };
 				console.log(data);
@@ -245,7 +242,6 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 					$scope.user.country_formatted = res.translated_value;
 				});
 				break;
-
 			case 'about':
 				data = { "about" : $scope.user.new_about };
 				$http.post('/settings_data', data)
@@ -288,6 +284,8 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 						$timeout(function(){
 							$scope.language_msg = '';
 						}, 3000);
+
+						$window.location.reload();
 					}
 					else {
 						$scope.language_msg = res.message;
@@ -300,9 +298,33 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 					$scope.user.language = res.translated_value;
 				});
 				break;
+			case 'date-format':
+				data = { "date-format" : $scope.user.date_format };
+				console.log(data);
+				$http.post('/settings_data', data)
+				.success(function(res){
+					if( res.success ) {
+						$scope.user.date_format = res.value;
+						$scope.discipline_msg='Date format successfully updated'; //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
+						$scope.showHide('edit_dateformat');
 
-			case 'dateformat':
+						/* after 3 secconds hide the message */
+						$timeout(function(){
+							$scope.dateformat_msg = '';
+						}, 3000);
+					}
+					else {
+						$scope.dateformat_msg = res.message;
+
+						/* after 3 secconds hide the message */
+						$timeout(function(){
+							$scope.dateformat_msg = '';
+						}, 3000);
+					}
+					$scope.user.date_format = res.translated_value;
+				});
 				break;
+
 			case 'username':
 				break;
 
