@@ -1,4 +1,5 @@
 var en = {
+    'this_language'         : 'English',
 
 	// Disciplines
 	'100m'					: '100m',

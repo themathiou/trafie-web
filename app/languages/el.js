@@ -1,4 +1,5 @@
 var el = {
+    'this_language'         : 'Ελληνικά',
 
     // Disciplines
     '100m'                  : '100μ',
