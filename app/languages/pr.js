@@ -56,6 +56,9 @@ var pr = {
     'country'               : 'Country',
     'language'              : 'Language',
     'about_me'              : 'Shit I\'ve done',
+    'privacy'               : 'Privacy',
+    'private'               : 'Private',
+    'public'                : 'Public',
 
     // Buttons
     'submit'				: 'Submit',

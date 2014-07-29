@@ -56,6 +56,9 @@ var el = {
     'country'               : 'Χώρα',
     'language'              : 'Γλώσσα',
     'about_me'              : 'Σχετικά με εμένα',
+    'privacy'               : 'Ιδιωτικότητα',
+    'private'               : 'Ιδιωτικό',
+    'public'                : 'Δημόσιο',
 
     // Buttons
     'submit'                : 'Υποβολή',

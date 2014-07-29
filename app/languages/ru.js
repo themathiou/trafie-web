@@ -56,6 +56,9 @@ var en = {
     'country'               : 'Country',
     'language'              : 'Language',
     'about_me'              : 'About Me',
+    'privacy'               : 'Privacy',
+    'private'               : 'Private',
+    'public'                : 'Public',
 
     // Buttons
     'submit'                : 'Submit',
