@@ -271,7 +271,7 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 				Account Settings
 			 */
 			case 'language':
-				data = { "language" : $scope.user.language  };
+				data = { "language" : $scope.user.new_language  };
 				console.log(data);
 				$http.post('/settings_data', data)
 				.success(function(res){
@@ -299,7 +299,7 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 				});
 				break;
 			case 'date-format':
-				data = { "date-format" : $scope.user.date_format };
+				data = { "date_format" : $scope.user.date_format };
 				console.log(data);
 				$http.post('/settings_data', data)
 				.success(function(res){
@@ -324,8 +324,30 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 					$scope.user.date_format = res.translated_value;
 				});
 				break;
-
 			case 'username':
+				data = { "username" : $scope.user.new_username };
+				console.log(data);
+				$http.post('/settings_data', data)
+				.success(function(res){
+					if( res.success ) {
+						$scope.user.username = res.value;
+						$scope.discipline_msg='Username successfully updated'; //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
+						$scope.showHide('edit_username');
+
+						/* after 3 secconds hide the message */
+						$timeout(function(){
+							$scope.username_msg = '';
+						}, 3000);
+					}
+					else {
+						$scope.username_msg = res.message;
+
+						/* after 3 secconds hide the message */
+						$timeout(function(){
+							$scope.username_msg = '';
+						}, 3000);
+					}
+				});
 				break;
 
 

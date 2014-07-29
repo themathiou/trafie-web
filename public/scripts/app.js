@@ -28,10 +28,6 @@ trafie.config(['$routeProvider',
 				templateUrl: '/views/profile.html',
 				controller: 'profileController'
 			}).
-			//probably useless
-			// when('/logout', {
-			// 	redirectTo:'/logout'
-			// }).
 			otherwise({
 				redirectTo: '/'
 			});

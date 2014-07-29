@@ -37,7 +37,7 @@ div#languageDiv.settingsElement
 		span {{user.language}}
 		div(ng-show="language_msg !=''") {{language_msg}}
 		div( ng-show="edit_language" )
-			select(name="language" ng-model="user.language")
+			select(name="language" ng-model="user.new_language")
 				option(value="no-selection" selected)= tr['choose_your_language']
 				- for( var i in languages )
 						option( value=i )= languages[i]
@@ -61,18 +61,16 @@ div#dateFormatDiv.settingsElement
 			input#submitDateFormat.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditDateFormat.cancel_link( ng-click="showHide('edit_dateformat')" )= tr['cancel']
 
-//USERNAME - PENDING
+//USERNAME
 div#usernameDiv.settingsElement
 	a#editUsername.editLink( ng-click="showHide('edit_username')")
 			include ../svg/edit_activity_svg
-	form( method="POST")
-		//label= tr['username'] + ': '
+	form( method="POST" ng-submit="submitChangeSetting('username')")
 		label http://www.trafie.com/
 		//span= errors.username
 		span#username_error
 		span.existed( ng-show="!edit_username" ) {{user.username || user._id}}
-			//^ = user.username || user._id
-		input#username( name="username" value="{{user.username || user._id}}" ng-show="edit_username" )
+		input#username( ng-model="user.new_username" placeholder="{{user.username || user._id}}" ng-show="edit_username" )
 		div.formButtons( ng-show="edit_username" )
 			input#submitUsername.btn.green( type="submit" value=tr['submit'])
 			a#cancelEditUsername.cancel_link( ng-click="showHide('edit_username')" )= tr['cancel']
