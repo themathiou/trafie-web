@@ -67,6 +67,20 @@ div#mainDisciplineDiv.settingsElement
 				input#submitMainDiscipline.btn.green( type="submit" value=tr['submit'])
 				a#cancelEditMainDiscipline.cancel_link( ng-click="showHide('edit_discipline')" )= tr['cancel']
 
+//PRIVACY
+div#privacyDiv.settingsElement
+	a.editLink( ng-click="showHide('edit_privacy')" )
+			include ../svg/edit_activity_svg
+	form( method="POST" ng-submit="submitChangeSetting('privacy')")
+		label= tr['privacy'] + ': '
+		span {{user.private}}
+		div(ng-show="privacy_msg !=''") {{privacy_msg}}
+		div( ng-show="edit_privacy" )
+			input( type="checkbox" name="privacy" value="yes" ng-model="user.new_privacy" ng-show="edit_privacy" )
+		div.formButtons( ng-show="edit_privacy" )
+			input#submitLanguage.btn.green( type="submit" value=tr['submit'])
+			a#cancelEditLanguage.cancel_link( ng-click="showHide('edit_privacy')" )= tr['cancel']
+
 //GENDER
 div#genderDiv.settingsElement
 	a#editGender.editLink( ng-click="showHide('edit_gender')" )

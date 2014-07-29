@@ -158,6 +158,31 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 					$scope.user.discipline_formatted = res.translated_value;
 				});
 				break;
+			case 'privacy':
+				data = { "private" : $scope.user.new_privacy };
+				console.log(data);
+				$http.post('/settings_data', data)
+				.success(function(res){
+					if( res.success ) {
+						$scope.user.private = res.value;
+						$scope.privacy_msg='Privacy successfully updated'; //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
+						$scope.showHide('edit_privacy');
+
+						/* after 3 secconds hide the message */
+						$timeout(function(){
+							$scope.privacy_msg = '';
+						}, 3000);
+					}
+					else {
+						$scope.privacy_msg = res.message;
+
+						/* after 3 secconds hide the message */
+						$timeout(function(){
+							$scope.privacy_msg = '';
+						}, 3000);
+					}
+				});
+				break;
 			case 'gender':
 				data = { "gender" : $scope.user.gender  };
 				console.log(data);
