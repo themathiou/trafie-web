@@ -27,7 +27,7 @@ exports.get = function( req, res ){
 		error_messages = '';
 
 	// Else, fetch the first name and the last name of the user from the database
-	Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline about male country birthday picture language date_format username')
+	Profile.schema.findOne({ '_id': user_id }, 'first_name last_name discipline about male country birthday picture language date_format username private')
 	.then( function( profile ) {
 		// If the user was not found, return null
 		if( typeof profile.first_name === 'undefined') {
@@ -68,7 +68,8 @@ exports.get = function( req, res ){
 				'language'    			: profile.language,
 				'language_formatted'	: tr['this_language'],
 				'date_format' 			: profile.date_format,
-				'username'    			: profile.username
+				'username'    			: profile.username,
+				'private'				: profile.private
 			}
 		};
 		
@@ -199,6 +200,15 @@ exports.post = function( req, res ) {
 				profile_data.date_format = req.body.date_format;
 				response.value = req.body.date_format;
 				response.translated_value = tr[req.body.date_format];
+			}
+		}
+
+		// Validating date format
+		if( typeof req.body.private !== 'undefined' ) {
+			if( typeof req.body.private === 'boolean' ) {
+				response.success = true;
+				profile_data.private = req.body.private;
+				response.value = req.body.private;
 			}
 		}
 

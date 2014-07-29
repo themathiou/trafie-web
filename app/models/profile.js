@@ -20,6 +20,7 @@ var profileSchema = mongoose.Schema({
   picture 		: { type: String, 	required: false, 	default: '' },
   date_format 	: { type: String, 	required: true, 	default: 'd-m-y' },
   language 		: { type: String, 	required: true, 	default: 'en' },
+  private 		: { type: Boolean, 	required: true, 	default: false },
   keywords 		: {
   					names: [ { type: String, required: false, default: '' } ]
   				  }
