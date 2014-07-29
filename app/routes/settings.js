@@ -66,11 +66,12 @@ exports.get = function( req, res ){
 				'birthday'    			: profile.birthday,
 				'picture'     			: picture,
 				'language'    			: profile.language,
+				'language_formatted'	: tr['this_language'],
 				'date_format' 			: profile.date_format,
 				'username'    			: profile.username
 			}
 		};
-
+		
 		res.json( data );
 	})
 	.fail( function( error ) {

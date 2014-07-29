@@ -1,4 +1,5 @@
 var pr = {
+    'this_language'         : 'Profanity',
 
 	// Disciplines
 	'100m'					: '100m',
