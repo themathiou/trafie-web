@@ -1,4 +1,12 @@
-trafie.controller("mainController", function($rootScope, $scope, $http, $routeParams, $location, $timeout, $upload) {
+trafie.controller("mainController", function(
+	$rootScope, 
+	$scope, 
+	$http, 
+	$routeParams, 
+	$location, 
+	$timeout, 
+	$upload, 
+	$window) {
 	///////////////////////////////////////////////////////
 	// GENERAL
 	///////////////////////////////////////////////////////
@@ -36,11 +44,13 @@ trafie.controller("mainController", function($rootScope, $scope, $http, $routePa
 	      return results;
 	    });
 	};
+	
 	/**
 	* onSelect
 	*/
 	$scope.onSelect = function ($item, $model, $label) {
-		$location.path('/' + $item._id);
+		//user  lower-level API for reloading page
+		$window.location.href = '/' + $item._id;
 	};
 
 

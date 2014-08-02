@@ -45,18 +45,16 @@ trafie.controller("profileController", function( $rootScope, $scope, $http, $rou
 
 
     $scope.initProfile = function(){
-		$scope.thisID = '';
+    	//true if this is the profile of the logged-in user
 		$scope.self = false;
 
-		if( $routeParams.userID === undefined || $routeParams.userID == $rootScope.user._id){
-				$scope.thisID = $rootScope.user._id;
-				$scope.self = true;
-				$scope.getProfile( $scope.thisID );
+		if( $routeParams.userID === undefined || $routeParams.userID === $rootScope.user._id){
+			$scope.self = true;
+			$scope.getProfile( $rootScope.user._id );
 		}
 		else{
-			$scope.thisID = $routeParams.userID;
 			$scope.self = false;
-			$scope.getProfile( $scope.thisID );
+			$scope.getProfile( $routeParams.userID );
 		}
 	}
 

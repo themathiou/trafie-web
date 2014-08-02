@@ -375,7 +375,6 @@ trafie.controller("settingsController", function($rootScope, $timeout, $scope, $
 				});
 				break;
 
-
 			default:
 				console.log('default switch case');
 		}
