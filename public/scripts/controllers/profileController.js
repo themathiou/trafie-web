@@ -48,13 +48,12 @@ trafie.controller("profileController", function( $rootScope, $scope, $http, $rou
     	//true if this is the profile of the logged-in user
 		$scope.self = false;
 
-		if( $routeParams.userID === undefined || $routeParams.userID === $rootScope.user._id){
-			$scope.self = true;
-			$scope.getProfile( $rootScope.user._id );
-		}
-		else{
-			$scope.self = false;
+		if( $routeParams.userID ) {
 			$scope.getProfile( $routeParams.userID );
+			$routeParams.userID !== $rootScope.user._id ? $scope.self = false : $scope.self = true;
+		}
+		else {
+			$scope.getProfile( $rootScope.user._id );
 		}
 	}
 
