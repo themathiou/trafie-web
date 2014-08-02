@@ -20,10 +20,10 @@ exports.get = function( req, res ){
 
   // When there is a profile_id or a username in the url
   if( typeof req.params.profile_id !== 'undefined' ) {
-    Profile.schema.findOne({ '_id': user_id }, 'language date_format').then( function( user_data ) {
+    Profile.schema.findOne({ '_id': user_id }, '_id language date_format').then( function( user_data ) {
 
       // Find the profile by id
-      Profile.schema.findOne({ '_id': req.params.profile_id }, '_id first_name last_name discipline country male picture')
+      Profile.schema.findOne({ '_id': req.params.profile_id }, '_id first_name last_name discipline country male picture private')
       .then( function( profile_data ) {
 
         // If the profile was found, get the data of the user
@@ -31,7 +31,7 @@ exports.get = function( req, res ){
           send_profile_data( res, profile_data, user_data );
         } else {
           // If the profile wasn't found, try to find it by username
-          Profile.schema.findOne({ 'username': req.params.profile_id }, '_id first_name last_name discipline country male picture')
+          Profile.schema.findOne({ 'username': req.params.profile_id }, '_id first_name last_name discipline country male picture private')
           .then( function( profile_data ) {
 
             // If the profile was found, get the data of the user
@@ -71,6 +71,10 @@ exports.get = function( req, res ){
  * @return object              (the profile data as a json object)
  */
 function send_profile_data( res, profile_data, user_data ) {
+  if( profile_data.private && profile_data._id !== user_data._id ) {
+    res.json( null );
+  }
+
   var tr = translations[user_data.language];
   var gender = profile_data.male ? tr['male'] : tr['female'];
   var formatted_discipline = profile_data.discipline ? tr[profile_data.discipline] : '';

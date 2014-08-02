@@ -13,7 +13,7 @@ profileHelper.validateName = function( name ) {
  * @param string name
  */
 profileHelper.validateUsername = function( username ) {
-	return /^[A-Za-z_.0-9]+$/.test( username );
+	return /^[A-Za-z_.0-9]+$/.test( username ) && username.length <= 20;
 };
 
 /**

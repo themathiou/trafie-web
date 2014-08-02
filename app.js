@@ -146,7 +146,7 @@ trafie.post( '/settings_data', settings.post );
 
 trafie.get( '/views/statistics.html', statistics.get_view );
 
-trafie.get( '/statistics', index.get_view );
+trafie.get( '/:user_id/statistics', index.get_view );
 
 
 /*******************************************************************************************************************************
@@ -219,8 +219,12 @@ trafie.post( '/reset_password/:hash', reset_password.post );
  * 404                                                                                                                         *
  ******************************************************************************************************************************/
 
- trafie.use(function(req, res, next){
-  res.status(404);
+trafie.use( function( req, res, next ) {
+  res.status( 404 );
+  res.sendfile('./app/views/four_oh_four.html');
+});
+
+trafie.get('/four_oh_four', function( req, res ) {
   res.sendfile('./app/views/four_oh_four.html');
 });
 
@@ -241,6 +245,7 @@ trafie.get('/logout', function( req, res ) {
 /*******************************************************************************************************************************
  * DUMMY DATA                                                                                                                  *
  ******************************************************************************************************************************/
+
 if( trafie.settings.env === 'development' ) {
   trafie.get( '/dummy_data', dummy_data.get );
 
@@ -252,7 +257,7 @@ if( trafie.settings.env === 'development' ) {
  * PROFILE                                                                                                                     *
  ******************************************************************************************************************************/
 
-trafie.get( '/:profile_id', profile.get_view );
+trafie.get( '/:profile_id', index.get_view );
 
 
 /*******************************************************************************************************************************
