@@ -3,7 +3,8 @@ var Profile = require('../models/profile.js'),
     Activity = require('../models/activity.js');
 
 // Loading helpers
-var activityHelper = require('../helpers/activity.js');
+var mainHelper = require('../helpers/main_helper.js');
+    activityHelper = require('../helpers/activity.js');
 
 // Initialize translations
 var translations = require('../languages/translations.js');
@@ -12,55 +13,21 @@ var translations = require('../languages/translations.js');
  * Profile - GET
  */
 exports.get = function( req, res ){
-  if( typeof req.session.user_id === 'undefined' ) {
+  if( typeof req.session.user_id === 'undefined' || typeof req.params.profile_id === 'undefined' ) {
     res.json( null );
   }
 
-  var user_id = req.session.user_id;
-
-  // When there is a profile_id or a username in the url
-  if( typeof req.params.profile_id !== 'undefined' ) {
-    Profile.schema.findOne({ '_id': user_id }, '_id language date_format').then( function( user_data ) {
-
-      // Find the profile by id
-      Profile.schema.findOne({ '_id': req.params.profile_id }, '_id first_name last_name discipline country male picture private')
-      .then( function( profile_data ) {
-
-        // If the profile was found, get the data of the user
-        if( profile_data !== null && profile_data !== undefined ) {
-          send_profile_data( res, profile_data, user_data );
-        } else {
-          // If the profile wasn't found, try to find it by username
-          Profile.schema.findOne({ 'username': req.params.profile_id }, '_id first_name last_name discipline country male picture private')
-          .then( function( profile_data ) {
-
-            // If the profile was found, get the data of the user
-            if( profile_data !== null && profile_data !== undefined ) {
-              send_profile_data( res, profile_data, user_data );
-            } else {
-              // Else, the user was searching for a profile that doesn't exist
-              res.json( null );
-            }
-            
-          })
-          .fail( function( error ) {
-            send_error( res, error );
-          });
-        }
-
-      })
-      .fail( function( error ) {
-        send_error( res, error );
-      });
-
-    })
-    .fail( function( error ) {
-        send_error( res, error );
-    });
-  } else {
-    // If no profile id was provided, return null
-	  res.json( null );
-  }
+  mainHelper.validateAccess( req.session.user_id, req.params.profile_id, function( response ){
+    if( response.success ) {
+      send_profile_data( res, response.profile, response.user );
+    } else {
+      if( response.error == 'query_error' ) {
+        send_error( res );
+      } else {
+        res.json( null );
+      }
+    }
+  });
 };
 
 /**
