@@ -13,18 +13,24 @@ var translations = require('../languages/translations.js');
  * Profile - GET
  */
 exports.get = function( req, res ){
-  if( typeof req.session.user_id === 'undefined' || typeof req.params.profile_id === 'undefined' ) {
-    res.json( null );
+  if( typeof req.params.profile_id === 'undefined' ) {
+    send_status( res, 404 );
   }
 
-  mainHelper.validateAccess( req.session.user_id, req.params.profile_id, function( response ){
+  var user_id = typeof req.session.user_id === 'undefined' ? null : req.session.user_id;
+
+  mainHelper.validateAccess( user_id, req.params.profile_id, function( response ){
+    // If the user has a valid session and they are not visiting a private profile
     if( response.success ) {
+      // Send the profile data to the client
       send_profile_data( res, response.profile, response.user );
     } else {
-      if( response.error == 'query_error' ) {
-        send_error( res );
+      // Otherwise, if it's a server error, send the error
+      if( response.error === 'query_error' ) {
+        send_status( res, 500 );
       } else {
-        res.json( null );
+        // If the user doesn't have access to the data, or the data don't exist, do not send anything
+        send_status( res, 404 );
       }
     }
   });
@@ -38,10 +44,6 @@ exports.get = function( req, res ){
  * @return object              (the profile data as a json object)
  */
 function send_profile_data( res, profile_data, user_data ) {
-  if( profile_data.private && profile_data._id !== user_data._id ) {
-    res.json( null );
-  }
-
   var tr = translations[user_data.language];
   var gender = profile_data.male ? tr['male'] : tr['female'];
   var formatted_discipline = profile_data.discipline ? tr[profile_data.discipline] : '';
@@ -95,82 +97,36 @@ function send_profile_data( res, profile_data, user_data ) {
  * @param string error
  * @param object res
  */
-function send_error( res, error ) {
-  res.statusCode = 500;
+function send_status( res, status ) {
+  res.statusCode = status;
   res.json( null );
 }
 
 exports.get_view = function( req, res ) {
+  var view_language;
+
   if( typeof req.session.user_id === 'undefined' ) {
-    return null;
+    view_language = 'en';
+    render_profile();
+  } else {
+    var user_id = req.session.user_id;
+
+    // Get the user and his profile
+    Profile.schema.findOne( { '_id': user_id }, 'language date_format' ).then( function( profile_data ) {
+      if( profile_data.language ) {
+        view_language = profile_data.language;
+        render_profile();
+      } else {
+        view_language = 'en';
+        render_profile();
+      }
+    })
+    .fail( function( error ) {
+      send_error_page( error, res );
+    });
   }
 
-  var user_id = req.session.user_id;
-
-  // Get the user and his profile
-  Profile.schema.findOne( { '_id': user_id }, 'language date_format' ).then( function( profile_data ) {
-    if( profile_data.language ) {
-      var disciplines = {
-        'time': [
-          '100m',
-          '200m',
-          '400m',
-          '800m',
-          '1500m',
-          '3000m',
-          '60m_hurdles',
-          '100m_hurdles',
-          '110m_hurdles',
-          '400m_hurdles',
-          '3000m_steeple',
-          '4x100m_relay',
-          '4x400m_relay',
-          'marathon'
-        ],
-        'distance': [
-          'high_jump',
-          'long_jump',
-          'triple_jump',
-          'pole_vault',
-          'shot_put',
-          'discus',
-          'hammer',
-          'javelin'
-        ],
-        'points': [
-          'pentathlon',
-          'heptathlon',
-          'decathlon'
-        ]
-      };
-
-      // The data that will go to the front end
-      var view_data = {
-        'disciplines' : disciplines,
-        'tr'          : translations[profile_data.language]
-      };
-
-      res.render( 'profile', view_data );
-    } else {
-      return null;
-    }
-  })
-  .fail( function( error ) {
-    send_error_page( error, res );
-  });
-};
-
-/**
- * Getting the activities and rendering the profile
- * @param object res
- * @param object user_data
- * @param object profile_data
- */
-function render( res, user_data, profile_data ) {
-  Activity.schema.getActivitiesOfUser( { 'user_id': profile_data._id }, null, -1 )
-  .then( function( activities ) {
-    // Format the activity data
-    var activities = activityHelper.formatActivities( activities, user_data.language, user_data.date_format );
+  function render_profile() {
     var disciplines = {
       'time': [
         '100m',
@@ -205,34 +161,15 @@ function render( res, user_data, profile_data ) {
       ]
     };
 
-    var picture = profile_data.picture ? profile_data.picture : ( profile_data.male ? '/images/profile_pics/default_male.png' : '/images/profile_pics/default_female.png' );
-
     // The data that will go to the front end
     var view_data = {
-      'profile': {
-        '_id'         : profile_data._id,
-        'first_name'  : profile_data.first_name,
-        'last_name'   : profile_data.last_name,
-        'discipline'  : profile_data.discipline,
-        'country'     : profile_data.country,
-        'picture'     : picture
-      },
-      'user': {
-        '_id'         : user_data._id,
-        'first_name'  : user_data.first_name
-      },
       'disciplines' : disciplines,
-      'activities'  : activities,
-      'tr'          : translations[user_data.language],
-      'section'     : 'profile'
+      'tr'          : translations[view_language]
     };
 
     res.render( 'profile', view_data );
-  })
-  .fail( function( error ) {
-    send_error_page( error, res );
-  });
-}
+  }
+};
 
 /**
  * Sends an error page in case a query fails
