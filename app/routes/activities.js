@@ -17,9 +17,12 @@ var translations = require('../languages/translations.js');
  * Activities - GET
  */
 exports.get = function( req, res ){
-	var user_id = req.session.user_id;
+	//var user_id = req.session.user_id;
+	var user_id = req.params.user_id;
 
-	if( !user_id || ( user_id !== req.params.user_id ) ) {
+	// removed the check for "|| ( user_id !== req.params.user_id )"
+	// in order to allow users to see other's user's activities
+	if( !user_id ) {
 		return_activity( res, 403, '', 'en', 'd-m-y' );
 	} else {
 		// Find the profile
@@ -276,7 +279,7 @@ exports.put = function( req, res ) {
 
 			var discipline = activity.discipline;
 			var performance = {};
-			
+
 			switch ( discipline ) {
 				case '100m':
 				case '200m':

@@ -118,18 +118,6 @@ trafie.controller("mainController", function(
 				data : {
 					myModel : $scope.myModel
 				},
-				/* formDataAppender: function(fd, key, val) {
-					if (angular.isArray(val)) {
-                        angular.forEach(val, function(v) {
-                          fd.append(key, v);
-                        });
-                      } else {
-                        fd.append(key, val);
-                      }
-				}, */
-				/* transformRequest: [function(val, h) {
-					console.log(val, h('my-header')); return val + '-modified';
-				}], */
 				file: $scope.selectedFiles[index],
 				fileFormDataName: 'profile_pic'
 			});
@@ -144,7 +132,6 @@ trafie.controller("mainController", function(
 				$scope.progress[index] = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
 			});
 			$scope.upload[index].xhr(function(xhr){
-		//xhr.upload.addEventListener('abort', function() {console.log('abort complete')}, false);
 			});
 		} else {
 			var fileReader = new FileReader();

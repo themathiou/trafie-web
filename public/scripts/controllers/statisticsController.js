@@ -1,4 +1,8 @@
-trafie.controller("statisticsController", function( $rootScope, $scope, $http, $timeout ) {
+trafie.controller("statisticsController", function( 
+    $rootScope, 
+    $scope, 
+    $http, 
+    $timeout ) {
 	
 	$scope.loading = true;
 

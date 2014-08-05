@@ -1,4 +1,10 @@
-trafie.controller("settingsController", function($rootScope, $timeout, $scope, $window, $http ){
+trafie.controller("settingsController", function(
+	$rootScope, 
+	$timeout, 
+	$scope, 
+	$window, 
+	$http ){
+	
 	$http.get('/settings_data')
 	.success(function(res){
 		console.log(res);

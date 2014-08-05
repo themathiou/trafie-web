@@ -1,4 +1,9 @@
-trafie.controller("profileController", function( $rootScope, $scope, $http, $routeParams ){
+trafie.controller("profileController", function( 
+	$rootScope, 
+	$scope, 
+	$http, 
+	$routeParams ){
+	
 	//GENERAL VARIABLES
 	$scope.disciplines = {
       'time': [
@@ -57,7 +62,9 @@ trafie.controller("profileController", function( $rootScope, $scope, $http, $rou
 		}
 	}
 
+	//get user profile based on user id
 	$scope.getProfile = function( user_id ){
+		console.log( 'user_id in get profile:' + user_id );
 		$http.get('/profile/'+ user_id)
 		.success(function(res){
 			$rootScope.current_user = res;
@@ -72,11 +79,13 @@ trafie.controller("profileController", function( $rootScope, $scope, $http, $rou
 
 			//get user's activities
 			$scope.getActivities( user_id , $rootScope.current_user.discipline);
+			
 			//get user's disciplines for filtering
 			$scope.getDisciplinesOfActivities( user_id );
 		});
 	}
 	
+	//get user activities based on user id
 	$scope.getActivities = function(user_id, discipline){
 		var url =  '';
 		discipline != '' ? url = '/user/' + user_id + '/activities?discipline=' + discipline : url = '/user/' + user_id + '/activities';
