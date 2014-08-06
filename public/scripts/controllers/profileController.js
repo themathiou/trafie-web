@@ -59,6 +59,7 @@ trafie.controller("profileController", function(
 		}
 		else {
 			$scope.getProfile( $rootScope.user._id );
+			$scope.self = true;
 		}
 	}
 
@@ -75,13 +76,13 @@ trafie.controller("profileController", function(
 			}
 
 			console.log( 'user', $rootScope.user );
-			console.log( 'visited-user', $rootScope.current_user );
+			console.log( 'current_user', $rootScope.current_user );
 
 			//get user's activities
 			$scope.getActivities( user_id , $rootScope.current_user.discipline);
 			
 			//get user's disciplines for filtering
-			$scope.getDisciplinesOfActivities( user_id );
+			//$scope.getDisciplinesOfActivities( user_id );
 		});
 	}
 	

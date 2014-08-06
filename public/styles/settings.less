@@ -1,0 +1,85 @@
+
+.settingsContent {
+	padding-left:10px;
+	padding-top: 60px;
+
+	h3 {
+		width: 100%;
+		text-align: center;
+	}
+
+	form {
+		width:100%;
+		display: inline-block;
+		margin: 0px;
+		padding: 3px 0px;
+
+		label {
+			font-size: 1em;
+		}
+
+		.textarea {
+			width: 550px;
+			max-width: 550px;
+		}
+
+	}
+
+	.settingsElement {
+		border-bottom: 1px solid @gray_01;
+		padding: 10px 5px;
+
+		input {
+			border: none;
+			font-size: 1em;
+
+			&[type="radio"] {
+				-webkit-appearance: radio;
+			}
+		}
+
+		textarea {
+			border: none;
+			font-size: 1em;
+		}
+
+		.existed {
+			display: inline-block;
+		}
+
+		&:hover{
+			background-color: @gray_01;
+		}
+
+		.settings_profile_pic_thumb {
+			width:40px;
+			height:40px;
+			margin-left: 5px;
+			.rounded_corners();
+			vertical-align: middle;
+		}
+	}
+
+	.non_editable {
+		display: inline-block;
+	}
+
+	.editable {
+		display: none;
+	}
+
+	.submitButtonsVisible {
+		display: block;
+		width:150px;
+	}
+
+	.submitButtonsHide {
+		visibility: hidden;
+	}
+
+
+	.editLink {
+		float:right;
+	}
+
+}

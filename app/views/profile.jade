@@ -9,7 +9,7 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
 				span( ng-show="current_user.discipline && current_user.country" ) - 
 				span( ng-show="current_user.country" ){{current_user.country}}
 	
-	ul(style="margin-bottom: 40px;")
+	ul( style="margin-bottom: 40px;" )
 		li( ng-repeat="(key, value) in user.disciplines_of_user" style="float:left;")
 			a( ng-click="getActivities( user._id, key )" ) {{value}}
 
@@ -29,7 +29,6 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
 				div.icon XX
 				div.info( data-activity-id="{{activity._id}}" )
 					div.current_data( ng-show="!activity.show_this" )
-						//if user._id==profile._id
 						a.deleteActivity( ng-show="self" ng-click="deleteActivity(activity._id)" )
 							include partials/svg/delete_activity_svg
 
@@ -39,7 +38,6 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
 						div.performance( data-value="{{activity.performance}}" ) {{activity.formatted_performance}}
 						div.discipline( data-value="{{activity.discipline}}" ) {{activity.formatted_discipline}}
 						div.date( data-value="{{activity.date}}" ) {{activity.formatted_date}}
-					//if user._id==profile._id
 					a.editActivity( ng-show="self" ng-click="initEditableActivity(activity)" )
 						include partials/svg/edit_activity_svg
 
