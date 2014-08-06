@@ -63,13 +63,6 @@ body {
   color: #555;
   font: 300 1em Open Sans, Arial, Helvetica, sans-serif;
   background-color: white;
-  /*
-		background-image: url("../images/ui/gray-background.png");
-		background-repeat: repeat;
-		background-position: 0 0,0 0,0 0;
-		background-color: #eaeff2;
-	*/
-
 }
 label {
   font-weight: 400;
@@ -88,6 +81,26 @@ label {
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-top: none;
   border-bottom: none;
+}
+.filters-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 0px;
+  list-style-type: none;
+}
+.filters-row li {
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+.filters-row a {
+  cursor: pointer;
+  text-decoration: none;
+}
+.filters-row a:hover {
+  font-weight: bold;
+  text-decoration: none;
 }
 #mainmenu_container {
   background: #ffffff url("../images/bar_back.png") repeat-x left top;
@@ -551,6 +564,9 @@ a:visited {
 #dashboard {
   margin-top: 60px;
 }
+.chart-div {
+  width: 100%;
+}
 .settingsContent {
   padding-left: 10px;
   padding-top: 60px;
@@ -619,4 +635,16 @@ a:visited {
 }
 .settingsContent .editLink {
   float: right;
+}
+.logout {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+.logout a {
+  text-decoration: none;
+}
+.logout a:hover {
+  text-decoration: none;
+  cursor: pointer;
 }

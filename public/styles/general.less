@@ -32,13 +32,6 @@ body
 	color: #555;
 	font: 300 1em Open Sans,Arial,Helvetica,sans-serif;
 	background-color: white;
-
-	/*
-		background-image: url("../images/ui/gray-background.png");
-		background-repeat: repeat;
-		background-position: 0 0,0 0,0 0;
-		background-color: #eaeff2;
-	*/
 }
 
 label {
@@ -63,9 +56,43 @@ label {
 	border-bottom: none;
 }
 
+//filters-row is the class for an unordered-list(ul)
+.filters-row {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex: 1;
+	padding: 0px;
+	list-style-type: none;
 
-.menu_profile{}
+	li {
+		margin-right: 10px;
+		flex-shrink:0;
+	}
 
-.menu_statistics{}
+	a {
+		cursor: pointer;
+		text-decoration: none;
 
-.menu_settings{}
+		&:hover {
+			font-weight: bold;
+			text-decoration: none;
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

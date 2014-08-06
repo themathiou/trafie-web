@@ -3,7 +3,7 @@ div#main_content( ng-init="statisticsInit( user._id, user.discipline)" )
 	br
 	h4= user.first_name
 	
-	ul
+	ul.filters-row
 		li( ng-repeat="(key, value) in user.disciplines_of_user")
 			a( ng-click="drawSimpleChart( user._id, key )" ) {{value}}
 
@@ -11,7 +11,7 @@ div#main_content( ng-init="statisticsInit( user._id, user.discipline)" )
 		p Your awesome history is loading! Please wait...
 
 	div#dashboard
-		div#chart_div( style="width: 100%; height: 300px;" )
+		div#chart_div.chart-div
 		div#control( style='width: 100%; height: 50px;' )
 
 

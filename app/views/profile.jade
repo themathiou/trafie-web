@@ -9,7 +9,7 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
 				span( ng-show="current_user.discipline && current_user.country" ) - 
 				span( ng-show="current_user.country" ){{current_user.country}}
 	
-	ul( style="margin-bottom: 40px;" )
+	ul.filters-row
 		li( ng-repeat="(key, value) in user.disciplines_of_user" style="float:left;")
 			a( ng-click="getActivities( user._id, key )" ) {{value}}
 
