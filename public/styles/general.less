@@ -1,3 +1,48 @@
+body
+{
+	margin: 0;
+	padding: 0;
+	color: #555;
+	font: 300 1em Open Sans,Arial,Helvetica,sans-serif;
+	background-color: white;
+}
+
+label {
+	font-weight: 400;
+}
+
+a {
+	cursor: pointer;
+}
+
+#content {
+	margin: 0px auto;
+	float: none;
+}
+
+#main_content
+{
+	max-width: 950px;
+	min-width: 950px;
+	width: 80%;
+	margin: 0px auto;
+	padding: 50px auto;
+	background-color: none;
+	border: 1px solid @gray_01;
+	border-top: none;
+	border-bottom: none;
+}
+
+.loading {
+	display: flex;
+	justify-content: flex-end;
+	flex-direction: column;
+	align-items: center;
+	min-height: 40px;
+	background-image: url("@{images}ui/loading.gif");
+	background-repeat: no-repeat;
+	background-position-x: center;
+}
 
 /*error message - text width - right of the label*/
 .error_message {
@@ -23,37 +68,6 @@
 	margin: 3px 0px;
 	padding: 3px 3px;
 	text-align: left;
-}
-
-body
-{
-	margin: 0;
-	padding: 0;
-	color: #555;
-	font: 300 1em Open Sans,Arial,Helvetica,sans-serif;
-	background-color: white;
-}
-
-label {
-	font-weight: 400;
-}
-
-#content {
-	margin: 0px auto;
-	float: none;
-}
-
-#main_content
-{
-	max-width: 950px;
-	min-width: 950px;
-	width: 80%;
-	margin: 0px auto;
-	padding: 50px auto;
-	background-color: none;
-	border: 1px solid @gray_01;
-	border-top: none;
-	border-bottom: none;
 }
 
 //filters-row is the class for an unordered-list(ul)

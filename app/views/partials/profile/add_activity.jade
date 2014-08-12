@@ -6,57 +6,57 @@ accordion( class="info add_activity" ng-show="self")
 	
 		//time measure
 		form( ng-show="disciplines.time.indexOf(newActivityForm.selected_discipline.id) > -1" ng-submit="submitNewActivity()" )
-			div.data_entry.row= tr['enter_your_performance'] +':'
-				br
-				div
-					label(for="hours_input")= tr['hours_short'] + ':'
-					input#hours_input(name="hours" size="3" maxlength="2" ng-model="newActivityForm.hours" )
-				div
-					label(for="minutes_input")= tr['minutes_short'] + ':'
-					input#minutes_input(name="minutes" size="3" maxlength="2" ng-model="newActivityForm.minutes")
-				div
-					label(for="seconds_input")= tr['seconds_short'] + ':'
-					input#seconds_input(name="seconds" size="3" maxlength="2" ng-model="newActivityForm.seconds")
-				div
-					label(for="centiseconds_input")= tr['centiseconds_short'] + ':'
-					input#centiseconds_input(name="centiseconds" size="3" maxlength="2" ng-model="newActivityForm.centiseconds")
+			div.data_entry= tr['enter_your_performance'] +':'
+				div.performance_fields
+					div
+						label(for="hours_input")= tr['hours_short'] + ':'
+						input#hours_input(name="hours" size="3" maxlength="2" ng-model="newActivityForm.hours" )
+					div
+						label(for="minutes_input")= tr['minutes_short'] + ':'
+						input#minutes_input(name="minutes" size="3" maxlength="2" ng-model="newActivityForm.minutes")
+					div
+						label(for="seconds_input")= tr['seconds_short'] + ':'
+						input#seconds_input(name="seconds" size="3" maxlength="2" ng-model="newActivityForm.seconds")
+					div
+						label(for="centiseconds_input")= tr['centiseconds_short'] + ':'
+						input#centiseconds_input(name="centiseconds" size="3" maxlength="2" ng-model="newActivityForm.centiseconds")
 				div
 					label(for="datepicker_time")= tr['date'] + ':'
 					input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="newActivityForm.date" is-open="opened" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
-			//submit
-			div#submit_buttons.row.submit_buttons
-				input.btn.green(type="submit" name="new_competition" value=tr['save'])
-				a.cancel_link( ng-click="accordions.addActivity = !accordions.addActivity" )= tr['cancel']
+				//submit
+				div#submit_buttons.submit_buttons
+					input.btn.green(type="submit" name="new_competition" value=tr['save'])
+					a.cancel_link( ng-click="accordions.addActivity = !accordions.addActivity" )= tr['cancel']
 
 		//distance measure
 		form#add_distance_activity_form( ng-show="disciplines.distance.indexOf(newActivityForm.selected_discipline.id) > -1" ng-submit="submitNewActivity()" )
-			div.data_entry.row= tr['enter_your_performance'] +':'
-				br
-				div
-					label(for="distance_1_input")= tr['meters_short'] + ':'
-					input#distance_1_input(name="distance_1" size="3" maxlength="2" ng-model="newActivityForm.distance_1").
-				div
-					label(for="distance_2_input")= tr['centimeters_short'] + ':'
-					input#distance_2_input(name="distance_2" size="3" maxlength="2" ng-model="newActivityForm.distance_2")
+			div.data_entry= tr['enter_your_performance'] +':'
+				div.performance_fields
+					div
+						label(for="distance_1_input")= tr['meters_short'] + ':'
+						input#distance_1_input(name="distance_1" size="3" maxlength="2" ng-model="newActivityForm.distance_1").
+					div
+						label(for="distance_2_input")= tr['centimeters_short'] + ':'
+						input#distance_2_input(name="distance_2" size="3" maxlength="2" ng-model="newActivityForm.distance_2")
 				div
 					label(for="datepicker_distance")= tr['date'] + ':'
 					input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="newActivityForm.date" is-open="opened" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
-			//submit
-			div#submit_buttons.row.submit_buttons
-				input.btn.green(type="submit" name="new_competition" value=tr['save'])
-				a.cancel_link( ng-click="accordions.addActivity = !accordions.addActivity" )= tr['cancel']
+				//submit
+				div#submit_buttons.submit_buttons
+					input.btn.green(type="submit" name="new_competition" value=tr['save'])
+					a.cancel_link( ng-click="accordions.addActivity = !accordions.addActivity" )= tr['cancel']
 
 		// points measure
 		form#add_points_activity_form( ng-show="disciplines.points.indexOf(newActivityForm.selected_discipline.id) > -1" ng-submit="submitNewActivity()" )
-			div.data_entry.row= tr['enter_your_performance'] +':'
-				br
-				label(for="points_input")= tr['points'] + ':'
-				input#points_input(type="text" name="points" size="7" maxlength="5" ng-model="newActivityForm.points")
+			div.data_entry= tr['enter_your_performance'] +':'
+				div.performance_fields
+					label(for="points_input")= tr['points'] + ':'
+					input#points_input(type="text" name="points" size="7" maxlength="5" ng-model="newActivityForm.points")
 				div
 					label(for="datepicker_point")= tr['date'] + ':'
 					input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="newActivityForm.date" is-open="opened" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
-			//submit
-			div#submit_buttons.row.submit_buttons
-				input.btn.green(type="submit" name="new_competition" value=tr['save'])
-				a.cancel_link( ng-click="accordions.addActivity = !accordions.addActivity" )= tr['cancel']
+				//submit
+				div#submit_buttons.submit_buttons
+					input.btn.green(type="submit" name="new_competition" value=tr['save'])
+					a.cancel_link( ng-click="accordions.addActivity = !accordions.addActivity" )= tr['cancel']
 		

@@ -112,9 +112,14 @@
 
 		.data_entry {
 			color: black;
-
-			div {
-				float:left;
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
+	
+			.performance_fields {
+				display: flex;
+				flex-direction: row;
+				align-items: center
 			}
 
 			label {
@@ -132,6 +137,8 @@
 			}
 
 			.submit_buttons {
+				align-self: center;
+				margin-top: 10px;
 			}
 		}
 
