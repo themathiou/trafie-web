@@ -26,7 +26,7 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
 
 			li( ng-repeat="activity in activities" )
 				div.icon_back
-				div.icon XX
+				div.icon
 				div.info( data-activity-id="{{activity._id}}" )
 					div.current_data( ng-show="!activity.show_this" )
 						a.deleteActivity( ng-show="self" ng-click="deleteActivity(activity._id)" )

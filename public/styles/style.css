@@ -7,7 +7,7 @@
 .edit_svg {
   height: 15px;
   width: 15px;
-  fill: rgba(0, 0, 0, 0.3);
+  fill: rgba(0, 0, 0, 0.5);
   transition: fill 0.4s ease-in-out;
   -webkit-transition: fill 0.4s ease-in-out;
   -moz-transition: fill 0.4s ease-in-out;
@@ -18,7 +18,7 @@
 .delete_svg {
   height: 15px;
   width: 15px;
-  fill: rgba(0, 0, 0, 0.3);
+  fill: rgba(0, 0, 0, 0.5);
   transition: fill 0.4s ease-in-out;
   -webkit-transition: fill 0.4s ease-in-out;
   -moz-transition: fill 0.4s ease-in-out;
@@ -38,6 +38,7 @@ body {
 }
 label {
   font-weight: 400;
+  color: rgba(0, 0, 0, 0.25);
 }
 a {
   cursor: pointer;
@@ -53,7 +54,7 @@ a {
   margin: 0px auto;
   padding: 50px auto;
   background-color: none;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.25);
   border-top: none;
   border-bottom: none;
 }
@@ -169,12 +170,12 @@ a {
 }
 #mainmenu #search_results li {
   display: block;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
   padding-top: 1em;
   padding-bottom: 1em;
 }
 #mainmenu #search_results li a {
-  color: rgba(0, 0, 0, 0.6);
+  color: rgba(0, 0, 0, 0.75);
   width: 100%;
   border: none;
 }
@@ -190,7 +191,7 @@ a {
   border: none;
 }
 #mainmenu #search_results li:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.25);
 }
 #search {
   display: block;
@@ -263,7 +264,7 @@ a {
 #profile_container #profileFullName {
   text-align: center;
   width: 100%;
-  color: rgba(0, 0, 0, 0.6);
+  color: rgba(0, 0, 0, 0.75);
 }
 #profile_container #profileFullName h3 {
   font-weight: 400;
@@ -292,8 +293,6 @@ a {
 
   /* post */
 
-  /* odd post */
-
   /* info end point (left) */
 
   /* ADD activity */
@@ -317,8 +316,8 @@ a {
 }
 .history_line > li .info {
   margin: 0 0 15px 12%;
-  background-color: rgba(0, 0, 0, 0.1);
-  color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(0, 0, 0, 0.25);
+  color: #000000;
   padding: 10px 10px 10px 15px;
   font-weight: 300;
   line-height: 1.4;
@@ -352,9 +351,6 @@ a {
   background-repeat: no-repeat;
   min-width: 18px;
 }
-.history_line > li:nth-child(odd) .info {
-  background-color: rgba(0, 0, 0, 0.1);
-}
 .history_line > li .info:after {
   right: 100%;
   border: solid transparent;
@@ -363,21 +359,18 @@ a {
   width: 0;
   position: absolute;
   pointer-events: none;
-  border-right-color: rgba(0, 0, 0, 0.1);
+  border-right-color: rgba(0, 0, 0, 0.25);
   border-width: 10px;
   top: 10px;
 }
-.history_line > li:nth-child(odd) .info:after {
-  border-right-color: rgba(0, 0, 0, 0.1);
-}
 .history_line > li .add_activity {
-  background: rgba(0, 0, 0, 0.1) !important;
+  background: rgba(0, 0, 0, 0.25) !important;
   color: #fff;
   padding: 0.4em;
   font-size: 1.1em;
   position: relative;
   border-radius: 5px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.25);
   border-left: none;
   margin-bottom: 30px;
   text-align: left;
@@ -392,7 +385,6 @@ a {
 .history_line > li .add_activity .data_entry .performance_fields {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
 }
 .history_line > li .add_activity .data_entry label {
@@ -413,7 +405,7 @@ a {
 }
 .history_line > li .add_activity .data_entry .submit_buttons {
   align-self: center;
-  margin-top: 5px;
+  margin-top: 10px;
 }
 .history_line #edit_activity_form {
   color: black;
@@ -442,14 +434,14 @@ a {
   width: 200px;
   margin: 0 0 15px 10%;
   line-height: 1.2;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.5);
   color: white;
   padding: 0.5em;
   font-size: 1em;
   font-style: italic;
   position: relative;
   border-radius: 5px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.25);
   margin-bottom: 30px;
   text-align: center;
 }
@@ -470,7 +462,7 @@ a {
   -ms-border-radius: 50%;
   -o-border-radius: 50%;
   border-radius: 50%;
-  box-shadow: 0 0 0 8px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 0 8px rgba(0, 0, 0, 0.75);
   text-align: center;
   left: 5%;
   /*top: 0;*/
@@ -595,7 +587,7 @@ a:visited {
   max-width: 550px;
 }
 .settingsContent .settingsElement {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
   padding: 10px 5px;
 }
 .settingsContent .settingsElement input {
@@ -613,7 +605,7 @@ a:visited {
   display: inline-block;
 }
 .settingsContent .settingsElement:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.25);
 }
 .settingsContent .settingsElement .settings_profile_pic_thumb {
   width: 40px;

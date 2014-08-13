@@ -172,10 +172,10 @@ trafie.controller("mainController", function(
 	  $scope.toggleMax();
 
 	  $scope.open = function($event) {
-	    $event.preventDefault();
-	    $event.stopPropagation();
+	    $timeout(function() {
+	      $scope.opened = true;
+	    });
 
-	    $scope.opened = true;
 	  };
 
 	  $scope.dateOptions = {

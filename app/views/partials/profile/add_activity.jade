@@ -1,8 +1,9 @@
 accordion( class="info add_activity" ng-show="self")
 	accordion-group( heading=tr['add_new_activity'] is-open="accordions.addActivity")
-		select( ng-model="newActivityForm.selected_discipline" ng-options="discipline.name for discipline in disciplines_options " ng-init="selected_discipline = disciplines_options[0].name" )
+
+		label Choose your discipline
+		select( ng-model="newActivityForm.selected_discipline" ng-options="discipline.name for discipline in disciplines_options " ng-init="newActivityForm.selected_discipline = disciplines_options[4].name" )
 			option( value="")= tr['choose_your_discipline']
-		//p( style="color:red;") {{selected_discipline}} {{accordions.addActivity}}
 	
 		//time measure
 		form( ng-show="disciplines.time.indexOf(newActivityForm.selected_discipline.id) > -1" ng-submit="submitNewActivity()" )
@@ -22,7 +23,7 @@ accordion( class="info add_activity" ng-show="self")
 						input#centiseconds_input(name="centiseconds" size="3" maxlength="2" ng-model="newActivityForm.centiseconds")
 				div
 					label(for="datepicker_time")= tr['date'] + ':'
-					input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="newActivityForm.date" is-open="opened" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
+					input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="newActivityForm.date" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
 				//submit
 				div#submit_buttons.submit_buttons
 					input.btn.green(type="submit" name="new_competition" value=tr['save'])
@@ -40,7 +41,7 @@ accordion( class="info add_activity" ng-show="self")
 						input#distance_2_input(name="distance_2" size="3" maxlength="2" ng-model="newActivityForm.distance_2")
 				div
 					label(for="datepicker_distance")= tr['date'] + ':'
-					input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="newActivityForm.date" is-open="opened" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
+					input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="newActivityForm.date" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
 				//submit
 				div#submit_buttons.submit_buttons
 					input.btn.green(type="submit" name="new_competition" value=tr['save'])
@@ -54,7 +55,7 @@ accordion( class="info add_activity" ng-show="self")
 					input#points_input(type="text" name="points" size="7" maxlength="5" ng-model="newActivityForm.points")
 				div
 					label(for="datepicker_point")= tr['date'] + ':'
-					input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="newActivityForm.date" is-open="opened" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
+					input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="newActivityForm.date" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
 				//submit
 				div#submit_buttons.submit_buttons
 					input.btn.green(type="submit" name="new_competition" value=tr['save'])

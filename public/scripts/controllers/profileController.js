@@ -2,6 +2,7 @@ trafie.controller("profileController", function(
 	$rootScope, 
 	$scope, 
 	$http, 
+	$timeout,
 	$routeParams ){
 	
 	//GENERAL VARIABLES
@@ -74,7 +75,7 @@ trafie.controller("profileController", function(
 				var temp = { name: res.disciplines[i] , id: i };
 				$rootScope.disciplines_options.push(temp);
 			}
-
+			
 			console.log( 'user', $rootScope.user );
 			console.log( 'current_user', $rootScope.current_user );
 
