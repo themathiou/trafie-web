@@ -76,6 +76,7 @@ div#privacyDiv.settingsElement
 		span {{user.private}}
 		div(ng-show="privacy_msg !=''") {{privacy_msg}}
 		div( ng-show="edit_privacy" )
+			label(for="privacy") Private
 			input( type="checkbox" name="privacy" value="yes" ng-model="user.new_privacy" ng-show="edit_privacy" )
 		div.formButtons( ng-show="edit_privacy" )
 			input#submitLanguage.btn.green( type="submit" value=tr['submit'])

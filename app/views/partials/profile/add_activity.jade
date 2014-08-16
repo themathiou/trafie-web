@@ -38,20 +38,23 @@ accordion( class="info add_activity" ng-show="self")
 
 
 				div
-					label(for="datepicker_time")= tr['date'] + ':'
-					input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="newActivityForm.date" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
+					label(for="datepicker")= tr['date'] + ':'
+					input(type="text" name="datepicker" class="form-control" datepicker-popup="{{format}}" ng-model="newActivityForm.date" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
 				div
 					label(for="place") Place
-					input(type="text" name="place")
+					input(type="text" name="place" ng-model="newActivityForm.place")
 				div
 					label(for="location") Location
-					input(type="text" name="location")
+					input(type="text" name="location" ng-model="newActivityForm.location")
 				div
 					label(for="competition") Competition
-					input(type="text" name="competition")
+					input(type="text" name="competition" ng-model="newActivityForm.competition")
 				div
 					label(for="notes") Notes
-					input(type="text" name="notes")
+					input(type="text" name="notes" ng-model="newActivityForm.notes")
+				div
+					label(for="privacy") Private
+					input( type="checkbox" name="privacy" value="yes" ng-model="newActivityForm.privacy" )
 
 				//submit
 				div#submit_buttons.submit_buttons
