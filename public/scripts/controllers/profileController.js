@@ -81,9 +81,10 @@ trafie.controller("profileController", function(
 
 			//get user's activities
 			$scope.getActivities( user_id , $rootScope.current_user.discipline);
-			
-			//get user's disciplines for filtering
-			//$scope.getDisciplinesOfActivities( user_id );
+	
+		})
+		.error( function(res) {
+			console.log( 'info :: User not found. Maybe he doesn\'t have a trafie profile or the profile is private.');
 		});
 	}
 	
@@ -94,18 +95,6 @@ trafie.controller("profileController", function(
 		$http.get(url)
 		.success(function(res){
 			$scope.activities = res;
-		})
-	}
-
-	$scope.getDisciplinesOfActivities = function( user_id ){
-		var url = '/user/' + user_id + '/disciplines';
-		$scope.disciplinesOfActivities = '';
-		$http.get(url)
-		.success(function(res){
-			$scope.disciplinesOfActivities = res;
-
-			console.log( user_id );
-			console.log( $scope.disciplinesOfActivities, res );
 		})
 	}
 	

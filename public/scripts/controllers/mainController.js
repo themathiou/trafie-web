@@ -32,14 +32,13 @@ trafie.controller("mainController", function(
 	$scope.searchUser = function(val) {
     	return $http.get( '/search/?value='+ val )
 		.then(function(res){
-	      var results = [];
-				console.log(res);
-	      angular.forEach(res.data, function(tmp_user){
-					tmp_user.label = tmp_user.first_name + ' ' + tmp_user.last_name;
-					if( tmp_user.formatted_discipline ) {
-						tmp_user.label += ' - ' + tmp_user.formatted_discipline;
-					}
-	        results.push(tmp_user);
+		      var results = [];
+		      angular.forEach(res.data, function(tmp_user){
+						tmp_user.label = tmp_user.first_name + ' ' + tmp_user.last_name;
+						if( tmp_user.formatted_discipline ) {
+							tmp_user.label += ' - ' + tmp_user.formatted_discipline;
+						}
+		       results.push(tmp_user);
 	      });
 	      return results;
 	    });
