@@ -281,6 +281,15 @@ activityHelper.parseDbDate = function( date ) {
 }
 
 /**
+ * Checks if private is true/false
+ * @param  boolean  private
+ * @return boolean
+ */
+activityHelper.privacyIsValid = function( private ) {
+	return typeof private === 'boolean';
+}
+
+/**
  * Checks if the given value is a positive integer number
  * @param number value
  * @return boolean

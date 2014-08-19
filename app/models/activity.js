@@ -11,7 +11,8 @@ var activitySchema = mongoose.Schema({
   place 		: { type: Number },
   location 		: { type: String },
   competition 	: { type: String },
-  notes 		: { type: String }
+  notes 		: { type: String },
+  private 		: { type: Boolean, required: true, default: false }
 });
 
 /**

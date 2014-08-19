@@ -38,6 +38,12 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
 						div.performance( data-value="{{activity.performance}}" ) {{activity.formatted_performance}}
 						div.discipline( data-value="{{activity.discipline}}" ) {{activity.formatted_discipline}}
 						div.date( data-value="{{activity.date}}" ) {{activity.formatted_date}}
+
+						div( data-value="{{activity.competition}}" ) {{activity.competition}}
+						div( data-value="{{activity.location}}" ) {{activity.location}}
+						div( data-value="{{activity.place}}" ) {{activity.place}}
+						div( data-value="{{activity.notes}}" ) {{activity.notes}}
+
 					a.editActivity( ng-show="self" ng-click="initEditableActivity(activity)" )
 						include partials/svg/edit_activity_svg
 
