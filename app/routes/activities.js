@@ -87,6 +87,7 @@ exports.post = function( req, res ) {
 				place = 0,
 				competition = '',
 				notes = '',
+				private = false,
 				tr = translations[profile_data.language];
 
 			// Validating date
@@ -160,7 +161,7 @@ exports.post = function( req, res ) {
 				error_messages.performance = tr['invalid_performance'];
 			}
 
-			if( typeof req.body.location !== 'undefined' && req.body.location ) {
+			if( typeof req.body.location !== 'undefined' ) {
 				if( activityHelper.locationIsValid( req.body.location ) ) {
 					location = req.body.location;
 				} else {
@@ -169,7 +170,7 @@ exports.post = function( req, res ) {
 				}
 			}
 
-			if( typeof req.body.place !== 'undefined' && req.body.place ) {
+			if( typeof req.body.place !== 'undefined' ) {
 				if( activityHelper.placeIsValid( req.body.place ) ) {
 					place = req.body.place;
 				} else {
@@ -178,7 +179,7 @@ exports.post = function( req, res ) {
 				}
 			}
 
-			if( typeof req.body.competition !== 'undefined' && req.body.competition ) {
+			if( typeof req.body.competition !== 'undefined' ) {
 				if( activityHelper.competitionIsValid( req.body.competition ) ) {
 					competition = req.body.competition;
 				} else {
@@ -187,7 +188,7 @@ exports.post = function( req, res ) {
 				}
 			}
 
-			if( typeof req.body.notes !== 'undefined' && req.body.notes ) {
+			if( typeof req.body.notes !== 'undefined' ) {
 				if( activityHelper.notesAreValid( req.body.notes ) ) {
 					notes = req.body.notes;
 				} else {
@@ -196,7 +197,7 @@ exports.post = function( req, res ) {
 				}
 			}
 
-			if( typeof req.body.private !== 'undefined' && req.body.private ) {
+			if( typeof req.body.private !== 'undefined' ) {
 				if( activityHelper.privacyIsValid( req.body.private ) ) {
 					private = req.body.private;
 				} else {
