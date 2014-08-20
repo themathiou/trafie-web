@@ -1,10 +1,10 @@
-trafie.controller("profileController", function( 
-	$rootScope, 
-	$scope, 
-	$http, 
+trafie.controller("profileController", function(
+	$rootScope,
+	$scope,
+	$http,
 	$timeout,
 	$routeParams ){
-	
+
 	//GENERAL VARIABLES
 	$scope.disciplines = {
       'time': [
@@ -75,19 +75,19 @@ trafie.controller("profileController", function(
 				var temp = { name: res.disciplines[i] , id: i };
 				$rootScope.disciplines_options.push(temp);
 			}
-			
+
 			console.log( 'user', $rootScope.user );
 			console.log( 'current_user', $rootScope.current_user );
 
 			//get user's activities
 			$scope.getActivities( user_id , $rootScope.current_user.discipline);
-	
+
 		})
 		.error( function(res) {
 			console.log( 'info :: User not found. Maybe he doesn\'t have a trafie profile or the profile is private.');
 		});
 	}
-	
+
 	//get user activities based on user id
 	$scope.getActivities = function(user_id, discipline){
 		var url =  '';
@@ -97,21 +97,21 @@ trafie.controller("profileController", function(
 			$scope.activities = res;
 		})
 	}
-	
+
 	/*
 	submitNewActivity function : creates the object for new activity submission and makes the ajax call (POST)
-	@param type : the type of the discipline ( accepted values : time, distance, points ) 
+	@param type : the type of the discipline ( accepted values : time, distance, points )
 	 */
 	$scope.submitNewActivity = function(){
-				
+
 				var data = $scope.newActivityForm;
 				data.discipline = data.selected_discipline.id;
 				console.log('add activity: ', data.date);
 				var splitDate = data.date.toString().split(' ');
-				data.date = splitDate[0] + ' ' + splitDate[1] + ' ' +splitDate[2] + ' ' +splitDate[3]; 
+				data.date = splitDate[0] + ' ' + splitDate[1] + ' ' +splitDate[2] + ' ' +splitDate[3];
 
 				console.log(data);
-				
+
 				$http.post('/user/' + $rootScope.user._id + '/activities', data)
 				.success(function(res){
 					$scope.accordions.addActivity = false;
@@ -133,7 +133,7 @@ trafie.controller("profileController", function(
 				}
 			}
 		})
-		.error(function(e){})	
+		.error(function(e){})
 	}
 
 
@@ -142,7 +142,7 @@ trafie.controller("profileController", function(
 	 */
 	$scope.initEditableActivity = function( activity ){
 
-		activity.show_this = !activity.show_this;
+		activity.show_editable_form = !activity.show_editable_form;
 
 		$scope.updateActivityForm = {};
 		if( $scope.disciplines.time.indexOf( activity.discipline ) > -1) {
@@ -167,6 +167,12 @@ trafie.controller("profileController", function(
 		}
 
 		$scope.updateActivityForm.date = activity.date;
+		$scope.updateActivityForm.place = activity.place;
+		$scope.updateActivityForm.location = activity.location;
+		$scope.updateActivityForm.competition = activity.competition;
+		$scope.updateActivityForm.notes = activity.notes;
+		$scope.updateActivityForm.private = activity.private;
+
 	}
 
 
@@ -176,7 +182,7 @@ trafie.controller("profileController", function(
 	$scope.updateActivity = function( activity ){
 		var data = $scope.updateActivityForm;
 		console.log('clean', data);
-		
+
 		data.date = new Date(data.date.toString().split('T')[0]);
 		var splitDate = data.date.toString().split(' ');
 		data.date = splitDate[0] + ' ' + splitDate[1] + ' ' +splitDate[2] + ' ' +splitDate[3];
@@ -188,7 +194,7 @@ trafie.controller("profileController", function(
 			console.log('res', res);
 			activity.formatted_performance = res.formatted_performance;
 			activity.formatted_date = res.formatted_date;
-			activity.show_this = !activity.show_this;
+			activity.show_editable_form = !activity.show_editable_form;
 
 		})
 

@@ -28,7 +28,7 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
 				div.icon_back
 				div.icon
 				div.info( data-activity-id="{{activity._id}}" )
-					div.current_data( ng-show="!activity.show_this" )
+					div.current_data( ng-show="!activity.show_editable_form" )
 						a.deleteActivity( ng-show="self" ng-click="deleteActivity(activity._id)" )
 							include partials/svg/delete_activity_svg
 

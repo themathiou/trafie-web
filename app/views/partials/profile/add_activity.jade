@@ -7,7 +7,7 @@ accordion( class="info add_activity" ng-show="self")
 	
 		form( ng-if="newActivityForm.selected_discipline" ng-submit="submitNewActivity()")
 			div.data_entry= tr['enter_your_performance'] +':'
-				//time measure
+				//- time
 				div.performance_fields( ng-if="disciplines.time.indexOf(newActivityForm.selected_discipline.id) > -1" )
 					div
 						label(for="hours_input")= tr['hours_short'] + ':'
@@ -22,7 +22,7 @@ accordion( class="info add_activity" ng-show="self")
 						label(for="centiseconds_input")= tr['centiseconds_short'] + ':'
 						input#centiseconds_input(name="centiseconds" size="3" maxlength="2" ng-model="newActivityForm.centiseconds")
 				
-				//distance measure
+				//- distance
 				div.performance_fields( ng-if="disciplines.distance.indexOf(newActivityForm.selected_discipline.id) > -1" )
 					div
 						label(for="distance_1_input")= tr['meters_short'] + ':'
@@ -31,12 +31,12 @@ accordion( class="info add_activity" ng-show="self")
 						label(for="distance_2_input")= tr['centimeters_short'] + ':'
 						input#distance_2_input(name="distance_2" size="3" maxlength="2" ng-model="newActivityForm.distance_2")
 
-				// points measure
+				//- points
 				div.performance_fields( ng-if="disciplines.points.indexOf(newActivityForm.selected_discipline.id) > -1" )
 					label(for="points_input")= tr['points'] + ':'
 					input#points_input(type="text" name="points" size="7" maxlength="5" ng-model="newActivityForm.points")
 
-
+				//- common variables
 				div
 					label(for="datepicker")= tr['date'] + ':'
 					input(type="text" name="datepicker" class="form-control" datepicker-popup="{{format}}" ng-model="newActivityForm.date" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")

@@ -1,51 +1,57 @@
 
-div( ng-show="activity.show_this" )
-	div#editDistanceActivityTemplate.row( ng-if="disciplines.distance.indexOf(activity.discipline) > -1 " )= tr['enter_your_performance'] +':'
+div( ng-show="activity.show_editable_form" )
+	div= tr['enter_your_performance'] +':'
 		br
 		form#edit_activity_form.data_entry( ng-submit=" updateActivity(activity) ")
-			div
-				label(for="distance_1_input")= tr['meters_short'] + ':'
-				input#distance_1_input( name="distance_1" size="3" maxlength="2" ng-model="updateActivityForm.distance_1" )
-			div
-				label(for="distance_2_input")= tr['centimeters_short'] + ':'
-				input#distance_2_input( name="distance_2" size="3" maxlength="2" ng-model="updateActivityForm.distance_2" )
+			//- distance
+			div( ng-if="disciplines.distance.indexOf(activity.discipline) > -1 " )
+				div
+					label(for="distance_1_input")= tr['meters_short'] + ':'
+					input#distance_1_input( name="distance_1" size="3" maxlength="2" ng-model="updateActivityForm.distance_1" )
+				div
+					label(for="distance_2_input")= tr['centimeters_short'] + ':'
+					input#distance_2_input( name="distance_2" size="3" maxlength="2" ng-model="updateActivityForm.distance_2" )
+			//- time
+			div( ng-if="disciplines.time.indexOf(activity.discipline) > -1 " )
+				div
+					label(for="hours_input")= tr['hours_short'] + ':'
+					input#hours_input(name="hours" size="3" maxlength="2" ng-model="updateActivityForm.hours")
+				div
+					label( for="minutes_input" )= tr['minutes_short'] + ':'
+					input#minutes_input(name="minutes" size="3" maxlength="2" ng-model="updateActivityForm.minutes")
+				div
+					label( for="seconds_input" )= tr['seconds_short'] + ':'
+					input#seconds_input( name="seconds" size="3" maxlength="2" ng-model="updateActivityForm.seconds")
+				div
+					label(for="centiseconds_input")= tr['centiseconds_short'] + ':'
+					input#centiseconds_input( name="centiseconds" size="3" maxlength="2" ng-model="updateActivityForm.centiseconds")
+
+			//- points
+			div( ng-if="disciplines.points.indexOf(activity.discipline) > -1 " )
+				label(for="points_input")= tr['points'] + ':'
+				input#points_input(type="text" name="points" size="7" maxlength="5" ng-model="updateActivityForm.points")
+			
+			//- common variables
 			div
 				label(for="datepicker_distance")= tr['date'] + ':'
 				input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="updateActivityForm.date" is-open="opened" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
+			div
+				label(for="place") Place
+				input(type="text" name="place" ng-model="updateActivityForm.place")
+			div
+				label(for="location") Location
+				input(type="text" name="location" ng-model="updateActivityForm.location")
+			div
+				label(for="competition") Competition
+				input(type="text" name="competition" ng-model="updateActivityForm.competition")
+			div
+				label(for="notes") Notes
+				input(type="text" name="notes" ng-model="updateActivityForm.notes")
+			div
+				label(for="private") Private
+				input( type="checkbox" name="private" ng-model="updateActivityForm.private" )
+
+
 			div#submit_buttons.row.submit_buttons
 				input.btn.green(type="submit" name="new_competition" value=tr['save'] )
-				a.cancel_edit_activity.cancel_link( ng-click="activity.show_this  = !activity.show_this" )= tr['cancel']
-
-	div#editTimeActivityTemplate.row( ng-if="disciplines.time.indexOf(activity.discipline) > -1 " )= tr['enter_your_performance'] +':'
-		br
-		form#edit_activity_form.data_entry( ng-submit="updateActivity(activity)")
-			div
-				label(for="hours_input")= tr['hours_short'] + ':'
-				input#hours_input(name="hours" size="3" maxlength="2" ng-model="updateActivityForm.hours")
-			div
-				label( for="minutes_input" )= tr['minutes_short'] + ':'
-				input#minutes_input(name="minutes" size="3" maxlength="2" ng-model="updateActivityForm.minutes")
-			div
-				label( for="seconds_input" )= tr['seconds_short'] + ':'
-				input#seconds_input( name="seconds" size="3" maxlength="2" ng-model="updateActivityForm.seconds")
-			div
-				label(for="centiseconds_input")= tr['centiseconds_short'] + ':'
-				input#centiseconds_input( name="centiseconds" size="3" maxlength="2" ng-model="updateActivityForm.centiseconds")
-			div
-				label(for="datepicker_time")= tr['date'] + ':'
-				input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="updateActivityForm.date" is-open="opened" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
-			div#submit_buttons.row.submit_buttons
-				input.btn.green(type="submit" name="new_competition" value=tr['save'])
-				a.cancel_edit_activity.cancel_link( ng-click="activity.show_this=!activity.show_this" )= tr['cancel']
-
-	div#editPointsActivityTemplate.row( ng-if="disciplines.points.indexOf(activity.discipline) > -1 " )= tr['enter_your_performance'] +':'
-		br
-		form#edit_activity_form.data_entry( ng-submit="updateActivity(activity)")
-			label(for="points_input")= tr['points'] + ':'
-			input#points_input(type="text" name="points" size="7" maxlength="5" ng-model="updateActivityForm.points")
-			div
-				label(for="datepicker_point")= tr['date'] + ':'
-				input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="updateActivityForm.date" is-open="opened" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
-			div#submit_buttons.row.submit_buttons
-				input.btn.green(type="submit" name="new_competition" value=tr['save'])
-				a.cancel_edit_activity.cancel_link( ng-click="activity.show_this=!activity.show_this" )= tr['cancel']
+				a.cancel_edit_activity.cancel_link( ng-click="activity.show_editable_form  = !activity.show_editable_form" )= tr['cancel']
