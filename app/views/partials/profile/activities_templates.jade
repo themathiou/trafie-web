@@ -34,7 +34,9 @@ div( ng-show="activity.show_editable_form" )
 			//- common variables
 			div
 				label(for="datepicker_distance")= tr['date'] + ':'
-				input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="updateActivityForm.date" is-open="opened" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
+				input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="updateActivityForm.date" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
+				//- input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="newActivityForm.date" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
+				
 			div
 				label(for="place") Place
 				input(type="text" name="place" ng-model="updateActivityForm.place")

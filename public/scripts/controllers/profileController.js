@@ -110,8 +110,6 @@ trafie.controller("profileController", function(
 				var splitDate = data.date.toString().split(' ');
 				data.date = splitDate[0] + ' ' + splitDate[1] + ' ' +splitDate[2] + ' ' +splitDate[3];
 
-				console.log(data);
-
 				$http.post('/user/' + $rootScope.user._id + '/activities', data)
 				.success(function(res){
 					$scope.accordions.addActivity = false;
@@ -194,6 +192,11 @@ trafie.controller("profileController", function(
 			console.log('res', res);
 			activity.formatted_performance = res.formatted_performance;
 			activity.formatted_date = res.formatted_date;
+			activity.place = res.place;
+			activity.location = res.location;
+			activity.competition = res.competition;
+			activity.notes = res.notes;
+			activity.private = res.private;
 			activity.show_editable_form = !activity.show_editable_form;
 
 		})

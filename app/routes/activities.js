@@ -274,6 +274,7 @@ exports.put = function( req, res ) {
 				place = 0,
 				competition = '',
 				notes = '',
+				private = false,
 				tr = translations[language];
 
 			// Checking if the date value is valid
@@ -377,11 +378,20 @@ exports.put = function( req, res ) {
 			}
 
 			if( typeof req.body.notes !== 'undefined' ) {
-				if( activityHelper.notesAreValid( req.body.note ) ) {
+				if( activityHelper.notesAreValid( req.body.notes ) ) {
 					notes = req.body.notes;
 				} else {
 					errors = true;
 					error_messages.notes = tr['too_long_text'];
+				}
+			}
+
+			if( typeof req.body.private !== 'undefined' ) {
+				if( activityHelper.privacyIsValid( req.body.private ) ) {
+					private = req.body.private;
+				} else {
+					errors = true;
+					error_messages.private = tr['privacy error'];
 				}
 			}
 
@@ -391,10 +401,11 @@ exports.put = function( req, res ) {
 				var activity = {
 					'performance' 	: performance,
 					'date'        	: date,
-					'place'			: place,
+					'place'		: place,
 					'location'		: location,
 					'competition'	: competition,
-					'notes'			: notes
+					'notes'		: notes,
+					'private'		: private
 				};
 
 				Activity.findByIdAndUpdate( activity_id, activity, '', function ( err, activity ) {
