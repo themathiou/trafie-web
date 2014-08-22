@@ -16,6 +16,10 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
 	div#loading( hidden )
 		img( src="images/ui/loading.gif" )
 
+	button.btn-default( ng-click="open_modal('delete')" ) open_modal m
+	button.btn-default( ng-click="open_modal('delete', 'lg')" ) Large modal
+	button.btn-default( ng-click="open_modal('popo', 'sm')" ) Small modal
+
 	div#history_container
 		ul#history_line.history_line
 			li

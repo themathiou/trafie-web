@@ -1,6 +1,9 @@
 //Define ng-app module
 //---
-var trafie = angular.module('trafie',[ 'ngRoute' , 'ui.bootstrap', 'ngAnimate' ]);
+var trafie = angular.module('trafie',[ 
+	'ngRoute' , 
+	'ui.bootstrap', 
+	'ngAnimate' ]);
 
 trafie.config(['$locationProvider',
 	function($locationProvider) {
