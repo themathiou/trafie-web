@@ -1,4 +1,4 @@
-trafie.service('$modalSvc',[ 
+trafie.service('$modalSvc', [ 
 	'$scope', 
 	'$modal', 
 	'$http', 
@@ -10,8 +10,6 @@ trafie.service('$modalSvc',[
 	   // Opens the modal
 	   // @param size : lg(large), sm(small) can be empty
 		$scope.open_modal = function (type, size) {
-			var template_url;
-
 			switch(type) {
 				case 'delete':
 					$modal.open({
