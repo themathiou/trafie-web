@@ -3,6 +3,7 @@ trafie.controller("profileController", function(
 	$scope,
 	$http,
 	$timeout,
+	$q,
 	$routeParams ){
 
 	//GENERAL VARIABLES
@@ -103,35 +104,37 @@ trafie.controller("profileController", function(
 	@param type : the type of the discipline ( accepted values : time, distance, points )
 	 */
 	$scope.submitNewActivity = function(){
+		var data = $scope.newActivityForm;
+		data.discipline = data.selected_discipline.id;
+		console.log('add activity: ', data.date);
+		var splitDate = data.date.toString().split(' ');
+		data.date = splitDate[0] + ' ' + splitDate[1] + ' ' +splitDate[2] + ' ' +splitDate[3];
 
-				var data = $scope.newActivityForm;
-				data.discipline = data.selected_discipline.id;
-				console.log('add activity: ', data.date);
-				var splitDate = data.date.toString().split(' ');
-				data.date = splitDate[0] + ' ' + splitDate[1] + ' ' +splitDate[2] + ' ' +splitDate[3];
-
-				$http.post('/user/' + $rootScope.user._id + '/activities', data)
-				.success(function(res){
-					$scope.accordions.addActivity = false;
-					$scope.activities.unshift(res);
-				})
-				.error(function(e){});
+		$http.post('/user/' + $rootScope.user._id + '/activities', data)
+		.success(function(res){
+			$scope.accordions.addActivity = false;
+			$scope.activities.unshift(res);
+		})
+		.error(function(e){});
 	}
 
 	/*
-		deleteActivity function : deletes a specific activity in profile
+		deleteActivity function : calls the modal for delete activitiy confirmation
+		@param activity_id: the id of the specific activity
 	 */
 	$scope.deleteActivity = function( activity_id ){
-		$http.delete( '/user/' + $rootScope.user._id +'/activities/' + activity_id )
-		.success(function(res){
-			for( var i in $scope.activities ) {
-				if( $scope.activities[i]._id == activity_id ){
-					$scope.activities.splice(i,1);
-					break;
+		$rootScope.confirm_delete_modal( activity_id, 'lg')
+		.then(function(result){
+			if(result){
+				for( var i in $scope.activities ) {
+					if( $scope.activities[i]._id == activity_id ){
+						$scope.activities.splice(i,1);
+						break;
+					}
 				}
 			}
-		})
-		.error(function(e){})
+		});
+
 	}
 
 
