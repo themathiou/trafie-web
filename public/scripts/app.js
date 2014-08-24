@@ -3,12 +3,13 @@
 var trafie = angular.module('trafie',[ 
 	'ngRoute' , 
 	'ui.bootstrap', 
-	'ngAnimate' ]);
+	'ngAnimate']);
 
 trafie.config(['$locationProvider',
 	function($locationProvider) {
 		$locationProvider.html5Mode(true)
-	}]);
+	}
+]);
 
 //Routing
 //---
@@ -34,7 +35,8 @@ trafie.config(['$routeProvider',
 			otherwise({
 				redirectTo: '/'
 			});
-	}]);
+	}
+]);
 
 
 //Initialization

@@ -1,15 +1,7 @@
-trafie.service('$modalSvc', [ 
-	'$scope', 
-	'$modal', 
-	'$http', 
-	'$q', 
-	'$timeout', 
-	'$modalInstance', 
-	function($scope, $modal, $http, $q, $timeout, $modalInstance) {
-   
+trafie.service('$modalSvc', function( $rootScope, $modal, $http, $q, $timeout ) {
 	   // Opens the modal
 	   // @param size : lg(large), sm(small) can be empty
-		$scope.open_modal = function (type, size) {
+		$rootScope.open_modal = function (type, size) {
 			switch(type) {
 				case 'delete':
 					$modal.open({
@@ -27,13 +19,14 @@ trafie.service('$modalSvc', [
 			}
 		};
 
-		var ModalInstanceCtrl = function ($scope, $modalInstance) {
-		  $scope.ok = function () {
-		    $modalInstance.close();
-		  };
+});
 
-		  $scope.cancel = function () {
-		    $modalInstance.dismiss('cancel');
-		  };
-		};
-}]);
+var ModalInstanceCtrl = function ( $scope, $modalInstance ) {
+  $scope.ok = function () {
+    $modalInstance.close();
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+};
