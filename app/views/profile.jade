@@ -9,6 +9,8 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
 				span( ng-show="current_user.discipline && current_user.country" ) - 
 				span( ng-show="current_user.country" ){{current_user.country}}
 	
+	alert( ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)") {{alert.msg}}
+
 	ul.filters-row
 		li( ng-repeat="(key, value) in user.disciplines_of_user" style="float:left;")
 			a( ng-click="getActivities( user._id, key )" ) {{value}}
@@ -55,18 +57,3 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
 				div.icon *
 				div.end
 					div.discipline everything started here
-
-
-// scripts
-// script(type='text/javascript', src='/javascripts/profile.js')
-// script( type='text/javascript', src='/javascripts/pikaday.min.js')
-// script.
-// 	//maxdate AND default day are TODAY. User can't add an activity for future event.
-// 	var picker_time = new Pikaday({field: document.getElementById('datepicker_time'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date(), yearRange: [2000,2020], defaultDate: new Date(), setDefaultDate: new Date() })
-
-// 	var picker_distance = new Pikaday({field: document.getElementById('datepicker_distance'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date(), yearRange: [2000,2020], defaultDate: new Date(), setDefaultDate: new Date() })
-
-// 	var picker_point = new Pikaday({field: document.getElementById('datepicker_point'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date(), yearRange: [2000,2020], defaultDate: new Date(), setDefaultDate: new Date() })
-
-// script.
-// 	profileHandlers();
