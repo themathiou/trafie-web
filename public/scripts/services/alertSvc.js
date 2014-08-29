@@ -1,17 +1,17 @@
 trafie.service('$alertSvc', function($rootScope, $http) {
 
-	$rootScope.alerts = [];
+  $rootScope.alerts = [];
 
-	//types : danger, success, info, ---can be empty
-	$rootScope.addAlert = function(type, message) {
-		$rootScope.alerts.push({
-			"type": type,
-			"msg": message
-		});
-	};
+  //types : danger, success, info, ---can be empty
+  $rootScope.addAlert = function(type, message) {
+    $rootScope.alerts.push({
+      "type": type,
+      "msg": message
+    });
+  };
 
-	$rootScope.closeAlert = function(index) {
-		$rootScope.alerts.splice(index, 1);
-	};
+  $rootScope.closeAlert = function(index) {
+    $rootScope.alerts.splice(index, 1);
+  };
 
 });

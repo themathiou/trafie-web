@@ -1,99 +1,99 @@
 body
 {
-	margin: 0;
-	padding: 0;
-	color: #555;
-	font: 300 1em Open Sans,Arial,Helvetica,sans-serif;
-	background-color: white;
+  margin: 0;
+  padding: 0;
+  color: #555;
+  font: 300 1em Open Sans,Arial,Helvetica,sans-serif;
+  background-color: white;
 }
 
 label {
-	font-weight: 400;
-	color: @black_25;
+  font-weight: 400;
+  color: @black_25;
 }
 
 a {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 #content {
-	margin: 0px auto;
-	float: none;
+  margin: 0px auto;
+  float: none;
 }
 
 #main_content
 {
-	max-width: 950px;
-	min-width: 950px;
-	width: 80%;
-	margin: 0px auto;
-	padding: 50px auto;
-	background-color: none;
-	border: 1px solid @black_25;
-	border-top: none;
-	border-bottom: none;
+  max-width: 950px;
+  min-width: 950px;
+  width: 80%;
+  margin: 0px auto;
+  padding: 50px auto;
+  background-color: none;
+  border: 1px solid @black_25;
+  border-top: none;
+  border-bottom: none;
 }
 
 .loading {
-	display: flex;
-	justify-content: flex-end;
-	flex-direction: column;
-	align-items: center;
-	min-height: 40px;
-	background-image: url("@{images}ui/loading.gif");
-	background-repeat: no-repeat;
-	background-position-x: center;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  align-items: center;
+  min-height: 40px;
+  background-image: url("@{images}ui/loading.gif");
+  background-repeat: no-repeat;
+  background-position-x: center;
 }
 
 /*error message - text width - right of the label*/
 .error_message {
-	color: white;
-	background-color: @red_message_back;
-	padding: 3px 3px;
-	text-align: left;
+  color: white;
+  background-color: @red_message_back;
+  padding: 3px 3px;
+  text-align: left;
 }
 
 /*warning message - text width - right of the label*/
 .warning_message {
-	color: @orange_message_back;
-	background-color: none;
-/* 	padding: 3px 3px; */
-	text-align: left;
+  color: @orange_message_back;
+  background-color: none;
+/*  padding: 3px 3px; */
+  text-align: left;
 }
 
 /*error message - full width red*/
 .green_message {
-	color: green;
-	background-color: @green_message_back;
-	.rounded_corners(5px);
-	margin: 3px 0px;
-	padding: 3px 3px;
-	text-align: left;
+  color: green;
+  background-color: @green_message_back;
+  .rounded_corners(5px);
+  margin: 3px 0px;
+  padding: 3px 3px;
+  text-align: left;
 }
 
 //filters-row is the class for an unordered-list(ul)
 .filters-row {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex: 1;
-	padding: 0px;
-	list-style-type: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 0px;
+  list-style-type: none;
 
-	li {
-		margin-right: 10px;
-		flex-shrink:0;
-	}
+  li {
+    margin-right: 10px;
+    flex-shrink:0;
+  }
 
-	a {
-		cursor: pointer;
-		text-decoration: none;
+  a {
+    cursor: pointer;
+    text-decoration: none;
 
-		&:hover {
-			font-weight: bold;
-			text-decoration: none;
-		}
-	}
+    &:hover {
+      font-weight: bold;
+      text-decoration: none;
+    }
+  }
 }
 
 
