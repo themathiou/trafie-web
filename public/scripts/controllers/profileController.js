@@ -188,7 +188,6 @@ trafie.controller("profileController", function(
     data.date = new Date(data.date.toString().split('T')[0]);
     var splitDate = data.date.toString().split(' ');
     data.date = splitDate[0] + ' ' + splitDate[1] + ' ' +splitDate[2] + ' ' +splitDate[3];
-
     data.discipline = activity.discipline;
     console.log('update activity: ', data);
     $http.put( "/user/" + $rootScope.user._id + "/activities/" + activity._id, data)
@@ -204,10 +203,5 @@ trafie.controller("profileController", function(
       activity.show_editable_form = !activity.show_editable_form;
 
     })
-
-
   }
-
-
-
 });

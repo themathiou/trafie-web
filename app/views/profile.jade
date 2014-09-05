@@ -1,72 +1,64 @@
 div#main_content( ng-init="initProfile()"  ng-cloak)
-	div#profile_container
-		div#image_container
-			img( src="{{current_user.picture}}" )
-		div#profileFullName
-			h3 {{current_user.first_name}} {{current_user.last_name}}
-			p 
-				span( ng-show="current_user.formatted_discipline" ){{current_user.formatted_discipline}} 
-				span( ng-show="current_user.discipline && current_user.country" ) - 
-				span( ng-show="current_user.country" ){{current_user.country}}
-	
-	ul.filters-row
-		li( ng-repeat="(key, value) in user.disciplines_of_user" style="float:left;")
-			a( ng-click="getActivities( user._id, key )" ) {{value}}
 
-	div#loading( hidden )
-		img( src="images/ui/loading.gif" )
+  div( ng-if="page_not_found" )
+      h3 The page you are looking for doesn't exists
 
-	div#history_container
-		ul#history_line.history_line
-			li
-				div.icon_back
-				div.icon +
-				//ADD ACTIVITY
-				include partials/profile/add_activity
+  div( ng-if="!page_not_found" )
+    div#profile_container
+      div#image_container
+        img( src="{{current_user.picture}}" )
+      div#profileFullName
+        h3 {{current_user.first_name}} {{current_user.last_name}}
+        p 
+          span( ng-show="current_user.formatted_discipline" ){{current_user.formatted_discipline}} 
+          span( ng-show="current_user.discipline && current_user.country" ) - 
+          span( ng-show="current_user.country" ){{current_user.country}}
+    
+    alert( ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)") {{alert.msg}}
 
-			li( ng-repeat="activity in activities" )
-				div.icon_back
-				div.icon
-				div.info( data-activity-id="{{activity._id}}" )
-					div.current_data( ng-show="!activity.show_editable_form" )
-						a.deleteActivity( ng-show="self" ng-click="deleteActivity(activity._id)" )
-							include partials/svg/delete_activity_svg
+    ul.filters-row
+      li( ng-repeat="(key, value) in user.disciplines_of_user" style="float:left;")
+        a( ng-click="getActivities( user._id, key )" ) {{value}}
 
-						//div.ribbon.ribbon-yellow
-							div.banner
-								div.text Personal Best
-						div.performance( data-value="{{activity.performance}}" ) {{activity.formatted_performance}}
-						div.discipline( data-value="{{activity.discipline}}" ) {{activity.formatted_discipline}}
-						div.date( data-value="{{activity.date}}" ) {{activity.formatted_date}}
+    div#loading( hidden )
+      img( src="images/ui/loading.gif" )
 
-						div( data-value="{{activity.competition}}" ) {{activity.competition}}
-						div( data-value="{{activity.location}}" ) {{activity.location}}
-						div( data-value="{{activity.place}}" ) {{activity.place}}
-						div( data-value="{{activity.notes}}" ) {{activity.notes}}
+    div#history_container
+      ul#history_line.history_line
+        li
+          div.icon_back
+          div.icon +
+          //ADD ACTIVITY
+          include partials/profile/add_activity
 
-					a.editActivity( ng-show="self" ng-click="initEditableActivity(activity)" )
-						include partials/svg/edit_activity_svg
+        li( ng-repeat="activity in activities" )
+          div.icon_back
+          div.icon
+          div.info( data-activity-id="{{activity._id}}" )
+            div.current_data( ng-show="!activity.show_editable_form" )
+              a.deleteActivity( ng-show="self" ng-click="deleteActivity(activity._id)" )
+                include partials/svg/delete_activity_svg
 
-					//edit activity templates
-					include partials/profile/activities_templates
+              //div.ribbon.ribbon-yellow
+                div.banner
+                  div.text Personal Best
+              div.performance( data-value="{{activity.performance}}" ) {{activity.formatted_performance}}
+              div.discipline( data-value="{{activity.discipline}}" ) {{activity.formatted_discipline}}
+              div.date( data-value="{{activity.date}}" ) {{activity.formatted_date}}
 
-			li
-				div.icon_back
-				div.icon *
-				div.end
-					div.discipline everything started here
+              div( data-value="{{activity.competition}}" ) {{activity.competition}}
+              div( data-value="{{activity.location}}" ) {{activity.location}}
+              div( data-value="{{activity.place}}" ) {{activity.place}}
+              div( data-value="{{activity.notes}}" ) {{activity.notes}}
 
+            a.editActivity( ng-show="self" ng-click="initEditableActivity(activity)" )
+              include partials/svg/edit_activity_svg
 
-// scripts
-// script(type='text/javascript', src='/javascripts/profile.js')
-// script( type='text/javascript', src='/javascripts/pikaday.min.js')
-// script.
-// 	//maxdate AND default day are TODAY. User can't add an activity for future event.
-// 	var picker_time = new Pikaday({field: document.getElementById('datepicker_time'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date(), yearRange: [2000,2020], defaultDate: new Date(), setDefaultDate: new Date() })
+            //edit activity templates
+            include partials/profile/activities_templates
 
-// 	var picker_distance = new Pikaday({field: document.getElementById('datepicker_distance'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date(), yearRange: [2000,2020], defaultDate: new Date(), setDefaultDate: new Date() })
-
-// 	var picker_point = new Pikaday({field: document.getElementById('datepicker_point'), firstDay: 1, minDate: new Date('2000-01-01'), maxDate: new Date(), yearRange: [2000,2020], defaultDate: new Date(), setDefaultDate: new Date() })
-
-// script.
-// 	profileHandlers();
+        li
+          div.icon_back
+          div.icon *
+          div.end
+            div.discipline everything started here

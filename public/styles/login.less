@@ -13,184 +13,184 @@
 
 html
 {
-		height:100%;
+    height:100%;
 }
 
 body
 {
-	margin: 0;
-	padding: 0;
-	color: #555;
-	font: 300 1em Open Sans,Arial,Helvetica,sans-serif;
-	background: white;
-	height:100%;
+  margin: 0;
+  padding: 0;
+  color: #555;
+  font: 300 1em Open Sans,Arial,Helvetica,sans-serif;
+  background: white;
+  height:100%;
 }
 
 
 /*error message - text width - right of the label*/
 .error_message {
-	color: white;
-	background-color: @red_message_back;
-	padding: 3px 3px;
-	text-align: left;
+  color: white;
+  background-color: @red_message_back;
+  padding: 3px 3px;
+  text-align: left;
 }
 
 /*warning message - text width - right of the label*/
 .warning_message {
-	color: @orange_message_back;
-	background-color: none;
-/* 	padding: 3px 3px; */
-	text-align: left;
+  color: @orange_message_back;
+  background-color: none;
+/*  padding: 3px 3px; */
+  text-align: left;
 }
 
 /*error message - full width red*/
 .green_message {
-	color: green;
-	background-color: @green_message_back;
-	.rounded-corners(5px);
-	margin: 3px 0px;
-	padding: 3px 3px;
-	text-align: left;
+  color: green;
+  background-color: @green_message_back;
+  .rounded-corners(5px);
+  margin: 3px 0px;
+  padding: 3px 3px;
+  text-align: left;
 }
 
 
 /******************************************************/
-/*					LOGIN			 				  */
+/*          LOGIN               */
 /******************************************************/
 .forms
 {
-	margin:0px auto;
-	padding:0px;
+  margin:0px auto;
+  padding:0px;
 }
 #login{
-	visibility: visible;
+  visibility: visible;
 }
 
 #registration
 {
-	visibility: visible;
-	float:left;
+  visibility: visible;
+  float:left;
 }
 
 #welcome_container
 {
-	//background: rgba(0,0,0, .2);
-	background-image: url('../images/welcome/01.jpg');
-	background-repeat: no-repeat;
-	background-position: center center;
-	background-attachment: fixed;
+  //background: rgba(0,0,0, .2);
+  background-image: url('../images/welcome/01.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
 
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
-	height:100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height:100%;
 }
 
 #welcome_logo
 {
-	font-size: 3em;
-	font-style: italic;
-	font-weight:100;
-	width: 100%;
-	text-align: center;
-	padding-top: 3em;
-	padding-bottom: 0.5em;
+  font-size: 3em;
+  font-style: italic;
+  font-weight:100;
+  width: 100%;
+  text-align: center;
+  padding-top: 3em;
+  padding-bottom: 0.5em;
 
-	color: white;
-	-webkit-text-shadow: 2px 2px 5px #000000;
-	-moz-text-shadow: 2px 2px 5px #000000;
-	-o-text-shadow: 2px 2px 5px #000000;
-	-ms-text-shadow: 2px 2px 5px #000000;
-	text-shadow: 2px 2px 5px #000000;
+  color: white;
+  -webkit-text-shadow: 2px 2px 5px #000000;
+  -moz-text-shadow: 2px 2px 5px #000000;
+  -o-text-shadow: 2px 2px 5px #000000;
+  -ms-text-shadow: 2px 2px 5px #000000;
+  text-shadow: 2px 2px 5px #000000;
 }
 
 .welcome_form
 {
-	width:400px;
-	padding: 5px 20px;
-	margin:0px auto;
-	background-color: rgba(255,255,255,0.9);
+  width:400px;
+  padding: 5px 20px;
+  margin:0px auto;
+  background-color: rgba(255,255,255,0.9);
 
-	.rounded-corners(7px);
+  .rounded-corners(7px);
 
-	color: #494949;
+  color: #494949;
 
-	h4 {
-		text-align: left;
-		font-weight: 400;
-		font-size: 1.2em;
-		margin-bottom: 10px;
-		color: @darkgray;
-	}
+  h4 {
+    text-align: left;
+    font-weight: 400;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color: @darkgray;
+  }
 
-	h3
-	{
-		width:100%;
-		text-align: center;
-		font-weight: 300;
-		font-size:1.3em;
-		font-style: italic;
-		margin:0px 0px 10px 0px;
-		padding:0px;
-	}
+  h3
+  {
+    width:100%;
+    text-align: center;
+    font-weight: 300;
+    font-size:1.3em;
+    font-style: italic;
+    margin:0px 0px 10px 0px;
+    padding:0px;
+  }
 
-	input
-	{
-		width:100%;
-		margin:0px auto;
+  input
+  {
+    width:100%;
+    margin:0px auto;
 
-		/* radius */
-		.rounded-corners(5px);
+    /* radius */
+    .rounded-corners(5px);
 
-		margin-bottom: 5px;
+    margin-bottom: 5px;
 
-		&[type="radio"]
-		{
-			width: auto;
-			height: 15px;
-			margin-right: 30px;
-		}
-	}
+    &[type="radio"]
+    {
+      width: auto;
+      height: 15px;
+      margin-right: 30px;
+    }
+  }
 
-	label {
-		display: block;
-	}
+  label {
+    display: block;
+  }
 
-	/*the text field parameters. use with <input> */
-	.textfield {
+  /*the text field parameters. use with <input> */
+  .textfield {
 
-		font-size: 1.4em;
-		border: 1px solid #FFFFFF;
-		box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2) inset;
-		padding: 5px 2%;
-		width:95%;
-		color: #777;
-	}
+    font-size: 1.4em;
+    border: 1px solid #FFFFFF;
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2) inset;
+    padding: 5px 2%;
+    width:95%;
+    color: #777;
+  }
 
-	.switch_login_register_message
-	{
+  .switch_login_register_message
+  {
 
-		color: @darkgray;
-		font-size: 0.9em;
+    color: @darkgray;
+    font-size: 0.9em;
 
-		a {
-			color:black;
-			padding-left: 3px;
-			font-size: 1em;
-			text-decoration: none;
+    a {
+      color:black;
+      padding-left: 3px;
+      font-size: 1em;
+      text-decoration: none;
 
-			&:hover {
-				text-decoration: underline;
-			}
-		}
-	}
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 
 }
 
 .information_message {
-	color:@informationorange;
-	font-size: 0.8em;
+  color:@informationorange;
+  font-size: 0.8em;
     margin-bottom: 4px;
 }
 
@@ -210,79 +210,79 @@ body
     text-decoration: none;
     font-weight: 600;
 
-	&:hover, &:focus {
-	    border: 1px solid ##56a721;
-	    background: #86ff34;
-	    background: -webkit-gradient(linear, left top, left bottom, from(#86ff34), to(#53a11f));
-	    background: -moz-linear-gradient(top, #86ff34, #53a11f);
-	    background: linear-gradient(to bottom, #86ff34, #53a11f);
-	    color: #ffffff;
-	    text-decoration: none;
-	}
+  &:hover, &:focus {
+      border: 1px solid ##56a721;
+      background: #86ff34;
+      background: -webkit-gradient(linear, left top, left bottom, from(#86ff34), to(#53a11f));
+      background: -moz-linear-gradient(top, #86ff34, #53a11f);
+      background: linear-gradient(to bottom, #86ff34, #53a11f);
+      color: #ffffff;
+      text-decoration: none;
+  }
 
-	&:active {
-	    background: #45861a;
-	    background: -webkit-gradient(linear, left top, left bottom, from(#45861a), to(#45861a));
-	    background: -moz-linear-gradient(top, #45861a, #45861a);
-	    background: linear-gradient(to bottom, #45861a, #45861a);
-	}
+  &:active {
+      background: #45861a;
+      background: -webkit-gradient(linear, left top, left bottom, from(#45861a), to(#45861a));
+      background: -moz-linear-gradient(top, #45861a, #45861a);
+      background: linear-gradient(to bottom, #45861a, #45861a);
+  }
 
 }
 
 
 /******************************************************/
-/*					MESSAGE SENT			  		  */
+/*          MESSAGE SENT              */
 /******************************************************/
 .message {
-	width:560px;
-	padding: 5px 20px;
-	margin:0px auto;
-	background-color: rgba(255,255,255,0.9);
+  width:560px;
+  padding: 5px 20px;
+  margin:0px auto;
+  background-color: rgba(255,255,255,0.9);
 
-	.rounded-corners(7px);
+  .rounded-corners(7px);
 }
 
 
 /******************************************************/
-/*			MULTIPLE DEVICES SUPPORT				  */
+/*      MULTIPLE DEVICES SUPPORT          */
 /******************************************************/
 
 /*******************************************************************************************************************************************************/
-/************************** iPad 	 ***************************************************************************************************************** */
+/************************** iPad   ***************************************************************************************************************** */
 /*******************************************************************************************************************************************************/
 @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
 
 .welcome_form
 {
-	width:60%;
+  width:60%;
 
-	color: #494949;
+  color: #494949;
 
-	h4 {
-		font-size: 1.4em;
-	}
+  h4 {
+    font-size: 1.4em;
+  }
 
-	h3
-	{
-		font-size:1.5em;
-	}
+  h3
+  {
+    font-size:1.5em;
+  }
 
 
-	/*the text field parameters. use with <input> */
-	.textfield {
-		font-size: 1.6em;
-		padding: 15px 2%;	
-	}
+  /*the text field parameters. use with <input> */
+  .textfield {
+    font-size: 1.6em;
+    padding: 15px 2%; 
+  }
 
-	.switch_login_register_message
-	{
-		font-size: 1.1em;
-		margin-top: 20px;
+  .switch_login_register_message
+  {
+    font-size: 1.1em;
+    margin-top: 20px;
 
-		a {
-			font-size: 1.2em;
-		}
-	}
+    a {
+      font-size: 1.2em;
+    }
+  }
 
 }
 
@@ -294,7 +294,7 @@ body
 
 
 /******************************************************/
-/*					FUNCTIONS		 				  */
+/*          FUNCTIONS             */
 /******************************************************/
 
 /*rounded corners function : 5px is default radius*/
