@@ -1,9 +1,10 @@
-trafie.controller("statisticsController", function( 
-    $rootScope, 
-    $scope, 
-    $http, 
-    $timeout ) {
-  
+trafie.controller("statisticsController", function(
+    $rootScope,
+    $scope,
+    $http,
+    $timeout,
+    $routeParams ) {
+
   $scope.loading = true;
 
     //object with disciplines grouped in categories
@@ -43,20 +44,21 @@ trafie.controller("statisticsController", function(
 
     // Load the Visualization API and the piechart package.
     $scope.statisticsInit = function( user_id, discipline ) {
-      // Note : we need to make sure the DOM is ready when you call google.load 
-      // with the callback option [google.load doc](https://developers.google.com/loader/)
-      //- google.load is adding the script to the page using a document.write() and wipes out the html.
-      // we use a callback for the load to force it use append rather than doc.write
-      console.log('init', user_id, discipline);
-        $timeout(function(){ 
-        google.load('visualization', '1', {'callback':function(){
-          $scope.drawSimpleChart( user_id, discipline );
-        }, 'packages':['corechart','controls']});
-      }, 1)
+        $scope.page_not_found = false;
+        // Note : we need to make sure the DOM is ready when you call google.load
+        // with the callback option [google.load doc](https://developers.google.com/loader/)
+        //- google.load is adding the script to the page using a document.write() and wipes out the html.
+        // we use a callback for the load to force it use append rather than doc.write
+        console.log('init', user_id, discipline);
+        $timeout(function(){
+            google.load('visualization', '1', {'callback':function(){
+              $scope.drawSimpleChart( user_id, discipline );
+            }, 'packages':['corechart','controls']});
+        }, 1)
     }
 
-  
-    
+
+
 
     /*********************************/
     /*    Draw Chart Functions   */
@@ -66,7 +68,7 @@ trafie.controller("statisticsController", function(
      * @param user_id : the user id
      * @param discipline : the discipline we want to show
      */
-    
+
     $scope.drawSimpleChart = function( user_id, discipline ){
       //start loading indicator
       $scope.loading = true;
@@ -100,6 +102,13 @@ trafie.controller("statisticsController", function(
                 "rows": []
             }
 
+            var config = {};
+            config.bindto = '#chart';
+            config.data = {};
+            config.data.json = {};
+            config.data.json.discipline_1 = [];
+            config.data.json.discipline_2 = [];
+            config.data.json.average = [];
             // add rows to chart based on the discipline
 
             // TIME DISCIPLINE i.e : performance: "00:00:20.09"
@@ -156,7 +165,13 @@ trafie.controller("statisticsController", function(
                             "v": average / 10000
                         }]
                     };
+
+
                     data.rows.push(temp);
+
+                    config.data.json.discipline_1.push(res[i].performance / 10000);
+                    config.data.json.discipline_2.push( Math.round( (res[i].performance / (10000 + Math.random()*1000))*100 ) /100 );
+                    config.data.json.average.push(average / 10000);
                 }
 
             }
@@ -268,6 +283,22 @@ trafie.controller("statisticsController", function(
 
             //hide loading indicator
             $scope.loading = false;
+
+            console.log(data, config);
+
+            // model for
+            // c3 charts
+            // var chart = c3.generate({
+            //     data: {
+            //         x: 'x',
+            //         columns: [
+            //             ['x', 30, 50, 100, 230, 300, 310],
+            //             ['discipline', 30, 200, 100, 400, 150, 250],
+            //             ['average', 130, 300, 200, 300, 250, 450]
+            //         ]
+            //     }
+            // });
+            var chart = c3.generate(config);
 
         })//end success
     .error(function(err){

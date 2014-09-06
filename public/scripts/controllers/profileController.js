@@ -52,6 +52,7 @@ trafie.controller("profileController", function(
 
     $scope.initProfile = function(){
       //true if this is the profile of the logged-in user
+    $scope.page_not_found = false;
     $scope.self = false;
     $scope.page_not_found = false;
 

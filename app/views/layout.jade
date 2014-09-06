@@ -14,6 +14,7 @@ head
 	//- link(rel='stylesheet', href='/styles/reset.css')
 	link(rel='stylesheet', href='/styles/style.css')
 	link(rel='stylesheet', href='/styles/bootstrap.css')
+	link(rel='stylesheet', href='/styles/c3.css')
 
 
 	meta(name="apple-mobile-web-app-capable" content="yes")
@@ -41,10 +42,10 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
 						a.menu_profile(href="/register") Register
 					li
 						a.menu_statistics(href="/login") Login
-						
+
 	#content.col-md-8( ng-view )
 
-	
+
 
 	//libs
 	script(type="text/javascript", src="/scripts/libs/angular-file-upload-html5-shim.js")
@@ -58,7 +59,7 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
 	script(type='text/javascript', src='/scripts/services/uploadSvc.js')
 	script(type='text/javascript', src='/scripts/services/modalSvc.js')
 	script(type='text/javascript', src='/scripts/services/alertSvc.js')
-	
+
 	//directives
 	// script(type='text/javascript', src='/scripts/directives/angular-file-upload.js')
 	script(type='text/javascript', src='/scripts/directives/file-select.js')
@@ -71,12 +72,17 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
 
 	//to be removed
 	//script(type='text/javascript', src='/scripts/scripts/script.js')
-	
 
 
+	//- google charts
 	script(type='text/javascript', src='https://www.google.com/jsapi')
 
-	
+	//- c3js charts
+	//- script( src="http://d3js.org/d3.v3.min.js" charset="utf-8")
+	script(type="text/javascript", src="/scripts/libs/d3.v3.min.js")
+	script(type="text/javascript", src="/scripts/libs/c3.min.js")
+
+
 //script.
 	mainMenuHandlers();
 

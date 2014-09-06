@@ -1,10 +1,10 @@
 trafie.controller("settingsController", function(
-  $rootScope, 
-  $timeout, 
-  $scope, 
-  $window, 
+  $rootScope,
+  $timeout,
+  $scope,
+  $window,
   $http ){
-  
+
   $http.get('/settings_data')
   .success(function(res){
     console.log(res);
@@ -18,7 +18,9 @@ trafie.controller("settingsController", function(
   $scope.settingsInit = function(){
     /* --- profile --- */
     //profile_pic
-    $scope.user.new_profile_pic = 'motherhacker';
+    if( $scope.user ) {
+        $scope.user.new_profile_pic = 'motherhacker';
+    }
     $scope.profile_pic_msg = '';
 
     //firstname
