@@ -45,70 +45,44 @@ trafie.controller("statisticsController", function(
     // Load the Visualization API and the piechart package.
     $scope.statisticsInit = function( user_id, discipline ) {
         $scope.page_not_found = false;
-        // Note : we need to make sure the DOM is ready when you call google.load
-        // with the callback option [google.load doc](https://developers.google.com/loader/)
-        //- google.load is adding the script to the page using a document.write() and wipes out the html.
-        // we use a callback for the load to force it use append rather than doc.write
-        console.log('init', user_id, discipline);
-        $timeout(function(){
-            google.load('visualization', '1', {'callback':function(){
-              $scope.drawSimpleChart( user_id, discipline );
-            }, 'packages':['corechart','controls']});
-        }, 1)
+        // console.log('init', user_id, discipline);
+        $scope.drawSimpleChart( user_id, discipline );
     }
 
 
 
 
     /*********************************/
-    /*    Draw Chart Functions   */
+    /*    Chart Functions   */
     /*********************************/
     /**
-     * drawSimpleChart() : called for drawing the chart for a discipline of the specific user
+     * drawSimpleChart() : drawing the chart for a discipline of the specific user
      * @param user_id : the user id
      * @param discipline : the discipline we want to show
      */
-
     $scope.drawSimpleChart = function( user_id, discipline ){
       //start loading indicator
       $scope.loading = true;
-
         console.log('draw', user_id, discipline);
         //call ajax_get (defined in script.js) in order to fetch the specific performances
         $http.get('/user/' + user_id + '/activities?discipline=' + discipline)
         .success(function(response){
-            //-------CHART-------
             // parse responce as JSON
-            var res = response; //JSON.parse(response);
+            var res = response;
 
-            //create a 2-dimension chart with y-axis:performance(number) and x-axis:date(date)
-            var data = {
-                "cols": [{
-                    "id": "",
-                    "label": "Date",
-                    "pattern": "",
-                    "type": "date"
-                }, {
-                    "id": "",
-                    "label": "Performance",
-                    "pattern": "",
-                    "type": "number"
-                }, {
-                    "id": "",
-                    "label": "Average",
-                    "pattern": "",
-                    "type": "number"
-                }],
-                "rows": []
-            }
-
+            //C3 data model
             var config = {};
             config.bindto = '#chart';
             config.data = {};
             config.data.json = {};
-            config.data.json.discipline_1 = [];
-            config.data.json.discipline_2 = [];
+            config.data.json.discipline = [];
             config.data.json.average = [];
+            config.axis = {
+                y : {
+                    tick: {}
+                }
+            }
+
             // add rows to chart based on the discipline
 
             // TIME DISCIPLINE i.e : performance: "00:00:20.09"
@@ -118,28 +92,28 @@ trafie.controller("statisticsController", function(
                 var response_length = res.length;
 
                 for (var i = 0; i < response_length; i++) {
-                    sum = sum + parseInt(res[i].performance.split(':')[0] * 360000 + res[i].performance.split(':')[1] * 6000 + res[i].performance.split(':')[2].split('.')[0] * 100 + res[i].performance.split(':')[2].split('.')[1]);
+                    sum = sum + parseInt(res[i].performance.split(':')[0] + res[i].performance.split(':')[1] + res[i].performance.split(':')[2].split('.')[0] + res[i].performance.split(':')[2].split('.')[1]);
                 }
+
                 average = sum / response_length;
 
                 for (var i in res) {
-                    //console.log(i, res[i]);
-                    var performance = res[i].performance.split(':')[0] * 360000 + res[i].performance.split(':')[1] * 6000 + res[i].performance.split(':')[2].split('.')[0] * 100 + res[i].performance.split(':')[2].split('.')[1];
-                    var temp = {
-                        "c": [{
-                            "v": "Date(" + Date.parse(res[i].date) + ")"
-                        }, {
-                            "v": performance,
-                            "f": res[i].formatted_performance
-                        }, {
-                            "v": average
-                        }]
-                    };
+                    var performance = res[i].performance.split(':')[0] + res[i].performance.split(':')[1] + res[i].performance.split(':')[2].split('.')[0] + res[i].performance.split(':')[2].split('.')[1];
 
+                    console.log(sum, average, res[i].performance, performance, typeof(performance));
+                    // data.rows.push(temp);
 
-                    console.log(sum, average, performance);
-                    data.rows.push(temp);
+                    config.data.json.discipline.push(performance);
+                    config.data.json.average.push(average);
                 }
+
+                //Format Y Axis
+                config.axis.y.tick = {
+                   format: function(d){
+                        return $scope.formatChartTicks( d , 'time');
+                   }
+                }
+
             }
 
             // DISTANCE DISCIPLINE
@@ -154,23 +128,7 @@ trafie.controller("statisticsController", function(
                 average = sum / response_length;
 
                 for (var i in res) {
-                    //console.log(i, res[i]);
-                    var temp = {
-                        "c": [{
-                            "v": "Date(" + Date.parse(res[i].date) + ")"
-                        }, {
-                            "v": (res[i].performance / 10000),
-                            "f": res[i].formatted_performance
-                        }, {
-                            "v": average / 10000
-                        }]
-                    };
-
-
-                    data.rows.push(temp);
-
-                    config.data.json.discipline_1.push(res[i].performance / 10000);
-                    config.data.json.discipline_2.push( Math.round( (res[i].performance / (10000 + Math.random()*1000))*100 ) /100 );
+                    config.data.json.discipline.push(res[i].performance / 10000);
                     config.data.json.average.push(average / 10000);
                 }
 
@@ -186,20 +144,12 @@ trafie.controller("statisticsController", function(
                 }
                 average = sum / response_length;
 
-
-                for (var i in res) {
+                var ctr = res.length;
+                while(ctr) {
                     //console.log(i, res[i]);
-                    var temp = {
-                        "c": [{
-                            "v": "Date(" + Date.parse(res[i].date) + ")"
-                        }, {
-                            "v": (res[i].performance),
-                            "f": res[i].formatted_performance
-                        }, {
-                            "v": average
-                        }]
-                    };
-                    data.rows.push(temp);
+                    ctr--;
+                    config.data.json.discipline.push(res[ctr].performance);
+                    config.data.json.average.push(average);
                 }
 
             }
@@ -208,103 +158,46 @@ trafie.controller("statisticsController", function(
                 console.log('- error in drawChart(). Unknown discipline:' + discipline);
             }
 
-            //------CONTROL-----
-            var control = new google.visualization.ControlWrapper({
-                'controlType': 'ChartRangeFilter',
-                'containerId': 'control',
-                'options': {
-                    // Filter by the date axis.
-                    'filterColumnIndex': 0,
-                    'ui': {
-                        'chartType': 'AreaChart',
-                        'chartOptions': {
-                            'chartArea': {
-                                'width': '90%'
-                            },
-                            'hAxis': {
-                                'baselineColor': 'none'
-                            }
-                        },
-                        // Display a single series that shows the closing value of the stock.
-                        // Thus, this view has two columns: the date (axis) and the stock value (line series).
-                        'chartView': {
-                            'columns': [0, 1, 2]
-                        },
-                        // 1 day in milliseconds = 24 * 60 * 60 * 1000 = 86,400,000
-                        'minRangeSize': 86400000
-                    }
-                },
-                // Initial range: 2012-02-09 to 2012-03-20.
-                'state': {
-                    'range': {
-                        'start': new Date(2014, 2, 1),
-                        'end': new Date()
-                    }
-                }
-            });
-
-            //---CHART
-            var chart = new google.visualization.ChartWrapper({
-                'chartType': 'LineChart',
-                'containerId': 'chart_div',
-                'options': {
-                    'title': discipline,
-                    'dataOpacity': '0.7',
-                    //'curveType': 'function',
-                    // Use the same chart area width as the control for axis alignment.
-                    'chartArea': {
-                    },
-                    'hAxis': {
-                        'slantedText': false
-                    }
-                    /*',vAxis': {'viewWindow': {'min': 0, 'max': 2000}}*/
-                },
-
-                // Convert the first column from 'date' to 'string'.
-                'view': {
-                    'columns': [{
-                            'calc': function(dataTable, rowIndex) {
-                                return dataTable.getFormattedValue(rowIndex, 0);
-                            },
-                            'type': 'string'
-                        },
-                        1, 2
-                    ]
-                }
-            });
-
-            //We need to reverse the order of the elements in rows for
-            //the dashboard.
-            data.rows.reverse();
-
-            var dashboard = new google.visualization.Dashboard( document.getElementById('dashboard') );
-            dashboard.bind(control, chart);
-            dashboard.draw(data);
-
             //hide loading indicator
             $scope.loading = false;
 
-            console.log(data, config);
+            console.log(config);
 
             // model for
-            // c3 charts
-            // var chart = c3.generate({
-            //     data: {
-            //         x: 'x',
-            //         columns: [
-            //             ['x', 30, 50, 100, 230, 300, 310],
-            //             ['discipline', 30, 200, 100, 400, 150, 250],
-            //             ['average', 130, 300, 200, 300, 250, 450]
-            //         ]
-            //     }
-            // });
+            // inject config for C3 charts
             var chart = c3.generate(config);
-
         })//end success
-    .error(function(err){
-      console.log('drawSimpleChart error');
-    });
+        .error(function(err){
+          console.log('drawSimpleChart error');
+        });
     }; //end drawSimpleChart
+
+
+    /**
+     * formatChartTicks() : makes the tick human readable
+     * @param data : the data we need to format
+     * @param discipline_type : the discipline type. Accepted values 'time', 'distance', 'points'
+     */
+     $scope.formatChartTicks = function( data, discipline_type ) {
+        switch(discipline_type) {
+        case 'time':
+            //convert number to string
+            data = data + '';
+            var _result = data.slice(-4,-2) + '.' + data.slice(-2);
+            if(data.slice(-6,-4)) { _result = data.slice(-6,-4) + ':' + _result };
+            if(data.slice(-8,-6)) { _result = data.slice(-8,-6) + ':' + _result }
+            return _result;
+            break;
+        case 'distance':
+            // code block
+            break;
+        case 'points':
+            // code block
+            break;
+        // default:
+        //     default code block
+        }
+     }
 
 }); //end controller
 

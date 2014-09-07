@@ -33,7 +33,7 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
           //ADD ACTIVITY
           include partials/profile/add_activity
 
-        li( ng-repeat="activity in activities" )
+        li.my-repeat-animation( ng-repeat="activity in activities" )
           div.icon_back
           div.icon
           div.info( data-activity-id="{{activity._id}}" )
