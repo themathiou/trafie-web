@@ -46,6 +46,22 @@ trafie.controller("statisticsController", function(
     $scope.statisticsInit = function( user_id, discipline ) {
         $scope.page_not_found = false;
         // console.log('init', user_id, discipline);
+
+        //C3 data model
+        $scope.config = {};
+        $scope.config.bindto = '#chart';
+        $scope.config.data = {};
+        $scope.config.data.json = {};
+        $scope.config.data.json.discipline = [];
+        $scope.config.data.json.average = [];
+        $scope.config.axis = {
+            y : {
+                tick: {}
+            }
+        }
+        $scope.config.subchart = {
+            show: true
+        }
         $scope.drawSimpleChart( user_id, discipline );
     }
 
@@ -67,21 +83,12 @@ trafie.controller("statisticsController", function(
         //call ajax_get (defined in script.js) in order to fetch the specific performances
         $http.get('/user/' + user_id + '/activities?discipline=' + discipline)
         .success(function(response){
-            // parse responce as JSON
+            // parse response as JSON
             var res = response;
 
-            //C3 data model
-            var config = {};
-            config.bindto = '#chart';
-            config.data = {};
-            config.data.json = {};
-            config.data.json.discipline = [];
-            config.data.json.average = [];
-            config.axis = {
-                y : {
-                    tick: {}
-                }
-            }
+            //reset data
+            $scope.config.data.json.discipline = [];
+            $scope.config.data.json.average = [];
 
             // add rows to chart based on the discipline
 
@@ -99,16 +106,12 @@ trafie.controller("statisticsController", function(
 
                 for (var i in res) {
                     var performance = res[i].performance.split(':')[0] + res[i].performance.split(':')[1] + res[i].performance.split(':')[2].split('.')[0] + res[i].performance.split(':')[2].split('.')[1];
-
-                    console.log(sum, average, res[i].performance, performance, typeof(performance));
-                    // data.rows.push(temp);
-
-                    config.data.json.discipline.push(performance);
-                    config.data.json.average.push(average);
+                    $scope.config.data.json.discipline.push(performance);
+                    $scope.config.data.json.average.push(average);
                 }
 
                 //Format Y Axis
-                config.axis.y.tick = {
+                $scope.config.axis.y.tick = {
                    format: function(d){
                         return $scope.formatChartTicks( d , 'time');
                    }
@@ -128,11 +131,19 @@ trafie.controller("statisticsController", function(
                 average = sum / response_length;
 
                 for (var i in res) {
-                    config.data.json.discipline.push(res[i].performance / 10000);
-                    config.data.json.average.push(average / 10000);
+                    $scope.config.data.json.discipline.push(res[i].performance / 10000);
+                    $scope.config.data.json.average.push(average / 10000);
+                }
+
+                //Format Y Axis
+                $scope.config.axis.y.tick = {
+                   format: function(d){
+                        return $scope.formatChartTicks( d , 'distance');
+                   }
                 }
 
             }
+
             // POINTS DISCIPLINE
             else if (disciplines.points.indexOf(discipline) > -1) {
                 var average = 0,
@@ -145,11 +156,16 @@ trafie.controller("statisticsController", function(
                 average = sum / response_length;
 
                 var ctr = res.length;
-                while(ctr) {
-                    //console.log(i, res[i]);
-                    ctr--;
-                    config.data.json.discipline.push(res[ctr].performance);
-                    config.data.json.average.push(average);
+                for(i in res) {
+                    $scope.config.data.json.discipline.push(res[i].performance);
+                    $scope.config.data.json.average.push(average);
+                }
+
+                //Format Y Axis
+                $scope.config.axis.y.tick = {
+                   format: function(d){
+                        return $scope.formatChartTicks( d , 'points');
+                   }
                 }
 
             }
@@ -161,11 +177,11 @@ trafie.controller("statisticsController", function(
             //hide loading indicator
             $scope.loading = false;
 
-            console.log(config);
+            console.log($scope.config);
 
             // model for
             // inject config for C3 charts
-            var chart = c3.generate(config);
+            var chart = c3.generate($scope.config);
         })//end success
         .error(function(err){
           console.log('drawSimpleChart error');
@@ -189,13 +205,13 @@ trafie.controller("statisticsController", function(
             return _result;
             break;
         case 'distance':
-            // code block
+            return data;
             break;
         case 'points':
-            // code block
+            return data;
             break;
-        // default:
-        //     default code block
+        default:
+             return data;
         }
      }
 
