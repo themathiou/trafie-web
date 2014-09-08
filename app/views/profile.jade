@@ -9,13 +9,13 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
         img( src="{{current_user.picture}}" )
       div#profileFullName
         h3 {{current_user.first_name}} {{current_user.last_name}}
-        p 
-          span( ng-show="current_user.formatted_discipline" ){{current_user.formatted_discipline}} 
-          span( ng-show="current_user.discipline && current_user.country" ) - 
+        p
+          span( ng-show="current_user.formatted_discipline" ){{current_user.formatted_discipline}}
+          span( ng-show="current_user.discipline && current_user.country" ) -
           span( ng-show="current_user.country" ){{current_user.country}}
         div( ng-if="!self")
             a( href="/statistics/{{current_user._id}}" ) View User Statistics
-    
+
     alert( ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)") {{alert.msg}}
 
     ul.filters-row

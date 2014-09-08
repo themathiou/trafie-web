@@ -132,7 +132,7 @@ trafie.controller("statisticsController", function(
 
                 for (var i in res) {
                     $scope.config.data.json.discipline.push(res[i].performance / 10000);
-                    $scope.config.data.json.average.push(average / 10000);
+                    $scope.config.data.json.average.push( average / 10000 );
                 }
 
                 //Format Y Axis
@@ -205,7 +205,7 @@ trafie.controller("statisticsController", function(
             return _result;
             break;
         case 'distance':
-            return data;
+            return data.toFixed(2);
             break;
         case 'points':
             return data;
