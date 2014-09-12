@@ -1,10 +1,13 @@
 div#main_content( ng-init="initProfile()"  ng-cloak)
 
+  //- PAGE NOT FOUND
   div( ng-if="page_not_found" )
       h3 The page you are looking for doesn't exists
 
+  //- PAGE FOUND START
   div( ng-if="!page_not_found" )
-    div#profile_container
+    //- PROFILE
+    div#profile_container.col-xs-12.col-md-12.col-lg-12
       div#image_container
         img( src="{{current_user.picture}}" )
       div#profileFullName
@@ -16,17 +19,21 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
         div( ng-if="!self")
             a( href="/statistics/{{current_user._id}}" ) View User Statistics
 
+    //- ALERTS
     alert( ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)") {{alert.msg}}
 
-    ul.filters-row
+    //- FILTERS
+    ul.filters-row.col-xs-12.col-md-12.col-lg-12
       li( ng-repeat="(key, value) in user.disciplines_of_user" style="float:left;")
         a( ng-click="getActivities( user._id, key )" ) {{value}}
 
-    div#loading( hidden )
+    //- LOADING
+    div#loading( hidden ).col-xs-12.col-md-12.col-lg-12
       img( src="images/ui/loading.gif" )
 
-    div#history_container
-      ul#history_line.history_line
+    //- HISTORY TIMELINE
+    div#history_container.col-xs-12.col-md-12.col-lg-12
+      ul.history_line.col-xs-12.col-md-12.col-lg-12
         li
           div.icon_back
           div.icon +

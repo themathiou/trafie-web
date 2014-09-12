@@ -2,13 +2,10 @@ vdoctype 5
 html(ng-app="trafie")
 head
 	meta(charset="utf-8")
+	meta( name="viewport" content="width=device-width, initial-scale=1")
 
 	//ICONS
 	link(rel="icon" href="/images/icons/trafie_72.png" type="image/x-icon")
-	//- link(rel="apple-touch-icon-precomposed" sizes="57x57" href="/images/icons/trafie_57.png")
-	//- link(rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/icons/trafie_72.png")
-	//- link(rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/icons/trafie_114.png")
-	//- link(rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/icons/trafie_144.png")
 
 	link(href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600&subset=latin,greek,cyrillic' rel='stylesheet' type='text/css')
 	//- link(rel='stylesheet', href='/styles/reset.css')
@@ -16,13 +13,11 @@ head
 	link(rel='stylesheet', href='/styles/bootstrap.css')
 	link(rel='stylesheet', href='/styles/c3.css')
 
-
-	meta(name="apple-mobile-web-app-capable" content="yes")
 	title trafie
 
 body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
-	div#mainmenu_container
-		div#mainmenu
+	div#mainmenu_container.col-xs-12.col-md-12.col-lg-12
+		div#mainmenu.col-xs-12.col-md-12.col-lg-8.col-lg-offset-2
 			div
 			a.logo(href="/")
 			input#search( type="text" ng-model="asyncSelected" placeholder="search for athletes!" typeahead-on-select="onSelect($item, $model, $label)" typeahead="result.label for result in searchUser($viewValue)" typeahead-loading="loadingLocations" class="form-control" autocomplete="off" )
@@ -43,7 +38,7 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
 					li
 						a.menu_statistics(href="/login") Login
 
-	#content.col-md-8( ng-view )
+	#content.col-xs-12.col-md-12.col-lg-8.col-lg-offset-2( ng-view )
 
 
 
