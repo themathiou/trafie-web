@@ -7,8 +7,9 @@ trafie.controller("mainController",[
   '$location',
   '$timeout',
   '$modalSvc',
+  '$alertSvc',
   '$uploadSvc',
-    function( $rootScope, $window, $scope, $http, $routeParams, $location, $timeout, $modalSvc, $uploadSvc) {
+    function( $rootScope, $window, $scope, $http, $routeParams, $location, $timeout, $modalSvc, $alertSvc, $uploadSvc) {
       ///////////////////////////////////////////////////////
       // GENERAL
       ///////////////////////////////////////////////////////

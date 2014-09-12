@@ -127,13 +127,17 @@ trafie.controller("profileController", function(
   $scope.deleteActivity = function( activity_id ){
     $rootScope.confirm_delete_modal( activity_id, 'lg')
     .then(function(result){
-      if(result){
+      if (result) {
         for( var i in $scope.activities ) {
           if( $scope.activities[i]._id == activity_id ){
             $scope.activities.splice(i,1);
             break;
           }
         }
+        $rootScope.addAlert('success', 'You fucking destroy that!');
+      }
+      else {
+        $rootScope.addAlert('warning', 'Something went so fucking wrong and this fucking activity couldn\'t be deleted' );
       }
     });
 
