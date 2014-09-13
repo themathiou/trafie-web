@@ -1,81 +1,104 @@
-vdoctype 5
+doctype 5
 html(ng-app="trafie")
 head
-	meta(charset="utf-8")
-	meta( name="viewport" content="width=device-width, initial-scale=1")
+    meta(charset="utf-8")
+    meta( name="viewport" content="width=device-width, initial-scale=1")
 
-	//ICONS
-	link(rel="icon" href="/images/icons/trafie_72.png" type="image/x-icon")
+    //ICONS
+    link(rel="icon" href="/images/icons/trafie_72.png" type="image/x-icon")
 
-	link(href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600&subset=latin,greek,cyrillic' rel='stylesheet' type='text/css')
-	//- link(rel='stylesheet', href='/styles/reset.css')
-	link(rel='stylesheet', href='/styles/style.css')
-	link(rel='stylesheet', href='/styles/bootstrap.css')
-	link(rel='stylesheet', href='/styles/c3.css')
+    link(href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600&subset=latin,greek,cyrillic' rel='stylesheet' type='text/css')
+    //- link(rel='stylesheet', href='/styles/reset.css')
+    link(rel='stylesheet', href='/styles/style.css')
+    link(rel='stylesheet', href='/styles/bootstrap.css')
+    link(rel='stylesheet', href='/styles/c3.css')
 
-	title trafie
+    title trafie
 
 body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
-	div#mainmenu_container.col-xs-12.col-md-12.col-lg-12
-		div#mainmenu.col-xs-12.col-md-12.col-lg-8.col-lg-offset-2
-			div
-			a.logo(href="/")
-			input#search( type="text" ng-model="asyncSelected" placeholder="search for athletes!" typeahead-on-select="onSelect($item, $model, $label)" typeahead="result.label for result in searchUser($viewValue)" typeahead-loading="loadingLocations" class="form-control" autocomplete="off" )
+    div#mainmenu_container.col-xs-12.col-sm-12.col-md-12.col-lg-12
+        div#mainmenu.col-xs-12.col-sm-12.col-md-10.col-lg-8.col-md-offset-1.col-lg-offset-2
+            a.logo.brand( href="/" )
+            //- DESKTOP
+            span( ng-if="!mobile" )
+                input.search( type="text" ng-model="asyncSelected" placeholder="search for athletes!" typeahead-on-select="onSelect($item, $model, $label)" typeahead="result.label for result in searchUser($viewValue)" typeahead-loading="loadingLocations" class="form-control" autocomplete="off" )
+
+                if user._id
+                    ul.navigation_menu
+                        li
+                            a.menu_profile(href="/" ng-class="{active: section == 'profile'}" ) {{user_first_name}}
+                        li
+                            a.menu_statistics(href="/statistics" ng-class="{active: section == 'statistics'}")= tr['statistics']
+                        li
+                            a.menu_settings(href="/settings" ng-class="{active: section == 'settings'}")= tr['settings']
+                else
+                    ul.navigation_menu
+                        li
+                            a.menu_profile(href="/register") Register
+                        li
+                            a.menu_statistics(href="/login") Login
+
+            //- MOBILE
+            span( ng-if="mobile" ng-init="isCollapsed = true")
+                button.btn.btn-default.btn-sm( ng-click="isCollapsed = !isCollapsed") Menu
+                div.col-xs-12.dropdown_container( collapse="isCollapsed" )
+                    div.flex_wrapper
+                        input.search( type="text" ng-model="asyncSelected" placeholder="search for athletes!" typeahead-on-select="onSelect($item, $model, $label)" typeahead="result.label for result in searchUser($viewValue)" typeahead-loading="loadingLocations" class="form-control" autocomplete="off" )
+
+                        if user._id
+                            ul.navigation_menu
+                                li
+                                    a.menu_profile(href="/" ng-class="{active: section == 'profile'}" ) {{user_first_name}}
+                                li
+                                    a.menu_statistics(href="/statistics" ng-class="{active: section == 'statistics'}")= tr['statistics']
+                                li
+                                    a.menu_settings(href="/settings" ng-class="{active: section == 'settings'}")= tr['settings']
+                        else
+                            ul.navigation_menu
+                                li
+                                    a.menu_profile(href="/register") Register
+                                li
+                                    a.menu_stat
 
 
-			if user._id
-				ul.navigation_menu
-					li
-						a.menu_profile(href="/" ng-class="{active: section == 'profile'}" ) {{user_first_name}}
-					li
-						a.menu_statistics(href="/statistics" ng-class="{active: section == 'statistics'}")= tr['statistics']
-					li
-						a.menu_settings(href="/settings" ng-class="{active: section == 'settings'}")= tr['settings']
-			else
-				ul.navigation_menu
-					li
-						a.menu_profile(href="/register") Register
-					li
-						a.menu_statistics(href="/login") Login
-
-	#content.col-xs-12.col-md-12.col-lg-8.col-lg-offset-2( ng-view )
+    #content.col-xs-12.col-sm-12.col-md-10.col-lg-8.col-md-offset-1.col-lg-offset-2( ng-view )
 
 
 
-	//- libs
-	script(type="text/javascript", src="/scripts/libs/angular-file-upload-html5-shim.js")
-	script(type="text/javascript", src="/scripts/libs/angular.min.js")
-	script(type="text/javascript", src="/scripts/libs/angular-route.min.js")
-	script(type="text/javascript", src="/scripts/libs/angular-animate.min.js")
-	script(type="text/javascript", src="/scripts/libs/ui-bootstrap-0.10.0.min.js")
-	script(type='text/javascript', src='/scripts/app.js')
+    //- libs
+    script(type="text/javascript", src="/scripts/libs/angular-file-upload-html5-shim.js")
+    script(type="text/javascript", src="/scripts/libs/angular.min.js")
+    script(type="text/javascript", src="/scripts/libs/angular-route.min.js")
+    script(type="text/javascript", src="/scripts/libs/angular-animate.min.js")
+    script(type="text/javascript", src="/scripts/libs/ui-bootstrap-0.10.0.min.js")
+    script(type='text/javascript', src='/scripts/app.js')
 
-	//- services
-	script(type='text/javascript', src='/scripts/services/uploadSvc.js')
-	script(type='text/javascript', src='/scripts/services/modalSvc.js')
-	script(type='text/javascript', src='/scripts/services/alertSvc.js')
+    //- services
+    script(type='text/javascript', src='/scripts/services/uploadSvc.js')
+    script(type='text/javascript', src='/scripts/services/modalSvc.js')
+    script(type='text/javascript', src='/scripts/services/alertSvc.js')
 
-	//- directives
-	//- script(type='text/javascript', src='/scripts/directives/angular-file-upload.js')
-	script(type='text/javascript', src='/scripts/directives/file-select.js')
+    //- directives
+    //- script(type='text/javascript', src='/scripts/directives/angular-file-upload.js')
+    script(type='text/javascript', src='/scripts/directives/file-select.js')
 
-	//- controllers
-	script(type='text/javascript', src='/scripts/controllers/mainController.js')
-	script(type='text/javascript', src='/scripts/controllers/profileController.js')
-	script(type='text/javascript', src='/scripts/controllers/settingsController.js')
-	script(type='text/javascript', src='/scripts/controllers/statisticsController.js')
+    //- controllers
+    script(type='text/javascript', src='/scripts/controllers/mainController.js')
+    script(type='text/javascript', src='/scripts/controllers/profileController.js')
+    script(type='text/javascript', src='/scripts/controllers/settingsController.js')
+    script(type='text/javascript', src='/scripts/controllers/statisticsController.js')
 
-	//- to be removed
-	//- script(type='text/javascript', src='/scripts/scripts/script.js')
+    //- to be removed
+    //- script(type='text/javascript', src='/scripts/scripts/script.js')
 
-	//- c3js charts
-	//- script( src="http://d3js.org/d3.v3.min.js" charset="utf-8")
-	script(type="text/javascript", src="/scripts/libs/d3.v3.min.js")
-	script(type="text/javascript", src="/scripts/libs/c3.min.js")
+    //- c3js charts
+    //- script( src="http://d3js.org/d3.v3.min.js" charset="utf-8")
+    script(type="text/javascript", src="/scripts/libs/d3.v3.min.js")
+    script(type="text/javascript", src="/scripts/libs/c3.min.js")
 
 
 //- script.
-	mainMenuHandlers();
+    mainMenuHandlers();
 
 
 

@@ -13,7 +13,19 @@ trafie.controller("mainController",[
       ///////////////////////////////////////////////////////
       // GENERAL
       ///////////////////////////////////////////////////////
-      $scope.appInit = function() {};
+      $scope.appInit = function() {
+        // if device size < 768px consider it as mobile
+        $window.innerWidth < 768 ? $scope.mobile = true : $scope.mobile = false;
+      };
+
+      ///////////////////////////////////////////////////////
+      // On window resize 
+      ///////////////////////////////////////////////////////
+       $window.onresize = function () {
+          // if device size < 768px consider it as mobile
+          $window.innerWidth < 768 ? $scope.mobile = true : $scope.mobile = false;
+          $scope.$apply();
+      }
 
       /**
        * [Syncs show and hide of elements]
@@ -158,13 +170,6 @@ trafie.controller("mainController",[
 
 
       ///////////////////////////////////////////////////////
-      // MODALS
-      ///////////////////////////////////////////////////////
-
-        // $scope.modalsss
-
-
-      ///////////////////////////////////////////////////////
       // datepicker bootstrap settings - TO CHANGE
       ///////////////////////////////////////////////////////
       $scope.today = function() {
@@ -200,4 +205,5 @@ trafie.controller("mainController",[
       /*
        end datepicker
        */
+
 }]);

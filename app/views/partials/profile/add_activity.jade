@@ -4,7 +4,7 @@ accordion( class="info add_activity" ng-show="self")
 		label Choose your discipline
 		select( ng-model="newActivityForm.selected_discipline" ng-options="discipline.name for discipline in disciplines_options " ng-init="newActivityForm.selected_discipline = disciplines_options[4].name" )
 			option( value="")= tr['choose_your_discipline']
-	
+
 		form( ng-if="newActivityForm.selected_discipline" ng-submit="submitNewActivity()")
 			div.data_entry= tr['enter_your_performance'] +':'
 				//- time
@@ -21,7 +21,7 @@ accordion( class="info add_activity" ng-show="self")
 					div
 						label(for="centiseconds_input")= tr['centiseconds_short'] + ':'
 						input#centiseconds_input(name="centiseconds" size="3" maxlength="2" ng-model="newActivityForm.centiseconds")
-				
+
 				//- distance
 				div.performance_fields( ng-if="disciplines.distance.indexOf(newActivityForm.selected_discipline.id) > -1" )
 					div

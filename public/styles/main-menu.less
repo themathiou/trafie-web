@@ -24,6 +24,39 @@
     padding:20px 36px;
   }
 
+  .dropdown_container{
+    background-color: @black_75;
+    height: 400px;
+    .bottom_rounded_corners(5px);
+
+    .flex_wrapper {
+      .flexbox(column);
+      justify-content: center;
+    }
+
+    .search {
+      margin: 20px 0px 10px 0px;
+      padding: 0px;
+      padding-left: 5px;
+      height: 30px;
+      border: 0;
+      .rounded_corners(3px);
+      letter-spacing: -1px;
+      width: 95%;
+      font-size: 15px;
+      background: white;
+
+      flex-grow:1;
+      align-self: center;
+    }
+
+    .navigation_menu {
+      flex-grow:1;
+      align-self: center;
+    }
+
+  }
+
   ul.navigation_menu
   {
     padding:10px 16px;
@@ -91,47 +124,48 @@
     }
 
   }
-}
 
-#search {
-  display: block;
-  float: left;
-  margin: 7px 0px 10px 30px;
-  padding:0px;
-  padding-left:5px;
-  height: 26px;
-  background: rgba(255, 255, 255, 0.2);
-  border: 0;
-  border-radius: 3px;
-  letter-spacing: -1px;
-  width: 50%;
-  font-size: 15px;
+  .search {
+    display: block;
+    float: left;
+    margin: 7px 0px 10px 30px;
+    padding:0px;
+    padding-left:5px;
+    height: 26px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 0;
+    border-radius: 3px;
+    letter-spacing: -1px;
+    width: 50%;
+    font-size: 15px;
 
-  &:focus {
-    background: white;
+    &:focus {
+      background: white;
 
-    .loading {
-      background-image: url("@{images}ui/loading.gif");
-      background-repeat: no-repeat;
-      background-position: 99% 50%;
-      background-size: 20px;
+      .loading {
+        background-image: url("@{images}ui/loading.gif");
+        background-repeat: no-repeat;
+        background-position: 99% 50%;
+        background-size: 20px;
+      }
+    }
+
+    &::-webkit-input-placeholder {
+       color: rgba(0, 0, 0, 0.6) ;
+    }
+
+    &:-moz-placeholder { /* Firefox 18- */
+       color: rgba(0, 0, 0, 0.8) ;
+    }
+
+    &::-moz-placeholder {  /* Firefox 19+ */
+       color: rgba(0, 0, 0, 0.8) ;
+    }
+
+    &:-ms-input-placeholder {
+       color: rgba(0, 0, 0, 0.8) ;
     }
   }
 
-  &::-webkit-input-placeholder {
-     color: rgba(0, 0, 0, 0.6) ;
-  }
-
-  &:-moz-placeholder { /* Firefox 18- */
-     color: rgba(0, 0, 0, 0.8) ;
-  }
-
-  &::-moz-placeholder {  /* Firefox 19+ */
-     color: rgba(0, 0, 0, 0.8) ;
-  }
-
-  &:-ms-input-placeholder {
-     color: rgba(0, 0, 0, 0.8) ;
-  }
-
 }
+

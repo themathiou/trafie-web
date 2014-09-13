@@ -8,6 +8,20 @@
   border-radius: @radius;
 }
 
+/* rounded corners function : 5px is default radius */
+.bottom_rounded_corners(@radius: 5px) {
+  -webkit-border-bottom-left-radius: @radius;
+  -moz-border-bottom-left-radius: @radius;
+  -ms-border-rbottom-left-adius: @radius;
+  -o-border-bottom-left-radius: @radius;
+  border-bottom-left-radius: @radius;
+  -webkit-border-bottom-right-radius: @radius;
+  -moz-border-bottom-right-radius: @radius;
+  -ms-border-rbottom-right-adius: @radius;
+  -o-border-bottom-right-radius: @radius;
+  border-bottom-right-radius: @radius;
+}
+
 /* background_shadow() */
 .background_shadow() {
   background: rgb(255,255,255); /* Old browsers */
@@ -23,6 +37,19 @@
 
 }
 
+// Flexbox
+//  @direction: row | row-reverse | column | column-reverse;
+.flexbox(@direction: row) {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: flex;
+
+  -webkit-flex-direction: @direction;
+  -moz-flex-direction: @direction;
+  -ms-flex-direction: @direction;
+  flex-direction: @direction;
+}
 
 /* transition : function for browsers support*/
 .transition(@text) {
