@@ -2,7 +2,7 @@ h3= tr['profile_settings']
 
 //PROFILE PIC
 div#profilePicDiv.settingsElement
-	a#editProfilePicture.editLink( ng-click="showHide('edit_profilepic')" )
+	a#editProfilePicture.editLink( ng-click="showHide('edit_profilepic')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
 		label= tr['profile_picture'] + ': '
 		img.settings_profile_pic_thumb( src="{{user.picture}}" )
@@ -26,7 +26,7 @@ div#profilePicDiv.settingsElement
 
 //FIRST NAME
 div#firstNameDiv.settingsElement
-	a#editFirstName.editLink( ng-click="showHide('edit_fname')" )
+	a#editFirstName.editLink( ng-click="showHide('edit_fname')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
 	form( method="POST" ng-submit="submitChangeSetting('first_name')")
 		label= tr['first_name'] + ': '
@@ -40,7 +40,7 @@ div#firstNameDiv.settingsElement
 
 //LAST NAME
 div#lastNameDiv.settingsElement
-	a#editLastName.editLink( ng-click="showHide('edit_lastname')" )
+	a#editLastName.editLink( ng-click="showHide('edit_lastname')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
 	form( method="POST" ng-submit="submitChangeSetting('last_name')")
 		label= tr['last_name'] + ': '
@@ -54,7 +54,7 @@ div#lastNameDiv.settingsElement
 
 //MAIN DISCIPLINE
 div#mainDisciplineDiv.settingsElement
-	a#editMainDiscipline.editLink( ng-click="showHide('edit_discipline')" )
+	a#editMainDiscipline.editLink( ng-click="showHide('edit_discipline')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
 	form( method="POST" ng-submit="submitChangeSetting('discipline')")
 		label= tr['main_discipline'] + ': '
@@ -69,7 +69,7 @@ div#mainDisciplineDiv.settingsElement
 
 //PRIVACY
 div#privacyDiv.settingsElement
-	a.editLink( ng-click="showHide('edit_privacy')" )
+	a.editLink( ng-click="showHide('edit_privacy')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
 	form( method="POST" ng-submit="submitChangeSetting('privacy')")
 		label= tr['privacy'] + ': '
@@ -84,7 +84,7 @@ div#privacyDiv.settingsElement
 
 //GENDER
 div#genderDiv.settingsElement
-	a#editGender.editLink( ng-click="showHide('edit_gender')" )
+	a#editGender.editLink( ng-click="showHide('edit_gender')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
 	form( method="POST" ng-submit="submitChangeSetting('gender')")
 		label= tr['gender'] + ': '
@@ -103,7 +103,7 @@ div#genderDiv.settingsElement
 
 //BIRTHDAY
 div#ageDiv.settingsElement
-	a#editAge.editLink( ng-click="showHide('edit_birthday')" )
+	a#editAge.editLink( ng-click="showHide('edit_birthday')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
 	form( method="POST" ng-submit="submitChangeSetting('birthday')")
 		label= tr['birthday'] + ': '
@@ -118,7 +118,7 @@ div#ageDiv.settingsElement
 
 //COUNTRY
 div#countryDiv.settingsElement
-	a#editCountry.editLink( ng-click="showHide('edit_country')" )
+	a#editCountry.editLink( ng-click="showHide('edit_country')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
 	form( method="POST" ng-submit="submitChangeSetting('country')")
 		label= tr['country'] + ': '
@@ -136,7 +136,7 @@ div#countryDiv.settingsElement
 
 //ABOUT ME
 div#aboutDiv.settingsElement
-	a#editAbout.editLink( ng-click="showHide('edit_about')" )
+	a#editAbout.editLink( ng-click="showHide('edit_about')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
 	form( method="POST" ng-submit="submitChangeSetting('about')")
 		label= tr['about_me'] + ': '
