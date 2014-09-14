@@ -7,10 +7,10 @@ head
     //ICONS
     link(rel="icon" href="/images/icons/trafie_72.png" type="image/x-icon")
 
-    link(href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600&subset=latin,greek,cyrillic' rel='stylesheet' type='text/css')
+    //- link(href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600&subset=latin,greek,cyrillic' rel='stylesheet' type='text/css')
     //- link(rel='stylesheet', href='/styles/reset.css')
-    link(rel='stylesheet', href='/styles/style.css')
     link(rel='stylesheet', href='/styles/bootstrap.css')
+    link(rel='stylesheet', href='/styles/style.css')
     link(rel='stylesheet', href='/styles/c3.css')
 
     title trafie
@@ -60,6 +60,9 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
                                 li
                                     a.menu_stat
 
+
+    //- ALERTS
+    alert.alert_custom.col-xs-12.col-sm-12.col-md-10.col-lg-8.col-md-offset-1.col-lg-offset-2( ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)") {{alert.msg}}
 
     #content.col-xs-12.col-sm-12.col-md-10.col-lg-8.col-md-offset-1.col-lg-offset-2( ng-view )
 

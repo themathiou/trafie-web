@@ -67,6 +67,7 @@ trafie.controller("mainController",[
 
 
       ///////////////////////////////////////////////////////
+      // SHOULD BE MOVED INTO A SERVICE
       // File Upload Functions and vars
       ///////////////////////////////////////////////////////
       $scope.usingFlash = false; //FileAPI && FileAPI.upload != null;
