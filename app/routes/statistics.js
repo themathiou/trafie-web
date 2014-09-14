@@ -1,3 +1,5 @@
+'use strict';
+
 var Profile = require('../models/profile.js'),
 	Activity = require('../models/activity.js');
 

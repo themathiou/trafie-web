@@ -1,8 +1,10 @@
+'use strict';
+
 // The User Model
-var mongoose = require('mongoose'),
+const mongoose = require('mongoose'),
 	q = require('q'),
 	crypto = require('crypto'),
-	userHelper = require('../helpers/user.js');
+	userHelper = require('../helpers/user.js'),
 	db = mongoose.connection;
 
 

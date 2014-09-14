@@ -1,3 +1,8 @@
+'use strict';
+
+// Loading models
+const Profile = require('../models/profile.js');
+
 var mainHelper = {};
 
 /**
@@ -31,7 +36,7 @@ mainHelper.validateAccess = function ( user_id, profile_id, callback ) {
 				response.success = true;
 				callback( response );
 			} else {
-				access_profile();
+				access_profile( user_data );
 			}
 		})
 		.fail( function( error ) {
@@ -43,10 +48,10 @@ mainHelper.validateAccess = function ( user_id, profile_id, callback ) {
 			language: 		'en',
 			date_format: 	'd-m-y'
 		};
-		access_profile();
+		access_profile( user_data );
 	}
 
-	function access_profile() {
+	function access_profile( user_data ) {
 		// If there is no profile id, return an error
 		if( typeof profile_id === 'undefined' ) {
 			// Just return the user
@@ -61,7 +66,7 @@ mainHelper.validateAccess = function ( user_id, profile_id, callback ) {
 			if( profile_data !== null && profile_data !== undefined ) {
 				// If the profile requested is a private profile and the user who tries to access it
 				// is not the user who owns it
-				if( profile_data.private && ( typeof user_data === 'undefined' || profile_data._id !== user_data._id ) ) {
+				if( profile_data.private && ( !user_data || profile_data._id.toString() !== user_data._id.toString() ) ) {
 					// Deny access
 					response.error = 'profile_not_valid';
 					callback( response );

@@ -1,13 +1,15 @@
+'use strict';
+
 // Loading models
-var Profile = require('../models/profile.js'),
-    Activity = require('../models/activity.js');
+const Profile = require('../models/profile.js'),
+      Activity = require('../models/activity.js');
 
 // Loading helpers
-var mainHelper = require('../helpers/main_helper.js');
-    activityHelper = require('../helpers/activity.js');
+const mainHelper = require('../helpers/main_helper.js'),
+      activityHelper = require('../helpers/activity.js');
 
 // Initialize translations
-var translations = require('../languages/translations.js');
+const translations = require('../languages/translations.js');
 
 /**
  * Profile - GET

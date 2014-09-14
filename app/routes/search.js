@@ -1,8 +1,10 @@
+'use strict';
+
 // Loading models
-var Profile = require('../models/profile.js');
+const Profile = require('../models/profile.js');
 
 // Initialize translations
-var translations = require('../languages/translations.js');
+const translations = require('../languages/translations.js');
 
 
 exports.get = function( req, res ) {
@@ -39,7 +41,7 @@ exports.get = function( req, res ) {
 
 		return Profile.schema.find( query, 'first_name last_name discipline country username _id', 10 );
 	})
-	.then( function( results ){
+	.then( function( results ) {
 		var results_length = results.length;
 		var formatted_results = [];
 		for ( var i=0 ; i<results_length ; i++ ) {

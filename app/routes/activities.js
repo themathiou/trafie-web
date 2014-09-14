@@ -1,16 +1,18 @@
+'use strict';
+
 // Loading modules
-var path = require('path'),
-	root_dir = path.dirname( require.main.filename );
+const path = require('path'),
+			root_dir = path.dirname( require.main.filename );
 
 // Loading models
-var Profile = require('../models/profile.js'),
-	Activity = require('../models/activity.js');
+const Profile = require('../models/profile.js'),
+			Activity = require('../models/activity.js');
 
 // Loading helpers
-var activityHelper = require('../helpers/activity.js');
+const activityHelper = require('../helpers/activity.js');
 
 // Initialize translations
-var translations = require('../languages/translations.js');
+const translations = require('../languages/translations.js');
 
 
 /**
@@ -87,7 +89,7 @@ exports.post = function( req, res ) {
 				place = 0,
 				competition = '',
 				notes = '',
-				private = false,
+				isPrivate = false,
 				tr = translations[profile_data.language];
 
 			// Validating date
@@ -199,7 +201,7 @@ exports.post = function( req, res ) {
 
 			if( typeof req.body.private !== 'undefined' ) {
 				if( activityHelper.privacyIsValid( req.body.private ) ) {
-					private = req.body.private;
+					isPrivate = req.body.private;
 				} else {
 					errors = true;
 					error_messages.private = tr['privacy error'];
@@ -214,11 +216,11 @@ exports.post = function( req, res ) {
 					'discipline'  	: discipline,
 					'performance' 	: performance,
 					'date'        	: date,
-					'place'		: place,
+					'place'			: place,
 					'location'		: location,
 					'competition'	: competition,
-					'notes'		: notes,
-					'private'		: private
+					'notes'			: notes,
+					'private'		: isPrivate
 				};
 
 				var activity = new Activity( new_activity );
@@ -274,7 +276,7 @@ exports.put = function( req, res ) {
 				place = 0,
 				competition = '',
 				notes = '',
-				private = false,
+				isPrivate = false,
 				tr = translations[language];
 
 			// Checking if the date value is valid
@@ -388,7 +390,7 @@ exports.put = function( req, res ) {
 
 			if( typeof req.body.private !== 'undefined' ) {
 				if( activityHelper.privacyIsValid( req.body.private ) ) {
-					private = req.body.private;
+					isPrivate = req.body.private;
 				} else {
 					errors = true;
 					error_messages.private = tr['privacy error'];
@@ -401,11 +403,11 @@ exports.put = function( req, res ) {
 				var activity = {
 					'performance' 	: performance,
 					'date'        	: date,
-					'place'		: place,
+					'place'			: place,
 					'location'		: location,
 					'competition'	: competition,
-					'notes'		: notes,
-					'private'		: private
+					'notes'			: notes,
+					'private'		: isPrivate
 				};
 
 				Activity.findByIdAndUpdate( activity_id, activity, '', function ( err, activity ) {

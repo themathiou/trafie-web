@@ -1,4 +1,6 @@
-var nodemailer = require('nodemailer');
+'use strict';
+
+const nodemailer = require('nodemailer');
 
 // Create a SMTP transport object
 var transport = nodemailer.createTransport("SMTP", {

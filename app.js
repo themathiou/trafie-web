@@ -24,26 +24,28 @@
  * EXPRESS                                                                                                                     *
  ******************************************************************************************************************************/
 
-var express = require('express'),
+'use strict';
+
+const express = require('express'),
     http = require('http'),
-    path = require('path');
-    url = require('url') ,
+    path = require('path'),
+    url = require('url'),
     mongoose = require('mongoose'),
     crypto = require('crypto'),
     q = require('q');
 
 // Initialize express
-var trafie = express();
+const trafie = express();
 
 // Mongo db connection
 mongoose.connect('mongodb://localhost/trafiejs');
 //var MONGOHQ_URL="mongodb://trafie_root:​my_secret_root_password@lennon.mongohq.com:10076/app19956848";
 //mongoose.connect(process.env.MONGOHQ_URL);
 
-var db = mongoose.connection;
+const db = mongoose.connection;
 
 // Initialize the routes
-var index = require('./app/routes/index')
+const index = require('./app/routes/index'),
     login = require('./app/routes/login'),
     register = require('./app/routes/register'),
     profile = require('./app/routes/profile'),
@@ -57,7 +59,7 @@ var index = require('./app/routes/index')
     dummy_data = require('./app/routes/dummy_data');
 
 // Initialize the helpers
-var activityHelper = require('./app/helpers/activity.js'),
+const activityHelper = require('./app/helpers/activity.js'),
     profileHelper = require('./app/helpers/profile.js'),
     userHelper = require('./app/helpers/user.js');
 
@@ -66,7 +68,7 @@ var activityHelper = require('./app/helpers/activity.js'),
  * LIBRARIES                                                                                                                   *
  ******************************************************************************************************************************/
 
-var Email = require('./app/libs/email');
+const Email = require('./app/libs/email');
 
 
 /*******************************************************************************************************************************
