@@ -1,3 +1,5 @@
+'use strict';
+
 // Loading models
 var User = require('../models/user.js'),
 	Profile = require('../models/profile.js'),

@@ -1,3 +1,5 @@
+'use strict';
+
 // Initialize translations
 var translations = require('../languages/translations.js');
 
@@ -285,8 +287,8 @@ activityHelper.parseDbDate = function( date ) {
  * @param  boolean  private
  * @return boolean
  */
-activityHelper.privacyIsValid = function( private ) {
-	return typeof private === 'boolean';
+activityHelper.privacyIsValid = function( privateSetting ) {
+	return typeof privateSetting === 'boolean';
 }
 
 /**

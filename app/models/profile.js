@@ -1,7 +1,9 @@
+'use strict';
+
 // The User Model
-var mongoose = require('mongoose');
-var db = mongoose.connection;
-var q = require('q');
+const mongoose = require('mongoose'),
+			db = mongoose.connection,
+			q = require('q');
 
 //Define User SCHEMA
 var profileSchema = mongoose.Schema({
@@ -44,11 +46,11 @@ profileSchema.findOne = function( where, select ) {
 * @param json where({email:someone@trafie.com})
 * @param String select
 */
-profileSchema.find = function( where, select, limit ) {
+profileSchema.find = function( where, select, limit, skip, sort ) {
 	var d = q.defer();
-	if( typeof limit == "undefined" ) limit = 0;
-	if( typeof skip == "undefined" ) skip = 0;
-	if( typeof sort == "undefined" ) sort = {};
+	if( typeof limit === "undefined" ) { limit = 0; }
+	if( typeof skip === "undefined" ) { skip = 0; }
+	if( typeof sort === "undefined" ) { sort = {}; }
 
 	Profile.find( where, select,
 		// Other parameters
@@ -76,11 +78,11 @@ profileSchema.save = function( profile ) {
 
 	profile.save(function ( err, res ) {
 		Profile.findOne( { '_id': res.id }, 'first_name last_name', function ( err, profile ) {
-			var names = [];
-			first_names = profile.first_name.split(' ');
-			last_names = profile.last_name.split(' ');
-			names = first_names.concat( last_names );
-			var names_length = names.length;
+			var names = [],
+				first_names = profile.first_name.split(' '),
+				last_names = profile.last_name.split(' '),
+				names = first_names.concat( last_names ),
+				names_length = names.length;
 			for ( var i=0 ; i<names_length ; i++ ) {
 				names[i] = names[i].toLowerCase();
 			}
