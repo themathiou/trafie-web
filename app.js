@@ -109,7 +109,7 @@ if ('development' == trafie.get('env')) {
 
 trafie.get( '/', index.get_view );
 
-trafie.get( '/profile/:profile_id', profile.get );
+trafie.get( '/profile/:profile_id?', profile.get );
 
 trafie.get( '/views/profile.html', profile.get_view );
 
