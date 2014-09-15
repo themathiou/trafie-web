@@ -39,6 +39,9 @@ exports.get = function( req, res ) {
 			}
 		}
 
+		// Do not fetch private profiles
+		ands.push( { 'private': false } );
+
 		var query = { $and: ands };
 
 		return Profile.schema.find( query, 'first_name last_name discipline country username _id', NUMBER_OF_SEARCH_RESULTS );
