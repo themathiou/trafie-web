@@ -1,9 +1,5 @@
 'use strict';
 
-// Loading modules
-const path = require('path'),
-			root_dir = path.dirname( require.main.filename );
-
 // Loading models
 const Profile = require('../models/profile.js'),
 			Activity = require('../models/activity.js');
