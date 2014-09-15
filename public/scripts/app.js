@@ -42,7 +42,7 @@ trafie.config(['$routeProvider',
 //Initialization
 //---
 trafie.run(function ($rootScope, $http) {
-    $http.get('/main_data')
+    $http.get('/profile')
     .success(function(res){
       console.log('run' , res);
       //The logged in user
