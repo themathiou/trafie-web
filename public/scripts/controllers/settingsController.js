@@ -303,6 +303,8 @@ trafie.controller("settingsController", function(
       /*
         Account Settings
        */
+      case 'password':
+        break;
       case 'language':
         data = { "language" : $scope.user.new_language  };
         console.log(data);

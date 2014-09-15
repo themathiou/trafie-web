@@ -1,12 +1,12 @@
 h3= tr['account_settings']
 
 //CHANGE PASSWORD
-div#changePasswordDiv.settingsElement( ng-init="edit_password=false;" )
+div#changePasswordDiv.settingsElement
 	label= tr['change_password']
 	a#editPassword.editLink( ng-click="showHide('edit_password')" tooltip-placement="top" tooltip="Edit" )
 		include ../svg/edit_activity_svg
 	div#changePassword( ng-show="edit_password" )
-		form( method="POST")
+		form( method="POST" ng-submit="submitChangeSetting('password')")
 			span
 				label( for="old_password" )= tr['old_password'] + ': '
 				//span= errors.first_name
