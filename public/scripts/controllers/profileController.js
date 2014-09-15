@@ -54,17 +54,15 @@ trafie.controller("profileController", function(
       //true if this is the profile of the logged-in user
       $scope.page_not_found = false;
       $scope.self = false;
-      $scope.page_not_found = false;
 
       if( $routeParams.userID ) {
         $routeParams.userID === $rootScope.user._id || $routeParams.userID === $rootScope.user.username ? $scope.self = true : $scope.self = false;
         $scope.getProfile( $routeParams.userID );
-        $scope.getDisciplinesOfUser( $rootScope.current_user._id, $scope.self );
       }
       else {
         $scope.getProfile( $rootScope.user._id );
-        $scope.getDisciplinesOfUser( $rootScope.user._id, $scope.self );
         $scope.self = true;
+        // $scope.getDisciplinesOfUser( $rootScope.user._id, $scope.self );
       }
   }
 
@@ -80,6 +78,7 @@ trafie.controller("profileController", function(
       }
       //get user's activities
       $scope.getActivities( $rootScope.current_user._id , $rootScope.current_user.discipline);
+      $scope.getDisciplinesOfUser( $rootScope.current_user._id );
 
     })
     .error( function (res) {
@@ -89,10 +88,11 @@ trafie.controller("profileController", function(
   }
 
   //get disciplines of user based on user id
-  $scope.getDisciplinesOfUser = function ( user_id, self ) {
+  $scope.getDisciplinesOfUser = function ( user_id ) {
+    console.log( user_id );
     $http.get('/user/'+ user_id+'/disciplines')
     .success( function (res) {
-      self ?  $rootScope.user.disciplines_of_user = res : $rootScope.current_user.disciplines_of_user = res;
+      $rootScope.current_user.disciplines_of_user = res;
     })
     .error( function (res) {
       console.err( 'info :: can\'t get disciplines of current user' );
