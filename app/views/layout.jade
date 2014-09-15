@@ -26,7 +26,7 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
                 if user._id
                     ul.navigation_menu
                         li
-                            a.menu_profile(href="/" ng-class="{active: section == 'profile'}" ) {{user_first_name}}
+                            a.menu_profile(href="/" ng-class="{active: section == 'profile'}" ) {{user.first_name}}
                         li
                             a.menu_statistics(href="/statistics" ng-class="{active: section == 'statistics'}")= tr['statistics']
                         li
@@ -48,8 +48,8 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
                         if user._id
                             ul.navigation_menu
                                 li
-                                    a.menu_profile(href="/" ng-class="{active: section == 'profile'}" ) {{user_first_name}}
-                                li
+                                    a.menu_profile(href="/" ng-class="{active: section == 'profile'}" ) {{user.first_name}}
+                                //- li
                                     a.menu_statistics(href="/statistics" ng-class="{active: section == 'statistics'}")= tr['statistics']
                                 li
                                     a.menu_settings(href="/settings" ng-class="{active: section == 'settings'}")= tr['settings']

@@ -1,11 +1,11 @@
-div( ng-init="statisticsInit( user._id, user.discipline )" )
+div( ng-init="statisticsInit()" )
 	br
 	br
-	h4= user.first_name
+	h4 {{current_user.first_name}} {{current_user.last_name}}
 
 	ul.filters-row
-		li( ng-repeat="(key, value) in user.disciplines_of_user")
-			a( ng-click="drawSimpleChart( user._id, key )" ) {{value}}
+		li( ng-repeat="discipline in current_user.disciplines_of_user")
+			a( ng-click="drawSimpleChart( current_user._id, discipline.discipline )" ) {{discipline.formatted_discipline}}
 
 	div.loading( ng-show="loading")
 

@@ -28,6 +28,10 @@ trafie.config(['$routeProvider',
         templateUrl: '/views/statistics.html',
         controller: 'statisticsController'
       }).
+      when('/statistics/:userID', {
+        templateUrl: '/views/statistics.html',
+        controller: 'statisticsController'
+      }).
       when('/:userID', {
         templateUrl: '/views/profile.html',
         controller: 'profileController'
@@ -46,11 +50,11 @@ trafie.run(function ($rootScope, $http) {
     .success(function(res){
       console.log('run' , res);
       //The logged in user
-      $rootScope.user = res.user;
-      $rootScope.user_first_name = res.user.first_name;
+      $rootScope.user = res;
+      // $rootScope.user_first_name = res.first_name;
 
       //the user we visit. Is the same at login
-      $rootScope.current_user = res.user;
+      $rootScope.current_user = res;
     });
 });
 

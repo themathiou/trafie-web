@@ -96,7 +96,7 @@ trafie.controller("settingsController", function(
         .success(function(res){
           if( res.success ) {
             $scope.user.first_name = res.value;
-            $rootScope.user_first_name = res.value;
+            $rootScope.user.first_name = res.value;
             $scope.first_name_msg='Firstname successfully updated'; //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
             $scope.showHide('edit_fname');
             /* after 3 secconds hide the message */

@@ -52,20 +52,20 @@ trafie.controller("profileController", function(
 
     $scope.initProfile = function(){
       //true if this is the profile of the logged-in user
-    $scope.page_not_found = false;
-    $scope.self = false;
-    $scope.page_not_found = false;
+      $scope.page_not_found = false;
+      $scope.self = false;
+      $scope.page_not_found = false;
 
-    if( $routeParams.userID ) {
-      $scope.getProfile( $routeParams.userID );
-      $scope.getDisciplinesOfUser( $routeParams.userID );
-      $routeParams.userID !== $rootScope.user._id ? $scope.self = false : $scope.self = true;
-    }
-    else {
-      $scope.getProfile( $rootScope.user._id );
-      $scope.getDisciplinesOfUser( $rootScope.user._id );
-      $scope.self = true;
-    }
+      if( $routeParams.userID ) {
+        $scope.getProfile( $routeParams.userID );
+        $scope.getDisciplinesOfUser( $routeParams.userID );
+        $routeParams.userID !== $rootScope.user._id ? $scope.self = false : $scope.self = true;
+      }
+      else {
+        $scope.getProfile( $rootScope.user._id );
+        $scope.getDisciplinesOfUser( $rootScope.user._id );
+        $scope.self = true;
+      }
   }
 
   //get user profile based on user id

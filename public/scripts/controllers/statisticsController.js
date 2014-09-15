@@ -5,7 +5,7 @@ trafie.controller("statisticsController", function(
     $timeout,
     $routeParams ) {
 
-  $scope.loading = true;
+    $scope.loading = true;
 
     //object with disciplines grouped in categories
     var disciplines = {
@@ -43,9 +43,8 @@ trafie.controller("statisticsController", function(
     };
 
     // Load the Visualization API and the piechart package.
-    $scope.statisticsInit = function( user_id, discipline ) {
+    $scope.statisticsInit = function() {
         $scope.page_not_found = false;
-        // console.log('init', user_id, discipline);
 
         //C3 data model
         $scope.config = {};
@@ -62,7 +61,14 @@ trafie.controller("statisticsController", function(
         $scope.config.subchart = {
             show: true
         }
-        $scope.drawSimpleChart( user_id, discipline );
+
+        if ($routeParams.userID) {
+            $scope.drawSimpleChart( $routeParams.userID, $rootScope.current_user.discipline )
+        }
+        else {
+            $rootScope.current_user = $rootScope.user;
+            $scope.drawSimpleChart( $rootScope.user._id, $rootScope.user.discipline );
+        }
     }
 
 

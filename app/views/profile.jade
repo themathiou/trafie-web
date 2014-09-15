@@ -22,8 +22,8 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
 
     //- FILTERS
     ul.filters-row.col-xs-12.col-md-12.col-lg-12
-      li( ng-repeat="(key, value) in current_user.disciplines_of_user" style="float:left;")
-        a( ng-click="getActivities( current_user._id, key )" ) {{value.formatted_discipline}}
+      li( ng-repeat="discipline in current_user.disciplines_of_user" style="float:left;")
+        a( ng-click="getActivities( current_user._id, discipline.discipline )" ) {{discipline.formatted_discipline}}
 
     //- LOADING
     div#loading( hidden ).col-xs-12.col-md-12.col-lg-12
