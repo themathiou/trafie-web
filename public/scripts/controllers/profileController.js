@@ -57,9 +57,9 @@ trafie.controller("profileController", function(
       $scope.page_not_found = false;
 
       if( $routeParams.userID ) {
-        $routeParams.userID !== $rootScope.user._id ? $scope.self = false : $scope.self = true;
+        $routeParams.userID === $rootScope.user._id || $routeParams.userID === $rootScope.user.username ? $scope.self = true : $scope.self = false;
         $scope.getProfile( $routeParams.userID );
-        $scope.getDisciplinesOfUser( $routeParams.userID, $scope.self );
+        $scope.getDisciplinesOfUser( $rootScope.current_user._id, $scope.self );
       }
       else {
         $scope.getProfile( $rootScope.user._id );
@@ -79,7 +79,7 @@ trafie.controller("profileController", function(
         $rootScope.disciplines_options.push(temp);
       }
       //get user's activities
-      $scope.getActivities( user_id , $rootScope.current_user.discipline);
+      $scope.getActivities( $rootScope.current_user._id , $rootScope.current_user.discipline);
 
     })
     .error( function (res) {
