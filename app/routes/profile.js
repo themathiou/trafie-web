@@ -26,7 +26,7 @@ exports.get = function( req, res ){
     send_status( res, 404 );
     return;
   }
-  
+
   mainHelper.validateAccess( user_id, profile_id, function( response ){
     // If the user has a valid session and they are not visiting a private profile
     if( response.success ) {
@@ -94,6 +94,7 @@ function send_profile_data( res, profile_data, user_data ) {
     'country':              country,
     'gender':               gender,
     'picture':              profile_data.picture,
+    'username':             profile_data.username,
     'disciplines':          disciplines
   }
 
