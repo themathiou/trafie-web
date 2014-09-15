@@ -14,18 +14,20 @@ const translations = require('../languages/translations.js');
 /**
  * Profile - GET
  */
-exports.get = function( req, res ) {
-  var profile_id = false;
+exports.get = function( req, res ){
+  var profile_id = false,
+      user_id = typeof req.session.user_id === 'undefined' ? null : req.session.user_id;
 
   if( typeof req.params.profile_id !== 'undefined' ) {
     profile_id = req.params.profile_id;
-  } else if( typeof req.session.user_id !== 'undefined' ) {
-    profile_id = req.session.user_id;
+  } else if( user_id ) {
+    profile_id = user_id;
   } else {
     send_status( res, 404 );
+    return;
   }
 
-  mainHelper.validateAccess( user_id, profile_id, function( response ){
+  mainHelper.validateAccess( user_id, req.params.profile_id, function( response ){
     // If the user has a valid session and they are not visiting a private profile
     if( response.success ) {
       // Send the profile data to the client
