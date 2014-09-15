@@ -11,7 +11,7 @@ var translations = require('../languages/translations.js');
  * Activities - GET
  */
 exports.get = function( req, res ){
-	var user_id = req.session.user_id;
+	var user_id = req.params.user_id;
 
 	if( user_id ) {
 		var user_data;
