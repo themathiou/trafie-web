@@ -27,7 +27,7 @@ exports.get = function( req, res ){
     return;
   }
 
-  mainHelper.validateAccess( user_id, req.params.profile_id, function( response ){
+  mainHelper.validateAccess( user_id, profile_id, function( response ){
     // If the user has a valid session and they are not visiting a private profile
     if( response.success ) {
       // Send the profile data to the client
