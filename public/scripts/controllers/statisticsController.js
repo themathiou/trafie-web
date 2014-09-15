@@ -67,6 +67,7 @@ trafie.controller("statisticsController", function(
         }
         else {
             $rootScope.current_user = $rootScope.user;
+            console.log('that: ', $rootScope.current_user);
             $scope.drawSimpleChart( $rootScope.user._id, $rootScope.user.discipline );
         }
     }

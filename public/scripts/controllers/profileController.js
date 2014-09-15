@@ -57,20 +57,19 @@ trafie.controller("profileController", function(
       $scope.page_not_found = false;
 
       if( $routeParams.userID ) {
-        $scope.getProfile( $routeParams.userID );
-        $scope.getDisciplinesOfUser( $routeParams.userID );
         $routeParams.userID !== $rootScope.user._id ? $scope.self = false : $scope.self = true;
+        $scope.getProfile( $routeParams.userID );
+        $scope.getDisciplinesOfUser( $routeParams.userID, $scope.self );
       }
       else {
         $scope.getProfile( $rootScope.user._id );
-        $scope.getDisciplinesOfUser( $rootScope.user._id );
+        $scope.getDisciplinesOfUser( $rootScope.user._id, $scope.self );
         $scope.self = true;
       }
   }
 
   //get user profile based on user id
   $scope.getProfile = function ( user_id ){
-    console.log( 'user_id in get profile:' + user_id );
     $http.get('/profile/'+ user_id)
     .success(function(res){
       $rootScope.current_user = res;
@@ -79,30 +78,24 @@ trafie.controller("profileController", function(
         var temp = { name: res.disciplines[i] , id: i };
         $rootScope.disciplines_options.push(temp);
       }
-
-      console.log( 'user', $rootScope.user );
-      console.log( 'current_user', $rootScope.current_user );
-
       //get user's activities
       $scope.getActivities( user_id , $rootScope.current_user.discipline);
 
     })
     .error( function (res) {
       $scope.page_not_found = true;
-      console.log( 'info :: User not found. Maybe he doesn\'t have a trafie profile or the profile is private.');
+      console.err( 'info :: User not found. Maybe he doesn\'t have a trafie profile or the profile is private.');
     });
   }
 
   //get disciplines of user based on user id
-  $scope.getDisciplinesOfUser = function ( user_id ) {
-    console.log( 'user_id in get disciplines of user:' + user_id );
+  $scope.getDisciplinesOfUser = function ( user_id, self ) {
     $http.get('/user/'+ user_id+'/disciplines')
     .success( function (res) {
-      console.log(res);
-      $rootScope.current_user.disciplines_of_user = res;
+      self ?  $rootScope.user.disciplines_of_user = res : $rootScope.current_user.disciplines_of_user = res;
     })
     .error( function (res) {
-      console.log( 'info :: can\'t get disciplines of current user' );
+      console.err( 'info :: can\'t get disciplines of current user' );
     });
   }
 
@@ -123,7 +116,6 @@ trafie.controller("profileController", function(
   $scope.submitNewActivity = function(){
     var data = $scope.newActivityForm;
     data.discipline = data.selected_discipline.id;
-    console.log('add activity: ', data.date);
     var splitDate = data.date.toString().split(' ');
     data.date = splitDate[0] + ' ' + splitDate[1] + ' ' +splitDate[2] + ' ' +splitDate[3];
 
@@ -185,7 +177,7 @@ trafie.controller("profileController", function(
       $scope.updateActivityForm.points = activity.performance;
     }
     else{
-      console.log('activity belongs to undefined type. WTF?');
+      console.err('activity belongs to undefined type');
     }
 
     $scope.updateActivityForm.date = activity.date;
@@ -203,16 +195,14 @@ trafie.controller("profileController", function(
    */
   $scope.updateActivity = function( activity ){
     var data = $scope.updateActivityForm;
-    console.log('clean', data);
 
     data.date = new Date(data.date.toString().split('T')[0]);
     var splitDate = data.date.toString().split(' ');
     data.date = splitDate[0] + ' ' + splitDate[1] + ' ' +splitDate[2] + ' ' +splitDate[3];
     data.discipline = activity.discipline;
-    console.log('update activity: ', data);
+
     $http.put( "/user/" + $rootScope.user._id + "/activities/" + activity._id, data)
     .success( function(res){
-      console.log('res', res);
       activity.formatted_performance = res.formatted_performance;
       activity.formatted_date = res.formatted_date;
       activity.place = res.place;
