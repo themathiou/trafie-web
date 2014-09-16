@@ -141,8 +141,6 @@ trafie.post( '/settings_data', settings.post );
 
 trafie.get( '/views/statistics.html', statistics.get_view );
 
-trafie.get( '/:user_id/statistics', index.get_view );
-
 
 /*******************************************************************************************************************************
  * SEARCH                                                                                                                      *

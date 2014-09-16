@@ -70,21 +70,24 @@ mainHelper.validateAccess = function ( user_id, profile_id, callback ) {
 			if( profile_data !== null && profile_data !== undefined ) {
 				// Check if the profile found is private
 				handlePrivacy( profile_data );
-				return null;
+				return 0;
 			} else {
 				// If the profile wasn't found, try to find it by username
 				return Profile.schema.findOne( { 'username': profile_id }, '_id first_name last_name discipline country male picture username private');
 			}
 		})
 		.then( function( profile_data ) {
-			// If the profile was found, get the data of the user
-			if( profile_data !== null && profile_data !== undefined ) {
-				// Check if the profile found is private
-				handlePrivacy( profile_data );
-			} else {
-				// If the profile wasn't found
-				response.error = 'profile_not_valid';
-				callback( response );
+			if( profile_data !== 0 ) {
+				// If the profile was found, get the data of the user
+				if( profile_data !== null && profile_data !== undefined ) {
+					// Check if the profile found is private
+					handlePrivacy( profile_data );
+				} else {
+					// If the profile wasn't found
+					response.error = 'profile_not_valid';
+					callback( response );
+					return;
+				}
 			}
 		})
 		.fail( function( error ) {

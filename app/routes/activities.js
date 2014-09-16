@@ -5,7 +5,8 @@ const Profile = require('../models/profile.js'),
 			Activity = require('../models/activity.js');
 
 // Loading helpers
-const activityHelper = require('../helpers/activity.js');
+const mainHelper = require('../helpers/main_helper.js'),
+			activityHelper = require('../helpers/activity.js');
 
 // Initialize translations
 const translations = require('../languages/translations.js');
@@ -14,27 +15,26 @@ const translations = require('../languages/translations.js');
 /**
  * Activities - GET
  */
-exports.get = function( req, res ){
-	//var user_id = req.session.user_id;
-	var user_id = req.params.user_id;
+exports.get = function( req, res ) {
+	var profile_id = false,
+    	user_id = typeof req.session.user_id === 'undefined' ? null : req.session.user_id;
 
-	// removed the check for "|| ( user_id !== req.params.user_id )"
-	// in order to allow users to see other's user's activities
-	if( !user_id ) {
-		return_activity( res, 403, '', 'en', 'd-m-y' );
-	} else {
-		// Find the profile
-		Profile.schema.findOne({ '_id': user_id }, 'language date_format')
-		.then( function( profile_data ) {
-			// If the profile doesn't exist, return an empty json
-			if( typeof profile_data.language === 'undefined' ) return_activity( res, 404, '', 'en', 'd-m-y' );
+  if( typeof req.params.user_id !== 'undefined' ) {
+    profile_id = req.params.user_id;
+  } else {
+    send_status( res, 404 );
+    return;
+  }
 
+	mainHelper.validateAccess( user_id, profile_id, function( response ) {
+		// If the user has a valid session and they are not visiting a private profile
+    if( response.success ) {
 			// If the activity id was specified, try to find the activity
 			if( typeof req.params.activity_id !== 'undefined' ) {
-				return_activity( res, 200, req.params.activity_id, profile_data.language, profile_data.date_format );
+				return_activity( res, 200, req.params.activity_id, response.profile.language, response.profile.date_format );
 			} else {
 				// If the activity id wasn't specified, try to fetch all the activities of the user
-				var where = {};
+				let where = {};
 				// If there was a discipline in the parameters of the GET request,
 				// fetch the activities only of this discipline
 				if( typeof req.query.discipline !== 'undefined' && req.query.discipline ) {
@@ -49,15 +49,20 @@ exports.get = function( req, res ){
 				else if( typeof req.query.to !== 'undefined' ) {
 					where.date = { "$lte": activityHelper.parseDbDate( req.query.to ) };
 				}
-				where.user_id = user_id;
+				where.user_id = response.profile._id;
 
-				return_activities( res, 200, where, profile_data.language, profile_data.date_format );
+				return_activities( res, 200, where, response.user.language, response.user.date_format );
 			}
-		})
-		.fail( function( error ) {
-			send_error_page( error, res );
-		});
-	}
+		} else {
+      // Otherwise, if it's a server error, send the error
+      if( response.error === 'query_error' ) {
+        send_status( res, 500 );
+      } else {
+        // If the user doesn't have access to the data, or the data don't exist, do not send anything
+        send_status( res, 404 );
+      }
+    }
+	});
 };
 
 
@@ -225,7 +230,7 @@ exports.post = function( req, res ) {
 					return_activity( res, 201, activity._id, profile_data.language, profile_data.date_format );
 				})
 				.fail( function( error ) {
-					send_error_page( error, res );
+					send_status( res, 500 );
 				});
 			} else {
 				// If there are errors, send the error messages to the client
@@ -415,7 +420,7 @@ exports.put = function( req, res ) {
 			}
 		})
 		.fail( function( error ) {
-			send_error_page( error, res );
+			send_status( res, 500 );
 		});
 	}
 };
@@ -442,7 +447,7 @@ exports.delete = function( req, res ) {
 		res.json( null );
 	})
 	.fail( function( error ) {
-		send_error_page( error, res );
+		send_status( res, 500 );
 	});
 };
 
@@ -489,7 +494,7 @@ function return_activity( res, status_code, _id, language, date_format, error_me
 		res.json( activity );
 	})
 	.fail( function( error ) {
-		send_error_page( error, res );
+		send_status( res, 500 );
 	});
 }
 
@@ -504,16 +509,17 @@ function return_activity( res, status_code, _id, language, date_format, error_me
  */
 function return_activities( res, status_code, where, language, date_format ) {
 	Activity.schema.getActivitiesOfUser( where, '', -1 ).then( function( activities ) {
-		for( var i in activities ) {
+		for( let i in activities ) {
 			activities[i] = {
 				'_id'                   : activities[i]._id,
 				'discipline'            : activities[i].discipline,
 				'performance'           : activities[i].performance,
 				'date'                  : activities[i].date,
-				'place' 				: activities[i].place,
-				'location'				: activities[i].location,
-				'competition'			: activities[i].competition,
-				'notes'					: activities[i].notes
+				'place' 								: activities[i].place,
+				'location'							: activities[i].location,
+				'competition'						: activities[i].competition,
+				'private'								: activities[i].private,
+				'notes'									: activities[i].notes
 			};
 		}
 
@@ -524,16 +530,16 @@ function return_activities( res, status_code, where, language, date_format ) {
 		res.json( activities );
 	})
 	.fail( function( error ) {
-		send_error_page( error, res );
+		send_status( res, 500 );
 	});
 }
 
 /**
- * Sends an error page in case a query fails
+ * Sends an error in case a query fails
  * @param string error
  * @param object res
  */
-function send_error_page( error, res ) {
-	res.statusCode = 500;
-	res.json( null );
+function send_status( res, status ) {
+  res.statusCode = status;
+  res.json( null );
 }

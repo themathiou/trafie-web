@@ -63,6 +63,7 @@ trafie.controller("statisticsController", function(
         }
 
         if ($routeParams.userID) {
+            $routeParams.userID === $rootScope.user._id || $routeParams.userID === $rootScope.user.username ? $scope.self = true : $scope.self = false;
             $scope.drawSimpleChart( $routeParams.userID, $rootScope.current_user.discipline )
         }
         else {

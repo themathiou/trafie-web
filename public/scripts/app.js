@@ -51,10 +51,15 @@ trafie.run(function ($rootScope, $http) {
       console.log('run' , res);
       //The logged in user
       $rootScope.user = res;
-      // $rootScope.user_first_name = res.first_name;
-
-      //the user we visit. Is the same at login
-      $rootScope.current_user = res;
+      $http.get('/user/'+ res._id+'/disciplines')
+      .success( function (res) {
+        $rootScope.user.disciplines_of_user = res;
+        $rootScope.current_user = res; //current user is logged in user
+      });
+    })
+    .error( function (res) {
+      console.err( 'info :: can\'t get disciplines of current user in -run-' );
     });
+
 });
 
