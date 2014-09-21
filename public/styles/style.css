@@ -46,11 +46,11 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: white;
+  background-color: #e9eaed;
 }
 label {
   font-weight: 400;
-  color: rgba(0, 0, 0, 0.25);
+  color: rgba(0, 0, 0, 0.75);
 }
 a {
   cursor: pointer;
@@ -311,21 +311,16 @@ a {
   padding: 0;
   list-style: none;
   position: relative;
-  /*line*/
-
   /* post */
-
-  /* info end point (left) */
 
   /* ADD activity */
 
   /* EDIT activity */
 
-  /* The icons */
-
 }
 .history_line > li .info {
   margin: 0 0 15px 0;
+  background-color: white;
   color: #000000;
   padding: 10px 10px 10px 15px;
   font-weight: 300;
@@ -337,11 +332,9 @@ a {
   -o-border-radius: 5px;
   border-radius: 5px;
   border: 1px solid rgba(0, 0, 0, 0.25);
-  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.2), 0 0 16px 4px rgba(255, 255, 255, 0.6) inset;
+  box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.2);
   display: inline-block;
   width: 100%;
-  /*    text-shadow: 0px 0px 4px #000; */
-
 }
 .history_line > li .info .performance {
   margin: 0px;
@@ -360,8 +353,6 @@ a {
   min-width: 18px;
 }
 .history_line > li .add_activity {
-  background: rgba(0, 0, 0, 0.25) !important;
-  color: #fff;
   padding: 0.4em;
   font-size: 1.1em;
   position: relative;
@@ -375,31 +366,25 @@ a {
 .history_line > li .add_activity .data_entry {
   color: black;
   display: flex;
-  justify-content: center;
+  justify-content: left;
   flex-direction: column;
 }
 .history_line > li .add_activity .data_entry .performance_fields {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: left;
+  justify-content: flex-start;
 }
-.history_line > li .add_activity .data_entry label {
-  font-size: 0.8em;
-  padding: 0px;
-  margin: 0px;
-}
-.history_line > li .add_activity .data_entry input {
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
-  border-radius: 5px;
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2) inset;
-  border: 1px white solid;
-  padding: 6px;
+.history_line > li .add_activity .data_entry .performance_fields div {
   text-align: center;
+  margin-right: 2%;
 }
-.history_line > li .add_activity .data_entry .submit_buttons {
+.history_line > li .add_activity .data_entry div {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+}
+.history_line > li .add_activity .submit_buttons {
   align-self: center;
   margin-top: 10px;
 }

@@ -17,27 +17,11 @@
   padding: 0;
   list-style: none;
   position: relative;
-  // width:450px;
-
-  /*line*/
-  // &:before {
-  //   content: '';
-  //   position: absolute;
-  //   top: 0;
-  //   bottom: 0;
-  //   width: 10px;
-  //   background: @red;
-  //   left: 5%;
-  //   margin-left: -14px;
-  //   z-index: 0;
-  //   box-shadow: 0px 0px 4px 2px rgba(255, 255, 255, 0.2), 0 0 2px 3px rgba(255, 255, 255, 0.2) inset;
-  // }
-
 
   /* post */
   & > li .info {
     margin: 0 0 15px 0;
-    // background-color: @black_25;
+    background-color: white;
     color: @black;
     padding: 10px 10px 10px 15px;
     font-weight: 300;
@@ -45,10 +29,9 @@
     position: relative;
     .rounded_corners(5px);
     border: 1px solid @black_25;
-    box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.2), 0 0 16px 4px rgba(255, 255, 255, 0.6) inset;
+    box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.2); //0 0 16px 4px rgba(255, 255, 255, 0.6) inset;
     display: inline-block;
     width:100%;
-    /*    text-shadow: 0px 0px 4px #000; */
 
     .performance {
       margin: 0px;
@@ -79,27 +62,8 @@
 
   }
 
-
-  /* info end point (left) */
-  // & > li .info:after {
-  //   right: 100%;
-  //   border: solid transparent;
-  //   content: " ";
-  //   height: 0;
-  //   width: 0;
-  //   position: absolute;
-  //   pointer-events: none;
-  //   border-right-color: @black_25;
-  //   border-width: 10px;
-  //   top: 10px;
-  // }
-
-
-
   /* ADD activity */
   & > li .add_activity{
-    background: @black_25 !important;
-    color: #fff;
     padding: 0.4em;
     font-size: 1.1em;
     position: relative;
@@ -113,33 +77,34 @@
     .data_entry {
       color: black;
       display: flex;
-      justify-content: center;
+      justify-content: left;
       flex-direction: column;
+
 
       .performance_fields {
         display: flex;
         flex-direction: row;
-        align-items: center
+        align-items: left;
+        justify-content: flex-start;
+
+        div {
+          text-align: center;
+          margin-right: 2%;
+        }
+
       }
 
-      label {
-        font-size: 0.8em;
-        padding:0px;
-        margin:0px;
-      }
+      div {
+        display: flex;
+        flex-direction: column;
+        align-items: left;
 
-      input {
-        .rounded_corners(5px);
-        box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2) inset;
-        border:1px white solid;
-        padding: 6px;
-        text-align: center;
       }
+    }
 
-      .submit_buttons {
-        align-self: center;
-        margin-top: 10px;
-      }
+    .submit_buttons {
+      align-self: center;
+      margin-top: 10px;
     }
 
   }
@@ -197,45 +162,6 @@
     border-bottom: 1px solid rgba(255,255,255,0.4);
   }
 
-
-
-
-/* The icons */
-  // & > li .icon_back {
-  //   width: 40px;
-  //   height: 40px;
-  //   font-size: 1em;
-  //   line-height: 40px;
-  //   position: absolute;
-  //   background: none;
-  //   .rounded_corners(50%);
-  //   box-shadow: 0 0 0 8px @black_75;
-  //   text-align: center;
-  //   left: 5%;
-  //   /*top: 0;*/
-  //   z-index: -5; /* has to be < 0 for being under the history line */
-  //   margin: 0 0 0 -6.5%;
-  // }
-
-  // & > li .icon {
-  //   width: 40px;
-  //   height: 40px;
-  //   font-style: normal;
-  //   font-weight: normal;
-  //   font-variant: normal;
-  //   text-transform: none;
-  //   font-size: 1em;
-  //   line-height: 40px;
-  //   position: absolute;
-  //   color: black;
-  //   background: white;
-  //   .rounded_corners(50%);
-  //   text-align: center;
-  //   left: 5%;
-  //   /*top: 0;*/
-  //   margin: 0 0 0 -6.5%;
-  //   .background_shadow();
-  // }
 }
 
 
