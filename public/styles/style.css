@@ -299,13 +299,6 @@ a {
   font-weight: lighter;
   margin: 0px;
 }
-#add_activity_link {
-  width: 100%;
-  float: left;
-}
-#history_container {
-  padding: 0px;
-}
 .history_line {
   margin: 0 auto;
   padding: 0;
@@ -332,11 +325,24 @@ a {
   display: inline-block;
   width: 100%;
 }
-.history_line > li .info .performance {
-  margin: 0px;
+.history_line > li .info .current_data {
+  display: flex;
+  flex-direction: column;
 }
-.history_line > li .info .competition {
+.history_line > li .info .current_data h1 {
   margin-top: 0px;
+  margin-bottom: 5px;
+}
+.history_line > li .info .current_data .competition {
+  margin-left: 5px;
+}
+.history_line > li .info .current_data blockquote {
+  display: flex;
+  flex-direction: column;
+}
+.history_line > li .info .current_data blockquote div {
+  display: flex;
+  flex-direction: column;
 }
 .history_line > li .info .deleteActivity {
   float: right;
@@ -503,45 +509,4 @@ a {
 .logout a:hover {
   text-decoration: none;
   cursor: pointer;
-}
-.ng-hide-add,
-.ng-hide-remove {
-  -webkit-transition: opacity 0.5s ease-in-out;
-  transition: opacity 0.5s ease-in-out;
-  /* remember to add this */
-
-  display: flex !important;
-  opacity: 1;
-}
-.ng-hide {
-  opacity: 0;
-}
-.my-repeat-animation.ng-enter,
-.my-repeat-animation.ng-leave,
-.my-repeat-animation.ng-move {
-  -webkit-transition: 0.5s linear all;
-  transition: 0.5s linear all;
-  position: relative;
-}
-.my-repeat-animation.ng-enter {
-  left: -10px;
-  opacity: 0;
-}
-.my-repeat-animation.ng-enter.ng-enter-active {
-  left: 0;
-  opacity: 1;
-}
-.my-repeat-animation.ng-leave {
-  left: 0;
-  opacity: 1;
-}
-.my-repeat-animation.ng-leave.ng-leave-active {
-  left: -10px;
-  opacity: 0;
-}
-.my-repeat-animation.ng-move {
-  opacity: 0.5;
-}
-.my-repeat-animation.ng-move.ng-move-active {
-  opacity: 1;
 }
