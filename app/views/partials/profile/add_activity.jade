@@ -6,52 +6,54 @@ accordion( class="info add_activity" ng-show="self")
 			option( value="")= tr['choose_your_discipline']
 
 		form( ng-if="newActivityForm.selected_discipline" ng-submit="submitNewActivity()")
-			div.data_entry= tr['enter_your_performance'] +':'
+			div.data_entry.form-group
+				label= tr['enter_your_performance'] +':'
 				//- time
 				div.performance_fields( ng-if="disciplines.time.indexOf(newActivityForm.selected_discipline.id) > -1" )
 					div
 						label(for="hours_input")= tr['hours_short'] + ':'
-						input#hours_input(name="hours" size="3" maxlength="2" ng-model="newActivityForm.hours" )
+						input.form-control( size="3" maxlength="2" ng-model="newActivityForm.hours" )
 					div
 						label(for="minutes_input")= tr['minutes_short'] + ':'
-						input#minutes_input(name="minutes" size="3" maxlength="2" ng-model="newActivityForm.minutes")
+						input.form-control( size="3" maxlength="2" ng-model="newActivityForm.minutes")
 					div
 						label(for="seconds_input")= tr['seconds_short'] + ':'
-						input#seconds_input(name="seconds" size="3" maxlength="2" ng-model="newActivityForm.seconds")
+						input.form-control( size="3" maxlength="2" ng-model="newActivityForm.seconds")
 					div
 						label(for="centiseconds_input")= tr['centiseconds_short'] + ':'
-						input#centiseconds_input(name="centiseconds" size="3" maxlength="2" ng-model="newActivityForm.centiseconds")
+						input.form-control( size="3" maxlength="2" ng-model="newActivityForm.centiseconds")
 
 				//- distance
 				div.performance_fields( ng-if="disciplines.distance.indexOf(newActivityForm.selected_discipline.id) > -1" )
 					div
 						label(for="distance_1_input")= tr['meters_short'] + ':'
-						input#distance_1_input(name="distance_1" size="3" maxlength="2" ng-model="newActivityForm.distance_1").
+						input.form-control size="3" maxlength="2" ng-model="newActivityForm.distance_1")
 					div
 						label(for="distance_2_input")= tr['centimeters_short'] + ':'
-						input#distance_2_input(name="distance_2" size="3" maxlength="2" ng-model="newActivityForm.distance_2")
+						input.form-control size="3" maxlength="2" ng-model="newActivityForm.distance_2")
 
 				//- points
 				div.performance_fields( ng-if="disciplines.points.indexOf(newActivityForm.selected_discipline.id) > -1" )
-					label(for="points_input")= tr['points'] + ':'
-					input#points_input(type="text" name="points" size="7" maxlength="5" ng-model="newActivityForm.points")
+					div
+						label(for="points_input")= tr['points'] + ':'
+						input.form-control(type="text" size="7" maxlength="5" ng-model="newActivityForm.points")
 
 				//- common variables
 				div
 					label(for="datepicker")= tr['date'] + ':'
-					input(type="text" name="datepicker" class="form-control" datepicker-popup="{{format}}" ng-model="newActivityForm.date" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
+					input.form-control(type="text" datepicker-popup="{{format}}" ng-model="newActivityForm.date" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
 				div
 					label(for="place") Place
-					input(type="text" name="place" ng-model="newActivityForm.place")
+					input.form-control(type="text" ng-model="newActivityForm.place" placeholder="i.e 4")
 				div
 					label(for="location") Location
-					input(type="text" name="location" ng-model="newActivityForm.location")
+					input.form-control(type="text" ng-model="newActivityForm.location" placeholder="i.e Athens, Greece")
 				div
 					label(for="competition") Competition
-					input(type="text" name="competition" ng-model="newActivityForm.competition")
+					input.form-control(type="text" ng-model="newActivityForm.competition" placeholder="i.e World Junior Championship")
 				div
 					label(for="notes") Notes
-					input(type="text" name="notes" ng-model="newActivityForm.notes")
+					input.form-control(type="text" ng-model="newActivityForm.notes" placeholder="There be dragons...")
 				div
 					label(for="private") Private
 					input( type="checkbox" name="private" ng-model="newActivityForm.private" )
@@ -71,7 +73,7 @@ accordion( class="info add_activity" ng-show="self")
 									button( class="button" ng-click="abort($index)" ng-show="hasUploader($index) && progress[$index] < 100") Abort
 									{{f.name}} - size: {{f.size}}B - type: {{f.type}}
 
-				//submit
-				div#submit_buttons.submit_buttons
-					input.btn.green(type="submit" name="new_competition" value=tr['save'])
-					a.cancel_link( ng-click="accordions.addActivity = !accordions.addActivity" )= tr['cancel']
+			//submit
+			div#submit_buttons.submit_buttons
+				input.btn.green(type="submit" value=tr['save'])
+				a.cancel_link( ng-click="accordions.addActivity = !accordions.addActivity" )= tr['cancel']

@@ -46,11 +46,11 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: white;
+  background-color: #e9eaed;
 }
 label {
   font-weight: 400;
-  color: rgba(0, 0, 0, 0.25);
+  color: rgba(0, 0, 0, 0.75);
 }
 a {
   cursor: pointer;
@@ -299,33 +299,17 @@ a {
   font-weight: lighter;
   margin: 0px;
 }
-#add_activity_link {
-  width: 100%;
-  float: left;
-}
-#history_container {
-  padding: 0px;
-}
 .history_line {
   margin: 0 auto;
   padding: 0;
   list-style: none;
   position: relative;
-  /*line*/
-
   /* post */
-
-  /* info end point (left) */
-
-  /* ADD activity */
-
-  /* EDIT activity */
-
-  /* The icons */
 
 }
 .history_line > li .info {
   margin: 0 0 15px 0;
+  background-color: white;
   color: #000000;
   padding: 10px 10px 10px 15px;
   font-weight: 300;
@@ -337,17 +321,28 @@ a {
   -o-border-radius: 5px;
   border-radius: 5px;
   border: 1px solid rgba(0, 0, 0, 0.25);
-  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.2), 0 0 16px 4px rgba(255, 255, 255, 0.6) inset;
+  box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.2);
   display: inline-block;
   width: 100%;
-  /*    text-shadow: 0px 0px 4px #000; */
-
 }
-.history_line > li .info .performance {
-  margin: 0px;
+.history_line > li .info .current_data {
+  display: flex;
+  flex-direction: column;
 }
-.history_line > li .info .competition {
+.history_line > li .info .current_data h1 {
   margin-top: 0px;
+  margin-bottom: 5px;
+}
+.history_line > li .info .current_data .competition {
+  margin-left: 5px;
+}
+.history_line > li .info .current_data blockquote {
+  display: flex;
+  flex-direction: column;
+}
+.history_line > li .info .current_data blockquote div {
+  display: flex;
+  flex-direction: column;
 }
 .history_line > li .info .deleteActivity {
   float: right;
@@ -359,11 +354,12 @@ a {
   background-repeat: no-repeat;
   min-width: 18px;
 }
+.history_line > li .info.editable {
+  border: 2px solid;
+  border-color: #e87600;
+}
 .history_line > li .add_activity {
-  background: rgba(0, 0, 0, 0.25) !important;
-  color: #fff;
   padding: 0.4em;
-  font-size: 1.1em;
   position: relative;
   border-radius: 5px;
   border: 1px solid rgba(0, 0, 0, 0.25);
@@ -372,114 +368,58 @@ a {
   text-align: left;
   text-shadow: none;
 }
-.history_line > li .add_activity .data_entry {
+.history_line > li .add_activity,
+.history_line .edit_activity {
+  font-size: 1.1em;
+}
+.history_line > li .add_activity .data_entry,
+.history_line .edit_activity .data_entry {
   color: black;
   display: flex;
-  justify-content: center;
+  justify-content: left;
   flex-direction: column;
 }
-.history_line > li .add_activity .data_entry .performance_fields {
+.history_line > li .add_activity .data_entry .performance_fields,
+.history_line .edit_activity .data_entry .performance_fields {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: left;
+  justify-content: flex-start;
 }
-.history_line > li .add_activity .data_entry label {
-  font-size: 0.8em;
-  padding: 0px;
-  margin: 0px;
+.history_line > li .add_activity .data_entry .performance_fields div,
+.history_line .edit_activity .data_entry .performance_fields div {
+  text-align: center;
+  margin-right: 2%;
 }
-.history_line > li .add_activity .data_entry input {
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
-  border-radius: 5px;
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2) inset;
-  border: 1px white solid;
-  padding: 6px;
+.history_line > li .add_activity .data_entry .performance_fields input,
+.history_line .edit_activity .data_entry .performance_fields input {
   text-align: center;
 }
-.history_line > li .add_activity .data_entry .submit_buttons {
+.history_line > li .add_activity .data_entry div,
+.history_line .edit_activity .data_entry div {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+}
+.history_line > li .add_activity .submit_buttons,
+.history_line .edit_activity .submit_buttons {
   align-self: center;
   margin-top: 10px;
 }
-.history_line #edit_activity_form {
-  color: black;
-  position: relative;
-}
-.history_line #edit_activity_form div {
-  float: left;
-}
-.history_line #edit_activity_form label {
-  font-size: 0.8em;
-  padding: 0px;
-  margin: 0px;
-}
-.history_line #edit_activity_form input {
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
-  border-radius: 5px;
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2) inset;
-  border: 1px white solid;
-  padding: 6px;
-  text-align: center;
-}
 .history_line > li .end {
   width: 200px;
-  margin: 0 0 15px 10%;
+  margin: auto;
   line-height: 1.2;
+  position: relative;
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
   padding: 0.5em;
-  font-size: 1em;
+  font-size: 1.1em;
   font-style: italic;
-  position: relative;
   border-radius: 5px;
   border: 1px solid rgba(0, 0, 0, 0.25);
   margin-bottom: 30px;
   text-align: center;
-}
-.history_line > li .info h2 {
-  margin-top: 0px;
-  padding: 0 0 10px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-}
-#footer {
-  padding: 1em;
-  margin: 1em 1.8em;
-  font-size: 0.8em;
-  text-align: center;
-  border-top: 0.1em solid #990100;
-}
-#logo {
-  padding: 1em 2em;
-  font-size: 200%;
-}
-.row {
-  width: 100%;
-  padding: 3px 0px;
-  display: block;
-}
-.hidden {
-  display: none;
-}
-.floatleft {
-  float: left;
-}
-.floatright {
-  float: right;
-}
-.clearfloat {
-  float: none;
-}
-a {
-  text-decoration: none;
-  color: #990100;
-}
-a:visited {
-  color: #990100;
 }
 .discipline_button {
   float: left;
@@ -569,45 +509,4 @@ a:visited {
 .logout a:hover {
   text-decoration: none;
   cursor: pointer;
-}
-.ng-hide-add,
-.ng-hide-remove {
-  -webkit-transition: opacity 0.5s ease-in-out;
-  transition: opacity 0.5s ease-in-out;
-  /* remember to add this */
-
-  display: flex !important;
-  opacity: 1;
-}
-.ng-hide {
-  opacity: 0;
-}
-.my-repeat-animation.ng-enter,
-.my-repeat-animation.ng-leave,
-.my-repeat-animation.ng-move {
-  -webkit-transition: 0.5s linear all;
-  transition: 0.5s linear all;
-  position: relative;
-}
-.my-repeat-animation.ng-enter {
-  left: -10px;
-  opacity: 0;
-}
-.my-repeat-animation.ng-enter.ng-enter-active {
-  left: 0;
-  opacity: 1;
-}
-.my-repeat-animation.ng-leave {
-  left: 0;
-  opacity: 1;
-}
-.my-repeat-animation.ng-leave.ng-leave-active {
-  left: -10px;
-  opacity: 0;
-}
-.my-repeat-animation.ng-move {
-  opacity: 0.5;
-}
-.my-repeat-animation.ng-move.ng-move-active {
-  opacity: 1;
 }

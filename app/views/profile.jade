@@ -30,33 +30,29 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
       img( src="images/ui/loading.gif" )
 
     //- HISTORY TIMELINE
-    div#history_container.col-xs-12.col-sm-12.col-md-12.col-lg-12
+    div.col-xs-12.col-sm-12.col-md-12.col-lg-12
       ul.history_line
         li
-          //- div.icon_back
-          //- div.icon +
-          //ADD ACTIVITY
+          //- ADD ACTIVITY
           include partials/profile/add_activity
 
-        li.my-repeat-animation( ng-repeat="activity in activities" )
-          //- div.icon_back
-          //- div.icon
-          div.info( data-activity-id="{{activity._id}}" )
-            div.current_data( ng-show="!activity.show_editable_form" )
-              a.deleteActivity( ng-if="self" ng-click="deleteActivity(activity._id)" tooltip-placement="top" tooltip="Delete")
-                include partials/svg/delete_activity_svg
+        //- .my-repeat-animation to be added
+        li( ng-repeat="activity in activities" )
+          div.info( ng-class="{ editable: activity.show_editable_form}")
+            a.deleteActivity( ng-if="self" ng-click="deleteActivity(activity._id)" tooltip-placement="top" tooltip="Delete")
+              include partials/svg/delete_activity_svg
 
-              //div.ribbon.ribbon-yellow
-                div.banner
-                  div.text Personal Best
-              h1.performance( data-value="{{activity.performance}}" ) {{activity.formatted_performance}}
-              h3.competition( data-value="{{activity.competition}}" ) {{activity.competition}}
+            div.current_data( ng-show="!activity.show_editable_form" )
+              h1 {{activity.formatted_performance}}
+                small.competition ~ {{activity.competition}}
               blockquote
-                p.date( data-value="{{activity.date}}" ) {{activity.formatted_date}}
-                p.discipline( data-value="{{activity.discipline}}" ) {{activity.formatted_discipline}}
-                p( data-value="{{activity.location}}" ) {{activity.location}}
-                p( data-value="{{activity.place}}" ) {{activity.place}}
-                p( data-value="{{activity.notes}}" ) {{activity.notes}}
+                div
+                  p {{activity.location}}
+                  p {{activity.formatted_date}}
+                //- p.discipline {{activity.formatted_discipline}}
+                p {{activity.place}}
+                div
+                  p.notes {{activity.notes}}
 
               //- WAITING activity.private FROM BACKEND
               a( style="float:left;" ng-if="self" ng-click="changePrivacyPENDING(activity._id)" tooltip-placement="top" tooltip="Change Privacy")
@@ -68,11 +64,9 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
             a.editActivity( ng-if="self" ng-click="initEditableActivity(activity)" tooltip-placement="top" tooltip="Edit" )
               include partials/svg/edit_activity_svg
 
-            //edit activity templates
+            //-edit activity templates
             include partials/profile/activities_templates
 
         li
-          //- div.icon_back
-          //- div.icon *
           div.end
             div.discipline everything started here
