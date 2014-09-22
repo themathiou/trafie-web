@@ -28,7 +28,7 @@ exports.get = function( req, res ) {
 
 	mainHelper.validateAccess( user_id, profile_id, function( response ) {
 		// If the user has a valid session and they are not visiting a private profile
-    if( response.success ) {
+    	if( response.success ) {
 			// If the activity id was specified, try to find the activity
 			if( typeof req.params.activity_id !== 'undefined' ) {
 				return_activity( res, 200, req.params.activity_id, user_id, response.profile.language, response.profile.date_format );
@@ -193,7 +193,7 @@ exports.post = function( req, res ) {
 				errors = true;
 				error_messages.private = tr['invalid_privacy'];
 			}
-			
+
 			// If there are no errors
 			if( !errors ) {
 				// Create the record that will be inserted in the db
@@ -436,25 +436,27 @@ function return_activity( res, status_code, activity_id, user_id, language, date
 		where = { $and: [{'_id': activity_id}, {$or:[ {'user_id': user_id}, {'private': false} ]} ] };
 	}
 
-	res.statusCode = status_code;
-
 	// Find the activity and return it
 	Activity.schema.findOne( where, '' ).then( function( activity ) {
-		activity = {
-			'_id'                   : activity._id,
-			'discipline'            : activity.discipline,
-			'performance'           : activity.performance,
-			'date'                  : activity.date,
-			'place' 				: activity.place,
-			'location'				: activity.location,
-			'competition'			: activity.competition,
-			'notes'					: activity.notes,
-			'private'				: activity.private
-		};
+		if( activity && Object.keys(activity).length ) {
+			activity = {
+				'_id'                   : activity._id,
+				'discipline'            : activity.discipline,
+				'performance'           : activity.performance,
+				'date'                  : activity.date,
+				'place' 				: activity.place,
+				'location'				: activity.location,
+				'competition'			: activity.competition,
+				'notes'					: activity.notes,
+				'private'				: activity.private
+			};
 
-		// Format the date of the activity
-		activity = activityHelper.formatActivity( activity, language, date_format );
-
+			// Format the date of the activity
+			activity = activityHelper.formatActivity( activity, language, date_format );
+		} else {
+			status_code = 404;
+		}
+		res.statusCode = status_code;
 		res.json( activity );
 	})
 	.fail( function( error ) {
@@ -479,11 +481,11 @@ function return_activities( res, status_code, where, language, date_format ) {
 				'discipline'            : activities[i].discipline,
 				'performance'           : activities[i].performance,
 				'date'                  : activities[i].date,
-				'place' 								: activities[i].place,
-				'location'							: activities[i].location,
-				'competition'						: activities[i].competition,
-				'private'								: activities[i].private,
-				'notes'									: activities[i].notes
+				'place' 				: activities[i].place,
+				'location'				: activities[i].location,
+				'competition'			: activities[i].competition,
+				'private'				: activities[i].private,
+				'notes'					: activities[i].notes
 			};
 		}
 
