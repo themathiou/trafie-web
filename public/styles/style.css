@@ -313,10 +313,6 @@ a {
   position: relative;
   /* post */
 
-  /* ADD activity */
-
-  /* EDIT activity */
-
 }
 .history_line > li .info {
   margin: 0 0 15px 0;
@@ -352,9 +348,12 @@ a {
   background-repeat: no-repeat;
   min-width: 18px;
 }
+.history_line > li .info.editable {
+  border: 2px solid;
+  border-color: #e87600;
+}
 .history_line > li .add_activity {
   padding: 0.4em;
-  font-size: 1.1em;
   position: relative;
   border-radius: 5px;
   border: 1px solid rgba(0, 0, 0, 0.25);
@@ -363,108 +362,58 @@ a {
   text-align: left;
   text-shadow: none;
 }
-.history_line > li .add_activity .data_entry {
+.history_line > li .add_activity,
+.history_line .edit_activity {
+  font-size: 1.1em;
+}
+.history_line > li .add_activity .data_entry,
+.history_line .edit_activity .data_entry {
   color: black;
   display: flex;
   justify-content: left;
   flex-direction: column;
 }
-.history_line > li .add_activity .data_entry .performance_fields {
+.history_line > li .add_activity .data_entry .performance_fields,
+.history_line .edit_activity .data_entry .performance_fields {
   display: flex;
   flex-direction: row;
   align-items: left;
   justify-content: flex-start;
 }
-.history_line > li .add_activity .data_entry .performance_fields div {
+.history_line > li .add_activity .data_entry .performance_fields div,
+.history_line .edit_activity .data_entry .performance_fields div {
   text-align: center;
   margin-right: 2%;
 }
-.history_line > li .add_activity .data_entry div {
+.history_line > li .add_activity .data_entry .performance_fields input,
+.history_line .edit_activity .data_entry .performance_fields input {
+  text-align: center;
+}
+.history_line > li .add_activity .data_entry div,
+.history_line .edit_activity .data_entry div {
   display: flex;
   flex-direction: column;
   align-items: left;
 }
-.history_line > li .add_activity .submit_buttons {
+.history_line > li .add_activity .submit_buttons,
+.history_line .edit_activity .submit_buttons {
   align-self: center;
   margin-top: 10px;
 }
-.history_line #edit_activity_form {
-  color: black;
-  position: relative;
-}
-.history_line #edit_activity_form div {
-  float: left;
-}
-.history_line #edit_activity_form label {
-  font-size: 0.8em;
-  padding: 0px;
-  margin: 0px;
-}
-.history_line #edit_activity_form input {
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
-  border-radius: 5px;
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2) inset;
-  border: 1px white solid;
-  padding: 6px;
-  text-align: center;
-}
 .history_line > li .end {
   width: 200px;
-  margin: 0 0 15px 10%;
+  margin: auto;
   line-height: 1.2;
+  position: relative;
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
   padding: 0.5em;
-  font-size: 1em;
+  font-size: 1.1em;
   font-style: italic;
-  position: relative;
   border-radius: 5px;
   border: 1px solid rgba(0, 0, 0, 0.25);
   margin-bottom: 30px;
   text-align: center;
-}
-.history_line > li .info h2 {
-  margin-top: 0px;
-  padding: 0 0 10px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-}
-#footer {
-  padding: 1em;
-  margin: 1em 1.8em;
-  font-size: 0.8em;
-  text-align: center;
-  border-top: 0.1em solid #990100;
-}
-#logo {
-  padding: 1em 2em;
-  font-size: 200%;
-}
-.row {
-  width: 100%;
-  padding: 3px 0px;
-  display: block;
-}
-.hidden {
-  display: none;
-}
-.floatleft {
-  float: left;
-}
-.floatright {
-  float: right;
-}
-.clearfloat {
-  float: none;
-}
-a {
-  text-decoration: none;
-  color: #990100;
-}
-a:visited {
-  color: #990100;
 }
 .discipline_button {
   float: left;
