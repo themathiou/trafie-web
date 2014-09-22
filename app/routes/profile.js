@@ -61,7 +61,6 @@ function userSearch( req, res ) {
     let query = generateSearchQuery( user_id, req.query, language );
     Profile.schema.find( query, 'first_name last_name discipline country username _id', NUMBER_OF_SEARCH_RESULTS )
     .then( function( results ) {
-      console.log( results );
       let formattedResults = formatResults( results, language );
       res.json( formattedResults );
     })
