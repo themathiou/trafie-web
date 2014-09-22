@@ -46,12 +46,12 @@ trafie.config(['$routeProvider',
 //Initialization
 //---
 trafie.run(function ($rootScope, $http) {
-    $http.get('/profile')
+    $http.get('/users/me')
     .success(function(res){
       console.log('run' , res);
       //The logged in user
       $rootScope.user = res;
-      $http.get('/user/'+ res._id+'/disciplines')
+      $http.get('/users/'+ res._id+'/disciplines')
       .success( function (res) {
         $rootScope.user.disciplines_of_user = res;
         $rootScope.current_user = res; //current user is logged in user

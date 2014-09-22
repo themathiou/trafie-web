@@ -12,31 +12,31 @@ accordion( class="info add_activity" ng-show="self")
 				div.performance_fields( ng-if="disciplines.time.indexOf(newActivityForm.selected_discipline.id) > -1" )
 					div
 						label(for="hours_input")= tr['hours_short'] + ':'
-						input.form-control( size="3" maxlength="2" ng-model="newActivityForm.hours" )
+						input.form-control( size="3" maxlength="2" ng-model="newActivityForm.performance.hours" )
 					div
 						label(for="minutes_input")= tr['minutes_short'] + ':'
-						input.form-control( size="3" maxlength="2" ng-model="newActivityForm.minutes")
+						input.form-control( size="3" maxlength="2" ng-model="newActivityForm.performance.minutes")
 					div
 						label(for="seconds_input")= tr['seconds_short'] + ':'
-						input.form-control( size="3" maxlength="2" ng-model="newActivityForm.seconds")
+						input.form-control( size="3" maxlength="2" ng-model="newActivityForm.performance.seconds")
 					div
 						label(for="centiseconds_input")= tr['centiseconds_short'] + ':'
-						input.form-control( size="3" maxlength="2" ng-model="newActivityForm.centiseconds")
+						input.form-control( size="3" maxlength="2" ng-model="newActivityForm.performance.centiseconds")
 
 				//- distance
 				div.performance_fields( ng-if="disciplines.distance.indexOf(newActivityForm.selected_discipline.id) > -1" )
 					div
 						label(for="distance_1_input")= tr['meters_short'] + ':'
-						input.form-control size="3" maxlength="2" ng-model="newActivityForm.distance_1")
+						input.form-control(size="3" maxlength="2" ng-model="newActivityForm.performance.distance_1")
 					div
 						label(for="distance_2_input")= tr['centimeters_short'] + ':'
-						input.form-control size="3" maxlength="2" ng-model="newActivityForm.distance_2")
+						input.form-control(size="3" maxlength="2" ng-model="newActivityForm.performance.distance_2")
 
 				//- points
 				div.performance_fields( ng-if="disciplines.points.indexOf(newActivityForm.selected_discipline.id) > -1" )
 					div
 						label(for="points_input")= tr['points'] + ':'
-						input.form-control(type="text" size="7" maxlength="5" ng-model="newActivityForm.points")
+						input.form-control(type="text" size="7" maxlength="5" ng-model="newActivityForm.performance.points")
 
 				//- common variables
 				div

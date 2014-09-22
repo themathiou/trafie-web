@@ -6,29 +6,29 @@ div.edit_activity( ng-show="activity.show_editable_form" )
 			div.performance_fields( ng-if="disciplines.distance.indexOf(activity.discipline) > -1 " )
 				div
 					label(for="distance_1_input")= tr['meters_short'] + ':'
-					input.form-control( size="3" maxlength="2" ng-model="updateActivityForm.distance_1" )
+					input.form-control( size="3" maxlength="2" ng-model="updateActivityForm.performance.distance_1" )
 				div
 					label(for="distance_2_input")= tr['centimeters_short'] + ':'
-					input.form-control( size="3" maxlength="2" ng-model="updateActivityForm.distance_2" )
+					input.form-control( size="3" maxlength="2" ng-model="updateActivityForm.performance.distance_2" )
 			//- time
 			div.performance_fields( ng-if="disciplines.time.indexOf(activity.discipline) > -1 " )
 				div
 					label(for="hours_input")= tr['hours_short'] + ':'
-					input.form-control( size="3" maxlength="2" ng-model="updateActivityForm.hours")
+					input.form-control( size="3" maxlength="2" ng-model="updateActivityForm.performance.hours")
 				div
 					label( for="minutes_input" )= tr['minutes_short'] + ':'
-					input.form-control( size="3" maxlength="2" ng-model="updateActivityForm.minutes")
+					input.form-control( size="3" maxlength="2" ng-model="updateActivityForm.performance.minutes")
 				div
 					label( for="seconds_input" )= tr['seconds_short'] + ':'
-					input.form-control( size="3" maxlength="2" ng-model="updateActivityForm.seconds")
+					input.form-control( size="3" maxlength="2" ng-model="updateActivityForm.performance.seconds")
 				div
 					label(for="centiseconds_input")= tr['centiseconds_short'] + ':'
-					input.form-control( size="3" maxlength="2" ng-model="updateActivityForm.centiseconds")
+					input.form-control( size="3" maxlength="2" ng-model="updateActivityForm.performance.centiseconds")
 
 			//- points
 			div.performance_fields( ng-if="disciplines.points.indexOf(activity.discipline) > -1 " )
 				label(for="points_input")= tr['points'] + ':'
-				input.form-control(type="text" size="7" maxlength="5" ng-model="updateActivityForm.points")
+				input.form-control(type="text" size="7" maxlength="5" ng-model="updateActivityForm.performance.points")
 
 			//- common variables
 			div
@@ -52,7 +52,6 @@ div.edit_activity( ng-show="activity.show_editable_form" )
 				label(for="private") Private
 				input( type="checkbox" ng-model="updateActivityForm.private" )
 
-
-		div.submit_buttons
-			input.btn.green(type="submit" name="new_competition" value=tr['save'] )
-			a.cancel_edit_activity.cancel_link( ng-click="activity.show_editable_form = !activity.show_editable_form" )= tr['cancel']
+			div.submit_buttons
+				input.btn.green(type="submit" name="new_competition" value=tr['save'] )
+				a.cancel_edit_activity.cancel_link( ng-click="activity.show_editable_form = !activity.show_editable_form" )= tr['cancel']

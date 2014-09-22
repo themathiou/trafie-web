@@ -342,7 +342,7 @@ a {
 }
 .history_line > li .info .current_data blockquote div {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }
 .history_line > li .info .deleteActivity {
   float: right;

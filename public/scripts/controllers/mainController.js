@@ -19,7 +19,7 @@ trafie.controller("mainController",[
       };
 
       ///////////////////////////////////////////////////////
-      // On window resize 
+      // On window resize
       ///////////////////////////////////////////////////////
        $window.onresize = function () {
           // if device size < 768px consider it as mobile
@@ -44,7 +44,7 @@ trafie.controller("mainController",[
        * @param
        */
       $scope.searchUser = function(val) {
-          return $http.get('/search/?value=' + val)
+          return $http.get('/users/?keywords=' + val)
               .then(function(res) {
                   var results = [];
                   angular.forEach(res.data, function(tmp_user) {

@@ -88,7 +88,7 @@ trafie.controller("statisticsController", function(
       $scope.loading = true;
         console.log('draw', user_id, discipline);
         //call ajax_get (defined in script.js) in order to fetch the specific performances
-        $http.get('/user/' + user_id + '/activities?discipline=' + discipline)
+        $http.get('/users/' + user_id + '/activities?discipline=' + discipline)
         .success(function(response){
             // parse response as JSON
             var res = response;

@@ -68,7 +68,7 @@ trafie.controller("profileController", function(
 
   //get user profile based on user id
   $scope.getProfile = function ( user_id ){
-    $http.get('/profile/'+ user_id)
+    $http.get('/users/'+ user_id)
     .success(function(res){
       $rootScope.current_user = res;
       $rootScope.disciplines_options = [];
@@ -90,7 +90,7 @@ trafie.controller("profileController", function(
   //get disciplines of user based on user id
   $scope.getDisciplinesOfUser = function ( user_id ) {
     console.log( user_id );
-    $http.get('/user/'+ user_id+'/disciplines')
+    $http.get('/users/'+ user_id+'/disciplines')
     .success( function (res) {
       $rootScope.current_user.disciplines_of_user = res;
     })
@@ -102,7 +102,7 @@ trafie.controller("profileController", function(
   //get user activities based on user id
   $scope.getActivities = function (user_id, discipline) {
     var url =  '';
-    discipline != '' ? url = '/user/' + user_id + '/activities?discipline=' + discipline : url = '/user/' + user_id + '/activities';
+    discipline != '' ? url = '/users/' + user_id + '/activities?discipline=' + discipline : url = '/users/' + user_id + '/activities';
     $http.get(url)
     .success(function(res){
       $scope.activities = res;
@@ -119,7 +119,7 @@ trafie.controller("profileController", function(
     var splitDate = data.date.toString().split(' ');
     data.date = splitDate[0] + ' ' + splitDate[1] + ' ' +splitDate[2] + ' ' +splitDate[3];
 
-    $http.post('/user/' + $rootScope.user._id + '/activities', data)
+    $http.post('/users/' + $rootScope.user._id + '/activities', data)
     .success(function(res){
       $scope.accordions.addActivity = false;
       $scope.activities.unshift(res);
@@ -201,7 +201,7 @@ trafie.controller("profileController", function(
     data.date = splitDate[0] + ' ' + splitDate[1] + ' ' +splitDate[2] + ' ' +splitDate[3];
     data.discipline = activity.discipline;
 
-    $http.put( "/user/" + $rootScope.user._id + "/activities/" + activity._id, data)
+    $http.put( "/users/" + $rootScope.user._id + "/activities/" + activity._id, data)
     .success( function(res){
       activity.formatted_performance = res.formatted_performance;
       activity.formatted_date = res.formatted_date;
