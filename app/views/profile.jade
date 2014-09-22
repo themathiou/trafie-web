@@ -54,11 +54,10 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
                 div
                   p.notes {{activity.notes}}
 
-              //- WAITING activity.private FROM BACKEND
-              a( style="float:left;" ng-if="self" ng-click="changePrivacyPENDING(activity._id)" tooltip-placement="top" tooltip="Change Privacy")
-                  span( ng-if="!activity.private" )
-                      include partials/svg/locked_svg
+              a( style="float:left;" ng-if="self" ng-click="changePrivacy(activity)" tooltip-placement="top" tooltip="Change Privacy")
                   span( ng-if="activity.private" )
+                      include partials/svg/locked_svg
+                  span( ng-if="!activity.private" )
                     include partials/svg/unlocked_svg
 
             a.editActivity( ng-if="self" ng-click="initEditableActivity(activity)" tooltip-placement="top" tooltip="Edit" )

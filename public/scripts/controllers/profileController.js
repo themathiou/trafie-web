@@ -50,7 +50,7 @@ trafie.controller("profileController", function(
     //time form
     $scope.newActivityForm = {};
 
-    $scope.initProfile = function(){
+    $scope.initProfile = function () {
       //true if this is the profile of the logged-in user
       $scope.page_not_found = false;
       $scope.self = false;
@@ -67,7 +67,7 @@ trafie.controller("profileController", function(
   }
 
   //get user profile based on user id
-  $scope.getProfile = function ( user_id ){
+  $scope.getProfile = function (user_id) {
     $http.get('/users/'+ user_id)
     .success(function(res){
       $rootScope.current_user = res;
@@ -88,7 +88,7 @@ trafie.controller("profileController", function(
   }
 
   //get disciplines of user based on user id
-  $scope.getDisciplinesOfUser = function ( user_id ) {
+  $scope.getDisciplinesOfUser = function (user_id) {
     console.log( user_id );
     $http.get('/users/'+ user_id+'/disciplines')
     .success( function (res) {
@@ -131,7 +131,7 @@ trafie.controller("profileController", function(
     deleteActivity function : calls the modal for delete activitiy confirmation
     @param activity_id: the id of the specific activity
    */
-  $scope.deleteActivity = function( activity_id ){
+  $scope.deleteActivity = function (activity_id) {
     $rootScope.confirm_delete_modal( activity_id, 'lg')
     .then(function(result){
       if (result) {
@@ -154,7 +154,7 @@ trafie.controller("profileController", function(
   /*
     initEditableActivity function : initializes variables for editing an existing activity
    */
-  $scope.initEditableActivity = function( activity ){
+  $scope.initEditableActivity = function (activity) {
 
     activity.show_editable_form = !activity.show_editable_form;
 
@@ -186,14 +186,13 @@ trafie.controller("profileController", function(
     $scope.updateActivityForm.competition = activity.competition;
     $scope.updateActivityForm.notes = activity.notes;
     $scope.updateActivityForm.private = activity.private;
-
   }
 
 
   /*
     updateActivity function : edit a specific activity
    */
-  $scope.updateActivity = function( activity ){
+  $scope.updateActivity = function (activity) {
     var data = $scope.updateActivityForm;
 
     data.date = new Date(data.date.toString().split('T')[0]);
@@ -211,7 +210,18 @@ trafie.controller("profileController", function(
       activity.notes = res.notes;
       activity.private = res.private;
       activity.show_editable_form = !activity.show_editable_form;
-
     })
   }
+
+  /*
+    changePrivacy function : changes privacy of the activity
+   */
+  $scope.changePrivacy = function (activity) {
+    var _activity = !activity.private;
+    $http.put( "/users/" + $rootScope.user._id + "/activities/" + activity._id, { private: _activity })
+    .success( function(res){
+      activity.private = res.private;
+    })
+  }
+
 });
