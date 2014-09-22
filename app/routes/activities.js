@@ -157,7 +157,7 @@ exports.post = function( req, res ) {
 			}
 
 			// Validating place
-			if( typeof req.body.place !== 'undefined' ) {
+			if( typeof req.body.place !== 'undefined' && req.body.place ) {
 				if( activityHelper.placeIsValid( req.body.place ) ) {
 					place = req.body.place;
 				} else {
@@ -193,7 +193,7 @@ exports.post = function( req, res ) {
 				errors = true;
 				error_messages.private = tr['invalid_privacy'];
 			}
-
+			
 			// If there are no errors
 			if( !errors ) {
 				// Create the record that will be inserted in the db
@@ -231,9 +231,9 @@ exports.post = function( req, res ) {
  */
 exports.put = function( req, res ) {
 	// Get the user id from the session
-	var user_id = req.session.user_id;
+	var user_id = typeof req.session.user_id !== 'undefined' ? req.session.user_id : null;
 	// Get the activity id from the url
-	var activity_id = req.params.activity_id;
+	var activity_id = typeof req.params.activity_id !== 'undefined' ? req.params.activity_id : null;
 
 	var language = '',
 		date_format = '';
@@ -259,7 +259,8 @@ exports.put = function( req, res ) {
 			var errors = false,
 				error_messages = {},
 				tr = translations[language],
-				activity = {};
+				activity = {},
+				disciplineType = false;
 
 			// Validating discipline (required field)
 			if( typeof req.body.discipline !== 'undefined' && typeof req.body.performance !== 'undefined' ) {
@@ -292,9 +293,9 @@ exports.put = function( req, res ) {
 				}
 			}
 
-			// Checking if the date value is valid (required field)
+			// Checking if the date value is valid
 			if( typeof req.body.date !== 'undefined' && req.body.date ) {
-				var date = activityHelper.parseDate( req.body.date );
+				let date = activityHelper.parseDate( req.body.date );
 				if( date ) {
 					activity.date = date;
 				} else {
@@ -314,7 +315,7 @@ exports.put = function( req, res ) {
 			}
 
 			// Validating place
-			if( typeof req.body.place !== 'undefined' ) {
+			if( typeof req.body.place !== 'undefined' && req.body.place ) {
 				if( activityHelper.placeIsValid( req.body.place ) ) {
 					activity.place = req.body.place;
 				} else {
@@ -352,7 +353,7 @@ exports.put = function( req, res ) {
 					error_messages.private = tr['invalid_privacy'];
 				}
 			}
-			
+
 			// If there are no errors
 			if( !errors && Object.keys(activity).length ) {
 				Activity.findByIdAndUpdate( activity_id, activity, '', function ( err, activity ) {
@@ -367,6 +368,7 @@ exports.put = function( req, res ) {
 			}
 		})
 		.fail( function( error ) {
+			console.log( 'Error: Query failed while updating an activity');
 			send_status( res, 500 );
 		});
 	}
@@ -425,6 +427,7 @@ function return_activity( res, status_code, activity_id, user_id, language, date
 		} else {
 			res.json( null );
 		}
+		return;
 	}
 	var where = {};
 	if( typeof user_id === 'undefined' ) {
