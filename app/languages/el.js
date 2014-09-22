@@ -102,11 +102,15 @@ var el = {
     'password_should_be_at_least_6_characters_long' : 'Ο κωδικός πρέπει να έχει τουλάχιστον 6 χαρακτήρες',
     'uploaded_image_too_large'                      : 'Το μέγεθος της φωτογραφίας είναι πολύ μεγάλο',
     'uploaded_image_wrong_type'                     : 'Ο τύπος του αρχείου είναι λανθασμένος',
+    'invalid_discipline'                            : 'Μη έγκυρο αγώνισμα',
+    'discipline_is_required'                        : 'Το αγώνισμα είναι υποχρεωτικό',
     'invalid_performance'                           : 'Μη έγκυρη επίδοση',
+    'performance_is_required'                       : 'Η επίδοση είναι υποχρεωτική',
     'too_long_text'                                 : 'Πολύ μεγάλο κείμενο',
     'invalid_place'                                 : 'Μη έγκυρη θέση',
     'wrong_date_format'                             : 'Η μορφή ημερομηνίας είναι λανθασμένη',
     'date_is_required'                              : 'Η ημερομηνία είναι υποχρεωτική',
+    'invalid_privacy'                               : 'Μη έγκυρη ρύθμιση ιδιωτικότητας',
 
     // Countries
     'AF': 'Afghanistan',

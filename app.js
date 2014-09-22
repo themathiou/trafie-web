@@ -56,7 +56,8 @@ const index = require('./app/routes/index'),
     settings = require('./app/routes/settings'),
     email_validation = require('./app/routes/email_validation'),
     reset_password = require('./app/routes/reset_password'),
-    dummy_data = require('./app/routes/dummy_data');
+    dummy_data = require('./app/routes/dummy_data'),
+    api = require('./app/routes/api');
 
 // Initialize the helpers
 const activityHelper = require('./app/helpers/activity.js'),
@@ -102,7 +103,9 @@ if ('development' == trafie.get('env')) {
 
 trafie.get( '/', index.get_view );
 
-trafie.get( '/profile/:profile_id?', profile.get );
+trafie.get( '/users/me', profile.get_me );
+
+trafie.get( '/users/:user_id?', profile.get );
 
 trafie.get( '/views/profile.html', profile.get_view );
 
@@ -111,15 +114,15 @@ trafie.get( '/views/profile.html', profile.get_view );
  * ACTIVITIES                                                                                                                  *
  ******************************************************************************************************************************/
 
-trafie.get( '/user/:user_id/activities/:activity_id?', activities.get );
+trafie.get( '/users/:user_id/activities/:activity_id?', activities.get );
 
-trafie.post( '/user/:user_id/activities', activities.post );
+trafie.post( '/users/:user_id/activities', activities.post );
 
-trafie.put( '/user/:user_id/activities/:activity_id', activities.put );
+trafie.put( '/users/:user_id/activities/:activity_id', activities.put );
 
-trafie.delete( '/user/:user_id/activities/:activity_id', activities.delete );
+trafie.delete( '/users/:user_id/activities/:activity_id', activities.delete );
 
-trafie.get( '/user/:user_id/disciplines', disciplines.get );
+trafie.get( '/users/:user_id/disciplines', disciplines.get );
 
 
 /*******************************************************************************************************************************
@@ -140,13 +143,6 @@ trafie.post( '/settings_data', settings.post );
  ******************************************************************************************************************************/
 
 trafie.get( '/views/statistics.html', statistics.get_view );
-
-
-/*******************************************************************************************************************************
- * SEARCH                                                                                                                      *
- ******************************************************************************************************************************/
-
- trafie.get( '/search', search.get );
 
 
 /*******************************************************************************************************************************
@@ -243,6 +239,17 @@ if( trafie.settings.env === 'development' ) {
   trafie.get( '/dummy_data', dummy_data.get );
 
   trafie.post( '/dummy_data', dummy_data.post );
+}
+
+
+/*******************************************************************************************************************************
+ * API                                                                                                                         *
+ ******************************************************************************************************************************/
+
+if( trafie.settings.env === 'development' ) {
+  trafie.get( '/api', api.get );
+
+  trafie.get( '/api_table', api.get_view );
 }
 
 

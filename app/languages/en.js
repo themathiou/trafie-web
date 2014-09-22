@@ -99,11 +99,15 @@ var en = {
     'password_should_be_at_least_6_characters_long' : 'Password should be at least 6 characters long',
     'uploaded_image_too_large'                      : 'The uploaded image is too large',
     'uploaded_image_wrong_type'                     : 'The type of the uploaded file is wrong',
+    'invalid_discipline'                            : 'Invalid discipline',
+    'discipline_is_required'                        : 'Discipline is required',
     'invalid_performance'                           : 'Invalid performance',
+    'performance_is_required'                       : 'Perfromance is required',
     'too_long_text'                                 : 'Text is too long',
     'invalid_place'                                 : 'Invalid place value',
     'wrong_date_format'                             : 'Wrong date format',
     'date_is_required'                              : 'Date is required',
+    'invalid_privacy'                               : 'Invalid privacy setting',
 
     // Countries
     'AF': 'Afghanistan',

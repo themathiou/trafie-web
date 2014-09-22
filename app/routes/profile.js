@@ -15,33 +15,163 @@ const translations = require('../languages/translations.js');
  * Profile - GET
  */
 exports.get = function( req, res ){
-  var profile_id = false,
+  var requested_user_id = false,
       user_id = typeof req.session.user_id === 'undefined' ? null : req.session.user_id;
 
-  if( typeof req.params.profile_id !== 'undefined' ) {
-    profile_id = req.params.profile_id;
-  } else if( user_id ) {
-    profile_id = user_id;
+  if( typeof req.params.user_id !== 'undefined' ) {
+    requested_user_id = req.params.user_id;
+    mainHelper.validateAccess( user_id, requested_user_id, function( response ) {
+      // If the user has a valid session and they are not visiting a private profile
+      if( response.success ) {
+        // Send the profile data to the client
+        send_profile_data( res, response.profile, response.user );
+      } else {
+        // Otherwise, if it's a server error, send the error
+        if( response.error === 'query_error' ) {
+          send_status( res, 500 );
+        } else {
+          // If the user doesn't have access to the data, or the data don't exist, do not send anything
+          send_status( res, 404 );
+        }
+      }
+    });
   } else {
-    send_status( res, 404 );
-    return;
+    userSearch( req, res );
   }
 
-  mainHelper.validateAccess( user_id, profile_id, function( response ){
-    // If the user has a valid session and they are not visiting a private profile
-    if( response.success ) {
-      // Send the profile data to the client
-      send_profile_data( res, response.profile, response.user );
-    } else {
-      // Otherwise, if it's a server error, send the error
-      if( response.error === 'query_error' ) {
-        send_status( res, 500 );
-      } else {
-        // If the user doesn't have access to the data, or the data don't exist, do not send anything
-        send_status( res, 404 );
+};
+
+function userSearch( req, res ) {
+  const NUMBER_OF_SEARCH_RESULTS = 10;
+  var language = 'en';
+  var user_id = typeof req.session.user_id !== 'undefined' ? req.session.user_id : '';
+
+  if( user_id ) {
+    // Find the profile
+    Profile.schema.findOne({ '_id': user_id }, 'language date_format')
+    .then( function( profile_data ) {
+      language = profile_data.language;
+      performSearch();
+    });
+  } else {
+    performSearch();
+  }
+
+  function performSearch() {
+    let query = generateSearchQuery( user_id, req.query, language );
+    Profile.schema.find( query, 'first_name last_name discipline country username _id', NUMBER_OF_SEARCH_RESULTS )
+    .then( function( results ) {
+      console.log( results );
+      let formattedResults = formatResults( results, language );
+      res.json( formattedResults );
+    })
+    .fail( function( error ) {
+      send_error_page( error, res );
+    });
+  }
+}
+
+function generateSearchQuery( user_id, search_query, language ) {
+  let ands = [];
+  
+  if( typeof search_query.keywords === 'string' ) {
+    var requested_keywords_string = search_query.keywords.trim();
+    var requested_keywords = requested_keywords_string.split(' ');
+    var requested_keywords_length = requested_keywords.length;
+
+    if( !requested_keywords_string ) {
+      res.json( [] );
+    }
+
+
+    for( let i=0; i<requested_keywords_length ; i++ ) {
+      requested_keywords[i] = requested_keywords[i].toLowerCase();
+      if( i == requested_keywords_length-1 ) {
+        ands.push( { 'keywords.names': { $regex: new RegExp("^" + requested_keywords[i] + ".*") } } );
+      }
+      else {
+        ands.push( { 'keywords.names': requested_keywords[i] } );
       }
     }
-  });
+  }
+
+  if( typeof search_query.first_name === 'string' ) {
+    ands.push( { 'first_name': search_query.first_name } );
+  }
+
+  if( typeof search_query.last_name === 'string' ) {
+    ands.push( { 'last_name': search_query.last_name } );
+  }
+
+  if( typeof search_query.discipline === 'string' ) {
+    ands.push( { 'discipline': search_query.discipline } );
+  }
+
+  if( typeof search_query.country === 'string' ) {
+    ands.push( { 'country': search_query.country } );
+  }
+
+  if( user_id ) {
+    // Do not fetch private profiles, unless it's the current user's profile
+    ands.push( { $or: [{ '_id': user_id }, { 'private': false }] } );
+  } else {
+    // Do not fetch private profiles
+    ands.push( { 'private': false } );
+  }
+
+  var query = {};
+  if( ands.length ) {
+    query.$and = ands;
+  }
+
+  return query;
+}
+
+function formatResults( results, language ) {
+  var results_length = results.length;
+  var formatted_results = [];
+  for( let i=0 ; i<results_length ; i++ ) {
+    formatted_results[i] = {};
+    formatted_results[i]._id = results[i]._id;
+    formatted_results[i].first_name = results[i].first_name;
+    formatted_results[i].last_name = results[i].last_name;
+    formatted_results[i].discipline = results[i].discipline;
+    formatted_results[i].country = results[i].country;
+    formatted_results[i].username = results[i].username;
+    formatted_results[i].formatted_country = results[i].country ? translations[language][results[i].country] : '';
+    formatted_results[i].formatted_discipline = results[i].discipline ? translations[language][results[i].discipline] : '';
+  }
+
+  return formatted_results;
+}
+
+/**
+ * Profile - GET
+ */
+exports.get_me = function( req, res ){
+  if( typeof req.session.user_id !== 'undefined' ) {
+    let profile_id = req.session.user_id,
+        user_id = req.session.user_id;
+    mainHelper.validateAccess( user_id, profile_id, function( response ){
+      // If the user has a valid session and they are not visiting a private profile
+      if( response.success ) {
+        // Send the profile data to the client
+        send_profile_data( res, response.profile, response.user );
+      } else {
+        // Otherwise, if it's a server error, send the error
+        if( response.error === 'query_error' ) {
+          send_status( res, 500 );
+        } else {
+          // If the user doesn't have access to the data, or the data don't exist, do not send anything
+          send_status( res, 404 );
+        }
+      }
+    });
+  } else {
+    // If the user doesn't have access to the data, or the data don't exist, do not send anything
+    send_status( res, 404 );
+  }
+
 };
 
 /**

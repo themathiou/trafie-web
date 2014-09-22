@@ -97,6 +97,50 @@ activityHelper.formatActivity = function( activity, language, date_format ) {
 	return activity;
 };
 
+/**
+ * Checks if the discipline is valid
+ * @param  string discipline
+ * @return string
+ */
+activityHelper.disciplineIsValid = function( discipline ) {
+	// Validating discipline and performance
+	switch ( discipline ) {
+		case '100m':
+		case '200m':
+		case '400m':
+		case '800m':
+		case '1500m':
+		case '3000m':
+		case '60m_hurdles':
+		case '100m_hurdles':
+		case '110m_hurdles':
+		case '400m_hurdles':
+		case '3000m_steeple':
+		case '4x100m_relay':
+		case '4x400m_relay':
+		case 'marathon':
+			return 'time';
+			break;
+		case 'high_jump':
+		case 'long_jump':
+		case 'triple_jump':
+		case 'pole_vault':
+		case 'shot_put':
+		case 'discus':
+		case 'hammer':
+		case 'javelin':
+			return 'distance';
+			break;
+		case 'pentathlon':
+		case 'heptathlon':
+		case 'decathlon':
+			return 'points'
+			break;
+		default:
+			return '';
+			break;
+	}
+};
 
 /**
  * Checks time inputs for validity, if they are valid, it adds leading zeros to
@@ -108,6 +152,12 @@ activityHelper.formatActivity = function( activity, language, date_format ) {
 activityHelper.validateTime = function( performance ) {
 	var valid = true;
 	var time = '';
+
+	// If a value was not posted, replace it with 00
+	performance.hours = typeof performance.hours !== 'undefined' && performance.hours != '' ? performance.hours : '00';
+	performance.minutes = typeof performance.minutes !== 'undefined' && performance.minutes != '' ? performance.minutes: '00';
+	performance.seconds = typeof performance.seconds !== 'undefined' && performance.seconds != '' ? performance.seconds: '00';
+	performance.centiseconds = typeof performance.centiseconds !== 'undefined' && performance.centiseconds != '' ? performance.centiseconds : '00';
 
 	// Validating hours
 	if( typeof performance.hours !== 'string' || parseInt( performance.hours ) != performance.hours || performance.hours.length > 2 || performance.hours < 0 ) {
@@ -175,6 +225,10 @@ activityHelper.validateDistance = function( performance ) {
 	var valid = true;
 	var distance = 0;
 
+	// Get the posted values. If a value was not posted, replace it with 0
+	performance.distance_1 = typeof performance.distance_1 !== 'undefined' && performance.distance_1 != '' ? performance.distance_1 : '0';
+	performance.distance_2 = typeof performance.distance_2 !== 'undefined' && performance.distance_2 != '' ? performance.distance_2 : '0';
+
 	// Validating the first part of the measurement
 	if( typeof performance.distance_1 !== 'string' || parseInt( performance.distance_1 ) != performance.distance_1 || performance.distance_1.length > 2 || performance.distance_1 < 0 ) {
 		valid = false;
@@ -205,6 +259,9 @@ activityHelper.validateDistance = function( performance ) {
  */
 activityHelper.validatePoints = function( performance ) {
 	var points = 0;
+
+	// Get the posted values. If a value was not posted, replace it with null
+	performance.points = typeof performance.points !== 'undefined' ? performance.points : null;
 
 	if( typeof performance.points === 'string' && parseInt( performance.points ) == performance.points && performance.points.length <= 5 && performance.points > 0 ) {
 		points = performance.points;
@@ -288,7 +345,22 @@ activityHelper.parseDbDate = function( date ) {
  * @return boolean
  */
 activityHelper.privacyIsValid = function( privateSetting ) {
-	return typeof privateSetting === 'boolean';
+	return typeof privateSetting === 'boolean' || privateSetting.toLowerCase() === 'true' || privateSetting.toLowerCase() === 'false';
+}
+
+/**
+ * Parses the privacy setting, in case it's represented by a string
+ * @param  string|boolean privateSetting
+ * @return boolean
+ */
+activityHelper.parsePrivacy = function( privateSetting ) {
+	if( typeof privateSetting === 'boolean' ) {
+		return privateSetting;
+	} else if( privateSetting.toLowerCase() === 'true' ) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 /**
