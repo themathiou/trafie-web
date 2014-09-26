@@ -344,6 +344,9 @@ a {
   display: flex;
   flex-direction: row;
 }
+.history_line > li .info .current_data .privacy {
+  align-self: flex-start;
+}
 .history_line > li .info .deleteActivity {
   float: right;
   background-repeat: no-repeat;
@@ -429,49 +432,71 @@ a {
 .chart-div {
   width: 100%;
 }
-.settingsContent {
+.settings-content {
   padding-left: 10px;
   padding-top: 60px;
 }
-.settingsContent h3 {
+.settings-content .tab-pane {
+  background-color: #ffffff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+  border-left: 1px solid rgba(0, 0, 0, 0.25);
+  border-right: 1px solid rgba(0, 0, 0, 0.25);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.2);
+}
+.settings-content .tab-pane h3 {
+  margin-top: 0px;
+  padding-top: 1em;
   width: 100%;
   text-align: center;
 }
-.settingsContent form {
+.settings-content .tab-pane form {
   width: 100%;
   display: inline-block;
   margin: 0px;
   padding: 3px 0px;
 }
-.settingsContent form label {
+.settings-content .tab-pane form label {
   font-size: 1em;
 }
-.settingsContent form .textarea {
+.settings-content .tab-pane form .textarea {
   width: 550px;
   max-width: 550px;
 }
-.settingsContent .settingsElement {
+.settings-content .settings-element {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+  padding: 10px 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.settings-content .settings-element input {
+  border: none;
+  font-size: 1em;
+}
+.settings-content .settings-element input[type="radio"] {
+  -webkit-appearance: radio;
+}
+.settings-content .settings-element textarea {
+  border: none;
+  font-size: 1em;
+}
+.settings-content .settings-element .existed {
+  display: inline-block;
+}
+.settings-content .settings-element:hover {
+  background-color: rgba(0, 0, 0, 0.25);
+}
+.settings-content .settings-element-profile-pic {
   border-bottom: 1px solid rgba(0, 0, 0, 0.25);
   padding: 10px 5px;
 }
-.settingsContent .settingsElement input {
-  border: none;
-  font-size: 1em;
-}
-.settingsContent .settingsElement input[type="radio"] {
-  -webkit-appearance: radio;
-}
-.settingsContent .settingsElement textarea {
-  border: none;
-  font-size: 1em;
-}
-.settingsContent .settingsElement .existed {
-  display: inline-block;
-}
-.settingsContent .settingsElement:hover {
-  background-color: rgba(0, 0, 0, 0.25);
-}
-.settingsContent .settingsElement .settings_profile_pic_thumb {
+.settings-content .settings-element-profile-pic .thumb {
   width: 40px;
   height: 40px;
   margin-left: 5px;
@@ -482,20 +507,14 @@ a {
   border-radius: 5px;
   vertical-align: middle;
 }
-.settingsContent .non_editable {
-  display: inline-block;
-}
-.settingsContent .editable {
-  display: none;
-}
-.settingsContent .submitButtonsVisible {
+.settings-content .submitButtonsVisible {
   display: block;
   width: 150px;
 }
-.settingsContent .submitButtonsHide {
+.settings-content .submitButtonsHide {
   visibility: hidden;
 }
-.settingsContent .editLink {
+.settings-content .editLink {
   float: right;
 }
 .logout {
@@ -504,6 +523,7 @@ a {
   padding: 20px;
 }
 .logout a {
+  color: #990100;
   text-decoration: none;
 }
 .logout a:hover {
