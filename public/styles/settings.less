@@ -1,32 +1,48 @@
 
-.settingsContent {
+.settings-content {
   padding-left:10px;
   padding-top: 60px;
 
-  h3 {
-    width: 100%;
-    text-align: center;
-  }
+  .tab-pane {
+    background-color:  @white;
+    border-bottom: 1px solid @black_25;
+    border-left: 1px solid @black_25;
+    border-right: 1px solid @black_25;
+    .rounded_corners(5px);
+    box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.2);
 
-  form {
-    width:100%;
-    display: inline-block;
-    margin: 0px;
-    padding: 3px 0px;
-
-    label {
-      font-size: 1em;
+    h3 {
+      margin-top: 0px;
+      padding-top: 1em;
+      width: 100%;
+      text-align: center;
     }
 
-    .textarea {
-      width: 550px;
-      max-width: 550px;
+    form {
+      width:100%;
+      display: inline-block;
+      margin: 0px;
+      padding: 3px 0px;
+
+      label {
+        font-size: 1em;
+      }
+
+      .textarea {
+        width: 550px;
+        max-width: 550px;
+      }
     }
   }
 
-  .settingsElement {
+
+  .settings-element {
     border-bottom: 1px solid @black_25;
     padding: 10px 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 
     input {
       border: none;
@@ -49,22 +65,19 @@
     &:hover{
       background-color: @black_25;
     }
+  }
 
-    .settings_profile_pic_thumb {
+  .settings-element-profile-pic {
+    border-bottom: 1px solid @black_25;
+    padding: 10px 5px;
+
+    .thumb {
       width:40px;
       height:40px;
       margin-left: 5px;
       .rounded_corners();
       vertical-align: middle;
     }
-  }
-
-  .non_editable {
-    display: inline-block;
-  }
-
-  .editable {
-    display: none;
   }
 
   .submitButtonsVisible {
@@ -89,6 +102,7 @@
   padding: 20px;
 
   a{
+    color: @red;
     text-decoration: none;
 
     &:hover {

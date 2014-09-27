@@ -54,7 +54,7 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
                 div
                   p.notes {{activity.notes}}
 
-              a( style="float:left;" ng-if="self" ng-click="changePrivacy(activity)" tooltip-placement="top" tooltip="Change Privacy")
+              a.privacy( style="float:left;" ng-if="self" ng-click="changePrivacy(activity)" tooltip-placement="top" tooltip="Change Privacy")
                   span( ng-if="activity.private" )
                       include partials/svg/locked_svg
                   span( ng-if="!activity.private" )
