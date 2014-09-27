@@ -186,6 +186,13 @@ function send_profile_data( res, profile_data, user_data ) {
   var formatted_discipline = profile_data.discipline ? tr[profile_data.discipline] : '';
   var country = profile_data.country ? tr[profile_data.country] : '';
 
+  /************************************************************************************************************
+   *                                                                                                          *
+   *                                                                                                          *
+   *  TO BE REMOVED! :-D                                                                                      *
+   *                                                                                                          *
+   *                                                                                                          *
+   * **********************************************************************************************************/
   var disciplines = {
       '100m':           tr['100m'],
       '200m':           tr['200m'],

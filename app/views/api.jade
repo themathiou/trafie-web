@@ -26,6 +26,7 @@ html
                 th Method
                 th Description
                 th Parameters
+                th Data
                 th Example Response (Success)
                 th Example Response (Fail)
             each endpoint in api
@@ -36,5 +37,6 @@ html
                         td= method.name
                         td= method.description
                         td= method.parameters
+                        td= method.data.toString()
                         td= method.exampleResponseSuccess
                         td= method.exampleResponseFail

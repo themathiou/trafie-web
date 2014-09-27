@@ -205,7 +205,7 @@ exports.post = function( req, res ) {
 			}
 		}
 
-		// Validating date format
+		// Validating privacy
 		if( typeof req.body.private !== 'undefined' ) {
 			if( typeof req.body.private === 'boolean' ) {
 				response.success = true;
@@ -214,7 +214,7 @@ exports.post = function( req, res ) {
 			}
 		}
 
-		// Validating date format
+		// Validating username
 		if( typeof req.body.username !== 'undefined' ) {
 			if( !profileHelper.validateUsername( req.body.username ) ) {
 				response.message = tr['invalid_username'];
@@ -291,7 +291,7 @@ exports.post = function( req, res ) {
 			});
 		}
 
-		// Validating the reset password request
+		// Validating the change password request
 		else if( typeof req.body.old_password !== 'undefined' && typeof req.body.password !== 'undefined' && req.body.repeat_password ) {
 			// Find the old password of the user
 			User.schema.findOne({ '_id': user_id }, 'password')
