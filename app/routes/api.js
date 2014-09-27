@@ -10,17 +10,17 @@ const api = [
 				parameters: 'first_name, last_name, discipline, country, keywords',
 				examples: ['/users', '/users?first_name=George&last_name=Balasis', '/users?keywords=george balasis'],
 				exampleResponseSuccess: JSON.stringify([
-										  {
-										    "_id": "5415cf0334a09e041c000001",
-										    "first_name": "George",
-										    "last_name": "Balasis",
-										    "discipline": "",
-										    "country": "",
-										    "username": "george",
-										    "formatted_country": "",
-										    "formatted_discipline": ""
-										  }
-										], null, 4),
+					{
+					    "_id": "5415cf0334a09e041c000001",
+					    "first_name": "George",
+					    "last_name": "Balasis",
+					    "discipline": "",
+					    "country": "",
+					    "username": "george",
+					    "formatted_country": "",
+					    "formatted_discipline": ""
+					  }
+					], null, 4),
 				exampleResponseFail: ''
 			}
 		]

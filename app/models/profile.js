@@ -105,10 +105,10 @@ profileSchema.update = function( where, data ) {
 	Profile.update( where, { $set: data }, { upsert: true }, function( error ) {
 		if( 'first_name' in data || 'last_name' in data ) {
 			Profile.findOne( where, 'first_name last_name', function ( err, profile ) {
-				var names = [];
-				first_names = profile.first_name.split(' ');
-				last_names = profile.last_name.split(' ');
-				names = first_names.concat( last_names );
+				var names = [],
+					first_names = profile.first_name.split(' '),
+					last_names = profile.last_name.split(' '),
+					names = first_names.concat( last_names );
 				var names_length = names.length;
 				for ( var i=0 ; i<names_length ; i++ ) {
 					names[i] = names[i].toLowerCase();
