@@ -5,18 +5,22 @@ trafie.controller("settingsController", function(
   $window,
   $http ){
 
-  $http.get('/settings_data')
-  .success(function(res){
-    console.log(res);
-    $scope.user = res.user;
-  });
 
   /**
    * [Initialize settings page behavior]
    * @return {[type]}
    */
   $scope.settingsInit = function(){
+
     /* --- profile --- */
+    $http.get('/settings_data')
+    .success(function(res){
+      console.log(res);
+      $scope.user = res.user;
+      $scope.user.new_first_name = $scope.user.first_name;
+      $scope.user.new_last_name = $scope.user.last_name;
+    });
+
     //profile_pic
     if( $scope.user ) {
         $scope.user.new_profile_pic = 'motherhacker';

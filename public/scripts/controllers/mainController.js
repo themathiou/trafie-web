@@ -18,6 +18,15 @@ trafie.controller("mainController",[
         $window.innerWidth < 768 ? $scope.mobile = true : $scope.mobile = false;
       };
 
+      $scope.$on('$routeChangeSuccess', function () {
+        switch($location.path()) {
+        case '/login' :
+          $window.location.href = '/login';
+        case '/register' :
+          $window.location.href = '/register';
+        }
+      });
+
       ///////////////////////////////////////////////////////
       // On window resize
       ///////////////////////////////////////////////////////
@@ -187,12 +196,11 @@ trafie.controller("mainController",[
       };
       $scope.toggleMax();
 
-      $scope.open = function($event) {
-          $timeout(function() {
-              $scope.opened = true;
-          });
-
-      };
+      // $scope.open = function($event) {
+      //     $timeout(function() {
+      //         $scope.opened = true;
+      //     });
+      // };
 
       $scope.dateOptions = {
           formatYear: 'yy',

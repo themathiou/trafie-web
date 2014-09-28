@@ -56,7 +56,7 @@ trafie.controller("profileController", function(
       $scope.self = false;
 
       if( $routeParams.userID ) {
-        $routeParams.userID === $rootScope.user._id || $routeParams.userID === $rootScope.user.username ? $scope.self = true : $scope.self = false;
+        $rootScope.user && ($routeParams.userID === $rootScope.user._id || $routeParams.userID === $rootScope.user.username) ? $scope.self = true : $scope.self = false;
         $scope.getProfile( $routeParams.userID );
       }
       else {
@@ -106,6 +106,13 @@ trafie.controller("profileController", function(
     $http.get(url)
     .success(function(res){
       $scope.activities = res;
+      $scope.active_years = [];
+      for( i in res) {
+        var _temp_year = new Date(res[i].date);
+        if ($scope.active_years.indexOf(_temp_year.getFullYear()) === -1) {
+          $scope.active_years.push(_temp_year.getFullYear());
+        }
+      }
     })
   }
 
