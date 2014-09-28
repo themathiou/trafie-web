@@ -236,7 +236,9 @@ exports.get_view = function( req, res ) {
   }
 
   function render_profile() {
-    var disciplines = {
+    let tr = translations[view_language];
+
+    let disciplines = {
         '100m':           tr['100m'],
         '200m':           tr['200m'],
         '400m':           tr['400m'],
@@ -265,9 +267,9 @@ exports.get_view = function( req, res ) {
     };
 
     // The data that will go to the front end
-    var view_data = {
+    let view_data = {
       'disciplines' : disciplines,
-      'tr'          : translations[view_language]
+      'tr'          : tr
     };
 
     res.render( 'profile', view_data );
