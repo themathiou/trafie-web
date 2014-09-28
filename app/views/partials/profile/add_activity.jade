@@ -2,14 +2,16 @@ accordion( class="info add_activity" ng-show="self")
 	accordion-group( heading=tr['add_new_activity'] is-open="accordions.addActivity")
 
 		label Choose your discipline
-		select( ng-model="newActivityForm.selected_discipline" ng-options="discipline.name for discipline in disciplines_options " ng-init="newActivityForm.selected_discipline = disciplines_options[4].name" )
+		select(ng-model="newActivityForm.selected_discipline")
 			option( value="")= tr['choose_your_discipline']
+			- for (i in disciplines)
+				option( value=disciplines[i])= tr[disciplines[i]]
 
 		form( ng-if="newActivityForm.selected_discipline" ng-submit="submitNewActivity()")
 			div.data_entry.form-group
 				label= tr['enter_your_performance'] +':'
 				//- time
-				div.performance_fields( ng-if="disciplines.time.indexOf(newActivityForm.selected_discipline.id) > -1" )
+				div.performance_fields( ng-if="disciplines.time.indexOf(newActivityForm.selected_discipline) > -1" )
 					div
 						label(for="hours_input")= tr['hours_short'] + ':'
 						input.form-control( size="3" maxlength="2" ng-model="newActivityForm.performance.hours" )
@@ -24,7 +26,7 @@ accordion( class="info add_activity" ng-show="self")
 						input.form-control( size="3" maxlength="2" ng-model="newActivityForm.performance.centiseconds")
 
 				//- distance
-				div.performance_fields( ng-if="disciplines.distance.indexOf(newActivityForm.selected_discipline.id) > -1" )
+				div.performance_fields( ng-if="disciplines.distance.indexOf(newActivityForm.selected_discipline) > -1" )
 					div
 						label(for="distance_1_input")= tr['meters_short'] + ':'
 						input.form-control(size="3" maxlength="2" ng-model="newActivityForm.performance.distance_1")
@@ -33,7 +35,7 @@ accordion( class="info add_activity" ng-show="self")
 						input.form-control(size="3" maxlength="2" ng-model="newActivityForm.performance.distance_2")
 
 				//- points
-				div.performance_fields( ng-if="disciplines.points.indexOf(newActivityForm.selected_discipline.id) > -1" )
+				div.performance_fields( ng-if="disciplines.points.indexOf(newActivityForm.selected_discipline) > -1" )
 					div
 						label(for="points_input")= tr['points'] + ':'
 						input.form-control(type="text" size="7" maxlength="5" ng-model="newActivityForm.performance.points")

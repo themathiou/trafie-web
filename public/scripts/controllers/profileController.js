@@ -71,11 +71,6 @@ trafie.controller("profileController", function(
     $http.get('/users/'+ user_id)
     .success(function(res){
       $rootScope.current_user = res;
-      $rootScope.disciplines_options = [];
-      for( i in res.disciplines ) {
-        var temp = { name: res.disciplines[i] , id: i };
-        $rootScope.disciplines_options.push(temp);
-      }
       //get user's activities
       $scope.getActivities( $rootScope.current_user._id , $rootScope.current_user.discipline);
       $scope.getDisciplinesOfUser( $rootScope.current_user._id );

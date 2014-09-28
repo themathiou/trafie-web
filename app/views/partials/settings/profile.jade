@@ -60,8 +60,10 @@ div.settings-element
 		span {{ user.discipline_formatted }}
 		div(ng-show="discipline_msg !=''") {{discipline_msg}}
 		div(ng-show="edit_discipline")
-			select(ng-model="user.new_main_discipline" ng-options="discipline.name for discipline in disciplines_options " ng-init="selected_discipline = disciplines_options[0].name" )
-				option(value="")= tr['choose_your_discipline']
+			select(ng-model="user.new_main_discipline")
+				option( value="")= tr['choose_your_discipline']
+				- for (i in disciplines)
+					option( value=disciplines[i])= tr[disciplines[i]]
 			div.formButtons
 				hr
 				input.btn.green( type="submit" value=tr['submit'])

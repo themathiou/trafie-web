@@ -143,7 +143,7 @@ trafie.controller("settingsController", function(
         });
         break;
       case 'discipline':
-        data = { "discipline" : $scope.user.new_main_discipline.id };
+        data = { "discipline" : $scope.user.new_main_discipline };
         console.log(data);
         $http.post('/settings_data', data)
         .success(function(res){
