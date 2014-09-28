@@ -185,7 +185,7 @@ function send_profile_data( res, profile_data, user_data ) {
   var gender = profile_data.male ? tr['male'] : tr['female'];
   var formatted_discipline = profile_data.discipline ? tr[profile_data.discipline] : '';
   var country = profile_data.country ? tr[profile_data.country] : '';
-  
+
   var profile = {
     '_id':                  profile_data._id,
     'first_name':           profile_data.first_name,
@@ -195,8 +195,7 @@ function send_profile_data( res, profile_data, user_data ) {
     'country':              country,
     'gender':               gender,
     'picture':              profile_data.picture,
-    'username':             profile_data.username,
-    'disciplines':          disciplines
+    'username':             profile_data.username
   }
 
   res.json( profile );
