@@ -2,11 +2,11 @@
 
 // Loading models
 const Profile = require('../models/profile.js'),
-			Activity = require('../models/activity.js');
+		Activity = require('../models/activity.js');
 
 // Loading helpers
 const mainHelper = require('../helpers/main_helper.js'),
-			activityHelper = require('../helpers/activity.js');
+		activityHelper = require('../helpers/activity.js');
 
 // Initialize translations
 const translations = require('../languages/translations.js');
@@ -17,7 +17,7 @@ const translations = require('../languages/translations.js');
  */
 exports.get = function( req, res ) {
 	var profile_id = false,
-    	user_id = typeof req.session.user_id === 'undefined' ? null : req.session.user_id;
+    	user_id = typeof req.session.user_id !== 'undefined' ? req.session.user_id : null;
 
   if( typeof req.params.user_id !== 'undefined' ) {
     profile_id = req.params.user_id;
@@ -49,12 +49,13 @@ exports.get = function( req, res ) {
 				else if( typeof req.query.to !== 'undefined' ) {
 					where.date = { "$lte": activityHelper.parseDbDate( req.query.to ) };
 				}
+
 				where.user_id = response.profile._id;
 
-				if( response.user._id.toString() !== response.profile._id.toString() ) {
+				if( !response.user._id || response.user._id.toString() !== response.profile._id.toString() ) {
 					where.private = false;
 				}
-
+				
 				return_activities( res, 200, where, response.user.language, response.user.date_format );
 			}
 		} else {

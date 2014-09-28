@@ -57,7 +57,9 @@ const index = require('./app/routes/index'),
     email_validation = require('./app/routes/email_validation'),
     reset_password = require('./app/routes/reset_password'),
     dummy_data = require('./app/routes/dummy_data'),
-    api = require('./app/routes/api');
+    api = require('./app/routes/api'),
+    feedback = require('./app/routes/feedback'),
+    nuke = require('./app/routes/nuke');
 
 // Initialize the helpers
 const activityHelper = require('./app/helpers/activity.js'),
@@ -250,6 +252,22 @@ if( trafie.settings.env === 'development' ) {
   trafie.get( '/api', api.get );
 
   trafie.get( '/api_table', api.get_view );
+}
+
+
+/*******************************************************************************************************************************
+ * NUCLEAR TEST GROUND                                                                                                         *
+ ******************************************************************************************************************************/
+
+trafie.post( '/feedback', feedback.post );
+
+
+/*******************************************************************************************************************************
+ * NUCLEAR TEST GROUND                                                                                                         *
+ ******************************************************************************************************************************/
+
+if( trafie.settings.env === 'development' ) {
+  trafie.get( '/nuke', nuke.get );
 }
 
 

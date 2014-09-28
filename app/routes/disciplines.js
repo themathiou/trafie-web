@@ -1,54 +1,57 @@
 'use strict';
 
 // Loading models
-var Profile = require('../models/profile.js'),
+const Profile = require('../models/profile.js'),
 	Activity = require('../models/activity.js');
 
+// Loading helpers
+const mainHelper = require('../helpers/main_helper.js');
+
 // Initialize translations
-var translations = require('../languages/translations.js');
+const translations = require('../languages/translations.js');
 
 /**
- * Activities - GET
+ * Disciplines - GET
  */
 exports.get = function( req, res ){
-	var user_id = req.params.user_id;
+	var profile_id = req.params.user_id,
+		user_id = typeof req.session.user_id !== 'undefined' ? req.session.user_id : null;
 
-	if( user_id ) {
-		var user_data;
-		// Else, fetch the first name and the last name of the user from the database
-		Profile.schema.findOne({ '_id': user_id }, 'language')
-		.then( function( response ) {
-			user_data = response;
-			return Activity.schema.getDisciplinesPerformedByUser( { 'user_id': user_id } );
-		})
-		.then( function( disciplines ) {
-			var response = [];
-			var disciplines_length = disciplines.length;
-			var tr = translations[user_data.language];
+	if( profile_id ) {
+		mainHelper.validateAccess( user_id, profile_id, function( response ) {
+			// If the user has a valid session and they are not visiting a private profile
+	    	if( response.success ) {
+	    		let user = response.user;
+	    		let profile = response.profile;
 
-			for( var i=0 ; i<disciplines_length ; i++ ) {
-				response[i] = {
-					'discipline': 			disciplines[i],
-					'formatted_discipline': tr[disciplines[i]]
-				};
+				let where = { 'user_id': profile_id };
+				if( !user_id || response.user._id.toString() !== response.profile._id.toString() ) {
+					where.private = false;
+				}
+
+				Activity.schema.getDisciplinesPerformedByUser( where )
+				.then( function( disciplines ) {
+					let response = [];
+					let disciplines_length = disciplines.length;
+					let tr = translations[user.language];
+
+					for( var i=0 ; i<disciplines_length ; i++ ) {
+						response[i] = {
+							'discipline': 			disciplines[i],
+							'formatted_discipline': tr[disciplines[i]]
+						};
+					}
+
+					res.status(200).json( response );
+				})
+				.fail( function( error ) {
+					res.status(500).json(null);
+				});
+			} else {
+				res.status(404).json(null);
 			}
-			
-			res.json( response );
-		})
-		.fail( function( error ) {
-			send_error_page( error, res );
 		});
 	} else {
-		res.json( null );
+		res.status(404).json( null );
 	}
 };
-
-/**
- * Sends an error page in case a query fails
- * @param string error
- * @param object res
- */
-function send_error_page( error, res ) {
-	res.statusCode = 500;
-	res.json( null );
-}
