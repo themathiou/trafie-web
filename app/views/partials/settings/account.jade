@@ -27,8 +27,8 @@ div.settings-element
 
 //LANGUAGE
 div.settings-element
+	label= tr['language'] + ': '
 	form( method="POST" ng-submit="submitChangeSetting('language')")
-		label= tr['language'] + ': '
 		span {{user.language}}
 		div(ng-show="language_msg !=''") {{language_msg}}
 		div( ng-show="edit_language" )
@@ -44,8 +44,8 @@ div.settings-element
 
 //DATE FORMAT
 div.settings-element
+	label= tr['date_format'] + ': '
 	form( method="POST" ng-submit="submitChangeSetting('date-format')" )
-		label= tr['date_format'] + ': '
 		span {{user.date_format}}
 		div(ng-show="dateformat_msg !=''") {{dateformat_msg}}
 		div( ng-show="edit_dateformat" )
@@ -60,8 +60,9 @@ div.settings-element
 
 //USERNAME
 div.settings-element
+	label= tr['username'] + ': '
 	form( method="POST" ng-submit="submitChangeSetting('username')" )
-		label http://www.trafie.com/
+		span http://www.trafie.com/
 		//span= errors.username
 		span#username_error
 		span.existed( ng-show="!edit_username" ) {{user.username || user._id}}

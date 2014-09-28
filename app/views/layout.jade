@@ -19,24 +19,22 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
     div#mainmenu_container.col-xs-12.col-sm-12.col-md-12.col-lg-12
         div#mainmenu.col-xs-12.col-sm-12.col-md-10.col-lg-8.col-md-offset-1.col-lg-offset-2
             a.logo.brand( href="/" )
+
             //- DESKTOP
             span( ng-if="!mobile" )
                 input.search( type="text" ng-model="asyncSelected" placeholder="search for athletes!" typeahead-on-select="onSelect($item, $model, $label)" typeahead="result.label for result in searchUser($viewValue)" typeahead-loading="loadingLocations" class="form-control" autocomplete="off" )
 
-                if user._id
-                    ul.navigation_menu
-                        li
-                            a.menu_profile(href="/" ng-class="{active: section == 'profile'}" ) {{user.first_name}}
-                        li
-                            a.menu_statistics(href="/statistics" ng-class="{active: section == 'statistics'}")= tr['statistics']
-                        li
-                            a.menu_settings(href="/settings" ng-class="{active: section == 'settings'}")= tr['settings']
-                else
-                    ul.navigation_menu
-                        li
-                            a.menu_profile(href="/register") Register
-                        li
-                            a.menu_statistics(href="/login") Login
+                ul.navigation_menu
+                    li(ng-if="!isVisitor")
+                        a.menu_profile(href="/" ng-class="{active: section == 'profile'}" ) {{user.first_name}}
+                    li(ng-if="!isVisitor")
+                        a.menu_statistics(href="/statistics" ng-class="{active: section == 'statistics'}")= tr['statistics']
+                    li(ng-if="!isVisitor")
+                        a.menu_settings(href="/settings" ng-class="{active: section == 'settings'}")= tr['settings']
+                    li(ng-if="isVisitor")
+                        a(href="/login") Login
+                    li(ng-if="isVisitor")
+                        a(href="/register") Register
 
             //- MOBILE
             span( ng-if="mobile" ng-init="isCollapsed = true")
@@ -45,20 +43,17 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
                     div.flex_wrapper
                         input.search( type="text" ng-model="asyncSelected" placeholder="search for athletes!" typeahead-on-select="onSelect($item, $model, $label)" typeahead="result.label for result in searchUser($viewValue)" typeahead-loading="loadingLocations" class="form-control" autocomplete="off" )
 
-                        if user._id
-                            ul.navigation_menu
-                                li
-                                    a.menu_profile(href="/" ng-class="{active: section == 'profile'}" ) {{user.first_name}}
-                                //- li
-                                    a.menu_statistics(href="/statistics" ng-class="{active: section == 'statistics'}")= tr['statistics']
-                                li
-                                    a.menu_settings(href="/settings" ng-class="{active: section == 'settings'}")= tr['settings']
-                        else
-                            ul.navigation_menu
-                                li
-                                    a.menu_profile(href="/register") Register
-                                li
-                                    a.menu_stat
+                        ul.navigation_menu
+                            li(ng-if="!isVisitor")
+                                a.menu_profile(href="/" ng-class="{active: section == 'profile'}" ) {{user.first_name}}
+                            //- li(ng-if="!isVisitor")
+                                a.menu_statistics(href="/statistics" ng-class="{active: section == 'statistics'}")= tr['statistics']
+                            li(ng-if="!isVisitor")
+                                a.menu_settings(href="/settings" ng-class="{active: section == 'settings'}")= tr['settings']
+                             li(ng-if="isVisitor")
+                                a(href="/login") Login
+                            li(ng-if="isVisitor")
+                                a(href="/register") Register
 
 
     //- ALERTS
