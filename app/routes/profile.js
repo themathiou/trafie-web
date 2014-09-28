@@ -185,42 +185,7 @@ function send_profile_data( res, profile_data, user_data ) {
   var gender = profile_data.male ? tr['male'] : tr['female'];
   var formatted_discipline = profile_data.discipline ? tr[profile_data.discipline] : '';
   var country = profile_data.country ? tr[profile_data.country] : '';
-
-  /************************************************************************************************************
-   *                                                                                                          *
-   *                                                                                                          *
-   *  TO BE REMOVED! :-D                                                                                      *
-   *                                                                                                          *
-   *                                                                                                          *
-   * **********************************************************************************************************/
-  var disciplines = {
-      '100m':           tr['100m'],
-      '200m':           tr['200m'],
-      '400m':           tr['400m'],
-      '800m':           tr['800m'],
-      '1500m':          tr['1500m'],
-      '3000m':          tr['3000m'],
-      '60m_hurdles':    tr['60m_hurdles'],
-      '100m_hurdles':   tr['100m_hurdles'],
-      '110m_hurdles':   tr['110m_hurdles'],
-      '400m_hurdles':   tr['400m_hurdles'],
-      '3000m_steeple':  tr['3000m_steeple'],
-      '4x100m_relay':   tr['4x100m_relay'],
-      '4x400m_relay':   tr['4x400m_relay'],
-      'marathon':       tr['marathon'],
-      'high_jump':      tr['high_jump'],
-      'long_jump':      tr['long_jump'],
-      'triple_jump':    tr['triple_jump'],
-      'pole_vault':     tr['pole_vault'],
-      'shot_put':       tr['shot_put'],
-      'discus':         tr['discus'],
-      'hammer':         tr['hammer'],
-      'javelin':        tr['javelin'],
-      'pentathlon':     tr['pentathlon'],
-      'heptathlon':     tr['heptathlon'],
-      'decathlon':      tr['decathlon']
-  };
-
+  
   var profile = {
     '_id':                  profile_data._id,
     'first_name':           profile_data.first_name,
