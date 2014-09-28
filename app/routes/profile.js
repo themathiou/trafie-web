@@ -237,39 +237,39 @@ exports.get_view = function( req, res ) {
 
   function render_profile() {
     let disciplines = [
-        '100m',
-        '200m',
-        '400m',
-        '800m',
-        '1500m',
-        '3000m',
-        '60m_hurdles',
-        '100m_hurdles',
-        '110m_hurdles',
-        '400m_hurdles',
-        '3000m_steeple',
-        '4x100m_relay',
-        '4x400m_relay',
-        'marathon',
-        'high_jump',
-        'long_jump',
-        'triple_jump',
-        'pole_vault',
-        'shot_put',
-        'discus',
-        'hammer',
-        'javelin',
-        'pentathlon',
-        'heptathlon',
-        'decathlon',
+      '100m',
+      '200m',
+      '400m',
+      '800m',
+      '1500m',
+      '3000m',
+      '60m_hurdles',
+      '100m_hurdles',
+      '110m_hurdles',
+      '400m_hurdles',
+      '3000m_steeple',
+      '4x100m_relay',
+      '4x400m_relay',
+      'marathon',
+      'high_jump',
+      'long_jump',
+      'triple_jump',
+      'pole_vault',
+      'shot_put',
+      'discus',
+      'hammer',
+      'javelin',
+      'pentathlon',
+      'heptathlon',
+      'decathlon'
     ];
 
     // The data that will go to the front end
     let view_data = {
       'disciplines' : disciplines,
-      'tr'          : tr
+      'tr'          : translations[view_language]
     };
-
+    
     res.render( 'profile', view_data );
   }
 };
