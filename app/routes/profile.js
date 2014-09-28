@@ -266,7 +266,7 @@ exports.get_view = function( req, res ) {
 
     // The data that will go to the front end
     let view_data = {
-      'disciplines' : translations[view_language],
+      'disciplines' : disciplines,
       'tr'          : tr
     };
 
