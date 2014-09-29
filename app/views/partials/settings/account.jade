@@ -29,10 +29,10 @@ div.settings-element
 div.settings-element
 	label= tr['language'] + ': '
 	form( method="POST" ng-submit="submitChangeSetting('language')")
-		span {{user.language}}
+		span {{localUser.language}}
 		div(ng-show="language_msg !=''") {{language_msg}}
 		div( ng-show="edit_language" )
-			select(name="language" ng-model="user.new_language")
+			select(name="language" ng-model="localUser.new_language")
 				option(value="no-selection" selected)= tr['choose_your_language']
 				- for( var i in languages )
 						option( value=i )= languages[i]
@@ -46,10 +46,10 @@ div.settings-element
 div.settings-element
 	label= tr['date_format'] + ': '
 	form( method="POST" ng-submit="submitChangeSetting('date-format')" )
-		span {{user.date_format}}
+		span {{localUser.date_format}}
 		div(ng-show="dateformat_msg !=''") {{dateformat_msg}}
 		div( ng-show="edit_dateformat" )
-			select( name='date_format' ng-model="user.date_format")
+			select( name='date_format' ng-model="localUser.date_format")
 				option( value='m-d-y' )= tr['m-d-y']
 				option( value='d-m-y' )= tr['d-m-y']
 		div.formButtons( ng-show="edit_dateformat" )
@@ -65,8 +65,8 @@ div.settings-element
 		span http://www.trafie.com/
 		//span= errors.username
 		span#username_error
-		span.existed( ng-show="!edit_username" ) {{user.username || user._id}}
-		input( ng-model="user.new_username" placeholder="{{user.username || user._id}}" ng-show="edit_username" )
+		span.existed( ng-show="!edit_username" ) {{localUser.username || localUser._id}}
+		input( ng-model="localUser.new_username" placeholder="{{localUser.username || localUser._id}}" ng-show="edit_username" )
 		div.formButtons( ng-show="edit_username" )
 			input.btn.green( type="submit" value=tr['submit'])
 			a.cancel_link( ng-click="showHide('edit_username')" )= tr['cancel']

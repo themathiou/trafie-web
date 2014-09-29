@@ -63,12 +63,12 @@ trafie.controller("statisticsController", function(
         }
 
         if ($routeParams.userID) {
-            $routeParams.userID === $rootScope.user._id || $routeParams.userID === $rootScope.user.username ? $scope.self = true : $scope.self = false;
+            $routeParams.userID === $rootScope.localUser._id || $routeParams.userID === $rootScope.localUser.username ? $scope.self = true : $scope.self = false;
             $scope.drawSimpleChart( $routeParams.userID, $rootScope.current_user.discipline )
         }
         else {
-            $rootScope.current_user = $rootScope.user;
-            $scope.drawSimpleChart( $rootScope.user._id, $rootScope.user.discipline );
+            $rootScope.current_user = $rootScope.localUser;
+            $scope.drawSimpleChart( $rootScope.localUser._id, $rootScope.localUser.discipline );
         }
     }
 

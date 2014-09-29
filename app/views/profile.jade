@@ -23,10 +23,10 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
     //- FILTERS
     ul.filters-row.col-xs-12.col-md-12.col-lg-12
       li( ng-repeat="discipline in current_user.disciplines_of_user" style="float:left;")
-        a( ng-click="getActivities( current_user._id, discipline.discipline )" ) {{discipline.formatted_discipline}}
+        a( ng-click="getActivities(current_user._id, discipline.discipline)" ) {{discipline.formatted_discipline}}
     ul.filters-row.col-xs-12.col-md-12.col-lg-12
       li( ng-repeat="year in active_years" style="float:left;")
-        a( ng-click="" ) {{year}}
+        a( ng-click="filterByYear(year)" ) {{year}}
 
     //- LOADING
     div#loading( hidden ).col-xs-12.col-md-12.col-lg-12
@@ -40,7 +40,7 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
           include partials/profile/add_activity
 
         //- .my-repeat-animation to be added
-        li( ng-repeat="activity in activities")
+        li( ng-repeat="activity in activities | filter:selected_year")
           div.info( ng-class="{editable: activity.show_editable_form}")
             a.deleteActivity( ng-if="self" ng-click="deleteActivity(activity._id)" tooltip-placement="top" tooltip="Delete")
               include partials/svg/delete_activity_svg
