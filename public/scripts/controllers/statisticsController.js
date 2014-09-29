@@ -83,15 +83,30 @@ trafie.controller("statisticsController", function(
      * @param user_id : the user id
      * @param discipline : the discipline we want to show
      */
-    $scope.drawSimpleChart = function( user_id, discipline ){
-      //start loading indicator
-      $scope.loading = true;
-        console.log('draw', user_id, discipline);
+    $scope.drawSimpleChart = function(user_id, discipline, year){
+        //start loading indicator
+        $scope.loading = true;
+        var _query = '';
+        if (!year) {
+            _query = '/users/' + user_id + '/activities?discipline=' + discipline;
+        }
+        else {
+            _query = '/users/' + user_id + '/activities?discipline=' + discipline + '&from=' +year+ '-01-01&to=' +year+ '-12-31';
+        }
+
         //call ajax_get (defined in script.js) in order to fetch the specific performances
-        $http.get('/users/' + user_id + '/activities?discipline=' + discipline)
+        $http.get(_query)
         .success(function(response){
             // parse response as JSON
             var res = response;
+
+            $scope.active_years = [];
+            for( i in res) {
+                var _temp_year = new Date(res[i].date);
+                if ($scope.active_years.indexOf(_temp_year.getFullYear()) === -1) {
+                  $scope.active_years.push(_temp_year.getFullYear());
+                }
+            }
 
             //reset data
             $scope.config.data.json.discipline = [];
