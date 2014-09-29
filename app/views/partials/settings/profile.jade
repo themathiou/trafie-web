@@ -3,7 +3,7 @@ h3= tr['profile_settings']
 //PROFILE PIC
 div.settings-element-profile-pic
 	label= tr['profile_picture'] + ': '
-	img.thumb( src="{{user.picture}}" )
+	img.thumb( src="{{localUser.picture}}" )
 	a.editLink( ng-click="showHide('edit_profilepic')" tooltip-placement="top" tooltip="Edit" )
 		include ../svg/edit_activity_svg
 	div( ng-show="edit_profilepic" )
@@ -27,10 +27,10 @@ div.settings-element-profile-pic
 div.settings-element(ng-class="{editable: edit_fname}")
 	label= tr['first_name'] + ': '
 	form.middle-section( method="POST" ng-submit="submitChangeSetting('first_name')")
-		span.existed(ng-show="!edit_fname") {{ user.first_name }}
+		span.existed(ng-show="!edit_fname") {{ localUser.first_name }}
 		div(ng-show="first_name_msg !=''") {{first_name_msg}}
 		div(ng-show="edit_fname")
-			input.form-control( ng-model="user.new_first_name" name="first_name" )
+			input.form-control( ng-model="localUser.new_first_name" name="first_name" )
 		div.formButtons( ng-show="edit_fname" )
 			hr
 			input.btn.green( type="submit" value=tr['submit'])
@@ -42,10 +42,10 @@ div.settings-element(ng-class="{editable: edit_fname}")
 div.settings-element(ng-class="{editable: edit_lastname}")
 	label= tr['last_name'] + ': '
 	form.middle-section( method="POST" ng-submit="submitChangeSetting('last_name')")
-		span.existed(ng-show="!edit_lastname") {{user.last_name}}
+		span.existed(ng-show="!edit_lastname") {{localUser.last_name}}
 		div(ng-show="last_name_msg !=''") {{last_name_msg}}
 		div(ng-show="edit_lastname" )
-			input(ng-model="user.new_last_name" name="last_name" )
+			input(ng-model="localUser.new_last_name" name="last_name" )
 		div.formButtons(ng-show="edit_lastname")
 			hr
 			input.btn.green( type="submit" value=tr['submit'])
@@ -57,10 +57,10 @@ div.settings-element(ng-class="{editable: edit_lastname}")
 div.settings-element
 	label= tr['main_discipline'] + ': '
 	form.middle-section( method="POST" ng-submit="submitChangeSetting('discipline')")
-		span {{ user.discipline_formatted }}
+		span {{ localUser.discipline_formatted }}
 		div(ng-show="discipline_msg !=''") {{discipline_msg}}
 		div(ng-show="edit_discipline")
-			select(ng-model="user.new_main_discipline")
+			select(ng-model="localUser.new_main_discipline")
 				option( value="")= tr['choose_your_discipline']
 				- for (i in disciplines)
 					option( value=disciplines[i])= tr[disciplines[i]]
@@ -75,11 +75,11 @@ div.settings-element
 div.settings-element
 	label= tr['privacy'] + ': '
 	form.middle-section( method="POST" ng-submit="submitChangeSetting('privacy')")
-		span {{user.private}}
+		span {{localUser.private}}
 		div(ng-show="privacy_msg !=''") {{privacy_msg}}
 		div( ng-show="edit_privacy" )
 			label(for="privacy") Private
-			input( type="checkbox" name="privacy" value="yes" ng-model="user.new_privacy" ng-show="edit_privacy" ng-checked="user.private" )
+			input( type="checkbox" name="privacy" value="yes" ng-model="localUser.new_privacy" ng-show="edit_privacy" ng-checked="localUser.private" )
 		div.formButtons(ng-show="edit_privacy")
 			hr
 			input.btn.green( type="submit" value=tr['submit'])
@@ -91,12 +91,12 @@ div.settings-element
 div.settings-element
 	label= tr['gender'] + ': '
 	form.middle-section( method="POST" ng-submit="submitChangeSetting('gender')")
-		span {{ user.gender_formatted }}
+		span {{ localUser.gender_formatted }}
 		div(ng-show="gender_msg !=''") {{gender_msg}}
 		div#gender( ng-show="edit_gender" )
-			input(id="male" name="gender" type="radio" ng-model="user.gender" value="male")
+			input(id="male" name="gender" type="radio" ng-model="localUser.gender" value="male")
 			label(for="male" class="clearfloat" )= tr['male']
-			input(id="female" name="gender" type="radio" ng-model="user.gender" value="female")
+			input(id="female" name="gender" type="radio" ng-model="localUser.gender" value="female")
 			label(for="female" class="clearfloat" )= tr['female']
 		div.formButtons(ng-show="edit_gender")
 			hr
@@ -111,11 +111,11 @@ div.settings-element
 div.settings-element
 	label= tr['birthday'] + ': '
 	form.middle-section( method="POST" ng-submit="submitChangeSetting('birthday')")
-		span {{ user.birthday.day }}.{{ user.birthday.month }}.{{ user.birthday.year }}
+		span {{ localUser.birthday.day }}.{{ localUser.birthday.month }}.{{ localUser.birthday.year }}
 		div(ng-show="birthday_msg !=''") {{birthday_msg}}
 		div(ng-show="edit_birthday")
 			p.input-group
-				input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="user.new_birthday" is-open="opened" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
+				input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="localUser.new_birthday" is-open="opened" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
 		div.formButtons(ng-show="edit_birthday")
 			hr
 			input.btn.green( type="submit" value=tr['submit'])
@@ -127,10 +127,10 @@ div.settings-element
 div.settings-element
 	label= tr['country'] + ': '
 	form.middle-section( method="POST" ng-submit="submitChangeSetting('country')")
-		span {{user.country_formatted}}
+		span {{localUser.country_formatted}}
 		div(ng-show="country_msg !=''") {{country_msg}}
 		div( ng-show="edit_country"  )
-			select( name="country" ng-model="user.country")
+			select( name="country" ng-model="localUser.country")
 				option(value="no-selection" selected)= tr['choose_your_country']
 				- for( var i in countries )
 					option( value=countries[i] )= tr[countries[i]]
@@ -146,10 +146,10 @@ div.settings-element
 div.settings-element
 	label= tr['about_me'] + ': '
 	form.middle-section( method="POST" ng-submit="submitChangeSetting('about')")
-		span( style="overflow-wrap: break-word;") {{user.about}}
+		span( style="overflow-wrap: break-word;") {{localUser.about}}
 		div(ng-show="about_msg !=''") {{about_msg}}
 		div( ng-show="edit_about" )
-			textarea.textarea( name="about" maxlength="400"  ng-model="user.new_about" ) {{user.about}}
+			textarea.textarea( name="about" maxlength="400"  ng-model="localUser.new_about" ) {{localUser.about}}
 		div.formButtons( ng-show="edit_about" )
 			hr
 			input.btn.green( type="submit" value=tr['submit'])

@@ -23,7 +23,7 @@ trafie.service('$modalSvc', function($rootScope, $modal, $http) {
 
 var ModalInstanceCtrl = function($rootScope, $scope, $http, $modalInstance, temp_activity_id) {
   $scope.confirm_delete = function() {
-    $http.delete('/users/' + $rootScope.user._id + '/activities/' + temp_activity_id)
+    $http.delete('/users/' + $rootScope.localUser._id + '/activities/' + temp_activity_id)
         .success(function(res) {
             $modalInstance.close(true);
         })

@@ -51,18 +51,20 @@ trafie.controller("profileController", function(
     $scope.newActivityForm = {};
 
     $scope.initProfile = function () {
+      $scope.selected_year = {};
+      $scope.selected_year.date = ''; //all years are shown. No filter applied.
+
       //true if this is the profile of the logged-in user
       $scope.page_not_found = false;
       $scope.self = false;
 
       if( $routeParams.userID ) {
-        $rootScope.user && ($routeParams.userID === $rootScope.user._id || $routeParams.userID === $rootScope.user.username) ? $scope.self = true : $scope.self = false;
+        $rootScope.localUser && ($routeParams.userID === $rootScope.localUser._id || $routeParams.userID === $rootScope.localUser.username) ? $scope.self = true : $scope.self = false;
         $scope.getProfile( $routeParams.userID );
       }
       else {
-        $scope.getProfile( $rootScope.user._id );
+        $scope.getProfile( $rootScope.localUser._id );
         $scope.self = true;
-        // $scope.getDisciplinesOfUser( $rootScope.user._id, $scope.self );
       }
   }
 
@@ -112,16 +114,24 @@ trafie.controller("profileController", function(
   }
 
   /*
+  filterByYear function : filters activities by year
+  @param year : the year we want i.e 2014
+   */
+  $scope.filterByYear = function (year) {
+    $scope.selected_year.date = year;
+  }
+
+  /*
   submitNewActivity function : creates the object for new activity submission and makes the ajax call (POST)
   @param type : the type of the discipline ( accepted values : time, distance, points )
    */
-  $scope.submitNewActivity = function(){
+  $scope.submitNewActivity = function () {
     var data = $scope.newActivityForm;
-    data.discipline = data.selected_discipline.id;
+    data.discipline = data.selected_discipline;
     var splitDate = data.date.toString().split(' ');
     data.date = splitDate[0] + ' ' + splitDate[1] + ' ' +splitDate[2] + ' ' +splitDate[3];
 
-    $http.post('/users/' + $rootScope.user._id + '/activities', data)
+    $http.post('/users/' + $rootScope.localUser._id + '/activities', data)
     .success(function(res){
       $scope.accordions.addActivity = false;
       $scope.activities.unshift(res);
@@ -202,7 +212,7 @@ trafie.controller("profileController", function(
     data.date = splitDate[0] + ' ' + splitDate[1] + ' ' +splitDate[2] + ' ' +splitDate[3];
     data.discipline = activity.discipline;
 
-    $http.put( "/users/" + $rootScope.user._id + "/activities/" + activity._id, data)
+    $http.put( "/users/" + $rootScope.localUser._id + "/activities/" + activity._id, data)
     .success( function(res){
       activity.formatted_performance = res.formatted_performance;
       activity.formatted_date = res.formatted_date;
@@ -220,7 +230,7 @@ trafie.controller("profileController", function(
    */
   $scope.changePrivacy = function (activity) {
     var _activity = !activity.private;
-    $http.put( "/users/" + $rootScope.user._id + "/activities/" + activity._id, { private: _activity })
+    $http.put( "/users/" + $rootScope.localUser._id + "/activities/" + activity._id, { private: _activity })
     .success( function(res){
       activity.private = res.private;
     })

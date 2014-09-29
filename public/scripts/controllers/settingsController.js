@@ -16,14 +16,14 @@ trafie.controller("settingsController", function(
     $http.get('/settings_data')
     .success(function(res){
       console.log(res);
-      $scope.user = res.user;
-      $scope.user.new_first_name = $scope.user.first_name;
-      $scope.user.new_last_name = $scope.user.last_name;
+      $scope.localUser = res.user;
+      $scope.localUser.new_first_name = $scope.localUser.first_name;
+      $scope.localUser.new_last_name = $scope.localUser.last_name;
     });
 
     //profile_pic
-    if( $scope.user ) {
-        $scope.user.new_profile_pic = 'motherhacker';
+    if( $scope.localUser ) {
+        $scope.localUser.new_profile_pic = 'motherhacker';
     }
     $scope.profile_pic_msg = '';
 
@@ -68,13 +68,13 @@ trafie.controller("settingsController", function(
         Profile settings
        */
       case 'profile_pic':
-        data = { "profile_pic" : $scope.user.new_profile_pic };
-        console.log($scope.user.new_profile_pic);
+        data = { "profile_pic" : $scope.localUser.new_profile_pic };
+        console.log($scope.localUser.new_profile_pic);
         $http.post('/settings_data', data)
         .success(function(res){
           console.log(res);
           if( res.success ) {
-            $scope.user.profile_pic = res.value;
+            $scope.localUser.profile_pic = res.value;
             $scope.profile_pic_msg='Profile pic successfully updated'; //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
             $scope.showHide('edit_profile_pic');
 
@@ -94,13 +94,13 @@ trafie.controller("settingsController", function(
         });
         break;
       case 'first_name':
-        data = { "first_name" : $scope.user.new_first_name  };
+        data = { "first_name" : $scope.localUser.new_first_name  };
         console.log(data);
         $http.post('/settings_data', data)
         .success(function(res){
           if( res.success ) {
-            $scope.user.first_name = res.value;
-            $rootScope.user.first_name = res.value;
+            $scope.localUser.first_name = res.value;
+            $rootScope.localUser.first_name = res.value;
             $scope.first_name_msg='Firstname successfully updated'; //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
             $scope.showHide('edit_fname');
             /* after 3 secconds hide the message */
@@ -118,12 +118,12 @@ trafie.controller("settingsController", function(
         });
         break;
       case 'last_name':
-        data = { "last_name" : $scope.user.new_last_name  };
+        data = { "last_name" : $scope.localUser.new_last_name  };
         console.log(data);
         $http.post('/settings_data', data)
         .success(function(res){
           if( res.success ) {
-            $scope.user.last_name = res.value;
+            $scope.localUser.last_name = res.value;
             $scope.last_name_msg='Lastname successfully updated'; //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
             $scope.showHide('edit_lastname');
 
@@ -143,14 +143,14 @@ trafie.controller("settingsController", function(
         });
         break;
       case 'discipline':
-        data = { "discipline" : $scope.user.new_main_discipline };
+        data = { "discipline" : $scope.localUser.new_main_discipline };
         console.log(data);
         $http.post('/settings_data', data)
         .success(function(res){
           if( res.success ) {
-            $scope.user.discipline = res.value;
-            $scope.user.discipline_formatted = res.value;
-            //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
+            $scope.localUser.discipline = res.value;
+            $scope.localUser.discipline_formatted = res.value;
+            //SHOULD GET MESSAGE FROM RESPONSE FOR FAIL CASE
             $scope.discipline_msg='Discipline successfully updated';
             $scope.showHide('edit_discipline');
 
@@ -167,16 +167,16 @@ trafie.controller("settingsController", function(
               $scope.discipline_msg = '';
             }, 3000);
           }
-          $scope.user.discipline_formatted = res.translated_value;
+          $scope.localUser.discipline_formatted = res.translated_value;
         });
         break;
       case 'privacy':
-        data = { "private" : $scope.user.new_privacy };
+        data = { "private" : $scope.localUser.new_privacy };
         console.log(data);
         $http.post('/settings_data', data)
         .success(function(res){
           if( res.success ) {
-            $scope.user.private = res.value;
+            $scope.localUser.private = res.value;
             $scope.privacy_msg='Privacy successfully updated'; //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
             $scope.showHide('edit_privacy');
 
@@ -196,12 +196,12 @@ trafie.controller("settingsController", function(
         });
         break;
       case 'gender':
-        data = { "gender" : $scope.user.gender  };
+        data = { "gender" : $scope.localUser.gender  };
         console.log(data);
         $http.post('/settings_data', data)
         .success(function(res){
           if( res.success ) {
-            $scope.user.gender = res.value;
+            $scope.localUser.gender = res.value;
             $scope.gender_msg='Gender successfully updated'; //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
             $scope.showHide('edit_gender');
 
@@ -218,14 +218,14 @@ trafie.controller("settingsController", function(
               $scope.gender_msg = '';
             }, 3000);
           }
-          $scope.user.gender_formatted = res.translated_value;
+          $scope.localUser.gender_formatted = res.translated_value;
         });
         break;
       case 'birthday':
-        //var utc = new Date($scope.user.new_birthday.getUTCFullYear(), $scope.user.new_birthday.getUTCMonth(), $scope.user.new_birthday.getUTCDate(),  $scope.user.new_birthday.getUTCHours(), $scope.user.new_birthday.getUTCMinutes(), $scope.user.new_birthday.getUTCSeconds());;
-        //var iso = $scope.user.new_birthday.toISOString();
-        // $scope.user.new_birthday = bday[0] + ' ' + bday[1] + ' ' + bday[2] + ' ' + bday[3];
-        var selected_date = $scope.user.new_birthday;
+        //var utc = new Date($scope.localUser.new_birthday.getUTCFullYear(), $scope.localUser.new_birthday.getUTCMonth(), $scope.localUser.new_birthday.getUTCDate(),  $scope.localUser.new_birthday.getUTCHours(), $scope.localUser.new_birthday.getUTCMinutes(), $scope.localUser.new_birthday.getUTCSeconds());;
+        //var iso = $scope.localUser.new_birthday.toISOString();
+        // $scope.localUser.new_birthday = bday[0] + ' ' + bday[1] + ' ' + bday[2] + ' ' + bday[3];
+        var selected_date = $scope.localUser.new_birthday;
 
 
         data = { "birthday" : {"day" : selected_date.getDate() , "month":selected_date.getMonth() , "year":selected_date.getFullYear()} };
@@ -234,7 +234,7 @@ trafie.controller("settingsController", function(
         $http.post('/settings_data', data)
         .success(function(res){
           if( res.success ) {
-            $scope.user.birthday = res.value;
+            $scope.localUser.birthday = res.value;
             $scope.birthday_msg='Birthday successfully updated'; //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
             $scope.showHide('edit_birthday');
 
@@ -254,12 +254,12 @@ trafie.controller("settingsController", function(
         });
         break;
       case 'country':
-        data = { "country" : $scope.user.country };
+        data = { "country" : $scope.localUser.country };
         console.log(data);
         $http.post('/settings_data', data)
         .success(function(res){
           if( res.success ) {
-            $scope.user.country = res.value;
+            $scope.localUser.country = res.value;
             $scope.country_msg='Country successfully updated'; //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
             $scope.showHide('edit_country');
 
@@ -276,15 +276,15 @@ trafie.controller("settingsController", function(
               $scope.country_msg = '';
             }, 3000);
           }
-          $scope.user.country_formatted = res.translated_value;
+          $scope.localUser.country_formatted = res.translated_value;
         });
         break;
       case 'about':
-        data = { "about" : $scope.user.new_about };
+        data = { "about" : $scope.localUser.new_about };
         $http.post('/settings_data', data)
         .success(function(res){
           if( res.success ) {
-            $scope.user.about = res.value;
+            $scope.localUser.about = res.value;
             $scope.about_msg = 'About successfully updated'; //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
             $scope.showHide('edit_about');
 
@@ -310,12 +310,12 @@ trafie.controller("settingsController", function(
       case 'password':
         break;
       case 'language':
-        data = { "language" : $scope.user.new_language  };
+        data = { "language" : $scope.localUser.new_language  };
         console.log(data);
         $http.post('/settings_data', data)
         .success(function(res){
           if( res.success ) {
-            $scope.user.language = res.value;
+            $scope.localUser.language = res.value;
             $scope.discipline_msg='Discipline successfully updated'; //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
             $scope.showHide('edit_discipline');
 
@@ -334,16 +334,16 @@ trafie.controller("settingsController", function(
               $scope.language_msg = '';
             }, 3000);
           }
-          $scope.user.language = res.translated_value;
+          $scope.localUser.language = res.translated_value;
         });
         break;
       case 'date-format':
-        data = { "date_format" : $scope.user.date_format };
+        data = { "date_format" : $scope.localUser.date_format };
         console.log(data);
         $http.post('/settings_data', data)
         .success(function(res){
           if( res.success ) {
-            $scope.user.date_format = res.value;
+            $scope.localUser.date_format = res.value;
             $scope.discipline_msg='Date format successfully updated'; //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
             $scope.showHide('edit_dateformat');
 
@@ -360,30 +360,30 @@ trafie.controller("settingsController", function(
               $scope.dateformat_msg = '';
             }, 3000);
           }
-          $scope.user.date_format = res.translated_value;
+          $scope.localUser.date_format = res.translated_value;
         });
         break;
       case 'username':
-        data = { "username" : $scope.user.new_username };
+        data = { "username" : $scope.localUser.new_username };
         console.log(data);
         $http.post('/settings_data', data)
         .success(function(res){
           if( res.success ) {
-            $scope.user.username = res.value;
+            $scope.localUser.username = res.value;
             $scope.discipline_msg='Username successfully updated'; //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
             $scope.showHide('edit_username');
 
             /* after 3 secconds hide the message */
             $timeout(function(){
-              $scope.username_msg = '';
+              $scope.localUsername_msg = '';
             }, 3000);
           }
           else {
-            $scope.username_msg = res.message;
+            $scope.localUsername_msg = res.message;
 
             /* after 3 secconds hide the message */
             $timeout(function(){
-              $scope.username_msg = '';
+              $scope.localUsername_msg = '';
             }, 3000);
           }
         });
@@ -398,7 +398,7 @@ trafie.controller("settingsController", function(
    * [Logs out]
    */
   $scope.logout = function(){
-    $rootScope.user = {};
+    $rootScope.localUser = {};
     $window.location.href = '/logout';
   }
 

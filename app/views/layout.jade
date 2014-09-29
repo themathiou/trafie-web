@@ -26,7 +26,7 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
 
                 ul.navigation_menu
                     li(ng-if="!isVisitor")
-                        a.menu_profile(href="/" ng-class="{active: section == 'profile'}" ) {{user.first_name}}
+                        a.menu_profile(href="/" ng-class="{active: section == 'profile'}" ) {{localUser.first_name}}
                     li(ng-if="!isVisitor")
                         a.menu_statistics(href="/statistics" ng-class="{active: section == 'statistics'}")= tr['statistics']
                     li(ng-if="!isVisitor")
@@ -45,7 +45,7 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
 
                         ul.navigation_menu
                             li(ng-if="!isVisitor")
-                                a.menu_profile(href="/" ng-class="{active: section == 'profile'}" ) {{user.first_name}}
+                                a.menu_profile(href="/" ng-class="{active: section == 'profile'}" ) {{localUser.first_name}}
                             //- li(ng-if="!isVisitor")
                                 a.menu_statistics(href="/statistics" ng-class="{active: section == 'statistics'}")= tr['statistics']
                             li(ng-if="!isVisitor")
