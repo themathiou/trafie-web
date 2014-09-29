@@ -31,16 +31,16 @@ var email = {
 	     'Follow the link to verify your email:<br>' +
 	     '<a href="' + host + '/validate/' + hash + '">This is the link</a>';
 
-	  transport.sendMail(message, function(error) {
+	  transport.sendMail( message, function( error ) {
 	    if(error) {
-	        console.log('Error occured: ' + error);
+	        console.log( 'Error occured while sending email: ' + error );
 	        return;
 	    }
 	  });
 	},
 
 	send_reset_password_email: function( email, first_name, last_name, hash, host ) {
-		var message = {};
+	var message = {};
 	  message.to = email;
 	  message.subject = 'Password reset request';
 	  message.html = '<h2>Hello ' + first_name + ' ' + last_name + '</h2>' +
@@ -48,12 +48,26 @@ var email = {
 	     'Follow the link in order to enter a new password:<br>' +
 	     '<a href="' + host + '/reset_password/' + hash + '">This is the link</a>';
 
-	  transport.sendMail(message, function(error) {
+	  transport.sendMail( message, function( error ) {
 	    if(error) {
-	        console.log('Error occured: ' + error);
+	        console.log( 'Error occured while sending email: ' + error );
 	        return;
 	    }
 	  });
+	},
+
+	send_email: function( email_address, email_text, email_subject ) {
+		var message = {};
+	  	message.to = email_address;
+	  	message.html = email_text;
+	  	message.subject = email_subject || '';
+
+	  	transport.sendMail( message, function( error ) {
+		    if(error) {
+		        console.log( 'Error occured while sending email: ' + error );
+		        return;
+		    }
+	  	});
 	}
 };
 
