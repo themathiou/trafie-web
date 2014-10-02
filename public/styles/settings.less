@@ -19,7 +19,7 @@
     }
 
     label {
-      flex-shrink: 0;
+      .flex-shrink(0);
       width: 20%;
       font-size: 1em;
       font-weight: bold;
@@ -27,10 +27,10 @@
 
     .middle-section {
       padding: 0px 5px;
-      display: flex;
+      .flexbox();
       flex-direction: column;
-      justify-content: space-between;
-      align-items: flex-start;
+      .justify-content(space-between);
+      .align-items(flex-start);
     }
 
     form {
@@ -53,10 +53,10 @@
   .settings-element {
     border-bottom: 1px solid @black_25;
     padding: 10px 5px;
-    display: flex;
+    .flexbox();
     flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
+    .justify-content(space-between);
+    .align-items(flex-start);
 
     &.editable {
       background-color: @lightgray;
@@ -115,8 +115,8 @@
 }
 
 .logout {
-  display: flex;
-  justify-content: center;
+  .flexbox();
+  .justify-content(center);
   padding: 20px;
 
   a{

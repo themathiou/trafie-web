@@ -26,10 +26,10 @@ a {
 }
 
 .loading {
-  display: flex;
-  justify-content: flex-end;
+  .flexbox();
+  .justify-content(flex-end);
   flex-direction: column;
-  align-items: center;
+  .align-items(center);
   min-height: 40px;
   background-image: url("@{images}ui/loading.gif");
   background-repeat: no-repeat;
@@ -38,16 +38,16 @@ a {
 
 //filters-row is the class for an unordered-list(ul)
 .filters-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
+  .flexbox();
+  .align-items(center);
+  .justify-content(center);
+  .flex();
   padding: 0px;
   list-style-type: none;
 
   li {
     margin-right: 10px;
-    flex-shrink:0;
+    .flex-shrink(0);
   }
 
   a {
