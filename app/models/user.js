@@ -10,10 +10,11 @@ const mongoose = require('mongoose'),
 
 //Define User SCHEMA
 var userSchema = mongoose.Schema({
-  email 	: { type: String, required: true, unique: true, index: true },
-  password 	: { type: String, required: true },
-  valid		: { type: Boolean, required: true, default: false}
+	email 		: { type: String, required: true, unique: true, index: true },
+	password 	: { type: String, required: true },
+	valid		: { type: Boolean, required: true, default: false}
 });
+
 
 /**
 * Find user by element

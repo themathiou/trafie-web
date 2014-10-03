@@ -2,31 +2,32 @@
 
 // The User Model
 const mongoose = require('mongoose'),
-			db = mongoose.connection,
-			q = require('q');
+		db = mongoose.connection,
+		q = require('q');
 
 //Define User SCHEMA
 var profileSchema = mongoose.Schema({
-  first_name	: { type: String, 	required: true },
-  last_name		: { type: String, 	required: true },
-  username 		: { type: String, 	required: false, 	default: null },
-  male			: { type: Boolean, 	required: false, 	default: null },
-  birthday		: {
-  					day: 	{ type: Number, required: false, default: null },
-  					month: 	{ type: Number, required: false, default: null },
-  					year: 	{ type: Number, required: false, default: null } 
-   				  },
-  discipline	: { type: String, 	required: false, 	default: '' },
-  about 		: { type: String, 	required: false, 	default: '' },
-  country 		: { type: String, 	required: false, 	default: '' },
-  picture 		: { type: String, 	required: false, 	default: '' },
-  date_format 	: { type: String, 	required: true, 	default: 'd-m-y' },
-  language 		: { type: String, 	required: true, 	default: 'en' },
-  private 		: { type: Boolean, 	required: true, 	default: false },
-  keywords 		: {
-  					names: [ { type: String, required: false, default: '' } ]
-  				  }
+	first_name	: { type: String, 	required: true },
+	last_name	: { type: String, 	required: true },
+	username 	: { type: String, 	required: false, 	default: null },
+	male		: { type: Boolean, 	required: false, 	default: null },
+	birthday	: {
+					day: 	{ type: Number, required: false, default: null },
+					month: 	{ type: Number, required: false, default: null },
+					year: 	{ type: Number, required: false, default: null } 
+				},
+	discipline	: { type: String, 	required: false, 	default: '' },
+	about 		: { type: String, 	required: false, 	default: '' },
+	country 	: { type: String, 	required: false, 	default: '' },
+	picture 	: { type: String, 	required: false, 	default: '' },
+	date_format : { type: String, 	required: true, 	default: 'd-m-y' },
+	language 	: { type: String, 	required: true, 	default: 'en' },
+	private 	: { type: Boolean, 	required: true, 	default: false },
+	keywords 	: {
+					names: [ { type: String, required: false, default: '' } ]
+				}
 });
+
 
 /**
 * Find profile by element
@@ -54,16 +55,16 @@ profileSchema.find = function( where, select, limit, skip, sort ) {
 
 	Profile.find( where, select,
 		// Other parameters
-	    {
-	      'limit': limit,
-	      'skip': skip,
-	      'sort': sort
-	      /* Sort example
-	      {
-	        // -1 = descending
-	        date: sort
-	      } */
-	    }, function ( err, profile ) {
+		{
+			'limit': limit,
+			'skip': skip,
+			'sort': sort
+			/* Sort example
+			{
+				// -1 = descending
+				date: sort
+			} */
+		}, function ( err, profile ) {
 		d.resolve( profile );
 	});
 	return d.promise;

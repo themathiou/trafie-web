@@ -27,12 +27,12 @@
 'use strict';
 
 const express = require('express'),
-    http = require('http'),
-    path = require('path'),
-    url = require('url'),
-    mongoose = require('mongoose'),
-    crypto = require('crypto'),
-    q = require('q');
+	http = require('http'),
+	path = require('path'),
+	url = require('url'),
+	mongoose = require('mongoose'),
+	crypto = require('crypto'),
+	q = require('q');
 
 // Initialize express
 const trafie = express();
@@ -46,25 +46,25 @@ const db = mongoose.connection;
 
 // Initialize the routes
 const index = require('./app/routes/index'),
-    login = require('./app/routes/login'),
-    register = require('./app/routes/register'),
-    profile = require('./app/routes/profile'),
-    activities = require('./app/routes/activities'),
-    disciplines = require('./app/routes/disciplines'),
-    search = require('./app/routes/search'),
-    statistics = require('./app/routes/statistics'),
-    settings = require('./app/routes/settings'),
-    email_validation = require('./app/routes/email_validation'),
-    reset_password = require('./app/routes/reset_password'),
-    dummy_data = require('./app/routes/dummy_data'),
-    api = require('./app/routes/api'),
-    feedback = require('./app/routes/feedback'),
-    nuke = require('./app/routes/nuke');
+	login = require('./app/routes/login'),
+	register = require('./app/routes/register'),
+	profile = require('./app/routes/profile'),
+	activities = require('./app/routes/activities'),
+	disciplines = require('./app/routes/disciplines'),
+	search = require('./app/routes/search'),
+	statistics = require('./app/routes/statistics'),
+	settings = require('./app/routes/settings'),
+	email_validation = require('./app/routes/email_validation'),
+	reset_password = require('./app/routes/reset_password'),
+	dummy_data = require('./app/routes/dummy_data'),
+	api = require('./app/routes/api'),
+	feedback = require('./app/routes/feedback'),
+	nuke = require('./app/routes/nuke');
 
 // Initialize the helpers
 const activityHelper = require('./app/helpers/activity.js'),
-    profileHelper = require('./app/helpers/profile.js'),
-    userHelper = require('./app/helpers/user.js');
+	profileHelper = require('./app/helpers/profile.js'),
+	userHelper = require('./app/helpers/user.js');
 
 
 /*******************************************************************************************************************************
@@ -95,7 +95,7 @@ trafie.use(express.static(path.join(__dirname, 'public')));
 
 // Development Only
 if ('development' == trafie.get('env')) {
-  trafie.use(express.errorHandler());
+ 	trafie.use(express.errorHandler());
 }
 
 
@@ -211,12 +211,12 @@ trafie.post( '/reset_password/:hash', reset_password.post );
  ******************************************************************************************************************************/
 
 trafie.use( function( req, res, next ) {
-  res.status( 404 );
-  res.sendfile('./app/views/four_oh_four.html');
+ 	res.status( 404 );
+ 	res.sendfile('./app/views/four_oh_four.html');
 });
 
 trafie.get('/four_oh_four', function( req, res ) {
-  res.sendfile('./app/views/four_oh_four.html');
+ 	res.sendfile('./app/views/four_oh_four.html');
 });
 
 
@@ -228,8 +228,8 @@ trafie.get('/four_oh_four', function( req, res ) {
  * Logout - GET
  */
 trafie.get('/logout', function( req, res ) {
-  req.session.destroy();
-  res.redirect('/');
+ 	req.session.destroy();
+ 	res.redirect('/');
 });
 
 
@@ -238,9 +238,9 @@ trafie.get('/logout', function( req, res ) {
  ******************************************************************************************************************************/
 
 if( trafie.settings.env === 'development' ) {
-  trafie.get( '/dummy_data', dummy_data.get );
+	trafie.get( '/dummy_data', dummy_data.get );
 
-  trafie.post( '/dummy_data', dummy_data.post );
+	trafie.post( '/dummy_data', dummy_data.post );
 }
 
 
@@ -249,9 +249,9 @@ if( trafie.settings.env === 'development' ) {
  ******************************************************************************************************************************/
 
 if( trafie.settings.env === 'development' ) {
-  trafie.get( '/api', api.get );
+	trafie.get( '/api', api.get );
 
-  trafie.get( '/api_table', api.get_view );
+	trafie.get( '/api_table', api.get_view );
 }
 
 
@@ -267,7 +267,7 @@ trafie.post( '/feedback', feedback.post );
  ******************************************************************************************************************************/
 
 if( trafie.settings.env === 'development' ) {
-  trafie.get( '/nuke', nuke.get );
+	trafie.get( '/nuke', nuke.get );
 }
 
 

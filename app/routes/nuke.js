@@ -3,7 +3,7 @@
 /**
  * Nuke - GET
  */
-exports.get = function( req, res ){
+exports.get = function(req, res) {
 	let action = '/feedback';
 	let method = 'POST';
 	let value_name = 'feedback_text';
