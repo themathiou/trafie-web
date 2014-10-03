@@ -58,7 +58,7 @@ accordion( class="info add_activity" ng-show="self")
 					input.form-control(type="text" ng-model="newActivityForm.notes" placeholder="There be dragons...")
 				div
 					label(for="private") Private
-					input(type="checkbox" name="private" ng-model="newActivityForm.private")
+					input(type="checkbox" name="private" ng-model="newActivityForm.private" ng-init="newActivityForm.private=false")
 
 				//- div
 					label= tr['profile_picture'] + ': '
