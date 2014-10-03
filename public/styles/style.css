@@ -162,6 +162,9 @@ a {
   cursor: pointer;
   text-decoration: none;
 }
+.filters-row a.selected {
+  font-weight: bold;
+}
 .filters-row a:hover {
   font-weight: bold;
   text-decoration: none;

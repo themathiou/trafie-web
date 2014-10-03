@@ -51,6 +51,7 @@ trafie.controller("profileController", function(
     $scope.newActivityForm = {};
 
     $scope.initProfile = function () {
+      $scope.selected_discipline = '';
       $scope.selected_year = {};
       $scope.selected_year.date = ''; //all years are shown. No filter applied.
 
@@ -99,6 +100,8 @@ trafie.controller("profileController", function(
   //get user activities based on user id
   $scope.getActivities = function (user_id, discipline) {
     var url =  '';
+    $scope.selected_year.date = '';//reset year filtering when switching between disciplines
+    $scope.selected_discipline = discipline;
     discipline != '' ? url = '/users/' + user_id + '/activities?discipline=' + discipline : url = '/users/' + user_id + '/activities';
     $http.get(url)
     .success(function(res){
@@ -118,7 +121,7 @@ trafie.controller("profileController", function(
   @param year : the year we want i.e 2014
    */
   $scope.filterByYear = function (year) {
-    $scope.selected_year.date = year;
+    year ? $scope.selected_year.date = year : $scope.selected_year.date = '';
   }
 
   /*

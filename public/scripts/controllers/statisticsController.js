@@ -45,6 +45,8 @@ trafie.controller("statisticsController", function(
     // Load the Visualization API and the piechart package.
     $scope.statisticsInit = function() {
         $scope.page_not_found = false;
+        $scope.selected_discipline = '';
+        $scope.selected_year = '';
 
         //C3 data model
         $scope.config = {};
@@ -64,33 +66,40 @@ trafie.controller("statisticsController", function(
 
         if ($routeParams.userID) {
             $routeParams.userID === $rootScope.localUser._id || $routeParams.userID === $rootScope.localUser.username ? $scope.self = true : $scope.self = false;
-            $scope.drawSimpleChart( $routeParams.userID, $rootScope.current_user.discipline )
+            $scope.drawSimpleChart( $routeParams.userID, $rootScope.current_user.discipline, false, true)
+            $scope.selected_discipline = $rootScope.current_user.discipline;
         }
         else {
             $rootScope.current_user = $rootScope.localUser;
-            $scope.drawSimpleChart( $rootScope.localUser._id, $rootScope.localUser.discipline );
+            $scope.drawSimpleChart( $rootScope.localUser._id, $rootScope.localUser.discipline, false, true);
+            $scope.selected_discipline = $rootScope.current_user.discipline;
         }
     }
-
-
-
 
     /*********************************/
     /*    Chart Functions   */
     /*********************************/
     /**
-     * drawSimpleChart() : drawing the chart for a discipline of the specific user
+     * drawSimpleChart() : drawing the chart for a discipline of the specific user filtered by date
      * @param user_id : the user id
      * @param discipline : the discipline we want to show
+     * @param year : selected year used for data filtering
+     * @parame init : boolean that is true ONLY in first time we call this function
      */
-    $scope.drawSimpleChart = function(user_id, discipline, year){
+    $scope.drawSimpleChart = function(user_id, discipline, year, init){
         //start loading indicator
         $scope.loading = true;
+        if ($scope.selected_discipline !== discipline) {
+            init = true;
+        }
+
+        $scope.selected_discipline = discipline;
         var _query = '';
         if (!year) {
             _query = '/users/' + user_id + '/activities?discipline=' + discipline;
         }
         else {
+            $scope.selected_year = year;
             _query = '/users/' + user_id + '/activities?discipline=' + discipline + '&from=' +year+ '-01-01&to=' +year+ '-12-31';
         }
 
@@ -100,11 +109,13 @@ trafie.controller("statisticsController", function(
             // parse response as JSON
             var res = response;
 
-            $scope.active_years = [];
-            for( i in res) {
-                var _temp_year = new Date(res[i].date);
-                if ($scope.active_years.indexOf(_temp_year.getFullYear()) === -1) {
-                  $scope.active_years.push(_temp_year.getFullYear());
+            if(init) {
+                $scope.active_years = [];
+                for( i in res) {
+                    var _temp_year = new Date(res[i].date);
+                    if ($scope.active_years.indexOf(_temp_year.getFullYear()) === -1) {
+                      $scope.active_years.push(_temp_year.getFullYear());
+                    }
                 }
             }
 
