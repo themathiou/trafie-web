@@ -1,147 +1,116 @@
 .history_line {
-  margin: 0 auto;
-  padding: 0;
-  list-style: none;
-  position: relative;
-
-  /* post */
-  & > li .info {
-    margin: 0 0 15px 0;
-    background-color: white;
-    color: @black;
-    padding: 10px 10px 10px 15px;
-    font-weight: 300;
-    line-height: 1.4;
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
     position: relative;
-    .rounded_corners(5px);
-    border: 1px solid @black_25;
-    box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.2);
-    display: inline-block;
-    width:100%;
+    /* post */
 
-    .current_data {
-      display: flex;
-      flex-direction: column;
-
-      h1 {
-        margin-top: 0px;
-        margin-bottom: 5px;
-      }
-
-      .competition {
-        margin-left: 5px;
-      }
-
-      blockquote {
-        display: flex;
-        flex-direction: column;
-
-        div {
-          display: flex;
-          flex-direction: row;
+    & > li .info {
+        margin: 0 0 15px 0;
+        background-color: white;
+        color: @black;
+        padding: 10px 10px 10px 15px;
+        font-weight: 300;
+        line-height: 1.4;
+        position: relative;
+        .rounded_corners(5px);
+        border: 1px solid @black_25;
+        box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.2);
+        display: inline-block;
+        width: 100%;
+        .current_data {
+            .flexbox();
+            .flex-column;
+            h1 {
+                margin-top: 0px;
+                margin-bottom: 5px;
+            }
+            .competition {
+                margin-left: 5px;
+            }
+            blockquote {
+                .flexbox();
+                .flex-column;
+                div {
+                    .flexbox();
+                    flex-direction: row;
+                }
+            }
+            .date {} .privacy {
+                .align-self(flex-start);
+            }
+            .location {}
         }
-      }
-
-      .date {
-
-      }
-
-      .privacy {
-        align-self: flex-start;
-      }
-
-      .location {
-
-      }
-
-    }
-
-    .deleteActivity {
-      float: right;
-      background-repeat: no-repeat;
-      min-width: 16px;
-    }
-
-    .editActivity {
-      float: right;
-      background-repeat: no-repeat;
-      min-width: 18px;
-    }
-
-    &.editable {
-      border: 2px solid;
-      border-color: @orange_message_back;
-    }
-
-  }
-
-  & > li .add_activity {
-    padding: 0.4em;
-    position: relative;
-    border-radius: 5px;
-    border: 1px solid @black_25;
-    border-left: none;
-    margin-bottom: 30px;
-    text-align: left;
-    text-shadow: none;
-  }
-
-  & > li .add_activity, .edit_activity {
-    font-size: 1.1em;
-
-    .data_entry {
-      color: black;
-      display: flex;
-      justify-content: left;
-      flex-direction: column;
-
-
-      .performance_fields {
-        display: flex;
-        flex-direction: row;
-        align-items: left;
-        justify-content: flex-start;
-
-        div {
-          text-align: center;
-          margin-right: 2%;
+        .deleteActivity {
+            float: right;
+            background-repeat: no-repeat;
+            min-width: 16px;
         }
-
-        input {
-          text-align: center;
+        .editActivity {
+            float: right;
+            background-repeat: no-repeat;
+            min-width: 18px;
         }
-
-      }
-
-      div {
-        display: flex;
-        flex-direction: column;
-        align-items: left;
-
-      }
+        &.editable {
+            border: 2px solid;
+            border-color: @orange_message_back;
+        }
     }
-
-    .submit_buttons {
-      align-self: center;
-      margin-top: 10px;
+    & > li .add_activity {
+        padding: 0.4em;
+        position: relative;
+        border-radius: 5px;
+        border: 1px solid @black_25;
+        border-left: none;
+        margin-bottom: 30px;
+        text-align: left;
+        text-shadow: none;
     }
-
-  }
-
-  & > li .end {
-    width: 200px;
-    margin: auto;
-    line-height: 1.2;
-    position: relative;
-    border-radius: 5px;
-    background-color: @black_50;
-    color: white;
-    padding: 0.5em;
-    font-size: 1.1em;
-    font-style: italic;
-    border-radius: 5px;
-    border:1px solid @black_25;
-    margin-bottom: 30px;
-    text-align: center;
-  }
+    & > li .add_activity, .edit_activity {
+        font-size: 1.1em;
+        .data_entry {
+            color: black;
+            .flexbox();
+            .justify-content(left);
+            flex-direction: column;
+            .performance_fields {
+                .flexbox();
+                flex-direction: row;
+                .align-items(left);
+                .justify-content(flex-start);
+                div {
+                    text-align: center;
+                    margin-right: 2%;
+                }
+                input {
+                    text-align: center;
+                }
+            }
+            div {
+                .flexbox();
+                .flex-column;
+                .align-items(left);
+            }
+        }
+        .submit_buttons {
+            .align-self(center);
+            margin-top: 10px;
+        }
+    }
+    & > li .end {
+        width: 200px;
+        margin: auto;
+        line-height: 1.2;
+        position: relative;
+        border-radius: 5px;
+        background-color: @black_50;
+        color: white;
+        padding: 0.5em;
+        font-size: 1.1em;
+        font-style: italic;
+        border-radius: 5px;
+        border: 1px solid @black_25;
+        margin-bottom: 30px;
+        text-align: center;
+    }
 }

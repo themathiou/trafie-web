@@ -1,76 +1,55 @@
-body
-{
-  margin: 0;
-  padding: 0;
-  background-color: @background_color;
+body {
+    margin: 0;
+    padding: 0;
+    background-color: @background_color;
 }
-
 label {
-  font-weight: 400;
-  color: @black_75;
+    font-weight: 400;
+    color: @black_75;
 }
-
 a {
-  cursor: pointer;
+    cursor: pointer;
 }
-
 #content {
-  margin: 0px auto;
-  float: none;
+    margin: 0px auto;
+    float: none;
 }
-
 .alert_custom {
-  position: fixed;
-  top: 70px;
-  z-index: 50;
+    position: fixed;
+    top: 70px;
+    z-index: 50;
 }
-
 .loading {
-  display: flex;
-  justify-content: flex-end;
-  flex-direction: column;
-  align-items: center;
-  min-height: 40px;
-  background-image: url("@{images}ui/loading.gif");
-  background-repeat: no-repeat;
-  background-position-x: center;
+    .flexbox();
+    .justify-content(flex-end);
+    flex-direction: column;
+    .align-items(center);
+    min-height: 40px;
+    background-image: url("@{images}ui/loading.gif");
+    background-repeat: no-repeat;
+    background-position-x: center;
 }
-
 //filters-row is the class for an unordered-list(ul)
 .filters-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-  padding: 0px;
-  list-style-type: none;
-
-  li {
-    margin-right: 10px;
-    flex-shrink:0;
-  }
-
-  a {
-    cursor: pointer;
-    text-decoration: none;
-
-    &:hover {
-      font-weight: bold;
-      text-decoration: none;
+    .flexbox();
+    .align-items(center);
+    .justify-content(center);
+    .flex();
+    padding: 0px;
+    list-style-type: none;
+    li {
+        margin-right: 10px;
+        .flex-shrink(0);
     }
-  }
+    a {
+        cursor: pointer;
+        text-decoration: none;
+        &.selected {
+            font-weight: bold;
+        }
+        &:hover {
+            font-weight: bold;
+            text-decoration: none;
+        }
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

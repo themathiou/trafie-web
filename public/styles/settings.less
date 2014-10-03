@@ -1,137 +1,103 @@
-
 .settings-content {
-  padding-left:10px;
-  padding-top: 60px;
-
-  .tab-pane {
-    background-color:  @white;
-    border-bottom: 1px solid @black_25;
-    border-left: 1px solid @black_25;
-    border-right: 1px solid @black_25;
-    .bottom_rounded_corners(5px);
-    box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.2);
-
-    h3 {
-      margin-top: 0px;
-      padding-top: 1em;
-      width: 100%;
-      text-align: center;
+    padding-left: 10px;
+    padding-top: 60px;
+    .tab-pane {
+        background-color: @white;
+        border-bottom: 1px solid @black_25;
+        border-left: 1px solid @black_25;
+        border-right: 1px solid @black_25;
+        .bottom_rounded_corners(5px);
+        box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.2);
+        h3 {
+            margin-top: 0px;
+            padding-top: 1em;
+            width: 100%;
+            text-align: center;
+        }
+        label {
+            .flex-shrink(0);
+            width: 20%;
+            font-size: 1em;
+            font-weight: bold;
+        }
+        .middle-section {
+            padding: 0px 5px;
+            .flexbox();
+            flex-direction: column;
+            .justify-content(space-between);
+            .align-items(flex-start);
+        }
+        form {
+            width: 100%;
+            display: inline-block;
+            margin: 0px;
+            padding: 3px 0px;
+            label {} .textarea {
+                width: 550px;
+                max-width: 550px;
+            }
+        }
     }
-
-    label {
-      flex-shrink: 0;
-      width: 20%;
-      font-size: 1em;
-      font-weight: bold;
+    .settings-element {
+        border-bottom: 1px solid @black_25;
+        padding: 10px 5px;
+        .flexbox();
+        flex-direction: row;
+        .justify-content(space-between);
+        .align-items(flex-start);
+        &.editable {
+            background-color: @lightgray;
+        }
+        input {
+            border: none;
+            font-size: 1em;
+            &[type="radio"] {
+                -webkit-appearance: radio;
+            }
+        }
+        textarea {
+            border: none;
+            font-size: 1em;
+        }
+        .existed {
+            display: inline-block;
+        }
+        &:hover {
+            background-color: @lightgray;
+        }
     }
-
-    .middle-section {
-      padding: 0px 5px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: flex-start;
+    .settings-element-profile-pic {
+        border-bottom: 1px solid @black_25;
+        padding: 10px 5px;
+        .thumb {
+            width: 40px;
+            height: 40px;
+            margin-left: 5px;
+            .rounded_corners();
+            vertical-align: middle;
+        }
     }
-
-    form {
-      width:100%;
-      display: inline-block;
-      margin: 0px;
-      padding: 3px 0px;
-
-      label {
-      }
-
-      .textarea {
-        width: 550px;
-        max-width: 550px;
-      }
+    .submitButtonsVisible {
+        display: block;
+        width: 150px;
     }
-  }
-
-
-  .settings-element {
-    border-bottom: 1px solid @black_25;
-    padding: 10px 5px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-
-    &.editable {
-      background-color: @lightgray;
+    .submitButtonsHide {
+        visibility: hidden;
     }
-
-    input {
-      border: none;
-      font-size: 1em;
-
-      &[type="radio"] {
-        -webkit-appearance: radio;
-      }
+    .editLink {
+        min-width: 30px;
     }
-
-    textarea {
-      border: none;
-      font-size: 1em;
-    }
-
-    .existed {
-      display: inline-block;
-    }
-
-    &:hover{
-      background-color: @lightgray;
-    }
-  }
-
-  .settings-element-profile-pic {
-    border-bottom: 1px solid @black_25;
-    padding: 10px 5px;
-
-    .thumb {
-      width:40px;
-      height:40px;
-      margin-left: 5px;
-      .rounded_corners();
-      vertical-align: middle;
-    }
-  }
-
-  .submitButtonsVisible {
-    display: block;
-    width:150px;
-  }
-
-  .submitButtonsHide {
-    visibility: hidden;
-  }
-
-
-  .editLink {
-    min-width: 30px;
-  }
-
 }
-
 .logout {
-  display: flex;
-  justify-content: center;
-  padding: 20px;
-
-  a{
-    color: @red;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: none;
-      cursor: pointer;
+    .flexbox();
+    .justify-content(center);
+    padding: 20px;
+    a {
+        color: @red;
+        text-decoration: none;
+        &:hover {
+            text-decoration: none;
+            cursor: pointer;
+        }
     }
-  }
-
 }
-
-
-
-
-

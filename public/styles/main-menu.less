@@ -1,171 +1,139 @@
-
-#mainmenu_container
-{
-  background:white url("@{images}bar_back.png") repeat-x left top;
-  position:fixed;
-  top:0;
-  height:40px;
-  z-index: 100;
+#mainmenu_container {
+    background: white url("@{images}bar_back.png") repeat-x left top;
+    position: fixed;
+    top: 0;
+    height: 40px;
+    z-index: 100;
 }
-
-#mainmenu
-{
-  // margin: 0 auto;
-  // max-width: 950px;
-  text-align:right;
-  z-index: 100;
-
-  .logo
-  {
-    background-image: url("@{images}logo.png");
-    background-repeat: no-repeat;
-    background-position: 0 2px;
-    float:left;
-    padding:20px 36px;
-  }
-
-  .dropdown_container{
-    background-color: @black_75;
-    height: 400px;
-    .bottom_rounded_corners(5px);
-
-    .flex_wrapper {
-      .flexbox(column);
-      justify-content: center;
-    }
-
-    .search {
-      margin: 20px 0px 10px 0px;
-      padding: 0px;
-      padding-left: 5px;
-      height: 30px;
-      border: 0;
-      .rounded_corners(3px);
-      letter-spacing: -1px;
-      width: 95%;
-      font-size: 15px;
-      background: white;
-
-      flex-grow:1;
-      align-self: center;
-    }
-
-    .navigation_menu {
-      flex-grow:1;
-      align-self: center;
-    }
-
-  }
-
-  ul.navigation_menu
-  {
-    padding:10px 16px;
-    margin:0px;
-    li {
-      display: inline;
-
-      a {
-        color:#ffffff;
-        background-color:transparent;
-        text-decoration:none;
-        padding:12px 12px 5px 12px;
-        font-size: 0.9em;
-        border-bottom: 5px solid transparent;
-        .transition(border 400ms ease-in-out);
-      }
-
-      a:hover, a.active
-      {
-        border-bottom: white 5px solid;
-      }
-
-    }
-
-  }
-
-  #search_results {
-    background-color: white;
-    width:440px;
-    float:left;
-    display: none;
-    margin-left:105px;
-    margin-top: -10px;
-    text-align: left;
-
-    li {
-      display: block;
-      border-bottom: 1px solid @black_25;
-      padding-top: 1em;
-      padding-bottom: 1em;
-
-      a {
-        color: @black_75;
-        width:100%;
-        border:none;
-
-        .name {
-          font-weight: 600;
-          font-size: 1.2em;
-        }
-
-        .details {
-          font-weight: 300;
-          font-size: 0.8em;
-        }
-
-        &:hover {
-          border:none;
-        }
-      }
-
-      &:hover {
-        background-color: @black_25;
-      }
-    }
-
-  }
-
-  .search {
-    display: block;
-    float: left;
-    margin: 7px 0px 10px 30px;
-    padding:0px;
-    padding-left:5px;
-    height: 26px;
-    background: rgba(255, 255, 255, 0.2);
-    border: 0;
-    border-radius: 3px;
-    letter-spacing: -1px;
-    width: 50%;
-    font-size: 15px;
-
-    &:focus {
-      background: white;
-
-      .loading {
-        background-image: url("@{images}ui/loading.gif");
+#mainmenu {
+    // margin: 0 auto;
+    // max-width: 950px;
+    text-align: right;
+    z-index: 100;
+    .logo {
+        background-image: url("@{images}logo.png");
         background-repeat: no-repeat;
-        background-position: 99% 50%;
-        background-size: 20px;
-      }
+        background-position: 0 2px;
+        float: left;
+        padding: 20px 36px;
     }
-
-    &::-webkit-input-placeholder {
-       color: rgba(0, 0, 0, 0.6) ;
+    .dropdown_container {
+        background-color: @black_75;
+        height: 400px;
+        .bottom_rounded_corners(5px);
+        .flex_wrapper {
+            .flex-column();
+            .justify-content(center);
+        }
+        .search {
+            margin: 20px 0px 10px 0px;
+            padding: 0px;
+            padding-left: 5px;
+            height: 30px;
+            border: 0;
+            .rounded_corners(3px);
+            letter-spacing: -1px;
+            width: 95%;
+            font-size: 15px;
+            background: white;
+            flex-grow: 1;
+            align-self: center;
+        }
+        .navigation_menu {
+            flex-grow: 1;
+            align-self: center;
+        }
     }
-
-    &:-moz-placeholder { /* Firefox 18- */
-       color: rgba(0, 0, 0, 0.8) ;
+    ul.navigation_menu {
+        padding: 10px 16px;
+        margin: 0px;
+        li {
+            display: inline;
+            a {
+                color: #ffffff;
+                background-color: transparent;
+                text-decoration: none;
+                padding: 12px 12px 5px 12px;
+                font-size: 0.9em;
+                border-bottom: 5px solid transparent;
+                .transition(border 400ms ease-in-out);
+            }
+            a:hover, a.active {
+                border-bottom: white 5px solid;
+            }
+        }
     }
-
-    &::-moz-placeholder {  /* Firefox 19+ */
-       color: rgba(0, 0, 0, 0.8) ;
+    #search_results {
+        background-color: white;
+        width: 440px;
+        float: left;
+        display: none;
+        margin-left: 105px;
+        margin-top: -10px;
+        text-align: left;
+        li {
+            display: block;
+            border-bottom: 1px solid @black_25;
+            padding-top: 1em;
+            padding-bottom: 1em;
+            a {
+                color: @black_75;
+                width: 100%;
+                border: none;
+                .name {
+                    font-weight: 600;
+                    font-size: 1.2em;
+                }
+                .details {
+                    font-weight: 300;
+                    font-size: 0.8em;
+                }
+                &:hover {
+                    border: none;
+                }
+            }
+            &:hover {
+                background-color: @black_25;
+            }
+        }
     }
-
-    &:-ms-input-placeholder {
-       color: rgba(0, 0, 0, 0.8) ;
+    .search {
+        display: block;
+        float: left;
+        margin: 7px 0px 10px 30px;
+        padding: 0px;
+        padding-left: 5px;
+        height: 26px;
+        background: rgba(255, 255, 255, 0.2);
+        border: 0;
+        border-radius: 3px;
+        letter-spacing: -1px;
+        width: 50%;
+        font-size: 15px;
+        &:focus {
+            background: white;
+            .loading {
+                background-image: url("@{images}ui/loading.gif");
+                background-repeat: no-repeat;
+                background-position: 99% 50%;
+                background-size: 20px;
+            }
+        }
+        &::-webkit-input-placeholder {
+            color: rgba(0, 0, 0, 0.6);
+        }
+        &:-moz-placeholder {
+            /* Firefox 18- */
+            
+            color: rgba(0, 0, 0, 0.8);
+        }
+        &::-moz-placeholder {
+            /* Firefox 19+ */
+            
+            color: rgba(0, 0, 0, 0.8);
+        }
+        &:-ms-input-placeholder {
+            color: rgba(0, 0, 0, 0.8);
+        }
     }
-  }
-
 }
-
