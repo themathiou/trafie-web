@@ -93,16 +93,22 @@ var pr = {
 	'date_format'                                   : 'Date Format',
 	'd-m-y'                                         : 'Day-Month-Year',
 	'm-d-y'                                         : 'Month-Day-Year',
+    'data_updated_successfully'                     : 'Data was updated successfully',
 
 	// Errors
-	'invalid_name'                                  : 'Is that even a name?',
+	'invalid_first_name'                            : 'I will be calling you dumbass from now on',
+	'invalid_last_name'                             : 'I will be calling you dumbass from now on',
+	'invalid_birthday'                              : 'Check your passport first',
+	'invalid_gender'                                : 'Ultra gaaaay!',
+	'invalid_country'                               : 'Invalid country',
+	'invalid_discipline'                            : 'Invalid discipline',
+	'invalid_language'                              : 'Invalid language',
 	'invalid_username'                              : 'Wtf?',
 	'passwords_do_not_match'                        : 'Passwords do not fuckin\' match',
 	'wrong_password'                                : 'You\'ve got the wrong fucking password',
 	'password_should_be_at_least_6_characters_long' : 'Password should be at least 6 fucking characters long',
 	'uploaded_image_too_large'                      : 'Get your fat image back',
 	'uploaded_image_wrong_type'                     : 'Wrong fuckin\' file type',
-	'invalid_discipline'                            : 'Invalid discipline',
 	'discipline_is_required'                        : 'Discipline is required',
 	'invalid_performance'                           : 'Invalid fuckin\' performance',
 	'performance_is_required'                       : 'Perfromance is fuckin\' required',
@@ -111,6 +117,8 @@ var pr = {
 	'wrong_date_format'                             : 'Wrong fuckin\' date format',
 	'date_is_required'                              : 'Date is fuckin\' required',
 	'invalid_privacy'                               : 'Invalid privacy setting',
+    'something_went_wrong'                          : 'Oops! We fucked up...',
+    'username_taken'                                : 'Username is taken',
 
 	// Countries
 	'AF': 'Afghanistan',

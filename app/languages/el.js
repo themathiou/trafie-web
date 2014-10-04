@@ -93,16 +93,22 @@ var el = {
 	'date_format'                                   : 'Μορφή Ημερομηνίας',
 	'd-m-y'                                         : 'Ημέρα-Μήνας-Έτος',
 	'm-d-y'                                         : 'Μήνας-Ημέρα-Έτος',
+    'data_updated_successfully'                     : 'Τα δεδομένα αποθηκεύτηκαν επιτυχώς',
 
 	// Errors
-	'invalid_name'                                  : 'Μη αποδεκτό όνομα',
+	'invalid_first_name'                            : 'Μη αποδεκτό μικρό όνομα',
+	'invalid_last_name'                             : 'Μη αποδεκτό επίθετο',
+	'invalid_birthday'                              : 'Μη αποδεκτή ημερομηνία γενεθλίων',
+	'invalid_gender'                                : 'Μη έγκυρο φύλο',
+	'invalid_country'                               : 'Μη έγκυρη χώρα',
+	'invalid_discipline'                            : 'Μη έγκυρο αγώνισμα',
+	'invalid_language'                              : 'Μη έγκυρη γλώσσα',
 	'invalid_username'                              : 'Μη αποδεκτό όνομα χρήστη',
 	'passwords_do_not_match'                        : 'Οι κωδικοί δεν ταιριάζουν',
 	'wrong_password'                                : 'Λάθος κωδικός',
 	'password_should_be_at_least_6_characters_long' : 'Ο κωδικός πρέπει να έχει τουλάχιστον 6 χαρακτήρες',
 	'uploaded_image_too_large'                      : 'Το μέγεθος της φωτογραφίας είναι πολύ μεγάλο',
 	'uploaded_image_wrong_type'                     : 'Ο τύπος του αρχείου είναι λανθασμένος',
-	'invalid_discipline'                            : 'Μη έγκυρο αγώνισμα',
 	'discipline_is_required'                        : 'Το αγώνισμα είναι υποχρεωτικό',
 	'invalid_performance'                           : 'Μη έγκυρη επίδοση',
 	'performance_is_required'                       : 'Η επίδοση είναι υποχρεωτική',
@@ -111,6 +117,8 @@ var el = {
 	'wrong_date_format'                             : 'Η μορφή ημερομηνίας είναι λανθασμένη',
 	'date_is_required'                              : 'Η ημερομηνία είναι υποχρεωτική',
 	'invalid_privacy'                               : 'Μη έγκυρη ρύθμιση ιδιωτικότητας',
+    'something_went_wrong'                          : 'Ωχ! Κάτι πήγε στραβά...',
+    'username_taken'                                : 'Το όνομα χρήστη χρησιμοποιείται',
 
 	// Countries
 	'AF': 'Afghanistan',

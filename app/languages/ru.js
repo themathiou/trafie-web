@@ -90,16 +90,22 @@ var en = {
 	'date_format'                                   : 'Date Format',
 	'd-m-y'                                         : 'Day-Month-Year',
 	'm-d-y'                                         : 'Month-Day-Year',
+    'data_updated_successfully'                     : 'Data was updated successfully',
 
 	// Errors
-	'invalid_name'                                  : 'Invalid name',
+	'invalid_first_name'                            : 'Invalid first name',
+	'invalid_last_name'                             : 'Invalid last name',
+	'invalid_birthday'                              : 'Invalid birthday',
+	'invalid_gender'                                : 'Invalid gender',
+	'invalid_country'                               : 'Invalid country',
+	'invalid_discipline'                            : 'Invalid discipline',
+	'invalid_language'                              : 'Invalid language',
 	'invalid_username'                              : 'Invalid username',
 	'passwords_do_not_match'                        : 'Passwords do not match',
 	'wrong_password'                                : 'Wrong password',
 	'password_should_be_at_least_6_characters_long' : 'Password should be at least 6 characters long',
 	'uploaded_image_too_large'                      : 'The uploaded image is too large',
 	'uploaded_image_wrong_type'                     : 'The type of the uploaded file is wrong',
-	'invalid_discipline'                            : 'Invalid discipline',
 	'discipline_is_required'                        : 'Discipline is required',
 	'invalid_performance'                           : 'Invalid performance',
 	'performance_is_required'                       : 'Perfromance is required',
@@ -108,6 +114,8 @@ var en = {
 	'wrong_date_format'                             : 'Wrong date format',
 	'date_is_required'                              : 'Date is required',
 	'invalid_privacy'                               : 'Invalid privacy setting',
+    'something_went_wrong'                          : 'Oops! Something went wrong...',
+    'username_taken'                                : 'Username is taken',
 
 	// Countries
 	'AF': 'Afghanistan',
