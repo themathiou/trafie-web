@@ -47,7 +47,7 @@ const api = [{
 	methods: [{
 		name: 'GET',
 		description: 'Returns all the public activities of the user.',
-		parameters: [],
+		parameters: ['from','to','discipline'],
 		data: [],
 		examples: ['/users/5415cf0334a09e041c000001/activities'],
 		example_response_success: '',
