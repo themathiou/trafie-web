@@ -27,8 +27,8 @@ div.settings-element-profile-pic
 div.settings-element(ng-class="{editable: edit_fname}")
 	label= tr['first_name'] + ': '
 	form.middle-section( method="POST" ng-submit="submitChangeSetting('first_name')")
-		span.existed(ng-show="!edit_fname") {{ localUser.first_name }}
-		div(ng-show="first_name_msg !=''") {{first_name_msg}}
+		span(ng-show="!edit_fname") {{ localUser.first_name }}
+		div(ng-show="first_name_msg !=''" ng-class="{error: !success, success: success}") {{first_name_msg}}
 		div(ng-show="edit_fname")
 			input.form-control( ng-model="localUser.new_first_name" name="first_name" )
 		div.formButtons( ng-show="edit_fname" )
@@ -42,8 +42,8 @@ div.settings-element(ng-class="{editable: edit_fname}")
 div.settings-element(ng-class="{editable: edit_lastname}")
 	label= tr['last_name'] + ': '
 	form.middle-section( method="POST" ng-submit="submitChangeSetting('last_name')")
-		span.existed(ng-show="!edit_lastname") {{localUser.last_name}}
-		div(ng-show="last_name_msg !=''") {{last_name_msg}}
+		span(ng-show="!edit_lastname") {{localUser.last_name}}
+		div(ng-show="last_name_msg !=''" ng-class="{error: !success, success: success}") {{last_name_msg}}
 		div(ng-show="edit_lastname" )
 			input(ng-model="localUser.new_last_name" name="last_name" )
 		div.formButtons(ng-show="edit_lastname")
@@ -58,7 +58,7 @@ div.settings-element
 	label= tr['main_discipline'] + ': '
 	form.middle-section( method="POST" ng-submit="submitChangeSetting('discipline')")
 		span {{ localUser.discipline_formatted }}
-		div(ng-show="discipline_msg !=''") {{discipline_msg}}
+		div(ng-show="discipline_msg !=''" ng-class="{error: !success, success: success}") {{discipline_msg}}
 		div(ng-show="edit_discipline")
 			select(ng-model="localUser.new_main_discipline")
 				option( value="")= tr['choose_your_discipline']
@@ -76,10 +76,10 @@ div.settings-element
 	label= tr['privacy'] + ': '
 	form.middle-section( method="POST" ng-submit="submitChangeSetting('privacy')")
 		span {{localUser.private}}
-		div(ng-show="privacy_msg !=''") {{privacy_msg}}
+		div(ng-show="privacy_msg !=''" ng-class="{error: !success, success: success}") {{privacy_msg}}
 		div( ng-show="edit_privacy" )
 			label(for="privacy") Private
-			input( type="checkbox" name="privacy" value="yes" ng-model="localUser.new_privacy" ng-show="edit_privacy" ng-checked="localUser.private" )
+				input( type="checkbox" name="privacy" value="yes" ng-model="localUser.new_privacy" ng-show="edit_privacy" ng-checked="localUser.private" )
 		div.formButtons(ng-show="edit_privacy")
 			hr
 			input.btn.green( type="submit" value=tr['submit'])
@@ -94,10 +94,10 @@ div.settings-element
 		span {{ localUser.gender_formatted }}
 		div(ng-show="gender_msg !=''") {{gender_msg}}
 		div#gender( ng-show="edit_gender" )
-			input(id="male" name="gender" type="radio" ng-model="localUser.gender" value="male")
-			label(for="male" class="clearfloat" )= tr['male']
-			input(id="female" name="gender" type="radio" ng-model="localUser.gender" value="female")
-			label(for="female" class="clearfloat" )= tr['female']
+			label(for="male")= tr['male']
+				input(id="male" name="gender" type="radio" ng-model="localUser.gender" value="male")
+			label(for="female")= tr['female']
+				input(id="female" name="gender" type="radio" ng-model="localUser.gender" value="female")
 		div.formButtons(ng-show="edit_gender")
 			hr
 			input.btn.green( type="submit" value=tr['submit'])

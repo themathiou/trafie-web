@@ -714,6 +714,9 @@ a {
 .settings-content .settings-element.editable {
   background-color: #f7f7f7;
 }
+.settings-content .settings-element:hover {
+  background-color: #f7f7f7;
+}
 .settings-content .settings-element input {
   border: none;
   font-size: 1em;
@@ -725,11 +728,11 @@ a {
   border: none;
   font-size: 1em;
 }
-.settings-content .settings-element .existed {
-  display: inline-block;
+.settings-content .settings-element .error {
+  color: red;
 }
-.settings-content .settings-element:hover {
-  background-color: #f7f7f7;
+.settings-content .settings-element .success {
+  color: green;
 }
 .settings-content .settings-element-profile-pic {
   border-bottom: 1px solid rgba(0, 0, 0, 0.25);

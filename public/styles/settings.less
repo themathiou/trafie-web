@@ -48,6 +48,11 @@
         &.editable {
             background-color: @lightgray;
         }
+        
+        &:hover {
+            background-color: @lightgray;
+        }
+
         input {
             border: none;
             font-size: 1em;
@@ -59,12 +64,14 @@
             border: none;
             font-size: 1em;
         }
-        .existed {
-            display: inline-block;
+
+        .error {
+            color:red;
         }
-        &:hover {
-            background-color: @lightgray;
+        .success {
+            color: green;
         }
+
     }
     .settings-element-profile-pic {
         border-bottom: 1px solid @black_25;

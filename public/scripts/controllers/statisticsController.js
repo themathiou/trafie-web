@@ -59,10 +59,10 @@ trafie.controller("statisticsController", function(
 		};
 		
 		// available types (can combined) 'area', 'area-spline', 'line', 'scatter', 'bar'
-		// $scope.config.data.types = {
-		// 	performance: 'scatter', 
-		// 	average: 'line'
-		// };
+		$scope.config.data.types = {
+			performance: 'line', 
+			average: 'line'
+		};
 
 		$scope.config.axis = {
 			y: {},
@@ -71,18 +71,16 @@ trafie.controller("statisticsController", function(
 				localtime: false,
 				tick: {
 					fit: false,
-					format: function(d) {
-						var _temp = (new Date(d)).toString().split(' ');
-						return _temp[2]+ ' ' + _temp[1] + ' ' + _temp[3];
+					format: function(date) {
+						formatDate(date);
 					}
 				}
 			}
 		}
 		$scope.config.tooltip = {
 			format: {
-				title: function(d) { //SHOULD BE MERGED WITH THE SAME FUNCTION THAT DEFINES THE FORMAT IN x-axis tick
-					var _temp = (new Date(d)).toString().split(' ');
-					return _temp[2]+ ' ' + _temp[1] + ' ' + _temp[3];
+				title: function(date) {
+					formatDate(date);
 				}
 			}
 		}
@@ -174,7 +172,7 @@ trafie.controller("statisticsController", function(
 					//Format Y Axis
 					$scope.config.axis.y.tick = {
 						format: function(d) {
-							return $scope.formatChartTicks(d, 'time');
+							return formatChartTicks(d, 'time');
 						}
 					}
 
@@ -202,7 +200,7 @@ trafie.controller("statisticsController", function(
 					//Format Y Axis
 					$scope.config.axis.y.tick = {
 						format: function(d) {
-							return $scope.formatChartTicks(d, 'distance');
+							return formatChartTicks(d, 'distance');
 						}
 					}
 				}
@@ -229,7 +227,7 @@ trafie.controller("statisticsController", function(
 					//Format Y Axis
 					$scope.config.axis.y.tick = {
 						format: function(d) {
-							return $scope.formatChartTicks(d, 'points');
+							return formatChartTicks(d, 'points');
 						}
 					}
 
@@ -260,7 +258,7 @@ trafie.controller("statisticsController", function(
 	 * @param data : the data we need to format
 	 * @param discipline_type : the discipline type. Accepted values 'time', 'distance', 'points'
 	 */
-	$scope.formatChartTicks = function(data, discipline_type) {
+	function formatChartTicks(data, discipline_type) {
 		switch (discipline_type) {
 			case 'time':
 				//convert number to string
@@ -283,6 +281,15 @@ trafie.controller("statisticsController", function(
 			default:
 				return data;
 		}
+	}
+
+	/**
+	 * formatDate() : formats the date to a specific format
+	 * @param date : the date we need to format
+	 */
+	function formatDate(date) {
+		var _temp = (new Date(date)).toString().split(' ');
+		return _temp[2]+ ' ' + _temp[1] + ' ' + _temp[3];
 	}
 
 }); //end controller
