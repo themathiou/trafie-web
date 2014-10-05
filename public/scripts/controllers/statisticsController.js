@@ -52,18 +52,46 @@ trafie.controller("statisticsController", function(
 		$scope.config = {};
 		$scope.config.bindto = '#chart';
 		$scope.config.data = {};
-		$scope.config.data.json = {};
-		$scope.config.data.json.discipline = [];
-		$scope.config.data.json.average = [];
+		$scope.config.data.json = [];
+		$scope.config.data.keys = {
+			x: 'date',
+			value: ['performance', 'average']
+		};
+		
+		// available types (can combined) 'area', 'area-spline', 'line', 'scatter', 'bar'
+		// $scope.config.data.types = {
+		// 	performance: 'scatter', 
+		// 	average: 'line'
+		// };
+
 		$scope.config.axis = {
-			y: {
-				tick: {}
+			y: {},
+			x: {
+				// type: 'timeseries',
+				localtime: false,
+				tick: {
+					fit: false,
+					format: function(d) {
+						var _temp = (new Date(d)).toString().split(' ');
+						return _temp[2]+ ' ' + _temp[1] + ' ' + _temp[3];
+					}
+				}
+			}
+		}
+		$scope.config.tooltip = {
+			format: {
+				title: function(d) { //SHOULD BE MERGED WITH THE SAME FUNCTION THAT DEFINES THE FORMAT IN x-axis tick
+					var _temp = (new Date(d)).toString().split(' ');
+					return _temp[2]+ ' ' + _temp[1] + ' ' + _temp[3];
+				}
 			}
 		}
 		$scope.config.subchart = {
 			show: true
 		}
 
+
+		//CHECKING USER and init necessary parameters
 		if ($routeParams.userID) {
 			$routeParams.userID === $rootScope.localUser._id || $routeParams.userID === $rootScope.localUser.username ? $scope.self = true : $scope.self = false;
 			$scope.drawSimpleChart($routeParams.userID, $rootScope.current_user.discipline, false, true)
@@ -95,6 +123,7 @@ trafie.controller("statisticsController", function(
 		$scope.selected_discipline = discipline;
 		var _query = '';
 		if (!year) {
+			$scope.selected_year = '';
 			_query = '/users/' + user_id + '/activities?discipline=' + discipline;
 		} else {
 			$scope.selected_year = year;
@@ -118,8 +147,7 @@ trafie.controller("statisticsController", function(
 				}
 
 				//reset data
-				$scope.config.data.json.discipline = [];
-				$scope.config.data.json.average = [];
+				$scope.config.data.json = []
 
 				// add rows to chart based on the discipline
 
@@ -136,9 +164,11 @@ trafie.controller("statisticsController", function(
 					average = sum / response_length;
 
 					for (var i in res) {
-						var performance = res[i].performance.split(':')[0] + res[i].performance.split(':')[1] + res[i].performance.split(':')[2].split('.')[0] + res[i].performance.split(':')[2].split('.')[1];
-						$scope.config.data.json.discipline.push(performance);
-						$scope.config.data.json.average.push(average);
+						$scope.config.data.json.push({
+							performance: res[i].performance.split(':')[0] + res[i].performance.split(':')[1] + res[i].performance.split(':')[2].split('.')[0] + res[i].performance.split(':')[2].split('.')[1],
+							average: average,
+							date: new Date(res[i].date)
+						})
 					}
 
 					//Format Y Axis
@@ -162,8 +192,11 @@ trafie.controller("statisticsController", function(
 					average = sum / response_length;
 
 					for (var i in res) {
-						$scope.config.data.json.discipline.push(res[i].performance / 10000);
-						$scope.config.data.json.average.push(average / 10000);
+						$scope.config.data.json.push({
+							performance: res[i].performance / 10000,
+							average: average / 10000,
+							date: new Date(res[i].date)
+						})
 					}
 
 					//Format Y Axis
@@ -172,7 +205,6 @@ trafie.controller("statisticsController", function(
 							return $scope.formatChartTicks(d, 'distance');
 						}
 					}
-
 				}
 
 				// POINTS DISCIPLINE
@@ -186,10 +218,12 @@ trafie.controller("statisticsController", function(
 					}
 					average = sum / response_length;
 
-					var ctr = res.length;
-					for (i in res) {
-						$scope.config.data.json.discipline.push(res[i].performance);
-						$scope.config.data.json.average.push(average);
+					for (var i in res) {
+						$scope.config.data.json.push({
+							performance: res[i].performance ,
+							average: average,
+							date: new Date(res[i].date)
+						})
 					}
 
 					//Format Y Axis
@@ -207,6 +241,7 @@ trafie.controller("statisticsController", function(
 
 				//hide loading indicator
 				$scope.loading = false;
+
 
 				console.log($scope.config);
 

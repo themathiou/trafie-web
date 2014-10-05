@@ -101,18 +101,19 @@ trafie.controller("profileController", function(
 		var url = '';
 		$scope.selected_year.date = ''; //reset year filtering when switching between disciplines
 		$scope.selected_discipline = discipline;
-		discipline != '' ? url = '/users/' + user_id + '/activities?discipline=' + discipline : url = '/users/' + user_id + '/activities';
+		url = typeof discipline !== 'undefined' ? '/users/' + user_id + '/activities?discipline=' + discipline : '/users/' + user_id + '/activities';
+		
 		$http.get(url)
-			.success(function(res) {
-				$scope.activities = res;
-				$scope.active_years = [];
-				for (i in res) {
-					var _temp_year = new Date(res[i].date);
-					if ($scope.active_years.indexOf(_temp_year.getFullYear()) === -1) {
-						$scope.active_years.push(_temp_year.getFullYear());
-					}
+		.success(function(res) {
+			$scope.activities = res;
+			$scope.active_years = [];
+			for (i in res) {
+				var _temp_year = new Date(res[i].date);
+				if ($scope.active_years.indexOf(_temp_year.getFullYear()) === -1) {
+					$scope.active_years.push(_temp_year.getFullYear());
 				}
-			})
+			}
+		})
 	}
 
 	/*

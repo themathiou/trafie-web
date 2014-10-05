@@ -22,6 +22,8 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
 
     //- FILTERS
     ul.filters-row.col-xs-12.col-md-12.col-lg-12
+      li
+        a(ng-click="getActivities(current_user._id)" ng-class="{selected: !selected_discipline}") All
       li(ng-repeat="discipline in current_user.disciplines_of_user")
         a(ng-click="getActivities(current_user._id, discipline.discipline)" ng-class="{selected: selected_discipline === discipline.discipline}") {{discipline.formatted_discipline}}
 
