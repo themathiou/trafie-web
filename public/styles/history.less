@@ -14,7 +14,6 @@
         line-height: 1.4;
         position: relative;
         .rounded_corners(5px);
-        border: 1px solid @black_25;
         box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.2);
         display: inline-block;
         width: 100%;
@@ -60,8 +59,6 @@
         padding: 0.4em;
         position: relative;
         border-radius: 5px;
-        border: 1px solid @black_25;
-        border-left: none;
         margin-bottom: 30px;
         text-align: left;
         text-shadow: none;
@@ -114,3 +111,35 @@
         text-align: center;
     }
 }
+
+// -- MOBILE : match cases -sm- & -xs- of bootstrap 
+@media (max-width: 767px) {
+    .history_line {
+         & > li .info {
+            margin: 0 0 3px 0;
+            .rounded_corners(0px);
+            border: 1px solid @black_25;
+            box-shadow: none;
+         }
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

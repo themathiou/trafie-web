@@ -164,10 +164,18 @@ a {
 }
 .filters-row a.selected {
   font-weight: bold;
+  border-bottom: 2px solid #428bca;
 }
 .filters-row a:hover {
-  font-weight: bold;
+  border-bottom: 2px solid #428bca;
   text-decoration: none;
+}
+.col-xs-12,
+.col-sm-12 {
+  position: relative;
+  min-height: 1px;
+  padding-right: 0px;
+  padding-left: 0px;
 }
 #mainmenu_container {
   background: #ffffff url("../images/bar_back.png") repeat-x left top;
@@ -339,12 +347,7 @@ a {
 /*profile container (profile pic and full name)*/
 #profile_container {
   margin: 55px auto 0px auto;
-  height: 250px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
-  border-radius: 5px;
+  height: 200px;
 }
 #profile_container #image_container {
   width: 150px;
@@ -399,7 +402,6 @@ a {
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
   border-radius: 5px;
-  border: 1px solid rgba(0, 0, 0, 0.25);
   box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.2);
   display: inline-block;
   width: 100%;
@@ -482,8 +484,6 @@ a {
   padding: 0.4em;
   position: relative;
   border-radius: 5px;
-  border: 1px solid rgba(0, 0, 0, 0.25);
-  border-left: none;
   margin-bottom: 30px;
   text-align: left;
   text-shadow: none;
@@ -600,6 +600,18 @@ a {
   margin-bottom: 30px;
   text-align: center;
 }
+@media (max-width: 767px) {
+  .history_line > li .info {
+    margin: 0 0 3px 0;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    -ms-border-radius: 0px;
+    -o-border-radius: 0px;
+    border-radius: 0px;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    box-shadow: none;
+  }
+}
 .discipline_button {
   float: left;
   padding: 0.5em;
@@ -609,7 +621,6 @@ a {
   width: 100%;
 }
 .settings-content {
-  padding-left: 10px;
   padding-top: 60px;
 }
 .settings-content .tab-pane {
