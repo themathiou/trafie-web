@@ -2,6 +2,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: @background_color;
+    font: OpenSans;
 }
 label {
     font-weight: 400;
@@ -37,12 +38,10 @@ a {
     .flex();
     padding: 0px;
     list-style-type: none;
-
     li {
         margin-right: 10px;
         .flex-shrink(0);
     }
-
     a {
         cursor: pointer;
         text-decoration: none;
@@ -57,11 +56,10 @@ a {
     }
 }
 
-
 // -- BOOTSTRAP OVERWRITING
-.col-xs-12, .col-sm-12{
-  position: relative;
-  min-height: 1px;
-  padding-right: 0px;
-  padding-left: 0px;
+.col-xs-12, .col-sm-12 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 0px;
+    padding-left: 0px;
 }

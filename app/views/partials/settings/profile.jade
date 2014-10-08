@@ -8,7 +8,7 @@ div.settings-element-profile-pic
 		include ../svg/edit_activity_svg
 	div( ng-show="edit_profilepic" )
 		div
-			input( type="file" ng-file-select="onFileSelect($files)" )
+			input( type="file" tr-file-select="onFileSelect($files)" )
 			button( ng-click="upload.abort()" ) Cancel Upload
 			div( ng-show="selectedFiles != null")
 				div( class="sel-file" ng-repeat="f in selectedFiles")
@@ -26,11 +26,12 @@ div.settings-element-profile-pic
 //FIRST NAME
 div.settings-element(ng-class="{editable: edit_fname}")
 	label= tr['first_name'] + ': '
-	form.middle-section( method="POST" ng-submit="submitChangeSetting('first_name')")
+	form.middle-section( method="POST" ng-submit="submitChangeSetting('first_name')" name="fname_form")
 		span(ng-show="!edit_fname") {{ localUser.first_name }}
-		div(ng-show="first_name_msg !=''" ng-class="{error: !success, success: success}") {{first_name_msg}}
 		div(ng-show="edit_fname")
-			input.form-control( ng-model="localUser.new_first_name" name="first_name" )
+			input.form-control(ng-model="localUser.new_first_name" name="first_name" ng-pattern="ONLY_ALPHABETIC" ng-class="{error: fname_form.first_name.$error.pattern}")
+			span.message_error(ng-show="fname_form.first_name.$error.pattern" ) Only alphabetic characters are allowed
+		div(ng-show="first_name_msg !=''" ng-class="{message_error: !success, message_success: success}") {{first_name_msg}}
 		div.formButtons( ng-show="edit_fname" )
 			hr
 			input.btn.green( type="submit" value=tr['submit'])
@@ -41,11 +42,11 @@ div.settings-element(ng-class="{editable: edit_fname}")
 //LAST NAME
 div.settings-element(ng-class="{editable: edit_lastname}")
 	label= tr['last_name'] + ': '
-	form.middle-section( method="POST" ng-submit="submitChangeSetting('last_name')")
+	form.middle-section( method="POST" ng-submit="submitChangeSetting('last_name')" name="lname_form")
 		span(ng-show="!edit_lastname") {{localUser.last_name}}
-		div(ng-show="last_name_msg !=''" ng-class="{error: !success, success: success}") {{last_name_msg}}
 		div(ng-show="edit_lastname" )
-			input(ng-model="localUser.new_last_name" name="last_name" )
+			input.form-control(ng-model="localUser.new_last_name" name="last_name" ng-pattern="ONLY_ALPHABETIC" ng-class="{error: lname_form.last_name.$error.pattern}")
+			div(ng-show="last_name_msg !=''" ng-class="{message_error: !success, message_success: success}") {{last_name_msg}}
 		div.formButtons(ng-show="edit_lastname")
 			hr
 			input.btn.green( type="submit" value=tr['submit'])

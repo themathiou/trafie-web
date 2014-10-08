@@ -17,6 +17,9 @@ div( ng-init="statisticsInit()" )
 
 	div( ng-show="loading") Loading the awesome! Please wait...
 
-	div#chart
+	div(ng-show="!valid_data")
+		p Add more activities for {{selected_discipline}} in {{selected_year}} in order to generate graph!
+
+	div(ng-show="valid_data")#chart
 
 

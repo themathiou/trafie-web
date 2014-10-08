@@ -1,4 +1,5 @@
-trafie.directive('ngFileSelect', [
+//tr-file-select directive
+trafie.directive('trFileSelect', [
 	'$parse',
 	'$timeout',
 	function($parse, $timeout) {

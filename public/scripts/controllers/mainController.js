@@ -74,6 +74,12 @@ trafie.controller("mainController", [
 			$window.location.href = '/' + $item._id;
 		};
 
+		///////////////////////////////////////////////////////
+		// Validation Patterns
+		///////////////////////////////////////////////////////
+		$rootScope.ONLY_ALPHABETIC = /^[A-Za-z ]+$/;
+		$rootScope.ALPHABETIC_NUMS_DOT_UNDER = /^[A-Za-z_.0-9]+$/;
+
 
 		///////////////////////////////////////////////////////
 		// SHOULD BE MOVED INTO A SERVICE
@@ -180,7 +186,7 @@ trafie.controller("mainController", [
 
 
 		///////////////////////////////////////////////////////
-		// datepicker bootstrap settings - TO CHANGE
+		// datepicker bootstrap settings - TO CHANGE AND MOVED
 		///////////////////////////////////////////////////////
 		$scope.today = function() {
 			$scope.dt = new Date();

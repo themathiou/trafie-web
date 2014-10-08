@@ -57,10 +57,10 @@ trafie.controller("statisticsController", function(
 			x: 'date',
 			value: ['performance', 'average']
 		};
-		
+
 		// available types (can combined) 'area', 'area-spline', 'line', 'scatter', 'bar'
 		$scope.config.data.types = {
-			performance: 'line', 
+			performance: 'line',
 			average: 'line'
 		};
 
@@ -71,23 +71,23 @@ trafie.controller("statisticsController", function(
 				localtime: false,
 				tick: {
 					fit: false,
-					format: function(date) {
-						formatDate(date);
+					format: function(d) {
+						return formatDate(d);
 					}
 				}
 			}
 		}
 		$scope.config.tooltip = {
 			format: {
-				title: function(date) {
-					formatDate(date);
+				title: function(d) {
+					formatDate(d);
 				}
 			}
 		}
+
 		$scope.config.subchart = {
 			show: true
 		}
-
 
 		//CHECKING USER and init necessary parameters
 		if ($routeParams.userID) {
@@ -114,6 +114,7 @@ trafie.controller("statisticsController", function(
 	$scope.drawSimpleChart = function(user_id, discipline, year, init) {
 		//start loading indicator
 		$scope.loading = true;
+		$scope.valid_data = false;
 		if ($scope.selected_discipline !== discipline) {
 			init = true;
 		}
@@ -146,102 +147,90 @@ trafie.controller("statisticsController", function(
 
 				//reset data
 				$scope.config.data.json = []
-
-				// add rows to chart based on the discipline
-
-				// TIME DISCIPLINE i.e : performance: "00:00:20.09"
-				if (disciplines.time.indexOf(discipline) > -1) {
-					var average = 0,
-						sum = 0;
-					var response_length = res.length;
-
-					for (var i = 0; i < response_length; i++) {
-						sum = sum + parseInt(res[i].performance.split(':')[0] + res[i].performance.split(':')[1] + res[i].performance.split(':')[2].split('.')[0] + res[i].performance.split(':')[2].split('.')[1]);
-					}
-
-					average = sum / response_length;
-
-					for (var i in res) {
-						$scope.config.data.json.push({
-							performance: res[i].performance.split(':')[0] + res[i].performance.split(':')[1] + res[i].performance.split(':')[2].split('.')[0] + res[i].performance.split(':')[2].split('.')[1],
-							average: average,
-							date: new Date(res[i].date)
-						})
-					}
-
-					//Format Y Axis
-					$scope.config.axis.y.tick = {
-						format: function(d) {
-							return formatChartTicks(d, 'time');
-						}
-					}
-
-				}
-
-				// DISTANCE DISCIPLINE
-				else if (disciplines.distance.indexOf(discipline) > -1) {
-					var average = 0,
-						sum = 0;
-					var response_length = res.length;
-
-					for (var i = 0; i < response_length; i++) {
-						sum = sum + parseInt(res[i].performance);
-					}
-					average = sum / response_length;
-
-					for (var i in res) {
-						$scope.config.data.json.push({
-							performance: res[i].performance / 10000,
-							average: average / 10000,
-							date: new Date(res[i].date)
-						})
-					}
-
-					//Format Y Axis
-					$scope.config.axis.y.tick = {
-						format: function(d) {
-							return formatChartTicks(d, 'distance');
-						}
-					}
-				}
-
-				// POINTS DISCIPLINE
-				else if (disciplines.points.indexOf(discipline) > -1) {
-					var average = 0,
-						sum = 0;
-					var response_length = res.length;
-
-					for (var i = 0; i < response_length; i++) {
-						sum = sum + parseInt(res[i].performance);
-					}
-					average = sum / response_length;
-
-					for (var i in res) {
-						$scope.config.data.json.push({
-							performance: res[i].performance ,
-							average: average,
-							date: new Date(res[i].date)
-						})
-					}
-
-					//Format Y Axis
-					$scope.config.axis.y.tick = {
-						format: function(d) {
-							return formatChartTicks(d, 'points');
-						}
-					}
-
-				}
-				// ERROR
-				else {
-					console.log('- error in drawChart(). Unknown discipline:' + discipline);
-				}
-
-				//hide loading indicator
+					//hide loading indicator
 				$scope.loading = false;
 
+				var average = 0,
+					sum = 0,
+					response_length = res.length;
 
-				console.log($scope.config);
+				if (response_length > 1) {
+					$scope.valid_data = true;
+					// TIME DISCIPLINE i.e : performance: "00:00:20.09"
+					if (disciplines.time.indexOf(discipline) > -1) {
+
+						for (var i = 0; i < response_length; i++) {
+							sum = sum + parseInt(res[i].performance.split(':')[0] + res[i].performance.split(':')[1] + res[i].performance.split(':')[2].split('.')[0] + res[i].performance.split(':')[2].split('.')[1]);
+						}
+
+						average = sum / response_length;
+
+						for (var i in res) {
+							$scope.config.data.json.push({
+								performance: res[i].performance.split(':')[0] + res[i].performance.split(':')[1] + res[i].performance.split(':')[2].split('.')[0] + res[i].performance.split(':')[2].split('.')[1],
+								average: average,
+								date: new Date(res[i].date)
+							})
+						}
+
+						//Format Y Axis
+						$scope.config.axis.y.tick = {
+							format: function(d) {
+								return formatChartTicks(d, 'time');
+							}
+						}
+					}
+					// DISTANCE DISCIPLINE
+					else if (disciplines.distance.indexOf(discipline) > -1) {
+
+						for (var i = 0; i < response_length; i++) {
+							sum = sum + parseInt(res[i].performance);
+						}
+						average = sum / response_length;
+
+						for (var i in res) {
+							$scope.config.data.json.push({
+								performance: res[i].performance / 10000,
+								average: average / 10000,
+								date: new Date(res[i].date)
+							})
+						}
+
+						//Format Y Axis
+						$scope.config.axis.y.tick = {
+							format: function(d) {
+								return formatChartTicks(d, 'distance');
+							}
+						}
+					}
+					// POINTS DISCIPLINE
+					else if (disciplines.points.indexOf(discipline) > -1) {
+
+						for (var i = 0; i < response_length; i++) {
+							sum = sum + parseInt(res[i].performance);
+						}
+						average = sum / response_length;
+
+						for (var i in res) {
+							$scope.config.data.json.push({
+								performance: res[i].performance,
+								average: average,
+								date: new Date(res[i].date)
+							})
+						}
+
+						//Format Y Axis
+						$scope.config.axis.y.tick = {
+							format: function(d) {
+								return formatChartTicks(d, 'points');
+							}
+						}
+					}
+					// ERROR
+					else {
+						console.log('- error in drawChart(). Unknown discipline:' + discipline);
+					}
+				}
 
 				// model for
 				// inject config for C3 charts
@@ -289,7 +278,7 @@ trafie.controller("statisticsController", function(
 	 */
 	function formatDate(date) {
 		var _temp = (new Date(date)).toString().split(' ');
-		return _temp[2]+ ' ' + _temp[1] + ' ' + _temp[3];
+		return _temp[2] + ' ' + _temp[1] + ' ' + _temp[3];
 	}
 
 }); //end controller
