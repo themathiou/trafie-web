@@ -1,26 +1,26 @@
 h3= tr['profile_settings']
 
 //PROFILE PIC
-div.settings-element-profile-pic
+div.settings-element(ng-class="{editable: edit_profilepic}")
 	label= tr['profile_picture'] + ': '
-	img.thumb( src="{{localUser.picture}}" )
-	a.editLink( ng-click="showHide('edit_profilepic')" tooltip-placement="top" tooltip="Edit" )
-		include ../svg/edit_activity_svg
-	div( ng-show="edit_profilepic" )
-		div
+	div.middle-section
+		img.thumb( src="{{localUser.picture}}" )
+		div( ng-show="edit_profilepic" )
 			input( type="file" tr-file-select="onFileSelect($files)" )
 			button( ng-click="upload.abort()" ) Cancel Upload
 			div( ng-show="selectedFiles != null")
 				div( class="sel-file" ng-repeat="f in selectedFiles")
 					{{($index + 1) + '.'}}
-					img( ng-show="dataUrls[$index]" ng-src="{{dataUrls[$index]}}" )
-					button.btn.green( ng-click="start($index)" ng-show="progress[$index] < 0") Start
+					img.img-rounded( ng-show="dataUrls[$index]" ng-src="{{dataUrls[$index]}}" )
+					button.btn.btn-success( ng-click="start($index)" ng-show="progress[$index] < 0") Start
 					span( class="progress" ng-show="progress[$index] >= 0" )
 						div( style="width:{{progress[$index]}}%") {{progress[$index]}}%
 					button( class="button" ng-click="abort($index)" ng-show="hasUploader($index) && progress[$index] < 100") Abort
 					{{f.name}} - size: {{f.size}}B - type: {{f.type}}
 		div.formButtons( ng-show="edit_profilepic" )
-			a.cancel_link( ng-click="showHide('edit_profilepic')" )= tr['cancel']
+			a.btn.btn-link( ng-click="showHide('edit_profilepic')" )= tr['cancel']
+	a.editLink( ng-click="showHide('edit_profilepic')" tooltip-placement="top" tooltip="Edit" )
+		include ../svg/edit_activity_svg
 
 
 //FIRST NAME
@@ -34,8 +34,8 @@ div.settings-element(ng-class="{editable: edit_fname}")
 		div(ng-show="first_name_msg !=''" ng-class="{message_error: !success, message_success: success}") {{first_name_msg}}
 		div.formButtons( ng-show="edit_fname" )
 			hr
-			input.btn.green( type="submit" value=tr['submit'])
-			a.cancel_link( ng-click="showHide('edit_fname')" )= tr['cancel']
+			input.btn.btn-success( type="submit" value=tr['submit'])
+			a.btn.btn-link( ng-click="showHide('edit_fname')" )= tr['cancel']
 	a.editLink( ng-click="showHide('edit_fname')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
 
@@ -49,8 +49,8 @@ div.settings-element(ng-class="{editable: edit_lastname}")
 			div(ng-show="last_name_msg !=''" ng-class="{message_error: !success, message_success: success}") {{last_name_msg}}
 		div.formButtons(ng-show="edit_lastname")
 			hr
-			input.btn.green( type="submit" value=tr['submit'])
-			a.cancel_link( ng-click="showHide('edit_lastname')")= tr['cancel']
+			input.btn.btn-success( type="submit" value=tr['submit'])
+			a.btn.btn-link( ng-click="showHide('edit_lastname')")= tr['cancel']
 	a.editLink( ng-click="showHide('edit_lastname')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
 
@@ -67,8 +67,8 @@ div.settings-element
 					option( value=disciplines[i])= tr[disciplines[i]]
 			div.formButtons
 				hr
-				input.btn.green( type="submit" value=tr['submit'])
-				a.cancel_link( ng-click="showHide('edit_discipline')" )= tr['cancel']
+				input.btn.btn-success( type="submit" value=tr['submit'])
+				a.btn.btn-link( ng-click="showHide('edit_discipline')" )= tr['cancel']
 	a.editLink( ng-click="showHide('edit_discipline')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
 
@@ -83,8 +83,8 @@ div.settings-element
 				input( type="checkbox" name="privacy" value="yes" ng-model="localUser.new_privacy" ng-show="edit_privacy" ng-checked="localUser.private" )
 		div.formButtons(ng-show="edit_privacy")
 			hr
-			input.btn.green( type="submit" value=tr['submit'])
-			a.cancel_link( ng-click="showHide('edit_privacy')" )= tr['cancel']
+			input.btn.btn-success( type="submit" value=tr['submit'])
+			a.btn.btn-link( ng-click="showHide('edit_privacy')" )= tr['cancel']
 	a.editLink( ng-click="showHide('edit_privacy')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
 
@@ -101,8 +101,8 @@ div.settings-element
 				input(id="female" name="gender" type="radio" ng-model="localUser.gender" value="female")
 		div.formButtons(ng-show="edit_gender")
 			hr
-			input.btn.green( type="submit" value=tr['submit'])
-			a.cancel_link( ng-click="showHide('edit_gender')" )= tr['cancel']
+			input.btn.btn-success( type="submit" value=tr['submit'])
+			a.btn.btn-link( ng-click="showHide('edit_gender')" )= tr['cancel']
 	a.editLink( ng-click="showHide('edit_gender')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
 
@@ -119,8 +119,8 @@ div.settings-element
 				input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="localUser.new_birthday" is-open="opened" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
 		div.formButtons(ng-show="edit_birthday")
 			hr
-			input.btn.green( type="submit" value=tr['submit'])
-			a.cancel_link( ng-click="showHide('edit_birthday')" )= tr['cancel']
+			input.btn.btn-success( type="submit" value=tr['submit'])
+			a.btn.btn-link( ng-click="showHide('edit_birthday')" )= tr['cancel']
 	a.editLink( ng-click="showHide('edit_birthday')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
 
@@ -137,8 +137,8 @@ div.settings-element
 					option( value=countries[i] )= tr[countries[i]]
 		div.formButtons(ng-show="edit_country")
 			hr
-			input.btn.green( type="submit" value=tr['submit'])
-			a.cancel_link( ng-click="showHide('edit_country')")= tr['cancel']
+			input.btn.btn-success( type="submit" value=tr['submit'])
+			a.btn.btn-link( ng-click="showHide('edit_country')")= tr['cancel']
 	a.editLink( ng-click="showHide('edit_country')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
 
@@ -153,8 +153,8 @@ div.settings-element
 			textarea.textarea( name="about" maxlength="400"  ng-model="localUser.new_about" ) {{localUser.about}}
 		div.formButtons( ng-show="edit_about" )
 			hr
-			input.btn.green( type="submit" value=tr['submit'])
-			a.cancel_link( ng-click="showHide('edit_about')" )= tr['cancel']
+			input.btn.btn-success( type="submit" value=tr['submit'])
+			a.btn.btn-link( ng-click="showHide('edit_about')" )= tr['cancel']
 	a.editLink( ng-click="showHide('edit_about')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
 

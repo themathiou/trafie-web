@@ -204,6 +204,9 @@ form .message_error {
 form .message_success {
   color: green;
 }
+.modal .text-message {
+  margin: 10px;
+}
 #mainmenu_container {
   background: #990100;
   position: fixed;
@@ -487,6 +490,13 @@ form .message_success {
   display: -moz-flex;
   display: -ms-flex;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -moz-box-orient: horizontal;
+  -ms-box-orient: horizontal;
+  box-orient: horizontal;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
   flex-direction: row;
 }
 .history_line > li .info .current_data .privacy {
@@ -507,6 +517,7 @@ form .message_success {
 }
 .history_line > li .info.editable {
   border: 2px solid;
+  background-color: #fcf8e3;
   border-color: #e87600;
 }
 .history_line > li .add_activity {
@@ -766,13 +777,10 @@ form .message_success {
   align-items: flex-start;
 }
 .settings-content .settings-element.editable {
-  background-color: #f7f7f7;
-}
-.settings-content .settings-element:hover {
-  background-color: #f7f7f7;
+  background-color: #fcf8e3;
 }
 .settings-content .settings-element input {
-  border: none;
+  border: 1px solid rgba(0, 0, 0, 0.25);
   font-size: 1em;
 }
 .settings-content .settings-element input[type="radio"] {
@@ -782,11 +790,7 @@ form .message_success {
   border: none;
   font-size: 1em;
 }
-.settings-content .settings-element-profile-pic {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
-  padding: 10px 5px;
-}
-.settings-content .settings-element-profile-pic .thumb {
+.settings-content .settings-element .thumb {
   width: 40px;
   height: 40px;
   margin-left: 5px;

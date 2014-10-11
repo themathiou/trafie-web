@@ -53,5 +53,6 @@ div.edit_activity( ng-show="activity.show_editable_form" )
 				input( type="checkbox" ng-model="updateActivityForm.private" )
 
 			div.submit_buttons
-				input.btn.green(type="submit" name="new_competition" value=tr['save'] )
-				a.cancel_edit_activity.cancel_link( ng-click="activity.show_editable_form = !activity.show_editable_form" )= tr['cancel']
+				hr
+				input.btn.btn-success(type="submit" name="new_competition" value=tr['save'] )
+				a.btn.btn-link( ng-click="activity.show_editable_form = !activity.show_editable_form" )= tr['cancel']

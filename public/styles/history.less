@@ -32,12 +32,15 @@
                 .flex-column;
                 div {
                     .flexbox();
-                    flex-direction: row;
+                    .flex-row;
                 }
             }
-            .date {} .privacy {
+            .date {} 
+
+            .privacy {
                 .align-self(flex-start);
             }
+            
             .location {}
         }
         .deleteActivity {
@@ -52,6 +55,7 @@
         }
         &.editable {
             border: 2px solid;
+            background-color: #fcf8e3; //same as bootstrap's bg-warning background color
             border-color: @orange_message_back;
         }
     }

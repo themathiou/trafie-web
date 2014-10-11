@@ -45,15 +45,14 @@
         .justify-content(space-between);
         .align-items(flex-start);
         &.editable {
-            background-color: @lightgray;
+            background-color: #fcf8e3; //same as bootstrap's bg-warning background color
         }
         
         &:hover {
-            background-color: @lightgray;
         }
 
         input {
-            border: none;
+            border: 1px solid @black_25;
             font-size: 1em;
             &[type="radio"] {
                 -webkit-appearance: radio;
@@ -64,10 +63,6 @@
             font-size: 1em;
         }
 
-    }
-    .settings-element-profile-pic {
-        border-bottom: 1px solid @black_25;
-        padding: 10px 5px;
         .thumb {
             width: 40px;
             height: 40px;
@@ -76,6 +71,7 @@
             vertical-align: middle;
         }
     }
+    
     .submitButtonsVisible {
         display: block;
         width: 150px;

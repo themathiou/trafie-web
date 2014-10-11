@@ -1,49 +1,48 @@
 h3= tr['account_settings']
 
 //CHANGE PASSWORD
-div.settings-element
+div.settings-element(ng-class="{editable: edit_password}")
 	label= tr['change_password']
-	div( ng-show="edit_password" )
-		form( method="POST" ng-submit="submitChangeSetting('password')")
-			span
-				label( for="old_password" )= tr['old_password'] + ': '
-				//span= errors.first_name
-				input( name="old_password" type="password")
-			span
-				label( for="password" )= tr['new_password'] + ': '
-				//span= errors.first_name
-				span#password_error
-				input( name="password" type="password")
-			span
-				label( for="repeat_password" )= tr['repeat_password'] + ': '
-				//span= errors.first_name
-				span.warning_message
-				input( name="repeat_password" type="password")
-			div
-				input.btn.green( type="submit" value=tr['submit'])
-				a.cancel_link( ng-click="showHide('edit_password')" )= tr['cancel']
+	form( method="POST" ng-submit="submitChangeSetting('password')" ng-show="edit_password" class="form-horizontal" role="form")
+		div.form-group
+			label( for="old_password" )= tr['old_password'] + ': '
+			//span= errors.first_name
+			input( name="old_password" type="password")
+		div.form-group
+			label( for="password" )= tr['new_password'] + ': '
+			span#password_error
+			input( name="password" type="password")
+		div.form-group
+			label( for="repeat_password" )= tr['repeat_password'] + ': '
+			span.warning_message
+			input( name="repeat_password" type="password")
+		div
+			hr
+			input.btn.btn-success( type="submit" value=tr['submit'])
+			a.btn.btn-link( ng-click="showHide('edit_password')" )= tr['cancel']
 	a.editLink( ng-click="showHide('edit_password')" tooltip-placement="top" tooltip="Edit" )
 		include ../svg/edit_activity_svg
 
 //LANGUAGE
-div.settings-element
+div.settings-element(ng-class="{editable: edit_language}")
 	label= tr['language'] + ': '
-	form( method="POST" ng-submit="submitChangeSetting('language')")
+	form(method="POST" ng-submit="submitChangeSetting('language')")
 		span {{localUser.language}}
 		div(ng-show="language_msg !=''") {{language_msg}}
-		div( ng-show="edit_language" )
+		div(ng-show="edit_language")
 			select(name="language" ng-model="localUser.new_language")
 				option(value="no-selection" selected)= tr['choose_your_language']
 				- for( var i in languages )
 						option( value=i )= languages[i]
-		div.formButtons( ng-show="edit_language" )
-			input.btn.green( type="submit" value=tr['submit'])
-			a.cancel_link( ng-click="showHide('edit_language')" )= tr['cancel']
+		div.formButtons(ng-show="edit_language")
+			hr
+			input.btn.btn-success( type="submit" value=tr['submit'])
+			a.btn.btn-link( ng-click="showHide('edit_language')" )= tr['cancel']
 	a.editLink( ng-click="showHide('edit_language')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
 
 //DATE FORMAT
-div.settings-element
+div.settings-element(ng-class="{editable: edit_dateformat}")
 	label= tr['date_format'] + ': '
 	form( method="POST" ng-submit="submitChangeSetting('date-format')" )
 		span {{localUser.date_format}}
@@ -53,13 +52,14 @@ div.settings-element
 				option( value='m-d-y' )= tr['m-d-y']
 				option( value='d-m-y' )= tr['d-m-y']
 		div.formButtons( ng-show="edit_dateformat" )
-			input.btn.green( type="submit" value=tr['submit'])
-			a.cancel_link( ng-click="showHide('edit_dateformat')" )= tr['cancel']
+			hr
+			input.btn.btn-success( type="submit" value=tr['submit'])
+			a.btn.btn-link( ng-click="showHide('edit_dateformat')" )= tr['cancel']
 	a.editLink( ng-click="showHide('edit_dateformat')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
 
 //USERNAME
-div.settings-element
+div.settings-element(ng-class="{editable: edit_username}")
 	label= tr['username'] + ': '
 	form( method="POST" ng-submit="submitChangeSetting('username')" )
 		span http://www.trafie.com/
@@ -68,8 +68,9 @@ div.settings-element
 		span.existed( ng-show="!edit_username" ) {{localUser.username || localUser._id}}
 		input( ng-model="localUser.new_username" placeholder="{{localUser.username || localUser._id}}" ng-show="edit_username" )
 		div.formButtons( ng-show="edit_username" )
-			input.btn.green( type="submit" value=tr['submit'])
-			a.cancel_link( ng-click="showHide('edit_username')" )= tr['cancel']
+			hr
+			input.btn.btn-success( type="submit" value=tr['submit'])
+			a.btn.btn-link( ng-click="showHide('edit_username')" )= tr['cancel']
 	a.editLink( ng-click="showHide('edit_username')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
 

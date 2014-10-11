@@ -63,5 +63,5 @@ accordion( class="info add_activity" ng-show="self")
 
 			//submit
 			div#submit_buttons.submit_buttons
-				input.btn.green(type="submit" value=tr['save'])
-				a.cancel_link( ng-click="accordions.addActivity = !accordions.addActivity" )= tr['cancel']
+				input.btn.btn-success(type="submit" value=tr['save'])
+				a.btn.btn-link( ng-click="accordions.addActivity = !accordions.addActivity" )= tr['cancel']
