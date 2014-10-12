@@ -6,26 +6,25 @@ block content
 		div#header
 			div#welcome_logo trafie
 
-		div.forms
-			form.welcome_form(method="post", action="/login")
-				if errors.email
-					div.error_message= errors.email
-
+		form.welcome_form.col-xs-12.col-sm-6.col-sm-offset-3.col-md-6.col-md-offset-3.col-lg-6.col-lg-offset-3(method="post" action="/login" role="form")
+			if errors.email
+				div.error_message= errors.email
+			div.form-group
 				label(for="email_input") Email:
 					span#email_error.warning_message
-				input#email_input.textfield(name="email" type="email" value="user@trafie.com" autofocus)
-				br
-
+				input#email_input.form-control(name="email" type="email" value="user@trafie.com" autofocus)
+			div.form-group
 				label(for="password_input") Password:
-				input#password_input.textfield(name="password" type="password" value="123123")
-				br
-				input#submit_button.button_green(type="submit", value="Login")
-				div
-					p.switch_login_register_message Not a member?
-						a(href="/register") Register
-				div
-					p.switch_login_register_message Forgot Password?
-						a(href="/reset_password_request") Reset Here
+				input#password_input.form-control(name="password" type="password" value="123123")
+			div
+				input.btn.btn-success.btn-lg.btn-block(type="submit", value="Login")
+			
+			div
+				p.switch_login_register_message Not a member?
+					a(href="/register") Register
+			div
+				p.switch_login_register_message Forgot Password?
+					a(href="/reset_password_request") Reset Here
 	//scripts
 	script(type='text/javascript', src='/javascripts/login.js')
 	script.

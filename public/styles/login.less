@@ -48,10 +48,6 @@ body {
 /*          LOGIN               */
 /******************************************************/
 
-.forms {
-    margin: 0px auto;
-    padding: 0px;
-}
 #login {
     visibility: visible;
 }
@@ -59,6 +55,7 @@ body {
     visibility: visible;
     float: left;
 }
+
 #welcome_container {
     //background: rgba(0,0,0, .2);
     background-image: url('../images/welcome/01.jpg');
@@ -75,9 +72,8 @@ body {
     font-size: 3em;
     font-style: italic;
     font-weight: 100;
-    width: 100%;
     text-align: center;
-    padding-top: 3em;
+    padding-top: 1em;
     padding-bottom: 0.5em;
     color: white;
     -webkit-text-shadow: 2px 2px 5px #000000;
@@ -86,55 +82,12 @@ body {
     -ms-text-shadow: 2px 2px 5px #000000;
     text-shadow: 2px 2px 5px #000000;
 }
+
 .welcome_form {
-    width: 400px;
-    padding: 5px 20px;
-    margin: 0px auto;
+    padding: 20px 20px;
     background-color: rgba(255, 255, 255, 0.9);
     .rounded-corners(7px);
     color: #494949;
-    h4 {
-        text-align: left;
-        font-weight: 400;
-        font-size: 1.2em;
-        margin-bottom: 10px;
-        color: @darkgray;
-    }
-    h3 {
-        width: 100%;
-        text-align: center;
-        font-weight: 300;
-        font-size: 1.3em;
-        font-style: italic;
-        margin: 0px 0px 10px 0px;
-        padding: 0px;
-    }
-    input {
-        width: 100%;
-        margin: 0px auto;
-        /* radius */
-        
-        .rounded-corners(5px);
-        margin-bottom: 5px;
-        &[type="radio"] {
-            width: auto;
-            height: 15px;
-            margin-right: 30px;
-        }
-    }
-    label {
-        display: block;
-    }
-    /*the text field parameters. use with <input> */
-    
-    .textfield {
-        font-size: 1.4em;
-        border: 1px solid #FFFFFF;
-        box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2) inset;
-        padding: 5px 2%;
-        width: 95%;
-        color: #777;
-    }
     .switch_login_register_message {
         color: @darkgray;
         font-size: 0.9em;
@@ -154,37 +107,7 @@ body {
     font-size: 0.8em;
     margin-bottom: 4px;
 }
-.button_green {
-    display: inline-block;
-    text-align: center;
-    vertical-align: middle;
-    padding: 4px 24px;
-    border: 1px solid #45861a;
-    .rounded-corners(8px);
-    background: #70d92b;
-    background: -webkit-gradient(linear, left top, left bottom, from(#70d92b), to(#45861a));
-    background: -moz-linear-gradient(top, #70d92b, #45861a);
-    background: linear-gradient(to bottom, #70d92b, #45861a);
-    font: 1.3em Open Sans, Arial, Helvetica, sans-serif;
-    color: #ffffff;
-    text-decoration: none;
-    font-weight: 600;
-    &:hover, &:focus {
-        border: 1px solid ##56a721;
-        background: #86ff34;
-        background: -webkit-gradient(linear, left top, left bottom, from(#86ff34), to(#53a11f));
-        background: -moz-linear-gradient(top, #86ff34, #53a11f);
-        background: linear-gradient(to bottom, #86ff34, #53a11f);
-        color: #ffffff;
-        text-decoration: none;
-    }
-    &:active {
-        background: #45861a;
-        background: -webkit-gradient(linear, left top, left bottom, from(#45861a), to(#45861a));
-        background: -moz-linear-gradient(top, #45861a, #45861a);
-        background: linear-gradient(to bottom, #45861a, #45861a);
-    }
-}
+
 /******************************************************/
 /*          MESSAGE SENT              */
 /******************************************************/
@@ -196,43 +119,11 @@ body {
     background-color: rgba(255, 255, 255, 0.9);
     .rounded-corners(7px);
 }
-/******************************************************/
-/*      MULTIPLE DEVICES SUPPORT          */
-/******************************************************/
-/*******************************************************************************************************************************************************/
-/************************** iPad   ***************************************************************************************************************** */
-/*******************************************************************************************************************************************************/
 
-@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
-    .welcome_form {
-        width: 60%;
-        color: #494949;
-        h4 {
-            font-size: 1.4em;
-        }
-        h3 {
-            font-size: 1.5em;
-        }
-        /*the text field parameters. use with <input> */
-        
-        .textfield {
-            font-size: 1.6em;
-            padding: 15px 2%;
-        }
-        .switch_login_register_message {
-            font-size: 1.1em;
-            margin-top: 20px;
-            a {
-                font-size: 1.2em;
-            }
-        }
-    }
-}
 /******************************************************/
 /*          FUNCTIONS             */
 /******************************************************/
 /*rounded corners function : 5px is default radius*/
-
 .rounded-corners (@radius: 5px) {
     -webkit-border-radius: @radius;
     -moz-border-radius: @radius;
