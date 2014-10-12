@@ -7,8 +7,8 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
   //- PAGE FOUND START
   div( ng-if="!page_not_found" )
     //- PROFILE
-    div#profile_container.col-xs-12.col-md-12.col-lg-12
-      div#image_container
+    div#profile-container.col-xs-12.col-md-12.col-lg-12
+      div#image-container.hidden-xs
         img( src="{{current_user.picture}}" )
       div#profileFullName
         h3 {{current_user.first_name}} {{current_user.last_name}}
@@ -17,8 +17,8 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
           span( ng-show="current_user.discipline && current_user.country" ) -
           span( ng-show="current_user.country" ){{current_user.country}}
 
-      div( ng-if="!self")
-          a( href="/statistics/{{current_user._id}}" ) View User Statistics
+    div( ng-if="!self").filters-row.col-xs-12.col-md-12.col-lg-12.hidden-xs
+      a( href="/statistics/{{current_user._id}}" ) View User Statistics
 
     //- FILTERS
     ul.filters-row.col-xs-12.col-md-12.col-lg-12
@@ -52,15 +52,12 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
 
             div.current_data( ng-show="!activity.show_editable_form" )
               h1 {{activity.formatted_performance}}
-                small.competition ~ {{activity.competition}}
+                small.competition ({{activity.place}}) {{activity.competition}}
               blockquote
-                div
-                  p {{activity.location}}
-                  p {{activity.formatted_date}}
+                p {{activity.location}}
+                p {{activity.formatted_date}}
                 //- p.discipline {{activity.formatted_discipline}}
-                p {{activity.place}}
-                div
-                  p.notes {{activity.notes}}
+                p.notes {{activity.notes}}
 
               a.privacy( style="float:left;" ng-if="self" ng-click="changePrivacy(activity)" tooltip-placement="top" tooltip="Change Privacy")
                   span( ng-if="activity.private" )

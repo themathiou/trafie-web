@@ -2,16 +2,13 @@ doctype 5
 html(ng-app="trafie")
 head
     meta(charset="utf-8")
-    meta( name="viewport" content="width=device-width, initial-scale=1")
+    meta( name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no")
 
     //ICONS
     link(rel="icon" href="/images/icons/trafie_72.png" type="image/x-icon")
 
     link(href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600&subset=latin,greek,cyrillic' rel='stylesheet' type='text/css')
-    //- link(rel='stylesheet', href='/styles/reset.css')
-    link(rel='stylesheet', href='/styles/bootstrap.css')
     link(rel='stylesheet', href='/styles/style.css')
-    link(rel='stylesheet', href='/styles/c3.css')
 
     title trafie
 
@@ -38,22 +35,24 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
 
             //- MOBILE
             span( ng-if="mobile" ng-init="isCollapsed = true")
-                button.btn.btn-default.btn-sm( ng-click="isCollapsed = !isCollapsed") Menu
+                ul.navigation_menu
+                    li(ng-if="!isVisitor")
+                        a.menu_profile(href="/" ng-class="{active: section == 'profile'}" ) {{localUser.first_name}}
+                    //- li(ng-if="!isVisitor")
+                        a.menu_statistics(href="/statistics" ng-class="{active: section == 'statistics'}")= tr['statistics']
+                    li(ng-if="!isVisitor")
+                        a.menu_settings(href="/settings" ng-class="{active: section == 'settings'}")= tr['settings']
+                    li(ng-if="isVisitor")
+                        a(href="/login") Login
+                    li(ng-if="isVisitor")
+                        a(href="/register") Register
+                    li
+                        a(ng-click="isCollapsed = !isCollapsed")
+                            include partials/svg/search_svg
                 div.col-xs-12.dropdown_container( collapse="isCollapsed" )
                     div.flex_wrapper
                         input.search( type="text" ng-model="asyncSelected" placeholder="search for athletes!" typeahead-on-select="onSelect($item, $model, $label)" typeahead="result.label for result in searchUser($viewValue)" typeahead-loading="loadingLocations" class="form-control" autocomplete="off" )
 
-                        ul.navigation_menu
-                            li(ng-if="!isVisitor")
-                                a.menu_profile(href="/" ng-class="{active: section == 'profile'}" ) {{localUser.first_name}}
-                            //- li(ng-if="!isVisitor")
-                                a.menu_statistics(href="/statistics" ng-class="{active: section == 'statistics'}")= tr['statistics']
-                            li(ng-if="!isVisitor")
-                                a.menu_settings(href="/settings" ng-class="{active: section == 'settings'}")= tr['settings']
-                             li(ng-if="isVisitor")
-                                a(href="/login") Login
-                            li(ng-if="isVisitor")
-                                a(href="/register") Register
 
 
     //- ALERTS
