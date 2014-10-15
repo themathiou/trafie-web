@@ -74,8 +74,8 @@ trafie.controller("profileController", function(
 			.success(function(res) {
 				$rootScope.current_user = res;
 				//get user's activities
-				$scope.getActivities($rootScope.current_user._id, $rootScope.current_user.discipline);
 				$scope.getDisciplinesOfUser($rootScope.current_user._id);
+				$scope.getActivities($rootScope.current_user._id, $rootScope.current_user.discipline);
 
 			})
 			.error(function(res) {
@@ -98,10 +98,11 @@ trafie.controller("profileController", function(
 
 	//get user activities based on user id
 	$scope.getActivities = function(user_id, discipline) {
+		console.log(user_id, discipline);
 		var url = '';
 		$scope.selected_year.date = ''; //reset year filtering when switching between disciplines
 		$scope.selected_discipline = discipline;
-		url = typeof discipline !== 'undefined' ? '/users/' + user_id + '/activities?discipline=' + discipline : '/users/' + user_id + '/activities';
+		url = discipline ? '/users/' + user_id + '/activities?discipline=' + discipline : '/users/' + user_id + '/activities';
 		
 		$http.get(url)
 		.success(function(res) {

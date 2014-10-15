@@ -1,14 +1,14 @@
 h3= tr['profile_settings']
 
 //PROFILE PIC
-div.settings-element(ng-class="{editable: edit_profilepic}")
+div.settings-element(ng-class="{editable: isEditable.profile_pic}")
 	label= tr['profile_picture'] + ': '
 	div.middle-section
 		img.thumb( src="{{localUser.picture}}" )
-		div( ng-show="edit_profilepic" )
+		div( ng-show="isEditable.profile_pic" )
 			input( type="file" tr-file-select="onFileSelect($files)" )
 			button( ng-click="upload.abort()" ) Cancel Upload
-			div( ng-show="selectedFiles != null")
+			div( ng-show="selectedFiles !==  null")
 				div( class="sel-file" ng-repeat="f in selectedFiles")
 					{{($index + 1) + '.'}}
 					img.img-rounded( ng-show="dataUrls[$index]" ng-src="{{dataUrls[$index]}}" )
@@ -17,50 +17,50 @@ div.settings-element(ng-class="{editable: edit_profilepic}")
 						div( style="width:{{progress[$index]}}%") {{progress[$index]}}%
 					button( class="button" ng-click="abort($index)" ng-show="hasUploader($index) && progress[$index] < 100") Abort
 					{{f.name}} - size: {{f.size}}B - type: {{f.type}}
-		div.formButtons( ng-show="edit_profilepic" )
-			a.btn.btn-link( ng-click="showHide('edit_profilepic')" )= tr['cancel']
-	a.editLink( ng-click="showHide('edit_profilepic')" tooltip-placement="top" tooltip="Edit" )
+		div.formButtons( ng-show="isEditable.profile_pic" )
+			a.btn.btn-link( ng-click="toggleEdit('profile_pic')" )= tr['cancel']
+	a.editLink( ng-click="toggleEdit('profile_pic')" tooltip-placement="top" tooltip="Edit" )
 		include ../svg/edit_activity_svg
 
 
 //FIRST NAME
-div.settings-element(ng-class="{editable: edit_fname}")
+div.settings-element(ng-class="{editable: isEditable.first_name}")
 	label= tr['first_name'] + ': '
 	form.middle-section( method="POST" ng-submit="submitChangeSetting('first_name')" name="fname_form")
-		span(ng-show="!edit_fname") {{ localUser.first_name }}
-		div(ng-show="edit_fname")
+		span(ng-show="!isEditable.first_name") {{ localUser.first_name }}
+		div(ng-show="isEditable.first_name")
 			input.form-control(ng-model="localUser.new_first_name" name="first_name" ng-pattern="ONLY_ALPHABETIC" ng-class="{error: fname_form.first_name.$error.pattern}")
 			span.message_error(ng-show="fname_form.first_name.$error.pattern" ) Only alphabetic characters are allowed
-		div(ng-show="first_name_msg !=''" ng-class="{message_error: !success, message_success: success}") {{first_name_msg}}
-		div.formButtons( ng-show="edit_fname" )
+		div(ng-show="first_name_msg" ng-class="{message_error: !success, message_success: success}") {{first_name_msg}}
+		div.formButtons( ng-show="isEditable.first_name" )
 			hr
 			input.btn.btn-success( type="submit" value=tr['submit'])
-			a.btn.btn-link( ng-click="showHide('edit_fname')" )= tr['cancel']
-	a.editLink( ng-click="showHide('edit_fname')" tooltip-placement="top" tooltip="Edit" )
+			a.btn.btn-link( ng-click="toggleEdit('first_name')" )= tr['cancel']
+	a.editLink( ng-click="toggleEdit('first_name')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
 
 //LAST NAME
-div.settings-element(ng-class="{editable: edit_lastname}")
+div.settings-element(ng-class="{editable: isEditable.last_name}")
 	label= tr['last_name'] + ': '
 	form.middle-section( method="POST" ng-submit="submitChangeSetting('last_name')" name="lname_form")
-		span(ng-show="!edit_lastname") {{localUser.last_name}}
-		div(ng-show="edit_lastname" )
+		span(ng-show="!isEditable.last_name") {{localUser.last_name}}
+		div(ng-show="isEditable.last_name" )
 			input.form-control(ng-model="localUser.new_last_name" name="last_name" ng-pattern="ONLY_ALPHABETIC" ng-class="{error: lname_form.last_name.$error.pattern}")
-			div(ng-show="last_name_msg !=''" ng-class="{message_error: !success, message_success: success}") {{last_name_msg}}
-		div.formButtons(ng-show="edit_lastname")
+		div(ng-show="last_name_msg" ng-class="{message_error: !success, message_success: success}") {{last_name_msg}}
+		div.formButtons(ng-show="isEditable.last_name")
 			hr
 			input.btn.btn-success( type="submit" value=tr['submit'])
-			a.btn.btn-link( ng-click="showHide('edit_lastname')")= tr['cancel']
-	a.editLink( ng-click="showHide('edit_lastname')" tooltip-placement="top" tooltip="Edit" )
+			a.btn.btn-link( ng-click="toggleEdit('last_name')")= tr['cancel']
+	a.editLink( ng-click="toggleEdit('last_name')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
 
 //MAIN DISCIPLINE
-div.settings-element
+div.settings-element(ng-class="{editable: isEditable.main_discipline}")
 	label= tr['main_discipline'] + ': '
 	form.middle-section( method="POST" ng-submit="submitChangeSetting('discipline')")
 		span {{ localUser.discipline_formatted }}
-		div(ng-show="discipline_msg !=''" ng-class="{error: !success, success: success}") {{discipline_msg}}
-		div(ng-show="edit_discipline")
+		div(ng-show="discipline_msg" ng-class="{message_error: !success, message_success: success}") {{discipline_msg}}
+		div(ng-show="isEditable.main_discipline")
 			select(ng-model="localUser.new_main_discipline")
 				option( value="")= tr['choose_your_discipline']
 				- for (i in disciplines)
@@ -68,94 +68,94 @@ div.settings-element
 			div.formButtons
 				hr
 				input.btn.btn-success( type="submit" value=tr['submit'])
-				a.btn.btn-link( ng-click="showHide('edit_discipline')" )= tr['cancel']
-	a.editLink( ng-click="showHide('edit_discipline')" tooltip-placement="top" tooltip="Edit" )
+				a.btn.btn-link( ng-click="toggleEdit('main_discipline')" )= tr['cancel']
+	a.editLink( ng-click="toggleEdit('main_discipline')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
 
 //PRIVACY
-div.settings-element
+div.settings-element(ng-class="{editable: isEditable.privacy}")
 	label= tr['privacy'] + ': '
 	form.middle-section( method="POST" ng-submit="submitChangeSetting('privacy')")
 		span {{localUser.private}}
-		div(ng-show="privacy_msg !=''" ng-class="{error: !success, success: success}") {{privacy_msg}}
-		div( ng-show="edit_privacy" )
+		div(ng-show="privacy_msg" ng-class="{message_error: !success, message_success: success}") {{privacy_msg}}
+		div( ng-show="isEditable.privacy" )
 			label(for="privacy") Private
-				input( type="checkbox" name="privacy" value="yes" ng-model="localUser.new_privacy" ng-show="edit_privacy" ng-checked="localUser.private" )
-		div.formButtons(ng-show="edit_privacy")
+				input( type="checkbox" name="privacy" value="yes" ng-model="localUser.new_privacy" ng-checked="localUser.private" )
+		div.formButtons(ng-show="isEditable.privacy")
 			hr
 			input.btn.btn-success( type="submit" value=tr['submit'])
-			a.btn.btn-link( ng-click="showHide('edit_privacy')" )= tr['cancel']
-	a.editLink( ng-click="showHide('edit_privacy')" tooltip-placement="top" tooltip="Edit" )
+			a.btn.btn-link( ng-click="toggleEdit('privacy')" )= tr['cancel']
+	a.editLink( ng-click="toggleEdit('privacy')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
 
 //GENDER
-div.settings-element
+div.settings-element(ng-class="{editable: isEditable.gender}")
 	label= tr['gender'] + ': '
 	form.middle-section( method="POST" ng-submit="submitChangeSetting('gender')")
 		span {{ localUser.gender_formatted }}
-		div(ng-show="gender_msg !=''") {{gender_msg}}
-		div#gender( ng-show="edit_gender" )
+		div(ng-show="gender_msg" ng-class="{message_error: !success, message_success: success}") {{gender_msg}}
+		div#gender( ng-show="isEditable.gender" )
 			label(for="male")= tr['male']
 				input(id="male" name="gender" type="radio" ng-model="localUser.gender" value="male")
 			label(for="female")= tr['female']
 				input(id="female" name="gender" type="radio" ng-model="localUser.gender" value="female")
-		div.formButtons(ng-show="edit_gender")
+		div.formButtons(ng-show="isEditable.gender")
 			hr
 			input.btn.btn-success( type="submit" value=tr['submit'])
-			a.btn.btn-link( ng-click="showHide('edit_gender')" )= tr['cancel']
-	a.editLink( ng-click="showHide('edit_gender')" tooltip-placement="top" tooltip="Edit" )
+			a.btn.btn-link( ng-click="toggleEdit('gender')" )= tr['cancel']
+	a.editLink( ng-click="toggleEdit('gender')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
 
 
 
 //BIRTHDAY
-div.settings-element
+div.settings-element(ng-class="{editable: isEditable.birthday}")
 	label= tr['birthday'] + ': '
 	form.middle-section( method="POST" ng-submit="submitChangeSetting('birthday')")
 		span {{ localUser.birthday.day }}.{{ localUser.birthday.month }}.{{ localUser.birthday.year }}
-		div(ng-show="birthday_msg !=''") {{birthday_msg}}
-		div(ng-show="edit_birthday")
+		div(ng-show="isEditable.birthday")
 			p.input-group
 				input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="localUser.new_birthday" is-open="opened" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
-		div.formButtons(ng-show="edit_birthday")
+		div(ng-show="birthday_msg" ng-class="{message_error: !success, message_success: success}") {{birthday_msg}}
+		div.formButtons(ng-show="isEditable.birthday")
 			hr
 			input.btn.btn-success( type="submit" value=tr['submit'])
-			a.btn.btn-link( ng-click="showHide('edit_birthday')" )= tr['cancel']
-	a.editLink( ng-click="showHide('edit_birthday')" tooltip-placement="top" tooltip="Edit" )
+			a.btn.btn-link( ng-click="toggleEdit('birthday')" )= tr['cancel']
+	a.editLink( ng-click="toggleEdit('birthday')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
 
 //COUNTRY
-div.settings-element
+div.settings-element(ng-class="{editable: isEditable.country}")
 	label= tr['country'] + ': '
 	form.middle-section( method="POST" ng-submit="submitChangeSetting('country')")
 		span {{localUser.country_formatted}}
-		div(ng-show="country_msg !=''") {{country_msg}}
-		div( ng-show="edit_country"  )
+		div( ng-show="isEditable.country"  )
 			select( name="country" ng-model="localUser.country")
 				option(value="no-selection" selected)= tr['choose_your_country']
 				- for( var i in countries )
 					option( value=countries[i] )= tr[countries[i]]
-		div.formButtons(ng-show="edit_country")
+		div(ng-show="country_msg" ng-class="{message_error: !success, message_success: success}") {{country_msg}}
+		div.formButtons(ng-show="isEditable.country")
 			hr
 			input.btn.btn-success( type="submit" value=tr['submit'])
-			a.btn.btn-link( ng-click="showHide('edit_country')")= tr['cancel']
-	a.editLink( ng-click="showHide('edit_country')" tooltip-placement="top" tooltip="Edit" )
+			a.btn.btn-link( ng-click="toggleEdit('country')")= tr['cancel']
+	a.editLink( ng-click="toggleEdit('country')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
 
 
 //ABOUT ME
-div.settings-element
+div.settings-element(ng-class="{editable: isEditable.about}")
 	label= tr['about_me'] + ': '
 	form.middle-section( method="POST" ng-submit="submitChangeSetting('about')")
 		span( style="overflow-wrap: break-word;") {{localUser.about}}
-		div(ng-show="about_msg !=''") {{about_msg}}
-		div( ng-show="edit_about" )
-			textarea.textarea( name="about" maxlength="400"  ng-model="localUser.new_about" ) {{localUser.about}}
-		div.formButtons( ng-show="edit_about" )
+		div( ng-show="isEditable.about" )
+			textarea.textarea( name="about" maxlength="400" rows="4" ng-model="localUser.new_about") {{localUser.about}}
+		div(ng-show="about_msg" ng-class="{message_error: !success, message_success: success}") {{about_msg}}
+		div.formButtons( ng-show="isEditable.about" )
 			hr
 			input.btn.btn-success( type="submit" value=tr['submit'])
-			a.btn.btn-link( ng-click="showHide('edit_about')" )= tr['cancel']
-	a.editLink( ng-click="showHide('edit_about')" tooltip-placement="top" tooltip="Edit" )
+			a.btn.btn-link( ng-click="toggleEdit('about')" )= tr['cancel']
+	a.editLink( ng-click="toggleEdit('about')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
 
 

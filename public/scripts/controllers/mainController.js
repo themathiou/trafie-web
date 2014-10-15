@@ -36,15 +36,6 @@ trafie.controller("mainController", [
 			$scope.$apply();
 		}
 
-		/**
-		 * [Syncs show and hide of elements]
-		 * @param  String element_variable
-		 * @return {[type]}
-		 */
-		$scope.showHide = function(element_variable) {
-			$scope[element_variable] = !$scope[element_variable];
-		}
-
 		///////////////////////////////////////////////////////
 		// SEARCH USERS
 		///////////////////////////////////////////////////////

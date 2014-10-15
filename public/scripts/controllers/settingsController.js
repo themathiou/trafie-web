@@ -21,37 +21,29 @@ trafie.controller("settingsController", function(
 				$scope.localUser.new_last_name = $scope.localUser.last_name;
 			});
 
+		//object that closes all settings in ACCOUNT at init and resets the open to close
+		$scope.isEditable = {
+			//profile
+			profile_pic: false,
+			first_name: false,
+			last_name: false,
+			main_discipline: false,
+			privacy: false,
+			gender: false,
+			birthday: false,
+			country: false,
+			about: false,
+			//account
+			password: false,
+			language: false,
+			date_format: false,
+			username: false
+		};
+
 		//profile_pic
 		if ($scope.localUser) {
 			$scope.localUser.new_profile_pic = 'motherhacker';
 		}
-		$scope.profile_pic_msg = '';
-
-		//firstname
-		$scope.first_name_msg = '';
-
-		//lastname
-		$scope.last_name_msg = '';
-
-		//discipline
-		$scope.discipline_msg = '';
-
-		//gender
-		$scope.gender_msg = '';
-
-		//country
-		$scope.country_msg = '';
-
-		//birthday
-		$scope.birthday_msg = '';
-
-		//about
-		$scope.about_msg = '';
-
-
-		/* --- account --- */
-		//language
-		$scope.language_msg = '';
 	}
 
 	/**
@@ -76,8 +68,8 @@ trafie.controller("settingsController", function(
 						console.log(res);
 						if (res.success) {
 							$scope.localUser.profile_pic = res.value;
-							$scope.profile_pic_msg = 'Profile pic successfully updated'; //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
-							$scope.showHide('edit_profile_pic');
+							$scope.profile_pic_msg = 'Profile pic successfully updated';
+							$scope.toggleEdit('edit_profile_pic');
 
 							/* after 3 secconds hide the message */
 							$timeout(function() {
@@ -103,7 +95,7 @@ trafie.controller("settingsController", function(
 						$scope.localUser.first_name = res.value;
 						$rootScope.localUser.first_name = res.value;
 						$scope.first_name_msg = res.message;
-						$scope.showHide('edit_fname');
+						$scope.toggleEdit('first_name');
 						$scope.success = true;
 						/* after 3 secconds hide the message */
 						$timeout(function() {
@@ -130,7 +122,7 @@ trafie.controller("settingsController", function(
 					.success(function(res) {
 						$scope.localUser.last_name = res.value;
 						$scope.last_name_msg = res.message;
-						$scope.showHide('edit_lastname');
+						$scope.toggleEdit('last_name');
 						$scope.success = true;
 
 						/* after 3 secconds hide the message */
@@ -162,9 +154,8 @@ trafie.controller("settingsController", function(
 							$scope.localUser.discipline_formatted = res.translated_value;
 						}
 						// $scope.localUser.discipline_formatted = res.value;
-						//SHOULD GET MESSAGE FROM RESPONSE FOR FAIL CASE
 						$scope.discipline_msg = res.message;
-						$scope.showHide('edit_discipline');
+						$scope.toggleEdit('discipline');
 						$scope.success = true;
 
 						/* after 3 secconds hide the message */
@@ -191,7 +182,7 @@ trafie.controller("settingsController", function(
 					.success(function(res) {
 						$scope.localUser.private = res.value;
 						$scope.privacy_msg = res.message;
-						$scope.showHide('edit_privacy');
+						$scope.toggleEdit('privacy');
 						$scope.success = true;
 
 						/* after 3 secconds hide the message */
@@ -220,7 +211,7 @@ trafie.controller("settingsController", function(
 					.success(function(res) {
 						$scope.localUser.gender = res.value;
 						$scope.gender_msg = res.message;
-						$scope.showHide('edit_gender');
+						$scope.toggleEdit('gender');
 						$scope.success = true;
 
 						/* after 3 secconds hide the message */
@@ -256,23 +247,24 @@ trafie.controller("settingsController", function(
 				console.log(data);
 				$http.post('/settings_data', data)
 					.success(function(res) {
-						if (res.success) {
-							$scope.localUser.birthday = res.value;
-							$scope.birthday_msg = 'Birthday successfully updated'; //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
-							$scope.showHide('edit_birthday');
+						$scope.localUser.birthday = res.value;
+						$scope.birthday_msg = res.message;
+						$scope.toggleEdit('birthday');
+						$scope.success = true;
 
-							/* after 3 secconds hide the message */
-							$timeout(function() {
-								$scope.birthday_msg = '';
-							}, 3000);
-						} else {
-							$scope.birthday_msg = res.message;
+						/* after 3 secconds hide the message */
+						$timeout(function() {
+							$scope.birthday_msg = '';
+						}, 3000);
+					})
+					.error(function(res) {
+						$scope.birthday_msg = res.message;
+						$scope.success = false;
 
-							/* after 3 secconds hide the message */
-							$timeout(function() {
-								$scope.birthday_msg = '';
-							}, 3000);
-						}
+						/* after 3 secconds hide the message */
+						$timeout(function() {
+							$scope.birthday_msg = '';
+						}, 3000);
 					});
 				break;
 			case 'country':
@@ -282,24 +274,25 @@ trafie.controller("settingsController", function(
 				console.log(data);
 				$http.post('/settings_data', data)
 					.success(function(res) {
-						if (res.success) {
-							$scope.localUser.country = res.value;
-							$scope.country_msg = 'Country successfully updated'; //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
-							$scope.showHide('edit_country');
+						$scope.localUser.country = res.value;
+						$scope.country_msg = res.message;
+						$scope.toggleEdit('country');
+						$scope.success = true;
 
-							/* after 3 secconds hide the message */
-							$timeout(function() {
-								$scope.country_msg = '';
-							}, 3000);
-						} else {
-							$scope.country_msg = res.message;
-
-							/* after 3 secconds hide the message */
-							$timeout(function() {
-								$scope.country_msg = '';
-							}, 3000);
-						}
+						/* after 3 secconds hide the message */
+						$timeout(function() {
+							$scope.country_msg = '';
+						}, 3000);
 						$scope.localUser.country_formatted = res.translated_value;
+					})
+					.error(function(res) {
+						$scope.country_msg = res.message;
+						$scope.success = false;
+
+						/* after 3 secconds hide the message */
+						$timeout(function() {
+							$scope.country_msg = '';
+						}, 3000);
 					});
 				break;
 			case 'about':
@@ -308,23 +301,24 @@ trafie.controller("settingsController", function(
 				};
 				$http.post('/settings_data', data)
 					.success(function(res) {
-						if (res.success) {
-							$scope.localUser.about = res.value;
-							$scope.about_msg = 'About successfully updated'; //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
-							$scope.showHide('edit_about');
+						$scope.localUser.about = res.value;
+						$scope.about_msg = res.message;
+						$scope.toggleEdit('about');
+						$scope.success = true;
 
-							/* after 3 secconds hide the message */
-							$timeout(function() {
-								$scope.about_msg = '';
-							}, 3000);
-						} else {
-							$scope.about_msg = res.message;
+						/* after 3 secconds hide the message */
+						$timeout(function() {
+							$scope.about_msg = '';
+						}, 3000);
+					})
+					.error(function(res) {
+						$scope.about_msg = res.message;
+						$scope.success = false;
 
-							/* after 3 secconds hide the message */
-							$timeout(function() {
-								$scope.about_msg = '';
-							}, 3000);
-						}
+						/* after 3 secconds hide the message */
+						$timeout(function() {
+							$scope.about_msg = '';
+						}, 3000);
 					});
 				break;
 
@@ -342,8 +336,8 @@ trafie.controller("settingsController", function(
 					.success(function(res) {
 						if (res.success) {
 							$scope.localUser.language = res.value;
-							$scope.discipline_msg = 'Discipline successfully updated'; //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
-							$scope.showHide('edit_discipline');
+							$scope.discipline_msg = res.message;
+							$scope.toggleEdit('edit_discipline');
 
 							/* after 3 secconds hide the message */
 							$timeout(function() {
@@ -371,8 +365,8 @@ trafie.controller("settingsController", function(
 					.success(function(res) {
 						if (res.success) {
 							$scope.localUser.date_format = res.value;
-							$scope.discipline_msg = 'Date format successfully updated'; //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
-							$scope.showHide('edit_dateformat');
+							$scope.discipline_msg = res.message;
+							$scope.toggleEdit('edit_dateformat');
 
 							/* after 3 secconds hide the message */
 							$timeout(function() {
@@ -398,8 +392,8 @@ trafie.controller("settingsController", function(
 					.success(function(res) {
 						if (res.success) {
 							$scope.localUser.username = res.value;
-							$scope.discipline_msg = 'Username successfully updated'; //SHOULD GET MESSAGE FROM RESPONSE LIKE FAIL CASE
-							$scope.showHide('edit_username');
+							$scope.discipline_msg = 'Username successfully updated';
+							$scope.toggleEdit('edit_username');
 
 							/* after 3 secconds hide the message */
 							$timeout(function() {
@@ -420,6 +414,23 @@ trafie.controller("settingsController", function(
 				console.log('default switch case');
 		}
 	}
+
+	/**
+	 * [toggle edit for settings]
+	 *
+	 */
+	$scope.toggleEdit = function(attribute) {
+		console.log(attribute, $scope.isEditable[attribute]);
+		if ($scope.isEditable[attribute]) {
+			$scope.isEditable[attribute] = !$scope.isEditable[attribute];
+		} else {
+			angular.forEach($scope.isEditable, function(element, i) {
+				$scope.isEditable[i] = false;
+			});
+			$scope.isEditable[attribute] = true;
+		}
+	}
+
 
 	/**
 	 * [Logs out]
