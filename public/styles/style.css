@@ -742,6 +742,7 @@ form .message_success {
   -moz-align-items: flex-start;
   -ms-align-items: flex-start;
   align-items: flex-start;
+  flex: 1;
 }
 .settings-content .tab-pane form {
   width: 100%;

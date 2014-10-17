@@ -18,6 +18,7 @@ div.settings-element(ng-class="{editable: isEditable.profile_pic}")
 					button( class="button" ng-click="abort($index)" ng-show="hasUploader($index) && progress[$index] < 100") Abort
 					{{f.name}} - size: {{f.size}}B - type: {{f.type}}
 		div.formButtons( ng-show="isEditable.profile_pic" )
+			hr
 			a.btn.btn-link( ng-click="toggleEdit('profile_pic')" )= tr['cancel']
 	a.editLink( ng-click="toggleEdit('profile_pic')" tooltip-placement="top" tooltip="Edit" )
 		include ../svg/edit_activity_svg

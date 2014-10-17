@@ -6,7 +6,7 @@ block content
 		div#header
 			div#welcome_logo trafie
 
-		form.welcome_form.col-xs-12.col-sm-6.col-sm-offset-3.col-md-6.col-md-offset-3.col-lg-6.col-lg-offset-3(method="post" action="/login" role="form")
+		form.welcome_form.col-xs-12.col-sm-6.col-md-6.col-lg-6(method="post" action="/login" role="form")
 			if errors.email
 				div.error_message= errors.email
 			div.form-group
@@ -20,11 +20,13 @@ block content
 				input.btn.btn-success.btn-lg.btn-block(type="submit", value="Login")
 			
 			div
-				p.switch_login_register_message Not a member?
-					a(href="/register") Register
+				h3 
+				small Not a member?
+				a(href="/register") &nbsp; Register
 			div
-				p.switch_login_register_message Forgot Password?
-					a(href="/reset_password_request") Reset Here
+				h3 
+				small Forgot Password?
+				a(href="/reset_password_request") &nbsp; Reset Here
 	//scripts
 	script(type='text/javascript', src='/javascripts/login.js')
 	script.

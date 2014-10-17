@@ -13,7 +13,7 @@ body {
     margin: 0;
     padding: 0;
     color: #555;
-    font: 300 1em Open Sans, Arial, Helvetica, sans-serif;
+    font-family:Open Sans, Arial, Helvetica, sans-serif;
     background: white;
     height: 100%;
 }
@@ -31,7 +31,7 @@ body {
     color: @orange_message_back;
     background-color: none;
     /*  padding: 3px 3px; */
-    
+
     text-align: left;
 }
 /*error message - full width red*/
@@ -88,19 +88,9 @@ body {
     background-color: rgba(255, 255, 255, 0.9);
     .rounded-corners(7px);
     color: #494949;
-    .switch_login_register_message {
-        color: @darkgray;
-        font-size: 0.9em;
-        a {
-            color: black;
-            padding-left: 3px;
-            font-size: 1em;
-            text-decoration: none;
-            &:hover {
-                text-decoration: underline;
-            }
-        }
-    }
+    float: none;
+    margin: 0px auto;
+    max-width: 550px;
 }
 .information_message {
     color: @informationorange;

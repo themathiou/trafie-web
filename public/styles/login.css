@@ -5,7 +5,7 @@ body {
   margin: 0;
   padding: 0;
   color: #555;
-  font: 300 1em Open Sans, Arial, Helvetica, sans-serif;
+  font-family: Open Sans, Arial, Helvetica, sans-serif;
   background: white;
   height: 100%;
 }
@@ -81,19 +81,9 @@ body {
   -o-border-radius: 7px;
   border-radius: 7px;
   color: #494949;
-}
-.welcome_form .switch_login_register_message {
-  color: rgba(0, 0, 0, 0.7);
-  font-size: 0.9em;
-}
-.welcome_form .switch_login_register_message a {
-  color: black;
-  padding-left: 3px;
-  font-size: 1em;
-  text-decoration: none;
-}
-.welcome_form .switch_login_register_message a:hover {
-  text-decoration: underline;
+  float: none;
+  margin: 0px auto;
+  max-width: 550px;
 }
 .information_message {
   color: #ffa500;

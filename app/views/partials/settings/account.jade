@@ -3,23 +3,22 @@ h3= tr['account_settings']
 //CHANGE PASSWORD
 div.settings-element(ng-class="{editable: isEditable.password}")
 	label= tr['change_password']
-	form( method="POST" ng-submit="submitChangeSetting('password')" ng-show="isEditable.password" class="form-horizontal" role="form")
-		div.form-group
-			label( for="old_password" )= tr['old_password'] + ': '
-			//span= errors.first_name
-			input( name="old_password" type="password")
-		div.form-group
-			label( for="password" )= tr['new_password'] + ': '
-			span#password_error
-			input( name="password" type="password")
-		div.form-group
-			label( for="repeat_password" )= tr['repeat_password'] + ': '
-			span.warning_message
-			input( name="repeat_password" type="password")
-		div
-			hr
-			input.btn.btn-success( type="submit" value=tr['submit'])
-			a.btn.btn-link( ng-click="toggleEdit('password')" )= tr['cancel']
+	form( method="POST" ng-submit="submitChangeSetting('password')" class="form-horizontal" role="form")
+		div(ng-show="isEditable.password" )
+			div.form-group
+				label( for="old_password" )= tr['old_password'] + ': '
+				input( name="old_password" ng-model="localUser.old_password" type="password")
+			div.form-group
+				label( for="password" )= tr['new_password'] + ': '
+				input( name="password" ng-model="localUser.password" type="password")
+			div.form-group
+				label( for="repeat_password" )= tr['repeat_password'] + ': '
+				input( name="repeat_password" ng-model="localUser.repeat_password" type="password")
+			div.formButtons
+				hr
+				input.btn.btn-success( type="submit" value=tr['submit'])
+				a.btn.btn-link( ng-click="toggleEdit('password')" )= tr['cancel']
+		div(ng-show="password_msg" ng-class="{message_error: !success, message_success: success}") {{password_msg}}
 	a.editLink( ng-click="toggleEdit('password')" tooltip-placement="top" tooltip="Edit" )
 		include ../svg/edit_activity_svg
 
@@ -27,13 +26,13 @@ div.settings-element(ng-class="{editable: isEditable.password}")
 div.settings-element(ng-class="{editable: isEditable.language}")
 	label= tr['language'] + ': '
 	form(method="POST" ng-submit="submitChangeSetting('language')")
-		span {{localUser.language}}
-		div(ng-show="language_msg !=''") {{language_msg}}
+		span {{localUser.language_formatted}}
 		div(ng-show="isEditable.language")
-			select(name="language" ng-model="localUser.new_language")
-				option(value="no-selection" selected)= tr['choose_your_language']
+			select(name="language" ng-model="localUser.language")
+				option(value="no-selection")= tr['choose_your_language']
 				- for( var i in languages )
 						option( value=i )= languages[i]
+		div(ng-show="language_msg" ng-class="{message_error: !success, message_success: success}") {{language_msg}}
 		div.formButtons(ng-show="isEditable.language")
 			hr
 			input.btn.btn-success( type="submit" value=tr['submit'])
@@ -46,11 +45,11 @@ div.settings-element(ng-class="{editable: isEditable.date_format}")
 	label= tr['date_format'] + ': '
 	form( method="POST" ng-submit="submitChangeSetting('date-format')" )
 		span {{localUser.date_format}}
-		div(ng-show="dateformat_msg !=''") {{dateformat_msg}}
 		div( ng-show="isEditable.date_format" )
 			select( name='date_format' ng-model="localUser.date_format")
 				option( value='m-d-y' )= tr['m-d-y']
 				option( value='d-m-y' )= tr['d-m-y']
+		div(ng-show="dateformat_msg" ng-class="{message_error: !success, message_success: success}") {{dateformat_msg}}
 		div.formButtons( ng-show="isEditable.date_format" )
 			hr
 			input.btn.btn-success( type="submit" value=tr['submit'])
@@ -63,10 +62,9 @@ div.settings-element(ng-class="{editable: isEditable.username}")
 	label= tr['username'] + ': '
 	form( method="POST" ng-submit="submitChangeSetting('username')" )
 		span http://www.trafie.com/
-		//span= errors.username
-		span#username_error
 		span.existed( ng-show="!isEditable.username" ) {{localUser.username || localUser._id}}
-		input( ng-model="localUser.new_username" placeholder="{{localUser.username || localUser._id}}" ng-show="isEditable.username" )
+		input(ng-model="localUser.new_username" placeholder="{{localUser.username || localUser._id}}" ng-show="isEditable.username")
+		div(ng-show="username_msg" ng-class="{message_error: !success, message_success: success}") {{username_msg}}
 		div.formButtons( ng-show="isEditable.username" )
 			hr
 			input.btn.btn-success( type="submit" value=tr['submit'])
