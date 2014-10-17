@@ -1,5 +1,47 @@
-/*profile container (profile pic and full name)*/
+//search field NOT IN main-menu bar
+//USAGE: xs-size only
+.dropdown_container_xs {
+    background-color: rgba(255, 255, 255, 0.1);
+    .bottom_rounded_corners(0px);
 
+    .flex_wrapper {
+        margin-top: 45px;
+        .flexbox;
+        .flex-column;
+        .justify-content(space-around);
+        
+    }
+    .search {
+        margin: 12px 0px 10px 0px;
+        padding: 0px;
+        padding-left: 5px;
+        height: 30px;
+        border: 0;
+        .rounded_corners(3px);
+        letter-spacing: -1px;
+        width: 95%;
+        font-size: 15px;
+        background: @white;
+        flex-grow: 1;
+        align-self: center;
+    }
+    .dropdown-menu {
+        width: 100%;
+        .rounded_corners(0px);
+        text-align: left;
+        background-color: rgba(255, 255, 255, 0.9);
+        left:0px !important;
+
+        li {
+            a {
+                padding: 10px 20px;
+            }
+        }
+    }
+}
+
+
+/*profile container (profile pic and full name)*/
 #profile-container {
     margin: 55px auto 30px auto;
     #image-container {

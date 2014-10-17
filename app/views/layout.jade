@@ -46,15 +46,7 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
                         a(href="/login") Login
                     li(ng-if="isVisitor")
                         a(href="/register") Register
-                    li
-                        a(ng-click="isCollapsed = !isCollapsed")
-                            include partials/svg/search_svg
-                div.col-xs-12.dropdown_container( collapse="isCollapsed" )
-                    div.flex_wrapper
-                        input.search( type="text" ng-model="asyncSelected" placeholder="search for athletes!" typeahead-on-select="onSelect($item, $model, $label)" typeahead="result.label for result in searchUser($viewValue)" typeahead-loading="loadingLocations" class="form-control" autocomplete="off" )
-
-
-
+                        
     //- ALERTS
     alert.alert_custom.col-xs-12.col-sm-12.col-md-10.col-lg-8.col-md-offset-1.col-lg-offset-2( ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)") {{alert.msg}}
 
