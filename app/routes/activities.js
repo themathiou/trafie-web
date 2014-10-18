@@ -220,11 +220,11 @@ exports.post = function(req, res) {
 					var activity = new Activity(new_activity);
 					// Save the activity
 					activity.save(function(err, activity) {
-							return_activity(res, 201, activity._id, user_id, profile_data.language, profile_data.date_format);
-						})
-						.fail(function(error) {
-							send_status(res, 500);
-						});
+						return_activity(res, 201, activity._id, user_id, profile_data.language, profile_data.date_format);
+					})
+					.fail(function(error) {
+						send_status(res, 500);
+					});
 				} else {
 					// If there are errors, send the error messages to the client
 					return_activity(res, 400, '', user_id, profile_data.language, profile_data.date_format, error_messages);
