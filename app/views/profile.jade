@@ -13,7 +13,7 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
     //- PROFILE
     div#profile-container.col-xs-12.col-md-12.col-lg-12
       div#image-container.hidden-xs
-        img( src="{{current_user.picture}}" )
+        img(src="{{current_user.picture}}")
       div#profileFullName
         h3 {{current_user.first_name}} {{current_user.last_name}}
         p
@@ -40,6 +40,7 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
     //- LOADING
     div#loading( hidden ).col-xs-12.col-md-12.col-lg-12
       img( src="images/ui/loading.gif" )
+
 
     //- HISTORY TIMELINE
     div.col-xs-12.col-sm-12.col-md-12.col-lg-12

@@ -116,7 +116,7 @@ div.settings-element(ng-class="{editable: isEditable.birthday}")
 		span {{ localUser.birthday.day }}.{{ localUser.birthday.month }}.{{ localUser.birthday.year }}
 		div(ng-show="isEditable.birthday")
 			p.input-group
-				input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="localUser.new_birthday" is-open="opened" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
+				input(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="localUser.new_birthday" is-open="opened" min-date="'1970-06-22'" max-date="'2005-12-01'" show-button-bar="false" show-weeks="false" init-date="'Oct 19 2014'" datepicker-options="dateOptions" ng-required="true" close-text="Close")
 		div(ng-show="birthday_msg" ng-class="{message_error: !success, message_success: success}") {{birthday_msg}}
 		div.formButtons(ng-show="isEditable.birthday")
 			hr

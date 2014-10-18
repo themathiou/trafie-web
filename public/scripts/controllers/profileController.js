@@ -157,14 +157,13 @@ trafie.controller("profileController", function(
 							break;
 						}
 					}
-					$rootScope.addAlert('success', 'You fucking destroy that!');
+					$rootScope.addAlert('success', 'You removed that activity!');
 				} else {
-					$rootScope.addAlert('warning', 'Something went so fucking wrong and this fucking activity couldn\'t be deleted');
+					$rootScope.addAlert('warning', 'Something went so f***ing wrong and this activity couldn\'t be deleted');
 				}
 			});
 
 	}
-
 
 	/*
 	  initEditableActivity function : initializes variables for editing an existing activity
