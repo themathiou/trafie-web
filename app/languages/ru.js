@@ -15,7 +15,7 @@ var en = {
 	'3000m_steeple'         : '3000м Steeple',
 	'4x100m_relay'          : '4x100м Relay',
 	'4x400m_relay'          : '4x400м Relay',
-	'marathon'              : 'Marathon',
+	'marathon'              : 'Марафон',
 	'high_jump'             : 'High Jump',
 	'long_jump'             : 'Long Jump',
 	'triple_jump'           : 'Triple Jump',

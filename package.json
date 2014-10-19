@@ -10,7 +10,10 @@
     "jade": "*",
     "nodemailer": "*",
     "q": "*",
-    "moment": "*"
+    "moment": "*",
+    "grunt": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-concat": "*"
   }
 }
         
