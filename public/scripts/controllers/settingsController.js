@@ -1,9 +1,6 @@
-trafie.controller("settingsController", function(
-	$rootScope,
-	$timeout,
-	$scope,
-	$window,
-	$http) {
+trafie.controller("settingsController", [
+	'$rootScope','$timeout','$scope','$window','$http',
+	function($rootScope,$timeout,$scope,$window,$http) {
 
 
 	/**
@@ -477,4 +474,4 @@ trafie.controller("settingsController", function(
 	}
 
 
-});
+}]);

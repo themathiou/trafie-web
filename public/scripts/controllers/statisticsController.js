@@ -1,9 +1,6 @@
-trafie.controller("statisticsController", function(
-	$rootScope,
-	$scope,
-	$http,
-	$timeout,
-	$routeParams) {
+trafie.controller("statisticsController", [
+	'$rootScope','$scope','$http','$timeout','$routeParams',
+	function($rootScope,$scope,$http,$timeout,$routeParams) {
 
 	$scope.loading = true;
 
@@ -281,4 +278,4 @@ trafie.controller("statisticsController", function(
 		return _temp[2] + ' ' + _temp[1] + ' ' + _temp[3];
 	}
 
-}); //end controller
+}]); //end controller

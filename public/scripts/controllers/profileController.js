@@ -1,11 +1,6 @@
-trafie.controller("profileController", function(
-	$rootScope,
-	$scope,
-	$http,
-	$timeout,
-	$window,
-	$q,
-	$routeParams) {
+trafie.controller("profileController", [
+	'$rootScope','$scope','$http','$timeout','$window','$q','$routeParams',
+	function($rootScope, $scope, $http, $timeout, $window, $q, $routeParams) {
 
 	//GENERAL VARIABLES
 	$scope.disciplines = {
@@ -237,4 +232,4 @@ trafie.controller("profileController", function(
 			})
 	}
 
-});
+}]);

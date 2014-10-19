@@ -1,7 +1,5 @@
 trafie.service('$uploadSvc', [
-  '$http', 
-  '$q', 
-  '$timeout', 
+  '$http', '$q', '$timeout', 
   function($http, $q, $timeout) {
     function sendHttp(config) {
       config.method = config.method || 'POST';

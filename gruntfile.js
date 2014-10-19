@@ -6,13 +6,14 @@ module.exports = function(grunt) {
         separator: ';'
       },
       dist: {
-        //src: ['public/scripts/**/*.js'],
         src: [
             'public/scripts/libs/angular-file-upload-html5-shim.js',
             'public/scripts/libs/angular.min.js',
             'public/scripts/libs/angular-route.min.js',
             'public/scripts/libs/angular-animate.min.js',
             'public/scripts/libs/ui-bootstrap-0.10.0.min.js',
+            'public/scripts/libs/d3.v3.min.js',
+            'public/scripts/libs/c3.min.js',
             'public/scripts/app.js',
             'public/scripts/controllers/*.js',
             'public/scripts/directives/*.js',
