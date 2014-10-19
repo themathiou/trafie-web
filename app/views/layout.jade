@@ -32,10 +32,13 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
                         a(href="/login") Login
                     li(ng-if="isVisitor")
                         a(href="/register") Register
+                    li
+                        a.feedback_wrapper(ng-click="openFeedbackForm()")
+                            include  partials/svg/feedback_svg
 
             //- MOBILE
-            span( ng-if="mobile" ng-init="isCollapsed = true")
-                ul.navigation_menu
+            span( ng-if="mobile" )
+                ul.navigation_menu_mobile
                     li(ng-if="!isVisitor")
                         a.menu_profile(href="/" ng-class="{active: section == 'profile'}" ) {{localUser.first_name}}
                     //- li(ng-if="!isVisitor")
@@ -46,11 +49,14 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
                         a(href="/login") Login
                     li(ng-if="isVisitor")
                         a(href="/register") Register
+                    li
+                        a.feedback_wrapper(ng-click="openFeedbackForm()")
+                            include partials/svg/feedback_svg
                         
     //- ALERTS
     alert.alert_custom.col-xs-12.col-sm-12.col-md-10.col-lg-8.col-md-offset-1.col-lg-offset-2( ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)") {{alert.msg}}
 
-    #content.col-xs-12.col-sm-12.col-md-10.col-lg-8.col-md-offset-1.col-lg-offset-2( ng-view )
+    #content.col-xs-12.col-sm-12.col-md-10.col-lg-8.col-md-offset-1.col-lg-offset-2(ng-view)
 
 
     script(type="text/javascript", src="/scripts/trafie.js")

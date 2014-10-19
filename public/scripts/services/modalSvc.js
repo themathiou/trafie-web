@@ -1,9 +1,8 @@
 trafie.service('$modalSvc', function($rootScope, $modal, $http) {
 
+	//confirm_delete_modal
 	// @param size : lg(large), sm(small) can be empty
 	$rootScope.confirm_delete_modal = function(activity_id, size) {
-		//$rootScope.temp_activity_id = activity_id;
-
 		var modalInstance = $modal.open({
 			templateUrl: 'templates/modals/confirm_delete.html',
 			controller: ModalInstanceCtrl,
@@ -15,6 +14,23 @@ trafie.service('$modalSvc', function($rootScope, $modal, $http) {
 			}
 		});
 
+
+		//return the promise from $modal.open() function
+		return modalInstance.result;
+	};
+
+	//openFeedbackModal
+	$rootScope.openFeedbackModal = function(size) {
+		var modalInstance = $modal.open({
+			templateUrl: 'templates/modals/feedback_form.html',
+			controller: ModalInstanceCtrl,
+			size: size || 'lg',
+			resolve: {
+				temp_activity_id: function() {
+					return 'mathiou';
+				}
+			}
+		});
 
 		//return the promise from $modal.open() function
 		return modalInstance.result;
@@ -40,4 +56,27 @@ var ModalInstanceCtrl = function($rootScope, $scope, $http, $modalInstance, temp
 	$scope.cancel = function() {
 		$modalInstance.dismiss('cancel');
 	};
+
+	$scope.submitFeedbackForm = function() {
+		data = {
+			"feedback_text": $scope.localUser.feedback_text
+		};
+		$http.post('/feedback', data)
+			.success(function(res) {
+				console.log("feedback message send successfully");
+				$modalInstance.close(true);
+			})
+			.error(function(res) {
+				console.error("feedback message couldn't be send!");
+				$modalInstance.close(true);
+			});
+	}
 };
+
+
+
+
+
+
+
+

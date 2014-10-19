@@ -89,7 +89,6 @@ trafie.controller("settingsController", function(
 				data = {
 					"first_name": $scope.localUser.new_first_name
 				};
-				console.log(data);
 				$http.post('/settings_data', data)
 					.success(function(res) {
 						$scope.localUser.first_name = res.value;
