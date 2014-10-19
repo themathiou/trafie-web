@@ -115,7 +115,7 @@ function create_user(activities_count, start_date, res) {
 
 			activity.place = ~~(Math.random() * 12) + 1;
 
-			var cities = ['Athens','Moscow','London','Berlin','Madrid','Paris','Stockholm','Vienna','Lisbon','Copenhagen','Helsinki','Rome','Oslo'];
+			var cities = ['Chania','Halkida','Athens','Moscow','London','Berlin','Madrid','Paris','Stockholm','Vienna','Lisbon','Copenhagen','Helsinki','Rome','Oslo'];
 
 			activity.location =  cities[~~(Math.random()*(cities.length-1))];
 
