@@ -1,4 +1,5 @@
-trafie.service('$modalSvc', function($rootScope, $modal, $http) {
+trafie.service('$modalSvc', ['$rootScope', '$modal', '$http',
+	function($rootScope, $modal, $http) {
 
 	//confirm_delete_modal
 	// @param size : lg(large), sm(small) can be empty
@@ -35,7 +36,8 @@ trafie.service('$modalSvc', function($rootScope, $modal, $http) {
 		//return the promise from $modal.open() function
 		return modalInstance.result;
 	};
-});
+
+}]);
 
 var ModalInstanceCtrl = function($rootScope, $scope, $http, $modalInstance, temp_activity_id) {
 	$scope.confirm_delete = function() {
@@ -72,11 +74,3 @@ var ModalInstanceCtrl = function($rootScope, $scope, $http, $modalInstance, temp
 			});
 	}
 };
-
-
-
-
-
-
-
-

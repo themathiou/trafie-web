@@ -1,14 +1,5 @@
 trafie.controller("mainController", [
-    '$rootScope',
-    '$window',
-    '$scope',
-    '$http',
-    '$routeParams',
-    '$location',
-    '$timeout',
-    '$modalSvc',
-    '$alertSvc',
-    '$uploadSvc',
+    '$rootScope','$window','$scope','$http','$routeParams','$location','$timeout','$modalSvc','$alertSvc','$uploadSvc',
     function($rootScope, $window, $scope, $http, $routeParams, $location, $timeout, $modalSvc, $alertSvc, $uploadSvc) {
         ///////////////////////////////////////////////////////
         // GENERAL

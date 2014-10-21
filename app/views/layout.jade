@@ -61,38 +61,39 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
     #content.col-xs-12.col-sm-12.col-md-10.col-lg-8.col-md-offset-1.col-lg-offset-2(ng-view)
 
 
+    script(type="text/javascript", src="/scripts/trafie.js")
 
     //- libs
-    script(type="text/javascript", src="/scripts/libs/angular-file-upload-html5-shim.js")
-    script(type="text/javascript", src="/scripts/libs/angular.min.js")
-    script(type="text/javascript", src="/scripts/libs/angular-route.min.js")
-    script(type="text/javascript", src="/scripts/libs/angular-animate.min.js")
-    script(type="text/javascript", src="/scripts/libs/ui-bootstrap-0.10.0.min.js")
-    script(type='text/javascript', src='/scripts/app.js')
-
-    //- services
-    script(type='text/javascript', src='/scripts/services/uploadSvc.js')
-    script(type='text/javascript', src='/scripts/services/modalSvc.js')
-    script(type='text/javascript', src='/scripts/services/alertSvc.js')
-
-    //- directives
-    //- script(type='text/javascript', src='/scripts/directives/angular-file-upload.js')
-    script(type='text/javascript', src='/scripts/directives/file-select.js')
-
-    //- controllers
-    script(type='text/javascript', src='/scripts/controllers/mainController.js')
-    script(type='text/javascript', src='/scripts/controllers/profileController.js')
-    script(type='text/javascript', src='/scripts/controllers/settingsController.js')
-    script(type='text/javascript', src='/scripts/controllers/statisticsController.js')
-
-    //- to be removed
-    //- script(type='text/javascript', src='/scripts/scripts/script.js')
-
-    //- c3js charts
-    //- script( src="http://d3js.org/d3.v3.min.js" charset="utf-8")
-    script(type="text/javascript", src="/scripts/libs/d3.v3.min.js")
-    script(type="text/javascript", src="/scripts/libs/c3.min.js")
-
+    //- script(type="text/javascript", src="/scripts/libs/angular-file-upload-html5-shim.js")
+    //- script(type="text/javascript", src="/scripts/libs/angular.min.js")
+    //- script(type="text/javascript", src="/scripts/libs/angular-route.min.js")
+    //- script(type="text/javascript", src="/scripts/libs/angular-animate.min.js")
+    //- script(type="text/javascript", src="/scripts/libs/ui-bootstrap-0.10.0.min.js")
+//- 
+    //- //- to be removed
+    //- //- script(type='text/javascript', src='/scripts/scripts/script.js')
+//- 
+    //- //- c3js charts
+    //- //- script( src="http://d3js.org/d3.v3.min.js" charset="utf-8")
+    //- script(type="text/javascript", src="/scripts/libs/d3.v3.min.js")
+    //- script(type="text/javascript", src="/scripts/libs/c3.min.js")
+//-     
+    //- script(type='text/javascript', src='/scripts/app.js')
+//- 
+    //- //- services
+    //- script(type='text/javascript', src='/scripts/services/uploadSvc.js')
+    //- script(type='text/javascript', src='/scripts/services/modalSvc.js')
+    //- script(type='text/javascript', src='/scripts/services/alertSvc.js')
+//- 
+    //- //- directives
+    //- //- script(type='text/javascript', src='/scripts/directives/angular-file-upload.js')
+    //- script(type='text/javascript', src='/scripts/directives/file-select.js')
+//- 
+    //- //- controllers
+    //- script(type='text/javascript', src='/scripts/controllers/mainController.js')
+    //- script(type='text/javascript', src='/scripts/controllers/profileController.js')
+    //- script(type='text/javascript', src='/scripts/controllers/settingsController.js')
+    //- script(type='text/javascript', src='/scripts/controllers/statisticsController.js')
 
 //- script.
     mainMenuHandlers();

@@ -1,4 +1,4 @@
-trafie.service('$alertSvc', function($rootScope, $http) {
+trafie.service('$alertSvc', ['$rootScope', '$http', function($rootScope, $http) {
 
 	$rootScope.alerts = [];
 
@@ -14,4 +14,4 @@ trafie.service('$alertSvc', function($rootScope, $http) {
 		$rootScope.alerts.splice(index, 1);
 	};
 
-});
+}]);

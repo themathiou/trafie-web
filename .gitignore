@@ -17,3 +17,7 @@ README~
 node_modules
 
 public/images/profile_pics
+
+public/scripts/trafie.js
+
+public/scripts/trafie.min.js
