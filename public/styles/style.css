@@ -396,6 +396,9 @@ form .message_success {
   font-size: 15px;
   background: #ffffff;
   flex-grow: 1;
+  -webkit-align-self: center;
+  -moz-align-self: center;
+  -ms-align-self: center;
   align-self: center;
 }
 .dropdown_container_xs .dropdown-menu {

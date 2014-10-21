@@ -122,7 +122,7 @@ trafie.controller("profileController", function(
 	@param year : the year we want i.e 2014
 	 */
 	$scope.filterByYear = function(year) {
-		year ? $scope.selected_year.date = year : $scope.selected_year.date = '';
+		$scope.selected_year.date = year || '';
 	}
 
 	/*
