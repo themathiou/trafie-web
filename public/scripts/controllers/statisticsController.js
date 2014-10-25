@@ -229,9 +229,8 @@ trafie.controller("statisticsController", [
 					}
 				}
 
-				// model for
-				// inject config for C3 charts
-				var chart = c3.generate($scope.config);
+				// inject config for C3 charts and generate them
+				c3.generate($scope.config);
 
 
 				$scope.isLoading = false;

@@ -9,6 +9,7 @@ div( ng-init="initProfile()"  ng-cloak)
     div.col-xs-12.dropdown_container_xs( collapse="isCollapsed" ng-if="mobile")
       div.flex_wrapper
         input.search( type="text" ng-model="asyncSelected" placeholder="search for athletes!" typeahead-on-select="onSelect($item, $model, $label)" typeahead="result.label for result in searchUser($viewValue)" typeahead-loading="loadingLocations" class="form-control" autocomplete="off" )
+    
     //- PROFILE
     div#profile-container
       div#image-container.hidden-xs
@@ -20,6 +21,7 @@ div( ng-init="initProfile()"  ng-cloak)
           span( ng-show="current_user.discipline && current_user.country" ) -
           span( ng-show="current_user.country" ){{current_user.country}}
 
+    //- VIEW USER STATISTICS
     div( ng-show="!self && !isLoading").filters-row.col-xs-12.col-md-12.col-lg-12.hidden-xs
       a( href="/statistics/{{current_user._id}}" ) View User Statistics
 
