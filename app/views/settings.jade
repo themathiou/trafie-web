@@ -1,18 +1,10 @@
-div( ng-controller="settingsController" ng-init="settingsInit()")
+div( ng-controller="settingsController" ng-init="settingsInit()" ng-cloak)
+	div.maincontent
+		tabset.settings-content
+			tab(heading=tr['profile_settings'])
+				include partials/settings/profile
+			tab(heading=tr['account_settings'])
+				include partials/settings/account
 
-	tabset.settings-content
-		tab(heading=tr['profile_settings'])
-			include partials/settings/profile
-		tab(heading=tr['account_settings'])
-			include partials/settings/account
-
-	//temp loading - move to search
-	div.logout
-		a( ng-click="logout()" )= tr['logout']
-
-	//scripts
-	//script(type='text/javascript', src='/javascripts/settings.js')
-	//script.
-		activeTab();
-		settingsHandlers();
-
+		div.logout
+			a( ng-click="logout()" )= tr['logout']

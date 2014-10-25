@@ -47,6 +47,7 @@ trafie.controller("profileController", [
 
 	$scope.initProfile = function() {
 		$scope.selected_discipline = '';
+		$scope.isLoading = "true";
 		$scope.selected_year = {};
 		$scope.selected_year.date = ''; //all years are shown. No filter applied.
 
@@ -109,6 +110,7 @@ trafie.controller("profileController", [
 					$scope.active_years.push(_temp_year.getFullYear());
 				}
 			}
+			$scope.isLoading = false;
 		})
 	}
 

@@ -1,25 +1,25 @@
-div( ng-init="statisticsInit()" )
-	br
-	br
-	h4 {{current_user.first_name}} {{current_user.last_name}}
+div( ng-init="statisticsInit()" ng-cloak)
+    div.maincontent
+        br
+        br
+        h4 {{current_user.first_name}} {{current_user.last_name}}
 
-	ul.filters-row
-		li( ng-repeat="discipline in current_user.disciplines_of_user")
-			a(ng-click="drawSimpleChart( current_user._id, discipline.discipline )" ng-class="{selected: selected_discipline === discipline.discipline}") {{discipline.formatted_discipline}}
-	ul.filters-row.col-xs-12.col-md-12.col-lg-12
-		li
-			a(ng-click="drawSimpleChart( current_user._id, selected_discipline )" ng-class="{selected: !selected_year}") All
-		li(ng-repeat="year in active_years")
-			a(ng-click="drawSimpleChart( current_user._id, selected_discipline, year )" ng-class="{selected: selected_year === year}") {{year}}
-	br
-	br
-	br
+        ul.filters-row( ng-show="!isLoading")
+            li( ng-repeat="discipline in current_user.disciplines_of_user")
+                a(ng-click="drawSimpleChart( current_user._id, discipline.discipline )" ng-class="{selected: selected_discipline === discipline.discipline}") {{discipline.formatted_discipline}}
+        ul.filters-row.col-xs-12.col-md-12.col-lg-12( ng-show="!isLoading")
+            li
+                a(ng-click="drawSimpleChart( current_user._id, selected_discipline )" ng-class="{selected: !selected_year}") All
+            li(ng-repeat="year in active_years")
+                a(ng-click="drawSimpleChart( current_user._id, selected_discipline, year )" ng-class="{selected: selected_year === year}") {{year}}
 
-	div( ng-show="loading") Loading the awesome! Please wait...
+        div.spinner( ng-show="isLoading")
+        h3( ng-show="isLoading") loading the awesomeness!
 
-	div(ng-show="!valid_data")
-		p Add more activities for {{selected_discipline}} in {{selected_year}} in order to generate graph!
+        //- TO BE FIXED WHEN EMPTY STATES BE ADDED
+        div(ng-show="!valid_data && isLoading")
+            p Add more activities for {{selected_discipline}} in {{selected_year}} in order to generate graph!
 
-	div(ng-show="valid_data")#chart
+        div(ng-show="valid_data")#chart
 
 

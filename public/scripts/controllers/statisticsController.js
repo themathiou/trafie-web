@@ -44,6 +44,7 @@ trafie.controller("statisticsController", [
 		$scope.page_not_found = false;
 		$scope.selected_discipline = '';
 		$scope.selected_year = '';
+		$scope.isLoading = true;
 
 		//C3 data model
 		$scope.config = {};
@@ -110,7 +111,6 @@ trafie.controller("statisticsController", [
 	 */
 	$scope.drawSimpleChart = function(user_id, discipline, year, init) {
 		//start loading indicator
-		$scope.loading = true;
 		$scope.valid_data = false;
 		if ($scope.selected_discipline !== discipline) {
 			init = true;
@@ -232,6 +232,10 @@ trafie.controller("statisticsController", [
 				// model for
 				// inject config for C3 charts
 				var chart = c3.generate($scope.config);
+
+
+				$scope.isLoading = false;
+
 			}) //end success
 			.error(function(err) {
 				console.log('drawSimpleChart error');

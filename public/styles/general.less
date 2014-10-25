@@ -21,16 +21,15 @@ a {
     top: 70px;
     z-index: 50;
 }
-.loading {
-    .flexbox();
-    .justify-content(flex-end);
-    flex-direction: column;
+
+.maincontent {
+    .flexbox;
+    .flex;
+    .flex-column;
     .align-items(center);
-    min-height: 40px;
-    background-image: url("@{images}ui/loading.gif");
-    background-repeat: no-repeat;
-    background-position-x: center;
+    .justify-content(center);
 }
+
 //filters-row is the class for an unordered-list(ul)
 .filters-row {
     .flexbox();

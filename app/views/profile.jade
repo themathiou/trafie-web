@@ -1,17 +1,16 @@
-div#main_content( ng-init="initProfile()"  ng-cloak)
+div( ng-init="initProfile()"  ng-cloak)
 
-  
   //- PAGE NOT FOUND
-  div( ng-if="page_not_found" )
+  div.maincontent( ng-if="page_not_found" )
       h3 The page you are looking for doesn't exists
 
   //- PAGE FOUND START
-  div( ng-if="!page_not_found" )
+  div.maincontent( ng-if="!page_not_found" )
     div.col-xs-12.dropdown_container_xs( collapse="isCollapsed" ng-if="mobile")
       div.flex_wrapper
         input.search( type="text" ng-model="asyncSelected" placeholder="search for athletes!" typeahead-on-select="onSelect($item, $model, $label)" typeahead="result.label for result in searchUser($viewValue)" typeahead-loading="loadingLocations" class="form-control" autocomplete="off" )
     //- PROFILE
-    div#profile-container.col-xs-12.col-md-12.col-lg-12
+    div#profile-container
       div#image-container.hidden-xs
         img(src="{{current_user.picture}}")
       div#profileFullName
@@ -21,37 +20,36 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
           span( ng-show="current_user.discipline && current_user.country" ) -
           span( ng-show="current_user.country" ){{current_user.country}}
 
-    div( ng-if="!self").filters-row.col-xs-12.col-md-12.col-lg-12.hidden-xs
+    div( ng-show="!self && !isLoading").filters-row.col-xs-12.col-md-12.col-lg-12.hidden-xs
       a( href="/statistics/{{current_user._id}}" ) View User Statistics
 
     //- FILTERS
-    ul.filters-row.col-xs-12.col-md-12.col-lg-12
+    ul.filters-row.col-xs-12.col-md-12.col-lg-12( ng-show="!isLoading" )
       li
         a(ng-click="getActivities(current_user._id)" ng-class="{selected: !selected_discipline}") All
       li(ng-repeat="discipline in current_user.disciplines_of_user")
         a(ng-click="getActivities(current_user._id, discipline.discipline)" ng-class="{selected: selected_discipline === discipline.discipline}") {{discipline.formatted_discipline}}
 
-    ul.filters-row.col-xs-12.col-md-12.col-lg-12
+    ul.filters-row.col-xs-12.col-md-12.col-lg-12( ng-show="!isLoading" )
       li
         a(ng-click="filterByYear()" ng-class="{selected: !selected_year.date}") All
       li(ng-repeat="year in active_years")
         a(ng-click="filterByYear(year)" ng-class="{selected: selected_year.date === year}") {{year}}
 
-    //- LOADING
-    div#loading( hidden ).col-xs-12.col-md-12.col-lg-12
-      img( src="images/ui/loading.gif" )
-
-
+    //- LOADING SPINNER
+    div.spinner( ng-show="isLoading")
+    h3( ng-show="isLoading") loading the awesomeness!
+      
     //- HISTORY TIMELINE
     div.col-xs-12.col-sm-12.col-md-12.col-lg-12
       ul.history_line
-        li
+        li(ng-show="!isLoading")
           //- ADD ACTIVITY
           include partials/profile/add_activity
 
         //- .my-repeat-animation to be added
         li( ng-repeat="activity in activities | filter:selected_year")
-          div.info( ng-class="{editable: activity.show_editable_form}")
+          div.info( ng-class="{editable: activity.show_editable_form}" ng-show="!isLoading")
             a.deleteActivity( ng-if="self && !activity.show_editable_form" ng-click="deleteActivity(activity._id)" tooltip-placement="top" tooltip="Delete")
               include partials/svg/delete_activity_svg
 
@@ -76,6 +74,6 @@ div#main_content( ng-init="initProfile()"  ng-cloak)
             //-edit activity templates
             include partials/profile/activities_templates
 
-        li
+        li(ng-show="!isLoading")
           div.end
             div.discipline everything started here
