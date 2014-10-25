@@ -443,10 +443,6 @@ form .message_success {
   -ms-border-radius: 70px;
   -o-border-radius: 70px;
   border-radius: 70px;
-  box-shadow: 1px 1px 4px 2px rgba(0, 0, 0, 0.3);
-  display: block;
-  /*border:4px solid white; */
-
 }
 #profile-container #profileFullName {
   text-align: center;

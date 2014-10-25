@@ -56,32 +56,32 @@ trafie.controller("settingsController", [
 			  Profile settings
 			 */
 			case 'profile_pic':
-				data = {
-					"profile_pic": $scope.localUser.new_profile_pic
-				};
-				console.log($scope.localUser.new_profile_pic);
-				$http.post('/settings_data', data)
-					.success(function(res) {
-						console.log(res);
-						if (res.success) {
-							$scope.localUser.profile_pic = res.value;
-							$scope.profile_pic_msg = 'Profile pic successfully updated';
-							$scope.toggleEdit('edit_profile_pic');
+				// data = {
+				// 	"profile_pic": $scope.localUser.new_profile_pic
+				// };
+				// console.log($scope.localUser.new_profile_pic);
+				// $http.post('/settings_data', data)
+				// 	.success(function(res) {
+				// 		console.log(res);
+				// 		if (res.success) {
+				// 			$scope.localUser.profile_pic = res.value;
+				// 			$scope.profile_pic_msg = 'Profile pic successfully updated';
+				// 			$scope.toggleEdit('edit_profile_pic');
 
-							/* after 3 secconds hide the message */
-							$timeout(function() {
-								$scope.profile_pic_msg = '';
-							}, 3000);
-						} else {
-							$scope.profile_pic_msg = res.message;
+				// 			/* after 3 secconds hide the message */
+				// 			$timeout(function() {
+				// 				$scope.profile_pic_msg = '';
+				// 			}, 3000);
+				// 		} else {
+				// 			$scope.profile_pic_msg = res.message;
 
-							/* after 3 secconds hide the message */
-							$timeout(function() {
-								$scope.profile_pic_msg = '';
-							}, 3000);
-						}
-					});
-				break;
+				// 			/* after 3 secconds hide the message */
+				// 			$timeout(function() {
+				// 				$scope.profile_pic_msg = '';
+				// 			}, 3000);
+				// 		}
+				// 	});
+				// break;
 			case 'first_name':
 				data = {
 					"first_name": $scope.localUser.new_first_name

@@ -13,7 +13,7 @@ div( ng-init="initProfile()"  ng-cloak)
     //- PROFILE
     div#profile-container
       div#image-container.hidden-xs
-        img(src="{{current_user.picture}}")
+        img(src="{{current_user.picture || '/images/ui/profile_pic.svg'}}")
       div#profileFullName
         h3 {{current_user.first_name}} {{current_user.last_name}}
         p
@@ -40,7 +40,7 @@ div( ng-init="initProfile()"  ng-cloak)
 
     //- LOADING SPINNER
     div.spinner( ng-show="isLoading")
-    h3( ng-show="isLoading") loading the awesomeness!
+    h4( ng-show="isLoading") Loading the awesomeness!
       
     //- HISTORY TIMELINE
     div.col-xs-12.col-sm-12.col-md-12.col-lg-12
@@ -56,7 +56,7 @@ div( ng-init="initProfile()"  ng-cloak)
               include partials/svg/delete_activity_svg
 
             div.current_data( ng-show="!activity.show_editable_form" )
-              h1 {{activity.formatted_performance}}
+              h2 {{activity.formatted_performance}}
                 small.competition ({{activity.place}}) {{activity.competition}}
               blockquote
                 p {{activity.location}}

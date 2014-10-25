@@ -3,7 +3,8 @@
 var trafie = angular.module('trafie', [
 	'ngRoute',
 	'ui.bootstrap',
-	'ngAnimate'
+	'ngAnimate',
+	'angularFileUpload'
 ]);
 
 trafie.config(['$locationProvider',
