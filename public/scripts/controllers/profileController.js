@@ -132,6 +132,7 @@ trafie.controller("profileController", [
 		var splitDate = data.date.toString().split(' ');
 		data.date = splitDate[0] + ' ' + splitDate[1] + ' ' + splitDate[2] + ' ' + splitDate[3];
 
+		console.log("submit new: ", data);
 		$http.post('/users/' + $rootScope.localUser._id + '/activities', data)
 			.success(function(res) {
 				$scope.accordions.addActivity = false;
@@ -203,11 +204,11 @@ trafie.controller("profileController", [
 	$scope.updateActivity = function(activity) {
 		var data = $scope.updateActivityForm;
 
-		data.date = new Date(data.date.toString().split('T')[0]);
 		var splitDate = data.date.toString().split(' ');
 		data.date = splitDate[0] + ' ' + splitDate[1] + ' ' + splitDate[2] + ' ' + splitDate[3];
 		data.discipline = activity.discipline;
 
+		console.log("update: ", data);
 		$http.put("/users/" + $rootScope.localUser._id + "/activities/" + activity._id, data)
 			.success(function(res) {
 				activity.formatted_performance = res.formatted_performance;
