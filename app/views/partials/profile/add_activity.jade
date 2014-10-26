@@ -7,38 +7,38 @@ accordion( class="info add_activity" ng-show="self")
 			- for (i in disciplines)
 				option( value=disciplines[i])= tr[disciplines[i]]
 
-		form( ng-if="newActivityForm.selected_discipline" ng-submit="submitNewActivity()")
+		form( ng-if="newActivityForm.selected_discipline" ng-submit="submitNewActivity()" name="submitForm")
 			div.data_entry.form-group
 				label= tr['enter_your_performance'] +':'
 				//- time
 				div.performance_fields( ng-if="disciplines.time.indexOf(newActivityForm.selected_discipline) > -1" )
 					div
 						label(for="hours_input")= tr['hours_short'] + ':'
-						input.form-control( size="3" maxlength="2" ng-model="newActivityForm.performance.hours" )
+						input.form-control( size="3" maxlength="2" ng-model="newActivityForm.performance.hours" name="hours" ng-class="{error: submitForm.hours.$error.pattern}" ng-pattern="NUMBERS")
 					div
 						label(for="minutes_input")= tr['minutes_short'] + ':'
-						input.form-control( size="3" maxlength="2" ng-model="newActivityForm.performance.minutes")
+						input.form-control( size="3" maxlength="2" ng-model="newActivityForm.performance.minutes" name="minutes" ng-class="{error: submitForm.minutes.$error.pattern}" ng-pattern="NUMBERS")
 					div
 						label(for="seconds_input")= tr['seconds_short'] + ':'
-						input.form-control( size="3" maxlength="2" ng-model="newActivityForm.performance.seconds")
+						input.form-control( size="3" maxlength="2" ng-model="newActivityForm.performance.seconds" name="seconds" ng-class="{error: submitForm.seconds.$error.pattern}" ng-pattern="NUMBERS")
 					div
 						label(for="centiseconds_input")= tr['centiseconds_short'] + ':'
-						input.form-control( size="3" maxlength="2" ng-model="newActivityForm.performance.centiseconds")
+						input.form-control( size="3" maxlength="2" ng-model="newActivityForm.performance.centiseconds" name="centiseconds" ng-class="{error: submitForm.centiseconds.$error.pattern}" ng-pattern="NUMBERS")
 
 				//- distance
 				div.performance_fields( ng-if="disciplines.distance.indexOf(newActivityForm.selected_discipline) > -1" )
 					div
 						label(for="distance_1_input")= tr['meters_short'] + ':'
-						input.form-control(size="3" maxlength="2" ng-model="newActivityForm.performance.distance_1")
+						input.form-control(size="3" maxlength="2" ng-model="newActivityForm.performance.distance_1" name="d_1" ng-class="{error: submitForm.d_1.$error.pattern}" ng-pattern="NUMBERS")
 					div
 						label(for="distance_2_input")= tr['centimeters_short'] + ':'
-						input.form-control(size="3" maxlength="2" ng-model="newActivityForm.performance.distance_2")
+						input.form-control(size="3" maxlength="2" ng-model="newActivityForm.performance.distance_2" name="d_2" ng-class="{error: submitForm.d_2.$error.pattern}" ng-pattern="NUMBERS")
 
 				//- points
 				div.performance_fields( ng-if="disciplines.points.indexOf(newActivityForm.selected_discipline) > -1" )
 					div
 						label(for="points_input")= tr['points'] + ':'
-						input.form-control(type="text" size="7" maxlength="5" ng-model="newActivityForm.performance.points")
+						input.form-control(type="text" size="7" maxlength="5" ng-model="newActivityForm.performance.points" name="points" ng-class="{error: submitForm.points.$error.pattern}" ng-pattern="NUMBERS")
 
 				//- common variables
 				div
@@ -46,7 +46,7 @@ accordion( class="info add_activity" ng-show="self")
 					input.form-control(type="text" datepicker-popup="{{format}}" ng-model="newActivityForm.date" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
 				div
 					label(for="place") Place
-					input.form-control(type="text" ng-model="newActivityForm.place" placeholder="i.e 4")
+					input.form-control(type="text" ng-model="newActivityForm.place" placeholder="i.e 4" name="place" ng-class="{error: submitForm.place.$error.pattern}" ng-pattern="NUMBERS")
 				div
 					label(for="location") Location
 					input.form-control(type="text" ng-model="newActivityForm.location" placeholder="i.e Athens, Greece")

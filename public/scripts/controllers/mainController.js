@@ -19,6 +19,13 @@ trafie.controller("mainController", [
         });
 
         ///////////////////////////////////////////////////////
+        // Validation Patterns
+        ///////////////////////////////////////////////////////
+        $rootScope.ONLY_ALPHABETIC = /^[A-Za-z ]+$/;
+        $rootScope.ALPHABETIC_NUMS_DOT_UNDER = /^[A-Za-z_.0-9]+$/;
+        $rootScope.NUMBERS = /^[0-9]*$/;
+
+        ///////////////////////////////////////////////////////
         // On window resize
         ///////////////////////////////////////////////////////
         $window.onresize = function() {
@@ -55,13 +62,6 @@ trafie.controller("mainController", [
             //user  lower-level API for reloading page
             $window.location.href = '/' + $item._id;
         };
-
-        ///////////////////////////////////////////////////////
-        // Validation Patterns
-        ///////////////////////////////////////////////////////
-        $rootScope.ONLY_ALPHABETIC = /^[A-Za-z ]+$/;
-        $rootScope.ALPHABETIC_NUMS_DOT_UNDER = /^[A-Za-z_.0-9]+$/;
-
 
         ///////////////////////////////////////////////////////
         // FILE Upload
