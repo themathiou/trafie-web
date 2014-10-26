@@ -14,7 +14,9 @@ div.settings-element(ng-class="{editable: isEditable.profile_pic}")
 			hr
 			input.btn.btn-success( type="submit" value="Upload")
 			a.btn.btn-link( ng-click="toggleEdit('profile_pic')" )= tr['cancel']
-	a.editLink( ng-click="toggleEdit('profile_pic')" tooltip-placement="top" tooltip="Edit" )
+	a.editLink( ng-click="toggleEdit('profile_pic')" ng-if="!mobile" ng-if="!mobile" tooltip-placement="top" tooltip="Edit" )
+		include ../svg/edit_activity_svg
+	a.editLink( ng-click="toggleEdit('profile_pic')" ng-if="mobile")
 		include ../svg/edit_activity_svg
 hr.main-separator
 
@@ -31,8 +33,10 @@ div.settings-element(ng-class="{editable: isEditable.first_name}")
 			hr
 			input.btn.btn-success( type="submit" value=tr['submit'])
 			a.btn.btn-link( ng-click="toggleEdit('first_name')" )= tr['cancel']
-	a.editLink( ng-click="toggleEdit('first_name')" tooltip-placement="top" tooltip="Edit" )
+	a.editLink( ng-click="toggleEdit('first_name')" ng-if="!mobile" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
+	a.editLink( ng-click="toggleEdit('first_name')" ng-if="mobile")
+		include ../svg/edit_activity_svg
 hr.main-separator
 
 //LAST NAME
@@ -47,8 +51,10 @@ div.settings-element(ng-class="{editable: isEditable.last_name}")
 			hr
 			input.btn.btn-success( type="submit" value=tr['submit'])
 			a.btn.btn-link( ng-click="toggleEdit('last_name')")= tr['cancel']
-	a.editLink( ng-click="toggleEdit('last_name')" tooltip-placement="top" tooltip="Edit" )
+	a.editLink( ng-click="toggleEdit('last_name')" ng-if="!mobile" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
+	a.editLink( ng-click="toggleEdit('last_name')" ng-if="mobile")
+		include ../svg/edit_activity_svg
 hr.main-separator
 
 //MAIN DISCIPLINE
@@ -66,8 +72,10 @@ div.settings-element(ng-class="{editable: isEditable.main_discipline}")
 				hr
 				input.btn.btn-success( type="submit" value=tr['submit'])
 				a.btn.btn-link( ng-click="toggleEdit('main_discipline')" )= tr['cancel']
-	a.editLink( ng-click="toggleEdit('main_discipline')" tooltip-placement="top" tooltip="Edit" )
+	a.editLink( ng-click="toggleEdit('main_discipline')" ng-if="!mobile" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
+	a.editLink( ng-click="toggleEdit('main_discipline')" ng-if="mobile")
+		include ../svg/edit_activity_svg
 hr.main-separator
 
 //PRIVACY
@@ -83,8 +91,10 @@ div.settings-element(ng-class="{editable: isEditable.privacy}")
 			hr
 			input.btn.btn-success( type="submit" value=tr['submit'])
 			a.btn.btn-link( ng-click="toggleEdit('privacy')" )= tr['cancel']
-	a.editLink( ng-click="toggleEdit('privacy')" tooltip-placement="top" tooltip="Edit" )
+	a.editLink( ng-click="toggleEdit('privacy')" ng-if="!mobile" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
+	a.editLink( ng-click="toggleEdit('privacy')" ng-if="mobile")
+		include ../svg/edit_activity_svg
 hr.main-separator
 
 //GENDER
@@ -102,8 +112,10 @@ div.settings-element(ng-class="{editable: isEditable.gender}")
 			hr
 			input.btn.btn-success( type="submit" value=tr['submit'])
 			a.btn.btn-link( ng-click="toggleEdit('gender')" )= tr['cancel']
-	a.editLink( ng-click="toggleEdit('gender')" tooltip-placement="top" tooltip="Edit" )
+	a.editLink( ng-click="toggleEdit('gender')" ng-if="!mobile" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
+	a.editLink( ng-click="toggleEdit('gender')" ng-if="mobile")
+		include ../svg/edit_activity_svg
 hr.main-separator
 
 //BIRTHDAY
@@ -119,8 +131,10 @@ div.settings-element(ng-class="{editable: isEditable.birthday}")
 			hr
 			input.btn.btn-success( type="submit" value=tr['submit'])
 			a.btn.btn-link( ng-click="toggleEdit('birthday')" )= tr['cancel']
-	a.editLink( ng-click="toggleEdit('birthday')" tooltip-placement="top" tooltip="Edit" )
+	a.editLink( ng-click="toggleEdit('birthday')" ng-if="!mobile" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
+	a.editLink( ng-click="toggleEdit('birthday')" ng-if="mobile")
+		include ../svg/edit_activity_svg
 hr.main-separator
 	
 //COUNTRY
@@ -138,8 +152,10 @@ div.settings-element(ng-class="{editable: isEditable.country}")
 			hr
 			input.btn.btn-success( type="submit" value=tr['submit'])
 			a.btn.btn-link( ng-click="toggleEdit('country')")= tr['cancel']
-	a.editLink( ng-click="toggleEdit('country')" tooltip-placement="top" tooltip="Edit" )
+	a.editLink( ng-click="toggleEdit('country')" ng-if="!mobile" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
+	a.editLink( ng-click="toggleEdit('country')" ng-if="mobile")
+		include ../svg/edit_activity_svg
 hr.main-separator
 
 //ABOUT ME
@@ -154,7 +170,9 @@ div.settings-element(ng-class="{editable: isEditable.about}")
 			hr
 			input.btn.btn-success( type="submit" value=tr['submit'])
 			a.btn.btn-link( ng-click="toggleEdit('about')" )= tr['cancel']
-	a.editLink( ng-click="toggleEdit('about')" tooltip-placement="top" tooltip="Edit" )
+	a.editLink( ng-click="toggleEdit('about')" ng-if="!mobile" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
+	a.editLink( ng-click="toggleEdit('about')" ng-if="mobile")
+		include ../svg/edit_activity_svg
 
 

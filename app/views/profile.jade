@@ -2,15 +2,24 @@ div( ng-init="initProfile()"  ng-cloak)
 
   //- PAGE NOT FOUND
   div.maincontent( ng-if="page_not_found" )
-      h3 The page you are looking for doesn't exists
+    div.col-xs-12.dropdown_container_xs(ng-if="mobile")
+      div.flex_wrapper
+        input.search( type="text" ng-model="asyncSelected" placeholder="search for athletes!" typeahead-on-select="onSelect($item, $model, $label)" typeahead="result.label for result in searchUser($viewValue)" typeahead-loading="loadingLocations" class="form-control" autocomplete="off" )
+
+    div.vertical_space_100.hidden-xs
+    div.empty-state-wrapper
+      img(src="/images/ui/search.svg")
+      h4 The page you are looking for doesn't exist.
+      h4 Use the search box on top of the page to search for athletes
 
   //- PAGE FOUND START
   div.maincontent( ng-if="!page_not_found" )
-    div.col-xs-12.dropdown_container_xs( collapse="isCollapsed" ng-if="mobile")
+    div.col-xs-12.dropdown_container_xs(ng-if="mobile")
       div.flex_wrapper
         input.search( type="text" ng-model="asyncSelected" placeholder="search for athletes!" typeahead-on-select="onSelect($item, $model, $label)" typeahead="result.label for result in searchUser($viewValue)" typeahead-loading="loadingLocations" class="form-control" autocomplete="off" )
     
     //- PROFILE
+    div.vertical_space_100.hidden-xs
     div#profile-container
       div#image-container.hidden-xs
         img(src="{{current_user.picture}}")
@@ -22,17 +31,17 @@ div( ng-init="initProfile()"  ng-cloak)
           span( ng-show="current_user.country" ){{current_user.country}}
 
     //- VIEW USER STATISTICS
-    div( ng-show="!self && !isLoading").filters-row.col-xs-12.col-md-12.col-lg-12.hidden-xs
+    div( ng-show="!self && !isLoading && !noActivities").filters-row.col-xs-12.col-md-12.col-lg-12.hidden-xs
       a( href="/statistics/{{current_user._id}}" ) View User Statistics
 
     //- FILTERS
-    ul.filters-row.col-xs-12.col-md-12.col-lg-12( ng-show="!isLoading" )
+    ul.filters-row.col-xs-12.col-md-12.col-lg-12( ng-show="!isLoading  && !noActivities" )
       li
         a(ng-click="getActivities(current_user._id)" ng-class="{selected: !selected_discipline}") All
       li(ng-repeat="discipline in current_user.disciplines_of_user")
         a(ng-click="getActivities(current_user._id, discipline.discipline)" ng-class="{selected: selected_discipline === discipline.discipline}") {{discipline.formatted_discipline}}
 
-    ul.filters-row.col-xs-12.col-md-12.col-lg-12( ng-show="!isLoading" )
+    ul.filters-row.col-xs-12.col-md-12.col-lg-12( ng-show="!isLoading  && !noActivities" )
       li
         a(ng-click="filterByYear()" ng-class="{selected: !selected_year.date}") All
       li(ng-repeat="year in active_years")
@@ -49,10 +58,19 @@ div( ng-init="initProfile()"  ng-cloak)
           //- ADD ACTIVITY
           include partials/profile/add_activity
 
+        li(ng-if="!isLoading && noActivities")
+          div.empty-state-wrapper
+              img(src="/images/ui/podium.svg")
+              h4(ng-show="self") There's nothing here! Add some!
+              h4(ng-show="!self") There's nothing here!
+
+
         //- .my-repeat-animation to be added
         li( ng-repeat="activity in activities | filter:selected_year")
           div.info( ng-class="{editable: activity.show_editable_form}" ng-show="!isLoading")
-            a.deleteActivity( ng-if="self && !activity.show_editable_form" ng-click="deleteActivity(activity._id)" tooltip-placement="top" tooltip="Delete")
+            a.deleteActivity( ng-if="self && !activity.show_editable_form && !mobile" ng-click="deleteActivity(activity._id)" tooltip-placement="top" tooltip="Delete")
+              include partials/svg/delete_activity_svg
+            a.deleteActivity( ng-if="self && !activity.show_editable_form && mobile" ng-click="deleteActivity(activity._id)")
               include partials/svg/delete_activity_svg
 
             div.current_data( ng-show="!activity.show_editable_form" )
@@ -60,22 +78,31 @@ div( ng-init="initProfile()"  ng-cloak)
                 small.competition ({{activity.place}}) {{activity.competition}}
               blockquote
                 p {{activity.location}}
-                p {{activity.formatted_date}}
-                //- p.discipline {{activity.formatted_discipline}}
-                p.notes {{activity.notes}}
+                  br 
+                  {{activity.formatted_date}}
+                  //- p.discipline {{activity.formatted_discipline}}
+                  br
+                  span.notes {{activity.notes}}
 
-              a.privacy( style="float:left;" ng-if="self" ng-click="changePrivacy(activity)" tooltip-placement="top" tooltip="Change Privacy")
-                  span( ng-if="activity.private" )
-                      include partials/svg/locked_svg
-                  span( ng-if="!activity.private" )
-                    include partials/svg/unlocked_svg
+            a.privacy(style="float:left;" ng-if="self && !mobile && !activity.show_editable_form" ng-click="changePrivacy(activity)" tooltip-placement="top" tooltip="Change Privacy")
+                span(ng-if="activity.private")
+                  include partials/svg/locked_svg
+                span(ng-if="!activity.private")
+                  include partials/svg/unlocked_svg
+            a.privacy(style="float:left;" ng-if="self && mobile && !activity.show_editable_form" ng-click="changePrivacy(activity)")
+                span(ng-if="activity.private")
+                  include partials/svg/locked_svg
+                span(ng-if="!activity.private")
+                  include partials/svg/unlocked_svg
 
-            a.editActivity( ng-if="self" ng-click="initEditableActivity(activity)" tooltip-placement="top" tooltip="Edit" )
+            a.editActivity(ng-if="self && !mobile" ng-click="initEditableActivity(activity)" tooltip-placement="top" tooltip="Edit")
+              include partials/svg/edit_activity_svg
+            a.editActivity(ng-if="self && mobile" ng-click="initEditableActivity(activity)")
               include partials/svg/edit_activity_svg
 
             //-edit activity templates
             include partials/profile/activities_templates
 
-        li(ng-show="!isLoading")
+        li(ng-show="!isLoading && !noActivities")
           div.end
             div.discipline everything started here

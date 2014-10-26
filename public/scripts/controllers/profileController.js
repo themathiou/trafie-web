@@ -102,6 +102,7 @@ trafie.controller("profileController", [
 		$http.get(url)
 		.success(function(res) {
 			$scope.activities = res;
+			$scope.noActivities = res.length === 0 ? true : false;
 			$scope.active_years = [];
 			for (i in res) {
 				var _temp_year = new Date(res[i].date);

@@ -32,10 +32,11 @@ a {
 
 //filters-row is the class for an unordered-list(ul)
 .filters-row {
-    .flexbox();
+    .flexbox;
     .align-items(center);
     .justify-content(center);
-    .flex();
+    .flex;
+    .flex-wrap;
     padding: 0px;
     list-style-type: none;
     li {
@@ -53,6 +54,34 @@ a {
             border-bottom: 2px solid #428bca;
             text-decoration: none;
         }
+    }
+}
+
+.vertical_space_100 {
+    min-height: 100px;
+}
+.vertical_space_50 {
+    min-height: 50px;
+}
+
+.empty-state-wrapper {
+    .flexbox;
+    .align-items(center);
+    .justify-content(center);
+    .flex-column;
+    .flex;
+
+    img {
+        width:70%;
+        height:auto;
+        max-height:150px;
+        color: red;
+        fill: blue;
+    }
+
+    h4 {
+        width:90%;
+        text-align: center;
     }
 }
 

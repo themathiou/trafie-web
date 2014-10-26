@@ -17,9 +17,10 @@ div( ng-init="statisticsInit()" ng-cloak)
         div.spinner( ng-show="isLoading")
         h3( ng-show="isLoading") loading the awesomeness!
 
-        //- TO BE FIXED WHEN EMPTY STATES BE ADDED
-        div(ng-show="!valid_data && isLoading")
-            p Add more activities for {{selected_discipline}} in {{selected_year}} in order to generate graph!
+        div(ng-show="!valid_data && !isLoading")
+            div.empty-state-wrapper
+              img(src="/images/ui/stats.svg")
+              h4 There are not enought activities in order to generate this graph
 
         div(ng-show="valid_data")#chart
 
