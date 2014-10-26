@@ -1,6 +1,6 @@
 trafie.controller("settingsController", [
-	'$rootScope','$timeout','$scope','$window','$http',
-	function($rootScope,$timeout,$scope,$window,$http) {
+	'$rootScope','$timeout','$scope','$window','$http','$uploadSvc',
+	function($rootScope,$timeout,$scope,$window,$http,$uploadSvc) {
 
 
 	/**
@@ -56,32 +56,62 @@ trafie.controller("settingsController", [
 			  Profile settings
 			 */
 			case 'profile_pic':
-				// data = {
-				// 	"profile_pic": $scope.localUser.new_profile_pic
-				// };
-				// console.log($scope.localUser.new_profile_pic);
-				// $http.post('/settings_data', data)
-				// 	.success(function(res) {
-				// 		console.log(res);
-				// 		if (res.success) {
-				// 			$scope.localUser.profile_pic = res.value;
-				// 			$scope.profile_pic_msg = 'Profile pic successfully updated';
-				// 			$scope.toggleEdit('edit_profile_pic');
+				if(!$scope.filesToUpload || !$scope.filesToUpload.length) {
+	                return;
+	            }
+	            $scope.uploading = true;
+                var _file = $scope.filesToUpload[0];
 
-				// 			/* after 3 secconds hide the message */
-				// 			$timeout(function() {
-				// 				$scope.profile_pic_msg = '';
-				// 			}, 3000);
-				// 		} else {
-				// 			$scope.profile_pic_msg = res.message;
+                $scope.upload = $uploadSvc.upload({
+                    url: '/settings_data', 
+                    method: 'POST', //or 'PUT'
+                    //headers: {'header-key': 'header-value'},
+                    //withCredentials: true,
+                    data: {
+                        profile_pic: _file
+                    },
+                    file: _file // or list of files ($files) for html5 only
+                    //fileName: 'doc.jpg' or ['1.jpg', '2.jpg', ...] // to modify the name of the file(s)
+                    // customize file formData name ('Content-Disposition'), server side file variable name. 
+                    //fileFormDataName: myFile, //or a list of names for multiple files (html5). Default is 'file' 
+                    // customize how data is added to formData. See #40#issuecomment-28612000 -- Danial -- for sample code
+                    //formDataAppender: function(formData, key, val){}
+                })
+                .progress(function(evt) {
+                    if(evt.loaded === evt.total) {
+                        $scope.uploading = false; 
+                    }
+                    console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+                })
+                .success(function(data, status, headers, config) {
+                    // file is uploaded successfully
+                    $scope.uploading = false; 
+                    $scope.filesToUpload = [];
+                    $scope.profile_pic_msg = 'Profile pic successfully updated';
+					$scope.toggleEdit('edit_profile_pic');
+					$scope.success = true;
 
-				// 			/* after 3 secconds hide the message */
-				// 			$timeout(function() {
-				// 				$scope.profile_pic_msg = '';
-				// 			}, 3000);
-				// 		}
-				// 	});
-				// break;
+					/* after 3 secconds hide the message */
+					$timeout(function() {
+						$scope.profile_pic_msg = '';
+					}, 3000);
+                })
+                .error(function(res) {
+                    console.log(res);
+                    $scope.first_name_msg = res.message;
+					$scope.success = false;
+					console.log(res.error || res.message);
+
+					/* after 3 seconds hide the message */
+					$timeout(function() {
+						$scope.first_name_msg = '';
+					}, 3000);
+                });
+                //.then(success, error, progress); 
+                // access or attach event listeners to the underlying XMLHttpRequest.
+                //.xhr(function(xhr){xhr.upload.addEventListener(...)})
+
+				break;
 			case 'first_name':
 				data = {
 					"first_name": $scope.localUser.new_first_name

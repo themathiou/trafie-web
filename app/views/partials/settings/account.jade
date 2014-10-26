@@ -21,6 +21,7 @@ div.settings-element(ng-class="{editable: isEditable.password}")
 		div(ng-show="password_msg" ng-class="{message_error: !success, message_success: success}") {{password_msg}}
 	a.editLink( ng-click="toggleEdit('password')" tooltip-placement="top" tooltip="Edit" )
 		include ../svg/edit_activity_svg
+hr.main-separator
 
 //LANGUAGE
 div.settings-element(ng-class="{editable: isEditable.language}")
@@ -39,6 +40,7 @@ div.settings-element(ng-class="{editable: isEditable.language}")
 			a.btn.btn-link( ng-click="toggleEdit('language')" )= tr['cancel']
 	a.editLink( ng-click="toggleEdit('language')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
+hr.main-separator
 
 //DATE FORMAT
 div.settings-element(ng-class="{editable: isEditable.date_format}")
@@ -56,7 +58,8 @@ div.settings-element(ng-class="{editable: isEditable.date_format}")
 			a.btn.btn-link( ng-click="toggleEdit('date_format')" )= tr['cancel']
 	a.editLink( ng-click="toggleEdit('date_format')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
-
+hr.main-separator
+	
 //USERNAME
 div.settings-element(ng-class="{editable: isEditable.username}")
 	label= tr['username'] + ': '

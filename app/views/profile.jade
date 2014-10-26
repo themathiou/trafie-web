@@ -13,7 +13,7 @@ div( ng-init="initProfile()"  ng-cloak)
     //- PROFILE
     div#profile-container
       div#image-container.hidden-xs
-        img(src="{{current_user.picture || '/images/ui/profile_pic.svg'}}")
+        img(src="{{current_user.picture}}")
       div#profileFullName
         h3 {{current_user.first_name}} {{current_user.last_name}}
         p

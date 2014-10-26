@@ -55,20 +55,22 @@ trafie.config(['$routeProvider',
 //---
 trafie.run(function($rootScope, $http) {
 	$rootScope.isVisitor = true;
+	
 	$http.get('/users/me')
 		.success(function(res) {
 			console.log('run', res);
 			//The logged in user
 			$rootScope.localUser = res;
 			$rootScope.isVisitor = false;
+			
 			$http.get('/users/' + res._id + '/disciplines')
-				.success(function(res) {
-					$rootScope.localUser.disciplines_of_user = res;
-					$rootScope.current_user = res; //current user is logged in user
-				})
-				.error(function(res) {
-					console.err('info :: can\'t get disciplines of current user in -run-');
-				});
+			.success(function(res) {
+				$rootScope.localUser.disciplines_of_user = res;
+				$rootScope.current_user = res; //current user is logged in user
+			})
+			.error(function(res) {
+				console.err('info :: can\'t get disciplines of current user in -run-');
+			});
 		})
 		.error(function(res) {
 			console.log('info :: Oooohhh we have a fuckin\' visitoo!!');

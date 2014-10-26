@@ -3,36 +3,20 @@ h3= tr['profile_settings']
 //PROFILE PIC
 div.settings-element(ng-class="{editable: isEditable.profile_pic}")
 	label= tr['profile_picture'] + ': '
-	div.middle-section
-		//- NEED TO SWITCH THE SEQUENCE OF THE FOLLOWING CHECK
-		img.thumb(src="{{'/images/ui/profile_pic.svg' || localUser.picture }}")
+	form.middle-section( method="POST" ng-submit="submitChangeSetting('profile_pic')")
+		img.thumb(src="{{localUser.picture}}")
 		div( ng-show="isEditable.profile_pic")
-			//- input(type="text" ng-model="myModelObj" )
-			input(type="file" ng-file-select="onFileSelect($files)" ng-model="propic")
-			//- input(type="file" ng-file-select="onFileSelect($files)" multiple accept="image/*" )
-			//- div(class="button" ng-file-select="onFileSelect($files)" data-multiple="true")
-			//- div(ng-file-drop="onFileSelect($files)" ng-file-drag-over-class="optional-css-class-name-or-function" ng-show="dropSupported") drop files here
-			//- div(ng-file-drop-available="dropSupported=true" ng-show="!dropSupported") HTML5 Drop File is not supported! 
-			button(ng-click="upload.abort()") Cancel Upload
-
-
-			//- input( type="file" tr-file-select="onFileSelect($files)" )
-			//- button( ng-click="upload.abort()" ) Cancel Upload
-			//- div( ng-show="selectedFiles !=  null")
-			//- 	div( class="sel-file" ng-repeat="f in selectedFiles")
-			//- 		{{($index + 1) + '.'}}
-			//- 		img.img-rounded( ng-show="dataUrls[$index]" ng-src="{{dataUrls[$index]}}" )
-			//- 		button.btn.btn-success( ng-click="start($index)" ng-show="progress[$index] < 0") Start
-			//- 		span( class="progress" ng-show="progress[$index] >= 0" )
-			//- 			div( style="width:{{progress[$index]}}%") {{progress[$index]}}%
-			//- 		button( class="button" ng-click="abort($index)" ng-show="hasUploader($index) && progress[$index] < 100") Abort
-			//- 		{{f.name}} - size: {{f.size}}B - type: {{f.type}}
+			input(type="file" ng-file-select="onFileSelect($files)")
+		div
+			p(ng-show="uploading") please wait while file is uploaded
+		div(ng-show="profile_pic_msg" ng-class="{message_error: !success, message_success: success}") {{profile_pic_msg}}
 		div.formButtons( ng-show="isEditable.profile_pic" )
 			hr
+			input.btn.btn-success( type="submit" value="Upload")
 			a.btn.btn-link( ng-click="toggleEdit('profile_pic')" )= tr['cancel']
 	a.editLink( ng-click="toggleEdit('profile_pic')" tooltip-placement="top" tooltip="Edit" )
 		include ../svg/edit_activity_svg
-
+hr.main-separator
 
 //FIRST NAME
 div.settings-element(ng-class="{editable: isEditable.first_name}")
@@ -49,6 +33,7 @@ div.settings-element(ng-class="{editable: isEditable.first_name}")
 			a.btn.btn-link( ng-click="toggleEdit('first_name')" )= tr['cancel']
 	a.editLink( ng-click="toggleEdit('first_name')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
+hr.main-separator
 
 //LAST NAME
 div.settings-element(ng-class="{editable: isEditable.last_name}")
@@ -64,6 +49,7 @@ div.settings-element(ng-class="{editable: isEditable.last_name}")
 			a.btn.btn-link( ng-click="toggleEdit('last_name')")= tr['cancel']
 	a.editLink( ng-click="toggleEdit('last_name')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
+hr.main-separator
 
 //MAIN DISCIPLINE
 div.settings-element(ng-class="{editable: isEditable.main_discipline}")
@@ -82,6 +68,7 @@ div.settings-element(ng-class="{editable: isEditable.main_discipline}")
 				a.btn.btn-link( ng-click="toggleEdit('main_discipline')" )= tr['cancel']
 	a.editLink( ng-click="toggleEdit('main_discipline')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
+hr.main-separator
 
 //PRIVACY
 div.settings-element(ng-class="{editable: isEditable.privacy}")
@@ -98,6 +85,7 @@ div.settings-element(ng-class="{editable: isEditable.privacy}")
 			a.btn.btn-link( ng-click="toggleEdit('privacy')" )= tr['cancel']
 	a.editLink( ng-click="toggleEdit('privacy')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
+hr.main-separator
 
 //GENDER
 div.settings-element(ng-class="{editable: isEditable.gender}")
@@ -116,8 +104,7 @@ div.settings-element(ng-class="{editable: isEditable.gender}")
 			a.btn.btn-link( ng-click="toggleEdit('gender')" )= tr['cancel']
 	a.editLink( ng-click="toggleEdit('gender')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
-
-
+hr.main-separator
 
 //BIRTHDAY
 div.settings-element(ng-class="{editable: isEditable.birthday}")
@@ -134,7 +121,8 @@ div.settings-element(ng-class="{editable: isEditable.birthday}")
 			a.btn.btn-link( ng-click="toggleEdit('birthday')" )= tr['cancel']
 	a.editLink( ng-click="toggleEdit('birthday')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
-
+hr.main-separator
+	
 //COUNTRY
 div.settings-element(ng-class="{editable: isEditable.country}")
 	label= tr['country'] + ': '
@@ -152,7 +140,7 @@ div.settings-element(ng-class="{editable: isEditable.country}")
 			a.btn.btn-link( ng-click="toggleEdit('country')")= tr['cancel']
 	a.editLink( ng-click="toggleEdit('country')" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
-
+hr.main-separator
 
 //ABOUT ME
 div.settings-element(ng-class="{editable: isEditable.about}")

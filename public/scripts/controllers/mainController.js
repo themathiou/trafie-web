@@ -1,6 +1,6 @@
 trafie.controller("mainController", [
-    '$rootScope','$window','$scope','$http','$routeParams','$location','$timeout','$modalSvc','$alertSvc','$upload',
-    function($rootScope, $window, $scope, $http, $routeParams, $location, $timeout, $modalSvc, $alertSvc, $upload) {
+    '$rootScope','$window','$scope','$http','$routeParams','$location','$timeout','$modalSvc','$alertSvc',
+    function($rootScope, $window, $scope, $http, $routeParams, $location, $timeout, $modalSvc, $alertSvc) {
         ///////////////////////////////////////////////////////
         // GENERAL
         ///////////////////////////////////////////////////////
@@ -64,140 +64,12 @@ trafie.controller("mainController", [
 
 
         ///////////////////////////////////////////////////////
-        // SHOULD BE MOVED INTO A SERVICE
-        // File Upload Functions and vars
+        // FILE Upload
         ///////////////////////////////////////////////////////
-
         $scope.onFileSelect = function($files) {
-            //$files: an array of files selected, each file has name, size, and type.
-            for (var i = 0; i < $files.length; i++) {
-                var file = $files[i];
-                $scope.upload = $upload.upload({
-                    url: '/settings_data', 
-                    method: 'POST', //or 'PUT'
-                    //headers: {'header-key': 'header-value'},
-                    //withCredentials: true,
-                    data: {
-                        profile_pic: file
-                    },
-                    file: file // or list of files ($files) for html5 only
-                    //fileName: 'doc.jpg' or ['1.jpg', '2.jpg', ...] // to modify the name of the file(s)
-                    // customize file formData name ('Content-Disposition'), server side file variable name. 
-                    //fileFormDataName: myFile, //or a list of names for multiple files (html5). Default is 'file' 
-                    // customize how data is added to formData. See #40#issuecomment-28612000 for sample code
-                    //formDataAppender: function(formData, key, val){}
-                }).progress(function(evt) {
-                    console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
-                }).success(function(data, status, headers, config) {
-                    // file is uploaded successfully
-                    console.log(data);
-                });
-                //.error(...)
-                //.then(success, error, progress); 
-                // access or attach event listeners to the underlying XMLHttpRequest.
-                //.xhr(function(xhr){xhr.upload.addEventListener(...)})
-            }
+            $scope.filesToUpload = $files;
         }
-        // $scope.usingFlash = false; //FileAPI && FileAPI.upload != null;
-        // $scope.fileReaderSupported = false; //window.FileReader != null && (window.FileAPI == null || FileAPI.html5 != false);
-        // $scope.uploadRightAway = false;
-        // $scope.uploadUrl = 'settings_data';
-
-        // $scope.hasUploader = function(index) {
-        //     return $scope.upload[index] != null;
-        // };
-        // $scope.abort = function(index) {
-        //     $scope.upload[index].abort();
-        //     $scope.upload[index] = null;
-        // };
-        // $scope.angularVersion = window.location.hash.length > 1 ? (window.location.hash.indexOf('/') === 1 ?
-        //     window.location.hash.substring(2) : window.location.hash.substring(1)) : '1.2.20';
-
-        // $scope.onFileSelect = function($files) {
-        //     $scope.selectedFiles = [];
-        //     $scope.progress = [];
-        //     if ($scope.upload && $scope.upload.length > 0) {
-        //         for (var i = 0; i < $scope.upload.length; i++) {
-        //             if ($scope.upload[i] != null) {
-        //                 $scope.upload[i].abort();
-        //             }
-        //         }
-        //     }
-        //     $scope.upload = [];
-        //     $scope.uploadResult = [];
-        //     $scope.selectedFiles = $files;
-        //     $scope.dataUrls = [];
-        //     for (var i = 0; i < $files.length; i++) {
-        //         var $file = $files[i];
-        //         if ($scope.fileReaderSupported && $file.type.indexOf('image') > -1) {
-        //             var fileReader = new FileReader();
-        //             fileReader.readAsDataURL($files[i]);
-        //             var loadFile = function(fileReader, index) {
-        //                 fileReader.onload = function(e) {
-        //                     $timeout(function() {
-        //                         $scope.dataUrls[index] = e.target.result;
-        //                     });
-        //                 }
-        //             }(fileReader, i);
-        //         }
-        //         $scope.progress[i] = -1;
-        //         if ($scope.uploadRightAway) {
-        //             $scope.start(i);
-        //         }
-        //     }
-        // };
-
-        // $scope.start = function(index) {
-        //     $scope.progress[index] = 0;
-        //     $scope.errorMsg = null;
-        //     $scope.howToSend = 1;
-        //     if ($scope.howToSend == 1) {
-        //         $scope.upload[index] = $uploadSvc.upload({
-        //             url: $scope.uploadUrl,
-        //             method: $scope.httpMethod,
-        //             headers: {
-        //                 'my-header': 'my-header-value'
-        //             },
-        //             data: {
-        //                 myModel: $scope.myModel
-        //             },
-        //             file: $scope.selectedFiles[index],
-        //             fileFormDataName: 'profile_pic'
-        //         });
-        //         $scope.upload[index].then(function(response) {
-        //             $timeout(function() {
-        //                 $scope.uploadResult.push(response.data);
-        //             });
-        //         }, function(response) {
-        //             if (response.status > 0) $scope.errorMsg = response.status + ': ' + response.data;
-        //         }, function(evt) {
-        //             // Math.min is to fix IE which reports 200% sometimes
-        //             $scope.progress[index] = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-        //         });
-        //         $scope.upload[index].xhr(function(xhr) {});
-        //     } else {
-        //         var fileReader = new FileReader();
-        //         fileReader.onload = function(e) {
-        //             $scope.upload[index] = $uploadSvc.http({
-        //                 url: $scope.uploadUrl,
-        //                 headers: {
-        //                     'Content-Type': $scope.selectedFiles[index].type
-        //                 },
-        //                 data: e.target.result
-        //             }).then(function(response) {
-        //                 $scope.uploadResult.push(response.data);
-        //             }, function(response) {
-        //                 if (response.status > 0) $scope.errorMsg = response.status + ': ' + response.data;
-        //             }, function(evt) {
-        //                 // Math.min is to fix IE which reports 200% sometimes
-        //                 $scope.progress[index] = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-        //             });
-        //         }
-        //         fileReader.readAsArrayBuffer($scope.selectedFiles[index]);
-        //     }
-        // };
-
-
+        
         ///////////////////////////////////////////////////////
         // FEEDBACK MODAL
         ///////////////////////////////////////////////////////
