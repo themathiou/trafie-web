@@ -148,6 +148,9 @@ a {
   -ms-justify-content: center;
   justify-content: center;
 }
+.maincontent .tabset tab {
+  text-align: center;
+}
 .filters-row {
   display: -webkit-box;
   display: -moz-box;
@@ -313,12 +316,44 @@ form .message_success {
 }
 #mainmenu ul.navigation_menu,
 #mainmenu ul.navigation_menu_mobile {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: flex;
+  -webkit-box-flex: 1 auto;
+  -moz-box-flex: 1 auto;
+  -ms-box-flex: 1 auto;
+  box-flex: 1 auto;
+  -webkit-flex: 1 auto;
+  -moz-flex: 1 auto;
+  -ms-flex: 1 auto;
+  flex: 1 auto;
+  -webkit-box-orient: horizontal;
+  -moz-box-orient: horizontal;
+  -ms-box-orient: horizontal;
+  box-orient: horizontal;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: space-around;
+  -moz-box-pack: space-around;
+  -ms-box-pack: space-around;
+  box-pack: space-around;
+  -webkit-justify-content: space-around;
+  -moz-justify-content: space-around;
+  -ms-justify-content: space-around;
+  justify-content: space-around;
   padding: 10px 16px;
   margin: 0px;
 }
 #mainmenu ul.navigation_menu li,
 #mainmenu ul.navigation_menu_mobile li {
-  display: inline;
+  list-style: none;
 }
 #mainmenu ul.navigation_menu li a,
 #mainmenu ul.navigation_menu_mobile li a {

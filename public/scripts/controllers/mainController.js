@@ -5,8 +5,10 @@ trafie.controller("mainController", [
         // GENERAL
         ///////////////////////////////////////////////////////
         $scope.appInit = function() {
-            // if device size < 768px consider it as mobile
-            $window.innerWidth < 768 ? $scope.mobile = true : $scope.mobile = false;
+            // if device size < 768px consider it as isMobile
+            $window.innerWidth < 768 ? $scope.isMobile = true : $scope.isMobile = false;
+            //isTouch. we need to create function for this check
+            $scope.isTouch = (('ontouchstart' in window) || (navigator.MaxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0));
         };
 
         $scope.$on('$routeChangeSuccess', function() {
@@ -29,8 +31,8 @@ trafie.controller("mainController", [
         // On window resize
         ///////////////////////////////////////////////////////
         $window.onresize = function() {
-            // if device size < 768px consider it as mobile
-            $window.innerWidth < 768 ? $scope.mobile = true : $scope.mobile = false;
+            // if device size < 768px consider it as isMobile
+            $window.innerWidth < 768 ? $scope.isMobile = true : $scope.isMobile = false;
             $scope.$apply();
         }
 

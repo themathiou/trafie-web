@@ -19,9 +19,9 @@ div.settings-element(ng-class="{editable: isEditable.password}")
 				input.btn.btn-success( type="submit" value=tr['submit'])
 				a.btn.btn-link( ng-click="toggleEdit('password')" )= tr['cancel']
 		div(ng-show="password_msg" ng-class="{message_error: !success, message_success: success}") {{password_msg}}
-	a.editLink( ng-click="toggleEdit('password')" ng-if="!mobile" ng-if="!mobile" tooltip-placement="top" tooltip="Edit" )
+	a.editLink( ng-click="toggleEdit('password')" ng-if="!isTouch" tooltip-placement="top" tooltip="Edit" )
 		include ../svg/edit_activity_svg
-	a.editLink( ng-click="toggleEdit('password')" ng-if="mobile" )
+	a.editLink( ng-click="toggleEdit('password')" ng-if="isTouch" )
 		include ../svg/edit_activity_svg
 hr.main-separator
 
@@ -40,9 +40,9 @@ div.settings-element(ng-class="{editable: isEditable.language}")
 			hr
 			input.btn.btn-success( type="submit" value=tr['submit'])
 			a.btn.btn-link( ng-click="toggleEdit('language')" )= tr['cancel']
-	a.editLink( ng-click="toggleEdit('language')" ng-if="!mobile" tooltip-placement="top" tooltip="Edit" )
+	a.editLink( ng-click="toggleEdit('language')" ng-if="!isTouch" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
-	a.editLink( ng-click="toggleEdit('language')" ng-if="mobile" )
+	a.editLink( ng-click="toggleEdit('language')" ng-if="isTouch" )
 		include ../svg/edit_activity_svg
 hr.main-separator
 
@@ -60,9 +60,9 @@ div.settings-element(ng-class="{editable: isEditable.date_format}")
 			hr
 			input.btn.btn-success( type="submit" value=tr['submit'])
 			a.btn.btn-link( ng-click="toggleEdit('date_format')" )= tr['cancel']
-	a.editLink( ng-click="toggleEdit('date_format')" ng-if="!mobile" tooltip-placement="top" tooltip="Edit" )
+	a.editLink( ng-click="toggleEdit('date_format')" ng-if="!isTouch" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
-	a.editLink( ng-click="toggleEdit('date_format')" ng-if="mobile" )
+	a.editLink( ng-click="toggleEdit('date_format')" ng-if="isTouch" )
 		include ../svg/edit_activity_svg
 hr.main-separator
 	
@@ -78,8 +78,8 @@ div.settings-element(ng-class="{editable: isEditable.username}")
 			hr
 			input.btn.btn-success( type="submit" value=tr['submit'])
 			a.btn.btn-link( ng-click="toggleEdit('username')" )= tr['cancel']
-	a.editLink( ng-click="toggleEdit('username')" ng-if="!mobile" tooltip-placement="top" tooltip="Edit" )
+	a.editLink( ng-click="toggleEdit('username')" ng-if="!isTouch" tooltip-placement="top" tooltip="Edit" )
 			include ../svg/edit_activity_svg
-	a.editLink( ng-click="toggleEdit('username')" ng-if="mobile" )
+	a.editLink( ng-click="toggleEdit('username')" ng-if="isTouch" )
 		include ../svg/edit_activity_svg
 
