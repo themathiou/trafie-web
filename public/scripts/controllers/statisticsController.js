@@ -112,6 +112,7 @@ trafie.controller("statisticsController", [
 	$scope.drawSimpleChart = function(user_id, discipline, year, init) {
 		//start loading indicator
 		$scope.valid_data = false;
+		$scope.isLoading = true;
 		if ($scope.selected_discipline !== discipline) {
 			init = true;
 		}

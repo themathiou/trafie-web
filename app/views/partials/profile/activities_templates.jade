@@ -1,35 +1,36 @@
 
 div.edit_activity( ng-show="activity.show_editable_form" )
-		form.form-group( ng-submit=" updateActivity(activity) ")
+		form.form-group( ng-submit="updateActivity(activity)" name="updateForm")
 			div.data_entry
 				label= tr['enter_your_performance'] +':'
 				//- distance
 				div.performance_fields( ng-if="disciplines.distance.indexOf(activity.discipline) > -1 " )
 					div
 						label(for="distance_1_input")= tr['meters_short'] + ':'
-						input.form-control( size="3" maxlength="2" ng-model="updateActivityForm.distance_1" )
+						input.form-control( size="3" maxlength="2" ng-model="updateActivityForm.performance.distance_1" name="d_1" ng-class="{error: updateForm.d_1.$error.pattern}" ng-pattern="NUMBERS")
 					div
 						label(for="distance_2_input")= tr['centimeters_short'] + ':'
-						input.form-control( size="3" maxlength="2" ng-model="updateActivityForm.distance_2" )
+						input.form-control( size="3" maxlength="2" ng-model="updateActivityForm.performance.distance_2" name="d_2" ng-class="{error: updateForm.d_2.$error.pattern}" ng-pattern="NUMBERS")
 				//- time
 				div.performance_fields( ng-if="disciplines.time.indexOf(activity.discipline) > -1 " )
 					div
 						label(for="hours_input")= tr['hours_short'] + ':'
-						input.form-control( size="3" maxlength="2" ng-model="updateActivityForm.hours")
+						input.form-control( size="3" maxlength="2" ng-model="updateActivityForm.performance.hours" name="hours" ng-class="{error: updateForm.hours.$error.pattern}" ng-pattern="NUMBERS")
 					div
 						label( for="minutes_input" )= tr['minutes_short'] + ':'
-						input.form-control( size="3" maxlength="2" ng-model="updateActivityForm.minutes")
+						input.form-control( size="3" maxlength="2" ng-model="updateActivityForm.performance.minutes" name="minutes" ng-class="{error: updateForm.minutes.$error.pattern}" ng-pattern="NUMBERS")
 					div
 						label( for="seconds_input" )= tr['seconds_short'] + ':'
-						input.form-control( size="3" maxlength="2" ng-model="updateActivityForm.seconds")
+						input.form-control( size="3" maxlength="2" ng-model="updateActivityForm.performance.seconds" name="seconds" ng-class="{error: updateForm.seconds.$error.pattern}" ng-pattern="NUMBERS")
 					div
 						label(for="centiseconds_input")= tr['centiseconds_short'] + ':'
-						input.form-control( size="3" maxlength="2" ng-model="updateActivityForm.centiseconds")
+						input.form-control( size="3" maxlength="2" ng-model="updateActivityForm.performance.centiseconds" name="centiseconds" ng-class="{error: updateForm.centiseconds.$error.pattern}" ng-pattern="NUMBERS")
 
 				//- points
 				div.performance_fields( ng-if="disciplines.points.indexOf(activity.discipline) > -1 " )
-					label(for="points_input")= tr['points'] + ':'
-					input.form-control(type="text" size="7" maxlength="5" ng-model="updateActivityForm.points")
+					div
+						label(for="points_input")= tr['points'] + ':'
+						input.form-control(type="text" size="7" maxlength="5" ng-model="updateActivityForm.performance.points" name="points" ng-class="{error: updateForm.points.$error.pattern}" ng-pattern="NUMBERS")
 
 				//- common variables
 				div
@@ -39,7 +40,7 @@ div.edit_activity( ng-show="activity.show_editable_form" )
 
 				div
 					label(for="place") Place
-					input.form-control(type="text" ng-model="updateActivityForm.place")
+					input.form-control(type="text" ng-model="updateActivityForm.place" maxlength="3" name="place" ng-class="{error: updateForm.place.$error.pattern}" ng-pattern="NUMBERS")
 				div
 					label(for="location") Location
 					input.form-control(type="text" ng-model="updateActivityForm.location")

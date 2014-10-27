@@ -19,41 +19,22 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
         div#mainmenu.col-xs-12.col-sm-12.col-md-10.col-lg-8.col-md-offset-1.col-lg-offset-2
             a.logo.brand( href="/" )
 
-            //- DESKTOP
-            span( ng-if="!mobile" )
-                input.search( type="text" ng-model="asyncSelected" placeholder="search for athletes!" typeahead-on-select="onSelect($item, $model, $label)" typeahead="result.label for result in searchUser($viewValue)" typeahead-loading="loadingLocations" class="form-control" autocomplete="off" )
+            input.search.hidden-xs(type="text" ng-model="asyncSelected" placeholder="search for athletes!" typeahead-on-select="onSelect($item, $model, $label)" typeahead="result.label for result in searchUser($viewValue)" typeahead-loading="loadingLocations" class="form-control" autocomplete="off" )
 
-                ul.navigation_menu
-                    li(ng-if="!isVisitor")
-                        a.menu_profile(href="/" ng-class="{active: section == 'profile'}" ) {{localUser.first_name}}
-                    li(ng-if="!isVisitor")
-                        a.menu_statistics(href="/statistics" ng-class="{active: section == 'statistics'}")= tr['statistics']
-                    li(ng-if="!isVisitor")
-                        a.menu_settings(href="/settings" ng-class="{active: section == 'settings'}")= tr['settings']
-                    li(ng-if="isVisitor")
-                        a(href="/login") Login
-                    li(ng-if="isVisitor")
-                        a(href="/register") Register
-                    li
-                        a.feedback_wrapper(ng-click="openFeedbackForm()")
-                            include  partials/svg/feedback_svg
-
-            //- MOBILE
-            span( ng-if="mobile" )
-                ul.navigation_menu_mobile
-                    li(ng-if="!isVisitor")
-                        a.menu_profile(href="/" ng-class="{active: section == 'profile'}" ) {{localUser.first_name}}
-                    //- li(ng-if="!isVisitor")
-                        a.menu_statistics(href="/statistics" ng-class="{active: section == 'statistics'}")= tr['statistics']
-                    li(ng-if="!isVisitor")
-                        a.menu_settings(href="/settings" ng-class="{active: section == 'settings'}")= tr['settings']
-                    li(ng-if="isVisitor")
-                        a(href="/login") Login
-                    li(ng-if="isVisitor")
-                        a(href="/register") Register
-                    li
-                        a.feedback_wrapper(ng-click="openFeedbackForm()")
-                            include partials/svg/feedback_svg
+            ul.navigation_menu
+                li(ng-if="!isVisitor")
+                    a.menu_profile(href="/" ng-class="{active: section == 'profile'}" ) {{localUser.first_name}}
+                li(ng-if="!isVisitor")
+                    a.menu_statistics.hidden-xs(href="/statistics" ng-class="{active: section == 'statistics'}")= tr['statistics']
+                li(ng-if="!isVisitor")
+                    a.menu_settings(href="/settings" ng-class="{active: section == 'settings'}")= tr['settings']
+                li(ng-if="isVisitor")
+                    a(href="/login") Login
+                li(ng-if="isVisitor")
+                    a(href="/register") Register
+                li
+                    a.feedback_wrapper(ng-click="openFeedbackForm()")
+                        include  partials/svg/feedback_svg
                         
     //- ALERTS
     alert.alert_custom.col-xs-12.col-sm-12.col-md-10.col-lg-8.col-md-offset-1.col-lg-offset-2( ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)") {{alert.msg}}
@@ -70,8 +51,6 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
     script(type="text/javascript", src="/scripts/libs/angular-animate.min.js")
     script(type="text/javascript", src="/scripts/libs/ui-bootstrap-0.10.0.min.js")
 
-    //- to be removed
-    //- script(type='text/javascript', src='/scripts/scripts/script.js')
 
     //- c3js charts
     //- script( src="http://d3js.org/d3.v3.min.js" charset="utf-8")

@@ -5,8 +5,10 @@ trafie.controller("mainController", [
         // GENERAL
         ///////////////////////////////////////////////////////
         $scope.appInit = function() {
-            // if device size < 768px consider it as mobile
-            $window.innerWidth < 768 ? $scope.mobile = true : $scope.mobile = false;
+            // if device size < 768px consider it as isMobile
+            $window.innerWidth < 768 ? $scope.isMobile = true : $scope.isMobile = false;
+            //isTouch. we need to create function for this check
+            $scope.isTouch = (('ontouchstart' in window) || (navigator.MaxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0));
         };
 
         $scope.$on('$routeChangeSuccess', function() {
@@ -19,11 +21,18 @@ trafie.controller("mainController", [
         });
 
         ///////////////////////////////////////////////////////
+        // Validation Patterns
+        ///////////////////////////////////////////////////////
+        $rootScope.ONLY_ALPHABETIC = /^[A-Za-z ]+$/;
+        $rootScope.ALPHABETIC_NUMS_DOT_UNDER = /^[A-Za-z_.0-9]+$/;
+        $rootScope.NUMBERS = /^[0-9]*$/;
+
+        ///////////////////////////////////////////////////////
         // On window resize
         ///////////////////////////////////////////////////////
         $window.onresize = function() {
-            // if device size < 768px consider it as mobile
-            $window.innerWidth < 768 ? $scope.mobile = true : $scope.mobile = false;
+            // if device size < 768px consider it as isMobile
+            $window.innerWidth < 768 ? $scope.isMobile = true : $scope.isMobile = false;
             $scope.$apply();
         }
 
@@ -55,13 +64,6 @@ trafie.controller("mainController", [
             //user  lower-level API for reloading page
             $window.location.href = '/' + $item._id;
         };
-
-        ///////////////////////////////////////////////////////
-        // Validation Patterns
-        ///////////////////////////////////////////////////////
-        $rootScope.ONLY_ALPHABETIC = /^[A-Za-z ]+$/;
-        $rootScope.ALPHABETIC_NUMS_DOT_UNDER = /^[A-Za-z_.0-9]+$/;
-
 
         ///////////////////////////////////////////////////////
         // FILE Upload
