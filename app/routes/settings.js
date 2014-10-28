@@ -281,6 +281,30 @@ exports.post = function(req, res) {
 
 			// Checking if the uploaded file is a valid image file
 			else if (typeof req.files !== 'undefined' && typeof req.files.profile_pic !== 'undefined') {
+				function uploadPhoto(data) {
+					// Save the file in the images folder
+					fs.writeFile(root_dir + '/public' + profile_data.picture, data, function(err) {
+						if (err) throw err;
+						// Update the database
+						Profile.update({
+							'_id': user_id
+						}, {
+							$set: profile_data
+						}, {
+							upsert: true
+						}, function(error) {
+							if(!error) {
+								response.message = tr['data_updated_successfully'];
+								res.status(200).json(response);
+							} else {
+								response.error = error;
+								response.message = tr['something_went_wrong'];
+								res.status(500).json(response);
+							}
+						});
+					});
+				}
+
 				// Read the image file
 				fs.readFile(req.files.profile_pic.path, function(err, data) {
 					// Get the file extension
@@ -309,34 +333,18 @@ exports.post = function(req, res) {
 						accepted_type = true;
 					}
 
-
-
 					if (accepted_type && accepted_size) {
 						profile_data.picture = '/images/profile_pics/' + user_id + '.' + extension;
 
-						fs.unlink(root_dir + '/public' + profile_data.picture, function(err) {
-							if (err) throw err;
-							// Save the file in the images folder
-							fs.writeFile(root_dir + '/public' + profile_data.picture, data, function(err) {
-								if (err) throw err;
-								// Update the database
-								Profile.update({
-									'_id': user_id
-								}, {
-									$set: profile_data
-								}, {
-									upsert: true
-								}, function(error) {
-									if(!error) {
-										response.message = tr['data_updated_successfully'];
-										res.status(200).json(response);
-									} else {
-										response.error = error;
-										response.message = tr['something_went_wrong'];
-										res.status(500).json(response);
-									}
+						fs.exists(root_dir + '/public' + profile_data.picture, function(exists) {
+						    if (exists) {
+								fs.unlink(root_dir + '/public' + profile_data.picture, function(err) {
+									if (err) throw err;
+									uploadPhoto(data);
 								});
-							});
+						    } else {
+						    	uploadPhoto(data);
+						    }
 						});
 					} else {
 						res.status(400).json(response);
