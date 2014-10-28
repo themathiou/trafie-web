@@ -71,6 +71,14 @@ trafie.controller("mainController", [
         $scope.onFileSelect = function($files) {
             $scope.filesToUpload = $files;
         }
+
+        /**
+         * [Logs out]
+         */
+        $scope.logout = function() {
+            $rootScope.localUser = {};
+            $window.location.href = '/logout';
+        }
         
         ///////////////////////////////////////////////////////
         // FEEDBACK MODAL
@@ -101,7 +109,7 @@ trafie.controller("mainController", [
         ///////////////////////////////////////////////////////
         $scope.today = function() {
             $scope.dt = new Date();
-        };
+        }
         $scope.today();
 
         $scope.clear = function() {

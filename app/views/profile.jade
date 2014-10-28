@@ -14,14 +14,14 @@ div( ng-init="initProfile()"  ng-cloak)
 
   //- PAGE FOUND START
   div.maincontent( ng-if="!page_not_found" )
-    div.col-xs-12.dropdown_container_xs(ng-if="isMobile")
+    //- div.col-xs-12.dropdown_container_xs(ng-if="isMobile")
       div.flex_wrapper
         input.search( type="text" ng-model="asyncSelected" placeholder="search for athletes!" typeahead-on-select="onSelect($item, $model, $label)" typeahead="result.label for result in searchUser($viewValue)" typeahead-loading="loadingLocations" class="form-control" autocomplete="off" )
     
     //- PROFILE
-    div.vertical_space_50.hidden-xs
+    div.vertical_space_50
     div#profile-container
-      div#image-container.hidden-xs
+      div#image-container
         img(src="{{current_user.picture}}")
       div#profileFullName
         h3 {{current_user.first_name}} {{current_user.last_name}}

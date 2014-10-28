@@ -495,13 +495,5 @@ trafie.controller("settingsController", [
 	}
 
 
-	/**
-	 * [Logs out]
-	 */
-	$scope.logout = function() {
-		$rootScope.localUser = {};
-		$window.location.href = '/logout';
-	}
-
 
 }]);

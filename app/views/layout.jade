@@ -24,13 +24,15 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
             ul.navigation_menu
                 li(ng-if="!isVisitor")
                     a.menu_profile(href="/" ng-class="{active: section == 'profile'}" ) {{localUser.first_name}}
+                li(ng-if="!isVisitor").hidden-xs
+                    a.menu_statistics(href="/statistics" ng-class="{active: section == 'statistics'}")= tr['statistics']
                 li(ng-if="!isVisitor")
-                    a.menu_statistics.hidden-xs(href="/statistics" ng-class="{active: section == 'statistics'}")= tr['statistics']
-                li(ng-if="!isVisitor")
-                    a.menu_settings(href="/settings" ng-class="{active: section == 'settings'}")= tr['settings']
+                    a.menu_settings.hidden-xs(href="/settings" ng-class="{active: section == 'settings'}")= tr['settings']
+                li(ng-if="!isVisitor && isMobile")
+                    a(ng-click="logout()") Logout
                 li(ng-if="isVisitor")
                     a(href="/login") Login
-                li(ng-if="isVisitor")
+                li(ng-if="isVisitor").hidden-xs
                     a(href="/register") Register
                 li
                     a.feedback-wrapper(ng-click="openFeedbackForm()")

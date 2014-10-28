@@ -991,6 +991,14 @@ angularFileUpload.directive('ngFileSelect', [ '$parse', '$timeout', function($pa
         $scope.onFileSelect = function($files) {
             $scope.filesToUpload = $files;
         }
+
+        /**
+         * [Logs out]
+         */
+        $scope.logout = function() {
+            $rootScope.localUser = {};
+            $window.location.href = '/logout';
+        }
         
         ///////////////////////////////////////////////////////
         // FEEDBACK MODAL
@@ -1021,7 +1029,7 @@ angularFileUpload.directive('ngFileSelect', [ '$parse', '$timeout', function($pa
         ///////////////////////////////////////////////////////
         $scope.today = function() {
             $scope.dt = new Date();
-        };
+        }
         $scope.today();
 
         $scope.clear = function() {
@@ -1795,14 +1803,6 @@ angularFileUpload.directive('ngFileSelect', [ '$parse', '$timeout', function($pa
 		}
 	}
 
-
-	/**
-	 * [Logs out]
-	 */
-	$scope.logout = function() {
-		$rootScope.localUser = {};
-		$window.location.href = '/logout';
-	}
 
 
 }]);;trafie.controller("statisticsController", [
