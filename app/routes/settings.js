@@ -51,7 +51,7 @@ exports.get = function(req, res) {
 				gender = 'no_gender_selected';
 			}
 
-			var picture = profile.picture || '/images/profile_pics/profile_pic.svg';
+			var picture = profile.picture || '/images/ui/profile_pic.svg';
 
 			var data = {
 				'user': {
