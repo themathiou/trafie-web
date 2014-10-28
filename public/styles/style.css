@@ -37,7 +37,7 @@
 /* (185,56,56) */
 /* MESSAGES */
 /* BUTTONS */
-.edit_svg {
+.edit-svg {
   height: 15px;
   width: 15px;
   fill: rgba(0, 0, 0, 0.5);
@@ -45,10 +45,10 @@
   -webkit-transition: fill 0.4s ease-in-out;
   -moz-transition: fill 0.4s ease-in-out;
 }
-.edit_svg:hover {
+.edit-svg:hover {
   fill: #e87600;
 }
-.delete_svg {
+.delete-svg {
   height: 15px;
   width: 15px;
   fill: rgba(0, 0, 0, 0.5);
@@ -56,11 +56,11 @@
   -webkit-transition: fill 0.4s ease-in-out;
   -moz-transition: fill 0.4s ease-in-out;
 }
-.delete_svg:hover {
+.delete-svg:hover {
   fill: #990100;
 }
-.locked_svg,
-.unlocked_svg {
+.locked-svg,
+.unlocked-svg {
   height: 25px;
   width: 25px;
   fill: rgba(0, 0, 0, 0.25);
@@ -68,15 +68,15 @@
   -webkit-transition: fill 0.4s ease-in-out;
   -moz-transition: fill 0.4s ease-in-out;
 }
-.locked_svg:hover,
-.unlocked_svg:hover {
+.locked-svg:hover,
+.unlocked-svg:hover {
   fill: rgba(0, 0, 0, 0.75);
 }
-.feedback_svg {
+.feedback-svg {
   fill: #ffffff;
-  margin-top: -15px;
+  margin-top: -12px;
 }
-.feedback_wrapper:hover {
+.feedback-wrapper:hover {
   background-color: none !important;
   border-bottom: none !important;
 }
@@ -148,7 +148,7 @@ a {
   -ms-justify-content: center;
   justify-content: center;
 }
-.maincontent .tabset tab {
+.maincontent .nav-tabs li {
   text-align: center;
 }
 .filters-row {

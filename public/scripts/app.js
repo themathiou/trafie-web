@@ -1,5 +1,7 @@
 //Define ng-app module
 //---
+
+//--- WE NEED TO FIX INJECTION HERE TO AVOID ISSUES IN MINIFICATION IN GRUNT ---//
 var trafie = angular.module('trafie', [
 	'ngRoute',
 	'ui.bootstrap',

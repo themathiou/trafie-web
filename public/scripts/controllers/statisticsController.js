@@ -7,20 +7,27 @@ trafie.controller("statisticsController", [
 	//object with disciplines grouped in categories
 	var disciplines = {
 		'time': [
+			'60m',
 			'100m',
 			'200m',
 			'400m',
 			'800m',
 			'1500m',
 			'3000m',
+			'5000m',
+			'10000m',
 			'60m_hurdles',
 			'100m_hurdles',
 			'110m_hurdles',
 			'400m_hurdles',
-			'3000m_steeple',
+			'3000m_steeplechase',
 			'4x100m_relay',
 			'4x400m_relay',
-			'marathon'
+			'half_marathon',
+			'marathon',
+			'20km_race_walk',
+			'50km_race_walk',
+			'cross_country_running',
 		],
 		'distance': [
 			'high_jump',
@@ -282,4 +289,4 @@ trafie.controller("statisticsController", [
 		return _temp[2] + ' ' + _temp[1] + ' ' + _temp[3];
 	}
 
-}]); //end controller
+}]);

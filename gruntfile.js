@@ -7,7 +7,7 @@ module.exports = function(grunt) {
       },
       dist: {
         src: [
-            'public/scripts/libs/angular-file-upload-html5-shim.js',
+            'public/scripts/libs/angular-file-upload-shim.js',
             'public/scripts/libs/angular.min.js',
             'public/scripts/libs/angular-route.min.js',
             'public/scripts/libs/angular-animate.min.js',
@@ -15,6 +15,7 @@ module.exports = function(grunt) {
             'public/scripts/libs/d3.v3.min.js',
             'public/scripts/libs/c3.min.js',
             'public/scripts/app.js',
+            'public/scripts/libs/angular-file-upload.js',
             'public/scripts/controllers/*.js',
             'public/scripts/directives/*.js',
             'public/scripts/services/*.js',
