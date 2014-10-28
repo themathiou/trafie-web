@@ -314,24 +314,28 @@ exports.post = function(req, res) {
 					if (accepted_type && accepted_size) {
 						profile_data.picture = '/images/profile_pics/' + user_id + '.' + extension;
 
-						// Save the file in the images folder
-						fs.writeFile(root_dir + '/public' + profile_data.picture, data, function(err) {
-							// Update the database
-							Profile.update({
-								'_id': user_id
-							}, {
-								$set: profile_data
-							}, {
-								upsert: true
-							}, function(error) {
-								if(!error) {
-									response.message = tr['data_updated_successfully'];
-									res.status(200).json(response);
-								} else {
-									response.error = error;
-									response.message = tr['something_went_wrong'];
-									res.status(500).json(response);
-								}
+						fs.unlink(root_dir + '/public' + profile_data.picture, function(err) {
+							if (err) throw err;
+							// Save the file in the images folder
+							fs.writeFile(root_dir + '/public' + profile_data.picture, data, function(err) {
+								if (err) throw err;
+								// Update the database
+								Profile.update({
+									'_id': user_id
+								}, {
+									$set: profile_data
+								}, {
+									upsert: true
+								}, function(error) {
+									if(!error) {
+										response.message = tr['data_updated_successfully'];
+										res.status(200).json(response);
+									} else {
+										response.error = error;
+										response.message = tr['something_went_wrong'];
+										res.status(500).json(response);
+									}
+								});
 							});
 						});
 					} else {
@@ -428,7 +432,7 @@ exports.get_view = function(req, res) {
 		.then(function(profile) {
 
 			var tr = translations[profile.language];
-			var disciplines = ['100m', '200m', '400m', '800m', '1500m', '3000m', '60m_hurdles', '100m_hurdles', '110m_hurdles', '400m_hurdles', '3000m_steeple', '4x100m_relay', '4x400m_relay', 'marathon', 'high_jump', 'long_jump', 'triple_jump', 'pole_vault', 'shot_put', 'discus', 'hammer', 'javelin', 'pentathlon', 'heptathlon', 'decathlon'];
+			var disciplines = ['60m','100m','200m','400m','800m','1500m','3000m','5000m','10000m','60m_hurdles','100m_hurdles','110m_hurdles','400m_hurdles','3000m_steeplechase','4x100m_relay','4x400m_relay','half_marathon','marathon','20km_race_walk','50km_race_walk','cross_country_running','high_jump','long_jump','triple_jump','pole_vault','shot_put','discus','hammer','javelin','pentathlon','heptathlon','decathlon'];
 			var countries = ['AF', 'AX', 'AL', 'DZ', 'AS', 'AD', 'AO', 'AI', 'AQ', 'AG', 'AR', 'AM', 'AW', 'AU', 'AT', 'AZ', 'BS', 'BH', 'BD', 'BB', 'BY', 'BE', 'BZ', 'BJ', 'BM', 'BT', 'BO', 'BQ', 'BA', 'BW', 'BV', 'BR', 'IO', 'BN', 'BG', 'BF', 'BI', 'KH', 'CM', 'CA', 'CV', 'KY', 'CF', 'TD', 'CL', 'CN', 'CX', 'CC', 'CO', 'KM', 'CG', 'CD', 'CK', 'CR', 'CI', 'HR', 'CU', 'CW', 'CY', 'CZ', 'DK', 'DJ', 'DM', 'DO', 'EC', 'EG', 'SV', 'GQ', 'ER', 'EE', 'ET', 'FK', 'FO', 'FJ', 'FI', 'FR', 'GF', 'PF', 'TF', 'GA', 'GM', 'GE', 'DE', 'GH', 'GI', 'GR', 'GL', 'GD', 'GP', 'GU', 'GT', 'GG', 'GN', 'GW', 'GY', 'HT', 'HM', 'VA', 'HN', 'HK', 'HU', 'IS', 'IN', 'ID', 'IR', 'IQ', 'IE', 'IM', 'IL', 'IT', 'JM', 'JP', 'JE', 'JO', 'KZ', 'KE', 'KI', 'KP', 'KR', 'KW', 'KG', 'LA', 'LV', 'LB', 'LS', 'LR', 'LY', 'LI', 'LT', 'LU', 'MO', 'MK', 'MG', 'MW', 'MY', 'MV', 'ML', 'MT', 'MH', 'MQ', 'MR', 'MU', 'YT', 'MX', 'FM', 'MD', 'MC', 'MN', 'ME', 'MS', 'MA', 'MZ', 'MM', 'NA', 'NR', 'NP', 'NL', 'NC', 'NZ', 'NI', 'NE', 'NG', 'NU', 'NF', 'MP', 'NO', 'OM', 'PK', 'PW', 'PS', 'PA', 'PG', 'PY', 'PE', 'PH', 'PN', 'PL', 'PT', 'PR', 'QA', 'RE', 'RO', 'RU', 'RW', 'BL', 'SH', 'KN', 'LC', 'MF', 'PM', 'VC', 'WS', 'SM', 'ST', 'SA', 'SN', 'RS', 'SC', 'SL', 'SG', 'SX', 'SK', 'SI', 'SB', 'SO', 'ZA', 'GS', 'SS', 'ES', 'LK', 'SD', 'SR', 'SJ', 'SZ', 'SE', 'CH', 'SY', 'TW', 'TJ', 'TZ', 'TH', 'TL', 'TG', 'TK', 'TO', 'TT', 'TN', 'TR', 'TM', 'TC', 'TV', 'UG', 'UA', 'AE', 'GB', 'US', 'UM', 'UY', 'UZ', 'VU', 'VE', 'VN', 'VG', 'VI', 'WF', 'EH', 'YE', 'ZM', 'ZW'];
 			var languages = {
 				'en': 'English',

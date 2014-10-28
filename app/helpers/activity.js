@@ -30,20 +30,27 @@ activityHelper.formatActivity = function(activity, language, date_format) {
 	if (!activity.discipline || !activity.performance) return null;
 
 	switch (activity.discipline) {
+		case '60m':
 		case '100m':
 		case '200m':
 		case '400m':
 		case '800m':
 		case '1500m':
 		case '3000m':
+		case '5000m':
+		case '10000m':
 		case '60m_hurdles':
 		case '100m_hurdles':
 		case '110m_hurdles':
 		case '400m_hurdles':
-		case '3000m_steeple':
+		case '3000m_steeplechase':
 		case '4x100m_relay':
 		case '4x400m_relay':
+		case 'half_marathon':
 		case 'marathon':
+    	case '20km_race_walk':
+    	case '50km_race_walk':
+    	case 'cross_country_running':
 			// Getting the centiseconds
 			var centiseconds = activity.performance.split('.')[1];
 			// Getting the rest of the performance parts
@@ -105,20 +112,27 @@ activityHelper.formatActivity = function(activity, language, date_format) {
 activityHelper.disciplineIsValid = function(discipline) {
 	// Validating discipline and performance
 	switch (discipline) {
+		case '60m':
 		case '100m':
 		case '200m':
 		case '400m':
 		case '800m':
 		case '1500m':
 		case '3000m':
+		case '5000m':
+		case '10000m':
 		case '60m_hurdles':
 		case '100m_hurdles':
 		case '110m_hurdles':
 		case '400m_hurdles':
-		case '3000m_steeple':
+		case '3000m_steeplechase':
 		case '4x100m_relay':
 		case '4x400m_relay':
+		case 'half_marathon':
 		case 'marathon':
+    	case '20km_race_walk':
+    	case '50km_race_walk':
+    	case 'cross_country_running':
 			return 'time';
 			break;
 		case 'high_jump':
