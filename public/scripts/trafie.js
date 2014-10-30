@@ -661,7 +661,6 @@ trafie.config(['$locationProvider',
 ]);
 
 //Routing
-//---
 trafie.config(['$routeProvider',
 	function($routeProvider) {
 		$routeProvider.
@@ -695,17 +694,13 @@ trafie.config(['$routeProvider',
 			redirectTo: '/'
 		});
 	}
-]);
-
-
+])
 //Initialization
-//---
-trafie.run(function($rootScope, $http) {
+.run(function($rootScope, $http) {
 	$rootScope.isVisitor = true;
 	
 	$http.get('/users/me')
 		.success(function(res) {
-			console.log('run', res);
 			//The logged in user
 			$rootScope.localUser = res;
 			$rootScope.isVisitor = false;
@@ -1124,12 +1119,39 @@ angularFileUpload.directive('ngFileSelect', [ '$parse', '$timeout', function($pa
 		$scope.page_not_found = false;
 		$scope.self = false;
 
+		//www.trafie.com/
 		if ($routeParams.userID) {
 			$rootScope.localUser && ($routeParams.userID === $rootScope.localUser._id || $routeParams.userID === $rootScope.localUser.username) ? $scope.self = true : $scope.self = false;
 			$scope.getProfile($routeParams.userID);
 		} else {
-			$scope.getProfile($rootScope.localUser._id);
-			$scope.self = true;
+		//www.trafie.com/:userID
+			if(!$rootScope.localUser) { //check if localUser exits. solves problem at login.
+				$http.get('/users/me')
+				.success(function(res) {
+					//The logged in user
+					$rootScope.localUser = res;
+					$rootScope.isVisitor = false;
+					
+					$http.get('/users/' + res._id + '/disciplines')
+					.success(function(res) {
+						$rootScope.localUser.disciplines_of_user = res;
+						$rootScope.current_user = res; //current user is logged in user
+
+						$scope.getProfile($rootScope.localUser._id);
+						$scope.self=true;
+					})
+					.error(function(res) {
+						console.err('info :: can\'t get disciplines of current user in profile controller');
+					});
+				})
+				.error(function(res) {
+					console.log('info :: Oooohhh we have a fuckin\' visitoo!!');
+				});
+			}
+			else {
+				$scope.getProfile($rootScope.localUser._id);
+				$scope.self = true;
+			}
 		}
 	}
 
@@ -1151,7 +1173,6 @@ angularFileUpload.directive('ngFileSelect', [ '$parse', '$timeout', function($pa
 
 	//get disciplines of user based on user id
 	$scope.getDisciplinesOfUser = function(user_id) {
-		console.log(user_id);
 		$http.get('/users/' + user_id + '/disciplines')
 			.success(function(res) {
 				$rootScope.current_user.disciplines_of_user = res;
@@ -1904,11 +1925,11 @@ angularFileUpload.directive('ngFileSelect', [ '$parse', '$timeout', function($pa
 		//CHECKING USER and init necessary parameters
 		if ($routeParams.userID) {
 			$routeParams.userID === $rootScope.localUser._id || $routeParams.userID === $rootScope.localUser.username ? $scope.self = true : $scope.self = false;
-			$scope.drawSimpleChart($routeParams.userID, $rootScope.current_user.discipline, false, true)
+			$scope.drawSimpleChart($routeParams.userID, ($rootScope.current_user.discipline || $rootScope.current_user.disciplines_of_user[0].discipline), false, true)
 			$scope.selected_discipline = $rootScope.current_user.discipline;
 		} else {
 			$rootScope.current_user = $rootScope.localUser;
-			$scope.drawSimpleChart($rootScope.localUser._id, $rootScope.localUser.discipline, false, true);
+			$scope.drawSimpleChart($rootScope.localUser._id, ($rootScope.localUser.discipline || $rootScope.localUser.disciplines_of_user[0].discipline), false, true);
 			$scope.selected_discipline = $rootScope.current_user.discipline;
 		}
 	}
@@ -1930,6 +1951,7 @@ angularFileUpload.directive('ngFileSelect', [ '$parse', '$timeout', function($pa
 		if ($scope.selected_discipline !== discipline) {
 			init = true;
 		}
+		console.log(discipline);
 
 		$scope.selected_discipline = discipline;
 		var _query = '';
