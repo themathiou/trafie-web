@@ -97,11 +97,11 @@ trafie.controller("statisticsController", [
 		//CHECKING USER and init necessary parameters
 		if ($routeParams.userID) {
 			$routeParams.userID === $rootScope.localUser._id || $routeParams.userID === $rootScope.localUser.username ? $scope.self = true : $scope.self = false;
-			$scope.drawSimpleChart($routeParams.userID, $rootScope.current_user.discipline, false, true)
+			$scope.drawSimpleChart($routeParams.userID, ($rootScope.current_user.discipline || $rootScope.current_user.disciplines_of_user[0].discipline), false, true)
 			$scope.selected_discipline = $rootScope.current_user.discipline;
 		} else {
 			$rootScope.current_user = $rootScope.localUser;
-			$scope.drawSimpleChart($rootScope.localUser._id, $rootScope.localUser.discipline, false, true);
+			$scope.drawSimpleChart($rootScope.localUser._id, ($rootScope.localUser.discipline || $rootScope.localUser.disciplines_of_user[0].discipline), false, true);
 			$scope.selected_discipline = $rootScope.current_user.discipline;
 		}
 	}
@@ -123,6 +123,7 @@ trafie.controller("statisticsController", [
 		if ($scope.selected_discipline !== discipline) {
 			init = true;
 		}
+		console.log(discipline);
 
 		$scope.selected_discipline = discipline;
 		var _query = '';
