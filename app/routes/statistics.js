@@ -22,7 +22,9 @@ exports.get_view = function(req, res) {
 	}
 
 	if (!user_id) {
-		res.redirect('/register');
+		res.redirect('/login');
+		// change to /login only for testing purposes
+		// res.redirect('/register');
 	} else {
 		Profile.schema.findOne({
 				'_id': user_id

@@ -7,7 +7,9 @@ const translations = require('../languages/translations.js');
 
 exports.get_view = function(req, res) {
 	if (typeof req.session.user_id === 'undefined' && !req.params.profile_id) {
-		res.redirect('/register');
+		res.redirect('/login');
+		// change to /login only for testing purposes
+		// res.redirect('/register');
 		return false;
 	}
 

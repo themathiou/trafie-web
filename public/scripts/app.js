@@ -16,7 +16,6 @@ trafie.config(['$locationProvider',
 ]);
 
 //Routing
-//---
 trafie.config(['$routeProvider',
 	function($routeProvider) {
 		$routeProvider.
@@ -50,17 +49,13 @@ trafie.config(['$routeProvider',
 			redirectTo: '/'
 		});
 	}
-]);
-
-
+])
 //Initialization
-//---
-trafie.run(function($rootScope, $http) {
+.run(function($rootScope, $http) {
 	$rootScope.isVisitor = true;
 	
 	$http.get('/users/me')
 		.success(function(res) {
-			console.log('run', res);
 			//The logged in user
 			$rootScope.localUser = res;
 			$rootScope.isVisitor = false;

@@ -62,12 +62,39 @@ trafie.controller("profileController", [
 		$scope.page_not_found = false;
 		$scope.self = false;
 
+		//www.trafie.com/
 		if ($routeParams.userID) {
 			$rootScope.localUser && ($routeParams.userID === $rootScope.localUser._id || $routeParams.userID === $rootScope.localUser.username) ? $scope.self = true : $scope.self = false;
 			$scope.getProfile($routeParams.userID);
 		} else {
-			$scope.getProfile($rootScope.localUser._id);
-			$scope.self = true;
+		//www.trafie.com/:userID
+			if(!$rootScope.localUser) { //check if localUser exits. solves problem at login.
+				$http.get('/users/me')
+				.success(function(res) {
+					//The logged in user
+					$rootScope.localUser = res;
+					$rootScope.isVisitor = false;
+					
+					$http.get('/users/' + res._id + '/disciplines')
+					.success(function(res) {
+						$rootScope.localUser.disciplines_of_user = res;
+						$rootScope.current_user = res; //current user is logged in user
+
+						$scope.getProfile($rootScope.localUser._id);
+						$scope.self=true;
+					})
+					.error(function(res) {
+						console.err('info :: can\'t get disciplines of current user in profile controller');
+					});
+				})
+				.error(function(res) {
+					console.log('info :: Oooohhh we have a fuckin\' visitoo!!');
+				});
+			}
+			else {
+				$scope.getProfile($rootScope.localUser._id);
+				$scope.self = true;
+			}
 		}
 	}
 
@@ -89,7 +116,6 @@ trafie.controller("profileController", [
 
 	//get disciplines of user based on user id
 	$scope.getDisciplinesOfUser = function(user_id) {
-		console.log(user_id);
 		$http.get('/users/' + user_id + '/disciplines')
 			.success(function(res) {
 				$rootScope.current_user.disciplines_of_user = res;
