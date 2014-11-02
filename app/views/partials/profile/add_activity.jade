@@ -1,7 +1,7 @@
 accordion( class="info add_activity" ng-show="self")
 	accordion-group( heading=tr['add_new_activity'] is-open="accordions.addActivity")
 
-		label Choose your discipline
+		label= tr['choose_your_discipline']
 		select(ng-model="newActivityForm.selected_discipline")
 			option( value="")= tr['choose_your_discipline']
 			- for (i in disciplines)
@@ -45,19 +45,19 @@ accordion( class="info add_activity" ng-show="self")
 					label(for="datepicker")= tr['date'] + ':'
 					input.form-control(type="text" datepicker-popup="{{format}}" ng-model="newActivityForm.date" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
 				div
-					label(for="place") Place
+					label(for="place")= tr['place']
 					input.form-control(type="text" ng-model="newActivityForm.place" placeholder="i.e 4" name="place" ng-class="{error: submitForm.place.$error.pattern}" ng-pattern="NUMBERS")
 				div
-					label(for="location") Location
+					label(for="location")= tr['location']
 					input.form-control(type="text" ng-model="newActivityForm.location" placeholder="i.e Athens, Greece")
 				div
-					label(for="competition") Competition
+					label(for="competition")= tr['competition']
 					input.form-control(type="text" ng-model="newActivityForm.competition" placeholder="i.e World Junior Championship")
 				div
-					label(for="notes") Notes
+					label(for="notes")= tr['notes']
 					input.form-control(type="text" ng-model="newActivityForm.notes" placeholder="There be dragons...")
 				div
-					label(for="private") Private
+					label(for="private")= tr['private']
 					input(type="checkbox" name="private" ng-model="newActivityForm.private" ng-init="newActivityForm.private=false")
 
 

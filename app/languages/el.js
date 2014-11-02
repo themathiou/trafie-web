@@ -83,10 +83,11 @@ var el = {
 
 	// Messages & Labels
 	'choose_your_discipline'                        : 'Διάλεξε άθλημα',
-	'passwords_do_not_match'                        : 'Οι κωδικοί δεν ταιριάζουν',
-	'wrong_password'                                : 'Λάθος κωδικός',
-	'password_should_be_at_least_6_characters_long' : 'Ο κωδικός πρέπει να έχει τουλάχιστον 6 χαρακτήρες',
 	'add_new_activity'                              : 'Προσθήκη νέας δραστηριότητας',
+    'place'                                         : 'Θέση',
+    'location'                                      : 'Τοποθεσία',
+    'competition'                                   : 'Αγώνας',
+    'notes'                                         : 'Σημειώσεις',
 	'choose_your_country'                           : 'Διάλεξε χώρα',
 	'choose_your_language'                          : 'Διάλεξε γλώσσα',
 	'no_gender_selected'                            : 'Δεν έχει επιλεγχθεί φύλο',

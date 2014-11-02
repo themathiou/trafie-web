@@ -84,6 +84,10 @@ var en = {
     // Messages & Labels
     'choose_your_discipline'                        : 'Choose your discipline',
     'add_new_activity'                              : 'Add New Activity',
+    'place'                                         : 'Place',
+    'location'                                      : 'Location',
+    'competition'                                   : 'Competition',
+    'notes'                                         : 'Notes',
     'choose_your_country'                           : 'Choose your country',
     'choose_your_language'                          : 'Choose your language',
     'no_gender_selected'                            : 'No gender selected',
