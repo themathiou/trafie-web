@@ -13,7 +13,9 @@
     "moment": "*",
     "grunt": "*",
     "grunt-contrib-uglify": "*",
-    "grunt-contrib-concat": "*"
+    "grunt-contrib-concat": "*",
+    "mongoose": "*",
+    "less-middleware": "*"
   }
 }
         

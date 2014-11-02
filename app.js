@@ -32,7 +32,8 @@ const express = require('express'),
 	url = require('url'),
 	mongoose = require('mongoose'),
 	crypto = require('crypto'),
-	q = require('q');
+	q = require('q'),
+	lessMiddleware = require('less-middleware');
 
 // Initialize express
 const trafie = express();
@@ -90,7 +91,8 @@ trafie.use(express.methodOverride());
 trafie.use(express.cookieParser('your secret here'));
 trafie.use(express.session({secret: '23tR@Ck@nDF!3lD_s3cur3535s!0n504'}));
 trafie.use(trafie.router);
-trafie.use(require('less-middleware')({ src: path.join(__dirname, 'public') }));
+trafie.use(lessMiddleware(__dirname + '/public'));
+trafie.use(express.static(__dirname + '/public'));
 trafie.use(express.static(path.join(__dirname, 'public')));
 
 // Development Only
