@@ -88,7 +88,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: #e9eaed;
-  font: OpenSans;
+  font-family: OpenSans;
 }
 label {
   font-weight: 400;
@@ -102,7 +102,7 @@ a {
   float: none;
 }
 .alert_custom {
-  position: fixed;
+  position: fixed !important;
   top: 70px;
   z-index: 50;
 }
@@ -548,7 +548,6 @@ form .message_success {
 }
 #profile-container #profileFullName h3 {
   font-weight: 400;
-  text-shadow: 0px 0px 6px #666;
   margin: 0px;
 }
 #profile-container #profileFullName p {
