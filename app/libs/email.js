@@ -9,7 +9,7 @@ var transport = nodemailer.createTransport("SMTP", {
 	// even have to define the service name
 	auth: {
 		user: "trafie.app@gmail.com",
-		pass: "tr@f!etr@f!e"
+		pass: "tr@f!etr@f!e!"
 	}
 });
 
