@@ -87,8 +87,12 @@ trafie.controller("settingsController", [
                     // file is uploaded successfully
                     $scope.uploading = false; 
                     $scope.filesToUpload = [];
-                    $scope.profile_pic_msg = 'Profile pic successfully updated';
+                    $scope.profile_pic_msg = data.message;
 					$scope.toggleEdit('edit_profile_pic');
+					// console.log($rootScope.current_user.picture);
+					$rootScope.current_user.picture = data.value + '?v=' + Date.now();
+					$rootScope.localUser.picture = data.value + '?v=' + Date.now();
+					// console.log($rootScope.current_user.picture);
 					$scope.success = true;
 
 					/* after 3 secconds hide the message */

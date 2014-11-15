@@ -1,6 +1,7 @@
 'use strict';
 
 var fs = require('fs'),
+	knox = require('knox'),
 	path = require('path'),
 	root_dir = path.dirname(require.main.filename);
 
@@ -280,34 +281,11 @@ exports.post = function(req, res) {
 
 			// Checking if the uploaded file is a valid image file
 			else if (typeof req.files !== 'undefined' && typeof req.files.profile_pic !== 'undefined') {
-				function uploadPhoto(data) {
-					// Save the file in the images folder
-					fs.writeFile(root_dir + '/public' + profile_data.picture, data, function(err) {
-						if (err) throw err;
-						// Update the database
-						Profile.update({
-							'_id': user_id
-						}, {
-							$set: profile_data
-						}, {
-							upsert: true
-						}, function(error) {
-							if(!error) {
-								response.message = tr['data_updated_successfully'];
-								res.status(200).json(response);
-							} else {
-								response.error = error;
-								response.message = tr['something_went_wrong'];
-								res.status(500).json(response);
-							}
-						});
-					});
-				}
-
 				// Read the image file
 				fs.readFile(req.files.profile_pic.path, function(err, data) {
 					// Get the file extension
-					var extension = req.files.profile_pic.name.split('.')[1];
+					var pic = req.files.profile_pic;
+					var extension = pic.name.substring(pic.name.lastIndexOf('.')+1);
 
 					var accepted_file_types = ['image/jpeg', 'image/png'];
 					// File size in MB
@@ -317,7 +295,7 @@ exports.post = function(req, res) {
 					var accepted_type = false;
 
 					// If the file size is acceptable
-					if (req.files.profile_pic.size > accepted_file_size * 1048576) {
+					if (pic.size > accepted_file_size * 1048576) {
 						response.message = tr['uploaded_image_too_large'];
 						response.error = 'Uploaded image is too large';
 					} else {
@@ -325,7 +303,7 @@ exports.post = function(req, res) {
 					}
 
 					// If the file type is acceptable
-					if (accepted_file_types.indexOf(req.files.profile_pic.type) < 0) {
+					if (accepted_file_types.indexOf(pic.type) < 0) {
 						response.message = tr['uploaded_image_wrong_type'];
 						response.error = 'Uploaded image is of wrong type';
 					} else {
@@ -333,17 +311,39 @@ exports.post = function(req, res) {
 					}
 
 					if (accepted_type && accepted_size) {
-						profile_data.picture = '/images/profile_pics/' + user_id + '.' + extension;
+						var s3 = knox.createClient({
+						    key: 'AKIAIQBX4EEBSV6QVPRA', //process.env.AWS_ACCESS_KEY_ID,
+						    secret: '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', //process.env.AWS_SECRET_ACCESS_KEY,
+						    bucket: 'trafie' //process.env.S3_BUCKET_NAME
+						});
 
-						fs.exists(root_dir + '/public' + profile_data.picture, function(exists) {
-						    if (exists) {
-								fs.unlink(root_dir + '/public' + profile_data.picture, function(err) {
-									if (err) throw err;
-									uploadPhoto(data);
-								});
-						    } else {
-						    	uploadPhoto(data);
-						    }
+					    var s3Headers = {
+					      'Content-Type': pic.type,
+					      'x-amz-acl': 'public-read'
+					    };
+
+					    s3.putFile(pic.path, user_id + '.' + extension, s3Headers, function(err, s3response){
+							if (err) throw err;
+							// Update the database
+							profile_data.picture = s3response.req.url;
+							Profile.update({
+								'_id': user_id
+							}, {
+								$set: profile_data
+							}, {
+								upsert: true
+							}, function(error) {
+								if(!error) {
+									response.message = tr['data_updated_successfully'];
+									response.value = s3response.req.url;
+									console.log(response);
+									res.status(200).json(response);
+								} else {
+									response.error = error;
+									response.message = tr['something_went_wrong'];
+									res.status(500).json(response);
+								}
+							});
 						});
 					} else {
 						res.status(400).json(response);

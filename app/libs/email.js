@@ -3,8 +3,8 @@
 const nodemailer = require('nodemailer');
 
 // Create a SMTP transport object
-var transport = nodemailer.createTransport("SMTP", {
-	//service: 'Gmail', // use well known service.
+var transport = nodemailer.createTransport({
+	service: 'Gmail', // use well known service.
 	// If you are using @gmail.com address, then you don't
 	// even have to define the service name
 	auth: {

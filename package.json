@@ -15,7 +15,8 @@
     "grunt-contrib-uglify": "*",
     "grunt-contrib-concat": "*",
     "mongoose": "*",
-    "less-middleware": "*"
+    "less-middleware": "*",
+    "knox":"~0.9.1"
   }
 }
         
