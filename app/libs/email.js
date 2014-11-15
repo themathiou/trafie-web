@@ -1,9 +1,10 @@
 'use strict';
 
 const nodemailer = require('nodemailer');
+var smtpTransport = require('nodemailer-smtp-transport');
 
 // Create a SMTP transport object
-var transport = nodemailer.createTransport({
+var transport = nodemailer.createTransport(smtpTransport({
 	service: 'Gmail', // use well known service.
 	// If you are using @gmail.com address, then you don't
 	// even have to define the service name
@@ -11,7 +12,7 @@ var transport = nodemailer.createTransport({
 		user: "trafie.app@gmail.com",
 		pass: "tr@f!etr@f!e!"
 	}
-});
+}));
 
 // Message object
 var message = {
