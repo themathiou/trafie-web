@@ -103,6 +103,7 @@ trafie.controller("profileController", [
 		$http.get('/users/' + user_id)
 			.success(function(res) {
 				$rootScope.current_user = res;
+				$rootScope.current_user.picture += '?v=' + Date.now(); // BAD PRACTICE. TO CHANGE.
 				//get user's activities
 				$scope.getDisciplinesOfUser($rootScope.current_user._id);
 				$scope.getActivities($rootScope.current_user._id, $rootScope.current_user.discipline);

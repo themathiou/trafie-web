@@ -78,9 +78,6 @@ trafie.controller("settingsController", [
                     //formDataAppender: function(formData, key, val){}
                 })
                 .progress(function(evt) {
-                    if(evt.loaded === evt.total) {
-                        $scope.uploading = false; 
-                    }
                     console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
                 })
                 .success(function(data, status, headers, config) {
@@ -89,10 +86,8 @@ trafie.controller("settingsController", [
                     $scope.filesToUpload = [];
                     $scope.profile_pic_msg = data.message;
 					$scope.toggleEdit('edit_profile_pic');
-					// console.log($rootScope.current_user.picture);
-					$rootScope.current_user.picture = data.value + '?v=' + Date.now();
-					$rootScope.localUser.picture = data.value + '?v=' + Date.now();
-					// console.log($rootScope.current_user.picture);
+					$rootScope.current_user.picture = data.value;
+					$rootScope.localUser.picture = data.value + '?v=' + Date.now(); // BAD PRACTICE. TO CHANGE.
 					$scope.success = true;
 
 					/* after 3 secconds hide the message */

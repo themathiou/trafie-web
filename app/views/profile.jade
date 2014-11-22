@@ -22,7 +22,7 @@ div( ng-init="initProfile()"  ng-cloak)
     div.vertical_space_50
     div#profile-container
       div#image-container
-        img(src="{{current_user.picture}}")
+        img(ng-src="{{current_user.picture}}")
       div#profileFullName
         h3 {{current_user.first_name}} {{current_user.last_name}}
         p

@@ -4,7 +4,7 @@ h3= tr['profile_settings']
 div.settings-element(ng-class="{editable: isEditable.profile_pic}")
 	label= tr['profile_picture'] + ': '
 	form.middle-section( method="POST" ng-submit="submitChangeSetting('profile_pic')")
-		img.thumb(src="{{localUser.picture}}")
+		img.thumb(ng-src="{{localUser.picture}}")
 		div( ng-show="isEditable.profile_pic")
 			input(type="file" ng-file-select="onFileSelect($files)")
 		div
