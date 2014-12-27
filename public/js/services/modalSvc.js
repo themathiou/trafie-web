@@ -1,9 +1,8 @@
-trafie.service('$modalSvc', ['$rootScope', '$modal', '$http',
-	function($rootScope, $modal, $http) {
+function ModalSvcImpl($modal, $http) {
 
 	//confirm_delete_modal
 	// @param size : lg(large), sm(small) can be empty
-	$rootScope.confirm_delete_modal = function(activity_id, size) {
+	this.confirm_delete_modal = function(activity_id, size) {
 		var modalInstance = $modal.open({
 			templateUrl: 'templates/modals/confirm_delete.html',
 			controller: ModalInstanceCtrl,
@@ -21,7 +20,7 @@ trafie.service('$modalSvc', ['$rootScope', '$modal', '$http',
 	};
 
 	//openFeedbackModal
-	$rootScope.openFeedbackModal = function(size) {
+	this.openFeedbackModal = function(size) {
 		var modalInstance = $modal.open({
 			templateUrl: 'templates/modals/feedback_form.html',
 			controller: ModalInstanceCtrl,
@@ -37,7 +36,11 @@ trafie.service('$modalSvc', ['$rootScope', '$modal', '$http',
 		return modalInstance.result;
 	};
 
-}]);
+    ///////////////////////////////////////////////////////////////////////////////////////
+    // Public Factory Interface for Angular
+    ///////////////////////////////////////////////////////////////////////////////////////
+    return this;
+};
 
 var ModalInstanceCtrl = function($rootScope, $scope, $http, $modalInstance, temp_activity_id) {
 	$scope.confirm_delete = function() {

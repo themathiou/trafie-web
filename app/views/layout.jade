@@ -45,33 +45,39 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
 
     //- script(type="text/javascript", src="/scripts/trafie.js")
 
+    //- general
+    script(type="text/javascript", src="/js/common/utils.js")    
+
     //- libs
-    script(type="text/javascript", src="/scripts/libs/angular-file-upload-shim.js")
-    script(type="text/javascript", src="/scripts/libs/angular.min.js")
-    script(type="text/javascript", src="/scripts/libs/angular-route.min.js")
-    script(type="text/javascript", src="/scripts/libs/angular-animate.min.js")
-    script(type="text/javascript", src="/scripts/libs/ui-bootstrap-0.10.0.min.js")
+    script(type="text/javascript", src="/js/libs/angular/angular-file-upload-shim.js")
+    script(type="text/javascript", src="/js/libs/angular/angular.min.js")
+    script(type="text/javascript", src="/js/libs/angular/angular-route.min.js")
+    script(type="text/javascript", src="/js/libs/angular/angular-animate.min.js")
+    script(type="text/javascript", src="/js/libs/ui-bootstrap-0.10.0.min.js")
 
 
     //- c3js charts
     //- script( src="http://d3js.org/d3.v3.min.js" charset="utf-8")
-    script(type="text/javascript", src="/scripts/libs/d3.v3.min.js")
-    script(type="text/javascript", src="/scripts/libs/c3.min.js")
+    script(type="text/javascript", src="/js/libs/d3.v3.min.js")
+    script(type="text/javascript", src="/js/libs/c3.min.js")
     
-    script(type='text/javascript', src='/scripts/app.js')
+    script(type='text/javascript', src='/js/app.js')
 
     //- services
-    script(type='text/javascript', src='/scripts/services/modalSvc.js')
-    script(type='text/javascript', src='/scripts/services/alertSvc.js')
+    script(type='text/javascript', src='/js/services/modalSvc.js')
+    script(type='text/javascript', src='/js/services/alertSvc.js')
+    script(type='text/javascript', src='/js/services/trafieServices.js')
 
     //- directives
-    script(type='text/javascript', src='/scripts/libs/angular-file-upload.js')
+
+    //- file upload
+    script(type='text/javascript', src='/js/libs/angular/angular-file-upload.js')
 
     //- controllers
-    script(type='text/javascript', src='/scripts/controllers/mainController.js')
-    script(type='text/javascript', src='/scripts/controllers/profileController.js')
-    script(type='text/javascript', src='/scripts/controllers/settingsController.js')
-    script(type='text/javascript', src='/scripts/controllers/statisticsController.js')
+    script(type='text/javascript', src='/js/controllers/mainController.js')
+    script(type='text/javascript', src='/js/controllers/profileController.js')
+    script(type='text/javascript', src='/js/controllers/settingsController.js')
+    script(type='text/javascript', src='/js/controllers/statisticsController.js')
 
 
 

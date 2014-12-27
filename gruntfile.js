@@ -7,21 +7,21 @@ module.exports = function(grunt) {
       },
       dist: {
         src: [
-            'public/scripts/libs/angular-file-upload-shim.js',
-            'public/scripts/libs/angular.min.js',
-            'public/scripts/libs/angular-route.min.js',
-            'public/scripts/libs/angular-animate.min.js',
-            'public/scripts/libs/ui-bootstrap-0.10.0.min.js',
-            'public/scripts/libs/d3.v3.min.js',
-            'public/scripts/libs/c3.min.js',
-            'public/scripts/app.js',
-            'public/scripts/libs/angular-file-upload.js',
-            'public/scripts/controllers/*.js',
-            'public/scripts/directives/*.js',
-            'public/scripts/services/*.js',
-            'public/scripts/scripts/*.js'
+            'public/js/libs/angular-file-upload-shim.js',
+            'public/js/libs/angular.min.js',
+            'public/js/libs/angular-route.min.js',
+            'public/js/libs/angular-animate.min.js',
+            'public/js/libs/ui-bootstrap-0.10.0.min.js',
+            'public/js/libs/d3.v3.min.js',
+            'public/js/libs/c3.min.js',
+            'public/js/app.js',
+            'public/js/libs/angular-file-upload.js',
+            'public/js/controllers/*.js',
+            'public/js/directives/*.js',
+            'public/js/services/*.js',
+            'public/js/scripts/*.js'
         ],
-        dest: 'public/scripts/<%= pkg.name %>.js'
+        dest: 'public/js/<%= pkg.name %>.js'
       }
     },
     uglify: {
@@ -30,7 +30,7 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'public/scripts/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
+          'public/js/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
         }
       }
     }
