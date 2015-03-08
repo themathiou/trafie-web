@@ -27,31 +27,31 @@ exports.get_view = function(req, res) {
 		// res.redirect('/register');
 	} else {
 		Profile.schema.findOne({
-				'_id': user_id
-			}, 'first_name last_name discipline country male birthday picture language date_format').then(function(profile_data) {
-				// If the user was found
-				if (typeof profile_data.first_name !== 'undefined') {
-					// The data that will go to the front end
-					var view_data = {
-						'user': {
-							'_id': user_id,
-							'first_name': profile_data.first_name,
-							'discipline': profile_data.discipline
-						},
-						'tr': translations[profile_data.language]
-					};
+			'_id': user_id
+		}, 'first_name last_name discipline country male birthday picture language date_format').then(function(profile_data) {
+			// If the user was found
+			if (typeof profile_data.first_name !== 'undefined') {
+				// The data that will go to the front end
+				var view_data = {
+					'user': {
+						'_id': user_id,
+						'first_name': profile_data.first_name,
+						'discipline': profile_data.discipline
+					},
+					'tr': translations[profile_data.language]
+				};
 
-					res.render('statistics', view_data);
-				} else {
-					// If the user wasn't found
-					res.redirect('/login');
-					return false;
-				}
-			})
-			.fail(function(error) {
-				send_error_page(error, res);
-				return;
-			});
+				res.render('statistics', view_data);
+			} else {
+				// If the user wasn't found
+				res.redirect('/login');
+				return false;
+			}
+		})
+		.fail(function(error) {
+			send_error_page(error, res);
+			return;
+		});
 	}
 }
 

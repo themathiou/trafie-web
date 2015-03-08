@@ -6,8 +6,8 @@ var User = require('../models/user.js'),
 	UserHashes = require('../models/user_hashes.js');
 
 // Loading helpers
-var profileHelper = require('../helpers/profile.js'),
-	userHelper = require('../helpers/user.js');
+var profileHelper = require('../helpers/profileHelper.js'),
+	userHelper = require('../helpers/userHelper.js');
 
 // Loading libraries
 var Email = require('../libs/email');

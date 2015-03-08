@@ -22,31 +22,30 @@ mainHelper.validateAccess = function(user_id, profile_id, callback) {
 
 	if (user_id) {
 		Profile.schema.findOne({
-				'_id': user_id
-			}, '_id language date_format').then(function(user_data_response) {
-
-				// If the user wasn't found, there's no point to continue
-				if (!user_data_response) {
-					response.error = 'user_not_valid';
-					callback(response);
-				}
-
-				response.user = user_data_response;
-				user_data = user_data_response;
-
-				// If the user didn't request profile specific data (E.g. he requested settings)
-				if (typeof profile_id === 'undefined') {
-					// Just return the user
-					response.success = true;
-					callback(response);
-				} else {
-					accessProfile();
-				}
-			})
-			.fail(function(error) {
-				response.error = 'query_error';
+			'_id': user_id
+		}, '_id language date_format').then(function(user_data_response) {
+			// If the user wasn't found, there's no point to continue
+			if (!user_data_response) {
+				response.error = 'user_not_valid';
 				callback(response);
-			});
+			}
+
+			response.user = user_data_response;
+			user_data = user_data_response;
+
+			// If the user didn't request profile specific data (E.g. he requested settings)
+			if (typeof profile_id === 'undefined') {
+				// Just return the user
+				response.success = true;
+				callback(response);
+			} else {
+				accessProfile();
+			}
+		})
+		.fail(function(error) {
+			response.error = 'query_error';
+			callback(response);
+		});
 	} else {
 		// A user who is not logged in tries to access a profile
 		response.user = {
@@ -67,39 +66,39 @@ mainHelper.validateAccess = function(user_id, profile_id, callback) {
 
 		// Find the profile by id
 		Profile.schema.findOne({
-				'_id': profile_id
-			}, '_id first_name last_name discipline country male picture username private')
-			.then(function(profile_data) {
+			'_id': profile_id
+		}, '_id first_name last_name discipline country male picture username private')
+		.then(function(profile_data) {
+			// If the profile was found, get the data of the user
+			if (profile_data !== null && profile_data !== undefined) {
+				// Check if the profile found is private
+				handlePrivacy(profile_data);
+				return 0;
+			} else {
+				// If the profile wasn't found, try to find it by username
+				return Profile.schema.findOne({
+					'username': profile_id
+				}, '_id first_name last_name discipline country male picture username private');
+			}
+		})
+		.then(function(profile_data) {
+			if (profile_data !== 0) {
 				// If the profile was found, get the data of the user
 				if (profile_data !== null && profile_data !== undefined) {
 					// Check if the profile found is private
 					handlePrivacy(profile_data);
-					return 0;
 				} else {
-					// If the profile wasn't found, try to find it by username
-					return Profile.schema.findOne({
-						'username': profile_id
-					}, '_id first_name last_name discipline country male picture username private');
+					// If the profile wasn't found
+					response.error = 'profile_not_valid';
+					callback(response);
+					return;
 				}
-			})
-			.then(function(profile_data) {
-				if (profile_data !== 0) {
-					// If the profile was found, get the data of the user
-					if (profile_data !== null && profile_data !== undefined) {
-						// Check if the profile found is private
-						handlePrivacy(profile_data);
-					} else {
-						// If the profile wasn't found
-						response.error = 'profile_not_valid';
-						callback(response);
-						return;
-					}
-				}
-			})
-			.fail(function(error) {
-				response.error = 'query_error';
-				callback(response);
-			});
+			}
+		})
+		.fail(function(error) {
+			response.error = 'query_error';
+			callback(response);
+		});
 	}
 
 	function handlePrivacy(profile_data) {

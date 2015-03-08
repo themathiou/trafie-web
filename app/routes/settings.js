@@ -10,8 +10,8 @@ var User = require('../models/user.js'),
 	Profile = require('../models/profile.js');
 
 // Loading helpers
-var profileHelper = require('../helpers/profile.js'),
-	userHelper = require('../helpers/user.js');
+var profileHelper = require('../helpers/profileHelper.js'),
+	userHelper = require('../helpers/userHelper.js');
 
 // Initialize translations
 var translations = require('../languages/translations.js');
@@ -31,55 +31,55 @@ exports.get = function(req, res) {
 
 	// Else, fetch the first name and the last name of the user from the database
 	Profile.schema.findOne({
-			'_id': user_id
-		}, 'first_name last_name discipline about male country birthday picture language date_format username private')
-		.then(function(profile) {
-			// If the user was not found, return null
-			if (typeof profile.first_name === 'undefined') {
-				res.json(null);
-				return false;
+		'_id': user_id
+	}, 'first_name last_name discipline about male country birthday picture language date_format username private')
+	.then(function(profile) {
+		// If the user was not found, return null
+		if (typeof profile.first_name === 'undefined') {
+			res.json(null);
+			return false;
+		}
+
+		var tr = translations[profile.language];
+
+		// Format the data that will go to the front end
+		var gender = '';
+		if (profile.male === true) {
+			gender = 'male';
+		} else if (profile.male === false) {
+			gender = 'female';
+		} else {
+			gender = 'no_gender_selected';
+		}
+		var picture = profile.picture || '/images/ui/profile_pic.svg';
+
+		var data = {
+			'user': {
+				'_id': user_id,
+				'first_name': profile.first_name,
+				'last_name': profile.last_name,
+				'discipline': profile.discipline,
+				'discipline_formatted': tr[profile.discipline],
+				'about': profile.about,
+				'gender': gender,
+				'gender_formatted': tr[gender],
+				'country': profile.country,
+				'country_formatted': tr[profile.country],
+				'birthday': profile.birthday,
+				'picture': picture,
+				'language': profile.language,
+				'language_formatted': tr['this_language'],
+				'date_format': profile.date_format,
+				'username': profile.username,
+				'private': profile.private
 			}
+		};
 
-			var tr = translations[profile.language];
-
-			// Format the data that will go to the front end
-			var gender = '';
-			if (profile.male === true) {
-				gender = 'male';
-			} else if (profile.male === false) {
-				gender = 'female';
-			} else {
-				gender = 'no_gender_selected';
-			}
-			var picture = profile.picture || '/images/ui/profile_pic.svg';
-
-			var data = {
-				'user': {
-					'_id': user_id,
-					'first_name': profile.first_name,
-					'last_name': profile.last_name,
-					'discipline': profile.discipline,
-					'discipline_formatted': tr[profile.discipline],
-					'about': profile.about,
-					'gender': gender,
-					'gender_formatted': tr[gender],
-					'country': profile.country,
-					'country_formatted': tr[profile.country],
-					'birthday': profile.birthday,
-					'picture': picture,
-					'language': profile.language,
-					'language_formatted': tr['this_language'],
-					'date_format': profile.date_format,
-					'username': profile.username,
-					'private': profile.private
-				}
-			};
-
-			res.json(data);
-		})
-		.fail(function(error) {
-			res.status(500).json(null);
-		});
+		res.json(data);
+	})
+	.fail(function(error) {
+		res.status(500).json(null);
+	});
 };
 
 

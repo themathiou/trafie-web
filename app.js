@@ -62,18 +62,6 @@ const index = require('./app/routes/index'),
 	feedback = require('./app/routes/feedback'),
 	nuke = require('./app/routes/nuke');
 
-// Initialize the helpers
-const activityHelper = require('./app/helpers/activity.js'),
-	profileHelper = require('./app/helpers/profile.js'),
-	userHelper = require('./app/helpers/user.js');
-
-
-/*******************************************************************************************************************************
- * LIBRARIES                                                                                                                   *
- ******************************************************************************************************************************/
-
-const Email = require('./app/libs/email');
-
 
 /*******************************************************************************************************************************
  * MODULES                                                                                                                     *

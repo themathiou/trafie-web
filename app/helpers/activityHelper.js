@@ -1,9 +1,9 @@
 'use strict';
 
 // Initialize translations
-var translations = require('../languages/translations.js');
+let translations = require('../languages/translations.js');
 
-var activityHelper = {};
+let activityHelper = {};
 
 /**
  * Converts the activity data to a more readable format
@@ -12,10 +12,9 @@ var activityHelper = {};
  * @param string date_format
  */
 activityHelper.formatActivities = function(activities, language, dateFormat) {
-	var activities_count = activities.length;
-	for (var i = 0; i < activities_count; i++) {
-		activities[i] = activityHelper.formatActivity(activities[i], language, dateFormat);
-	}
+	activities.map(function(activity) {
+		return activityHelper.formatActivity(activity, language, dateFormat);
+	});
 	return activities;
 };
 
@@ -56,7 +55,7 @@ activityHelper.formatActivity = function(activity, language, date_format) {
 			// Getting the rest of the performance parts
 			var performance_parts = activity.performance.split('.')[0].split(':');
 			// If the first part of the time is 0, remove it (affects hours and minutes)
-			for (var j = 0; j < 2; j++) {
+			for (let j = 0; j < 2; j++) {
 				if (performance_parts[0] == 0) {
 					performance_parts.splice(0, 1);
 				} else {
@@ -164,8 +163,8 @@ activityHelper.disciplineIsValid = function(discipline) {
  * @return string
  */
 activityHelper.validateTime = function(performance) {
-	var valid = true;
-	var time = '';
+	let valid = true;
+	let time = '';
 
 	// If a value was not posted, replace it with 00
 	performance.hours = typeof performance.hours !== 'undefined' && performance.hours != '' ? performance.hours : '00';
@@ -218,7 +217,7 @@ activityHelper.validateTime = function(performance) {
 			performance.centiseconds = '00';
 		}
 
-		var time = performance.hours + ':' + performance.minutes + ':' + performance.seconds + '.' + performance.centiseconds;
+		let time = performance.hours + ':' + performance.minutes + ':' + performance.seconds + '.' + performance.centiseconds;
 	}
 
 	return time;
@@ -232,8 +231,8 @@ activityHelper.validateTime = function(performance) {
  * @return number
  */
 activityHelper.validateDistance = function(performance) {
-	var valid = true;
-	var distance = 0;
+	let valid = true;
+	let distance = 0;
 
 	// Get the posted values. If a value was not posted, replace it with 0
 	performance.distance_1 = typeof performance.distance_1 !== 'undefined' && performance.distance_1 != '' ? performance.distance_1 : '0';
@@ -268,7 +267,7 @@ activityHelper.validateDistance = function(performance) {
  * @return string
  */
 activityHelper.validatePoints = function(performance) {
-	var points = 0;
+	let points = 0;
 
 	// Get the posted values. If a value was not posted, replace it with null
 	performance.points = typeof performance.points !== 'undefined' ? performance.points : null;
@@ -286,17 +285,17 @@ activityHelper.validatePoints = function(performance) {
  * @param string date
  */
 activityHelper.parseDate = function(date) {
-	var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+	let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 	date = date.split(' ');
-	var currentDate = new Date();
+	let currentDate = new Date();
 
 	// If the date is invalid, return an empty string
 	if (date.length != 4 || months.indexOf(date[1]) < 0 || !parseInt(date[2]) || date[2] < 1 || date[2] > 31 || !parseInt(date[3]) || date[3] < 1900 || date[3] > currentDate.getFullYear()) {
 		return '';
 	} else {
 		// Create the date object
-		var parsedDate = new Date(date[3], months.indexOf(date[1]), date[2]);
+		let parsedDate = new Date(date[3], months.indexOf(date[1]), date[2]);
 		return parsedDate < currentDate ? parsedDate : currentDate;
 	}
 };
@@ -344,7 +343,7 @@ activityHelper.notesAreValid = function(notes) {
  */
 activityHelper.parseDbDate = function(date) {
 	date = date.split('T')[0];
-	var dateParts = date.split('-');
+	let dateParts = date.split('-');
 
 	return new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
 }

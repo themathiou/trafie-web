@@ -5,8 +5,8 @@ const Profile = require('../models/profile.js'),
 	Activity = require('../models/activity.js');
 
 // Loading helpers
-const mainHelper = require('../helpers/main_helper.js'),
-	activityHelper = require('../helpers/activity.js');
+const mainHelper = require('../helpers/mainHelper.js'),
+	activityHelper = require('../helpers/activityHelper.js');
 
 // Initialize translations
 const translations = require('../languages/translations.js');
@@ -508,29 +508,29 @@ function return_activity(res, status_code, activity_id, user_id, language, date_
  */
 function return_activities(res, status_code, where, language, date_format) {
 	Activity.schema.getActivitiesOfUser(where, '', -1).then(function(activities) {
-			for (let i in activities) {
-				activities[i] = {
-					'_id': activities[i]._id,
-					'discipline': activities[i].discipline,
-					'performance': activities[i].performance,
-					'date': activities[i].date,
-					'place': activities[i].place,
-					'location': activities[i].location,
-					'competition': activities[i].competition,
-					'private': activities[i].private,
-					'notes': activities[i].notes
-				};
-			}
-
-			// Format the date of the activities
-			activities = activityHelper.formatActivities(activities, language, date_format);
-
-			res.statusCode = status_code;
-			res.json(activities);
-		})
-		.fail(function(error) {
-			send_status(res, 500);
+		activities.forEach(function(activity, index) {
+			activities[index] = {
+				_id: 			activity._id,
+				discipline: 	activity.discipline,
+				performance: 	activity.performance,
+				date: 			activity.date,
+				place: 			activity.place,
+				location: 		activity.location,
+				competition: 	activity.competition,
+				private: 		activity.private,
+				notes: 			activity.notes
+			};
 		});
+
+		// Format the date of the activities
+		activities = activityHelper.formatActivities(activities, language, date_format);
+
+		res.statusCode = status_code;
+		res.json(activities);
+	})
+	.fail(function(error) {
+		send_status(res, 500);
+	});
 }
 
 /**

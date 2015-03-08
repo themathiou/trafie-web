@@ -4,7 +4,7 @@
 const mongoose = require('mongoose'),
 	q = require('q'),
 	crypto = require('crypto'),
-	userHelper = require('../helpers/user.js'),
+	userHelper = require('../helpers/userHelper.js'),
 	db = mongoose.connection;
 
 
