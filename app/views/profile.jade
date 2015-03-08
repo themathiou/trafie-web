@@ -52,7 +52,7 @@ div( ng-init="initProfile()"  ng-cloak)
     h4( ng-show="isLoading") Loading the awesomeness!
       
     //- HISTORY TIMELINE
-    div.col-xs-12.col-sm-12.col-md-12.col-lg-12
+    div.col-xs-12.col-sm-12.col-md-12.col-lg-12(when-scrolled="loadMore()")
       ul.history_line
         li(ng-show="!isLoading")
           //- ADD ACTIVITY
@@ -64,9 +64,8 @@ div( ng-init="initProfile()"  ng-cloak)
               h4(ng-show="self") There's nothing here! Add some!
               h4(ng-show="!self") There's nothing here!
 
-
         //- .my-repeat-animation to be added
-        li( ng-repeat="activity in activities | filter:selected_year")
+        li( ng-repeat="activity in activities | filter:selected_year | limitTo:LAZY_LOADING_VIEW")
           div.info( ng-class="{editable: activity.show_editable_form}" ng-show="!isLoading")
             a.deleteActivity( ng-if="self && !activity.show_editable_form && !isTouch" ng-click="deleteActivity(activity._id)" tooltip-placement="top" tooltip="Delete")
               include partials/svg/delete_activity_svg

@@ -32,6 +32,11 @@ angular.module('trafie.controllers' , []);
             $rootScope.ONLY_ALPHABETIC = /^[A-Za-z ]+$/;
             $rootScope.ALPHABETIC_NUMS_DOT_UNDER = /^[A-Za-z_.0-9]+$/;
             $rootScope.NUMBERS = /^[0-9]*$/;
+            
+            ///////////////////////////////////////////////////////
+            // CONSTANTS - to be removed
+            ///////////////////////////////////////////////////////
+            $rootScope.LAZY_LOADING_BLOCK_SIZE = 10;
 
             ///////////////////////////////////////////////////////
             // On window resize
