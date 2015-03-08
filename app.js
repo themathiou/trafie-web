@@ -27,12 +27,8 @@
 'use strict';
 
 const express = require('express'),
-	http = require('http'),
 	path = require('path'),
-	url = require('url'),
 	mongoose = require('mongoose'),
-	crypto = require('crypto'),
-	q = require('q'),
 	lessMiddleware = require('less-middleware');
 
 // Initialize express
