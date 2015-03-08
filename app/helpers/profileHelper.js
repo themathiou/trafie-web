@@ -1,5 +1,8 @@
 'use strict';
 
+// Get the config file
+const config = require('../config/config.js');
+
 var profileHelper = {};
 
 /**
@@ -118,9 +121,7 @@ profileHelper.validateLanguage = function(language) {
  * @return boolean
  */
 profileHelper.validateDiscipline = function(discipline) {
-	var disciplines = ['60m','100m','200m','400m','800m','1500m','3000m','5000m','10000m','60m_hurdles','100m_hurdles','110m_hurdles','400m_hurdles','3000m_steeplechase','4x100m_relay','4x400m_relay','half_marathon','marathon','20km_race_walk','50km_race_walk','cross_country_running','high_jump','long_jump','triple_jump','pole_vault','shot_put','discus','hammer','javelin','pentathlon','heptathlon','decathlon'];
-
-	return disciplines.indexOf(discipline) >= 0;
+	return disciplines.indexOf(config.disciplines) >= 0;
 };
 
 /**

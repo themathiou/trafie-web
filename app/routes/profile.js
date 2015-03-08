@@ -11,6 +11,9 @@ const mainHelper = require('../helpers/mainHelper.js'),
 // Initialize translations
 const translations = require('../languages/translations.js');
 
+// Get the config file
+const config = require('../config/config.js');
+
 /**
  * Profile - GET
  */
@@ -212,7 +215,7 @@ function sendProfileData(res, profileData, user_data) {
 		formatted_discipline: 	tr[profileData.discipline] || '',
 		country: 				tr[profileData.country] || '',
 		gender: 				profileData.male ? tr['male'] : tr['female'],
-		picture: 				profileData.picture || '/images/ui/profile_pic.svg',
+		picture: 				profileData.picture || config.defaultProfilePic,
 		username: 				profileData.username
 	};
 
