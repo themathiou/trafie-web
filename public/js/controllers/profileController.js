@@ -6,12 +6,12 @@
 		function($rootScope, $scope, $http, $timeout, $window, $q, $routeParams, ModalSvc, AlertSvc) {
 
 		//GENERAL VARIABLES
-		$scope.disciplines = Utils.DISCIPLINES; 
-		
+		$scope.disciplines = Utils.DISCIPLINES;
+
 		//variable for Open/Close accordions
 		$scope.accordions = {
 			addActivity: false
-		}
+		};
 
 		//time form
 		$scope.newActivityForm = {};
@@ -22,9 +22,12 @@
 			$scope.selected_year = {};
 			$scope.selected_year.date = ''; //all years are shown. No filter applied.
 
+            $rootScope.LAZY_LOADING_VIEW = $rootScope.LAZY_LOADING_BLOCK_SIZE; //initial value
+
 			//true if this is the profile of the logged-in user
 			$scope.page_not_found = false;
 			$scope.self = false;
+			$scope.hasMoreToLoad = false;
 
 			//www.trafie.com/
 			if ($routeParams.userID) {
@@ -38,7 +41,7 @@
 						//The logged in user
 						$rootScope.localUser = res;
 						$rootScope.isVisitor = false;
-						
+
 						$http.get('/users/' + res._id + '/disciplines')
 						.success(function(res) {
 							$rootScope.localUser.disciplines_of_user = res;
@@ -60,7 +63,7 @@
 					$scope.self = true;
 				}
 			}
-		}
+		};
 
 		//get user profile based on user id
 		$scope.getProfile = function(user_id) {
@@ -77,7 +80,7 @@
 					$scope.page_not_found = true;
 					console.err('info :: User not found. Maybe he doesn\'t have a trafie profile or the profile is private.');
 				});
-		}
+		};
 
 		//get disciplines of user based on user id
 		$scope.getDisciplinesOfUser = function(user_id) {
@@ -88,15 +91,16 @@
 				.error(function(res) {
 					console.err('info :: can\'t get disciplines of current user');
 				});
-		}
+		};
 
 		//get user activities based on user id
 		$scope.getActivities = function(user_id, discipline) {
 			var url = '';
+			$rootScope.LAZY_LOADING_VIEW = $rootScope.LAZY_LOADING_BLOCK_SIZE;
 			$scope.selected_year.date = ''; //reset year filtering when switching between disciplines
 			$scope.selected_discipline = discipline;
 			url = discipline ? '/users/' + user_id + '/activities?discipline=' + discipline : '/users/' + user_id + '/activities';
-			
+
 			$http.get(url)
 			.success(function(res) {
 				$scope.activities = res;
@@ -109,8 +113,9 @@
 					}
 				}
 				$scope.isLoading = false;
+				$scope.hasMoreToLoad = res.length > $rootScope.LAZY_LOADING_VIEW ? true : false;
 			})
-		}
+		};
 
 		/*
 		filterByYear function : filters activities by year
@@ -118,7 +123,7 @@
 		 */
 		$scope.filterByYear = function(year) {
 			$scope.selected_year.date = year || '';
-		}
+		};
 
 		/*
 		submitNewActivity function : creates the object for new activity submission and makes the ajax call (POST)
@@ -137,7 +142,7 @@
 					$scope.activities.unshift(res);
 				})
 				.error(function(e) {});
-		}
+		};
 
 		/*
 		  deleteActivity function : calls the modal for delete activitiy confirmation
@@ -159,7 +164,15 @@
 					}
 				});
 
-		}
+		};
+
+		$scope.loadMore = function () {
+			if ($rootScope.LAZY_LOADING_VIEW < $scope.activities.length) {
+				$rootScope.LAZY_LOADING_VIEW += $rootScope.LAZY_LOADING_BLOCK_SIZE;
+			} else {
+				$scope.hasMoreToLoad = false;
+			}
+		};
 
 		/*
 		  initEditableActivity function : initializes variables for editing an existing activity
@@ -195,7 +208,7 @@
 			$scope.updateActivityForm.competition = activity.competition;
 			$scope.updateActivityForm.notes = activity.notes;
 			$scope.updateActivityForm.private = activity.private;
-		}
+		};
 
 
 		/*
@@ -220,7 +233,7 @@
 					activity.private = res.private;
 					activity.show_editable_form = !activity.show_editable_form;
 				})
-		}
+		};
 
 		/*
 		  changePrivacy function : changes privacy of the activity
@@ -233,7 +246,7 @@
 				.success(function(res) {
 					activity.private = res.private;
 				})
-		}
+		};
 	}]); //end of controller
 
 })();

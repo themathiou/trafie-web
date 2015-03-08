@@ -5,6 +5,7 @@
 var trafie = angular.module('trafie', [
 	'trafie.controllers',
 	'trafie.services',
+	'trafie.directives',
 	'ngRoute',
 	'ui.bootstrap',
 	'ngAnimate',
