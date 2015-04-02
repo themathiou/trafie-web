@@ -168,7 +168,7 @@
 
 		$scope.loadMore = function () {
 			if ($rootScope.LAZY_LOADING_VIEW < $scope.activities.length) {
-				$rootScope.LAZY_LOADING_VIEW += $rootScope.LAZY_LOADING_BLOCK_SIZE;
+				$rootScope.LAZY_LOADING_VIEW += Utils.LAZY_LOADING_BLOCK_SIZE;
 			} else {
 				$scope.hasMoreToLoad = false;
 			}
