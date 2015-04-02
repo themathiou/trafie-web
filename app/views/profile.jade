@@ -17,7 +17,7 @@ div( ng-init="initProfile()"  ng-cloak)
     //- div.col-xs-12.dropdown_container_xs(ng-if="isMobile")
       div.flex_wrapper
         input.search( type="text" ng-model="asyncSelected" placeholder="search for athletes!" typeahead-on-select="onSelect($item, $model, $label)" typeahead="result.label for result in searchUser($viewValue)" typeahead-loading="loadingLocations" class="form-control" autocomplete="off" )
-    
+
     //- PROFILE
     div.vertical_space_50
     div#profile-container
@@ -50,7 +50,7 @@ div( ng-init="initProfile()"  ng-cloak)
     //- LOADING SPINNER
     div.spinner( ng-show="isLoading")
     h4( ng-show="isLoading") Loading the awesomeness!
-      
+
     //- HISTORY TIMELINE
     div.col-xs-12.col-sm-12.col-md-12.col-lg-12(when-scrolled="loadMore()")
       ul.history_line
@@ -77,7 +77,7 @@ div( ng-init="initProfile()"  ng-cloak)
                 small.competition ({{activity.place}}) {{activity.competition}}
               blockquote
                 p {{activity.location}}
-                  br 
+                  br
                   {{activity.formatted_date}}
                   //- p.discipline {{activity.formatted_discipline}}
                   br

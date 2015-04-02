@@ -3,6 +3,7 @@ html(ng-app="trafie")
 head
     meta(charset="utf-8")
     meta( name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no")
+    base(href="/")
     //- meta(name="apple-mobile-web-app-capable" content="yes")
     //- meta(name="apple-mobile-web-app-capable" content="yes")
 
@@ -37,7 +38,7 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
                 li
                     a.feedback-wrapper(ng-click="openFeedbackForm()")
                         include  partials/svg/feedback_svg
-                        
+
     //- ALERTS
     alert.col-xs-12.col-sm-12.col-md-10.col-lg-8.col-md-offset-1.col-lg-offset-2.alert_custom( ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)") {{alert.msg}}
 
@@ -46,7 +47,7 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
     //- script(type="text/javascript", src="/scripts/trafie.js")
 
     //- general
-    script(type="text/javascript", src="/js/common/utils.js")    
+    script(type="text/javascript", src="/js/common/utils.js")
 
     //- libs
     script(type="text/javascript", src="/js/libs/angular/angular-file-upload-shim.js")
@@ -60,7 +61,7 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
     //- script( src="http://d3js.org/d3.v3.min.js" charset="utf-8")
     script(type="text/javascript", src="/js/libs/d3.v3.min.js")
     script(type="text/javascript", src="/js/libs/c3.min.js")
-    
+
     script(type='text/javascript', src='/js/app.js')
 
     //- services

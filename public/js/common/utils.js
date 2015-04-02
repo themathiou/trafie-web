@@ -6,6 +6,8 @@ Utils.ONLY_ALPHABETIC = /^[A-Za-z ]+$/;
 Utils.ALPHABETIC_NUMS_DOT_UNDER = /^[A-Za-z_.0-9]+$/;
 Utils.NUMBERS = /^[0-9]*$/;
 
+Utils.LAZY_LOADING_BLOCK_SIZE = 10;
+
 
 //object with disciplines grouped in categories
 Utils.DISCIPLINES = {

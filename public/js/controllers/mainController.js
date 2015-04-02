@@ -29,14 +29,9 @@ angular.module('trafie.controllers' , []);
             ///////////////////////////////////////////////////////
             // Validation Patterns
             ///////////////////////////////////////////////////////
-            $rootScope.ONLY_ALPHABETIC = /^[A-Za-z ]+$/;
-            $rootScope.ALPHABETIC_NUMS_DOT_UNDER = /^[A-Za-z_.0-9]+$/;
-            $rootScope.NUMBERS = /^[0-9]*$/;
-            
-            ///////////////////////////////////////////////////////
-            // CONSTANTS - to be removed
-            ///////////////////////////////////////////////////////
-            $rootScope.LAZY_LOADING_BLOCK_SIZE = 10;
+            $scope.ONLY_ALPHABETIC = Utils.ONLY_ALPHABETIC;
+            $scope.ALPHABETIC_NUMS_DOT_UNDER = Utils.ALPHABETIC_NUMS_DOT_UNDER;
+            $scope.NUMBERS = Utils.NUMBERS;
 
             ///////////////////////////////////////////////////////
             // On window resize
@@ -90,7 +85,7 @@ angular.module('trafie.controllers' , []);
                 $rootScope.localUser = {};
                 $window.location.href = '/logout';
             }
-            
+
             ///////////////////////////////////////////////////////
             // FEEDBACK MODAL
             ///////////////////////////////////////////////////////

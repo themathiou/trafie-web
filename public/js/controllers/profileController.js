@@ -22,7 +22,7 @@
 			$scope.selected_year = {};
 			$scope.selected_year.date = ''; //all years are shown. No filter applied.
 
-            $rootScope.LAZY_LOADING_VIEW = $rootScope.LAZY_LOADING_BLOCK_SIZE; //initial value
+            $rootScope.LAZY_LOADING_VIEW = Utils.LAZY_LOADING_BLOCK_SIZE; //initial value
 
 			//true if this is the profile of the logged-in user
 			$scope.page_not_found = false;
@@ -96,7 +96,7 @@
 		//get user activities based on user id
 		$scope.getActivities = function(user_id, discipline) {
 			var url = '';
-			$rootScope.LAZY_LOADING_VIEW = $rootScope.LAZY_LOADING_BLOCK_SIZE;
+			$rootScope.LAZY_LOADING_VIEW = Utils.LAZY_LOADING_BLOCK_SIZE;
 			$scope.selected_year.date = ''; //reset year filtering when switching between disciplines
 			$scope.selected_discipline = discipline;
 			url = discipline ? '/users/' + user_id + '/activities?discipline=' + discipline : '/users/' + user_id + '/activities';
