@@ -1,4 +1,4 @@
-function ModalSvcImpl($modal, $http) {
+function ModalSvcImpl($modal, $http, Activity) {
 
 	//confirm_delete_modal
 	// @param size : lg(large), sm(small) can be empty
@@ -42,16 +42,14 @@ function ModalSvcImpl($modal, $http) {
     return this;
 };
 
-var ModalInstanceCtrl = function($rootScope, $scope, $http, $modalInstance, temp_activity_id) {
+var ModalInstanceCtrl = function($rootScope, $scope, $http, $modalInstance, Activity, temp_activity_id) {
 	$scope.confirm_delete = function() {
-		$http.delete('/users/' + $rootScope.localUser._id + '/activities/' + temp_activity_id)
-			.success(function(res) {
+		Activity.delete({userId: $rootScope.localUser._id, activityId: temp_activity_id}, function() {
 				$modalInstance.close(true);
-			})
-			.error(function(e) {
+			}, function(err) {
 				console.log('error in confirm_delete:', e, ' --- ' + temp_activity_id);
 				$modalInstance.close(false);
-			})
+			});
 	}
 
 	$scope.ok = function() {
