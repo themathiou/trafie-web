@@ -213,7 +213,8 @@ function sendProfileData(res, profileData, user_data) {
 		country: 				tr[profileData.country] || '',
 		gender: 				profileData.male ? tr['male'] : tr['female'],
 		picture: 				profileData.picture || '/images/ui/profile_pic.svg',
-		username: 				profileData.username
+		username: 				profileData.username,
+		about:                  profileData.about
 	};
 
 	res.json(profile);

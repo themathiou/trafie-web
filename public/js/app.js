@@ -9,7 +9,8 @@ var trafie = angular.module('trafie', [
 	'ngRoute',
 	'ui.bootstrap',
 	'ngAnimate',
-	'angularFileUpload'
+	'angularFileUpload',
+	'720kb.datepicker'
 ]);
 
 trafie.config(['$locationProvider',
@@ -56,13 +57,13 @@ trafie.config(['$routeProvider',
 //Initialization
 .run(function($rootScope, $http) {
 	$rootScope.isVisitor = true;
-	
+
 	$http.get('/users/me')
 		.success(function(res) {
 			//The logged in user
 			$rootScope.localUser = res;
 			$rootScope.isVisitor = false;
-			
+
 			$http.get('/users/' + res._id + '/disciplines')
 			.success(function(res) {
 				$rootScope.localUser.disciplines_of_user = res;

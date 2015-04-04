@@ -1,26 +1,24 @@
-div( ng-init="statisticsInit()" ng-cloak)
-    div.maincontent
-        <br><br>
-        h4
-            a( href="/{{current_user._id}}") &lt; {{current_user.first_name}} {{current_user.last_name}}
+div.statistics-page.col-xs-12.col-sm-12.col-md-12.col-lg-8(ng-init="statisticsInit()" ng-cloak)
+    h4
+        a( href="/{{current_user._id}}") &lt; {{current_user.first_name}} {{current_user.last_name}}
 
-        ul.filters-row( ng-show="!isLoading")
-            li( ng-repeat="discipline in current_user.disciplines_of_user")
-                a(ng-click="drawSimpleChart( current_user._id, discipline.discipline )" ng-class="{selected: selected_discipline === discipline.discipline}") {{discipline.formatted_discipline}}
-        ul.filters-row.col-xs-12.col-md-12.col-lg-12( ng-show="!isLoading")
-            li
-                a(ng-click="drawSimpleChart( current_user._id, selected_discipline )" ng-class="{selected: !selected_year}") All
-            li(ng-repeat="year in active_years")
-                a(ng-click="drawSimpleChart( current_user._id, selected_discipline, year )" ng-class="{selected: selected_year === year}") {{year}}
+    ul.filters-row( ng-show="!isLoading")
+        li( ng-repeat="discipline in current_user.disciplines_of_user")
+            a(ng-click="drawSimpleChart( current_user._id, discipline.discipline )" ng-class="{selected: selected_discipline === discipline.discipline}") {{discipline.formatted_discipline}}
+    ul.filters-row.col-xs-12.col-md-12.col-lg-12( ng-show="!isLoading")
+        li
+            a(ng-click="drawSimpleChart( current_user._id, selected_discipline )" ng-class="{selected: !selected_year}") All
+        li(ng-repeat="year in active_years")
+            a(ng-click="drawSimpleChart( current_user._id, selected_discipline, year )" ng-class="{selected: selected_year === year}") {{year}}
 
-        div.spinner( ng-show="isLoading")
-        h3( ng-show="isLoading") loading the awesomeness!
+    div.spinner( ng-show="isLoading")
+    h3( ng-show="isLoading") loading the awesomeness!
 
-        div(ng-show="!valid_data && !isLoading")
-            div.empty-state-wrapper
-              img(src="/images/ui/stats.svg")
-              h4 There are not enought activities in order to generate this graph
+    div(ng-show="!valid_data && !isLoading")
+        div.empty-state-wrapper
+          img(src="/images/ui/stats.svg")
+          h4 There are not enought activities in order to generate this graph
 
-        div(ng-show="valid_data")#chart
+    div(ng-show="valid_data")#chart
 
 

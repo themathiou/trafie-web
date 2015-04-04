@@ -1,17 +1,20 @@
-#mainmenu {
+.main-menu {
     background: @red;
+    left:0;
     position: fixed;
-    top: 0;
-    height: 45px;
-    z-index: 100;
-    padding-top: 2px;
-    // margin: 0 auto;
-    // max-width: 950px;
-    text-align: right;
+
     z-index: 100;
     .flexbox;
+    .flex;
     .justify-content(center);
     .align-items(center);
+
+    .elements-wrapper {
+        .flexbox;
+        .flex(0 auto);
+        .justify-content(center);
+        .align-items(center);
+    }
 
     .logo {
         background-image: url("@{images}logo.png");
@@ -24,10 +27,9 @@
         &.navigation_menu, &.navigation_menu_mobile {
             .flexbox;
             .flex(0 0 auto);
-            .justify-content(center);
+            .justify-content(flex-end);
             .align-items(center);
 
-            padding: 10px 16px;
             margin: 0px;
             li {
                 list-style: none;
@@ -98,8 +100,7 @@
         border: 0;
         border-radius: 3px;
         letter-spacing: -1px;
-        max-width: 400px;
-        margin-right: 100px;
+        width: 100%;
         font-size: 15px;
         &:focus {
             background: white;
