@@ -53,13 +53,13 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
     script(type="text/javascript", src="/js/libs/angular/angular.min.js")
     script(type="text/javascript", src="/js/libs/angular/angular-route.min.js")
     script(type="text/javascript", src="/js/libs/angular/angular-animate.min.js")
-    script(type="text/javascript", src="/js/libs/ui-bootstrap-0.10.0.min.js")
+    script(type="text/javascript", src="/js/libs/angular/angular-resource.min.js")
+    script(type="text/javascript", src="/js/libs/thirdparty/ui-bootstrap-0.10.0.min.js")
 
 
     //- c3js charts
-    //- script( src="http://d3js.org/d3.v3.min.js" charset="utf-8")
-    script(type="text/javascript", src="/js/libs/d3.v3.min.js")
-    script(type="text/javascript", src="/js/libs/c3.min.js")
+    script(type="text/javascript", src="/js/libs/thirdparty/d3.v3.min.js")
+    script(type="text/javascript", src="/js/libs/thirdparty/c3.min.js")
 
     script(type='text/javascript', src='/js/app.js')
 
@@ -70,6 +70,9 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
 
     //- directives
     script(type='text/javascript', src='/js/directives/directives.js')
+
+    //- models
+    script(type='text/javascript', src='/js/models/resources.js')
 
     //- file upload
     script(type='text/javascript', src='/js/libs/angular/angular-file-upload.js')

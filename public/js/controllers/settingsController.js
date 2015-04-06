@@ -2,8 +2,8 @@
     'use strict';
 
 	angular.module('trafie.controllers').controller("settingsController", [
-		'$rootScope','$timeout','$scope','$window','$http','$uploadSvc',
-		function($rootScope,$timeout,$scope,$window,$http,$uploadSvc) {
+		'$rootScope', '$timeout', '$scope', '$window', '$uploadSvc', 'Setting',
+		function($rootScope, $timeout, $scope, $window, $uploadSvc, Setting) {
 
 
 		/**
@@ -13,13 +13,11 @@
 		$scope.settingsInit = function() {
 
 			/* --- profile --- */
-			$http.get('/settings_data')
-				.success(function(res) {
-					console.log(res);
-					$scope.localUser = res.user;
-					$scope.localUser.new_first_name = $scope.localUser.first_name;
-					$scope.localUser.new_last_name = $scope.localUser.last_name;
-				});
+			Setting.get(function(res) {
+				$scope.localUser = res.user;
+				$scope.localUser.new_first_name = $scope.localUser.first_name;
+				$scope.localUser.new_last_name = $scope.localUser.last_name;
+			});
 
 			//object that closes all settings in ACCOUNT at init and resets the open to close
 			$scope.isEditable = {
@@ -66,7 +64,7 @@
 	                var _file = $scope.filesToUpload[0];
 
 	                $scope.upload = $uploadSvc.upload({
-	                    url: '/settings_data', 
+	                    url: '/settings_data',
 	                    method: 'POST', //or 'PUT'
 	                    //headers: {'header-key': 'header-value'},
 	                    //withCredentials: true,
@@ -75,8 +73,8 @@
 	                    },
 	                    file: _file // or list of files ($files) for html5 only
 	                    //fileName: 'doc.jpg' or ['1.jpg', '2.jpg', ...] // to modify the name of the file(s)
-	                    // customize file formData name ('Content-Disposition'), server side file variable name. 
-	                    //fileFormDataName: myFile, //or a list of names for multiple files (html5). Default is 'file' 
+	                    // customize file formData name ('Content-Disposition'), server side file variable name.
+	                    //fileFormDataName: myFile, //or a list of names for multiple files (html5). Default is 'file'
 	                    // customize how data is added to formData. See #40#issuecomment-28612000 -- Danial -- for sample code
 	                    //formDataAppender: function(formData, key, val){}
 	                })
@@ -85,7 +83,7 @@
 	                })
 	                .success(function(data, status, headers, config) {
 	                    // file is uploaded successfully
-	                    $scope.uploading = false; 
+	                    $scope.uploading = false;
 	                    $scope.filesToUpload = [];
 	                    $scope.profile_pic_msg = data.message;
 						$scope.toggleEdit('edit_profile_pic');
@@ -109,7 +107,7 @@
 							$scope.first_name_msg = '';
 						}, 3000);
 	                });
-	                //.then(success, error, progress); 
+	                //.then(success, error, progress);
 	                // access or attach event listeners to the underlying XMLHttpRequest.
 	                //.xhr(function(xhr){xhr.upload.addEventListener(...)})
 
@@ -118,8 +116,7 @@
 					data = {
 						"first_name": $scope.localUser.new_first_name
 					};
-					$http.post('/settings_data', data)
-						.success(function(res) {
+					Setting.save(data, function(res){
 							$scope.localUser.first_name = res.value;
 							$rootScope.localUser.first_name = res.value;
 							$scope.first_name_msg = res.message;
@@ -129,11 +126,11 @@
 							$timeout(function() {
 								$scope.first_name_msg = '';
 							}, 3000);
-						})
-						.error(function(res) {
-							$scope.first_name_msg = res.message;
+						},
+						function(err) {
+							$scope.first_name_msg = err.message;
 							$scope.success = false;
-							console.log(res.error || res.message);
+							console.log(err.error || err.message);
 
 							/* after 3 secconds hide the message */
 							$timeout(function() {
@@ -145,9 +142,7 @@
 					data = {
 						"last_name": $scope.localUser.new_last_name
 					};
-					console.log(data);
-					$http.post('/settings_data', data)
-						.success(function(res) {
+					Setting.save(data, function(res){
 							$scope.localUser.last_name = res.value;
 							$scope.last_name_msg = res.message;
 							$scope.toggleEdit('last_name');
@@ -157,12 +152,11 @@
 							$timeout(function() {
 								$scope.last_name_msg = '';
 							}, 3000);
-
-						})
-						.error(function(res) {
-							$scope.last_name_msg = res.message;
+						},
+						function(err) {
+							$scope.last_name_msg = err.message;
 							$scope.success = false;
-							console.log(res.error || res.message);
+							console.log(err.error || err.message);
 
 							/* after 3 secconds hide the message */
 							$timeout(function() {
@@ -174,9 +168,7 @@
 					data = {
 						"discipline": $scope.localUser.new_main_discipline
 					};
-					console.log(data);
-					$http.post('/settings_data', data)
-						.success(function(res) {
+					Setting.save(data, function(res){
 							$scope.localUser.discipline = res.value;
 							if (res.translated_value) {
 								$scope.localUser.discipline_formatted = res.translated_value;
@@ -190,24 +182,21 @@
 							$timeout(function() {
 								$scope.discipline_msg = '';
 							}, 3000);
-						})
-						.error(function(res) {
-							$scope.discipline_msg = res.message;
+						},
+						function(err) {
+							$scope.discipline_msg = err.message;
 							$scope.success = false;
 							/* after 3 secconds hide the message */
 							$timeout(function() {
 								$scope.discipline_msg = '';
 							}, 3000);
 						});
-
 					break;
 				case 'privacy':
 					data = {
 						"private": $scope.localUser.new_privacy
 					};
-					console.log(data);
-					$http.post('/settings_data', data)
-						.success(function(res) {
+					Setting.save(data, function(res){
 							$scope.localUser.private = res.value;
 							$scope.privacy_msg = res.message;
 							$scope.toggleEdit('privacy');
@@ -217,12 +206,10 @@
 							$timeout(function() {
 								$scope.privacy_msg = '';
 							}, 3000);
-
-						})
-						.error(function(res) {
-							$scope.privacy_msg = res.message;
+						},
+						function(err) {
+							$scope.privacy_msg = err.message;
 							$scope.success = false;
-							console.log(res.error || res.message);
 
 							/* after 3 secconds hide the message */
 							$timeout(function() {
@@ -234,9 +221,7 @@
 					data = {
 						"gender": $scope.localUser.gender
 					};
-					console.log(data);
-					$http.post('/settings_data', data)
-						.success(function(res) {
+					Setting.save(data, function(res){
 							$scope.localUser.gender = res.value;
 							$scope.gender_msg = res.message;
 							$scope.toggleEdit('gender');
@@ -247,11 +232,9 @@
 								$scope.gender_msg = '';
 							}, 3000);
 							$scope.localUser.gender_formatted = res.translated_value;
-						})
-						.error(function(res) {
-							$scope.gender_msg = res.message;
+						}, function(err) {
+							$scope.gender_msg = err.message;
 							$scope.success = false;
-							console.log(res.error || res.message);
 
 							/* after 3 secconds hide the message */
 							$timeout(function() {
@@ -272,9 +255,7 @@
 						}
 					};
 
-					console.log(data);
-					$http.post('/settings_data', data)
-						.success(function(res) {
+					Setting.save(data, function(res) {
 							$scope.localUser.birthday = res.value;
 							$scope.birthday_msg = res.message;
 							$scope.toggleEdit('birthday');
@@ -284,9 +265,8 @@
 							$timeout(function() {
 								$scope.birthday_msg = '';
 							}, 3000);
-						})
-						.error(function(res) {
-							$scope.birthday_msg = res.message;
+						}, function(err) {
+							$scope.birthday_msg = err.message;
 							$scope.success = false;
 
 							/* after 3 secconds hide the message */
@@ -299,9 +279,7 @@
 					data = {
 						"country": $scope.localUser.country
 					};
-					console.log(data);
-					$http.post('/settings_data', data)
-						.success(function(res) {
+					Setting.save(data, function(res) {
 							$scope.localUser.country = res.value;
 							$scope.country_msg = res.message;
 							$scope.toggleEdit('country');
@@ -312,9 +290,8 @@
 								$scope.country_msg = '';
 							}, 3000);
 							$scope.localUser.country_formatted = res.translated_value;
-						})
-						.error(function(res) {
-							$scope.country_msg = res.message;
+						}, function(err) {
+							$scope.country_msg = err.message;
 							$scope.success = false;
 
 							/* after 3 secconds hide the message */
@@ -327,8 +304,7 @@
 					data = {
 						"about": $scope.localUser.new_about
 					};
-					$http.post('/settings_data', data)
-						.success(function(res) {
+					Setting.save(data, function(res) {
 							$scope.localUser.about = res.value;
 							$scope.about_msg = res.message;
 							$scope.toggleEdit('about');
@@ -338,9 +314,8 @@
 							$timeout(function() {
 								$scope.about_msg = '';
 							}, 3000);
-						})
-						.error(function(res) {
-							$scope.about_msg = res.message;
+						}, function(err) {
+							$scope.about_msg = err.message;
 							$scope.success = false;
 
 							/* after 3 secconds hide the message */
@@ -359,8 +334,7 @@
 						"password": $scope.localUser.password,
 						"repeat_password": $scope.localUser.repeat_password
 					};
-					$http.post('/settings_data', data)
-						.success(function(res) {
+					Setting.save(data, function(res) {
 							$scope.password_msg = res.message;
 							$scope.toggleEdit('password');
 							$scope.success = true;
@@ -369,14 +343,13 @@
 							$scope.localUser.old_password = '';
 							$scope.localUser.password = '';
 							$scope.localUser.repeat_password = '';
-							
+
 							/* after 3 secconds hide the message */
 							$timeout(function() {
 								$scope.password_msg = '';
 							}, 3000);
-						})
-						.error(function(res){
-							$scope.password_msg = res.message;
+						}, function(err) {
+							$scope.password_msg = err.message;
 							$scope.success = false;
 
 							//clear fields
@@ -394,9 +367,7 @@
 					data = {
 						"language": $scope.localUser.language
 					};
-					console.log(data);
-					$http.post('/settings_data', data)
-						.success(function(res) {
+					Setting.save(data, function(res) {
 							$scope.localUser.language = res.value;
 							$scope.language_msg = res.message;
 							$scope.toggleEdit('edit_discipline');
@@ -408,9 +379,8 @@
 							}, 3000);
 
 							$window.location.reload();
-						})
-						.error(function(res){
-							$scope.language_msg = res.message;
+						}, function(err) {
+							$scope.language_msg = err.message;
 							$scope.success = false;
 
 							/* after 3 secconds hide the message */
@@ -424,9 +394,7 @@
 					data = {
 						"date_format": $scope.localUser.date_format
 					};
-					console.log(data);
-					$http.post('/settings_data', data)
-						.success(function(res) {
+					Setting.save(data, function(res) {
 							$scope.localUser.date_format = res.value;
 							$scope.dateformat_msg = res.message;
 							$scope.toggleEdit('edit_dateformat');
@@ -436,9 +404,8 @@
 							$timeout(function() {
 								$scope.dateformat_msg = '';
 							}, 3000);
-						})
-						.error(function(res){						
-							$scope.dateformat_msg = res.message;
+						}, function(err) {
+							$scope.dateformat_msg = ερρ.message;
 							$scope.success = false;
 
 							/* after 3 secconds hide the message */
@@ -452,9 +419,7 @@
 					data = {
 						"username": $scope.localUser.new_username
 					};
-					console.log(data);
-					$http.post('/settings_data', data)
-						.success(function(res) {
+					Setting.save(data, function(res) {
 							$scope.localUser.username = res.value;
 							$scope.username_msg = res.message;
 							$scope.toggleEdit('username');
@@ -464,9 +429,8 @@
 							$timeout(function() {
 								$scope.username_msg = '';
 							}, 3000);
-						})
-						.error(function(res){
-							$scope.username_msg = res.message;
+						}, function(err) {
+							$scope.username_msg = err.message;
 							$scope.success = false;
 
 							/* after 3 secconds hide the message */
@@ -475,7 +439,6 @@
 							}, 3000);
 						});
 					break;
-
 				default:
 					console.log('default switch case');
 			}
