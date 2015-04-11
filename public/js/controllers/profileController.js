@@ -2,8 +2,8 @@
     'use strict';
 
 	angular.module('trafie.controllers').controller("profileController", [
-		'$rootScope','$scope','$http','$timeout','$window','$q','$routeParams', 'ModalSvc', 'AlertSvc',
-		function($rootScope, $scope, $http, $timeout, $window, $q, $routeParams, ModalSvc, AlertSvc) {
+		'$rootScope','$scope', '$timeout','$window','$q','$routeParams', 'ModalSvc', 'AlertSvc', 'Activity', 'User', 'Discipline',
+		function($rootScope, $scope,  $timeout, $window, $q, $routeParams, ModalSvc, AlertSvc, Activity, User, Discipline) {
 
 		//GENERAL VARIABLES
 		$scope.disciplines = Utils.DISCIPLINES;
@@ -22,7 +22,7 @@
 			$scope.selected_year = {};
 			$scope.selected_year.date = ''; //all years are shown. No filter applied.
 
-            $rootScope.LAZY_LOADING_VIEW = $rootScope.LAZY_LOADING_BLOCK_SIZE; //initial value
+            $rootScope.LAZY_LOADING_VIEW = Utils.LAZY_LOADING_BLOCK_SIZE; //initial value
 
 			//true if this is the profile of the logged-in user
 			$scope.page_not_found = false;
@@ -36,26 +36,22 @@
 			} else {
 			//www.trafie.com/:userID
 				if(!$rootScope.localUser) { //check if localUser exits. solves problem at login.
-					$http.get('/users/me')
-					.success(function(res) {
+					User.get({id:'me'}, function(res) {
 						//The logged in user
 						$rootScope.localUser = res;
 						$rootScope.isVisitor = false;
 
-						$http.get('/users/' + res._id + '/disciplines')
-						.success(function(res) {
+						Discipline.query({userId: res._id}, function(res) {
 							$rootScope.localUser.disciplines_of_user = res;
 							$rootScope.current_user = res; //current user is logged in user
-
 							$scope.getProfile($rootScope.localUser._id);
 							$scope.self=true;
-						})
-						.error(function(res) {
-							console.err('info :: can\'t get disciplines of current user in profile controller');
+						}, function(err) {
+							console.err('info :: can\'t get disciplines of current user in profile controller: ' + err);
 						});
-					})
-					.error(function(res) {
-						console.log('info :: Oooohhh we have a fuckin\' visitoo!!');
+					},
+					function(err) {
+						console.log('info :: Oooohhh we have a visitoo!!');
 					});
 				}
 				else {
@@ -67,28 +63,23 @@
 
 		//get user profile based on user id
 		$scope.getProfile = function(user_id) {
-			$http.get('/users/' + user_id)
-				.success(function(res) {
-					$rootScope.current_user = res;
-					$rootScope.current_user.picture += '?v=' + Date.now(); // BAD PRACTICE. TO CHANGE.
-					//get user's activities
-					$scope.getDisciplinesOfUser($rootScope.current_user._id);
-					$scope.getActivities($rootScope.current_user._id, $rootScope.current_user.discipline);
-
-				})
-				.error(function(res) {
-					$scope.page_not_found = true;
-					console.err('info :: User not found. Maybe he doesn\'t have a trafie profile or the profile is private.');
-				});
+			User.get({userId: user_id}, function(res) {
+				$rootScope.current_user = res;
+				$rootScope.current_user.picture += '?v=' + Date.now(); // BAD PRACTICE. TO CHANGE.
+				//get user's activities
+				$scope.getDisciplinesOfUser($rootScope.current_user._id);
+				$scope.getActivities($rootScope.current_user._id, $rootScope.current_user.discipline);
+			}, function(err) {
+				$scope.page_not_found = true;
+				console.err('info :: User not found. Maybe he doesn\'t have a trafie profile or the profile is private.');
+			});
 		};
 
 		//get disciplines of user based on user id
 		$scope.getDisciplinesOfUser = function(user_id) {
-			$http.get('/users/' + user_id + '/disciplines')
-				.success(function(res) {
+			Discipline.query({userId: user_id}, function(res) {
 					$rootScope.current_user.disciplines_of_user = res;
-				})
-				.error(function(res) {
+				}, function(err) {
 					console.err('info :: can\'t get disciplines of current user');
 				});
 		};
@@ -96,25 +87,23 @@
 		//get user activities based on user id
 		$scope.getActivities = function(user_id, discipline) {
 			var url = '';
-			$rootScope.LAZY_LOADING_VIEW = $rootScope.LAZY_LOADING_BLOCK_SIZE;
+			$rootScope.LAZY_LOADING_VIEW = Utils.LAZY_LOADING_BLOCK_SIZE;
 			$scope.selected_year.date = ''; //reset year filtering when switching between disciplines
 			$scope.selected_discipline = discipline;
-			url = discipline ? '/users/' + user_id + '/activities?discipline=' + discipline : '/users/' + user_id + '/activities';
 
-			$http.get(url)
-			.success(function(res) {
+			Activity.query({userId: user_id, discipline: discipline}, function(res) {
 				$scope.activities = res;
 				$scope.noActivities = res.length === 0 ? true : false;
 				$scope.active_years = [];
-				for (var i in res) {
-					var _temp_year = new Date(res[i].date);
+				for (var i = 0; i < $scope.activities.length; i++) {
+					var _temp_year = new Date($scope.activities[i].date);
 					if ($scope.active_years.indexOf(_temp_year.getFullYear()) === -1) {
 						$scope.active_years.push(_temp_year.getFullYear());
 					}
 				}
 				$scope.isLoading = false;
-				$scope.hasMoreToLoad = res.length > $rootScope.LAZY_LOADING_VIEW ? true : false;
-			})
+				$scope.hasMoreToLoad = $scope.activities.length > $rootScope.LAZY_LOADING_VIEW ? true : false;
+			});
 		};
 
 		/*
@@ -136,12 +125,10 @@
 			var splitDate = data.date.toString().split(' ');
 			data.date = splitDate[0] + ' ' + splitDate[1] + ' ' + splitDate[2] + ' ' + splitDate[3];
 
-			$http.post('/users/' + $rootScope.localUser._id + '/activities', data)
-				.success(function(res) {
-					$scope.accordions.addActivity = false;
-					$scope.activities.unshift(res);
-				})
-				.error(function(e) {});
+			Activity.save({userId: $rootScope.localUser._id}, data, function(res) {
+				$scope.accordions.addActivity = false;
+				$scope.activities.unshift(res);
+			});
 		};
 
 		/*
@@ -168,7 +155,7 @@
 
 		$scope.loadMore = function () {
 			if ($rootScope.LAZY_LOADING_VIEW < $scope.activities.length) {
-				$rootScope.LAZY_LOADING_VIEW += $rootScope.LAZY_LOADING_BLOCK_SIZE;
+				$rootScope.LAZY_LOADING_VIEW += Utils.LAZY_LOADING_BLOCK_SIZE;
 			} else {
 				$scope.hasMoreToLoad = false;
 			}
@@ -222,17 +209,18 @@
 			data.date = splitDate[0] + ' ' + splitDate[1] + ' ' + splitDate[2] + ' ' + splitDate[3];
 			data.discipline = activity.discipline;
 
-			$http.put("/users/" + $rootScope.localUser._id + "/activities/" + activity._id, data)
-				.success(function(res) {
-					activity.formatted_performance = res.formatted_performance;
-					activity.formatted_date = res.formatted_date;
-					activity.place = res.place;
-					activity.location = res.location;
-					activity.competition = res.competition;
-					activity.notes = res.notes;
-					activity.private = res.private;
-					activity.show_editable_form = !activity.show_editable_form;
-				})
+			console.log(data);
+			Activity.update({userId: $rootScope.localUser._id, activityId: activity._id}, data, function (res) {
+				console.log(res);
+				activity.formatted_performance = res.formatted_performance;
+				activity.formatted_date = res.formatted_date;
+				activity.place = res.place;
+				activity.location = res.location;
+				activity.competition = res.competition;
+				activity.notes = res.notes;
+				activity.private = res.private;
+				activity.show_editable_form = !activity.show_editable_form;
+			});
 		};
 
 		/*
@@ -240,12 +228,9 @@
 		 */
 		$scope.changePrivacy = function(activity) {
 			var _activity = !activity.private;
-			$http.put("/users/" + $rootScope.localUser._id + "/activities/" + activity._id, {
-					private: _activity
-				})
-				.success(function(res) {
-					activity.private = res.private;
-				})
+			Activity.update({userId: $rootScope.localUser._id, activityId: activity._id}, {private: _activity}, function(res) {
+				activity.private = res.private;
+			});
 		};
 	}]); //end of controller
 

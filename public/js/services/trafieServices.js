@@ -11,7 +11,7 @@ angular.module('trafie.services', []);
     // *** alertSvc ***
     // Alert messages service
     ///////////////////////////////////////////////////////////////////////////////////////////////
-    angular.module('trafie.services').factory('AlertSvc', [ 
+    angular.module('trafie.services').factory('AlertSvc', [
         '$http',
         AlertSvcImpl
     ]);
@@ -20,10 +20,10 @@ angular.module('trafie.services', []);
     // *** modalSvc ***
     // Modals service
     ///////////////////////////////////////////////////////////////////////////////////////////////
-    angular.module('trafie.services').factory('ModalSvc', [ 
-        '$modal', 
+    angular.module('trafie.services').factory('ModalSvc', [
+        '$modal',
         '$http',
+        'Activity',
         ModalSvcImpl
     ]);
-
 })();

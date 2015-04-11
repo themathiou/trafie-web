@@ -6,10 +6,12 @@ var trafie = angular.module('trafie', [
 	'trafie.controllers',
 	'trafie.services',
 	'trafie.directives',
+	'trafie.models',
 	'ngRoute',
 	'ui.bootstrap',
 	'ngAnimate',
-	'angularFileUpload'
+	'angularFileUpload',
+	'ngResource'
 ]);
 
 trafie.config(['$locationProvider',
@@ -54,26 +56,36 @@ trafie.config(['$routeProvider',
 	}
 ])
 //Initialization
-.run(function($rootScope, $http) {
+.run(function($rootScope, User, Discipline) {
 	$rootScope.isVisitor = true;
-	
-	$http.get('/users/me')
-		.success(function(res) {
-			//The logged in user
-			$rootScope.localUser = res;
-			$rootScope.isVisitor = false;
-			
-			$http.get('/users/' + res._id + '/disciplines')
-			.success(function(res) {
-				$rootScope.localUser.disciplines_of_user = res;
-				$rootScope.current_user = res; //current user is logged in user
-			})
-			.error(function(res) {
-				console.err('info :: can\'t get disciplines of current user in -run-');
-			});
-		})
-		.error(function(res) {
-			console.log('info :: Oooohhh we have a fuckin\' visitoo!!');
+	User.get({userId:'me'}, function(res){
+		//The logged in user
+		$rootScope.localUser = res;
+		$rootScope.isVisitor = false;
+
+		Discipline.query({userId: res._id}, function() {
+			$rootScope.localUser.disciplines_of_user = res;
+			$rootScope.current_user = res; //current user is logged in user
 		});
+	});
+
+	// $http.get('/users/me')
+	// 	.success(function(res) {
+	// 		//The logged in user
+	// 		$rootScope.localUser = res;
+	// 		$rootScope.isVisitor = false;
+
+	// 		$http.get('/users/' + res._id + '/disciplines')
+	// 		.success(function(res) {
+	// 			$rootScope.localUser.disciplines_of_user = res;
+	// 			$rootScope.current_user = res; //current user is logged in user
+	// 		})
+	// 		.error(function(res) {
+	// 			console.err('info :: can\'t get disciplines of current user in -run-');
+	// 		});
+	// 	})
+	// 	.error(function(res) {
+	// 		console.log('info :: Oooohhh we have a visitoo!!');
+	// 	});
 
 });

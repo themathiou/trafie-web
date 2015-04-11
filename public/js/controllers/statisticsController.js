@@ -2,53 +2,53 @@
     'use strict';
 
 	angular.module('trafie.controllers').controller("statisticsController", [
-		'$rootScope','$scope','$http','$timeout','$routeParams',
-		function($rootScope,$scope,$http,$timeout,$routeParams) {
+		'$rootScope', '$scope', '$timeout', '$routeParams', 'Activity',
+		function($rootScope, $scope, $timeout, $routeParams, Activity) {
 
 		$scope.loading = true;
 		var disciplines = Utils.DISCIPLINES;
 
-		// //object with disciplines grouped in categories
-		// var disciplines = {
-		// 	'time': [
-		// 		'60m',
-		// 		'100m',
-		// 		'200m',
-		// 		'400m',
-		// 		'800m',
-		// 		'1500m',
-		// 		'3000m',
-		// 		'5000m',
-		// 		'10000m',
-		// 		'60m_hurdles',
-		// 		'100m_hurdles',
-		// 		'110m_hurdles',
-		// 		'400m_hurdles',
-		// 		'3000m_steeplechase',
-		// 		'4x100m_relay',
-		// 		'4x400m_relay',
-		// 		'half_marathon',
-		// 		'marathon',
-		// 		'20km_race_walk',
-		// 		'50km_race_walk',
-		// 		'cross_country_running',
-		// 	],
-		// 	'distance': [
-		// 		'high_jump',
-		// 		'long_jump',
-		// 		'triple_jump',
-		// 		'pole_vault',
-		// 		'shot_put',
-		// 		'discus',
-		// 		'hammer',
-		// 		'javelin'
-		// 	],
-		// 	'points': [
-		// 		'pentathlon',
-		// 		'heptathlon',
-		// 		'decathlon'
-		// 	]
-		// };
+		//object with disciplines grouped in categories
+		/*var disciplines = {
+			'time': [
+				'60m',
+				'100m',
+				'200m',
+				'400m',
+				'800m',
+				'1500m',
+				'3000m',
+				'5000m',
+				'10000m',
+				'60m_hurdles',
+				'100m_hurdles',
+				'110m_hurdles',
+				'400m_hurdles',
+				'3000m_steeplechase',
+				'4x100m_relay',
+				'4x400m_relay',
+				'half_marathon',
+				'marathon',
+				'20km_race_walk',
+				'50km_race_walk',
+				'cross_country_running',
+			],
+			'distance': [
+				'high_jump',
+				'long_jump',
+				'triple_jump',
+				'pole_vault',
+				'shot_put',
+				'discus',
+				'hammer',
+				'javelin'
+			],
+			'points': [
+				'pentathlon',
+				'heptathlon',
+				'decathlon'
+			]
+		};*/
 
 		// Load the Visualization API and the piechart package.
 		$scope.statisticsInit = function() {
@@ -130,24 +130,23 @@
 			console.log(discipline);
 
 			$scope.selected_discipline = discipline;
-			var _query = '';
+			var postBody = {};
 			if (!year) {
 				$scope.selected_year = '';
-				_query = '/users/' + user_id + '/activities?discipline=' + discipline;
+				postBody.userId = user_id;
+				postBody.discipline = discipline;
 			} else {
 				$scope.selected_year = year;
-				_query = '/users/' + user_id + '/activities?discipline=' + discipline + '&from=' + year + '-01-01&to=' + year + '-12-31';
+				postBody.userId = user_id;
+				postBody.discipline = discipline;
+				postBody.from = year + '-01-01';
+				postBody.to = year + '-12-31';
 			}
 
-			//call ajax_get (defined in script.js) in order to fetch the specific performances
-			$http.get(_query)
-				.success(function(response) {
-					// parse response as JSON
-					var res = response;
-
+			Activity.query(postBody , function(res) {
 					if (init) {
 						$scope.active_years = [];
-						for (i in res) {
+						for (var i = 0; i < res.length; i++) {
 							var _temp_year = new Date(res[i].date);
 							if ($scope.active_years.indexOf(_temp_year.getFullYear()) === -1) {
 								$scope.active_years.push(_temp_year.getFullYear());
@@ -175,7 +174,7 @@
 
 							average = sum / response_length;
 
-							for (var i in res) {
+							for (var i = 0; i < res.length; i++) {
 								$scope.config.data.json.push({
 									performance: res[i].performance.split(':')[0] + res[i].performance.split(':')[1] + res[i].performance.split(':')[2].split('.')[0] + res[i].performance.split(':')[2].split('.')[1],
 									average: average,
@@ -198,7 +197,7 @@
 							}
 							average = sum / response_length;
 
-							for (var i in res) {
+							for (var i = 0; i < res.length; i++) {
 								$scope.config.data.json.push({
 									performance: res[i].performance / 10000,
 									average: average / 10000,
@@ -221,7 +220,7 @@
 							}
 							average = sum / response_length;
 
-							for (var i in res) {
+							for (var i = 0; i < res.length; i++) {
 								$scope.config.data.json.push({
 									performance: res[i].performance,
 									average: average,
@@ -247,11 +246,10 @@
 
 
 					$scope.isLoading = false;
-
-				}) //end success
-				.error(function(err) {
-					console.log('drawSimpleChart error');
-				});
+			},
+			function(err){
+				console.log('drawSimpleChart error: ', err);
+			});
 		}; //end drawSimpleChart
 
 
@@ -262,26 +260,26 @@
 		 */
 		function formatChartTicks(data, discipline_type) {
 			switch (discipline_type) {
-				case 'time':
-					//convert number to string
-					data = data + '';
-					var _result = data.slice(-4, -2) + '.' + data.slice(-2);
-					if (data.slice(-6, -4)) {
-						_result = data.slice(-6, -4) + ':' + _result
-					};
-					if (data.slice(-8, -6)) {
-						_result = data.slice(-8, -6) + ':' + _result
-					}
-					return _result;
-					break;
-				case 'distance':
-					return data.toFixed(2);
-					break;
-				case 'points':
-					return data;
-					break;
-				default:
-					return data;
+			case 'time':
+				//convert number to string
+				data = data + '';
+				var _result = data.slice(-4, -2) + '.' + data.slice(-2);
+				if (data.slice(-6, -4)) {
+					_result = data.slice(-6, -4) + ':' + _result
+				};
+				if (data.slice(-8, -6)) {
+					_result = data.slice(-8, -6) + ':' + _result
+				}
+				return _result;
+				break;
+			case 'distance':
+				return data.toFixed(2);
+				break;
+			case 'points':
+				return data;
+				break;
+			default:
+				return data;
 			}
 		}
 
