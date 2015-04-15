@@ -21,12 +21,18 @@
 
         .dropdown {
             .dropdown-toggle {
+                color: @black_50;rs
 
+                &:hover {
+                    text-decoration: none;
+                    color: @black;
+                }
             }
 
             .dropdown-menu {
                 min-width: 90px;
                 right: 0px;
+                left: auto;
             }
         }
 
@@ -47,6 +53,7 @@
                 margin: 0px;
                 color: @black_75;
                 font-weight: 400;
+                overflow-wrap: break-word;
             }
 
             .location-date {

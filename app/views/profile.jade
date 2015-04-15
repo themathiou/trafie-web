@@ -50,10 +50,6 @@ div.profile-page.col-xs-12.col-sm-12.col-md-12.col-lg-8(ng-init="initProfile()" 
         //- .my-repeat-animation to be added
         li(ng-repeat="activity in activities | filter:selected_year | limitTo:LAZY_LOADING_VIEW")
           div.info(ng-class="{editable: activity.show_editable_form}" ng-show="!isLoading")
-            //- a.deleteActivity(ng-if="self && !activity.show_editable_form && !isTouch" ng-click="deleteActivity(activity._id)" tooltip-placement="top" tooltip="Delete")
-            //-   include partials/svg/delete_activity_svg
-            //- a.deleteActivity(ng-if="self && !activity.show_editable_form && isTouch" ng-click="deleteActivity(activity._id)")
-            //-   include partials/svg/delete_activity_svg
 
             span.dropdown(ng-if="self && !activity.show_editable_form" style="float:right;" dropdown on-toggle="toggled(open)")
               a.dropdown-toggle(href="" dropdown-toggle) •••
@@ -81,11 +77,6 @@ div.profile-page.col-xs-12.col-sm-12.col-md-12.col-lg-8(ng-init="initProfile()" 
                   include partials/svg/locked_svg
                 span(ng-if="!activity.private")
                   include partials/svg/unlocked_svg
-
-            //- a.editActivity(ng-if="self && !isTouch" ng-click="initEditableActivity(activity)" tooltip-placement="top" tooltip="Edit")
-            //-   include partials/svg/edit_activity_svg
-            //- a.editActivity(ng-if="self && isTouch" ng-click="initEditableActivity(activity)")
-            //-   include partials/svg/edit_activity_svg
 
             //-edit activity templates
             include partials/profile/activities_templates

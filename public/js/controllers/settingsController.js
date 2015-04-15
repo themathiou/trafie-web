@@ -246,7 +246,8 @@
 					//var utc = new Date($scope.localUser.new_birthday.getUTCFullYear(), $scope.localUser.new_birthday.getUTCMonth(), $scope.localUser.new_birthday.getUTCDate(),  $scope.localUser.new_birthday.getUTCHours(), $scope.localUser.new_birthday.getUTCMinutes(), $scope.localUser.new_birthday.getUTCSeconds());;
 					//var iso = $scope.localUser.new_birthday.toISOString();
 					// $scope.localUser.new_birthday = bday[0] + ' ' + bday[1] + ' ' + bday[2] + ' ' + bday[3];
-					var selected_date = $scope.localUser.new_birthday;
+					var selected_date = new Date($scope.localUser.new_birthday);
+
 					data = {
 						"birthday": {
 							"day": selected_date.getDate(),
