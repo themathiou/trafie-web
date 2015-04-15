@@ -1,7 +1,7 @@
-div(ng-init="initProfile()"  ng-cloak)
+div.profile-page.col-xs-12.col-sm-12.col-md-12.col-lg-8(ng-init="initProfile()"  ng-cloak)
 
   //- PAGE NOT FOUND
-  div.maincontent(ng-if="page_not_found")
+  div(ng-if="page_not_found")
     div.col-xs-12.dropdown_container_xs(ng-if="isMobile")
       div.flex_wrapper
         input.search(type="text" ng-model="asyncSelected" placeholder="search for athletes!" typeahead-on-select="onSelect($item, $model, $label)" typeahead="result.label for result in searchUser($viewValue)" typeahead-loading="loadingLocations" class="form-control" autocomplete="off")
@@ -13,45 +13,29 @@ div(ng-init="initProfile()"  ng-cloak)
       h4 Use the search box on top to search for athletes
 
   //- PAGE FOUND START
-  div.maincontent(ng-if="!page_not_found")
+  div.col-xs-12.col-sm-12.col-md-12.col-lg-12(ng-if="!page_not_found")
     //- div.col-xs-12.dropdown_container_xs(ng-if="isMobile")
       div.flex_wrapper
         input.search(type="text" ng-model="asyncSelected" placeholder="search for athletes!" typeahead-on-select="onSelect($item, $model, $label)" typeahead="result.label for result in searchUser($viewValue)" typeahead-loading="loadingLocations" class="form-control" autocomplete="off")
 
-    //- PROFILE
-    div.vertical_space_50
-    div#profile-container
-      div#image-container
-        img(ng-src="{{current_user.picture}}")
-      div#profileFullName
-        h3 {{current_user.first_name}} {{current_user.last_name}}
-        p
-          span(ng-show="current_user.formatted_discipline"){{current_user.formatted_discipline}}
-          span(ng-show="current_user.discipline && current_user.country") -
-          span(ng-show="current_user.country"){{current_user.country}}
+    //- LEFT COLUMN
+    include partials/profile/left_column
 
-    div(ng-if="!isLoading  && !noActivities")
-      //- VIEW USER STATISTICS
-      a(href="/statistics/{{current_user._id}}" ng-if="!self").filters-row.col-xs-12.col-md-12.col-lg-12.hidden-xs View User Statistics
+    //- HISTORY TIMELINE
+    div.col-xs-12.col-sm-8.col-md-8.col-lg-8(when-scrolled="loadMore()")
       //- FILTERS
-      ul.filters-row.col-xs-12.col-md-12.col-lg-12
+      ul.filters-row
         li
           a(ng-click="getActivities(current_user._id)" ng-class="{selected: !selected_discipline}") All
         li(ng-repeat="discipline in current_user.disciplines_of_user")
           a(ng-click="getActivities(current_user._id, discipline.discipline)" ng-class="{selected: selected_discipline === discipline.discipline}") {{discipline.formatted_discipline}}
 
-      ul.filters-row.col-xs-12.col-md-12.col-lg-12
+      ul.filters-row
         li
           a(ng-click="filterByYear()" ng-class="{selected: !selected_year.date}") All
         li(ng-repeat="year in active_years")
           a(ng-click="filterByYear(year)" ng-class="{selected: selected_year.date === year}") {{year}}
 
-    //- LOADING SPINNER
-    div.spinner(ng-show="isLoading")
-    h4(ng-show="isLoading") Loading the awesomeness!
-
-    //- HISTORY TIMELINE
-    div.col-xs-12.col-sm-12.col-md-12.col-lg-12(when-scrolled="loadMore()")
       ul.history_line
         li(ng-show="!isLoading")
           //- ADD ACTIVITY
@@ -66,37 +50,42 @@ div(ng-init="initProfile()"  ng-cloak)
         //- .my-repeat-animation to be added
         li(ng-repeat="activity in activities | filter:selected_year | limitTo:LAZY_LOADING_VIEW")
           div.info(ng-class="{editable: activity.show_editable_form}" ng-show="!isLoading")
-            a.deleteActivity(ng-if="self && !activity.show_editable_form && !isTouch" ng-click="deleteActivity(activity._id)" tooltip-placement="top" tooltip="Delete")
-              include partials/svg/delete_activity_svg
-            a.deleteActivity(ng-if="self && !activity.show_editable_form && isTouch" ng-click="deleteActivity(activity._id)")
-              include partials/svg/delete_activity_svg
+            //- a.deleteActivity(ng-if="self && !activity.show_editable_form && !isTouch" ng-click="deleteActivity(activity._id)" tooltip-placement="top" tooltip="Delete")
+            //-   include partials/svg/delete_activity_svg
+            //- a.deleteActivity(ng-if="self && !activity.show_editable_form && isTouch" ng-click="deleteActivity(activity._id)")
+            //-   include partials/svg/delete_activity_svg
+
+            span.dropdown(ng-if="self && !activity.show_editable_form" style="float:right;" dropdown on-toggle="toggled(open)")
+              a.dropdown-toggle(href="" dropdown-toggle) •••
+              ul.dropdown-menu
+                li
+                  a(href="" ng-click="initEditableActivity(activity)") Edit
+                li
+                  a(href="" ng-click="deleteActivity(activity._id)") Delete
+
 
             div.current_data(ng-show="!activity.show_editable_form")
               h2 {{activity.formatted_performance}}
-                small.competition ({{activity.place}}) {{activity.competition}}
-              blockquote
-                p {{activity.location}}
-                  br
-                  {{activity.formatted_date}}
-                  //- p.discipline {{activity.formatted_discipline}}
-                  br
-                  span.notes {{activity.notes}}
+                small.competition {{activity.competition}} ({{activity.place}})
+              p.location-date {{activity.formatted_date}} | {{activity.location}}
+              p.notes(ng-if="activity.notes")
+                em &quot;{{activity.notes}}&quot;
 
-            a.privacy(style="float:left;" ng-if="self && !isTouch && !activity.show_editable_form" ng-click="changePrivacy(activity)" tooltip-placement="top" tooltip="Change Privacy")
+            a.privacy(style="float:right;" ng-if="self && !isTouch && !activity.show_editable_form" ng-click="changePrivacy(activity)" tooltip-placement="top" tooltip="Change Privacy")
                 span(ng-if="activity.private")
                   include partials/svg/locked_svg
                 span(ng-if="!activity.private")
                   include partials/svg/unlocked_svg
-            a.privacy(style="float:left;" ng-if="self && isTouch && !activity.show_editable_form" ng-click="changePrivacy(activity)")
+            a.privacy(style="float:right;" ng-if="self && isTouch && !activity.show_editable_form" ng-click="changePrivacy(activity)")
                 span(ng-if="activity.private")
                   include partials/svg/locked_svg
                 span(ng-if="!activity.private")
                   include partials/svg/unlocked_svg
 
-            a.editActivity(ng-if="self && !isTouch" ng-click="initEditableActivity(activity)" tooltip-placement="top" tooltip="Edit")
-              include partials/svg/edit_activity_svg
-            a.editActivity(ng-if="self && isTouch" ng-click="initEditableActivity(activity)")
-              include partials/svg/edit_activity_svg
+            //- a.editActivity(ng-if="self && !isTouch" ng-click="initEditableActivity(activity)" tooltip-placement="top" tooltip="Edit")
+            //-   include partials/svg/edit_activity_svg
+            //- a.editActivity(ng-if="self && isTouch" ng-click="initEditableActivity(activity)")
+            //-   include partials/svg/edit_activity_svg
 
             //-edit activity templates
             include partials/profile/activities_templates
@@ -104,3 +93,7 @@ div(ng-init="initProfile()"  ng-cloak)
         li(ng-show="!isLoading && !noActivities")
           div.end
             div.discipline everything started here
+
+    //- LOADING SPINNER
+    div.spinner(ng-show="isLoading")
+    h4(ng-show="isLoading") Loading the awesomeness!
