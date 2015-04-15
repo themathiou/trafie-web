@@ -170,17 +170,13 @@
 				performance: {}
 			};
 			if ($scope.disciplines.time.indexOf(activity.discipline) > -1) {
-				var splitted_performance = activity.performance.split(':');
-				//we get the existed performance in hh:mm:ss.cc format.
-				//We split it and add each part to the specific element
-				$scope.updateActivityForm.performance.hours = splitted_performance[0].toString();
-				$scope.updateActivityForm.performance.minutes = splitted_performance[1].toString();
-				$scope.updateActivityForm.performance.seconds = splitted_performance[2].split('.')[0].toString();
-				$scope.updateActivityForm.performance.centiseconds = splitted_performance[2].split('.')[1].toString();
-
+				$scope.updateActivityForm.performance.hours = activity.performance.hours || '00';
+				$scope.updateActivityForm.performance.minutes = activity.performance.minutes || '00';
+				$scope.updateActivityForm.performance.seconds = activity.performance.seconds || '00';
+				$scope.updateActivityForm.performance.centiseconds = activity.performance.centiseconds || '00';
 			} else if ($scope.disciplines.distance.indexOf(activity.discipline) > -1) {
-				$scope.updateActivityForm.performance.distance_1 = (parseInt(activity.performance / 10000)).toString();
-				$scope.updateActivityForm.performance.distance_2 = (parseInt(((activity.performance / 10000) % $scope.updateActivityForm.performance.distance_1) * 100)).toString();
+				$scope.updateActivityForm.performance.distance_1 = (parseInt(activity.performance / 10000)).toString() || '00';
+				$scope.updateActivityForm.performance.distance_2 = (parseInt(((activity.performance / 10000) % $scope.updateActivityForm.performance.distance_1) * 100)).toString() || '00';
 			} else if ($scope.disciplines.points.indexOf(activity.discipline) > -1) {
 				$scope.updateActivityForm.performance.points = activity.performance;
 			} else {
@@ -202,9 +198,9 @@
 		$scope.updateActivity = function(activity) {
 			var data = $scope.updateActivityForm;
 
-			data.date = new Date(data.date);
-			var splitDate = data.date.toString().split(' ');
-			data.date = splitDate[0] + ' ' + splitDate[1] + ' ' + splitDate[2] + ' ' + splitDate[3];
+			// data.date = new Date(data.date);
+			// var splitDate = data.date.toString().split(' ');
+			// data.date = splitDate[0] + ' ' + splitDate[1] + ' ' + splitDate[2] + ' ' + splitDate[3];
 			data.discipline = activity.discipline;
 
 			console.log(data);

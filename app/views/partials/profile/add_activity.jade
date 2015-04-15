@@ -43,7 +43,6 @@ accordion( class="info add_activity" ng-show="self")
 				//- common variables
 				div
 					label(for="datepicker")= tr['date'] + ':'
-					//- input.form-control(type="text" datepicker-popup="{{format}}" ng-model="newActivityForm.date" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
 					datepicker(date-format="EEE MMM dd yyyy")
 						input.form-control(ng-model="newActivityForm.date" type="text" placeholder="Choose a date")
 				div

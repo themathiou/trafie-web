@@ -471,6 +471,7 @@ function return_activity(res, status_code, activity_id, user_id, language, date_
 
 	// Find the activity and return it
 	Activity.schema.findOne(where, '').then(function(activity) {
+	console.log('0', activity. activity.performance);
 			if (activity && Object.keys(activity).length) {
 				activity = {
 					'_id': activity._id,
@@ -485,6 +486,7 @@ function return_activity(res, status_code, activity_id, user_id, language, date_
 				};
 
 				// Format the date of the activity
+				console.log('1', activity);
 				activity = activityHelper.formatActivity(activity, language, date_format);
 			} else {
 				status_code = 404;
