@@ -1,7 +1,7 @@
 
 div.edit_activity( ng-show="activity.show_editable_form" )
 		form.form-group( ng-submit="updateActivity(activity)" name="updateForm")
-			div.data_entry
+			div.data-entry
 				label= tr['enter_your_performance'] +':'
 				//- distance
 				div.performance_fields( ng-if="disciplines.distance.indexOf(activity.discipline) > -1 " )
@@ -35,9 +35,8 @@ div.edit_activity( ng-show="activity.show_editable_form" )
 				//- common variables
 				div
 					label(for="datepicker_distance")= tr['date'] + ':'
-					input.form-control(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="updateActivityForm.date" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
-					//- input.form-control(type="text" class="form-control" datepicker-popup="{{format}}" ng-model="newActivityForm.date" min-date="'1970-06-22'" max-date="'2005-12-01'" show-weeks="false" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close")
-
+					datepicker(date-format="EEE MMM dd yyyy")
+						input.form-control(ng-model="updateActivityForm.date" type="text" placeholder="Choose a date")
 				div
 					label(for="place") Place
 					input.form-control(type="text" ng-model="updateActivityForm.place" maxlength="3" name="place" ng-class="{error: updateForm.place.$error.pattern}" ng-pattern="NUMBERS")

@@ -1,5 +1,5 @@
 // Initialize the controllers. This MUST be the first controller that is loaded.
-angular.module('trafie.controllers' , []);
+angular.module('trafie.controllers' , ['ui.bootstrap']);
 
 (function () {
     'use strict';

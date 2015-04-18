@@ -67,7 +67,7 @@ mainHelper.validateAccess = function(user_id, profile_id, callback) {
 		// Find the profile by id
 		Profile.schema.findOne({
 			'_id': profile_id
-		}, '_id first_name last_name discipline country male picture username private')
+		}, '_id first_name last_name discipline country male picture username private about')
 		.then(function(profile_data) {
 			// If the profile was found, get the data of the user
 			if (profile_data !== null && profile_data !== undefined) {
@@ -78,7 +78,7 @@ mainHelper.validateAccess = function(user_id, profile_id, callback) {
 				// If the profile wasn't found, try to find it by username
 				return Profile.schema.findOne({
 					'username': profile_id
-				}, '_id first_name last_name discipline country male picture username private');
+				}, '_id first_name last_name discipline country male picture username private about');
 			}
 		})
 		.then(function(profile_data) {

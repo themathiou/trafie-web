@@ -122,9 +122,7 @@
 			var data = $scope.newActivityForm;
 			data.discipline = data.selected_discipline;
 
-			var splitDate = data.date.toString().split(' ');
-			data.date = splitDate[0] + ' ' + splitDate[1] + ' ' + splitDate[2] + ' ' + splitDate[3];
-
+			//date must be of format "Thu Apr 11 2014" - "EEE MMM dd yyyy"
 			Activity.save({userId: $rootScope.localUser._id}, data, function(res) {
 				$scope.accordions.addActivity = false;
 				$scope.activities.unshift(res);
