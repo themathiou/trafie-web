@@ -1,21 +1,23 @@
 'use strict';
 
-var fs = require('fs'),
+const fs = require('fs'),
 	knox = require('knox'),
 	path = require('path'),
 	root_dir = path.dirname(require.main.filename);
 
 // Loading models
-var User = require('../models/user.js'),
+const User = require('../models/user.js'),
 	Profile = require('../models/profile.js');
 
 // Loading helpers
-var profileHelper = require('../helpers/profileHelper.js'),
+const profileHelper = require('../helpers/profileHelper.js'),
 	userHelper = require('../helpers/userHelper.js');
 
 // Initialize translations
-var translations = require('../languages/translations.js');
+const translations = require('../languages/translations.js');
 
+// Get the config file
+const config = require('../config/config.js');
 
 exports.get = function(req, res) {
 	// If there is no user id in the session, return null
@@ -51,7 +53,7 @@ exports.get = function(req, res) {
 		} else {
 			gender = 'no_gender_selected';
 		}
-		var picture = profile.picture || '/images/ui/profile_pic.svg';
+		var picture = profile.picture || config.defaultProfilePic;
 
 		var data = {
 			'user': {
@@ -439,7 +441,6 @@ exports.get_view = function(req, res) {
 		.then(function(profile) {
 
 			var tr = translations[profile.language];
-			var disciplines = ['60m','100m','200m','400m','800m','1500m','3000m','5000m','10000m','60m_hurdles','100m_hurdles','110m_hurdles','400m_hurdles','3000m_steeplechase','4x100m_relay','4x400m_relay','half_marathon','marathon','20km_race_walk','50km_race_walk','cross_country_running','high_jump','long_jump','triple_jump','pole_vault','shot_put','discus','hammer','javelin','pentathlon','heptathlon','decathlon'];
 			var countries = ['AF', 'AX', 'AL', 'DZ', 'AS', 'AD', 'AO', 'AI', 'AQ', 'AG', 'AR', 'AM', 'AW', 'AU', 'AT', 'AZ', 'BS', 'BH', 'BD', 'BB', 'BY', 'BE', 'BZ', 'BJ', 'BM', 'BT', 'BO', 'BQ', 'BA', 'BW', 'BV', 'BR', 'IO', 'BN', 'BG', 'BF', 'BI', 'KH', 'CM', 'CA', 'CV', 'KY', 'CF', 'TD', 'CL', 'CN', 'CX', 'CC', 'CO', 'KM', 'CG', 'CD', 'CK', 'CR', 'CI', 'HR', 'CU', 'CW', 'CY', 'CZ', 'DK', 'DJ', 'DM', 'DO', 'EC', 'EG', 'SV', 'GQ', 'ER', 'EE', 'ET', 'FK', 'FO', 'FJ', 'FI', 'FR', 'GF', 'PF', 'TF', 'GA', 'GM', 'GE', 'DE', 'GH', 'GI', 'GR', 'GL', 'GD', 'GP', 'GU', 'GT', 'GG', 'GN', 'GW', 'GY', 'HT', 'HM', 'VA', 'HN', 'HK', 'HU', 'IS', 'IN', 'ID', 'IR', 'IQ', 'IE', 'IM', 'IL', 'IT', 'JM', 'JP', 'JE', 'JO', 'KZ', 'KE', 'KI', 'KP', 'KR', 'KW', 'KG', 'LA', 'LV', 'LB', 'LS', 'LR', 'LY', 'LI', 'LT', 'LU', 'MO', 'MK', 'MG', 'MW', 'MY', 'MV', 'ML', 'MT', 'MH', 'MQ', 'MR', 'MU', 'YT', 'MX', 'FM', 'MD', 'MC', 'MN', 'ME', 'MS', 'MA', 'MZ', 'MM', 'NA', 'NR', 'NP', 'NL', 'NC', 'NZ', 'NI', 'NE', 'NG', 'NU', 'NF', 'MP', 'NO', 'OM', 'PK', 'PW', 'PS', 'PA', 'PG', 'PY', 'PE', 'PH', 'PN', 'PL', 'PT', 'PR', 'QA', 'RE', 'RO', 'RU', 'RW', 'BL', 'SH', 'KN', 'LC', 'MF', 'PM', 'VC', 'WS', 'SM', 'ST', 'SA', 'SN', 'RS', 'SC', 'SL', 'SG', 'SX', 'SK', 'SI', 'SB', 'SO', 'ZA', 'GS', 'SS', 'ES', 'LK', 'SD', 'SR', 'SJ', 'SZ', 'SE', 'CH', 'SY', 'TW', 'TJ', 'TZ', 'TH', 'TL', 'TG', 'TK', 'TO', 'TT', 'TN', 'TR', 'TM', 'TC', 'TV', 'UG', 'UA', 'AE', 'GB', 'US', 'UM', 'UY', 'UZ', 'VU', 'VE', 'VN', 'VG', 'VI', 'WF', 'EH', 'YE', 'ZM', 'ZW'];
 			var languages = {
 				'en': 'English',
@@ -447,9 +448,8 @@ exports.get_view = function(req, res) {
 				'ru': 'Русский'
 			};
 
-
 			var view_data = {
-				'disciplines': disciplines,
+				'disciplines': config.disciplines,
 				'languages': languages,
 				'countries': countries,
 				'tr': translations[profile.language],
