@@ -1,25 +1,35 @@
 module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    bower_concat: {
+      all: {
+        dest: 'public/js/_bower.js',
+        dependencies: {
+          "angular-animate": "angular",
+          "angular-resource": "angular",
+          "angular-route": "angular",
+          "c3": "d3"
+        },
+        bowerOptions: {
+          relative: false
+        }
+      }
+    },
     concat: {
       options: {
         separator: ';'
       },
       dist: {
         src: [
-            'public/js/libs/angular-file-upload-shim.js',
-            'public/js/libs/angular.min.js',
-            'public/js/libs/angular-route.min.js',
-            'public/js/libs/angular-animate.min.js',
-            'public/js/libs/angular-resource.min.js',
-            'public/js/libs/thirdparty/ui-bootstrap-0.10.0.min.js',
-            'public/js/libs/thirdparty/d3.v3.min.js',
-            'public/js/libs/thirdparty/c3.min.js',
+            'public/js/_bower.js',
+            'public/js/common/utils.js',
+            'public/js/libs/angular/angular-file-upload-shim.js',
+            'public/js/libs/thirdparty/ui-bootstrap-custom-0.12.1.js',
             'public/js/app.js',
-            'public/js/libs/angular-file-upload.js',
             'public/js/services/*.js',
             'public/js/directives/*.js',
             'public/js/models/*.js',
+            'public/js/libs/angular/angular-file-upload.js',
             'public/js/controllers/*.js',
             'public/js/scripts/*.js'
         ],
@@ -28,18 +38,51 @@ module.exports = function(grunt) {
     },
     uglify: {
       options: {
-        banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+        banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n',
+        mangle: {
+          except: ['angular']
+        }
       },
       dist: {
         files: {
           'public/js/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
         }
       }
+    },
+    less: {
+      all: {
+        options: {},
+        files: {
+          "public/styles/css/style.css": "public/styles/less/style.less"
+        }
+      }
+    },
+    concat_css: {
+      options: {},
+      all: {
+        src: ["public/styles/css/bootstrap.css","public/styles/css/c3.css","public/styles/css/angular-datepicker.css","public/styles/css/style.css"],
+        dest: "public/styles/css/compiled.css"
+      }
+    },
+    cssmin: {
+      target: {
+        files: [{
+          expand: true,
+          cwd: 'public/styles/css',
+          src: ['compiled.css'],
+          dest: 'public/styles/css',
+          ext: '.min.css'
+        }]
+      }
     }
   });
 
-  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-bower-concat');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-concat-css');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
 
-  grunt.registerTask('default', ['concat', 'uglify']);
+  grunt.registerTask('default', ['bower_concat','concat', 'uglify', 'less', 'concat_css', 'cssmin']);
 };

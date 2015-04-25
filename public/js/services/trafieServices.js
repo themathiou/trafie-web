@@ -12,6 +12,7 @@ angular.module('trafie.services', []);
     // Alert messages service
     ///////////////////////////////////////////////////////////////////////////////////////////////
     angular.module('trafie.services').factory('AlertSvc', [
+        '$rootScope',
         '$http',
         AlertSvcImpl
     ]);

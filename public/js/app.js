@@ -1,12 +1,11 @@
 //Define ng-app module
-//---
 
 //--- WE NEED TO FIX INJECTION HERE TO AVOID ISSUES IN MINIFICATION IN GRUNT ---//
 var trafie = angular.module('trafie', [
-	'trafie.controllers',
-	'trafie.services',
-	'trafie.directives',
 	'trafie.models',
+	'trafie.services',
+	'trafie.controllers',
+	'trafie.directives',
 	'ngRoute',
 	'ui.bootstrap',
 	'ngAnimate',
@@ -57,7 +56,7 @@ trafie.config(['$routeProvider',
 	}
 ])
 //Initialization
-.run(function($rootScope, User, Discipline) {
+.run(['$rootScope', 'User', 'Discipline', function($rootScope, User, Discipline) {
 	$rootScope.isVisitor = true;
 
 	User.get({userId:'me'}, function(res){
@@ -90,4 +89,4 @@ trafie.config(['$routeProvider',
 	// 		console.log('info :: Oooohhh we have a visitoo!!');
 	// 	});
 
-});
+}]);
