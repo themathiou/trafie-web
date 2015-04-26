@@ -47,7 +47,7 @@ var ModalInstanceCtrl = function($rootScope, $scope, $http, $modalInstance, Acti
 		Activity.delete({userId: $rootScope.localUser._id, activityId: temp_activity_id}, function() {
 				$modalInstance.close(true);
 			}, function(err) {
-				console.log('error in confirm_delete:', e, ' --- ' + temp_activity_id);
+				console.log('error in confirm_delete:', err, ' --- ' + temp_activity_id);
 				$modalInstance.close(false);
 			});
 	}
@@ -75,3 +75,7 @@ var ModalInstanceCtrl = function($rootScope, $scope, $http, $modalInstance, Acti
 			});
 	}
 };
+
+// solve DI issue for controller
+ModalInstanceCtrl.$inject = ['$rootScope', '$scope', '$http', '$modalInstance', 'Activity'];
+
