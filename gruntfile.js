@@ -4,12 +4,6 @@ module.exports = function(grunt) {
     bower_concat: {
       all: {
         dest: 'public/js/_bower.js',
-        dependencies: {
-          "angular-animate": "angular",
-          "angular-resource": "angular",
-          "angular-route": "angular",
-          "c3": "d3"
-        },
         bowerOptions: {
           relative: false
         }

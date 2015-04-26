@@ -1,6 +1,4 @@
 //Define ng-app module
-
-//--- WE NEED TO FIX INJECTION HERE TO AVOID ISSUES IN MINIFICATION IN GRUNT ---//
 var trafie = angular.module('trafie', [
 	'trafie.models',
 	'trafie.services',
@@ -69,24 +67,4 @@ trafie.config(['$routeProvider',
 			$rootScope.current_user = res; //current user is logged in user
 		});
 	});
-
-	// $http.get('/users/me')
-	// 	.success(function(res) {
-	// 		//The logged in user
-	// 		$rootScope.localUser = res;
-	// 		$rootScope.isVisitor = false;
-
-	// 		$http.get('/users/' + res._id + '/disciplines')
-	// 		.success(function(res) {
-	// 			$rootScope.localUser.disciplines_of_user = res;
-	// 			$rootScope.current_user = res; //current user is logged in user
-	// 		})
-	// 		.error(function(res) {
-	// 			console.err('info :: can\'t get disciplines of current user in -run-');
-	// 		});
-	// 	})
-	// 	.error(function(res) {
-	// 		console.log('info :: Oooohhh we have a visitoo!!');
-	// 	});
-
 }]);
