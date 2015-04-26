@@ -47,15 +47,15 @@ module.exports = function(grunt) {
       all: {
         options: {},
         files: {
-          "public/styles/css/style.css": "public/styles/less/style.less"
+          'public/styles/css/style.css': 'public/styles/less/style.less'
         }
       }
     },
     concat_css: {
       options: {},
       all: {
-        src: ["public/styles/css/bootstrap.css","public/styles/css/c3.css","public/styles/css/angular-datepicker.css","public/styles/css/style.css"],
-        dest: "public/styles/css/compiled.css"
+        src: ['public/styles/css/bootstrap.css','public/styles/css/c3.css','public/styles/css/angular-datepicker.css','public/styles/css/style.css'],
+        dest: 'public/styles/css/compiled.css'
       }
     },
     cssmin: {
