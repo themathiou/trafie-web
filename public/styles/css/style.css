@@ -402,7 +402,7 @@ form .message_success {
   align-items: center;
 }
 .main-menu .logo {
-  background-image: url("../images/logo.png");
+  background-image: url("../../images/logo.png");
   background-repeat: no-repeat;
   background-position: 0 2px;
   float: left;
@@ -519,7 +519,7 @@ form .message_success {
   background: white;
 }
 .main-menu .search:focus .loading {
-  background-image: url("../images/ui/loading.gif");
+  background-image: url("../../images/ui/loading.gif");
   background-repeat: no-repeat;
   background-position: 99% 50%;
   background-size: 20px;
