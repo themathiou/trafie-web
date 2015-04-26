@@ -24,8 +24,7 @@ module.exports = function(grunt) {
             'public/js/directives/*.js',
             'public/js/models/*.js',
             'public/js/libs/angular/angular-file-upload.js',
-            'public/js/controllers/*.js',
-            'public/js/scripts/*.js'
+            'public/js/controllers/*.js'
         ],
         dest: 'public/js/<%= pkg.name %>.js'
       }

@@ -66,6 +66,7 @@ exports.get = function(req, res) {
 		} else {
 			// Otherwise, if it's a server error, send the error
 			if (response.error === 'query_error') {
+				console.log('query_error');
 				send_status(res, 500);
 			} else {
 				// If the user doesn't have access to the data, or the data don't exist, do not send anything
@@ -471,7 +472,6 @@ function return_activity(res, status_code, activity_id, user_id, language, date_
 
 	// Find the activity and return it
 	Activity.schema.findOne(where, '').then(function(activity) {
-	console.log('0', activity. activity.performance);
 			if (activity && Object.keys(activity).length) {
 				activity = {
 					'_id': activity._id,
@@ -486,7 +486,6 @@ function return_activity(res, status_code, activity_id, user_id, language, date_
 				};
 
 				// Format the date of the activity
-				console.log('1', activity);
 				activity = activityHelper.formatActivity(activity, language, date_format);
 			} else {
 				status_code = 404;
@@ -495,6 +494,7 @@ function return_activity(res, status_code, activity_id, user_id, language, date_
 			res.json(activity);
 		})
 		.fail(function(error) {
+			console.log("Could not find the activity:" + error);
 			send_status(res, 500);
 		});
 }
@@ -531,6 +531,7 @@ function return_activities(res, status_code, where, language, date_format) {
 		res.json(activities);
 	})
 	.fail(function(error) {
+		console.log("Could not return activities: " + error);
 		send_status(res, 500);
 	});
 }

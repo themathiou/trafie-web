@@ -172,6 +172,7 @@ activityHelper.validateTime = function(performance) {
 	performance.seconds = typeof performance.seconds !== 'undefined' && performance.seconds != '' ? performance.seconds : '00';
 	performance.centiseconds = typeof performance.centiseconds !== 'undefined' && performance.centiseconds != '' ? performance.centiseconds : '00';
 
+	console.log(performance);
 	// Validating hours
 	if (typeof performance.hours !== 'string' || parseInt(performance.hours) != performance.hours || performance.hours.length > 2 || performance.hours < 0) {
 		valid = false;
@@ -217,7 +218,7 @@ activityHelper.validateTime = function(performance) {
 			performance.centiseconds = '00';
 		}
 
-		let time = performance.hours + ':' + performance.minutes + ':' + performance.seconds + '.' + performance.centiseconds;
+		time = performance.hours + ':' + performance.minutes + ':' + performance.seconds + '.' + performance.centiseconds;
 	}
 
 	return time;
