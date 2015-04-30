@@ -62,8 +62,8 @@ trafie.config(['$routeProvider',
 		$rootScope.localUser = res;
 		$rootScope.isVisitor = false;
 
-		Discipline.query({userId: res._id}, function() {
-			$rootScope.localUser.disciplines_of_user = res;
+		Discipline.query({userId: res._id}, function(discipline_response) {
+			$rootScope.localUser.disciplines_of_user = discipline_response;
 			$rootScope.current_user = res; //current user is logged in user
 		});
 	});

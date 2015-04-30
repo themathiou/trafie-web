@@ -22,7 +22,7 @@ angular.module('trafie.models').factory('Activity', ['$resource', function($reso
 // *** Disciplines (of User) ***
 ///////////////////////////////////////////////////////////////////////////////////////////////
 angular.module('trafie.models').factory('Discipline', ['$resource', function($resource) {
-  return $resource('/users/:userId/disciplines/:activityId');
+  return $resource('/users/:userId/disciplines');
 }]);
 
 

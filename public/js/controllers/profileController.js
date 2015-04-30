@@ -183,7 +183,7 @@
 				console.err('activity belongs to undefined type');
 			}
 
-			$scope.updateActivityForm.date = moment(activity.date).format("ddd MMM DD gggg");;
+			$scope.updateActivityForm.date = moment(activity.date).format("ddd MMM DD gggg");
 			$scope.updateActivityForm.place = activity.place;
 			$scope.updateActivityForm.location = activity.location;
 			$scope.updateActivityForm.competition = activity.competition;
