@@ -4,6 +4,7 @@ angular.module('trafie.directives' , []);
 (function () {
     'use strict';
 
+    //SHOULD BE INDEPENDEND FROM $WINDOW. THIS SHOULD BE USED ONLY BASED ELEMENT SCROLL !!!!!!!!
 	angular.module('trafie.directives', []).directive('whenScrolled', ['$window', function($window) {
         return {
             restrict: "A",

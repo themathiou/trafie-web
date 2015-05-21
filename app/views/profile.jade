@@ -58,6 +58,8 @@ div.profile-page.col-xs-12.col-sm-12.col-md-12.col-lg-8(ng-init="initProfile()" 
                   a(href="" ng-click="initEditableActivity(activity)") Edit
                 li
                   a(href="" ng-click="deleteActivity(activity._id)") Delete
+                li
+                  a(href="" ng-click="deleteActivity(activity._id)") ngDialog
 
 
             div.current_data(ng-show="!activity.show_editable_form")
