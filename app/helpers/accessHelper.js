@@ -1,120 +1,124 @@
 'use strict';
 
 // Loading models
-const Profile = require('../models/profile.js');
+var Profile = require('../models/profile.js'),
+	q = require('q');
 
-var mainHelper = {};
+var accessHelper = {};
 
 /**
  * Checks if the user has access to the requested data
- * @param  String	  user_id
- * @param  String     profile_id
- * @param  Function   callback
+ * @param  String	  userId
+ * @param  String     profileId
  */
-mainHelper.validateAccess = function(user_id, profile_id, callback) {
+accessHelper.validateAccess = function(user, profileId) {
+	var defer = q.defer();
 	var response = {
 			success: false,
 			user: {},
 			profile: {},
 			error: ''
 		},
-		user_data = false;
+		userData = false,
+		userId =  user && user._id || null;
 
-	if (user_id) {
+	if (userId) {
 		Profile.schema.findOne({
-			'_id': user_id
-		}, '_id language date_format').then(function(user_data_response) {
+			'_id': userId
+		}, '_id language dateFormat').then(function(userDataResponse) {
 			// If the user wasn't found, there's no point to continue
-			if (!user_data_response) {
+			if (!userDataResponse) {
 				response.error = 'user_not_valid';
-				callback(response);
+				defer.resolve(response);
 			}
 
-			response.user = user_data_response;
-			user_data = user_data_response;
+			response.user = userDataResponse;
+			userData = userDataResponse;
 
 			// If the user didn't request profile specific data (E.g. he requested settings)
-			if (typeof profile_id === 'undefined') {
+			if (typeof profileId === 'undefined') {
 				// Just return the user
 				response.success = true;
-				callback(response);
+				defer.resolve(response);
 			} else {
 				accessProfile();
 			}
 		})
-		.fail(function(error) {
+		.catch(function(error) {
 			response.error = 'query_error';
-			callback(response);
+			defer.resolve(response);
 		});
 	} else {
 		// A user who is not logged in tries to access a profile
 		response.user = {
 			language: 'en',
-			date_format: 'd-m-y'
+			dateFormat: 'd-m-y'
 		};
 		accessProfile();
 	}
 
 	function accessProfile() {
 		// If there is no profile id, return an error
-		if (typeof profile_id === 'undefined' || !profile_id) {
+		if (typeof profileId === 'undefined' || !profileId) {
 			// Just return the user
 			response.error = 'profile_not_valid';
-			callback(response);
+			defer.resolve(response);
 			return;
 		}
 
 		// Find the profile by id
 		Profile.schema.findOne({
-			'_id': profile_id
-		}, '_id first_name last_name discipline country male picture username private about')
-		.then(function(profile_data) {
+			'_id': profileId
+		}, '_id firstName lastName discipline country male picture username private about')
+		.then(function(profileData) {
 			// If the profile was found, get the data of the user
-			if (profile_data !== null && profile_data !== undefined) {
+			if (profileData !== null && profileData !== undefined) {
 				// Check if the profile found is private
-				handlePrivacy(profile_data);
+				handlePrivacy(profileData);
 				return 0;
 			} else {
 				// If the profile wasn't found, try to find it by username
 				return Profile.schema.findOne({
-					'username': profile_id
-				}, '_id first_name last_name discipline country male picture username private about');
+					'username': profileId
+				}, '_id firstName lastName discipline country male picture username private about');
 			}
 		})
-		.then(function(profile_data) {
-			if (profile_data !== 0) {
+		.then(function(profileData) {
+			if (profileData !== 0) {
 				// If the profile was found, get the data of the user
-				if (profile_data !== null && profile_data !== undefined) {
+				if (profileData !== null && profileData !== undefined) {
 					// Check if the profile found is private
-					handlePrivacy(profile_data);
+					handlePrivacy(profileData);
 				} else {
 					// If the profile wasn't found
 					response.error = 'profile_not_valid';
-					callback(response);
+					defer.resolve(response);
 					return;
 				}
 			}
 		})
-		.fail(function(error) {
+		.catch(function(error) {
 			response.error = 'query_error';
-			callback(response);
+			defer.resolve(response);
 		});
 	}
 
-	function handlePrivacy(profile_data) {
+	function handlePrivacy(profileData) {
 		// If the profile requested is a private profile and the user who tries to access it
 		// is not the user who owns it
-		if (profile_data.private && (!user_data || profile_data._id.toString() !== user_data._id.toString())) {
+		if (profileData.private && (!userData || profileData._id.toString() !== userData._id.toString())) {
 			// Deny access
 			response.error = 'profile_not_valid';
-			callback(response);
+			defer.resolve(response);
 		} else {
 			// Return the profile data along with the data of the user who requested it
-			response.profile = profile_data;
+			response.profile = profileData;
 			response.success = true;
-			callback(response);
+			defer.resolve(response);
 		}
 	}
+
+	return defer.promise;
 };
 
-module.exports = mainHelper;
+module.exports = accessHelper;

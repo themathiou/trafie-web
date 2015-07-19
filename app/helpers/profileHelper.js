@@ -135,11 +135,11 @@ profileHelper.validateAbout = function(about) {
 
 /**
  * Checks the date format for validity
- * @param string date_format
+ * @param string dateFormat
  * @return boolean
  */
-profileHelper.validateDateFormat = function(date_format) {
-	return date_format == 'd-m-y' || date_format == 'm-d-y';
+profileHelper.validateDateFormat = function(dateFormat) {
+	return dateFormat == 'd-m-y' || dateFormat == 'm-d-y';
 };
 
 module.exports = profileHelper;

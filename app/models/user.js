@@ -31,13 +31,13 @@ userSchema.findOne = function( where, select ) {
 
 /**
  * Resets user's password
- * @param string user_id
+ * @param string userId
  * @param string password
  */
-userSchema.resetPassword = function( user_id, password ) {
+userSchema.resetPassword = function( userId, password ) {
 	var d = q.defer();
 	password = userHelper.encryptPassword( password );
-	User.findByIdAndUpdate( user_id, { password: password }, '', function ( err, user ) {
+	User.findByIdAndUpdate( userId, { password: password }, '', function ( err, user ) {
 		d.resolve(user);
 	});
 	return d.promise;

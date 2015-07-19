@@ -21,11 +21,11 @@ div.settings-element(ng-class="{editable: isEditable.profile_pic}")
 hr.main-separator
 
 //FIRST NAME
-div.settings-element(ng-class="{editable: isEditable.first_name}")
+div.settings-element(ng-class="{editable: isEditable.firstName}")
 	label= tr['first_name'] + ': '
 	form.middle-section( method="POST" ng-submit="submitChangeSetting('first_name')" name="fname_form")
-		span(ng-show="!isEditable.first_name") {{ localUser.first_name }}
-		div(ng-show="isEditable.first_name")
+		span(ng-show="!isEditable.firstName") {{ localUser.firstName }}
+		div(ng-show="isEditable.firstName")
 			input.form-control(ng-model="localUser.new_first_name" name="first_name" ng-pattern="ONLY_ALPHABETIC" ng-class="{error: fname_form.first_name.$error.pattern}")
 			span.message_error(ng-show="fname_form.first_name.$error.pattern" ) Only alphabetic characters are allowed
 		div(ng-show="first_name_msg" ng-class="{message_error: !success, message_success: success}") {{first_name_msg}}

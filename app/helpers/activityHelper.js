@@ -5,27 +5,29 @@ let translations = require('../languages/translations.js');
 
 let activityHelper = {};
 
+// DEPRECATED - THE CLIENT SHOULD DO THIS
 /**
  * Converts the activity data to a more readable format
  * @param array activities
  * @param string language
- * @param string date_format
+ * @param string dateFormat
  */
-activityHelper.formatActivities = function(activities, language, dateFormat) {
+/*activityHelper.formatActivities = function(activities, language, dateFormat) {
 	activities.map(function(activity) {
 		return activityHelper.formatActivity(activity, language, dateFormat);
 	});
 	return activities;
-};
+};*/
 
 
+// DEPRECATED - THE CLIENT SHOULD DO THIS
 /**
  * Converts the activity data to a more readable format
  * @param object activity
  * @param string language
- * @param string date_format
+ * @param string dateFormat
  */
-activityHelper.formatActivity = function(activity, language, date_format) {
+/*activityHelper.formatActivity = function(activity) {
 	if (!activity.discipline || !activity.performance) return null;
 
 	switch (activity.discipline) {
@@ -91,7 +93,7 @@ activityHelper.formatActivity = function(activity, language, date_format) {
 
 	// Adjusting the time to the user's timezone
 	activity.date.setHours(activity.date.getHours() + 3);
-	switch (date_format) {
+	switch (dateFormat) {
 		case 'd-m-y':
 			activity.formatted_date = activity.date.getDate() + '-' + (activity.date.getMonth() + 1) + '-' + activity.date.getFullYear();
 			break;
@@ -101,14 +103,14 @@ activityHelper.formatActivity = function(activity, language, date_format) {
 	}
 
 	return activity;
-};
+};*/
 
 /**
  * Checks if the discipline is valid
  * @param  string discipline
  * @return string
  */
-activityHelper.disciplineIsValid = function(discipline) {
+activityHelper.validateDiscipline = function(discipline) {
 	// Validating discipline and performance
 	switch (discipline) {
 		case '60m':
@@ -172,7 +174,6 @@ activityHelper.validateTime = function(performance) {
 	performance.seconds = typeof performance.seconds !== 'undefined' && performance.seconds != '' ? performance.seconds : '00';
 	performance.centiseconds = typeof performance.centiseconds !== 'undefined' && performance.centiseconds != '' ? performance.centiseconds : '00';
 
-	console.log(performance);
 	// Validating hours
 	if (typeof performance.hours !== 'string' || parseInt(performance.hours) != performance.hours || performance.hours.length > 2 || performance.hours < 0) {
 		valid = false;

@@ -4,7 +4,7 @@ div.left-column.hidden-xs.col-sm-4.col-md-4.col-lg-4
     div.image-container
       img(ng-src="{{current_user.picture}}")
     div.user-info
-      p.full-name {{current_user.first_name}} {{current_user.last_name}}
+      p.full-name {{current_user.firstName}} {{current_user.last_name}}
       p.username(ng-if="::current_user.username") @{{current_user.username}}
       p(ng-if="::current_user.formatted_discipline") {{current_user.formatted_discipline}}
       p(ng-if="::current_user.country") {{current_user.country}}

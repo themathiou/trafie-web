@@ -8,7 +8,7 @@ var userHelper = require('../helpers/userHelper.js');
 
 
 exports.get = function(req, res) {
-	if (typeof req.session.user_id !== 'undefined') {
+	if (typeof req.session.userId !== 'undefined') {
 		res.redirect('/');
 	}
 
@@ -18,14 +18,15 @@ exports.get = function(req, res) {
 };
 
 exports.post = function(req, res) {
-	if (typeof req.session.user_id !== 'undefined') {
+	if (typeof req.session.userId !== 'undefined') {
 		res.redirect('/');
 	}
 
-	var email = req.body.email.toLowerCase();
+/*	var email = req.body.email.toLowerCase();
 	var password = userHelper.encryptPassword(req.body.password);
-
-	// Find user by id and password
+				req.session.userId = res.user._id;*/
+res.redirect('/');
+/*	// Find user by id and password
 	User.schema.findOne({
 		'email': email,
 		'password': password,
@@ -37,7 +38,7 @@ exports.post = function(req, res) {
 			// If the user has validated their account
 			if (response.valid === true) {
 				// Start the session and log the user in
-				req.session.user_id = response._id;
+				req.session.userId = response._id;
 				res.redirect('/');
 			} else {
 				// If the user is not valid yet, notify them that there is an email waiting
@@ -52,9 +53,9 @@ exports.post = function(req, res) {
 			});
 		}
 	})
-	.fail(function(error) {
+	.catch(function(error) {
 		send_error_page(error, res);
-	});
+	});*/
 };
 
 /**
@@ -64,5 +65,5 @@ exports.post = function(req, res) {
  */
 function send_error_page(error, res) {
 	res.statusCode = 500;
-	res.sendfile('./views/five_oh_oh.html');
+	res.sendFile('../views/five_oh_oh.html', {"root": __dirname});
 }

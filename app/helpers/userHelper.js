@@ -38,11 +38,11 @@ userHelper.validatePassword = function(password) {
 
 /**
  * Makes the user valid
- * @param string user_id
+ * @param string userId
  */
-userHelper.validateUser = function(user_id) {
+userHelper.validateUser = function(userId) {
 	var d = q.defer();
-	User.findByIdAndUpdate(user_id, {
+	User.findByIdAndUpdate(userId, {
 		valid: true
 	}, '', function(err, user) {
 		d.resolve(!user);

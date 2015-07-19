@@ -29,7 +29,7 @@ var moment = require('moment'),
 
 exports.get = function(req, res) {
 	res.send(markup);
-}
+};
 
 exports.post = function(req, res) {
 	if (typeof req.body.number_of_users !== 'undefined' && typeof req.body.number_of_activities && typeof req.body.start_date) {
@@ -50,20 +50,20 @@ exports.post = function(req, res) {
 		create_default_users();
 		res.send(markup);
 	}
-}
+};
 
 function create_user(activities_count, start_date, res) {
 	(function() {
 		var random_index = ~~(Math.random() * names.length);
-		var first_name = names[random_index];
+		var firstName = names[random_index];
 
 		var random_index = ~~(Math.random() * names.length);
-		var last_name = names[random_index];
+		var lastName = names[random_index];
 
 		var delimiter = ~~(Math.random() * 2) ? '.' : '_';
 
 		var new_user = {
-			'email': first_name.toLowerCase() + delimiter + last_name.toLowerCase() + (~~(Math.random() * 10000)) + '@trafie.com',
+			'email': firstName.toLowerCase() + delimiter + lastName.toLowerCase() + (~~(Math.random() * 10000)) + '@trafie.com',
 			'password': userHelper.encryptPassword('123123'),
 			'valid': true
 		};
@@ -82,16 +82,16 @@ function create_user(activities_count, start_date, res) {
 		}
 
 		var new_profile = {
-			'first_name': first_name,
-			'last_name': last_name,
-			'username': first_name.toLowerCase() + delimiter + last_name.toLowerCase() + (~~(Math.random() * 10000)),
+			'firstName': firstName,
+			'lastName': lastName,
+			'username': firstName.toLowerCase() + delimiter + lastName.toLowerCase() + (~~(Math.random() * 10000)),
 			'discipline': main_discipline
 		};
 
 		if (~~(Math.random() * 2)) {
 			var random_index = ~~(Math.random() * names.length);
 			var middle_name = names[random_index];
-			new_profile.last_name = middle_name + ' ' + last_name;
+			new_profile.lastName = middle_name + ' ' + lastName;
 		}
 
 		var activities = [];
@@ -138,7 +138,7 @@ function create_user(activities_count, start_date, res) {
 				if(activities_count) {
 					(function(){
 						for(var i=0 ; i<activities_count ; i++) {
-							activities[i].user_id = user._id;
+							activities[i].userId = user._id;
 							var activity = new Activity(activities[i]);
 							activity.save(function(err, activity) {
 								if(err) {
@@ -246,8 +246,8 @@ function create_default_users() {
 				'valid': true
 			},
 			profile: {
-				'first_name': 'Testodore',
-				'last_name': 'Testoyevsky',
+				'firstName': 'Testodore',
+				'lastName': 'Testoyevsky',
 				'username': 'user'
 			}
 		},
@@ -258,8 +258,8 @@ function create_default_users() {
 				'valid': true
 			},
 			profile: {
-				'first_name': 'Theodore',
-				'last_name': 'Mathioudakis',
+				'firstName': 'Theodore',
+				'lastName': 'Mathioudakis',
 				'username': 'theodore'
 			}
 		},
@@ -270,8 +270,8 @@ function create_default_users() {
 				'valid': true
 			},
 			profile: {
-				'first_name': 'George',
-				'last_name': 'Balasis',
+				'firstName': 'George',
+				'lastName': 'Balasis',
 				'username': 'george'
 			}
 		},
@@ -282,8 +282,8 @@ function create_default_users() {
 				'valid': true
 			},
 			profile: {
-				'first_name': 'Babis',
-				'last_name': 'Mathioudakis',
+				'firstName': 'Babis',
+				'lastName': 'Mathioudakis',
 				'username': 'babis'
 			}
 		},
@@ -294,8 +294,8 @@ function create_default_users() {
 				'valid': true
 			},
 			profile: {
-				'first_name': 'Elisavet',
-				'last_name': 'Balasi',
+				'firstName': 'Elisavet',
+				'lastName': 'Balasi',
 				'username': 'elisavet'
 			}
 		}

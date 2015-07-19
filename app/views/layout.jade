@@ -24,9 +24,9 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
 
             ul.navigation_menu.col-xs-8.col-sm-6.col-md-6.col-lg-6
                 li(ng-if="!isVisitor")
-                    a(href="/{{localUser._id}}" ng-class="{active: section == 'profile'}" ) {{localUser.first_name}}
-                li(ng-if="!isVisitor").hidden-xs
-                    a(href="/statistics" ng-class="{active: section == 'statistics'}")= tr['statistics']
+                    a(href="/{{localUser._id}}" ng-class="{active: section == 'profile'}" ) {{localUser.firstName}}
+                //- li(ng-if="!isVisitor").hidden-xs
+                    //- a(href="/statistics" ng-class="{active: section == 'statistics'}")= tr['statistics']
                 li(ng-if="!isVisitor")
                     a.hidden-xs(href="/settings" ng-class="{active: section == 'settings'}")= tr['settings']
                 li(ng-if="!isVisitor && isMobile")

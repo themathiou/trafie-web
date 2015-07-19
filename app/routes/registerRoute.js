@@ -14,15 +14,15 @@ var Email = require('../libs/email');
 
 
 exports.get = function(req, res) {
-	if (typeof req.session.user_id !== 'undefined') {
+	if (typeof req.session.userId !== 'undefined') {
 		res.redirect('/');
 	}
 
 	res.render('register', {
 		errors: {},
 		fields: {
-			'first_name': '',
-			'last_name': '',
+			'firstName': '',
+			'lastName': '',
 			'email': ''
 		}
 	});
@@ -30,7 +30,7 @@ exports.get = function(req, res) {
 
 
 exports.post = function(req, res) {
-	if (typeof req.session.user_id !== 'undefined') {
+	if (typeof req.session.userId !== 'undefined') {
 		res.redirect('/');
 	}
 
@@ -38,8 +38,8 @@ exports.post = function(req, res) {
 	var errors = false;
 
 	// Initializing the input values
-	var first_name = typeof req.body.first_name !== 'undefined' ? req.body.first_name.trim() : '';
-	var last_name = typeof req.body.last_name !== 'undefined' ? req.body.last_name.trim() : '';
+	var firstName = typeof req.body.firstName !== 'undefined' ? req.body.firstName.trim() : '';
+	var lastName = typeof req.body.lastName !== 'undefined' ? req.body.lastName.trim() : '';
 	var email = typeof req.body.email !== 'undefined' ? req.body.email.trim().toLowerCase() : '';
 	var password = typeof req.body.password !== 'undefined' ? req.body.password : '';
 	var repeat_password = typeof req.body.repeat_password !== 'undefined' ? req.body.repeat_password : '';
@@ -67,18 +67,18 @@ exports.post = function(req, res) {
 		error_messages.email = 'Email is not valid';
 		errors = true;
 	}
-	if (!first_name) {
-		error_messages.first_name = 'First name is required';
+	if (!firstName) {
+		error_messages.firstName = 'First name is required';
 		errors = true;
-	} else if (!profileHelper.validateName(first_name)) {
-		error_messages.first_name = 'First name can only have latin characters';
+	} else if (!profileHelper.validateName(firstName)) {
+		error_messages.firstName = 'First name can only have latin characters';
 		errors = true;
 	}
-	if (!last_name) {
-		error_messages.last_name = 'Last name is required';
+	if (!lastName) {
+		error_messages.lastName = 'Last name is required';
 		errors = true;
-	} else if (!profileHelper.validateName(last_name)) {
-		error_messages.last_name = 'Last name can only have latin characters';
+	} else if (!profileHelper.validateName(lastName)) {
+		error_messages.lastName = 'Last name can only have latin characters';
 		errors = true;
 	}
 
@@ -95,8 +95,8 @@ exports.post = function(req, res) {
 			res.render('register', {
 				'errors': error_messages,
 				'fields': {
-					'first_name': first_name,
-					'last_name': last_name,
+					'firstName': firstName,
+					'lastName': lastName,
 					'email': email
 				}
 			});
@@ -112,8 +112,8 @@ exports.post = function(req, res) {
 		};
 
 		var new_profile = {
-			'first_name': first_name,
-			'last_name': last_name
+			'firstName': firstName,
+			'lastName': lastName
 		};
 
 		// Creating the user and profile objects
@@ -128,7 +128,7 @@ exports.post = function(req, res) {
 					return UserHashes.schema.createVerificationHash(new_user.email, user._id);
 				})
 				.then(function(email_hash) {
-					Email.send_verification_email(new_user.email, new_profile.first_name, new_profile.last_name, email_hash, req.headers.host);
+					Email.send_verification_email(new_user.email, new_profile.firstName, new_profile.lastName, email_hash, req.headers.host);
 
 					// Redirecting to the profile
 					res.redirect('/validation_email_sent/0/' + user._id);

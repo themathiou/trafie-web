@@ -10,32 +10,32 @@ var translations = require('../languages/translations.js');
 /**
  * Renders the statistics page
  * @param object  res           (the express response object)
- * @param string  user_id       (the user_id)
+ * @param string  userId       (the userId)
  * @param json    profile_data  (data of the profile of the user)
  */
 exports.get_view = function(req, res) {
-	var user_id = req.session.user_id;
+	var userId = req.session.userId;
 
 	// If there is a user id in the request (NOT IMPLEMENTED YET)
-	if (typeof req.params.user_id !== 'undefined') {
-		console.log(req.params.user_id);
+	if (typeof req.params.userId !== 'undefined') {
+		console.log(req.params.userId);
 	}
 
-	if (!user_id) {
+	if (!userId) {
 		res.redirect('/login');
 		// change to /login only for testing purposes
 		// res.redirect('/register');
 	} else {
 		Profile.schema.findOne({
-			'_id': user_id
-		}, 'first_name last_name discipline country male birthday picture language date_format').then(function(profile_data) {
+			'_id': userId
+		}, 'firstName lastName discipline country male birthday picture language dateFormat').then(function(profile_data) {
 			// If the user was found
-			if (typeof profile_data.first_name !== 'undefined') {
+			if (typeof profile_data.firstName !== 'undefined') {
 				// The data that will go to the front end
 				var view_data = {
 					'user': {
-						'_id': user_id,
-						'first_name': profile_data.first_name,
+						'_id': userId,
+						'firstName': profile_data.firstName,
 						'discipline': profile_data.discipline
 					},
 					'tr': translations[profile_data.language]
@@ -48,7 +48,7 @@ exports.get_view = function(req, res) {
 				return false;
 			}
 		})
-		.fail(function(error) {
+		.catch(function(error) {
 			send_error_page(error, res);
 			return;
 		});
@@ -62,5 +62,5 @@ exports.get_view = function(req, res) {
  */
 function send_error_page(error, res) {
 	res.statusCode = 500;
-	res.sendfile('./views/five_oh_oh.html');
+	res.sendFile('../views/five_oh_oh.html', {"root": __dirname});
 }

@@ -34,7 +34,7 @@
 				//account
 				password: false,
 				language: false,
-				date_format: false,
+				dateFormat: false,
 				username: false
 			};
 
@@ -393,10 +393,10 @@
 					break;
 				case 'date-format':
 					data = {
-						"date_format": $scope.localUser.date_format
+						"dateFormat": $scope.localUser.date_format
 					};
 					Setting.save(data, function(res) {
-							$scope.localUser.date_format = res.value;
+							$scope.localUser.dateFormat = res.value;
 							$scope.dateformat_msg = res.message;
 							$scope.toggleEdit('edit_dateformat');
 							$scope.success = true;
@@ -414,7 +414,7 @@
 								$scope.dateformat_msg = '';
 							}, 3000);
 						});
-					$scope.localUser.date_format = res.translated_value;
+					$scope.localUser.dateFormat = res.translated_value;
 					break;
 				case 'username':
 					data = {

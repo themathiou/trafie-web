@@ -1,35 +1,35 @@
 'use strict';
 
-const Profile = require('../models/profile.js'),
+var Profile = require('../models/profile.js'),
 	Activity = require('../models/activity.js');
 // Initialize translations
 const translations = require('../languages/translations.js');
 
-exports.get_view = function(req, res) {
-	if (typeof req.session.user_id === 'undefined' && !req.params.profile_id) {
+exports.getView = function(req, res) {
+	if (typeof req.user === 'undefined' && !req.params.profileId) {
 		res.redirect('/login');
 		// change to /login only for testing purposes
 		// res.redirect('/register');
 		return false;
 	}
 
-	var user_id = req.session.user_id ? req.session.user_id : req.params.profile_id;
+	var userId = req.user ? req.user._id : req.params.profileId;
 	Profile.schema.findOne({
-		'_id': user_id
-	}, '_id first_name language')
+		_id: userId
+	}, '_id firstName language')
 	.then(function(response) {
-		if (response.first_name) {
+		if (response._id) {
 			var data = {
-				'user': {
-					'_id': response._id,
-					'first_name': response.first_name
+				user: {
+					_id: response._id,
+					firstName: response.firstName
 				},
-				'tr': translations[response.language]
+				tr: translations[response.language]
 			}
 
 			res.render('layout', data);
 		} else {
-			res.sendfile('./app/views/four_oh_four.html');
+			res.sendFile('../app/views/four_oh_four.html',  {"root": __dirname});
 		}
 	});
 };

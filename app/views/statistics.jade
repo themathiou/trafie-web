@@ -1,6 +1,6 @@
 div.statistics-page.col-xs-12.col-sm-12.col-md-12.col-lg-8(ng-init="statisticsInit()" ng-cloak)
     h4
-        a( href="/{{current_user._id}}") &lt; {{current_user.first_name}} {{current_user.last_name}}
+        a( href="/{{current_user._id}}") &lt; {{current_user.firstName}} {{current_user.lastName}}
 
     ul.filters-row(ng-show="!isLoading")
         li( ng-repeat="discipline in current_user.disciplines_of_user")

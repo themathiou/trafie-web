@@ -12,24 +12,24 @@ exports.post = function(req, res) {
 
 		let user_data_text = '';
 		let users_name = '';
-		if (typeof req.session.user_id !== 'undefined') {
+		if (typeof req.session.userId !== 'undefined') {
 			User.schema.findOne({
-					'_id': req.session.user_id
+					'_id': req.session.userId
 				}, 'email').then(function(user) {
 					user_data_text = '<b>Email</b>: ' + user.email + '<br>';
 					return Profile.schema.findOne({
-						'_id': req.session.user_id
-					}, '_id first_name last_name discipline country language birthday');
+						'_id': req.session.userId
+					}, '_id firstName lastName discipline country language birthday');
 				})
 				.then(function(profile) {
-					user_data_text += '<b>Name</b>: ' + profile.first_name + ' ' + profile.last_name + '<br>' +
+					user_data_text += '<b>Name</b>: ' + profile.firstName + ' ' + profile.lastName + '<br>' +
 						'<b>Country</b>: ' + profile.country + '<br>' +
 						'<b>Language</b>: ' + profile.language + '<br>' +
 						'<b>Birtday</b>: ' + profile.birthday.day + '/' + profile.birthday.month + '/' + profile.birthday.year + '<br>' +
 						'<b>Main discipline</b>: ' + profile.discipline + '<br>' +
 						'<b>User id</b>: ' + profile._id + '<br>';
 
-					users_name = profile.first_name + ' ' + profile.last_name;
+					users_name = profile.firstName + ' ' + profile.lastName;
 					send_email();
 				});
 		} else {

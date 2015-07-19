@@ -21,23 +21,23 @@ const config = require('../config/config.js');
 
 exports.get = function(req, res) {
 	// If there is no user id in the session, return null
-	if (typeof req.session.user_id === 'undefined') {
+	if (typeof req.session.userId === 'undefined') {
 		res.status(401).json(null);
 		return false;
 	}
 
-	var first_name, last_name,
-		user_id = req.session.user_id,
+	var firstName, lastName,
+		userId = req.session.userId,
 		update = '',
 		error_messages = '';
 
 	// Else, fetch the first name and the last name of the user from the database
 	Profile.schema.findOne({
-		'_id': user_id
-	}, 'first_name last_name discipline about male country birthday picture language date_format username private')
+		'_id': userId
+	}, 'firstName lastName discipline about male country birthday picture language dateFormat username private')
 	.then(function(profile) {
 		// If the user was not found, return null
-		if (typeof profile.first_name === 'undefined') {
+		if (typeof profile.firstName === 'undefined') {
 			res.json(null);
 			return false;
 		}
@@ -57,9 +57,9 @@ exports.get = function(req, res) {
 
 		var data = {
 			'user': {
-				'_id': user_id,
-				'first_name': profile.first_name,
-				'last_name': profile.last_name,
+				'_id': userId,
+				'firstName': profile.firstName,
+				'lastName': profile.lastName,
 				'discipline': profile.discipline,
 				'discipline_formatted': tr[profile.discipline],
 				'about': profile.about,
@@ -71,7 +71,7 @@ exports.get = function(req, res) {
 				'picture': picture,
 				'language': profile.language,
 				'language_formatted': tr['this_language'],
-				'date_format': profile.date_format,
+				'dateFormat': profile.dateFormat,
 				'username': profile.username,
 				'private': profile.private
 			}
@@ -79,7 +79,7 @@ exports.get = function(req, res) {
 
 		res.json(data);
 	})
-	.fail(function(error) {
+	.catch(function(error) {
 		res.status(500).json(null);
 	});
 };
@@ -87,20 +87,20 @@ exports.get = function(req, res) {
 
 exports.post = function(req, res) {
 	// If there is no user id in the session, redirect to register screen
-	if (typeof req.session.user_id === 'undefined') {
+	if (typeof req.session.userId === 'undefined') {
 		res.status(401).json(null);
 		return false;
 	}
 
-	var user_id = req.session.user_id;
+	var userId = req.session.userId;
 
 	// Check if the profile really exists
 	Profile.schema.findOne({
-			'_id': user_id
-		}, 'first_name language')
+			'_id': userId
+		}, 'firstName language')
 		.then(function(profile) {
 			// If the profile doesn't exist, return null
-			if (typeof profile.first_name === 'undefined') {
+			if (typeof profile.firstName === 'undefined') {
 				res.status(404).json(null);
 				return false;
 			}
@@ -117,23 +117,23 @@ exports.post = function(req, res) {
 				};
 
 			// Validating first name
-			if (typeof req.body.first_name !== 'undefined') {
-				if (profileHelper.validateName(req.body.first_name)) {
-					profile_data.first_name = req.body.first_name;
-					response.value = req.body.first_name;
+			if (typeof req.body.firstName !== 'undefined') {
+				if (profileHelper.validateName(req.body.firstName)) {
+					profile_data.firstName = req.body.firstName;
+					response.value = req.body.firstName;
 				} else {
-					response.message = tr['invalid_first_name'];
+					response.message = tr['invalid_firstName'];
 					response.error = 'Invalid first name';
 				}
 			}
 
 			// Validating last name
-			if (typeof req.body.last_name !== 'undefined') {
-				if (profileHelper.validateName(req.body.last_name)) {
-					profile_data.last_name = req.body.last_name;
-					response.value = req.body.last_name;
+			if (typeof req.body.lastName !== 'undefined') {
+				if (profileHelper.validateName(req.body.lastName)) {
+					profile_data.lastName = req.body.lastName;
+					response.value = req.body.lastName;
 				} else {
-					response.message = tr['invalid_last_name'];
+					response.message = tr['invalid_lastName'];
 					response.error = 'Invalid last name';
 				}
 			}
@@ -211,11 +211,11 @@ exports.post = function(req, res) {
 			}
 
 			// Validating date format
-			if (typeof req.body.date_format !== 'undefined') {
-				if (profileHelper.validateDateFormat(req.body.date_format)) {
-					profile_data.date_format = req.body.date_format;
-					response.value = req.body.date_format;
-					response.translated_value = tr[req.body.date_format];
+			if (typeof req.body.dateFormat !== 'undefined') {
+				if (profileHelper.validateDateFormat(req.body.dateFormat)) {
+					profile_data.dateFormat = req.body.dateFormat;
+					response.value = req.body.dateFormat;
+					response.translated_value = tr[req.body.dateFormat];
 				} else {
 					response.message = tr['wrong_date_format'];
 					response.error = 'Invalid date format';
@@ -250,7 +250,7 @@ exports.post = function(req, res) {
 								profile_data.username = username;
 								response.value = username;
 								Profile.update({
-										'_id': user_id
+										'_id': userId
 									}, {
 										$set: profile_data
 									}, {
@@ -262,14 +262,14 @@ exports.post = function(req, res) {
 										}
 										return;
 									})
-									.fail(function(error) {
+									.catch(function(error) {
 										response.error = error;
 										response.message = tr['something_went_wrong'];
 										res.status(500).json(response);
 										return;
 									});
 							} else {
-								if (profile._id !== user_id) {
+								if (profile._id !== userId) {
 									response.message = tr['username_taken'];
 									response.error = 'Username is used by another user';
 								}
@@ -324,12 +324,12 @@ exports.post = function(req, res) {
 					      'x-amz-acl': 'public-read'
 					    };
 
-					    s3.putFile(pic.path, user_id + '.' + extension, s3Headers, function(err, s3response){
+					    s3.putFile(pic.path, userId + '.' + extension, s3Headers, function(err, s3response){
 							if (err) throw err;
 							// Update the database
 							profile_data.picture = s3response.req.url;
 							Profile.update({
-								'_id': user_id
+								'_id': userId
 							}, {
 								$set: profile_data
 							}, {
@@ -358,7 +358,7 @@ exports.post = function(req, res) {
 			else if (typeof req.body.old_password !== 'undefined' && typeof req.body.password !== 'undefined' && req.body.repeat_password) {
 				// Find the old password of the user
 				User.schema.findOne({
-						'_id': user_id
+						'_id': userId
 					}, 'password')
 					.then(function(user) {
 						if (typeof user.password === 'undefined') {
@@ -381,12 +381,12 @@ exports.post = function(req, res) {
 							}
 							if (!response.error) {
 								// If there are no errors, the password gets reset
-								User.schema.resetPassword(user_id, req.body.password)
+								User.schema.resetPassword(userId, req.body.password)
 									.then(function() {
 										response.message = tr['data_updated_successfully'];
 										res.status(200).json(response);
 									})
-									.fail(function(error) {
+									.catch(function(error) {
 										response.error = error;
 										response.message = tr['something_went_wrong'];
 										res.status(500).json(response);
@@ -400,13 +400,13 @@ exports.post = function(req, res) {
 				// Else, fetch the first name and the last name of the user from the database
 				if (!response.error) {
 					Profile.schema.update({
-							'_id': user_id
+							'_id': userId
 						}, profile_data)
 						.then(function(profile) {
 							response.message = tr['data_updated_successfully'];
 							res.json(response);
 						})
-						.fail(function(error) {
+						.catch(function(error) {
 							response.error = error;
 							response.message = tr['something_went_wrong'];
 							res.status(500).json(response);
@@ -427,16 +427,16 @@ exports.post = function(req, res) {
  */
 exports.get_view = function(req, res) {
 	// If there is no user id in the session, redirect to register screen
-	if (typeof req.session.user_id === 'undefined') {
+	if (typeof req.session.userId === 'undefined') {
 		res.send('');
 		return false;
 	}
 
-	var user_id = req.session.user_id;
+	var userId = req.session.userId;
 
 	// Check if the profile really exists
 	Profile.schema.findOne({
-			'_id': user_id
+			'_id': userId
 		}, 'language')
 		.then(function(profile) {
 
@@ -458,7 +458,7 @@ exports.get_view = function(req, res) {
 
 			res.render('settings', view_data);
 		})
-		.fail(function(error) {
+		.catch(function(error) {
 			res.send('');
 		});
 };

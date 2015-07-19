@@ -20,7 +20,7 @@ exports.request = {};
  * Reset Password Request - GET
  */
 exports.request.get = function(req, res) {
-	if (typeof req.session.user_id !== 'undefined') {
+	if (typeof req.session.userId !== 'undefined') {
 		res.redirect('/');
 	}
 
@@ -35,14 +35,14 @@ exports.request.get = function(req, res) {
  * Reset Password Request - POST
  */
 exports.request.post = function(req, res) {
-	if (typeof req.session.user_id !== 'undefined') {
+	if (typeof req.session.userId !== 'undefined') {
 		res.redirect('/');
 	}
 
 	var email = req.body.email;
-	var user_id = '';
-	var first_name = '';
-	var last_name = '';
+	var userId = '';
+	var firstName = '';
+	var lastName = '';
 	var view_data = {
 		'error': ''
 	};
@@ -58,27 +58,27 @@ exports.request.post = function(req, res) {
 				res.render('reset_password_request', view_data);
 				return;
 			}
-			user_id = response._id;
+			userId = response._id;
 
 			// Get the user's first name and last name, needed for the email
 			return Profile.schema.findOne({
-				'_id': user_id
-			}, 'first_name last_name');
+				'_id': userId
+			}, 'firstName lastName');
 		})
 		.then(function(response) {
-			first_name = response.first_name;
-			last_name = response.last_name;
+			firstName = response.firstName;
+			lastName = response.lastName;
 
 			// Create a new reset password hash
-			return UserHashes.schema.createResetPasswordHash(user_id);
+			return UserHashes.schema.createResetPasswordHash(userId);
 		})
 		.then(function(response) {
 			// Send an email with the hash
-			Email.send_reset_password_email(email, first_name, last_name, response, req.headers.host);
+			Email.send_reset_password_email(email, firstName, lastName, response, req.headers.host);
 			view_data.email = email;
 			res.render('reset_password_email_sent', view_data);
 		})
-		.fail(function(error) {
+		.catch(function(error) {
 			send_error_page(error, res);
 		});
 };
@@ -105,7 +105,7 @@ exports.get = function(req, res) {
 				res.redirect('/login');
 			}
 		})
-		.fail(function(error) {
+		.catch(function(error) {
 			send_error_page(error, res);
 		});
 };
@@ -124,7 +124,7 @@ exports.post = function(req, res) {
 			'repeat_password': ''
 		}
 	};
-	var user_id = '';
+	var userId = '';
 
 	// Generate post error messages
 	if (!userHelper.validatePassword(password)) {
@@ -144,8 +144,8 @@ exports.post = function(req, res) {
 	UserHashes.schema.findUserIdByHash(hash, 'reset')
 		.then(function(response) {
 			if (response) {
-				user_id = response.user_id;
-				return User.schema.resetPassword(user_id, password);
+				userId = response.userId;
+				return User.schema.resetPassword(userId, password);
 			} else {
 				res.redirect('/login');
 			}
@@ -154,10 +154,10 @@ exports.post = function(req, res) {
 			// Delete the hash
 			UserHashes.schema.deleteHash(hash, 'reset');
 			// Storing the user id in the session
-			req.session.user_id = user_id;
+			req.session.userId = userId;
 			res.redirect('/');
 		})
-		.fail(function(error) {
+		.catch(function(error) {
 			send_error_page(error, res);
 		});
 };
@@ -170,5 +170,5 @@ exports.post = function(req, res) {
  */
 function send_error_page(error, res) {
 	res.statusCode = 500;
-	res.sendfile('./views/five_oh_oh.html');
+	res.sendFile('../views/five_oh_oh.html', {"root": __dirname});
 }

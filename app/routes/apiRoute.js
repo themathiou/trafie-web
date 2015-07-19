@@ -5,12 +5,12 @@ const api = [{
 	methods: [{
 		name: 'GET',
 		description: 'Returns users, filtered by the parameters. If there is a "keywords" parameters, a search will be performed based on the words serparated by spaces. Only public users will be returned.',
-		parameters: ['first_name', 'last_name', 'discipline', 'country', 'keywords'],
+		parameters: ['firstName', 'last_name', 'discipline', 'country', 'keywords'],
 		data: [],
-		examples: ['/users', '/users?first_name=George&last_name=Balasis', '/users?keywords=george balasis'],
+		examples: ['/users', '/users?firstName=George&last_name=Balasis', '/users?keywords=george balasis'],
 		example_response_success: JSON.stringify([{
 			"_id": "5415cf0334a09e041c000001",
-			"first_name": "George",
+			"firstName": "George",
 			"last_name": "Balasis",
 			"discipline": "",
 			"country": "",
@@ -21,7 +21,7 @@ const api = [{
 		example_response_fail: ''
 	}]
 }, {
-	route: '/users/:user_id',
+	route: '/users/:userId',
 	methods: [{
 		name: 'GET',
 		description: 'Returns the user by id. Only public users will be returned unless a logged in user tries to access themselves.',
@@ -43,7 +43,7 @@ const api = [{
 		example_response_fail: ''
 	}]
 }, {
-	route: '/users/:user_id/activities',
+	route: '/users/:userId/activities',
 	methods: [{
 		name: 'GET',
 		description: 'Returns all the public activities of the user.',
@@ -54,7 +54,7 @@ const api = [{
 		example_response_fail: ''
 	}]
 }, {
-	route: '/users/:user_id/activities/:activity_id',
+	route: '/users/:userId/activities/:activity_id',
 	methods: [{
 		name: 'GET',
 		description: 'Returns the activity by id. Only public activities will be returned unless a logged in user tries to access their activity.',
@@ -209,7 +209,7 @@ const api = [{
 		example_response_fail: ''
 	}]
 }, {
-	route: '/users/:user_id/disciplines',
+	route: '/users/:userId/disciplines',
 	methods: [{
 		name: 'GET',
 		description: 'Returns all the disciplines that the user has recorded.',

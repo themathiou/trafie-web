@@ -17,13 +17,13 @@ const Email = require('../libs/email');
  * in order to validate their account
  */
 exports.validation_email_sent = function(req, res) {
-	if (typeof req.session.user_id !== 'undefined') {
+	if (typeof req.session.userId !== 'undefined') {
 		res.redirect('/');
 	}
 
-	var user_id = req.params.user_id;
+	var userId = req.params.userId;
 	User.schema.findOne({
-		'_id': user_id
+		'_id': userId
 	}, 'email valid')
 	.then(function(response) {
 		if (!response.email || response.valid) {
@@ -33,10 +33,10 @@ exports.validation_email_sent = function(req, res) {
 		res.render('validation_email_sent', {
 			'email': response.email,
 			'resend': req.params.resend,
-			'user_id': user_id
+			'userId': userId
 		});
 	})
-	.fail(function(error) {
+	.catch(function(error) {
 		send_error_page(error, res);
 	});
 };
@@ -47,18 +47,18 @@ exports.validation_email_sent = function(req, res) {
  * Validates the newly created user
  */
 exports.validate = function(req, res) {
-	if (typeof req.session.user_id !== 'undefined') {
+	if (typeof req.session.userId !== 'undefined') {
 		res.redirect('/');
 	}
 
-	var user_id = '';
+	var userId = '';
 	// Find the user to whom the hash belongs
 	UserHashes.schema.findUserIdByHash(req.params.hash, 'verify')
 	.then(function(response) {
 		if (response) {
-			user_id = response.user_id;
+			userId = response.userId;
 			// Validate the user
-			return userHelper.validateUser(response.user_id);
+			return userHelper.validateUser(response.userId);
 		} else {
 			res.redirect('/login');
 		}
@@ -67,10 +67,10 @@ exports.validate = function(req, res) {
 		// Delete the hash after validation
 		UserHashes.schema.deleteHash(req.params.hash, 'verify');
 		// Storing the user id in the session
-		req.session.user_id = user_id;
+		req.session.userId = userId;
 		res.redirect('/');
 	})
-	.fail(function(error) {
+	.catch(function(error) {
 		send_error_page(error, res);
 	});
 };
@@ -81,16 +81,16 @@ exports.validate = function(req, res) {
  * Resends the validation email
  */
 exports.resend_validation_email = function(req, res) {
-	if (typeof req.session.user_id !== 'undefined') {
+	if (typeof req.session.userId !== 'undefined') {
 		res.redirect('/');
 	}
 
 	var email = '';
-	var first_name = '';
-	var last_name = '';
-	var user_id = req.params.user_id;
+	var firstName = '';
+	var lastName = '';
+	var userId = req.params.userId;
 	User.schema.findOne({
-		'_id': user_id
+		'_id': userId
 	}, 'email valid')
 	.then(function(response) {
 		// If the email wasn't found or the user is already valid
@@ -100,22 +100,22 @@ exports.resend_validation_email = function(req, res) {
 		email = response.email;
 		// Find the user's first name and last name
 		return Profile.schema.findOne({
-			'_id': user_id
-		}, 'first_name last_name');
+			'_id': userId
+		}, 'firstName lastName');
 	})
 	.then(function(response) {
-		first_name = response.first_name;
-		last_name = response.last_name;
+		firstName = response.firstName;
+		lastName = response.lastName;
 		// Find the validation has that was stored in the db for the user
-		return UserHashes.schema.findValidationHashByUserId(user_id);
+		return UserHashes.schema.findValidationHashByUserId(userId);
 	})
 	.then(function(response) {
 		// Send an email with the hash to the user
-		Email.send_verification_email(email, first_name, last_name, response.hash, req.headers.host);
+		Email.send_verification_email(email, firstName, lastName, response.hash, req.headers.host);
 
-		res.redirect('/validation_email_sent/1/' + user_id);
+		res.redirect('/validation_email_sent/1/' + userId);
 	})
-	.fail(function(error) {
+	.catch(function(error) {
 		send_error_page(error, res);
 	});
 };
@@ -127,5 +127,5 @@ exports.resend_validation_email = function(req, res) {
  */
 function send_error_page(error, res) {
 	res.statusCode = 500;
-	res.sendfile('./views/five_oh_oh.html');
+	res.sendFile('../views/five_oh_oh.html',  {"root": __dirname});
 }

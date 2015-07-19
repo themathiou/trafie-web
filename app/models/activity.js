@@ -3,10 +3,12 @@
 var mongoose = require('mongoose');
 var db = mongoose.connection;
 var q = require('q');
+// Loading helpers
+var activityHelper = require('../helpers/activityHelper.js');
 
 //Define User SCHEMA
 var activitySchema = mongoose.Schema({
-	user_id		: { type: String, required: true, index: true },
+	userId		: { type: String, required: true, index: true },
 	discipline	: { type: String, required: true },
 	performance	: { type: String },
 	date 		: { type: Date, default: Date.now },
@@ -65,7 +67,7 @@ activitySchema.getActivitiesOfUser = function(where, select, sort) {
 /**
  * Returns all the names of the disciplines, that are included
  * in the user's activities
- * @param json where( { user_id: hash } )
+ * @param json where( { userId: hash } )
  */
 activitySchema.getDisciplinesPerformedByUser = function(where) {
 	var d = q.defer();
@@ -90,6 +92,92 @@ activitySchema.delete = function(where) {
 	});
 
 	return d.promise;
+};
+
+activitySchema.methods.validate = function() {
+	var errors = false,
+		errorMessages = {},
+		disciplineType = '';
+
+	if(!this.discipline) {
+		errors = true;
+		errorMessages.performance = 'discipline_is_required';
+	} else {
+		disciplineType = activityHelper.validateDiscipline(this.discinpline);
+		if(!disciplineType) {
+			errors = true;
+			errorMessages.performance = 'invalid_discipline';
+		}
+	}
+
+	if(!('performance' in this)) {
+		errors = true;
+		errorMessages.performance = 'performance_is_required';
+	} 
+	else if(disciplineType) {
+		var performance = null;
+		switch (disciplineType) {
+			case 'time':
+				performance = activityHelper.validateTime(this.performance);
+				break;
+			case 'distance':
+				performance = activityHelper.validateDistance(this.performance);
+				break;
+			case 'points':
+				performance = activityHelper.validatePoints(this.performance);
+				break;
+		}
+		this.performance = perfrormance;
+		if (!performance) {
+			errors = true;
+			errorMessages.performance = 'invalid_performance';
+		}
+	}
+
+	// Validating date (required field)
+	if(!this.date) {
+		errors = true;
+		errorMessages.date = 'date_is_required';
+	} 
+	else {
+		this.date = activityHelper.parseDate(this.date);
+		if(!this.date) {
+			errors = true;
+			errorMessages.date = 'wrong_date_format';
+		}
+	}
+
+	// Validating location
+	if (this.location && !activityHelper.locationIsValid(this.location)) {
+		errors = true;
+		errorMessages.location = 'too_long_text';
+	}
+
+	// Validating place
+	if (this.place && !activityHelper.placeIsValid(this.place)) {
+		errors = true;
+		errorMessages.place = 'invalid_place';
+	}
+
+	// Validating competition
+	if (this.competition && !activityHelper.competitionIsValid(this.competition)) {
+		errors = true;
+		errorMessages.competition = 'too_long_text';
+	}
+
+	// Validating notes
+	if (this.notes && !activityHelper.notesAreValid(req.body.notes)) {
+		errors = true;
+		errorMessages.notes = 'too_long_text';
+	}
+
+	// Validating privacy (required field)
+	if (!('private' in this) || ('private' in this && !activityHelper.privacyIsValid(this.private))) {
+		errors = true;
+		errorMessages.private = 'invalid_privacy';
+	}
+
+	return errors ? errorMessages : null;
 };
 
 var Activity = mongoose.model('Activity', activitySchema);
