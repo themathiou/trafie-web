@@ -28,7 +28,6 @@ var profileSchema = mongoose.Schema({
 				}
 });
 
-
 /**
 * Find profile by element
 * @param json where({email:someone@trafie.com})

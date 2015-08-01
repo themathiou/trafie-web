@@ -146,7 +146,7 @@ trafie.post( '/register', register.post );
  ******************************************************************************************************************************/
 
 trafie.get( '/login', login.get );
-trafie.post( '/login', passport.authenticate('local'), login.post );
+trafie.post( '/login', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login'}) );
 
 
 /*******************************************************************************************************************************

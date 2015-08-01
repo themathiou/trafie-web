@@ -105,7 +105,6 @@ exports.get = function(req, res) {
 	});
 };
 
-
 /**
  * Activities - POST
  */
@@ -145,7 +144,6 @@ exports.post = function(req, res) {
 		}
 	}
 };
-
 
 /**
  * Activities - PUT

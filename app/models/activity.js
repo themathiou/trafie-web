@@ -10,7 +10,7 @@ var activityHelper = require('../helpers/activityHelper.js');
 var activitySchema = mongoose.Schema({
 	userId		: { type: String, required: true, index: true },
 	discipline	: { type: String, required: true },
-	performance	: { type: String },
+	performance	: { type: Number, required: true },
 	date 		: { type: Date, default: Date.now },
 	place 		: { type: Number },
 	location 	: { type: String },
@@ -18,7 +18,6 @@ var activitySchema = mongoose.Schema({
 	notes 		: { type: String },
 	private 	: { type: Boolean, required: true, default: false }
 });
-
 
 /**
  * Find activity by element
@@ -128,7 +127,7 @@ activitySchema.methods.validate = function() {
 				break;
 		}
 		this.performance = perfrormance;
-		if (!performance) {
+		if (performance !== null) {
 			errors = true;
 			errorMessages.performance = 'invalid_performance';
 		}

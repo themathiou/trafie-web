@@ -15,7 +15,6 @@ var userSchema = mongoose.Schema({
 	valid		: { type: Boolean, required: true, default: false}
 });
 
-
 /**
 * Find user by element
 * @param json where( { email: someone@trafie.com } )
