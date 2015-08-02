@@ -47,7 +47,7 @@ activityHelper.validateDiscipline = function(discipline) {
 		case 'pentathlon':
 		case 'heptathlon':
 		case 'decathlon':
-			return 'points'
+			return 'points';
 			break;
 		default:
 			return '';
@@ -86,8 +86,11 @@ activityHelper.validatePoints = function(performance) {
  * @param string date
  */
 activityHelper.parseDate = function(date) {
-	date = moment(date + ' +0000', 'YYYY-MM-DD HH:mm:ss Z');
-	return date.isValid() ? date.toDate() : null;
+	if(date instanceof Date) {
+		return date;
+	}
+	var momentDate = moment(date + ' +0000', 'YYYY-MM-DD HH:mm:ss Z');
+	return momentDate.isValid() ? momentDate.toDate() : null;
 };
 
 /**
@@ -97,7 +100,7 @@ activityHelper.parseDate = function(date) {
  */
 activityHelper.locationIsValid = function(location) {
 	return typeof location === 'string' && location.length < 120;
-}
+};
 
 /**
  * Checks if the place is a valid integer
@@ -106,7 +109,7 @@ activityHelper.locationIsValid = function(location) {
  */
 activityHelper.placeIsValid = function(place) {
 	return isPositiveInteger(place);
-}
+};
 
 /**
  * Checks if the length of the competition string is acceptable
@@ -115,7 +118,7 @@ activityHelper.placeIsValid = function(place) {
  */
 activityHelper.competitionIsValid = function(competition) {
 	return typeof competition === 'string' && competition.length < 120;
-}
+};
 
 /**
  * Checks if the length of the notes string is acceptable
@@ -124,7 +127,7 @@ activityHelper.competitionIsValid = function(competition) {
  */
 activityHelper.notesAreValid = function(notes) {
 	return typeof notes === 'string' && notes.length < 1000;
-}
+};
 
 /**
  * Parses the dates as they are stored in the db
@@ -136,7 +139,7 @@ activityHelper.parseDbDate = function(date) {
 	let dateParts = date.split('-');
 
 	return new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
-}
+};
 
 /**
  * Checks if private is true/false
@@ -145,7 +148,7 @@ activityHelper.parseDbDate = function(date) {
  */
 activityHelper.privacyIsValid = function(privateSetting) {
 	return typeof privateSetting === 'boolean' || privateSetting.toLowerCase() === 'true' || privateSetting.toLowerCase() === 'false';
-}
+};
 
 /**
  * Parses the privacy setting, in case it's represented by a string
@@ -160,7 +163,7 @@ activityHelper.parsePrivacy = function(privateSetting) {
 	} else {
 		return false;
 	}
-}
+};
 
 /**
  * Checks if the given value is a positive integer number
@@ -169,6 +172,6 @@ activityHelper.parsePrivacy = function(privateSetting) {
  */
 function isPositiveInteger(value) {
 	return typeof value !== 'undefined' && !isNaN(parseInt(value)) && isFinite(value) && value > 0 && value % 1 === 0;
-};
+}
 
 module.exports = activityHelper;

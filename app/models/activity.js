@@ -11,7 +11,7 @@ var activitySchema = mongoose.Schema({
 	userId		: { type: String, required: true, index: true },
 	discipline	: { type: String, required: true },
 	performance	: { type: Number, required: true },
-	date 		: { type: Date, default: Date.now },
+	date 		: { type: Date, required: true },
 	place 		: { type: Number },
 	location 	: { type: String },
 	competition : { type: String },
@@ -54,9 +54,9 @@ activitySchema.getActivitiesOfUser = function(where, select, sort) {
 				date: sort
 			}
 		},
-		function(err, activity) {
-			if (err) handleError(err);
-			d.resolve(activity);
+		function(err, activities) {
+			if (err) d.reject(err);
+			d.resolve(activities);
 		}
 	);
 
@@ -71,7 +71,7 @@ activitySchema.getActivitiesOfUser = function(where, select, sort) {
 activitySchema.getDisciplinesPerformedByUser = function(where) {
 	var d = q.defer();
 	Activity.distinct('discipline', where, function(err, activity) {
-		if (err) handleError(err);
+		if (err) d.reject(err);
 		d.resolve(activity);
 	});
 
@@ -86,14 +86,18 @@ activitySchema.delete = function(where) {
 	var d = q.defer();
 
 	Activity.remove(where, function(err, deleted) {
-		if (err) handleError(err);
+		if (err) d.reject(err);
 		d.resolve(deleted);
 	});
 
 	return d.promise;
 };
 
-activitySchema.methods.validate = function() {
+/**
+ * WARNING: DO NOT RENAME TO VALIDATE, IT MAKES MONGOOSE HANG
+ * Checks if all the data in the model are valid
+ */
+activitySchema.methods.checkValid = function() {
 	var errors = false,
 		errorMessages = {},
 		disciplineType = '';
@@ -102,7 +106,7 @@ activitySchema.methods.validate = function() {
 		errors = true;
 		errorMessages.performance = 'discipline_is_required';
 	} else {
-		disciplineType = activityHelper.validateDiscipline(this.discinpline);
+		disciplineType = activityHelper.validateDiscipline(this.discipline);
 		if(!disciplineType) {
 			errors = true;
 			errorMessages.performance = 'invalid_discipline';
@@ -117,17 +121,16 @@ activitySchema.methods.validate = function() {
 		var performance = null;
 		switch (disciplineType) {
 			case 'time':
-				performance = activityHelper.validateTime(this.performance);
+				this.performance = activityHelper.validateTime(this.performance);
 				break;
 			case 'distance':
-				performance = activityHelper.validateDistance(this.performance);
+				this.performance = activityHelper.validateDistance(this.performance);
 				break;
 			case 'points':
-				performance = activityHelper.validatePoints(this.performance);
+				this.performance = activityHelper.validatePoints(this.performance);
 				break;
 		}
-		this.performance = perfrormance;
-		if (performance !== null) {
+		if(this.performance === null) {
 			errors = true;
 			errorMessages.performance = 'invalid_performance';
 		}
@@ -165,7 +168,7 @@ activitySchema.methods.validate = function() {
 	}
 
 	// Validating notes
-	if (this.notes && !activityHelper.notesAreValid(req.body.notes)) {
+	if (this.notes && !activityHelper.notesAreValid(this.notes)) {
 		errors = true;
 		errorMessages.notes = 'too_long_text';
 	}

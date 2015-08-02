@@ -39,7 +39,7 @@ exports.get = function(req, res) {
 };
 
 function userSearch(req, res) {
-	let query = generateSearchQuery(userId, req.query);
+	let query = generateSearchQuery(req);
 	Profile.schema.find(query, 'firstName lastName discipline country username _id', SEARCH_RESULTS_LENGTH)
 	.then(function(results) {
 		res.json(results);
@@ -49,8 +49,9 @@ function userSearch(req, res) {
 	});
 }
 
-function generateSearchQuery(userId, searchQuery) {
+function generateSearchQuery(req) {
 	let ands = [];
+	var searchQuery = req.query;
 
 	if (typeof searchQuery.keywords === 'string') {
 		let requestedKeywordsString = searchQuery.keywords.trim(),
@@ -78,41 +79,36 @@ function generateSearchQuery(userId, searchQuery) {
 
 	if (typeof searchQuery.firstName === 'string') {
 		ands.push({
-			'firstName': searchQuery.firstName
+			firstName: searchQuery.firstName
 		});
 	}
 
 	if (typeof searchQuery.lastName === 'string') {
 		ands.push({
-			'lastName': searchQuery.lastName
+			lastName: searchQuery.lastName
 		});
 	}
 
 	if (typeof searchQuery.discipline === 'string') {
 		ands.push({
-			'discipline': searchQuery.discipline
+			discipline: searchQuery.discipline
 		});
 	}
 
 	if (typeof searchQuery.country === 'string') {
 		ands.push({
-			'country': searchQuery.country
+			country: searchQuery.country
 		});
 	}
 
-	if (userId) {
-		// Do not fetch private profiles, unless it's the current user's profile
+	// Do not fetch private profiles
+	ands.push({
+		private: false
+	});
+
+	if(req.user) {
 		ands.push({
-			$or: [{
-				'_id': userId
-			}, {
-				'private': false
-			}]
-		});
-	} else {
-		// Do not fetch private profiles
-		ands.push({
-			'private': false
+			_id: {$ne: req.user._id}
 		});
 	}
 

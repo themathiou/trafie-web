@@ -86,11 +86,10 @@ exports.get = function(req, res) {
 
 				Activity.schema.getActivitiesOfUser(where, '', -1)
 				.then(function(activities) {
-					res.statusCode = status_code;
 					res.json(activities);
 				})
 				.catch(function(error) {
-					res.status(500).json(null);
+					res.status(500).json(error);
 				});
 			}
 		} else {
@@ -110,7 +109,7 @@ exports.get = function(req, res) {
  */
 exports.post = function(req, res) {
 	// Get the user id from the session
-	var userId = req.user && req.user._id || null;
+	var userId = req.user && req.user._id.toString() || null;
 	// If there is no user id, or the user id is different than the one in the session
 	if (!userId || (userId !== req.params.userId)) {
 		res.status(403).json(null);
@@ -120,7 +119,7 @@ exports.post = function(req, res) {
 			userId: userId,
 			discipline: req.body.discipline || null,
 			performance: typeof req.body.performance !== 'undefined' ? req.body.performance : null,
-			date: req.body.date || null,
+			date: req.body.date && activityHelper.parseDate(req.body.date) || null,
 			place: req.body.place || null,
 			location: req.body.location || null,
 			competition: req.body.competition || null,
@@ -128,14 +127,14 @@ exports.post = function(req, res) {
 			private: req.body.isPrivate || false
 		},
 		activity = new Activity(activityData),
-		errors = activity.validate();
+		errors = activity.checkValid();
 
 		if(!errors) {
 			// Save the activity
-			activity.save(function(err, activity) {
-				res.status(201).json(activity);
-			})
-			.catch(function(error) {
+			activity.save()
+			.then(function(activityRes) {
+				res.status(201).json(activityRes);
+			}, function(err) {
 				res.status(500).json(null);
 			});
 		} else {
@@ -150,7 +149,7 @@ exports.post = function(req, res) {
  */
 exports.put = function(req, res) {
 	// Get the user id from the session
-	var userId = req.user && req.user._id || null;
+	var userId = req.user && req.user._id.toString() || null;
 	// Get the activity id from the url
 	var activityId = typeof req.params.activityId !== 'undefined' ? req.params.activityId : null;
 
@@ -166,7 +165,7 @@ exports.put = function(req, res) {
 				userId: userId,
 				discipline: req.body.discipline || null,
 				performance: typeof req.body.performance !== 'undefined' ? req.body.performance : null,
-				date: req.body.date || null,
+				date: req.body.date && activityHelper.parseDate(req.body.date) || null,
 				place: req.body.place || null,
 				location: req.body.location || null,
 				competition: req.body.competition || null,
@@ -174,12 +173,12 @@ exports.put = function(req, res) {
 				private: req.body.isPrivate || false
 			},
 			activity = new Activity(activityData),
-			errors = activity.validate();
+			errors = activity.checkValid();
 
 			// If there are no errors
 			if (!errors) {
 				Activity.findByIdAndUpdate(activityId, activity, '', function(err, activity) {
-					res.status(201).json(activity);
+					res.status(200).json(activity);
 				});
 			} else {
 				// If there are errors, send the error messages to the client
@@ -197,7 +196,7 @@ exports.put = function(req, res) {
  */
 exports.delete = function(req, res) {
 	// Get the user id from the session
-	var userId = req.session.userId;
+	var userId = req.user && req.user._id.toString();
 	// Get the activity id from the url
 	var activityId = req.params.activityId;
 

@@ -44,7 +44,10 @@ const express = require('express'),
 const trafie = express();
 
 // Mongo db connection
-mongoose.connect('mongodb://localhost/trafie');
+mongoose.connect('mongodb://localhost/trafie', function (err) {
+  if (err) console.log(err);
+});
+
 // var MONGOHQ_URL="mongodb://trafie_root:​my_secret_root_password@lennon.mongohq.com:10076/app19956848";
 // mongoose.connect(process.env.MONGOHQ_URL);
 const db = mongoose.connection;
@@ -111,10 +114,10 @@ trafie.get( '/users/:userId?', profile.get );
  * ACTIVITIES                                                                                                                  *
  ******************************************************************************************************************************/
 
-trafie.get( '/users/:userId/activities/:activity_id?', activities.get );
+trafie.get( '/users/:userId/activities/:activityId?', activities.get );
 trafie.post( '/users/:userId/activities', activities.post );
-trafie.put( '/users/:userId/activities/:activity_id', activities.put );
-trafie.delete( '/users/:userId/activities/:activity_id', activities.delete );
+trafie.put( '/users/:userId/activities/:activityId', activities.put );
+trafie.delete( '/users/:userId/activities/:activityId', activities.delete );
 trafie.get( '/users/:userId/disciplines', disciplines.get );
 
 
