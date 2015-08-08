@@ -126,6 +126,7 @@ var pr = {
 	'invalid_privacy'                               : 'Invalid privacy setting',
     'something_went_wrong'                          : 'Oops! We fucked up...',
     'username_taken'                                : 'Username is taken',
+    'wrong_old_password'                            : 'The old password is wrong',
 
 	// Countries
 	'AF': 'Afghanistan',

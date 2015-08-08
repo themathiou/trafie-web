@@ -109,9 +109,9 @@ exports.get = function(req, res) {
  */
 exports.post = function(req, res) {
 	// Get the user id from the session
-	var userId = req.user && req.user._id.toString() || null;
+	var userId = req.user && req.user._id || null;
 	// If there is no user id, or the user id is different than the one in the session
-	if (!userId || (userId !== req.params.userId)) {
+	if (!userId || (userId.toString() !== req.params.userId)) {
 		res.status(403).json(null);
 	} else {
 		// Create the record that will be inserted in the db

@@ -10,24 +10,22 @@ const User = require('../models/user.js'),
 	Profile = require('../models/profile.js');
 
 // Loading helpers
-const profileHelper = require('../helpers/profileHelper.js'),
-	userHelper = require('../helpers/userHelper.js');
-
-// Initialize translations
-const translations = require('../languages/translations.js');
+const profileHelper = require('../helpers/profileHelper.js');
 
 // Get the config file
 const config = require('../config/config.js');
 
 exports.get = function(req, res) {
+	// Get the user id from the session
+	var userId = req.user && req.user._id.toString();
+
 	// If there is no user id in the session, return null
-	if (typeof req.session.userId === 'undefined') {
+	if (!userId) {
 		res.status(401).json(null);
 		return false;
 	}
 
 	var firstName, lastName,
-		userId = req.session.userId,
 		update = '',
 		error_messages = '';
 
@@ -41,8 +39,6 @@ exports.get = function(req, res) {
 			res.json(null);
 			return false;
 		}
-
-		var tr = translations[profile.language];
 
 		// Format the data that will go to the front end
 		var gender = '';
@@ -61,16 +57,12 @@ exports.get = function(req, res) {
 				'firstName': profile.firstName,
 				'lastName': profile.lastName,
 				'discipline': profile.discipline,
-				'discipline_formatted': tr[profile.discipline],
 				'about': profile.about,
 				'gender': gender,
-				'gender_formatted': tr[gender],
 				'country': profile.country,
-				'country_formatted': tr[profile.country],
 				'birthday': profile.birthday,
 				'picture': picture,
 				'language': profile.language,
-				'language_formatted': tr['this_language'],
 				'dateFormat': profile.dateFormat,
 				'username': profile.username,
 				'private': profile.private
@@ -86,21 +78,22 @@ exports.get = function(req, res) {
 
 
 exports.post = function(req, res) {
+	// Get the user id from the session
+	var userId = req.user && req.user._id.toString();
+
 	// If there is no user id in the session, redirect to register screen
-	if (typeof req.session.userId === 'undefined') {
+	if (!userId) {
 		res.status(401).json(null);
 		return false;
 	}
 
-	var userId = req.session.userId;
-
 	// Check if the profile really exists
 	Profile.schema.findOne({
 			'_id': userId
-		}, 'firstName language')
+		}, '_id')
 		.then(function(profile) {
 			// If the profile doesn't exist, return null
-			if (typeof profile.firstName === 'undefined') {
+			if (typeof profile._id === 'undefined') {
 				res.status(404).json(null);
 				return false;
 			}
@@ -109,11 +102,10 @@ exports.post = function(req, res) {
 				update = '',
 				profile_data = {},
 				user_data = {},
-				tr = translations[profile.language],
 				response = {
-					'value': '',
-					'translated_value': '',
-					'message': ''
+					value: '',
+					message: '',
+					error: ''
 				};
 
 			// Validating first name
@@ -122,8 +114,7 @@ exports.post = function(req, res) {
 					profile_data.firstName = req.body.firstName;
 					response.value = req.body.firstName;
 				} else {
-					response.message = tr['invalid_firstName'];
-					response.error = 'Invalid first name';
+					response.error = 'invalid_first_name';
 				}
 			}
 
@@ -133,8 +124,7 @@ exports.post = function(req, res) {
 					profile_data.lastName = req.body.lastName;
 					response.value = req.body.lastName;
 				} else {
-					response.message = tr['invalid_lastName'];
-					response.error = 'Invalid last name';
+					response.error = 'invalid_last_name';
 				}
 			}
 
@@ -145,8 +135,7 @@ exports.post = function(req, res) {
 					profile_data.birthday = birthday;
 					response.value = profile_data.birthday;
 				} else {
-					response.message = tr['invalid_birthday'];
-					response.error = 'Invalid birthday value';
+					response.error = 'invalid_birthday';
 				}
 			}
 
@@ -155,10 +144,8 @@ exports.post = function(req, res) {
 				if (profileHelper.validateGender(req.body.gender)) {
 					profile_data.male = req.body.gender == 'male';
 					response.value = req.body.gender;
-					response.translated_value = tr[req.body.gender];
 				} else {
-					response.message = tr['invalid_gender'];
-					response.error = 'Invalid gender value';
+					response.error = 'invalid_gender';
 				}
 			}
 
@@ -167,10 +154,8 @@ exports.post = function(req, res) {
 				if (profileHelper.validateCountry(req.body.country)) {
 					profile_data.country = req.body.country;
 					response.value = req.body.country;
-					response.translated_value = tr[req.body.country];
 				} else {
-					response.message = tr['invalid_country'];
-					response.error = 'Invalid country';
+					response.error = 'invalid_country';
 				}
 			}
 
@@ -179,10 +164,8 @@ exports.post = function(req, res) {
 				if (profileHelper.validateDiscipline(req.body.discipline)) {
 					profile_data.discipline = req.body.discipline;
 					response.value = req.body.discipline;
-					response.translated_value = tr[req.body.discipline];
 				} else {
-					response.message = tr['invalid_discipline'];
-					response.error = 'Invalid discipline';
+					response.error = 'invalid_discipline';
 				}
 			}
 
@@ -191,10 +174,8 @@ exports.post = function(req, res) {
 				if (profileHelper.validateAbout(req.body.about)) {
 					profile_data.about = req.body.about;
 					response.value = req.body.about;
-					response.translated_value = tr[req.body.about];
 				} else {
-					response.message = tr['too_long_text'];
-					response.error = 'Invalid about me value';
+					response.error = 'too_long_text';
 				}
 			}
 
@@ -203,10 +184,8 @@ exports.post = function(req, res) {
 				if (profileHelper.validateLanguage(req.body.language)) {
 					profile_data.language = req.body.language;
 					response.value = req.body.language;
-					response.translated_value = translations['languages'][req.body.language];
 				} else {
-					response.message = tr['invalid_language'];
-					response.error = 'Invalid language';
+					response.error = 'invalid_language';
 				}
 			}
 
@@ -215,10 +194,8 @@ exports.post = function(req, res) {
 				if (profileHelper.validateDateFormat(req.body.dateFormat)) {
 					profile_data.dateFormat = req.body.dateFormat;
 					response.value = req.body.dateFormat;
-					response.translated_value = tr[req.body.dateFormat];
 				} else {
-					response.message = tr['wrong_date_format'];
-					response.error = 'Invalid date format';
+					response.error = 'wrong_date_format';
 				}
 			}
 
@@ -229,16 +206,14 @@ exports.post = function(req, res) {
 					profile_data.private = req.body.private;
 					response.value = req.body.private;
 				} else {
-					response.message = tr['invalid_privacy'];
-					response.error = 'Invalid privacy value';
+					response.error = 'invalid_privacy';
 				}
 			}
 
 			// Validating username
 			if (typeof req.body.username !== 'undefined') {
 				if (!profileHelper.validateUsername(req.body.username)) {
-					response.message = tr['invalid_username'];
-					response.error = 'Invalid username';
+					response.error = 'invalid_username';
 					res.status(400).json(response);
 				} else {
 					var username = req.body.username.toLowerCase();
@@ -257,24 +232,21 @@ exports.post = function(req, res) {
 										upsert: true
 									}, function(error) {
 										if(!error) {
-											response.message = tr['data_updated_successfully'];
+											response.message = 'data_updated_successfully';
 											res.status(200).json(response);
 										}
 										return;
 									})
 									.catch(function(error) {
-										response.error = error;
-										response.message = tr['something_went_wrong'];
+										response.error = 'something_went_wrong';
 										res.status(500).json(response);
 										return;
 									});
 							} else {
 								if (profile._id !== userId) {
-									response.message = tr['username_taken'];
-									response.error = 'Username is used by another user';
+									response.error = 'username_taken';
 								}
 								response.value = username;
-								console.log(response);
 								res.status(422).json(response);
 							}
 						});
@@ -298,16 +270,14 @@ exports.post = function(req, res) {
 
 					// If the file size is acceptable
 					if (pic.size > accepted_file_size * 1048576) {
-						response.message = tr['uploaded_image_too_large'];
-						response.error = 'Uploaded image is too large';
+						response.error = 'uploaded_image_too_large';
 					} else {
 						accepted_size = true;
 					}
 
 					// If the file type is acceptable
 					if (accepted_file_types.indexOf(pic.type) < 0) {
-						response.message = tr['uploaded_image_wrong_type'];
-						response.error = 'Uploaded image is of wrong type';
+						response.error = 'uploaded_image_wrong_type';
 					} else {
 						accepted_type = true;
 					}
@@ -336,13 +306,12 @@ exports.post = function(req, res) {
 								upsert: true
 							}, function(error) {
 								if(!error) {
-									response.message = tr['data_updated_successfully'];
+									response.message = 'data_updated_successfully';
 									response.value = s3response.req.url;
 									console.log(response);
 									res.status(200).json(response);
 								} else {
-									response.error = error;
-									response.message = tr['something_went_wrong'];
+									response.error = 'something_went_wrong';
 									res.status(500).json(response);
 								}
 							});
@@ -362,33 +331,28 @@ exports.post = function(req, res) {
 					}, 'password')
 					.then(function(user) {
 						if (typeof user.password === 'undefined') {
-							response.error = 'User\'s old password could not be found';
-							response.message = tr['something_went_wrong'];
+							response.error = 'wrong_old_password';
 							res.status(400).json(response);
 						} else {
 							// Generating errors
 							if (req.body.password !== req.body.repeat_password) {
-								response.error = 'Passwords do not match';
-								response.message = tr['passwords_do_not_match'];
+								response.error = 'passwords_do_not_match';
 							}
 							if (user.password !== userHelper.encryptPassword(req.body.old_password)) {
-								response.error = 'Wrong old password';
-								response.message = tr['wrong_password'];
+								response.error = 'wrong_old_password';
 							}
 							if (!userHelper.validatePassword(req.body.password)) {
-								response.error = 'A password shorter than the minimum allowed characters was provided';
-								response.message = tr['password_should_be_at_least_6_characters_long'];
+								response.error = 'password_should_be_at_least_6_characters_long';
 							}
 							if (!response.error) {
 								// If there are no errors, the password gets reset
 								User.schema.resetPassword(userId, req.body.password)
 									.then(function() {
-										response.message = tr['data_updated_successfully'];
+										response.message = 'data_updated_successfully';
 										res.status(200).json(response);
 									})
 									.catch(function(error) {
-										response.error = error;
-										response.message = tr['something_went_wrong'];
+										response.error = 'something_went_wrong';
 										res.status(500).json(response);
 									});
 							} else {
@@ -403,12 +367,11 @@ exports.post = function(req, res) {
 							'_id': userId
 						}, profile_data)
 						.then(function(profile) {
-							response.message = tr['data_updated_successfully'];
+							response.message = 'data_updated_successfully';
 							res.json(response);
 						})
 						.catch(function(error) {
-							response.error = error;
-							response.message = tr['something_went_wrong'];
+							response.error = 'something_went_wrong';
 							res.status(500).json(response);
 						});
 					// If there are errors, do not update the profile

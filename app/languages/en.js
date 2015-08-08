@@ -127,6 +127,7 @@ var en = {
     'invalid_privacy'                               : 'Invalid privacy setting',
     'something_went_wrong'                          : 'Oops! Something went wrong...',
     'username_taken'                                : 'Username is taken',
+    'wrong_old_password'                            : 'The old password is wrong',
 
     // Countries
     'AF': 'Afghanistan',

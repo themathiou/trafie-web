@@ -127,6 +127,7 @@ var en = {
 	'invalid_privacy'                               : 'Неверный параметр конфиденциальности',
     'something_went_wrong'                          : 'Ой! Что-то пошло не так...',
     'username_taken'                                : 'Имя пользователя берется',
+    'wrong_old_password'                            : 'Неверный пароль',
 
 	// Countries
 	'AF': 'Афганистан',

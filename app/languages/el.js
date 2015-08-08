@@ -127,6 +127,7 @@ var el = {
 	'invalid_privacy'                               : 'Μη έγκυρη ρύθμιση ιδιωτικότητας',
     'something_went_wrong'                          : 'Ωχ! Κάτι πήγε στραβά...',
     'username_taken'                                : 'Το όνομα χρήστη χρησιμοποιείται',
+    'wrong_old_password'                            : 'Ο παλιός κωδικός είναι λανθασμένος',
 
 	// Countries
 	'AF': 'Afghanistan',

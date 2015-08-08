@@ -121,7 +121,7 @@ profileHelper.validateLanguage = function(language) {
  * @return boolean
  */
 profileHelper.validateDiscipline = function(discipline) {
-	return disciplines.indexOf(config.disciplines) >= 0;
+	return config.disciplines.indexOf(discipline) >= 0;
 };
 
 /**
