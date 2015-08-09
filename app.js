@@ -38,7 +38,8 @@ const express = require('express'),
 	passport = require('passport'),
 	bodyParser = require('body-parser'),
 	errorHandler = require('errorhandler'),
-	cookieParser = require('cookie-parser');
+	cookieParser = require('cookie-parser'),
+	redisStore = require('connect-redis')(session);
 
 // Initialize express
 const trafie = express();
@@ -85,9 +86,11 @@ trafie.set('view engine', 'jade');
 trafie.set('view cache', true);
 trafie.set('env', 'development');
 trafie.use(methodOverride());
-trafie.use(session({ resave: true,
-                  saveUninitialized: true,
-                  secret: '23tR@Ck@nDF!3lD_s3cur3535s!0n504' }));
+ trafie.use(session({ store: new redisStore({
+	 host: '127.0.0.1',
+	 port: 6379,
+	 client: redisClient
+ }), secret: '23tR@Ck@nDF!3lD_s3cur3535s!0n504' }));
 trafie.use(bodyParser.json());
 trafie.use(bodyParser.urlencoded({ extended: true }));
 trafie.use(cookieParser('23tR@Ck@nDF!3lD_s3cur3535s!0n504'));
@@ -247,7 +250,7 @@ if( trafie.get('env') === 'development' ) {
  * 404                                                                                                                         *
  ******************************************************************************************************************************/
 
-trafie.use( function( req, res, next ) {
+trafie.use( function( req, res ) {
  	res.status( 404 );
  	res.sendFile('/app/views/four-oh-four.html', {"root": __dirname});
 });
