@@ -63,11 +63,11 @@ activityHelper.validateDiscipline = function(discipline) {
  * @return string
  */
 activityHelper.validateTime = function(performance) {
-	return isPositiveInteger(performance) && parseInt(performance) || null;
+	return isPositiveInteger(performance) ? parseInt(performance) : null;
 };
 
 activityHelper.validateDistance = function(performance) {
-	return isPositiveInteger(performance) && parseInt(performance) || null;
+	return isPositiveInteger(performance) ? parseInt(performance) : null;
 };
 
 /**
@@ -77,7 +77,7 @@ activityHelper.validateDistance = function(performance) {
  * @return string
  */
 activityHelper.validatePoints = function(performance) {
-	return isPositiveInteger(performance) && parseInt(performance) || null;
+	return isPositiveInteger(performance) ? parseInt(performance) : null;
 };
 
 /**
@@ -171,7 +171,7 @@ activityHelper.parsePrivacy = function(privateSetting) {
  * @return boolean
  */
 function isPositiveInteger(value) {
-	return typeof value !== 'undefined' && !isNaN(parseInt(value)) && isFinite(value) && value > 0 && value % 1 === 0;
+	return typeof value !== 'undefined' && !isNaN(parseInt(value)) && isFinite(value) && value >= 0 && value % 1 === 0;
 };
 
 module.exports = activityHelper;

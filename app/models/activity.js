@@ -16,7 +16,18 @@ var activitySchema = mongoose.Schema({
 	location 	: { type: String },
 	competition : { type: String },
 	notes 		: { type: String },
-	private 	: { type: Boolean, required: true, default: false }
+	private 	: { type: Boolean, required: true, default: false },
+	dateCreated : { type: Date },
+	dateUpdated : { type: Date }
+});
+
+activitySchema.pre('save', function(next){
+	var now = new Date();
+	this.dateUpdated = now;
+	if ( !this.dateCreated ) {
+		this.dateCreated = now;
+	}
+	next();
 });
 
 /**

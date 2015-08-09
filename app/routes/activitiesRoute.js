@@ -124,7 +124,7 @@ exports.post = function(req, res) {
 			location: req.body.location || null,
 			competition: req.body.competition || null,
 			notes: req.body.notes || null,
-			private: req.body.isPrivate || false
+			private: req.body.private || false
 		},
 		activity = new Activity(activityData),
 		errors = activity.checkValid();
@@ -161,24 +161,25 @@ exports.put = function(req, res) {
 			if (!activity || typeof activity._id == 'undefined') res.status(404).json(null);
 
 			// Create the record that will be inserted in the db
-			var activityData = {
-				userId: userId,
-				discipline: req.body.discipline || null,
-				performance: typeof req.body.performance !== 'undefined' ? req.body.performance : null,
-				date: req.body.date && activityHelper.parseDate(req.body.date) || null,
-				place: req.body.place || null,
-				location: req.body.location || null,
-				competition: req.body.competition || null,
-				notes: req.body.notes || null,
-				private: req.body.isPrivate || false
-			},
-			activity = new Activity(activityData),
-			errors = activity.checkValid();
+			activity.discipline = req.body.discipline || activity.discipline;
+			activity.performance = typeof req.body.performance !== 'undefined' ? req.body.performance : activity.performance;
+			activity.date = typeof req.body.date !== 'undefined' ? activityHelper.parseDate(req.body.date) : activity.date;
+			activity.place = typeof req.body.performance !== 'undefined' ? req.body.place : activity.date;
+			activity.location = typeof req.body.location !== 'undefined' ? req.body.location : activity.location;
+			activity.competition = typeof req.body.competition !== 'undefined' ? req.body.competition : activity.competition;
+			activity.notes = typeof req.body.notes !== 'undefined' ? req.body.notes : activity.notes;
+			activity.private = typeof req.body.private !== 'undefined' ? req.body.private : activity.private;
+
+			var errors = activity.checkValid();
 
 			// If there are no errors
 			if (!errors) {
-				Activity.findByIdAndUpdate(activityId, activity, '', function(err, activity) {
-					res.status(200).json(activity);
+				activity.save(function(err, activity) {
+					if(err) {
+						res.status(500).json(null);
+					} else {
+						res.status(200).json(activity);
+					}
 				});
 			} else {
 				// If there are errors, send the error messages to the client

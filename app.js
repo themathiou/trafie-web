@@ -123,10 +123,10 @@ trafie.get( '/users/:userId?', profile.get );
  * ACTIVITIES                                                                                                                  *
  ******************************************************************************************************************************/
 
-trafie.get( '/users/:userId/activities/:activity_id?', activities.get );
+trafie.get( '/users/:userId/activities/:activityId?', activities.get );
 trafie.post( '/users/:userId/activities', activities.post );
-trafie.put( '/users/:userId/activities/:activity_id', activities.put );
-trafie.delete( '/users/:userId/activities/:activity_id', activities.delete );
+trafie.put( '/users/:userId/activities/:activityId', activities.put );
+trafie.delete( '/users/:userId/activities/:activityId', activities.delete );
 trafie.get( '/users/:userId/disciplines', disciplines.get );
 
 
