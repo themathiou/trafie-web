@@ -86,11 +86,16 @@ trafie.set('view engine', 'jade');
 trafie.set('view cache', true);
 trafie.set('env', 'development');
 trafie.use(methodOverride());
- trafie.use(session({ store: new redisStore({
-	 host: '127.0.0.1',
-	 port: 6379,
-	 client: redisClient
- }), secret: '23tR@Ck@nDF!3lD_s3cur3535s!0n504' }));
+trafie.use(session({ 
+	store: new redisStore({
+		host: '127.0.0.1',
+		port: 6379,
+		client: redisClient
+	}),
+	secret: '23tR@Ck@nDF!3lD_s3cur3535s!0n504',
+    resave: true,
+    saveUninitialized: true
+}));
 trafie.use(bodyParser.json());
 trafie.use(bodyParser.urlencoded({ extended: true }));
 trafie.use(cookieParser('23tR@Ck@nDF!3lD_s3cur3535s!0n504'));
