@@ -60,20 +60,20 @@ redisClient.on('connect', function() {
 
 const passportSessions = require('./app/config/sessions');
 // Initialize the routes
-const index = require('./app/routes/index'),
-	login = require('./app/routes/loginRoute'),
-	register = require('./app/routes/registerRoute'),
-	profile = require('./app/routes/profileRoute'),
-	activities = require('./app/routes/activitiesRoute'),
-	disciplines = require('./app/routes/disciplinesRoute'),
-	//statistics = require('./app/routes/statisticsRoute'),
-	settings = require('./app/routes/settingsRoute'),
-	//email_validation = require('./app/routes/emailValidationRoute'),
-	//reset_password = require('./app/routes/resetPasswordRoute'),
-	dummyData = require('./app/routes/dummyDataRoute'),
-	api = require('./app/routes/apiRoute'),
-	feedback = require('./app/routes/feedbackRoute'),
-	nuke = require('./app/routes/nukeRoute');
+const index = require('./app/controllers/index'),
+	login = require('./app/controllers/loginController'),
+	register = require('./app/controllers/registerController'),
+	profile = require('./app/controllers/profileController'),
+	activities = require('./app/controllers/activitiesController'),
+	disciplines = require('./app/controllers/disciplinesController'),
+	//statistics = require('./app/controllers/statistics'),
+	settings = require('./app/controllers/settingsController'),
+	//email_validation = require('./app/controllers/emailValidationController'),
+	//reset_password = require('./app/controllers/resetPasswordController'),
+	dummyData = require('./app/controllers/dummyDataController'),
+	api = require('./app/controllers/apiController'),
+	feedback = require('./app/controllers/feedbackController'),
+	nuke = require('./app/controllers/nukeController');
 
 
 /*******************************************************************************************************************************
