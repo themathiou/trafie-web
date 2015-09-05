@@ -202,14 +202,17 @@ exports.delete = function(req, res) {
 	var activityId = req.params.activityId;
 
 	// If there is no user id, return an empty json
-	if (!userId || !activityId || (userId !== req.params.userId)) res.status(403).json(null);
+	if (!userId || !activityId || (userId !== req.params.userId)) {
+		res.status(403).json(null);
+	} else {
+		Activity.schema.delete({'_id': activityId, 'userId': userId})
+		.then(function(deleted) {
+			var status = deleted ? 200 : 403;
+			res.status(status).json(null);
+		})
+		.catch(function(error) {
+			res.status(500).json(null);
+		});
+	}
 
-	Activity.schema.delete({'_id': activityId, 'userId': userId})
-	.then(function(deleted) {
-		var status = deleted ? 200 : 403;
-		res.status(status).json(null);
-	})
-	.catch(function(error) {
-		res.status(500).json(null);
-	});
 };
