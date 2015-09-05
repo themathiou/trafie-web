@@ -113,7 +113,7 @@ function create_user(activities_count, start_date, res) {
 			var activity_date = moment.unix(activity_timestamp);
 			activity.date = activity_date.toDate();
 
-			activity.place = ~~(Math.random() * 12) + 1;
+			activity.rank = ~~(Math.random() * 12) + 1;
 
 			var cities = ['Chania','Halkida','Athens','Moscow','London','Berlin','Madrid','Paris','Stockholm','Vienna','Lisbon','Copenhagen','Helsinki','Rome','Oslo'];
 

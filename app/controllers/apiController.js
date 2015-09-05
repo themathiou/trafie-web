@@ -112,7 +112,7 @@ const api = [{
 			type: 'date object',
 			required: true
 		}, {
-			name: 'place',
+			name: 'rank',
 			type: 'number',
 			required: false
 		}, {

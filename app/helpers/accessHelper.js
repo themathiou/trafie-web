@@ -2,7 +2,8 @@
 
 // Loading models
 var Profile = require('../models/profile.js'),
-	q = require('q');
+	q = require('q'),
+	sessions = require('../config/sessions.js');
 
 var accessHelper = {};
 
@@ -19,7 +20,7 @@ accessHelper.validateAccess = function(user, profileId) {
 			profile: {},
 			error: ''
 		},
-		userData = false,
+		userData = false;
 		userId =  user && user._id || null;
 
 	if (userId) {

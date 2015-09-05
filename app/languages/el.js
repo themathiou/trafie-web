@@ -84,7 +84,7 @@ var el = {
 	// Messages & Labels
 	'choose_your_discipline'                        : 'Διάλεξε άθλημα',
 	'add_new_activity'                              : 'Προσθήκη νέας δραστηριότητας',
-    'place'                                         : 'Θέση',
+    'rank'                                          : 'Θέση',
     'location'                                      : 'Τοποθεσία',
     'competition'                                   : 'Αγώνας',
     'notes'                                         : 'Σημειώσεις',
@@ -121,7 +121,7 @@ var el = {
 	'invalid_performance'                           : 'Μη έγκυρη επίδοση',
 	'performance_is_required'                       : 'Η επίδοση είναι υποχρεωτική',
 	'too_long_text'                                 : 'Πολύ μεγάλο κείμενο',
-	'invalid_place'                                 : 'Μη έγκυρη θέση',
+	'invalid_rank'                                  : 'Μη έγκυρη θέση',
 	'wrong_date_format'                             : 'Η μορφή ημερομηνίας είναι λανθασμένη',
 	'date_is_required'                              : 'Η ημερομηνία είναι υποχρεωτική',
 	'invalid_privacy'                               : 'Μη έγκυρη ρύθμιση ιδιωτικότητας',

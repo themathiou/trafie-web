@@ -103,12 +103,12 @@ activityHelper.locationIsValid = function(location) {
 };
 
 /**
- * Checks if the place is a valid integer
- * @param  number  place
+ * Checks if the rank is a valid integer
+ * @param  number  rank
  * @return boolean
  */
-activityHelper.placeIsValid = function(place) {
-	return isPositiveInteger(place);
+activityHelper.rankIsValid = function(rank) {
+	return isPositiveInteger(rank);
 };
 
 /**

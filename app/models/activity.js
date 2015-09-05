@@ -12,7 +12,7 @@ var activitySchema = mongoose.Schema({
 	discipline	: { type: String, required: true },
 	performance	: { type: Number, required: true },
 	date 		: { type: Date, required: true },
-	place 		: { type: Number },
+	rank 		: { type: Number },
 	location 	: { type: String },
 	competition : { type: String },
 	notes 		: { type: String },
@@ -166,10 +166,10 @@ activitySchema.methods.checkValid = function() {
 		errorMessages.location = 'too_long_text';
 	}
 
-	// Validating place
-	if (this.place && !activityHelper.placeIsValid(this.place)) {
+	// Validating rank
+	if (this.rank && !activityHelper.rankIsValid(this.rank)) {
 		errors = true;
-		errorMessages.place = 'invalid_place';
+		errorMessages.rank = 'invalid_rank';
 	}
 
 	// Validating competition

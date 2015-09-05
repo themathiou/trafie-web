@@ -84,7 +84,7 @@ var en = {
 	// Messages & Labels
 	'choose_your_discipline'                        : 'Выберите дисциплину',
 	'add_new_activity'                              : 'Добавить новую деятельность',
-    'place'                                         : 'Место',
+    'rank'                                          : 'Место',
     'location'                                      : 'Местоположение',
     'competition'                                   : 'Конкурс',
     'notes'                                         : 'Примечания',
@@ -121,7 +121,7 @@ var en = {
 	'invalid_performance'                           : 'Неверный производительность',
 	'performance_is_required'                       : 'Производительность требуется',
 	'too_long_text'                                 : 'Слишком длинный текст',
-	'invalid_place'                                 : 'Неверное значение место',
+	'invalid_rank'                                  : 'Неверное значение место',
 	'wrong_date_format'                             : 'Неправильный формат дату',
 	'date_is_required'                              : 'Дата необходим',
 	'invalid_privacy'                               : 'Неверный параметр конфиденциальности',

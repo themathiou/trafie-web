@@ -39,3 +39,5 @@ passport.use(new LocalStrategy({
         });
     }
 ));
+
+exports.isAuthenticated = passport.authenticate('local');

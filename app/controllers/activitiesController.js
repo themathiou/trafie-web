@@ -120,7 +120,7 @@ exports.post = function(req, res) {
 			discipline: req.body.discipline || null,
 			performance: typeof req.body.performance !== 'undefined' ? req.body.performance : null,
 			date: req.body.date && activityHelper.parseDate(req.body.date) || null,
-			place: req.body.place || null,
+			rank: req.body.rank || null,
 			location: req.body.location || null,
 			competition: req.body.competition || null,
 			notes: req.body.notes || null,
@@ -164,7 +164,7 @@ exports.put = function(req, res) {
 			activity.discipline = req.body.discipline || activity.discipline;
 			activity.performance = typeof req.body.performance !== 'undefined' ? req.body.performance : activity.performance;
 			activity.date = typeof req.body.date !== 'undefined' ? activityHelper.parseDate(req.body.date) : activity.date;
-			activity.place = typeof req.body.performance !== 'undefined' ? req.body.place : activity.date;
+			activity.rank = typeof req.body.performance !== 'undefined' ? req.body.rank : activity.date;
 			activity.location = typeof req.body.location !== 'undefined' ? req.body.location : activity.location;
 			activity.competition = typeof req.body.competition !== 'undefined' ? req.body.competition : activity.competition;
 			activity.notes = typeof req.body.notes !== 'undefined' ? req.body.notes : activity.notes;
