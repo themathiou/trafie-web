@@ -37,10 +37,10 @@ server.exchange(oauth2orize.exchange.password(function (client, email, password,
             var tokenObj = new Token(tokenObject);
             tokenObj.save(function (err) {
                 if (err) return callback(err);
-                var refreshTokenObj = new Token({value: refreshToken, clientId: client.id, userId: email, scope: 0});
+                var refreshTokenObj = new Token({value: refreshToken, clientId: client.id, userId: user._id, scope: 0});
                 refreshTokenObj.save(function (err) {
                     if (err) return callback(err);
-                    callback(null, token, refreshToken, {expires_in: expirationDate});
+                    callback(null, token, refreshToken, {expires_in: expirationDate, user_id: user._id});
                 });
             })
         } else {
