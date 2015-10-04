@@ -32,7 +32,6 @@ const express = require('express'),
 	mongoose = require('mongoose'),
 	lessMiddleware = require('less-middleware'),
 	redis = require('redis'),
-	redisClient = redis.createClient(16679, "redis://h:pd3377dnutq6ava2p3fah105nnm@ec2-54-217-234-142.eu-west-1.compute.amazonaws.com"),//redis.createClient(), //redis.createClient(port, host)
 	methodOverride = require('method-override'),
 	session = require('express-session'),
 	passport = require('passport'),
@@ -43,21 +42,6 @@ const express = require('express'),
 
 // Initialize express
 const trafie = express();
-
-// Mongo db connection
-// mongoose.connect('mongodb://localhost/trafie', function (err) {
-//   if (err) {
-//     console.log(err);
-//   }
-// });
-var MONGOHQ_URL="mongodb://trafie_root:​my_secret_root_password@lennon.mongohq.com:10076/app19956848";
-mongoose.connect(process.env.MONGOHQ_URL);
-
-const db = mongoose.connection;
-
-redisClient.on('connect', function() {
-    console.log('redis connected');
-});
 
 const passportSessions = require('./app/config/sessions');
 // Initialize the routes
@@ -80,6 +64,38 @@ const index = require('./app/controllers/index'),
 
 
 /*******************************************************************************************************************************
+ * DATABASES                                                                                                                   *
+ ******************************************************************************************************************************/
+
+trafie.set('env', 'production');
+var MONGO_HOST, REDIS_DATA;
+if (trafie.get('env') === 'development') {
+	REDIS_DATA = {
+		host: '127.0.0.1',
+		port: 6379,
+	}
+	MONGO_HOST = 'mongodb://localhost/trafie';
+} else {
+	REDIS_DATA = {
+		host: "redis://h:pd3377dnutq6ava2p3fah105nnm@ec2-54-217-234-142.eu-west-1.compute.amazonaws.com",
+		port: 16679
+	}
+	MONGO_HOST = "mongodb://trafie_root:​my_secret_root_password@lennon.mongohq.com:10076/app19956848";
+}
+
+// Mongo db connection
+mongoose.connect(MONGO_HOST, function (err) {
+  	if (err) {
+    	console.log(err);
+  	}
+});
+
+const redisClient = redis.createClient(REDIS_DATA.port, REDIS_DATA.host); //redis.createClient();
+redisClient.on('connect', function() {
+    console.log('redis connected');
+});
+
+/*******************************************************************************************************************************
  * MODULES                                                                                                                     *
  ******************************************************************************************************************************/
 
@@ -87,12 +103,11 @@ trafie.set('port', process.env.PORT || 3000);
 trafie.set('views', path.join(__dirname, 'app/views'));
 trafie.set('view engine', 'jade');
 trafie.set('view cache', true);
-trafie.set('env', 'development');
 trafie.use(methodOverride());
 trafie.use(session({ 
 	store: new redisStore({
-		host: '127.0.0.1',
-		port: 6379,
+		host: REDIS_DATA.host,
+		port: REDIS_DATA.port,
 		client: redisClient
 	}),
 	secret: '23tR@Ck@nDF!3lD_s3cur3535s!0n504',
