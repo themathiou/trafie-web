@@ -20,7 +20,7 @@ accessHelper.validateAccess = function(user, profileId) {
 			profile: {},
 			error: ''
 		},
-		userData = false;
+		userData = false,
 		userId =  user && user._id || null;
 
 	if (userId) {

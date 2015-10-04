@@ -24,6 +24,10 @@
     "knox": "~0.9.1",
     "passport": "~0.2.2",
     "passport-local": "~1.0.0",
+    "passport-http": "~0.3.0",
+    "passport-http-bearer": "~1.0.1",
+    "passport-oauth2-client-password": "~0.1.2",
+    "oauth2orize": "~1.0.1",
     "redis": "~0.12.1",
     "connect-redis": "~2.4.1"
   },

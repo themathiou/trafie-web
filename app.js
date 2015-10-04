@@ -73,7 +73,9 @@ const index = require('./app/controllers/index'),
 	dummyData = require('./app/controllers/dummyDataController'),
 	api = require('./app/controllers/apiController'),
 	feedback = require('./app/controllers/feedbackController'),
-	nuke = require('./app/controllers/nukeController');
+	nuke = require('./app/controllers/nukeController'),
+	auth = require('./app/controllers/authController'),
+	oAuth = require('./app/controllers/oAuthController');
 
 
 /*******************************************************************************************************************************
@@ -123,11 +125,11 @@ trafie.get( '/users/:userId?', profile.get );
  * ACTIVITIES                                                                                                                  *
  ******************************************************************************************************************************/
 
-trafie.get( '/users/:userId/activities/:activityId?', activities.get );
-trafie.post( '/users/:userId/activities', activities.post );
-trafie.put( '/users/:userId/activities/:activityId', activities.put );
-trafie.delete( '/users/:userId/activities/:activityId', activities.delete );
-trafie.get( '/users/:userId/disciplines', disciplines.get );
+trafie.get( '/users/:userId/activities/:activityId?', passport.authenticate('bearer', { session: false }), activities.get );
+trafie.post( '/users/:userId/activities', passport.authenticate('bearer', { session: false }), activities.post );
+trafie.put( '/users/:userId/activities/:activityId', passport.authenticate('bearer', { session: false }), activities.put );
+trafie.delete( '/users/:userId/activities/:activityId', passport.authenticate('bearer', { session: false }), activities.delete );
+trafie.get( '/users/:userId/disciplines', passport.authenticate('bearer', { session: false }), disciplines.get );
 
 
 /*******************************************************************************************************************************
@@ -159,6 +161,8 @@ trafie.post( '/register', register.post );
 
 trafie.get( '/login', login.get );
 trafie.post( '/login', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login'}) );
+
+trafie.post( '/authorize', oAuth.authorize);
 
 
 /*******************************************************************************************************************************
