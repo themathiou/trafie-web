@@ -82,7 +82,7 @@ if (trafie.get('env') === 'development') {
 		host: "ec2-54-217-234-142.eu-west-1.compute.amazonaws.com",
 		port: 16679
 	};
-	MONGO_HOST = "mongodb://trafie_root:​my_secret_root_password@lennon.mongohq.com:10076/app19956848";
+	MONGO_HOST = 'mongodb://localhost/trafie';
 }
 
 // Mongo db connection
@@ -92,7 +92,7 @@ mongoose.connect(MONGO_HOST, function (err) {
   	}
 });
 
-const redisClient = redis.createClient(REDIS_DATA.port, REDIS_DATA.host); //redis.createClient();
+const redisClient = redis.createClient(REDIS_DATA.url); //redis.createClient();
 redisClient.on('connect', function() {
     console.log('redis connected');
 });
@@ -110,7 +110,6 @@ trafie.use(session({
 	store: new redisStore({
 		host: REDIS_DATA.host,
 		port: REDIS_DATA.port,
-		url: REDIS_DATA.url,
 		client: redisClient
 	}),
 	secret: '23tR@Ck@nDF!3lD_s3cur3535s!0n504',
