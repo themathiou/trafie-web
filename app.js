@@ -72,14 +72,16 @@ var MONGO_HOST, REDIS_DATA;
 if (trafie.get('env') === 'development') {
 	REDIS_DATA = {
 		host: '127.0.0.1',
+		url: '127.0.0.1',
 		port: 6379,
-	}
+	};
 	MONGO_HOST = 'mongodb://localhost/trafie';
 } else {
 	REDIS_DATA = {
-		host: "redis://h:pd3377dnutq6ava2p3fah105nnm@ec2-54-217-234-142.eu-west-1.compute.amazonaws.com",
+		url: "redis://h:pd3377dnutq6ava2p3fah105nnm@ec2-54-217-234-142.eu-west-1.compute.amazonaws.com",
+		host: "ec2-54-217-234-142.eu-west-1.compute.amazonaws.com",
 		port: 16679
-	}
+	};
 	MONGO_HOST = "mongodb://trafie_root:​my_secret_root_password@lennon.mongohq.com:10076/app19956848";
 }
 
@@ -108,6 +110,7 @@ trafie.use(session({
 	store: new redisStore({
 		host: REDIS_DATA.host,
 		port: REDIS_DATA.port,
+		url: REDIS_DATA.url,
 		client: redisClient
 	}),
 	secret: '23tR@Ck@nDF!3lD_s3cur3535s!0n504',
