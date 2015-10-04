@@ -84,7 +84,7 @@ var en = {
     // Messages & Labels
     'choose_your_discipline'                        : 'Choose your discipline',
     'add_new_activity'                              : 'Add New Activity',
-    'place'                                         : 'Place',
+    'rank'                                          : 'Rank',
     'location'                                      : 'Location',
     'competition'                                   : 'Competition',
     'notes'                                         : 'Notes',
@@ -121,12 +121,13 @@ var en = {
     'invalid_performance'                           : 'Invalid performance',
     'performance_is_required'                       : 'Perfromance is required',
     'too_long_text'                                 : 'Text is too long',
-    'invalid_place'                                 : 'Invalid place value',
+    'invalid_rank'                                  : 'Invalid rank value',
     'wrong_date_format'                             : 'Wrong date format',
     'date_is_required'                              : 'Date is required',
     'invalid_privacy'                               : 'Invalid privacy setting',
     'something_went_wrong'                          : 'Oops! Something went wrong...',
     'username_taken'                                : 'Username is taken',
+    'wrong_old_password'                            : 'The old password is wrong',
 
     // Countries
     'AF': 'Afghanistan',

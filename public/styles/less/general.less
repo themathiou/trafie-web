@@ -1,0 +1,103 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: @background_color;
+    font-family: Open Sans;
+    .flexbox;
+    .flex;
+    .flex-column;
+    .align-items(center);
+    .justify-content(center);
+}
+
+label {
+    font-weight: 400;
+    color: @black_75;
+}
+a {
+    cursor: pointer;
+}
+
+.alert_custom {
+    position: fixed !important;
+    top: 70px;
+    z-index: 50;
+}
+
+.maincontent {
+    padding-top: 50px;
+    .flexbox;
+    .flex;
+    .flex-column;
+    .align-items(center);
+    .justify-content(center);
+
+    .nav-tabs {
+        li {
+            text-align: center;
+        }
+    }
+}
+
+//filters-row is the class for an unordered-list(ul)
+.filters-row {
+    .flexbox;
+    .align-items(center);
+    .justify-content(center);
+    .flex;
+    .flex-wrap;
+    padding: 0px;
+    list-style-type: none;
+    li {
+        margin-right: 10px;
+        .flex-shrink(0);
+    }
+    a {
+        cursor: pointer;
+        text-decoration: none;
+        &.selected {
+            font-weight: bold;
+            border-bottom: 2px solid #428bca;
+        }
+        &:hover {
+            border-bottom: 2px solid #428bca;
+            text-decoration: none;
+        }
+    }
+}
+
+.vertical_space_100 {
+    min-height: 100px;
+}
+.vertical_space_50 {
+    min-height: 50px;
+}
+
+.empty-state-wrapper {
+    .flexbox;
+    .align-items(center);
+    .justify-content(center);
+    .flex-column;
+    .flex;
+
+    img {
+        width:70%;
+        height:auto;
+        max-height:150px;
+        color: red;
+        fill: blue;
+    }
+
+    h4 {
+        width:90%;
+        text-align: center;
+    }
+}
+
+// -- BOOTSTRAP OVERWRITING
+.col-xs-12, .col-sm-12 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 0px;
+    padding-left: 0px;
+}

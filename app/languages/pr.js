@@ -120,12 +120,13 @@ var pr = {
 	'invalid_performance'                           : 'Invalid fuckin\' performance',
 	'performance_is_required'                       : 'Perfromance is fuckin\' required',
 	'too_long_text'                                 : 'Text is too long',
-	'invalid_place'                                 : 'Invalid place value',
+	'invalid_rank'                                  : 'Invalid place value',
 	'wrong_date_format'                             : 'Wrong fuckin\' date format',
 	'date_is_required'                              : 'Date is fuckin\' required',
 	'invalid_privacy'                               : 'Invalid privacy setting',
     'something_went_wrong'                          : 'Oops! We fucked up...',
     'username_taken'                                : 'Username is taken',
+    'wrong_old_password'                            : 'The old password is wrong',
 
 	// Countries
 	'AF': 'Afghanistan',

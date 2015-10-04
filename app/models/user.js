@@ -4,7 +4,7 @@
 const mongoose = require('mongoose'),
 	q = require('q'),
 	crypto = require('crypto'),
-	userHelper = require('../helpers/user.js'),
+	userHelper = require('../helpers/userHelper.js'),
 	db = mongoose.connection;
 
 
@@ -14,7 +14,6 @@ var userSchema = mongoose.Schema({
 	password 	: { type: String, required: true },
 	valid		: { type: Boolean, required: true, default: false}
 });
-
 
 /**
 * Find user by element
@@ -31,13 +30,13 @@ userSchema.findOne = function( where, select ) {
 
 /**
  * Resets user's password
- * @param string user_id
+ * @param string userId
  * @param string password
  */
-userSchema.resetPassword = function( user_id, password ) {
+userSchema.resetPassword = function( userId, password ) {
 	var d = q.defer();
 	password = userHelper.encryptPassword( password );
-	User.findByIdAndUpdate( user_id, { password: password }, '', function ( err, user ) {
+	User.findByIdAndUpdate( userId, { password: password }, '', function ( err, user ) {
 		d.resolve(user);
 	});
 	return d.promise;

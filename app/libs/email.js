@@ -23,11 +23,11 @@ var message = {
 };
 
 var email = {
-	send_verification_email: function(email, first_name, last_name, hash, host) {
+	send_verification_email: function(email, firstName, lastName, hash, host) {
 		var message = {};
 		message.to = email;
 		message.subject = 'Welcome to trafie ✔';
-		message.html = '<h2>Hello ' + first_name + ' ' + last_name + '</h2>' +
+		message.html = '<h2>Hello ' + firstName + ' ' + lastName + '</h2>' +
 			'<p>You have successfully registered to trafie.</p><br><p>The <b><i>trafie</i></b> team</p><br>' +
 			'Follow the link to verify your email:<br>' +
 			'<a href="' + host + '/validate/' + hash + '">This is the link</a>';
@@ -40,11 +40,11 @@ var email = {
 		});
 	},
 
-	send_reset_password_email: function(email, first_name, last_name, hash, host) {
+	send_reset_password_email: function(email, firstName, lastName, hash, host) {
 		var message = {};
 		message.to = email;
 		message.subject = 'Password reset request';
-		message.html = '<h2>Hello ' + first_name + ' ' + last_name + '</h2>' +
+		message.html = '<h2>Hello ' + firstName + ' ' + lastName + '</h2>' +
 			'<p>You have requested to reset the password of your account on trafie.</p><br>' +
 			'Follow the link in order to enter a new password:<br>' +
 			'<a href="' + host + '/reset_password/' + hash + '">This is the link</a>';

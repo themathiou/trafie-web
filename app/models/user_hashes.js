@@ -12,7 +12,7 @@ var db = mongoose.connection;
  * @param type string (valid input is ['verify', 'reset'])
  */
 var userHashSchema = mongoose.Schema({
-	user_id: 	{type: String, required: true, index: true, unique: true},
+	userId: 	{type: String, required: true, index: true, unique: true},
 	hash: 		{type: String, required: true},
 	type: 		{type: String, required: true}
 });
@@ -28,7 +28,7 @@ userHashSchema.findUserIdByHash = function(hash, type) {
 	User_hash.findOne({
 		'hash': hash,
 		'type': type
-	}, 'user_id hash', function(err, response) {
+	}, 'userId hash', function(err, response) {
 		d.resolve(response);
 	});
 	return d.promise;
@@ -37,14 +37,14 @@ userHashSchema.findUserIdByHash = function(hash, type) {
 
 /**
  * Returns the validation hash that was sent to the given user
- * @param string user_id
+ * @param string userId
  */
-userHashSchema.findValidationHashByUserId = function(user_id) {
+userHashSchema.findValidationHashByUserId = function(userId) {
 	var d = q.defer();
 	User_hash.findOne({
-		'user_id': user_id,
+		'userId': userId,
 		'type': 'verify'
-	}, 'user_id hash', function(err, response) {
+	}, 'userId hash', function(err, response) {
 		d.resolve(response);
 	});
 	return d.promise;
@@ -71,9 +71,9 @@ userHashSchema.deleteHash = function(hash, type) {
 /**
  * Create and save verification hash
  * @param string email
- * @param string user_id
+ * @param string userId
  */
-userHashSchema.createVerificationHash = function(email, user_id) {
+userHashSchema.createVerificationHash = function(email, userId) {
 	var sha512Hash = crypto.createHash('sha512');
 	sha512Hash.update('23tR@Ck@nDF!3lD04' + email + (new Date().getTime()));
 
@@ -81,7 +81,7 @@ userHashSchema.createVerificationHash = function(email, user_id) {
 	var hash = sha512Hash.digest('hex');
 	var d = q.defer();
 	var new_user_hash = {
-		'user_id': user_id,
+		'userId': userId,
 		'hash': hash,
 		'type': 'verify'
 	};
@@ -98,24 +98,24 @@ userHashSchema.createVerificationHash = function(email, user_id) {
 
 /**
  * Create and save reset password hash
- * @param string user_id
+ * @param string userId
  */
-userHashSchema.createResetPasswordHash = function(user_id) {
+userHashSchema.createResetPasswordHash = function(userId) {
 	var d = q.defer();
 	User_hash.findOne({
-		'user_id': user_id,
+		'userId': userId,
 		'type': 'reset'
-	}, 'user_id hash', function(err, response) {
+	}, 'userId hash', function(err, response) {
 		if (response !== null && typeof response.hash !== 'undefined') {
 			d.resolve(response.hash);
 		} else {
 			var sha512Hash = crypto.createHash('sha512');
-			sha512Hash.update('23tR@Ck@nDF!3lD04' + user_id + (new Date().getTime()));
+			sha512Hash.update('23tR@Ck@nDF!3lD04' + userId + (new Date().getTime()));
 
 			// The reset password hash
 			var hash = sha512Hash.digest('hex');
 			var new_user_hash = {
-				'user_id': user_id,
+				'userId': userId,
 				'hash': hash,
 				'type': 'reset'
 			};

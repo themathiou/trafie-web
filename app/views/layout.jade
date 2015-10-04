@@ -3,6 +3,7 @@ html(ng-app="trafie")
 head
     meta(charset="utf-8")
     meta( name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no")
+    base(href="/")
     //- meta(name="apple-mobile-web-app-capable" content="yes")
     //- meta(name="apple-mobile-web-app-capable" content="yes")
 
@@ -10,24 +11,24 @@ head
     link(rel="icon" href="/images/icons/trafie_72.png" type="image/x-icon")
 
     link(href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600&subset=latin,greek,cyrillic' rel='stylesheet' type='text/css')
-    link(rel='stylesheet', href='/styles/style.css')
+    link(rel='stylesheet', href='/styles/css/compiled.min.css')
 
     title trafie
 
 body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
-    div#mainmenu_container.col-xs-12.col-sm-12.col-md-12.col-lg-12
-        div#mainmenu.col-xs-12.col-sm-12.col-md-10.col-lg-8.col-md-offset-1.col-lg-offset-2
-            a.logo.brand( href="/{{localUser._id}}" )
+    div.main-menu.col-xs-12.col-sm-12.col-md-12.col-lg-12
+        div.elements-wrapper.col-xs-12.col-sm-12.col-md-12.col-lg-8
+            a.logo.brand.col-xs-4.col-sm-2.col-md-2.col-lg-2( href="/{{localUser._id}}" )
 
-            input.search.hidden-xs(type="text" ng-model="asyncSelected" placeholder="search for athletes!" typeahead-on-select="onSelect($item, $model, $label)" typeahead="result.label for result in searchUser($viewValue)" typeahead-loading="loadingLocations" class="form-control" autocomplete="off" )
+            input.search.hidden-xs.col-sm-4.col-md-4.col-lg-4(type="text" ng-model="asyncSelected" placeholder="search for athletes!" typeahead-on-select="onSelect($item, $model, $label)" typeahead="result.label for result in searchUser($viewValue)" typeahead-loading="loadingLocations" class="form-control" autocomplete="off" )
 
-            ul.navigation_menu
+            ul.navigation_menu.col-xs-8.col-sm-6.col-md-6.col-lg-6
                 li(ng-if="!isVisitor")
-                    a.menu_profile(href="/{{localUser._id}}" ng-class="{active: section == 'profile'}" ) {{localUser.first_name}}
-                li(ng-if="!isVisitor").hidden-xs
-                    a.menu_statistics(href="/statistics" ng-class="{active: section == 'statistics'}")= tr['statistics']
+                    a(href="/{{localUser._id}}" ng-class="{active: section == 'profile'}" ) {{localUser.firstName}}
+                //- li(ng-if="!isVisitor").hidden-xs
+                    //- a(href="/statistics" ng-class="{active: section == 'statistics'}")= tr['statistics']
                 li(ng-if="!isVisitor")
-                    a.menu_settings.hidden-xs(href="/settings" ng-class="{active: section == 'settings'}")= tr['settings']
+                    a.hidden-xs(href="/settings" ng-class="{active: section == 'settings'}")= tr['settings']
                 li(ng-if="!isVisitor && isMobile")
                     a(ng-click="logout()") Logout
                 li(ng-if="isVisitor")
@@ -35,43 +36,52 @@ body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
                 //- li(ng-if="isVisitor").hidden-xs
                     a(href="/register") Register
                 li
-                    a.feedback-wrapper(ng-click="openFeedbackForm()")
+                    a(ng-click="openFeedbackForm()")
                         include  partials/svg/feedback_svg
-                        
+
     //- ALERTS
-    alert.col-xs-12.col-sm-12.col-md-10.col-lg-8.col-md-offset-1.col-lg-offset-2.alert_custom( ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)") {{alert.msg}}
+    alert.col-xs-12.col-sm-12.col-md-10.col-lg-8.alert_custom(ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)") {{alert.msg}}
 
-    #content.col-xs-12.col-sm-12.col-md-10.col-lg-8.col-md-offset-1.col-lg-offset-2(ng-view)
+    div.maincontent.col-xs-12.col-sm-12.col-md-12.col-lg-12(ng-view)
 
-    script(type="text/javascript", src="/scripts/trafie.js")
+    //- script(type="text/javascript", src="/js/trafie.min.js")
 
-    //- //- libs
-    //- script(type="text/javascript", src="/scripts/libs/angular-file-upload-shim.js")
-    //- script(type="text/javascript", src="/scripts/libs/angular.min.js")
-    //- script(type="text/javascript", src="/scripts/libs/angular-route.min.js")
-    //- script(type="text/javascript", src="/scripts/libs/angular-animate.min.js")
-    //- script(type="text/javascript", src="/scripts/libs/ui-bootstrap-0.10.0.min.js")
+    //- general
+    script(type="text/javascript", src="/js/_bower.js")
+    script(type="text/javascript", src="/js/common/utils.js")
 
+    //- libs
+    script(type="text/javascript", src="/js/libs/angular/angular-file-upload-shim.js")
+    //- script(type="text/javascript", src="/js/libs/angular/angular.min.js")
+    //- script(type="text/javascript", src="/js/libs/angular/angular-route.min.js")
+    //- script(type="text/javascript", src="/js/libs/angular/angular-animate.min.js")
+    //- script(type="text/javascript", src="/js/libs/angular/angular-resource.min.js")
+    script(type="text/javascript", src="/js/libs/thirdparty/ui-bootstrap-custom-0.12.1.js")
+    //- script(type="text/javascript", src="/js/libs/thirdparty/angular-datepicker.min.js")
 
-    //- //- c3js charts
-    //- //- script( src="http://d3js.org/d3.v3.min.js" charset="utf-8")
-    //- script(type="text/javascript", src="/scripts/libs/d3.v3.min.js")
-    //- script(type="text/javascript", src="/scripts/libs/c3.min.js")
-    
-    //- script(type='text/javascript', src='/scripts/app.js')
+    //- c3js charts
+    //- script( src="http://d3js.org/d3.v3.min.js" charset="utf-8")
+    script(type="text/javascript", src="/js/libs/thirdparty/d3.v3.min.js")
+    script(type="text/javascript", src="/js/libs/thirdparty/c3.min.js")
 
-    //- //- services
-    //- script(type='text/javascript', src='/scripts/services/modalSvc.js')
-    //- script(type='text/javascript', src='/scripts/services/alertSvc.js')
+    script(type='text/javascript', src='/js/app.js')
 
-    //- //- directives
-    //- script(type='text/javascript', src='/scripts/libs/angular-file-upload.js')
+    //- services
+    script(type='text/javascript', src='/js/services/modalSvc.js')
+    script(type='text/javascript', src='/js/services/alertSvc.js')
+    script(type='text/javascript', src='/js/services/trafieServices.js')
 
-    //- //- controllers
-    //- script(type='text/javascript', src='/scripts/controllers/mainController.js')
-    //- script(type='text/javascript', src='/scripts/controllers/profileController.js')
-    //- script(type='text/javascript', src='/scripts/controllers/settingsController.js')
-    //- script(type='text/javascript', src='/scripts/controllers/statisticsController.js')
+    //- directives
+    script(type='text/javascript', src='/js/directives/directives.js')
 
+    //- models
+    script(type='text/javascript', src='/js/models/resources.js')
 
+    //- file upload
+    script(type='text/javascript', src='/js/libs/angular/angular-file-upload.js')
 
+    //- controllers
+    script(type='text/javascript', src='/js/controllers/mainController.js')
+    script(type='text/javascript', src='/js/controllers/profileController.js')
+    script(type='text/javascript', src='/js/controllers/settingsController.js')
+    script(type='text/javascript', src='/js/controllers/statisticsController.js')

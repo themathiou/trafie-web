@@ -11,17 +11,17 @@ block content
 			div.form-group
 				label(for="first_name") First Name
 					span#first_name_error
-					if errors.first_name
-						span.error_message= errors.first_name
-				input#first_name.form-control(type="text" name="first_name" placeholder="" value=fields.first_name)
+					if errors.firstName
+						span.error_message= errors.firstName
+				input#first_name.form-control(type="text" name="first_name" placeholder="" value=fields.firstName)
 
 			//LAST NAME
 			div.form-group
 				label(for="last_name") Last Name
 					span#last_name_error
-					if errors.last_name
-						span.error_message= errors.last_name
-				input#last_name.form-control(type="text" name="last_name" placeholder="" value=fields.last_name)
+					if errors.lastName
+						span.error_message= errors.lastName
+				input#last_name.form-control(type="text" name="last_name" placeholder="" value=fields.lastName)
 
 			//EMAIL
 			div.form-group

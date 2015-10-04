@@ -1,0 +1,109 @@
+.settings-page {
+    .flexbox;
+    .flex;
+    .flex-column;
+    .align-items(center);
+    .justify-content(center);
+
+    .settings-content {
+        .main-separator {
+            border-bottom: 1px solid @black_25;
+            margin: 0px;
+        }
+        padding-top: 60px;
+        .tab-pane {
+            background-color: @white;
+            border-bottom: 1px solid @black_25;
+            border-left: 1px solid @black_25;
+            border-right: 1px solid @black_25;
+            .bottom_rounded_corners(5px);
+            box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.2);
+            h3 {
+                margin-top: 0px;
+                padding-top: 1em;
+                width: 100%;
+                text-align: center;
+            }
+            label {
+                .flex-shrink(0);
+                width: 20%;
+                font-size: 1em;
+                font-weight: bold;
+            }
+            .middle-section {
+                padding: 0px 5px;
+                .flexbox;
+                .flex-column;
+                .justify-content(space-between);
+                .align-items(flex-start);
+                flex: 1;
+            }
+            form {
+                width: 100%;
+                display: inline-block;
+                margin: 0px;
+                padding: 3px 0px;
+                label {} .textarea {
+                    width: 550px;
+                    max-width: 550px;
+                }
+            }
+        }
+        .settings-element {
+            padding: 10px 5px;
+            .flexbox;
+            .flex-row;
+            .justify-content(space-between);
+            .align-items(flex-start);
+            &.editable {
+                background-color: #fcf8e3; //same as bootstrap's bg-warning background color
+            }
+
+            &:hover {
+            }
+
+            input {
+                border: 1px solid @black_25;
+                font-size: 1em;
+                &[type="radio"] {
+                    -webkit-appearance: radio;
+                }
+            }
+            textarea {
+                border: none;
+                font-size: 1em;
+            }
+
+            .thumb {
+                width: 40px;
+                height: 40px;
+                margin-left: 5px;
+                .rounded_corners();
+                vertical-align: middle;
+            }
+        }
+        .submitButtonsVisible {
+            display: block;
+            width: 150px;
+        }
+        .submitButtonsHide {
+            visibility: hidden;
+        }
+        .editLink {
+            min-width: 30px;
+        }
+    }
+    .logout {
+        .flexbox();
+        .justify-content(center);
+        padding: 20px;
+        a {
+            color: @red;
+            text-decoration: none;
+            &:hover {
+                text-decoration: none;
+                cursor: pointer;
+            }
+        }
+    }
+}

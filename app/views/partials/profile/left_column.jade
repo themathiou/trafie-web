@@ -1,0 +1,15 @@
+div.left-column.hidden-xs.col-sm-4.col-md-4.col-lg-4
+  //- profile container
+  div.profile-container
+    div.image-container
+      img(ng-src="{{current_user.picture}}")
+    div.user-info
+      p.full-name {{current_user.firstName}} {{current_user.last_name}}
+      p.username(ng-if="::current_user.username") @{{current_user.username}}
+      p(ng-if="::current_user.formatted_discipline") {{current_user.formatted_discipline}}
+      p(ng-if="::current_user.country") {{current_user.country}}
+      p.about(ng-if="::current_user.about") {{current_user.about}}
+
+    div.view-activities(ng-if="!isLoading  && !noActivities && !self")
+        //- VIEW USER STATISTICS
+        a(href="/statistics/{{::current_user._id}}") View User Statistics

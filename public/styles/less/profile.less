@@ -1,0 +1,95 @@
+//search field NOT IN main-menu bar
+//USAGE: xs-size only
+//Commented out in profile.jade
+/*.dropdown_container_xs {
+    background-color: rgba(255, 255, 255, 0.1);
+    .bottom_rounded_corners(0px);
+    .flex_wrapper {
+        margin-top: 45px;
+        .flexbox;
+        .flex-column;
+        .justify-content(space-around);
+    }
+    .search {
+        margin: 12px 0px 10px 0px;
+        padding: 0px;
+        padding-left: 5px;
+        height: 30px;
+        border: 0;
+        .rounded_corners(3px);
+        letter-spacing: -1px;
+        width: 95%;
+        font-size: 15px;
+        background: @white;
+        flex-grow: 1;
+        .align-self(center);
+    }
+    .dropdown-menu {
+        width: 100%;
+        .rounded_corners(0px);
+        text-align: left;
+        background-color: rgba(255, 255, 255, 0.9);
+        left:0px !important;
+        li {
+            a {
+                padding: 10px 20px;
+            }
+        }
+    }
+}*/
+
+.profile-page {
+    .flexbox;
+    .flex;
+    .align-items(center);
+    .justify-content(center);
+
+    // LEFT COLUMN
+    /*profile container (profile pic and full name)*/
+    .profile-container {
+        .flexbox;
+        .flex;
+        .flex-column;
+        .align-items(center);
+        .justify-content(center);
+
+        margin: 40px auto 30px auto;
+        .image-container {
+            width: 200px;
+            margin: 0px auto;
+            img {
+                width: 100%;
+                margin: 5px auto 0px;
+                .rounded_corners(10px);
+                border:4px solid white;
+            }
+        }
+        .user-info {
+            margin-top: 20px;
+            flex-grow: 0px;
+            p { //all p's
+                margin: 0px;
+                color: @black_75;
+                font-size: 1em;
+            }
+            .full-name {
+                color: @black;
+                font-size: 1.8em;
+                line-height: 1;
+                word-wrap: break-word;
+            }
+            .username {
+                font-size: 1.1em;
+            }
+            .about {
+                margin-top: 10px;
+                font-size: 1.1em;
+                color: @black;
+            }
+        }
+
+        .view-activities {
+            margin-top: 20px;
+        }
+    }
+}

@@ -10,14 +10,16 @@
 
 .gitignore~
 
-README~
+.idea
 
-.htaccess~
+README~
 
 node_modules
 
+bower_components
+
 public/images/profile_pics
 
-public/scripts/trafie.js
+public/js/trafie.js
 
-public/scripts/trafie.min.js
+public/styles/style.css

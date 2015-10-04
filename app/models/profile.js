@@ -7,8 +7,8 @@ const mongoose = require('mongoose'),
 
 //Define User SCHEMA
 var profileSchema = mongoose.Schema({
-	first_name	: { type: String, 	required: true },
-	last_name	: { type: String, 	required: true },
+	firstName	: { type: String, 	required: true },
+	lastName	: { type: String, 	required: true },
 	username 	: { type: String, 	required: false, 	default: null },
 	male		: { type: Boolean, 	required: false, 	default: null },
 	birthday	: {
@@ -20,14 +20,13 @@ var profileSchema = mongoose.Schema({
 	about 		: { type: String, 	required: false, 	default: '' },
 	country 	: { type: String, 	required: false, 	default: '' },
 	picture 	: { type: String, 	required: false, 	default: '' },
-	date_format : { type: String, 	required: true, 	default: 'd-m-y' },
+	dateFormat 	: { type: String, 	required: true, 	default: 'd-m-y' },
 	language 	: { type: String, 	required: true, 	default: 'en' },
 	private 	: { type: Boolean, 	required: true, 	default: false },
 	keywords 	: {
 					names: [ { type: String, required: false, default: '' } ]
 				}
 });
-
 
 /**
 * Find profile by element
@@ -78,11 +77,11 @@ profileSchema.save = function( profile ) {
 	var d = q.defer();
 
 	profile.save(function ( err, res ) {
-		Profile.findOne( { '_id': res.id }, 'first_name last_name', function ( err, profile ) {
+		Profile.findOne( { '_id': res.id }, 'firstName lastName', function ( err, profile ) {
 			var names = [],
-				first_names = profile.first_name.split(' '),
-				last_names = profile.last_name.split(' '),
-				names = first_names.concat( last_names ),
+				firstNames = profile.firstName.split(' '),
+				lastNames = profile.lastName.split(' '),
+				names = firstNames.concat( lastNames ),
 				names_length = names.length;
 			for ( var i=0 ; i<names_length ; i++ ) {
 				names[i] = names[i].toLowerCase();
@@ -104,12 +103,12 @@ profileSchema.update = function( where, data ) {
 	var d = q.defer();
 
 	Profile.update( where, { $set: data }, { upsert: true }, function( error ) {
-		if( 'first_name' in data || 'last_name' in data ) {
-			Profile.findOne( where, 'first_name last_name', function ( err, profile ) {
+		if( 'firstName' in data || 'lastName' in data ) {
+			Profile.findOne( where, 'firstName lastName', function ( err, profile ) {
 				var names = [],
-					first_names = profile.first_name.split(' '),
-					last_names = profile.last_name.split(' '),
-					names = first_names.concat( last_names );
+					firstNames = profile.firstName.split(' '),
+					lastNames = profile.lastName.split(' '),
+					names = firstNames.concat( lastNames );
 				var names_length = names.length;
 				for ( var i=0 ; i<names_length ; i++ ) {
 					names[i] = names[i].toLowerCase();

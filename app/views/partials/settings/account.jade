@@ -47,16 +47,16 @@ div.settings-element(ng-class="{editable: isEditable.language}")
 hr.main-separator
 
 //DATE FORMAT
-div.settings-element(ng-class="{editable: isEditable.date_format}")
+div.settings-element(ng-class="{editable: isEditable.dateFormat}")
 	label= tr['date_format'] + ': '
 	form( method="POST" ng-submit="submitChangeSetting('date-format')" )
 		span {{localUser.date_format}}
-		div( ng-show="isEditable.date_format" )
-			select( name='date_format' ng-model="localUser.date_format")
+		div( ng-show="isEditable.dateFormat" )
+			select( name='date_format' ng-model="localUser.dateFormat")
 				option( value='m-d-y' )= tr['m-d-y']
 				option( value='d-m-y' )= tr['d-m-y']
 		div(ng-show="dateformat_msg" ng-class="{message_error: !success, message_success: success}") {{dateformat_msg}}
-		div.formButtons( ng-show="isEditable.date_format" )
+		div.formButtons( ng-show="isEditable.dateFormat" )
 			hr
 			input.btn.btn-success( type="submit" value=tr['submit'])
 			a.btn.btn-link( ng-click="toggleEdit('date_format')" )= tr['cancel']

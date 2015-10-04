@@ -27,52 +27,56 @@
 'use strict';
 
 const express = require('express'),
-	http = require('http'),
+	router = express.Router(),
 	path = require('path'),
-	url = require('url'),
 	mongoose = require('mongoose'),
-	crypto = require('crypto'),
-	q = require('q'),
-	lessMiddleware = require('less-middleware');
+	lessMiddleware = require('less-middleware'),
+	redis = require('redis'),
+	redisClient = redis.createClient(), //redis.createClient(port, host)
+	methodOverride = require('method-override'),
+	session = require('express-session'),
+	passport = require('passport'),
+	bodyParser = require('body-parser'),
+	errorHandler = require('errorhandler'),
+	cookieParser = require('cookie-parser'),
+	redisStore = require('connect-redis')(session);
 
 // Initialize express
 const trafie = express();
 
 // Mongo db connection
-// mongoose.connect('mongodb://localhost/trafiejs');
+// mongoose.connect('mongodb://localhost/trafie', function (err) {
+//   if (err) {
+//     console.log(err);
+//   }
+// });
 var MONGOHQ_URL="mongodb://trafie_root:​my_secret_root_password@lennon.mongohq.com:10076/app19956848";
 mongoose.connect(process.env.MONGOHQ_URL);
 
 const db = mongoose.connection;
 
+redisClient.on('connect', function() {
+    console.log('redis connected');
+});
+
+const passportSessions = require('./app/config/sessions');
 // Initialize the routes
-const index = require('./app/routes/index'),
-	login = require('./app/routes/login'),
-	register = require('./app/routes/register'),
-	profile = require('./app/routes/profile'),
-	activities = require('./app/routes/activities'),
-	disciplines = require('./app/routes/disciplines'),
-	search = require('./app/routes/search'),
-	statistics = require('./app/routes/statistics'),
-	settings = require('./app/routes/settings'),
-	email_validation = require('./app/routes/email_validation'),
-	reset_password = require('./app/routes/reset_password'),
-	dummy_data = require('./app/routes/dummy_data'),
-	api = require('./app/routes/api'),
-	feedback = require('./app/routes/feedback'),
-	nuke = require('./app/routes/nuke');
-
-// Initialize the helpers
-const activityHelper = require('./app/helpers/activity.js'),
-	profileHelper = require('./app/helpers/profile.js'),
-	userHelper = require('./app/helpers/user.js');
-
-
-/*******************************************************************************************************************************
- * LIBRARIES                                                                                                                   *
- ******************************************************************************************************************************/
-
-const Email = require('./app/libs/email');
+const index = require('./app/controllers/index'),
+	login = require('./app/controllers/loginController'),
+	register = require('./app/controllers/registerController'),
+	profile = require('./app/controllers/profileController'),
+	activities = require('./app/controllers/activityController'),
+	disciplines = require('./app/controllers/disciplineController'),
+	//statistics = require('./app/controllers/statistics'),
+	settings = require('./app/controllers/settingsController'),
+	//email_validation = require('./app/controllers/emailValidationController'),
+	//reset_password = require('./app/controllers/resetPasswordController'),
+	dummyData = require('./app/controllers/dummyDataController'),
+	api = require('./app/controllers/apiController'),
+	feedback = require('./app/controllers/feedbackController'),
+	nuke = require('./app/controllers/nukeController'),
+	auth = require('./app/controllers/authController'),
+	oAuth = require('./app/controllers/oAuthController');
 
 
 /*******************************************************************************************************************************
@@ -84,20 +88,29 @@ trafie.set('views', path.join(__dirname, 'app/views'));
 trafie.set('view engine', 'jade');
 trafie.set('view cache', true);
 trafie.set('env', 'development');
-trafie.use(express.favicon());
-trafie.use(express.logger('dev'));
-trafie.use(express.bodyParser());
-trafie.use(express.methodOverride());
-trafie.use(express.cookieParser('your secret here'));
-trafie.use(express.session({secret: '23tR@Ck@nDF!3lD_s3cur3535s!0n504'}));
-trafie.use(trafie.router);
+trafie.use(methodOverride());
+trafie.use(session({ 
+	store: new redisStore({
+		host: '127.0.0.1',
+		port: 6379,
+		client: redisClient
+	}),
+	secret: '23tR@Ck@nDF!3lD_s3cur3535s!0n504',
+    resave: true,
+    saveUninitialized: true
+}));
+trafie.use(bodyParser.json());
+trafie.use(bodyParser.urlencoded({ extended: true }));
+trafie.use(cookieParser('23tR@Ck@nDF!3lD_s3cur3535s!0n504'));
 trafie.use(lessMiddleware(__dirname + '/public'));
 trafie.use(express.static(__dirname + '/public'));
 trafie.use(express.static(path.join(__dirname, 'public')));
+trafie.use(passport.initialize());
+trafie.use(passport.session());
 
 // Development Only
-if ('development' == trafie.get('env')) {
- 	trafie.use(express.errorHandler());
+if (trafie.get('env') === 'development') {
+ 	trafie.use(errorHandler());
 }
 
 
@@ -105,48 +118,34 @@ if ('development' == trafie.get('env')) {
  * PROFILE                                                                                                                     *
  ******************************************************************************************************************************/
 
-trafie.get( '/', index.get_view );
-
-trafie.get( '/users/me', profile.get_me );
-
-trafie.get( '/users/:user_id?', profile.get );
-
-trafie.get( '/views/profile.html', profile.get_view );
+trafie.get( '/', index.getView );
+trafie.get( '/users/:userId?', profile.get );
 
 
 /*******************************************************************************************************************************
  * ACTIVITIES                                                                                                                  *
  ******************************************************************************************************************************/
 
-trafie.get( '/users/:user_id/activities/:activity_id?', activities.get );
-
-trafie.post( '/users/:user_id/activities', activities.post );
-
-trafie.put( '/users/:user_id/activities/:activity_id', activities.put );
-
-trafie.delete( '/users/:user_id/activities/:activity_id', activities.delete );
-
-trafie.get( '/users/:user_id/disciplines', disciplines.get );
+trafie.get( '/users/:userId/activities/:activityId?', passport.authenticate('bearer', { session: false }), activities.get );
+trafie.post( '/users/:userId/activities', passport.authenticate('bearer', { session: false }), activities.post );
+trafie.put( '/users/:userId/activities/:activityId', passport.authenticate('bearer', { session: false }), activities.put );
+trafie.delete( '/users/:userId/activities/:activityId', passport.authenticate('bearer', { session: false }), activities.delete );
+trafie.get( '/users/:userId/disciplines', passport.authenticate('bearer', { session: false }), disciplines.get );
 
 
 /*******************************************************************************************************************************
  * SETTINGS                                                                                                                    *
  ******************************************************************************************************************************/
 
-trafie.get( '/views/settings.html', settings.get_view );
-
-trafie.get( '/settings', index.get_view );
-
-trafie.get( '/settings_data', settings.get );
-
-trafie.post( '/settings_data', settings.post );
+trafie.get( '/settings', settings.get );
+trafie.post( '/settings', settings.post );
 
 
 /*******************************************************************************************************************************
  * STATISTICS                                                                                                                  *
  ******************************************************************************************************************************/
 
-trafie.get( '/views/statistics.html', statistics.get_view );
+// trafie.get( '/views/statistics.html', statistics.get_view );
 
 
 /*******************************************************************************************************************************
@@ -154,7 +153,6 @@ trafie.get( '/views/statistics.html', statistics.get_view );
  ******************************************************************************************************************************/
 
 trafie.get( '/register', register.get );
-
 trafie.post( '/register', register.post );
 
 
@@ -163,8 +161,9 @@ trafie.post( '/register', register.post );
  ******************************************************************************************************************************/
 
 trafie.get( '/login', login.get );
+trafie.post( '/login', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login'}) );
 
-trafie.post( '/login', login.post );
+trafie.post( '/authorize', oAuth.authorize);
 
 
 /*******************************************************************************************************************************
@@ -176,19 +175,19 @@ trafie.post( '/login', login.post );
  * Shows a page that just informs the user to check their email
  * in order to validate their account
  */
-trafie.get( '/validation_email_sent/:resend/:user_id', email_validation.validation_email_sent );
+//trafie.get( '/validation_email_sent/:resend/:userId', email_validation.validation_email_sent );
 
 /**
  * Validate - GET
  * Validates the newly created user
  */
-trafie.get( '/validate/:hash', email_validation.validate );
+//trafie.get( '/validate/:hash', email_validation.validate );
 
 /**
  * Resend validation email - GET
  * Resends the validation email
  */
-trafie.get( '/resend_validation_email/:user_id', email_validation.resend_validation_email );
+//trafie.get( '/resend_validation_email/:userId', email_validation.resend_validation_email );
 
 
 /*******************************************************************************************************************************
@@ -196,30 +195,16 @@ trafie.get( '/resend_validation_email/:user_id', email_validation.resend_validat
  ******************************************************************************************************************************/
 
 // Reset Password Request - GET
-trafie.get( '/reset_password_request', reset_password.request.get );
+//trafie.get( '/reset-password-request', reset_password.request.get );
 
 // Reset Password Request - GET
-trafie.post( '/reset_password_request', reset_password.request.post );
+//trafie.post( '/reset-password-request', reset_password.request.post );
 
 // Reset Password - GET
-trafie.get( '/reset_password/:hash', reset_password.get );
+//trafie.get( '/reset-password/:hash', reset_password.get );
 
 // Reset Password - GET
-trafie.post( '/reset_password/:hash', reset_password.post );
-
-
-/*******************************************************************************************************************************
- * 404                                                                                                                         *
- ******************************************************************************************************************************/
-
-trafie.use( function( req, res, next ) {
- 	res.status( 404 );
- 	res.sendfile('./app/views/four_oh_four.html');
-});
-
-trafie.get('/four_oh_four', function( req, res ) {
- 	res.sendfile('./app/views/four_oh_four.html');
-});
+//trafie.post( '/reset-password/:hash', reset_password.post );
 
 
 /*******************************************************************************************************************************
@@ -239,10 +224,9 @@ trafie.get('/logout', function( req, res ) {
  * DUMMY DATA                                                                                                                  *
  ******************************************************************************************************************************/
 
-if( trafie.settings.env === 'development' ) {
-	trafie.get( '/dummy_data', dummy_data.get );
-
-	trafie.post( '/dummy_data', dummy_data.post );
+if( trafie.get('env') === 'development' ) {
+	trafie.get( '/dummy-data', dummyData.get );
+	trafie.post( '/dummy-data', dummyData.post );
 }
 
 
@@ -250,15 +234,14 @@ if( trafie.settings.env === 'development' ) {
  * API                                                                                                                         *
  ******************************************************************************************************************************/
 
-if( trafie.settings.env === 'development' ) {
+if( trafie.get('env') === 'development' ) {
 	trafie.get( '/api', api.get );
-
-	trafie.get( '/api_table', api.get_view );
+	trafie.get( '/api-table', api.get_view );
 }
 
 
 /*******************************************************************************************************************************
- * NUCLEAR TEST GROUND                                                                                                         *
+ * FEEDBACK                                                                                                                    *
  ******************************************************************************************************************************/
 
 trafie.post( '/feedback', feedback.post );
@@ -268,16 +251,23 @@ trafie.post( '/feedback', feedback.post );
  * NUCLEAR TEST GROUND                                                                                                         *
  ******************************************************************************************************************************/
 
-if( trafie.settings.env === 'development' ) {
+if( trafie.get('env') === 'development' ) {
 	trafie.get( '/nuke', nuke.get );
 }
 
 
 /*******************************************************************************************************************************
- * PROFILE                                                                                                                     *
+ * 404                                                                                                                         *
  ******************************************************************************************************************************/
 
-trafie.get( '/:profile_id', index.get_view );
+trafie.use( function( req, res ) {
+ 	res.status( 404 );
+ 	res.sendFile('/app/views/four-oh-four.html', {"root": __dirname});
+});
+
+trafie.get('/four-oh-four', function( req, res ) {
+ 	res.sendFile('/app/views/four-oh-four.html', {"root": __dirname});
+});
 
 
 /*******************************************************************************************************************************
@@ -286,4 +276,4 @@ trafie.get( '/:profile_id', index.get_view );
 
 var port = process.env.PORT || 3000;
 require('http').createServer(trafie).listen(port);
-console.log('Up and running...');
+console.log('Up and running... port 3000');
