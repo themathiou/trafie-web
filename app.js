@@ -67,7 +67,7 @@ const index = require('./app/controllers/index'),
  * DATABASES                                                                                                                   *
  ******************************************************************************************************************************/
 
-trafie.set('env', 'production');
+trafie.set('env', 'development');
 var MONGO_HOST, REDIS_DATA;
 if (trafie.get('env') === 'development') {
 	REDIS_DATA = {
@@ -92,7 +92,7 @@ mongoose.connect(MONGO_HOST, function (err) {
   	}
 });
 
-const redisClient = redis.createClient(REDIS_DATA.url); //redis.createClient();
+const redisClient = redis.createClient(REDIS_DATA.host, REDIS_DATA.port); //redis.createClient();
 redisClient.on('connect', function() {
     console.log('redis connected');
 });
