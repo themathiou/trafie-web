@@ -78,11 +78,11 @@ if (trafie.get('env') === 'development') {
 	MONGO_HOST = 'mongodb://localhost/trafie';
 } else {
 	REDIS_DATA = {
-		url: "redis://h:pd3377dnutq6ava2p3fah105nnm@ec2-54-217-234-142.eu-west-1.compute.amazonaws.com",
+		url: "redis://h:pfnv4tdfed5nm6fhashpp4mbt0s@ec2-54-217-234-142.eu-west-1.compute.amazonaws.com",
 		host: "ec2-54-217-234-142.eu-west-1.compute.amazonaws.com",
-		port: 16679
+		port: 17199
 	};
-	MONGO_HOST = 'mongodb://localhost/trafie';
+	MONGO_HOST = 'mongodb://heroku:P1aN1RHthqkUin8l5AKPlM5zGc5knKNDfL7qO4l9rNbNEDm1xYkVGnRHnFRrq507se6Wb8eD1afwZY1Mb5-3Hg@lennon.mongohq.com:10076/app19956848';
 }
 
 // Mongo db connection
