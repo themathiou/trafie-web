@@ -65,9 +65,11 @@ var index = require('./app/controllers/index'),
 
     const db = require('./app/config/db.js');
 
+
 /*******************************************************************************************************************************
  * DATABASES                                                                                                                   *
  ******************************************************************************************************************************/
+
 var redisClient = null;
 if(db[process.env.NODE_ENV].redis.password) {
     redisClient = redis.createClient(db[process.env.NODE_ENV].redis.port, db[process.env.NODE_ENV].redis.host, {auth_pass: true});
@@ -77,7 +79,7 @@ if(db[process.env.NODE_ENV].redis.password) {
 }
 
 redisClient.on('connect', function() {
-    console.log('redis connected');
+	console.log('redis connected');
 });
 
 // Mongo db connection
