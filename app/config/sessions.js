@@ -1,7 +1,5 @@
-const redis = require('redis'),
-	redisClient = redis.createClient(),
-	passport = require('passport'),
-	LocalStrategy = require('passport-local').Strategy;
+const passport = require('passport'),
+    LocalStrategy = require('passport-local').Strategy;
 
 var userHelper = require('../helpers/userHelper.js');
 

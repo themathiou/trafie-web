@@ -1,4 +1,4 @@
- /*##########-Theodore-Mathioudakis-##########################-George-Balasis-#############
+/*##########-Theodore-Mathioudakis-##########################-George-Balasis-#############
  ##                                                                                      ##
  ##                                                        x#x_                          ##
  ##                                                      j#`^^*    ,,                    ##
@@ -25,77 +25,66 @@
  ******************************************************************************************************************************/
 
 'use strict';
+process.env.NODE_ENV = 'production';
 
-const express = require('express'),
-	router = express.Router(),
-	path = require('path'),
-	mongoose = require('mongoose'),
-	lessMiddleware = require('less-middleware'),
-	redis = require('redis'),
-	methodOverride = require('method-override'),
-	session = require('express-session'),
-	passport = require('passport'),
-	bodyParser = require('body-parser'),
-	errorHandler = require('errorhandler'),
-	cookieParser = require('cookie-parser'),
-	redisStore = require('connect-redis')(session);
+var express = require('express'),
+    router = express.Router(),
+    path = require('path'),
+    mongoose = require('mongoose'),
+    lessMiddleware = require('less-middleware'),
+    redis = require('redis'),
+    methodOverride = require('method-override'),
+    session = require('express-session'),
+    passport = require('passport'),
+    bodyParser = require('body-parser'),
+    errorHandler = require('errorhandler'),
+    cookieParser = require('cookie-parser'),
+    redisStore = require('connect-redis')(session);
 
 // Initialize express
-const trafie = express();
+var trafie = express();
 
-const passportSessions = require('./app/config/sessions');
+var passportSessions = require('./app/config/sessions');
 // Initialize the routes
-const index = require('./app/controllers/index'),
-	login = require('./app/controllers/loginController'),
-	register = require('./app/controllers/registerController'),
-	profile = require('./app/controllers/profileController'),
-	activities = require('./app/controllers/activityController'),
-	disciplines = require('./app/controllers/disciplineController'),
-	//statistics = require('./app/controllers/statistics'),
-	settings = require('./app/controllers/settingsController'),
-	//email_validation = require('./app/controllers/emailValidationController'),
-	//reset_password = require('./app/controllers/resetPasswordController'),
-	dummyData = require('./app/controllers/dummyDataController'),
-	api = require('./app/controllers/apiController'),
-	feedback = require('./app/controllers/feedbackController'),
-	nuke = require('./app/controllers/nukeController'),
-	auth = require('./app/controllers/authController'),
-	oAuth = require('./app/controllers/oAuthController');
+var index = require('./app/controllers/index'),
+    login = require('./app/controllers/loginController'),
+    register = require('./app/controllers/registerController'),
+    profile = require('./app/controllers/profileController'),
+    activities = require('./app/controllers/activityController'),
+    disciplines = require('./app/controllers/disciplineController'),
+//statistics = require('./app/controllers/statistics'),
+    settings = require('./app/controllers/settingsController'),
+//email_validation = require('./app/controllers/emailValidationController'),
+//reset_password = require('./app/controllers/resetPasswordController'),
+    dummyData = require('./app/controllers/dummyDataController'),
+    api = require('./app/controllers/apiController'),
+    feedback = require('./app/controllers/feedbackController'),
+    nuke = require('./app/controllers/nukeController'),
+    auth = require('./app/controllers/authController'),
+    oAuth = require('./app/controllers/oAuthController');
 
+    const db = require('./app/config/db.js');
 
 /*******************************************************************************************************************************
  * DATABASES                                                                                                                   *
  ******************************************************************************************************************************/
-
-trafie.set('env', 'development');
-var MONGO_HOST, REDIS_DATA;
-if (trafie.get('env') === 'development') {
-	REDIS_DATA = {
-		host: '127.0.0.1',
-		url: '127.0.0.1',
-		port: 6379,
-	};
-	MONGO_HOST = 'mongodb://localhost/trafie';
+var redisClient = null;
+if(db[process.env.NODE_ENV].redis.password) {
+    redisClient = redis.createClient(db[process.env.NODE_ENV].redis.port, db[process.env.NODE_ENV].redis.host, {auth_pass: true});
+    redisClient.auth(db[process.env.NODE_ENV].password);
 } else {
-	REDIS_DATA = {
-		url: "redis://h:pfnv4tdfed5nm6fhashpp4mbt0s@ec2-54-217-234-142.eu-west-1.compute.amazonaws.com",
-		host: "ec2-54-217-234-142.eu-west-1.compute.amazonaws.com",
-		port: 17199
-	};
-	MONGO_HOST = 'mongodb://heroku:P1aN1RHthqkUin8l5AKPlM5zGc5knKNDfL7qO4l9rNbNEDm1xYkVGnRHnFRrq507se6Wb8eD1afwZY1Mb5-3Hg@lennon.mongohq.com:10076/app19956848';
+    redisClient = redis.createClient(db[process.env.NODE_ENV].redis.port, db[process.env.NODE_ENV].redis.host);
 }
 
-// Mongo db connection
-mongoose.connect(MONGO_HOST, function (err) {
-  	if (err) {
-    	console.log(err);
-  	}
-});
-
-const redisClient = redis.createClient(REDIS_DATA.host, REDIS_DATA.port); //redis.createClient();
 redisClient.on('connect', function() {
     console.log('redis connected');
 });
+
+// Mongo db connection
+mongoose.connect(db[process.env.NODE_ENV].mongo.url, function (err) {
+    if (err) {console.log(err);} else {console.log('mongo connected');}
+});
+
 
 /*******************************************************************************************************************************
  * MODULES                                                                                                                     *
@@ -106,13 +95,13 @@ trafie.set('views', path.join(__dirname, 'app/views'));
 trafie.set('view engine', 'jade');
 trafie.set('view cache', true);
 trafie.use(methodOverride());
-trafie.use(session({ 
-	store: new redisStore({
-		host: REDIS_DATA.host,
-		port: REDIS_DATA.port,
-		client: redisClient
-	}),
-	secret: '23tR@Ck@nDF!3lD_s3cur3535s!0n504',
+trafie.use(session({
+    store: new redisStore({
+        host: db[process.env.NODE_ENV].redis.host,
+        port: db[process.env.NODE_ENV].redis.port,
+        client: redisClient
+    }),
+    secret: '23tR@Ck@nDF!3lD_s3cur3535s!0n504',
     resave: true,
     saveUninitialized: true
 }));
@@ -127,7 +116,7 @@ trafie.use(passport.session());
 
 // Development Only
 if (trafie.get('env') === 'development') {
- 	trafie.use(errorHandler());
+    trafie.use(errorHandler());
 }
 
 
@@ -232,8 +221,8 @@ trafie.post( '/authorize', oAuth.authorize);
  * Logout - GET
  */
 trafie.get('/logout', function( req, res ) {
- 	req.session.destroy();
- 	res.redirect('/');
+    req.session.destroy();
+    res.redirect('/');
 });
 
 
@@ -242,8 +231,8 @@ trafie.get('/logout', function( req, res ) {
  ******************************************************************************************************************************/
 
 if( trafie.get('env') === 'development' ) {
-	trafie.get( '/dummy-data', dummyData.get );
-	trafie.post( '/dummy-data', dummyData.post );
+    trafie.get( '/dummy-data', dummyData.get );
+    trafie.post( '/dummy-data', dummyData.post );
 }
 
 
@@ -252,8 +241,8 @@ if( trafie.get('env') === 'development' ) {
  ******************************************************************************************************************************/
 
 if( trafie.get('env') === 'development' ) {
-	trafie.get( '/api', api.get );
-	trafie.get( '/api-table', api.get_view );
+    trafie.get( '/api', api.get );
+    trafie.get( '/api-table', api.get_view );
 }
 
 
@@ -269,7 +258,7 @@ trafie.post( '/feedback', feedback.post );
  ******************************************************************************************************************************/
 
 if( trafie.get('env') === 'development' ) {
-	trafie.get( '/nuke', nuke.get );
+    trafie.get( '/nuke', nuke.get );
 }
 
 
@@ -278,12 +267,12 @@ if( trafie.get('env') === 'development' ) {
  ******************************************************************************************************************************/
 
 trafie.use( function( req, res ) {
- 	res.status( 404 );
- 	res.sendFile('/app/views/four-oh-four.html', {"root": __dirname});
+    res.status( 404 );
+    res.sendFile('/app/views/four-oh-four.html', {"root": __dirname});
 });
 
 trafie.get('/four-oh-four', function( req, res ) {
- 	res.sendFile('/app/views/four-oh-four.html', {"root": __dirname});
+    res.sendFile('/app/views/four-oh-four.html', {"root": __dirname});
 });
 
 
