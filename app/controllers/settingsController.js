@@ -18,7 +18,7 @@ const config = require('../config/config.js');
 exports.get = function(req, res) {
 	// Get the user id from the session
 	var userId = req.user && req.user._id.toString();
-
+	
 	// If there is no user id in the session, return null
 	if (!userId) {
 		res.status(401).json(null);

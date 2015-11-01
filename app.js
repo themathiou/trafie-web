@@ -25,7 +25,7 @@
  ******************************************************************************************************************************/
 
 'use strict';
-process.env.NODE_ENV = 'production';
+process.env.NODE_ENV = 'development';
 
 var express = require('express'),
     router = express.Router(),
@@ -145,8 +145,8 @@ trafie.get( '/users/:userId/disciplines', passport.authenticate('bearer', { sess
  * SETTINGS                                                                                                                    *
  ******************************************************************************************************************************/
 
-trafie.get( '/settings', settings.get );
-trafie.post( '/settings', settings.post );
+trafie.get( '/settings', passport.authenticate('bearer', { session: false }), settings.get );
+trafie.post( '/settings', passport.authenticate('bearer', { session: false }), settings.post );
 
 
 /*******************************************************************************************************************************
