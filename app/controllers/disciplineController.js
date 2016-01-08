@@ -7,9 +7,6 @@ const Profile = require('../models/profile.js'),
 // Loading helpers
 const accessHelper = require('../helpers/accessHelper.js');
 
-// Initialize translations
-const translations = require('../languages/translations.js');
-
 /**
  * Disciplines - GET
  */
@@ -33,16 +30,7 @@ exports.get = function(req, res) {
 
 				Activity.schema.getDisciplinesPerformedByUser(where)
 				.then(function(disciplines) {
-					let response = [];
-					let tr = translations[user.language];
-					disciplines.forEach(function(discipline) {
-						response.push({
-							'discipline': 			discipline,
-							'formatted_discipline': tr[discipline]
-						});
-					});
-
-					res.status(200).json(response);
+					res.status(200).json(disciplines);
 				})
 				.catch(function(error) {
 					res.status(500).json(null);

@@ -3,9 +3,6 @@
 var Profile = require('../models/profile.js'),
 	Activity = require('../models/activity.js');
 
-// Initialize translations
-var translations = require('../languages/translations.js');
-
 
 /**
  * Renders the statistics page
@@ -37,8 +34,7 @@ exports.get_view = function(req, res) {
 						'_id': userId,
 						'firstName': profile_data.firstName,
 						'discipline': profile_data.discipline
-					},
-					'tr': translations[profile_data.language]
+					}
 				};
 
 				res.render('statistics', view_data);

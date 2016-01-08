@@ -3,44 +3,12 @@
 // Loading models
 const User = require('../models/user.js'),
 	Profile = require('../models/profile.js'),
-	UserHashes = require('../models/user_hashes.js');
+	UserHashes = require('../models/userHashes.js');
 
 // Loading helpers
 const userHelper = require('../helpers/userHelper.js');
 
 const Email = require('../libs/email');
-
-
-/**
- * Email validation - GET
- * Shows a page that just informs the user to check their email
- * in order to validate their account
- */
-exports.validation_email_sent = function(req, res) {
-	if (typeof req.session.userId !== 'undefined') {
-		res.redirect('/');
-	}
-
-	var userId = req.params.userId;
-	User.schema.findOne({
-		'_id': userId
-	}, 'email valid')
-	.then(function(response) {
-		if (!response.email || response.valid) {
-			res.redirect('/login');
-		}
-
-		res.render('validation_email_sent', {
-			'email': response.email,
-			'resend': req.params.resend,
-			'userId': userId
-		});
-	})
-	.catch(function(error) {
-		send_error_page(error, res);
-	});
-};
-
 
 /**
  * Validate - GET

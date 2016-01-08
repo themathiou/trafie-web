@@ -324,7 +324,7 @@ exports.post = function(req, res) {
 			}
 
 			// Validating the change password request
-			else if (typeof req.body.old_password !== 'undefined' && typeof req.body.password !== 'undefined' && req.body.repeat_password) {
+			else if (typeof req.body.oldPassword !== 'undefined' && typeof req.body.password !== 'undefined') {
 				// Find the old password of the user
 				User.schema.findOne({
 						'_id': userId
@@ -335,10 +335,7 @@ exports.post = function(req, res) {
 							res.status(400).json(response);
 						} else {
 							// Generating errors
-							if (req.body.password !== req.body.repeat_password) {
-								response.error = 'passwords_do_not_match';
-							}
-							if (user.password !== userHelper.encryptPassword(req.body.old_password)) {
+							if (user.password !== userHelper.encryptPassword(req.body.oldPassword)) {
 								response.error = 'wrong_old_password';
 							}
 							if (!userHelper.validatePassword(req.body.password)) {

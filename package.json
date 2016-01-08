@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node --harmony app.js"
+    "start": "node app.js"
   },
   "dependencies": {
     "express": "~4.13.1",
@@ -17,9 +17,6 @@
     "nodemailer-smtp-transport": "~1.0.0",
     "q": "~2.0.3",
     "moment": "~2.10.3",
-    "grunt": "*",
-    "grunt-contrib-uglify": "*",
-    "grunt-contrib-concat": "*",
     "mongoose": "~4.0.7",
     "less-middleware": "~2.0.1",
     "knox": "~0.9.1",
@@ -30,12 +27,14 @@
     "passport-oauth2-client-password": "~0.1.2",
     "oauth2orize": "~1.0.1",
     "redis": "~0.12.1",
-    "connect-redis": "~2.4.1"
+    "connect-redis": "~2.4.1",
+    "lodash": "~3.10.1"
   },
   "devDependencies": {
-    "grunt-bower-concat": "^0.4.0",
-    "grunt-concat-css": "^0.3.1",
-    "grunt-contrib-cssmin": "^0.12.2",
+    "gulp-less": "*",
+    "gulp-ng-annotate": "*",
+    "gulp-util": "*",
+    "gulp-rename": "*",
     "jasmine-node": "~1.14.5",
     "request": "~2.64"
   }

@@ -1,0 +1,34 @@
+<form class="form-signin" method="post" role="form">
+    <h2 class="form-signin-heading">trafie</h2>
+    <div class="alert alert-danger" role="alert" ng-if="errorsArray.length" ng-bind-html="errorsArray.join('<br>')">
+
+    </div>
+    <div class="form-group" ng-class="{'has-error': errors.firstName}">
+        <label for="first-name">First name:</label>
+        <input id="first-name" class="form-control" name="firstName" type="text" ng-model="formData.firstName" autofocus required>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': errors.lastName}">
+        <label for="last-name">Last name:</label>
+        <input id="last-name" class="form-control" name="lastName" type="text" ng-model="formData.lastName" required>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': errors.email}">
+        <label for="email">Email:</label>
+        <input id="email" class="form-control" name="email" type="email" ng-model="formData.email" required>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': errors.password}">
+        <label for="password">Password:</label>
+        <input id="password" class="form-control" name="password" type="password" ng-model="formData.password" required>
+    </div>
+
+    <div>
+        <input class="btn btn-success btn-lg btn-block" type="submit" ng-click="register()" value="Register">
+    </div>
+
+    <div>
+        <small>Already a member?</small>&nbsp;
+        <a href="/login">Login</a>
+    </div>
+</form>

@@ -10,7 +10,7 @@ var oauth2orize = require('oauth2orize'),
 // Create OAuth 2.0 server
 var server = oauth2orize.createServer();
 
-// Register serialialization function
+// Register serialization function
 server.serializeClient(function(client, callback) {
   return callback(null, client._id);
 });
@@ -25,8 +25,8 @@ server.deserializeClient(function(id, callback) {
 
 server.exchange(oauth2orize.exchange.password(function (client, email, password, scope, callback) {
     User.findOne({email: email}, function (err, user) {
-        if (err) return callback(err)
-        if (!user) return callback(null, false)
+        if (err) return callback(err);
+        if (!user) return callback(null, false);
         if(userHelper.encryptPassword(password) === user.password) {
             var token = uid(256);
             var refreshToken = uid(256);
@@ -51,20 +51,20 @@ server.exchange(oauth2orize.exchange.password(function (client, email, password,
 
 //Refresh Token
 server.exchange(oauth2orize.exchange.refreshToken(function (client, refreshToken, scope, callback) {
-    var refreshTokenHash = crypto.createHash('sha1').update(refreshToken).digest('hex')
+    var refreshTokenHash = crypto.createHash('sha1').update(refreshToken).digest('hex');
 
     Token.findOne({value: refreshTokenHash}, function (err, token) {
-        if (err) return callback(err)
-        if (!token) return callback(null, false)
-        if (client.clientId !== token.clientId) return callback(null, false)
+        if (err) return callback(err);
+        if (!token) return callback(null, false);
+        if (client.clientId !== token.clientId) return callback(null, false);
         
-        var newAccessToken = utils.uid(256)
-        var accessTokenHash = crypto.createHash('sha1').update(newAccessToken).digest('hex')
+        var newAccessToken = utils.uid(256);
+        var accessTokenHash = crypto.createHash('sha1').update(newAccessToken).digest('hex');
         
-        var expirationDate = new Date(new Date().getTime() + (10 * 3600 * 1000))
+        var expirationDate = new Date(new Date().getTime() + (10 * 3600 * 1000));
     
         Token.update({userId: token.userId}, {$set: {value: accessTokenHash, scope: scope, expirationDate: expirationDate}}, function (err) {
-            if (err) return callback(err)
+            if (err) return callback(err);
             callback(null, newAccessToken, refreshToken, {expires_in: expirationDate});
         })
     })
@@ -80,7 +80,7 @@ function uid (len) {
   }
 
   return buf.join('');
-};
+}
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;

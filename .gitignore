@@ -18,8 +18,7 @@ node_modules
 
 bower_components
 
-public/images/profile_pics
+app/languages/el.json
+app/languages/en.json
 
-public/js/trafie.js
-
-public/styles/style.css
+public/styles/styles.css

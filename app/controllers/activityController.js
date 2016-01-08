@@ -18,7 +18,6 @@ exports.get = function(req, res) {
 		res.status(404).json(null);
 		return;
 	}
-
 	accessHelper.validateAccess(req.user, profileId)
 	.then(function(response) {
 		// If the user has a valid session and they are not visiting a private profile

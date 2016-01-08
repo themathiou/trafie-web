@@ -1,17 +1,9 @@
 'use strict';
 
-// Loading models
-var User = require('../models/user.js');
-
-// Loading helpers
-var userHelper = require('../helpers/userHelper.js');
-
-exports.get = function(req, res) {
-	if (req.user) {
-		res.redirect('/');
-	}
-
-	res.render('login', {
-		'errors': {}
-	});
+exports.post = function(req, res) {
+    if (req.user) {
+        res.status(200).json({'_id': req.user._id});
+    } else {
+        res.status(404).json(null);
+    }
 };

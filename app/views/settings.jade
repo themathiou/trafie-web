@@ -1,9 +1,0 @@
-div.settings-page.col-xs-12.col-sm-12.col-md-12.col-lg-8(ng-controller="settingsController" ng-init="settingsInit()" ng-cloak)
-	tabset.settings-content.col-xs-12.col-sm-12.col-md-12.col-lg-12
-		tab.col-xs-6.col-md-6.col-lg-6(heading=tr['profile_settings'])
-			include partials/settings/profile
-		tab.col-xs-6.col-md-6.col-lg-6(heading=tr['account_settings'])
-			include partials/settings/account
-
-	div.logout
-		a( ng-click="logout()" )= tr['logout']

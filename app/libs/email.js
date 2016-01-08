@@ -23,7 +23,7 @@ var message = {
 };
 
 var email = {
-	send_verification_email: function(email, firstName, lastName, hash, host) {
+	sendVerificationEmail: function(email, firstName, lastName, hash, host) {
 		var message = {};
 		message.to = email;
 		message.subject = 'Welcome to trafie ✔';

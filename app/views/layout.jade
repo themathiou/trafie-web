@@ -1,87 +1,28 @@
 doctype html
 html(ng-app="trafie")
-head
-    meta(charset="utf-8")
-    meta( name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no")
-    base(href="/")
-    //- meta(name="apple-mobile-web-app-capable" content="yes")
-    //- meta(name="apple-mobile-web-app-capable" content="yes")
+    head
+        meta(charset="utf-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no")
+        base(href="/")
+        title trafie
 
-    //ICONS
-    link(rel="icon" href="/images/icons/trafie_72.png" type="image/x-icon")
+        link(href='/styles/styles.css' rel='stylesheet' type='text/css')
+        script(type="text/javascript").
+            trafie = {
+                userId: "#{userId}"
+            };
 
-    link(href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600&subset=latin,greek,cyrillic' rel='stylesheet' type='text/css')
-    link(rel='stylesheet', href='/styles/css/compiled.min.css')
+    body(ng-controller="AppController as App" ng-cloak)
+        nav.navbar.navbar-default
+            div.container
+                div.container-fluid
+                    div.navbar-header
+                        a.navbar-brand(href="/") trafie
+                    div#navbar.navbar-collapse.collapse
+                        ul.nav.navbar-nav.navbar-right
+                            li
+                                a(href='/settings') Settings
+        div.container
+            div.col-xs-12(ng-view)
 
-    title trafie
-
-body( ng-controller="mainController" ng-init="appInit()" ng-cloak)
-    div.main-menu.col-xs-12.col-sm-12.col-md-12.col-lg-12
-        div.elements-wrapper.col-xs-12.col-sm-12.col-md-12.col-lg-8
-            a.logo.brand.col-xs-4.col-sm-2.col-md-2.col-lg-2( href="/{{localUser._id}}" )
-
-            input.search.hidden-xs.col-sm-4.col-md-4.col-lg-4(type="text" ng-model="asyncSelected" placeholder="search for athletes!" typeahead-on-select="onSelect($item, $model, $label)" typeahead="result.label for result in searchUser($viewValue)" typeahead-loading="loadingLocations" class="form-control" autocomplete="off" )
-
-            ul.navigation_menu.col-xs-8.col-sm-6.col-md-6.col-lg-6
-                li(ng-if="!isVisitor")
-                    a(href="/{{localUser._id}}" ng-class="{active: section == 'profile'}" ) {{localUser.firstName}}
-                //- li(ng-if="!isVisitor").hidden-xs
-                    //- a(href="/statistics" ng-class="{active: section == 'statistics'}")= tr['statistics']
-                li(ng-if="!isVisitor")
-                    a.hidden-xs(href="/settings" ng-class="{active: section == 'settings'}")= tr['settings']
-                li(ng-if="!isVisitor && isMobile")
-                    a(ng-click="logout()") Logout
-                li(ng-if="isVisitor")
-                    a(href="/login") Login
-                //- li(ng-if="isVisitor").hidden-xs
-                    a(href="/register") Register
-                li
-                    a(ng-click="openFeedbackForm()")
-                        include  partials/svg/feedback_svg
-
-    //- ALERTS
-    alert.col-xs-12.col-sm-12.col-md-10.col-lg-8.alert_custom(ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)") {{alert.msg}}
-
-    div.maincontent.col-xs-12.col-sm-12.col-md-12.col-lg-12(ng-view)
-
-    //- script(type="text/javascript", src="/js/trafie.min.js")
-
-    //- general
-    script(type="text/javascript", src="/js/_bower.js")
-    script(type="text/javascript", src="/js/common/utils.js")
-
-    //- libs
-    script(type="text/javascript", src="/js/libs/angular/angular-file-upload-shim.js")
-    //- script(type="text/javascript", src="/js/libs/angular/angular.min.js")
-    //- script(type="text/javascript", src="/js/libs/angular/angular-route.min.js")
-    //- script(type="text/javascript", src="/js/libs/angular/angular-animate.min.js")
-    //- script(type="text/javascript", src="/js/libs/angular/angular-resource.min.js")
-    script(type="text/javascript", src="/js/libs/thirdparty/ui-bootstrap-custom-0.12.1.js")
-    //- script(type="text/javascript", src="/js/libs/thirdparty/angular-datepicker.min.js")
-
-    //- c3js charts
-    //- script( src="http://d3js.org/d3.v3.min.js" charset="utf-8")
-    script(type="text/javascript", src="/js/libs/thirdparty/d3.v3.min.js")
-    script(type="text/javascript", src="/js/libs/thirdparty/c3.min.js")
-
-    script(type='text/javascript', src='/js/app.js')
-
-    //- services
-    script(type='text/javascript', src='/js/services/modalSvc.js')
-    script(type='text/javascript', src='/js/services/alertSvc.js')
-    script(type='text/javascript', src='/js/services/trafieServices.js')
-
-    //- directives
-    script(type='text/javascript', src='/js/directives/directives.js')
-
-    //- models
-    script(type='text/javascript', src='/js/models/resources.js')
-
-    //- file upload
-    script(type='text/javascript', src='/js/libs/angular/angular-file-upload.js')
-
-    //- controllers
-    script(type='text/javascript', src='/js/controllers/mainController.js')
-    script(type='text/javascript', src='/js/controllers/profileController.js')
-    script(type='text/javascript', src='/js/controllers/settingsController.js')
-    script(type='text/javascript', src='/js/controllers/statisticsController.js')
+        include ./partials/scripts.jade

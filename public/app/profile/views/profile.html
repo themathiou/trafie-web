@@ -1,0 +1,11 @@
+<div>
+    <div ng-if="profileFound">
+        <span>{{user.firstName + ' ' + user.lastName}}</span>
+        <form>
+            <select ng-options="discipline as (discipline.label | translate) for discipline in disciplines track by discipline.key" ng-model="selectedDiscipline"></select>
+        </form>
+    </div>
+    <div ng-if="!profileFound">
+        Profile not found
+    </div>
+</div>

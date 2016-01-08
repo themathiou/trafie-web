@@ -2,34 +2,26 @@
 
 var Profile = require('../models/profile.js'),
 	Activity = require('../models/activity.js');
-// Initialize translations
-const translations = require('../languages/translations.js');
 
 exports.getView = function(req, res) {
-	if (typeof req.user === 'undefined' && !req.params.profileId) {
-		res.redirect('/login');
-		// change to /login only for testing purposes
-		// res.redirect('/register');
+    //var angularRoutes = ['/', '/settings'];
+	if (typeof req.user === 'undefined' && req.originalUrl === '/') {
+		res.redirect(301, '/register');
 		return false;
 	}
+    var data = {
+        userId: req.user ? req.user._id : ''
+    };
 
-	var userId = req.user ? req.user._id : req.params.profileId;
-	Profile.schema.findOne({
-		_id: userId
-	}, '_id firstName language')
-	.then(function(response) {
-		if (response._id) {
-			var data = {
-				user: {
-					_id: response._id,
-					firstName: response.firstName
-				},
-				tr: translations[response.language]
-			}
+    res.render('layout', data);
+};
 
-			res.render('layout', data);
-		} else {
-			res.sendFile('../app/views/four_oh_four.html',  {"root": __dirname});
-		}
-	});
+exports.getOuterView = function(req, res) {
+    var angularRoutes = ['/login', '/register', '/reset-password', '/reset-password-request'];
+    if (req.user && angularRoutes.indexOf(req.originalUrl) >= 0) {
+        res.redirect(301, '/');
+        return false;
+    }
+
+    res.render('layout-outer');
 };
