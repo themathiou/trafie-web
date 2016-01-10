@@ -1,0 +1,1482 @@
+{
+  "LANGUAGE": {
+    "NAME": {
+      "en": "English",
+      "el": "Ελληνικά"
+    },
+    "SHORT_NAME": {
+      "en": "en",
+      "el": "el"
+    }
+  },
+  "DISCIPLINES": {
+    "60M": {
+      "en": "60m",
+      "el": "60μ"
+    },
+    "100M": {
+      "en": "100m",
+      "el": "100μ"
+    },
+    "200M": {
+      "en": "200m",
+      "el": "200μ"
+    },
+    "400M": {
+      "en": "400m",
+      "el": "400μ"
+    },
+    "800M": {
+      "en": "800m",
+      "el": "800μ"
+    },
+    "1500M": {
+      "en": "1500m",
+      "el": "1500μ"
+    },
+    "3000M": {
+      "en": "3000m",
+      "el": "3000μ"
+    },
+    "5000M": {
+      "en": "5000m",
+      "el": "5000μ"
+    },
+    "10000M": {
+      "en": "10000m",
+      "el": "10000μ"
+    },
+    "60M_HURDLES": {
+      "en": "60m hurdles",
+      "el": "60μ εμπόδια"
+    },
+    "100M_HURDLES": {
+      "en": "100m hurdles",
+      "el": "100μ εμπόδια"
+    },
+    "110M_HURDLES": {
+      "en": "110m hurdles",
+      "el": "110μ εμπόδια"
+    },
+    "400M_HURDLES": {
+      "en": "400m hurdles",
+      "el": "400μ εμπόδια"
+    },
+    "3000M_STEEPLECHASE": {
+      "en": "3000m steeplechase",
+      "el": "3000μ φυσικά εμπόδια"
+    },
+    "4X100M_RELAY": {
+      "en": "4x100m relay",
+      "el": "4x100μ σκυτάλη"
+    },
+    "4X400M_RELAY": {
+      "en": "4x400m relay",
+      "el": "4x400μ σκυτάλη"
+    },
+    "HALF_MARATHON": {
+      "en": "Half marathon",
+      "el": "Ημιμαραθώνιος"
+    },
+    "MARATHON": {
+      "en": "Marathon",
+      "el": "Μαραθώνιος"
+    },
+    "20KM_RACE_WALK": {
+      "en": "20km race walk",
+      "el": "20χλμ βάδην"
+    },
+    "50KM_RACE_WALK": {
+      "en": "50km race walk",
+      "el": "50χλμ βάδην"
+    },
+    "CROSS_COUNTRY_RUNNING": {
+      "en": "Cross country running",
+      "el": "Ανώμαλος δρόμος"
+    },
+    "HIGH_JUMP": {
+      "en": "High jump",
+      "el": "Άλμα εις υψος"
+    },
+    "LONG_JUMP": {
+      "en": "Long jump",
+      "el": "Άλμα εις μήκος"
+    },
+    "TRIPLE_JUMP": {
+      "en": "Triple jump",
+      "el": "Τριπλούν"
+    },
+    "POLE_VAULT": {
+      "en": "Pole vault",
+      "el": "Άλμα επί κοντώ"
+    },
+    "SHOT_PUT": {
+      "en": "Shot put",
+      "el": "Σφαιροβολία"
+    },
+    "DISCUS": {
+      "en": "Discus",
+      "el": "Δισκοβολία"
+    },
+    "HAMMER": {
+      "en": "Hammer",
+      "el": "Σφυροβολία"
+    },
+    "JAVELIN": {
+      "en": "Javelin",
+      "el": "Ακοντισμός"
+    },
+    "PENTATHLON": {
+      "en": "Pentathlon",
+      "el": "Πένταθλο"
+    },
+    "HEPTATHLON": {
+      "en": "Heptathlon",
+      "el": "Έπταθλο"
+    },
+    "DECATHLON": {
+      "en": "Decathlon",
+      "el": "Δέκαθλο"
+    }
+  },
+  "MEASUREMENTS": {
+    "HOURS": {
+      "en": "Hours",
+      "el": "Ώρες"
+    },
+    "HOURS_SHORT": {
+      "en": "hrs",
+      "el": "ώρες"
+    },
+    "MINUTES": {
+      "en": "Minutes",
+      "el": "Λεπτά"
+    },
+    "MINUTES_SHORT": {
+      "en": "min",
+      "el": "λεπ"
+    },
+    "SECONDS":{
+      "en": "Seconds",
+      "el": "Δευτερόλεπτα"
+    },
+    "SECONDS_SHORT": {
+      "en": "sec",
+      "el": "δευτ"
+    },
+    "CENTISECONDS": {
+      "en": "Centiseconds",
+      "el": "Εκατοστά"
+    },
+    "CENTISECONDS_SHORT": {
+      "en": "csec",
+      "el": "εκ"
+    },
+    "METERS": {
+      "en": "Meters",
+      "el": "Μέτρα"
+    },
+    "METERS_SHORT": {
+      "en": "m",
+      "el": "μ"
+    },
+    "CENTIMETERS": {
+      "en": "Centimeters",
+      "el": "Εκατοστά"
+    },
+    "CENTIMETERS_SHORT": {
+      "en": "cm",
+      "el": "εκ"
+    },
+    "POINTS": {
+      "en": "points",
+      "el": "πόντοι"
+    }
+  },
+  "COMMON": {
+    "DATE": {
+      "en": "Date",
+      "el": "Ημερομηνία"
+    },
+    "MALE": {
+      "en": "Male",
+      "el": "Άνδρας"
+    },
+    "FEMALE": {
+      "en": "Female",
+      "el": "Γυναίκα"
+    },
+    "FIRST_NAME": {
+      "en": "First name",
+      "el": "Όνομα"
+    },
+    "LAST_NAME": {
+      "en": "Last name",
+      "el": "Επίθετο"
+    },
+    "USERNAME": {
+      "en": "Username",
+      "el": "Όνομα χρήστη"
+    },
+    "PROFILE_PICTURE": {
+      "en": "Profile picture",
+      "el": "Εικόνα προφίλ"
+    },
+    "BIRTHDAY": {
+      "en": "Birthday",
+      "el": "Ημ. γέννησης"
+    },
+    "GENDER": {
+      "en": "Gender",
+      "el": "Φύλο"
+    },
+    "MAIN_DISCIPLINE": {
+      "en": "Main discipline",
+      "el": "Κύριο άθλημα"
+    },
+    "COUNTRY": {
+      "en": "Country",
+      "el": "Χώρα"
+    },
+    "LANGUAGE": {
+      "en": "Language",
+      "el": "Γλώσσα"
+    },
+    "ABOUT_ME": {
+      "en": "About Me",
+      "el": "Σχετικά με εμένα"
+    },
+    "PRIVACY": {
+      "en": "Privacy",
+      "el": "Ιδιωτικότητα"
+    },
+    "PRIVATE": {
+      "en": "Private",
+      "el": "Ιδιωτικό"
+    },
+    "PUBLIC": {
+      "en": "Public",
+      "el": "Δημόσιο"
+    },
+    "SUBMIT": {
+      "en": "Submit",
+      "el": "Υποβολή"
+    },
+    "SAVE": {
+      "en": "Save",
+      "el": "Αποθήκευση"
+    },
+    "CANCEL": {
+      "en": "Cancel",
+      "el": "Ακύρωση"
+    },
+    "EDIT": {
+      "en": "Edit",
+      "el": "Επεξεργασία"
+    },
+    "LOGOUT": {
+      "en": "Logout",
+      "el": "Έξοδος"
+    },
+    "SETTINGS": {
+      "en": "Settings",
+      "el": "Ρυθμίσεις"
+    },
+    "STATISTICS": {
+      "en": "Statistics",
+      "el": "Στατιστικά"
+    },
+    "GENERAL_SETTINGS": {
+      "en": "General settings",
+      "el": "Γενικές ρυθμίσεις"
+    },
+    "PROFILE_SETTINGS": {
+      "en": "Profile settings",
+      "el": "Ρυθμίσεις προφίλ"
+    },
+    "ACCOUNT_SETTINGS": {
+      "en": "Account settings",
+      "el": "Ρυθμίσεις λογαριασμού"
+    },
+    "SOMETHING_WENT_WRONG": {
+      "en": "Oops! Something went wrong...",
+      "el": "Ωχ! Κάτι πήγε στραβά..."
+    }
+  },
+  "PROFILE": {
+    "CHOOSE_YOUR_DISCIPLINE": {
+      "en": "Choose your discipline",
+      "el": "Διάλεξε άθλημα"
+    },
+    "ADD_NEW_ACTIVITY": {
+      "en": "Add New Activity",
+      "el": "Προσθήκη νέας δραστηριότητας"
+    },
+    "RANK": {
+      "en": "Rank",
+      "el": "Θέση"
+    },
+    "LOCATION": {
+      "en": "Location",
+      "el": "Τοποθεσία"
+    },
+    "COMPETITION": {
+      "en": "Competition",
+      "el": "Αγώνας"
+    },
+    "NOTES": {
+      "en": "Notes",
+      "el": "Σημειώσεις"
+    },
+    "ENTER_YOUR_PERFORMANCE": {
+      "en": "Enter your performance",
+      "el": "Βάλε την επίδοσή σου"
+    },
+    "DISCIPLINE_IS_REQUIRED":{
+      "en": "Discipline is required",
+      "el": "Το αγώνισμα είναι υποχρεωτικό"
+    },
+    "INVALID_PERFORMANCE":{
+      "en": "Invalid performance",
+      "el": "Μη έγκυρη επίδοση"
+    },
+    "PERFORMANCE_IS_REQUIRED":{
+      "en": "Performance is required",
+      "el": "Η επίδοση είναι υποχρεωτική"
+    },
+    "TOO_LONG_TEXT":{
+      "en": "Text is too long",
+      "el": "Πολύ μεγάλο κείμενο"
+    },
+    "INVALID_RANK":{
+      "en": "Invalid rank value",
+      "el": "Μη έγκυρη θέση"
+    },
+    "WRONG_DATE_FORMAT":{
+      "en": "Wrong date format",
+      "el": "Η μορφή ημερομηνίας είναι λανθασμένη"
+    },
+    "DATE_IS_REQUIRED":{
+      "en": "Date is required",
+      "el": "Η ημερομηνία είναι υποχρεωτική"
+    }
+  },
+  "SETTINGS": {
+    "CHOOSE_YOUR_COUNTRY": {
+      "en": "Choose your country",
+      "el": "Διάλεξε χώρα"
+    },
+    "CHOOSE_YOUR_LANGUAGE": {
+      "en": "Choose your language",
+      "el": "Διάλεξε γλώσσα"
+    },
+    "NO_GENDER_SELECTED": {
+      "en": "No gender selected",
+      "el": "Δεν έχει επιλεγχθεί φύλο"
+    },
+    "WRITE_SOMETHING_ABOUT_YOU": {
+      "en": "Write something about you",
+      "el": "Γράψε κάτι για εσένα"
+    },
+    "CHANGE_PASSWORD": {
+      "en": "Change Password",
+      "el": "Αλλαγή Κωδικού"
+    },
+    "OLD_PASSWORD": {
+      "en": "Old Password",
+      "el": "Παλιός Κωδικός"
+    },
+    "NEW_PASSWORD": {
+      "en": "New Password",
+      "el": "Καινούριος Κωδικός"
+    },
+    "REPEAT_PASSWORD": {
+      "en": "Repeat Password",
+      "el": "Επανέλαβε τον Κωδικό"
+    },
+    "DATE_FORMAT": {
+      "en": "Date Format",
+      "el": "Μορφή Ημερομηνίας"
+    },
+    "DATA_WAS_UPDATED_SUCCESSFULLY": {
+      "en": "Data was updated successfully",
+      "el": "Τα δεδομένα αποθηκεύτηκαν επιτυχώς"
+    },
+    "DAY_MONTH_YEAR": {
+      "en": "Day-Month-Year",
+      "el": "Ημέρα-Μήνας-Έτος"
+    },
+    "MONTH_DAY_YEAR": {
+      "en": "Month-Day-Year",
+      "el": "Μήνας-Ημέρα-Έτος"
+    },
+    "INVALID_FIRST_NAME": {
+      "en": "Invalid first name",
+      "el": "Μη αποδεκτό όνομα"
+    },
+    "INVALID_LAST_NAME": {
+      "en": "Invalid last name",
+      "el": "Μη αποδεκτό επίθετο"
+    },
+    "INVALID_BIRTHDAY": {
+      "en": "Invalid birthday",
+      "el": "Μη αποδεκτή ημερομηνία γενεθλίων"
+    },
+    "INVALID_GENDER": {
+      "en": "Invalid gender",
+      "el": "Μη έγκυρο φύλο"
+    },
+    "INVALID_COUNTRY": {
+      "en": "Invalid country",
+      "el": "Μη έγκυρο αγώνισμα"
+    },
+    "INVALID_DISCIPLINE": {
+      "en": "Invalid discipline",
+      "el": "Μη έγκυρο αγώνισμα"
+    },
+    "INVALID_LANGUAGE": {
+      "en": "Invalid language",
+      "el": "Μη έγκυρη γλώσσα"
+    },
+    "INVALID_USERNAME": {
+      "en": "Invalid username",
+      "el": "Μη αποδεκτό όνομα χρήστη"
+    },
+    "PASSWORDS_DO_NOT_MATCH": {
+      "en": "Passwords do not match",
+      "el": "Οι κωδικοί δεν ταιριάζουν"
+    },
+    "WRONG_PASSWORD": {
+      "en": "Wrong password",
+      "el": "Λάθος κωδικός"
+    },
+    "PASSWORD_SHOULD_BE_AT_LEAST_6_CHARACTERS_LONG": {
+      "en": "Password should be at least 6 characters long",
+      "el": "Ο κωδικός πρέπει να έχει τουλάχιστον 6 χαρακτήρες"
+    },
+    "UPLOADED_IMAGE_TOO_LARGE": {
+      "en": "The uploaded image is too large",
+      "el": "Το μέγεθος της φωτογραφίας είναι πολύ μεγάλο"
+    },
+    "UPLOADED_IMAGE_WRONG_TYPE": {
+      "en": "The type of the uploaded file is wrong",
+      "el": "Ο τύπος του αρχείου είναι λανθασμένος"
+    },
+    "USERNAME_TAKEN": {
+      "en": "Username is taken",
+      "el": "Το όνομα χρήστη χρησιμοποιείται"
+    },
+    "WRONG_OLD_PASSWORD": {
+      "en": "The old password is wrong",
+      "el": "Ο παλιός κωδικός είναι λανθασμένος"
+    }
+  },
+  "OUTER": {
+    "EMAIL_NOT_FOUND": {
+      "en": "Email not found",
+      "el": "Το email δεν βρέθηκε"
+    },
+    "RESET_PASSWORD_INSTRUCTIONS_EMAIL": {
+      "en": "An email with instructions of resetting your password, has been sent to your email address",
+      "el": "Ένα email με οδηγίες για την αλλαγή του κωδικού σας, έχει σταλλεί στην διεύθυνση σας"
+    }
+  },
+  "COUNTRIES": {
+    "AF":{
+      "en": "Afghanistan",
+      "el": "Afghanistan"
+    },
+    "AX":{
+      "en": "Aland Islands",
+      "el": "Aland Islands"
+    },
+    "AL":{
+      "en": "Albania",
+      "el": "Albania"
+    },
+    "DZ":{
+      "en": "Algeria",
+      "el": "Algeria"
+    },
+    "AS":{
+      "en": "American Samoa",
+      "el": "American Samoa"
+    },
+    "AD":{
+      "en": "Andorra",
+      "el": "Andorra"
+    },
+    "AO":{
+      "en": "Angola",
+      "el": "Angola"
+    },
+    "AI":{
+      "en": "Anguilla",
+      "el": "Anguilla"
+    },
+    "AQ":{
+      "en": "Antarctica",
+      "el": "Antarctica"
+    },
+    "AG":{
+      "en": "Antigua and Barbuda",
+      "el": "Antigua and Barbuda"
+    },
+    "AR":{
+      "en": "Argentina",
+      "el": "Argentina"
+    },
+    "AM":{
+      "en": "Armenia",
+      "el": "Armenia"
+    },
+    "AW":{
+      "en": "Aruba",
+      "el": "Aruba"
+    },
+    "AU":{
+      "en": "Australia",
+      "el": "Australia"
+    },
+    "AT":{
+      "en": "Austria",
+      "el": "Austria"
+    },
+    "AZ":{
+      "en": "Azerbaijan",
+      "el": "Azerbaijan"
+    },
+    "BS":{
+      "en": "Bahamas",
+      "el": "Bahamas"
+    },
+    "BH":{
+      "en": "Bahrain",
+      "el": "Bahrain"
+    },
+    "BD":{
+      "en": "Bangladesh",
+      "el": "Bangladesh"
+    },
+    "BB":{
+      "en": "Barbados",
+      "el": "Barbados"
+    },
+    "BY":{
+      "en": "Belarus",
+      "el": "Belarus"
+    },
+    "BE":{
+      "en": "Belgium",
+      "el": "Belgium"
+    },
+    "BZ":{
+      "en": "Belize",
+      "el": "Belize"
+    },
+    "BJ":{
+      "en": "Benin",
+      "el": "Benin"
+    },
+    "BM":{
+      "en": "Bermuda",
+      "el": "Bermuda"
+    },
+    "BT":{
+      "en": "Bhutan",
+      "el": "Bhutan"
+    },
+    "BO":{
+      "en": "Bolivia, Plurinational State of",
+      "el": "Bolivia, Plurinational State of"
+    },
+    "BQ":{
+      "en": "Bonaire, Sint Eustatius and Saba",
+      "el": "Bonaire, Sint Eustatius and Saba"
+    },
+    "BA":{
+      "en": "Bosnia and Herzegovina",
+      "el": "Bosnia and Herzegovina"
+    },
+    "BW":{
+      "en": "Botswana",
+      "el": "Botswana"
+    },
+    "BV":{
+      "en": "Bouvet Island",
+      "el": "Bouvet Island"
+    },
+    "BR":{
+      "en": "Brazil",
+      "el": "Brazil"
+    },
+    "IO":{
+      "en": "British Indian Ocean Territory",
+      "el": "British Indian Ocean Territory"
+    },
+    "BN":{
+      "en": "Brunei Darussalam",
+      "el": "Brunei Darussalam"
+    },
+    "BG":{
+      "en": "Bulgaria",
+      "el": "Bulgaria"
+    },
+    "BF":{
+      "en": "Burkina Faso",
+      "el": "Burkina Faso"
+    },
+    "BI":{
+      "en": "Burundi",
+      "el": "Burundi"
+    },
+    "KH":{
+      "en": "Cambodia",
+      "el": "Cambodia"
+    },
+    "CM":{
+      "en": "Cameroon",
+      "el": "Cameroon"
+    },
+    "CA":{
+      "en": "Canada",
+      "el": "Canada"
+    },
+    "CV":{
+      "en": "Cape Verde",
+      "el": "Cape Verde"
+    },
+    "KY":{
+      "en": "Cayman Islands",
+      "el": "Cayman Islands"
+    },
+    "CF":{
+      "en": "Central African Republic",
+      "el": "Central African Republic"
+    },
+    "TD":{
+      "en": "Chad",
+      "el": "Chad"
+    },
+    "CL":{
+      "en": "Chile",
+      "el": "Chile"
+    },
+    "CN":{
+      "en": "China",
+      "el": "China"
+    },
+    "CX":{
+      "en": "Christmas Island",
+      "el": "Christmas Island"
+    },
+    "CC":{
+      "en": "Cocos (Keeling) Islands",
+      "el": "Cocos (Keeling) Islands"
+    },
+    "CO":{
+      "en": "Colombia",
+      "el": "Colombia"
+    },
+    "KM":{
+      "en": "Comoros",
+      "el": "Comoros"
+    },
+    "CG":{
+      "en": "Congo",
+      "el": "Congo"
+    },
+    "CD":{
+      "en": "Congo, The Democratic Republic of the",
+      "el": "Congo, The Democratic Republic of the"
+    },
+    "CK":{
+      "en": "Cook Islands",
+      "el": "Cook Islands"
+    },
+    "CR":{
+      "en": "Costa Rica",
+      "el": "Costa Rica"
+    },
+    "CI":{
+      "en": "Cote d'Ivoire",
+      "el": "Cote d'Ivoire"
+    },
+    "HR":{
+      "en": "Croatia",
+      "el": "Croatia"
+    },
+    "CU":{
+      "en": "Cuba",
+      "el": "Cuba"
+    },
+    "CW":{
+      "en": "Curacao",
+      "el": "Curacao"
+    },
+    "CY":{
+      "en": "Cyprus",
+      "el": "Cyprus"
+    },
+    "CZ":{
+      "en": "Czech Republic",
+      "el": "Czech Republic"
+    },
+    "DK":{
+      "en": "Denmark",
+      "el": "Denmark"
+    },
+    "DJ":{
+      "en": "Djibouti",
+      "el": "Djibouti"
+    },
+    "DM":{
+      "en": "Dominica",
+      "el": "Dominica"
+    },
+    "DO":{
+      "en": "Dominican Republic",
+      "el": "Dominican Republic"
+    },
+    "EC":{
+      "en": "Ecuador",
+      "el": "Ecuador"
+    },
+    "EG":{
+      "en": "Egypt",
+      "el": "Egypt"
+    },
+    "SV":{
+      "en": "El Salvador",
+      "el": "El Salvador"
+    },
+    "GQ":{
+      "en": "Equatorial Guinea",
+      "el": "Equatorial Guinea"
+    },
+    "ER":{
+      "en": "Eritrea",
+      "el": "Eritrea"
+    },
+    "EE":{
+      "en": "Estonia",
+      "el": "Estonia"
+    },
+    "ET":{
+      "en": "Ethiopia",
+      "el": "Ethiopia"
+    },
+    "FK":{
+      "en": "Falkland Islands (Malvinas)",
+      "el": "Falkland Islands (Malvinas)"
+    },
+    "FO":{
+      "en": "Faroe Islands",
+      "el": "Faroe Islands"
+    },
+    "FJ":{
+      "en": "Fiji",
+      "el": "Fiji"
+    },
+    "FI":{
+      "en": "Finland",
+      "el": "Finland"
+    },
+    "FR":{
+      "en": "France",
+      "el": "France"
+    },
+    "GF":{
+      "en": "French Guiana",
+      "el": "French Guiana"
+    },
+    "PF":{
+      "en": "French Polynesia",
+      "el": "French Polynesia"
+    },
+    "TF":{
+      "en": "French Southern Territories",
+      "el": "French Southern Territories"
+    },
+    "GA":{
+      "en": "Gabon",
+      "el": "Gabon"
+    },
+    "GM":{
+      "en": "Gambia",
+      "el": "Gambia"
+    },
+    "GE":{
+      "en": "Georgia",
+      "el": "Georgia"
+    },
+    "DE":{
+      "en": "Germany",
+      "el": "Germany"
+    },
+    "GH":{
+      "en": "Ghana",
+      "el": "Ghana"
+    },
+    "GI":{
+      "en": "Gibraltar",
+      "el": "Gibraltar"
+    },
+    "GR":{
+      "en": "Greece",
+      "el": "Greece"
+    },
+    "GL":{
+      "en": "Greenland",
+      "el": "Greenland"
+    },
+    "GD":{
+      "en": "Grenada",
+      "el": "Grenada"
+    },
+    "GP":{
+      "en": "Guadeloupe",
+      "el": "Guadeloupe"
+    },
+    "GU":{
+      "en": "Guam",
+      "el": "Guam"
+    },
+    "GT":{
+      "en": "Guatemala",
+      "el": "Guatemala"
+    },
+    "GG":{
+      "en": "Guernsey",
+      "el": "Guernsey"
+    },
+    "GN":{
+      "en": "Guinea",
+      "el": "Guinea"
+    },
+    "GW":{
+      "en": "Guinea-Bissau",
+      "el": "Guinea-Bissau"
+    },
+    "GY":{
+      "en": "Guyana",
+      "el": "Guyana"
+    },
+    "HT":{
+      "en": "Haiti",
+      "el": "Haiti"
+    },
+    "HM":{
+      "en": "Heard Island and McDonald Islands",
+      "el": "Heard Island and McDonald Islands"
+    },
+    "VA":{
+      "en": "Holy See (Vatican City State)",
+      "el": "Holy See (Vatican City State)"
+    },
+    "HN":{
+      "en": "Honduras",
+      "el": "Honduras"
+    },
+    "HK":{
+      "en": "Hong Kong",
+      "el": "Hong Kong"
+    },
+    "HU":{
+      "en": "Hungary",
+      "el": "Hungary"
+    },
+    "IS":{
+      "en": "Iceland",
+      "el": "Iceland"
+    },
+    "IN":{
+      "en": "India",
+      "el": "India"
+    },
+    "ID":{
+      "en": "Indonesia",
+      "el": "Indonesia"
+    },
+    "IR":{
+      "en": "Iran, Islamic Republic of",
+      "el": "Iran, Islamic Republic of"
+    },
+    "IQ":{
+      "en": "Iraq",
+      "el": "Iraq"
+    },
+    "IE":{
+      "en": "Ireland",
+      "el": "Ireland"
+    },
+    "IM":{
+      "en": "Isle of Man",
+      "el": "Isle of Man"
+    },
+    "IL":{
+      "en": "Israel",
+      "el": "Israel"
+    },
+    "IT":{
+      "en": "Italy",
+      "el": "Italy"
+    },
+    "JM":{
+      "en": "Jamaica",
+      "el": "Jamaica"
+    },
+    "JP":{
+      "en": "Japan",
+      "el": "Japan"
+    },
+    "JE":{
+      "en": "Jersey",
+      "el": "Jersey"
+    },
+    "JO":{
+      "en": "Jordan",
+      "el": "Jordan"
+    },
+    "KZ":{
+      "en": "Kazakhstan",
+      "el": "Kazakhstan"
+    },
+    "KE":{
+      "en": "Kenya",
+      "el": "Kenya"
+    },
+    "KI":{
+      "en": "Kiribati",
+      "el": "Kiribati"
+    },
+    "KP":{
+      "en": "Korea, Democratic People's Republic of",
+      "el": "Korea, Democratic People's Republic of"
+    },
+    "KR":{
+      "en": "Korea, Republic of",
+      "el": "Korea, Republic of"
+    },
+    "KW":{
+      "en": "Kuwait",
+      "el": "Kuwait"
+    },
+    "KG":{
+      "en": "Kyrgyzstan",
+      "el": "Kyrgyzstan"
+    },
+    "LA":{
+      "en": "Lao People's Democratic Republic",
+      "el": "Lao People's Democratic Republic"
+    },
+    "LV":{
+      "en": "Latvia",
+      "el": "Latvia"
+    },
+    "LB":{
+      "en": "Lebanon",
+      "el": "Lebanon"
+    },
+    "LS":{
+      "en": "Lesotho",
+      "el": "Lesotho"
+    },
+    "LR":{
+      "en": "Liberia",
+      "el": "Liberia"
+    },
+    "LY":{
+      "en": "Libya",
+      "el": "Libya"
+    },
+    "LI":{
+      "en": "Liechtenstein",
+      "el": "Liechtenstein"
+    },
+    "LT":{
+      "en": "Lithuania",
+      "el": "Lithuania"
+    },
+    "LU":{
+      "en": "Luxembourg",
+      "el": "Luxembourg"
+    },
+    "MO":{
+      "en": "Macao",
+      "el": "Macao"
+    },
+    "MK":{
+      "en": "Macedonia, The Former Yugoslav Republic of",
+      "el": "Macedonia, The Former Yugoslav Republic of"
+    },
+    "MG":{
+      "en": "Madagascar",
+      "el": "Madagascar"
+    },
+    "MW":{
+      "en": "Malawi",
+      "el": "Malawi"
+    },
+    "MY":{
+      "en": "Malaysia",
+      "el": "Malaysia"
+    },
+    "MV":{
+      "en": "Maldives",
+      "el": "Maldives"
+    },
+    "ML":{
+      "en": "Mali",
+      "el": "Mali"
+    },
+    "MT":{
+      "en": "Malta",
+      "el": "Malta"
+    },
+    "MH":{
+      "en": "Marshall Islands",
+      "el": "Marshall Islands"
+    },
+    "MQ":{
+      "en": "Martinique",
+      "el": "Martinique"
+    },
+    "MR":{
+      "en": "Mauritania",
+      "el": "Mauritania"
+    },
+    "MU":{
+      "en": "Mauritius",
+      "el": "Mauritius"
+    },
+    "YT":{
+      "en": "Mayotte",
+      "el": "Mayotte"
+    },
+    "MX":{
+      "en": "Mexico",
+      "el": "Mexico"
+    },
+    "FM":{
+      "en": "Micronesia, Federated States of",
+      "el": "Micronesia, Federated States of"
+    },
+    "MD":{
+      "en": "Moldova, Republic of",
+      "el": "Moldova, Republic of"
+    },
+    "MC":{
+      "en": "Monaco",
+      "el": "Monaco"
+    },
+    "MN":{
+      "en": "Mongolia",
+      "el": "Mongolia"
+    },
+    "ME":{
+      "en": "Montenegro",
+      "el": "Montenegro"
+    },
+    "MS":{
+      "en": "Montserrat",
+      "el": "Montserrat"
+    },
+    "MA":{
+      "en": "Morocco",
+      "el": "Morocco"
+    },
+    "MZ":{
+      "en": "Mozambique",
+      "el": "Mozambique"
+    },
+    "MM":{
+      "en": "Myanmar",
+      "el": "Myanmar"
+    },
+    "NA":{
+      "en": "Namibia",
+      "el": "Namibia"
+    },
+    "NR":{
+      "en": "Nauru",
+      "el": "Nauru"
+    },
+    "NP":{
+      "en": "Nepal",
+      "el": "Nepal"
+    },
+    "NL":{
+      "en": "Netherlands",
+      "el": "Netherlands"
+    },
+    "NC":{
+      "en": "New Caledonia",
+      "el": "New Caledonia"
+    },
+    "NZ":{
+      "en": "New Zealand",
+      "el": "New Zealand"
+    },
+    "NI":{
+      "en": "Nicaragua",
+      "el": "Nicaragua"
+    },
+    "NE":{
+      "en": "Niger",
+      "el": "Niger"
+    },
+    "NG":{
+      "en": "Nigeria",
+      "el": "Nigeria"
+    },
+    "NU":{
+      "en": "Niue",
+      "el": "Niue"
+    },
+    "NF":{
+      "en": "Norfolk Island",
+      "el": "Norfolk Island"
+    },
+    "MP":{
+      "en": "Northern Mariana Islands",
+      "el": "Northern Mariana Islands"
+    },
+    "NO":{
+      "en": "Norway",
+      "el": "Norway"
+    },
+    "OM":{
+      "en": "Oman",
+      "el": "Oman"
+    },
+    "PK":{
+      "en": "Pakistan",
+      "el": "Pakistan"
+    },
+    "PW":{
+      "en": "Palau",
+      "el": "Palau"
+    },
+    "PS":{
+      "en": "Palestine, State of",
+      "el": "Palestine, State of"
+    },
+    "PA":{
+      "en": "Panama",
+      "el": "Panama"
+    },
+    "PG":{
+      "en": "Papua New Guinea",
+      "el": "Papua New Guinea"
+    },
+    "PY":{
+      "en": "Paraguay",
+      "el": "Paraguay"
+    },
+    "PE":{
+      "en": "Peru",
+      "el": "Peru"
+    },
+    "PH":{
+      "en": "Philippines",
+      "el": "Philippines"
+    },
+    "PN":{
+      "en": "Pitcairn",
+      "el": "Pitcairn"
+    },
+    "PL":{
+      "en": "Poland",
+      "el": "Poland"
+    },
+    "PT":{
+      "en": "Portugal",
+      "el": "Portugal"
+    },
+    "PR":{
+      "en": "Puerto rico",
+      "el": "Puerto rico"
+    },
+    "QA":{
+      "en": "Qatar",
+      "el": "Qatar"
+    },
+    "RE":{
+      "en": "Reunion",
+      "el": "Reunion"
+    },
+    "RO":{
+      "en": "Romania",
+      "el": "Romania"
+    },
+    "RU":{
+      "en": "Russian Federation",
+      "el": "Russian Federation"
+    },
+    "RW":{
+      "en": "Rwanda",
+      "el": "Rwanda"
+    },
+    "BL":{
+      "en": "Saint Barthelemy",
+      "el": "Saint Barthelemy"
+    },
+    "SH":{
+      "en": "Saint Helena, Ascension and Tristan da Cunha",
+      "el": "Saint Helena, Ascension and Tristan da Cunha"
+    },
+    "KN":{
+      "en": "Saint Kitts and Nevis",
+      "el": "Saint Kitts and Nevis"
+    },
+    "LC":{
+      "en": "Saint Lucia",
+      "el": "Saint Lucia"
+    },
+    "MF":{
+      "en": "Saint Martin (French Part)",
+      "el": "Saint Martin (French Part)"
+    },
+    "PM":{
+      "en": "Saint Pierre and Miquelon",
+      "el": "Saint Pierre and Miquelon"
+    },
+    "VC":{
+      "en": "Saint Vincent and the Grenadines",
+      "el": "Saint Vincent and the Grenadines"
+    },
+    "WS":{
+      "en": "Samoa",
+      "el": "Samoa"
+    },
+    "SM":{
+      "en": "San Marino",
+      "el": "San Marino"
+    },
+    "ST":{
+      "en": "Sao Tome and Principe",
+      "el": "Sao Tome and Principe"
+    },
+    "SA":{
+      "en": "Saudi Arabia",
+      "el": "Saudi Arabia"
+    },
+    "SN":{
+      "en": "Senegal",
+      "el": "Senegal"
+    },
+    "RS":{
+      "en": "Serbia",
+      "el": "Serbia"
+    },
+    "SC":{
+      "en": "Seychelles",
+      "el": "Seychelles"
+    },
+    "SL":{
+      "en": "Sierra Leone",
+      "el": "Sierra Leone"
+    },
+    "SG":{
+      "en": "Singapore",
+      "el": "Singapore"
+    },
+    "SX":{
+      "en": "Sint Maarten (Dutch Part)",
+      "el": "Sint Maarten (Dutch Part)"
+    },
+    "SK":{
+      "en": "Slovakia",
+      "el": "Slovakia"
+    },
+    "SI":{
+      "en": "Slovenia",
+      "el": "Slovenia"
+    },
+    "SB":{
+      "en": "Solomon Islands",
+      "el": "Solomon Islands"
+    },
+    "SO":{
+      "en": "Somalia",
+      "el": "Somalia"
+    },
+    "ZA":{
+      "en": "South Africa",
+      "el": "South Africa"
+    },
+    "GS":{
+      "en": "South Georgia and the South Sandwich Islands",
+      "el": "South Georgia and the South Sandwich Islands"
+    },
+    "SS":{
+      "en": "South Sudan",
+      "el": "South Sudan"
+    },
+    "ES":{
+      "en": "Spain",
+      "el": "Spain"
+    },
+    "LK":{
+      "en": "Sri Lanka",
+      "el": "Sri Lanka"
+    },
+    "SD":{
+      "en": "Sudan",
+      "el": "Sudan"
+    },
+    "SR":{
+      "en": "Suriname",
+      "el": "Suriname"
+    },
+    "SJ":{
+      "en": "Svalbard and Jan Mayen",
+      "el": "Svalbard and Jan Mayen"
+    },
+    "SZ":{
+      "en": "Swaziland",
+      "el": "Swaziland"
+    },
+    "SE":{
+      "en": "Sweden",
+      "el": "Sweden"
+    },
+    "CH":{
+      "en": "Switzerland",
+      "el": "Switzerland"
+    },
+    "SY":{
+      "en": "Syrian Arab Republic",
+      "el": "Syrian Arab Republic"
+    },
+    "TW":{
+      "en": "Taiwan, Province of China",
+      "el": "Taiwan, Province of China"
+    },
+    "TJ":{
+      "en": "Tajikistan",
+      "el": "Tajikistan"
+    },
+    "TZ":{
+      "en": "Tanzania, United Republic of",
+      "el": "Tanzania, United Republic of"
+    },
+    "TH":{
+      "en": "Thailand",
+      "el": "Thailand"
+    },
+    "TL":{
+      "en": "Timor-Leste",
+      "el": "Timor-Leste"
+    },
+    "TG":{
+      "en": "Togo",
+      "el": "Togo"
+    },
+    "TK":{
+      "en": "Tokelau",
+      "el": "Tokelau"
+    },
+    "TO":{
+      "en": "Tonga",
+      "el": "Tonga"
+    },
+    "TT":{
+      "en": "Trinidad and Tobago",
+      "el": "Trinidad and Tobago"
+    },
+    "TN":{
+      "en": "Tunisia",
+      "el": "Tunisia"
+    },
+    "TR":{
+      "en": "Turkey",
+      "el": "Turkey"
+    },
+    "TM":{
+      "en": "Turkmenistan",
+      "el": "Turkmenistan"
+    },
+    "TC":{
+      "en": "Turks and Caicos Islands",
+      "el": "Turks and Caicos Islands"
+    },
+    "TV":{
+      "en": "Tuvalu",
+      "el": "Tuvalu"
+    },
+    "UG":{
+      "en": "Uganda",
+      "el": "Uganda"
+    },
+    "UA":{
+      "en": "Ukraine",
+      "el": "Ukraine"
+    },
+    "AE":{
+      "en": "United Arab Emirates",
+      "el": "United Arab Emirates"
+    },
+    "GB":{
+      "en": "United Kingdom",
+      "el": "United Kingdom"
+    },
+    "US":{
+      "en": "United States",
+      "el": "United States"
+    },
+    "UM":{
+      "en": "United States Minor Outlying Islands",
+      "el": "United States Minor Outlying Islands"
+    },
+    "UY":{
+      "en": "Uruguay",
+      "el": "Uruguay"
+    },
+    "UZ":{
+      "en": "Uzbekistan",
+      "el": "Uzbekistan"
+    },
+    "VU":{
+      "en": "Vanuatu",
+      "el": "Vanuatu"
+    },
+    "VE":{
+      "en": "Venezuela, Bolivarian Republic of",
+      "el": "Venezuela, Bolivarian Republic of"
+    },
+    "VN":{
+      "en": "Vietnam",
+      "el": "Vietnam"
+    },
+    "VG":{
+      "en": "Virgin Islands, British",
+      "el": "Virgin Islands, British"
+    },
+    "VI":{
+      "en": "Virgin Islands, U.S.",
+      "el": "Virgin Islands, U.S."
+    },
+    "WF":{
+      "en": "Wallis and Futuna",
+      "el": "Wallis and Futuna"
+    },
+    "EH":{
+      "en": "Western Sahara",
+      "el": "Western Sahara"
+    },
+    "YE":{
+      "en": "Yemen",
+      "el": "Yemen"
+    },
+    "ZM":{
+      "en": "Zambia",
+      "el": "Zambia"
+    },
+    "ZW":{
+      "en": "Zimbabwe",
+      "el": "Zimbabwe"
+    }
+  }
+}
