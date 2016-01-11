@@ -18,7 +18,7 @@ node_modules
 
 bower_components
 
-app/languages/el.json
-app/languages/en.json
+public/languages/el.json
+public/languages/en.json
 
 public/styles/styles.css
