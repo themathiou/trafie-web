@@ -5,7 +5,6 @@
 var mongoose = require('mongoose');
 var q = require('q');
 var crypto = require('crypto');
-var db = mongoose.connection;
 
 /**
  * Define User_Hashes SCHEMA
@@ -14,9 +13,18 @@ var db = mongoose.connection;
 var userHashSchema = mongoose.Schema({
 	userId: 	{type: String, required: true, index: true, unique: true},
 	hash: 		{type: String, required: true},
-	type: 		{type: String, required: true}
+	type: 		{type: String, required: true},
+	dateCreated:{ type: Date }
 });
 
+userHashSchema.pre('save', function(next){
+	var now = new Date();
+	this.dateUpdated = now;
+	if ( !this.dateCreated ) {
+		this.dateCreated = now;
+	}
+	next();
+});
 
 /**
  * Returns the user id of the user to whom the hash was sent
