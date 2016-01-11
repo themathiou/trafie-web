@@ -1,7 +1,7 @@
 (function(angular) {
     angular.module('trafie')
     .controller('ProfileController', function($rootScope, $scope, $routeParams, $location, Activity,
-                                              User, DISCIPLINES_MAP) {
+                                              User, DISCIPLINES_MAP, userService) {
         $scope.profileFound = true;
         $scope.loading = true;
         $scope.user = null;
@@ -15,7 +15,7 @@
         $scope.selectedDiscipline = $scope.disciplines[0];
 
         if(!('userIdentifier' in $routeParams)) {
-            trafie.loadUser().then(loadProfile, function() {
+            userService.loadCurrentUser().then(loadProfile, function() {
                 $location.path('/register');
             });
         } else {

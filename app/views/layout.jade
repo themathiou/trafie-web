@@ -20,7 +20,7 @@ html(ng-app="trafie")
                         a.navbar-brand(href="/") trafie
                     div#navbar.navbar-collapse.collapse
                         ul.nav.navbar-nav.navbar-right
-                            li
+                            li(ng-if="App.user")
                                 a(href='/settings') Settings
         div.container
             div.col-xs-12(ng-view)
