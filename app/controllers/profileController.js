@@ -13,11 +13,9 @@ const SEARCH_RESULTS_LENGTH = 10;
  * Profile - GET
  */
 exports.get = function(req, res) {
-	var requestedUserId = false;
-
 	if (typeof req.params.userId !== 'undefined') {
-		requestedUserId = req.params.userId;
-		accessHelper.validateAccess(req.user, requestedUserId)
+        console.log('req.user', req.user)
+		accessHelper.validateAccess(req.user, req.params.userId)
 		.then(function(response) {
 			// If the user has a valid session and they are not visiting a private profile
 			if (response.success) {
@@ -128,16 +126,26 @@ function generateSearchQuery(req) {
  * @return object              (the profile data as a json object)
  */
 function sendProfileData(res, profileData, userData) {
-	var profile = {
-		_id: 					profileData._id,
-		firstName: 				profileData.firstName,
-		lastName: 				profileData.lastName,
-		discipline: 			profileData.discipline,
-		gender: 				profileData.male,
-		picture: 				profileData.picture || config.defaultProfilePic,
-		username: 				profileData.username,
-		about:                  profileData.about
-	};
+    var profile = {
+        _id: 			profileData._id,
+        firstName: 		profileData.firstName,
+        lastName: 		profileData.lastName,
+        discipline: 	profileData.discipline,
+        gender: 		profileData.male,
+        picture: 		profileData.picture || config.defaultProfilePic,
+        username: 	    profileData.username,
+        country:        profileData.country,
+        about:          profileData.about
+    };
+    console.log(profileData);
+    console.log(userData);
+    if(profileData._id.toString() === userData._id.toString()) {
+        profile.private = profileData.private;
+        profile.birthday = profileData.birthday;
+        profile.language = userData.language;
+        profile.dateFormat = userData.dateFormat;
+        profile.email = userData.email;
+    }
 
 	res.json(profile);
 }

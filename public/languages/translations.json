@@ -214,6 +214,10 @@
       "en": "Last name",
       "el": "Επίθετο"
     },
+    "EMAIL": {
+      "en": "Email",
+      "el": "Email"
+    },
     "USERNAME": {
       "en": "Username",
       "el": "Όνομα χρήστη"
@@ -265,6 +269,10 @@
     "SAVE": {
       "en": "Save",
       "el": "Αποθήκευση"
+    },
+    "SAVE_CHANGES": {
+      "en": "Save changes",
+      "el": "Αποθήκευση αλλαγών"
     },
     "CANCEL": {
       "en": "Cancel",

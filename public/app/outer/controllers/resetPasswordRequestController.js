@@ -12,6 +12,7 @@
                     .then(function(res) {
                         if(res.status === 200) {
                             var message = encodeURIComponent('An email with instructions of resetting your password, has been sent to your email address');
+                            console.log(message);
                             $window.location.href = '/login?message=' + message + '&message_type=success';
                         }
                     }, function(res) {

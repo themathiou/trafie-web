@@ -52,7 +52,6 @@ var index = require('./app/controllers/index'),
     profile = require('./app/controllers/profileController'),
     activities = require('./app/controllers/activityController'),
     disciplines = require('./app/controllers/disciplineController'),
-//statistics = require('./app/controllers/statistics'),
     settings = require('./app/controllers/settingsController'),
 //email_validation = require('./app/controllers/emailValidationController'),
     resetPassword = require('./app/controllers/resetPasswordController'),
@@ -60,6 +59,7 @@ var index = require('./app/controllers/index'),
     api = require('./app/controllers/apiController'),
     feedback = require('./app/controllers/feedbackController'),
     nuke = require('./app/controllers/nukeController'),
+    auth = require('./app/controllers/authController'),
     oAuth = require('./app/controllers/oAuthController');
 
     const db = require('./app/config/db.js');

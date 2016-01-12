@@ -71,24 +71,24 @@ server.exchange(oauth2orize.exchange.refreshToken(function (client, refreshToken
 }));
 
 function uid (len) {
-  var buf = []
-    , chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-    , charlen = chars.length;
+    var buf = []
+        , chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+        , charlen = chars.length;
 
-  for (var i = 0; i < len; ++i) {
-    buf.push(chars[getRandomInt(0, charlen - 1)]);
-  }
+    for (var i = 0; i < len; ++i) {
+        buf.push(chars[getRandomInt(0, charlen - 1)]);
+    }
 
-  return buf.join('');
+    return buf.join('');
 }
 
 function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 // token endpoint
 exports.authorize = [
-    passport.authenticate(['client-basic', 'client-password'], { session: false }),
+    passport.authenticate(['client-basic', 'client-password'], {session: false }),
     server.token(),
     server.errorHandler()
 ];

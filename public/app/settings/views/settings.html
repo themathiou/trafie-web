@@ -1,4 +1,37 @@
 <div>
-    Settings
-    <button ng-click="logout()">Logout</button>
+    <h2>Settings</h2>
+    <form method="POST" name="form">
+        <div class="form-group">
+            <label for="firstName" translate="COMMON.FIRST_NAME"></label>
+            <input type="text" class="form-control" id="firstName" ng-model="user.firstName">
+        </div>
+        <div class="form-group">
+            <label for="lastName" translate="COMMON.LAST_NAME"></label>
+            <input type="text" class="form-control" id="lastName" ng-model="user.lastName">
+        </div>
+        <div class="form-group">
+            <label for="email" translate="COMMON.EMAIL"></label>
+            <input type="email" class="form-control" id="email" ng-model="user.email" disabled>
+        </div>
+        <div class="form-group">
+            <label for="country" translate="COMMON.COUNTRY"></label>
+            <select class="form-control" id="country" ng-model="user.country" ng-options="country as (country && 'COUNTRIES.' + country.toUpperCase() || 'SETTINGS.CHOOSE_YOUR_COUNTRY' | translate) for country in countries"></select>
+        </div>
+        <div class="form-group">
+            <label for="aboutMe" translate="COMMON.ABOUT_ME"></label>
+            <textarea class="form-control" id="aboutMe" ng-model="user.about"></textarea>
+        </div>
+        <!--<div class="form-group">
+            <label for="exampleInputFile">File input</label>
+            <input type="file" id="exampleInputFile">
+            <p class="help-block">Example block-level help text here.</p>
+        </div>-->
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="user.private"> Private profile
+            </label>
+        </div>
+        <button type="submit" class="btn btn-success" ng-click="saveSettings()" translate="COMMON.SAVE_CHANGES"></button>
+    </form>
+    <button class="btn btn-link" ng-click="logout()">Logout</button>
 </div>
