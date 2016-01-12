@@ -20,7 +20,7 @@ exports.get = function(req, res) {
 			// If the user has a valid session and they are not visiting a private profile
 			if (response.success) {
 				// Send the profile data to the client
-				sendProfileData(res, response.profile, response.user);
+				sendProfileData(req, res, response.profile, response.user);
 			} else {
 				// Otherwise, if it's a server error, send the error
 				if (response.error === 'query_error') {
@@ -125,7 +125,7 @@ function generateSearchQuery(req) {
  * @param  object userData     (the object that contains the data of the user who is viewing the profile)
  * @return object              (the profile data as a json object)
  */
-function sendProfileData(res, profileData, userData) {
+function sendProfileData(req, res, profileData, userData) {
     var profile = {
         _id: 			profileData._id,
         firstName: 		profileData.firstName,
@@ -144,7 +144,7 @@ function sendProfileData(res, profileData, userData) {
         profile.birthday = profileData.birthday;
         profile.language = userData.language;
         profile.dateFormat = userData.dateFormat;
-        profile.email = userData.email;
+        profile.email = req.user.email;
     }
 
 	res.json(profile);
