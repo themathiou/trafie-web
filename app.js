@@ -60,6 +60,7 @@ var index = require('./app/controllers/index'),
     api = require('./app/controllers/apiController'),
     feedback = require('./app/controllers/feedbackController'),
     nuke = require('./app/controllers/nukeController'),
+    auth = require('./app/controllers/authController'),
     oAuth = require('./app/controllers/oAuthController');
 
     const db = require('./app/config/db.js');
