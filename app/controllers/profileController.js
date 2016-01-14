@@ -130,7 +130,7 @@ function sendProfileData(req, res, profileData, userData) {
         firstName: 		profileData.firstName,
         lastName: 		profileData.lastName,
         discipline: 	profileData.discipline,
-        gender: 		profileData.male,
+        male:    		profileData.male,
         picture: 		profileData.picture || config.defaultProfilePic,
         username: 	    profileData.username,
         country:        profileData.country,

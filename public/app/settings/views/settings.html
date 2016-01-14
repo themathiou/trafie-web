@@ -5,6 +5,11 @@
             <uib-tab heading="{{'COMMON.PROFILE_SETTINGS' | translate}}">
                 <div class="panel">
                     <div class="panel-body">
+                        <!--<div class="form-group">
+                            <label for="exampleInputFile">File input</label>
+                            <input type="file" id="exampleInputFile">
+                            <p class="help-block">Example block-level help text here.</p>
+                        </div>-->
                         <div class="form-group">
                             <label for="firstName" translate="COMMON.FIRST_NAME"></label>
                             <input type="text" class="form-control" id="firstName" ng-model="user.firstName">
@@ -25,11 +30,18 @@
                             <label for="aboutMe" translate="COMMON.ABOUT_ME"></label>
                             <textarea class="form-control" id="aboutMe" ng-model="user.about"></textarea>
                         </div>
-                        <!--<div class="form-group">
-                            <label for="exampleInputFile">File input</label>
-                            <input type="file" id="exampleInputFile">
-                            <p class="help-block">Example block-level help text here.</p>
-                        </div>-->
+                        <div class="form-group">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="gender" ng-model="user.male" value="true"> {{'COMMON.MALE' | translate}}
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="gender" ng-model="user.male" value="false"> {{'COMMON.FEMALE' | translate}}
+                                </label>
+                            </div>
+                        </div>
                         <div class="checkbox">
                             <label>
                                 <input type="checkbox" ng-model="user.private"> {{'COMMON.PRIVATE' | translate}}
@@ -46,6 +58,15 @@
                         <div class="form-group">
                             <label for="email" translate="COMMON.EMAIL"></label>
                             <input type="email" class="form-control" id="email" ng-model="user.email" disabled>
+                        </div>
+                        <div class="form-group">
+                            <h4 translate="SETTINGS.CHANGE_PASSWORD"></h4>
+                            <label for="old-password" translate="SETTINGS.OLD_PASSWORD"></label>
+                            <input type="password" id="old-password" name="oldPassword" class="form-control" ng-model="user.oldPassword" minlength="6">
+                            <label for="password" translate="SETTINGS.NEW_PASSWORD"></label>
+                            <input type="password" id="password" name="password" class="form-control" ng-model="user.password" minlength="6">
+                            <label for="repeat-password" translate="SETTINGS.REPEAT_PASSWORD"></label>
+                            <input type="password" id="repeat-password" name="repeat-password" class="form-control" ng-model="repeatPassword" minlength="6">
                         </div>
                         <button type="submit" class="btn btn-success" ng-click="saveSettings()" translate="COMMON.SAVE_CHANGES"></button>
                         <button class="btn btn-link" ng-click="logout()">Logout</button>

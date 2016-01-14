@@ -10,10 +10,6 @@
             console.log($scope.user);
         });
 
-        $scope.$watchCollection('user', function(){
-            console.log($scope.user);
-        });
-
         $scope.saveSettings = function() {
             console.log($scope.user);
         };
