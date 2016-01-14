@@ -52,6 +52,7 @@ var index = require('./app/controllers/index'),
     profile = require('./app/controllers/profileController'),
     activities = require('./app/controllers/activityController'),
     disciplines = require('./app/controllers/disciplineController'),
+//statistics = require('./app/controllers/statistics'),
     settings = require('./app/controllers/settingsController'),
 //email_validation = require('./app/controllers/emailValidationController'),
     resetPassword = require('./app/controllers/resetPasswordController'),
@@ -59,7 +60,6 @@ var index = require('./app/controllers/index'),
     api = require('./app/controllers/apiController'),
     feedback = require('./app/controllers/feedbackController'),
     nuke = require('./app/controllers/nukeController'),
-    auth = require('./app/controllers/authController'),
     oAuth = require('./app/controllers/oAuthController');
 
     const db = require('./app/config/db.js');
@@ -125,18 +125,24 @@ if (trafie.get('env') === 'development') {
  * PROFILE                                                                                                                     *
  ******************************************************************************************************************************/
 
-trafie.get( '/users/:userId?', profile.get );
+trafie.get('/users/:userId?', profile.get );
+trafie.get('/api/users/:userId?', passport.authenticate('bearer', { session: false }), profile.get);
 
 
 /*******************************************************************************************************************************
  * ACTIVITIES                                                                                                                  *
  ******************************************************************************************************************************/
 
-trafie.get( '/users/:userId/activities/:activityId?', activities.get );
-trafie.post( '/users/:userId/activities', activities.post );
-trafie.put( '/users/:userId/activities/:activityId', activities.put );
-trafie.delete( '/users/:userId/activities/:activityId', activities.delete );
-trafie.get( '/users/:userId/disciplines', disciplines.get );
+trafie.get('/users/:userId/activities/:activityId?', activities.get );
+trafie.post('/users/:userId/activities', activities.post );
+trafie.put('/users/:userId/activities/:activityId', activities.put );
+trafie.delete('/users/:userId/activities/:activityId', activities.delete );
+trafie.get('/users/:userId/disciplines', disciplines.get );
+
+trafie.post('/api/users/:userId/activities', passport.authenticate('bearer', { session: false }), activities.post );
+trafie.put('/api/users/:userId/activities/:activityId', passport.authenticate('bearer', { session: false }), activities.put );
+trafie.delete('/api/users/:userId/activities/:activityId', passport.authenticate('bearer', { session: false }), activities.delete );
+trafie.get('/api/users/:userId/disciplines', passport.authenticate('bearer', { session: false }), disciplines.get );
 
 
 /*******************************************************************************************************************************
