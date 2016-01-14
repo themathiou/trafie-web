@@ -312,10 +312,6 @@
     }
   },
   "PROFILE": {
-    "CHOOSE_YOUR_DISCIPLINE": {
-      "en": "Choose your discipline",
-      "el": "Διάλεξε άθλημα"
-    },
     "ADD_NEW_ACTIVITY": {
       "en": "Add New Activity",
       "el": "Προσθήκη νέας δραστηριότητας"
@@ -370,6 +366,10 @@
     }
   },
   "SETTINGS": {
+    "CHOOSE_YOUR_DISCIPLINE": {
+      "en": "Choose your discipline",
+      "el": "Διάλεξε άθλημα"
+    },
     "CHOOSE_YOUR_COUNTRY": {
       "en": "Choose your country",
       "el": "Διάλεξε χώρα"

@@ -1,8 +1,9 @@
 (function(angular) {
     angular.module('trafie')
-    .controller('SettingsController', function($scope, $http, $window, userService, COUNTRIES) {
+    .controller('SettingsController', function($scope, $http, $window, userService, COUNTRIES, DISCIPLINES) {
         $scope.user = null;
         $scope.countries = [''].concat(COUNTRIES);
+        $scope.disciplines = [''].concat(DISCIPLINES);
 
         userService.loadCurrentUser().then(function(user) {
             $scope.user = user;

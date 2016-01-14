@@ -1,37 +1,57 @@
 <div>
     <h2>Settings</h2>
     <form method="POST" name="form">
-        <div class="form-group">
-            <label for="firstName" translate="COMMON.FIRST_NAME"></label>
-            <input type="text" class="form-control" id="firstName" ng-model="user.firstName">
-        </div>
-        <div class="form-group">
-            <label for="lastName" translate="COMMON.LAST_NAME"></label>
-            <input type="text" class="form-control" id="lastName" ng-model="user.lastName">
-        </div>
-        <div class="form-group">
-            <label for="email" translate="COMMON.EMAIL"></label>
-            <input type="email" class="form-control" id="email" ng-model="user.email" disabled>
-        </div>
-        <div class="form-group">
-            <label for="country" translate="COMMON.COUNTRY"></label>
-            <select class="form-control" id="country" ng-model="user.country" ng-options="country as (country && 'COUNTRIES.' + country.toUpperCase() || 'SETTINGS.CHOOSE_YOUR_COUNTRY' | translate) for country in countries"></select>
-        </div>
-        <div class="form-group">
-            <label for="aboutMe" translate="COMMON.ABOUT_ME"></label>
-            <textarea class="form-control" id="aboutMe" ng-model="user.about"></textarea>
-        </div>
-        <!--<div class="form-group">
-            <label for="exampleInputFile">File input</label>
-            <input type="file" id="exampleInputFile">
-            <p class="help-block">Example block-level help text here.</p>
-        </div>-->
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" ng-model="user.private"> Private profile
-            </label>
-        </div>
-        <button type="submit" class="btn btn-success" ng-click="saveSettings()" translate="COMMON.SAVE_CHANGES"></button>
+        <uib-tabset>
+            <uib-tab heading="{{'COMMON.PROFILE_SETTINGS' | translate}}">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="firstName" translate="COMMON.FIRST_NAME"></label>
+                            <input type="text" class="form-control" id="firstName" ng-model="user.firstName">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName" translate="COMMON.LAST_NAME"></label>
+                            <input type="text" class="form-control" id="lastName" ng-model="user.lastName">
+                        </div>
+                        <div class="form-group">
+                            <label for="discipline" translate="COMMON.MAIN_DISCIPLINE"></label>
+                            <select class="form-control" id="discipline" ng-model="user.discipline" ng-options="discipline as (discipline && 'DISCIPLINES.' + discipline.toUpperCase() || 'SETTINGS.CHOOSE_YOUR_DISCIPLINE' | translate) for discipline in disciplines"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="country" translate="COMMON.COUNTRY"></label>
+                            <select class="form-control" id="country" ng-model="user.country" ng-options="country as (country && 'COUNTRIES.' + country.toUpperCase() || 'SETTINGS.CHOOSE_YOUR_COUNTRY' | translate) for country in countries"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="aboutMe" translate="COMMON.ABOUT_ME"></label>
+                            <textarea class="form-control" id="aboutMe" ng-model="user.about"></textarea>
+                        </div>
+                        <!--<div class="form-group">
+                            <label for="exampleInputFile">File input</label>
+                            <input type="file" id="exampleInputFile">
+                            <p class="help-block">Example block-level help text here.</p>
+                        </div>-->
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" ng-model="user.private"> {{'COMMON.PRIVATE' | translate}}
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-success" ng-click="saveSettings()" translate="COMMON.SAVE_CHANGES"></button>
+                        <button class="btn btn-link" ng-click="logout()">Logout</button>
+                    </div>
+                </div>
+            </uib-tab>
+            <uib-tab heading="{{'COMMON.ACCOUNT_SETTINGS' | translate}}">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="email" translate="COMMON.EMAIL"></label>
+                            <input type="email" class="form-control" id="email" ng-model="user.email" disabled>
+                        </div>
+                        <button type="submit" class="btn btn-success" ng-click="saveSettings()" translate="COMMON.SAVE_CHANGES"></button>
+                        <button class="btn btn-link" ng-click="logout()">Logout</button>
+                    </div>
+                </div>
+            </uib-tab>
+        </uib-tabset>
     </form>
-    <button class="btn btn-link" ng-click="logout()">Logout</button>
 </div>

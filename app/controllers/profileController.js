@@ -14,7 +14,6 @@ const SEARCH_RESULTS_LENGTH = 10;
  */
 exports.get = function(req, res) {
 	if (typeof req.params.userId !== 'undefined') {
-        console.log('req.user', req.user)
 		accessHelper.validateAccess(req.user, req.params.userId)
 		.then(function(response) {
 			// If the user has a valid session and they are not visiting a private profile
@@ -137,8 +136,6 @@ function sendProfileData(req, res, profileData, userData) {
         country:        profileData.country,
         about:          profileData.about
     };
-    console.log(profileData);
-    console.log(userData);
     if(profileData._id.toString() === userData._id.toString()) {
         profile.private = profileData.private;
         profile.birthday = profileData.birthday;

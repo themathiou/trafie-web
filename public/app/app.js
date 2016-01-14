@@ -1,5 +1,5 @@
 (function (angular) {
-    angular.module('trafie', ['ngRoute', 'ngResource', 'pascalprecht.translate'])
+    angular.module('trafie', ['ngRoute', 'ngResource', 'pascalprecht.translate', 'ui.bootstrap'])
     .run(function (){})
     .config(function ($routeProvider, $locationProvider) {
         $locationProvider.html5Mode(true);
