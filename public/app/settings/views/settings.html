@@ -60,13 +60,22 @@
                             <input type="email" class="form-control" id="email" ng-model="user.email" disabled>
                         </div>
                         <div class="form-group">
-                            <h4 translate="SETTINGS.CHANGE_PASSWORD"></h4>
+                            <label for="country" translate="COMMON.COUNTRY"></label>
+                            <select class="form-control" id="country" ng-model="user.language" ng-options="language as (language || 'SETTINGS.CHOOSE_YOUR_COUNTRY' | translate) for country in countries"></select>
+                        </div>
+                        <!-- lang, date format, username -->
+                        <h4 translate="SETTINGS.CHANGE_PASSWORD"></h4>
+                        <div class="form-group">
                             <label for="old-password" translate="SETTINGS.OLD_PASSWORD"></label>
-                            <input type="password" id="old-password" name="oldPassword" class="form-control" ng-model="user.oldPassword" minlength="6">
+                            <input type="password" id="old-password" name="oldPassword" class="form-control" ng-model="user.oldPassword" ng-minlength="6">
+                        </div>
+                        <div class="form-group">
                             <label for="password" translate="SETTINGS.NEW_PASSWORD"></label>
-                            <input type="password" id="password" name="password" class="form-control" ng-model="user.password" minlength="6">
+                            <input type="password" id="password" name="password" class="form-control" ng-model="user.password" ng-minlength="6">
+                        </div>
+                        <div class="form-group">
                             <label for="repeat-password" translate="SETTINGS.REPEAT_PASSWORD"></label>
-                            <input type="password" id="repeat-password" name="repeat-password" class="form-control" ng-model="repeatPassword" minlength="6">
+                            <input type="password" id="repeat-password" name="repeat-password" class="form-control" ng-model="repeatPassword" ng-minlength="6">
                         </div>
                         <button type="submit" class="btn btn-success" ng-click="saveSettings()" translate="COMMON.SAVE_CHANGES"></button>
                         <button class="btn btn-link" ng-click="logout()">Logout</button>

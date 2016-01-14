@@ -26,8 +26,6 @@
     "angular-translate": "~2.8.1",
     "angular-translate-loader-static-files": "~2.8.1",
     "angular-bootstrap": "~1.0.3",
-    "jquery": "~2.1.4",
-    "underscore": "~1.8.3",
     "moment": "~2.10.6",
     "bootstrap": "~3.3.6"
   }
