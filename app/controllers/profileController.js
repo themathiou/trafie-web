@@ -136,7 +136,7 @@ function sendProfileData(req, res, profileData, userData) {
         country:        profileData.country,
         about:          profileData.about
     };
-    if(profileData._id.toString() === userData._id.toString()) {
+    if('_id' in userData && profileData._id.toString() === userData._id.toString()) {
         profile.private = profileData.private;
         profile.birthday = profileData.birthday;
         profile.language = userData.language;

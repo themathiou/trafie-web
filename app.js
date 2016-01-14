@@ -133,10 +133,10 @@ trafie.get( '/users/:userId?', profile.get );
  ******************************************************************************************************************************/
 
 trafie.get( '/users/:userId/activities/:activityId?', activities.get );
-trafie.post( '/users/:userId/activities', passport.authenticate('bearer', { session: false }), activities.post );
-trafie.put( '/users/:userId/activities/:activityId', passport.authenticate('bearer', { session: false }), activities.put );
-trafie.delete( '/users/:userId/activities/:activityId', passport.authenticate('bearer', { session: false }), activities.delete );
-trafie.get( '/users/:userId/disciplines', passport.authenticate('bearer', { session: false }), disciplines.get );
+trafie.post( '/users/:userId/activities', activities.post );
+trafie.put( '/users/:userId/activities/:activityId', activities.put );
+trafie.delete( '/users/:userId/activities/:activityId', activities.delete );
+trafie.get( '/users/:userId/disciplines', disciplines.get );
 
 
 /*******************************************************************************************************************************
