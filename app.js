@@ -140,6 +140,7 @@ trafie.put('/users/:userId/activities/:activityId', activities.put );
 trafie.delete('/users/:userId/activities/:activityId', activities.delete );
 trafie.get('/users/:userId/disciplines', disciplines.get );
 
+trafie.get('/api/users/:userId/activities/:activityId?', passport.authenticate('bearer', { session: false }), activities.get );
 trafie.post('/api/users/:userId/activities', passport.authenticate('bearer', { session: false }), activities.post );
 trafie.put('/api/users/:userId/activities/:activityId', passport.authenticate('bearer', { session: false }), activities.put );
 trafie.delete('/api/users/:userId/activities/:activityId', passport.authenticate('bearer', { session: false }), activities.delete );
