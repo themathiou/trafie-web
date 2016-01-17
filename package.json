@@ -28,7 +28,9 @@
     "oauth2orize": "~1.0.1",
     "redis": "~0.12.1",
     "connect-redis": "~2.4.1",
-    "lodash": "~3.10.1"
+    "lodash": "~3.10.1",
+    "gulp": "~3.9.0",
+    "bower": "~1.7.2"
   },
   "devDependencies": {
     "gulp-less": "*",
@@ -37,5 +39,8 @@
     "gulp-rename": "*",
     "jasmine-node": "~1.14.5",
     "request": "~2.64"
+  },
+  "scripts": {
+    "postinstall": "gulp && cd public && bower install"
   }
 }
