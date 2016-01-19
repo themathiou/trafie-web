@@ -5,9 +5,6 @@
   "engines": {
     "node": "5.4.1"
   },
-  "scripts": {
-    "start": "node app.js"
-  },
   "dependencies": {
     "express": "~4.13.1",
     "body-parser": "~1.13.2",
@@ -43,6 +40,7 @@
     "request": "~2.64"
   },
   "scripts": {
+    "start": "node app.js",
     "postinstall": "gulp && cd public && bower install"
   }
 }
