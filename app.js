@@ -52,7 +52,6 @@ var index = require('./app/controllers/index'),
     profile = require('./app/controllers/profileController'),
     activities = require('./app/controllers/activityController'),
     disciplines = require('./app/controllers/disciplineController'),
-//statistics = require('./app/controllers/statistics'),
     settings = require('./app/controllers/settingsController'),
 //email_validation = require('./app/controllers/emailValidationController'),
     resetPassword = require('./app/controllers/resetPasswordController'),
@@ -111,7 +110,6 @@ trafie.use(bodyParser.json());
 trafie.use(bodyParser.urlencoded({ extended: true }));
 trafie.use(cookieParser('23tR@Ck@nDF!3lD_s3cur3535s!0n504'));
 trafie.use(lessMiddleware(__dirname + '/public'));
-trafie.use(express.static(__dirname + '/public'));
 trafie.use(express.static(path.join(__dirname, 'public')));
 trafie.use(passport.initialize());
 trafie.use(passport.session());
