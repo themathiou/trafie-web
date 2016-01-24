@@ -52,7 +52,6 @@ var index = require('./app/controllers/index'),
     profile = require('./app/controllers/profileController'),
     activities = require('./app/controllers/activityController'),
     disciplines = require('./app/controllers/disciplineController'),
-    settings = require('./app/controllers/settingsController'),
 //email_validation = require('./app/controllers/emailValidationController'),
     resetPassword = require('./app/controllers/resetPasswordController'),
     dummyData = require('./app/controllers/dummyDataController'),
@@ -125,7 +124,10 @@ if (trafie.get('env') === 'development') {
  ******************************************************************************************************************************/
 
 trafie.get('/users/:userId?', profile.get );
+trafie.post('/users/:userId?', profile.post );
+
 trafie.get('/api/users/:userId?', passport.authenticate('bearer', { session: false }), profile.get);
+trafie.post('/api/users/:userId?', passport.authenticate('bearer', { session: false }), profile.post);
 
 
 /*******************************************************************************************************************************

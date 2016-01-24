@@ -2,6 +2,10 @@
 var mongoose = require('mongoose'),
 	crypto = require('crypto');
 
+/**
+ * @TODO: Add dateCreated field
+ */
+
 // Define our token schema
 var tokenSchema = new mongoose.Schema({
   value: { type: String, required: true },

@@ -31,7 +31,7 @@ server.exchange(oauth2orize.exchange.password(function (client, email, password,
             var token = uid(256);
             var refreshToken = uid(256);
  
-            var expirationDate = new Date(new Date().getTime() + (10 * 3600 * 1000));
+            var expirationDate = new Date(new Date().getTime() + (24 * 3600 * 1));
             var tokenObject = {value: token, expirationDate: expirationDate, clientId: client.id, userId: user._id, scope: 0};
 
             var tokenObj = new Token(tokenObject);

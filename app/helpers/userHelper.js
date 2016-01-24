@@ -1,6 +1,7 @@
 'use strict';
 
 var crypto = require('crypto');
+const config = require('../config/config.js');
 
 var userHelper = {};
 
@@ -23,7 +24,7 @@ userHelper.encryptPassword = function(password) {
  * @return boolean
  */
 userHelper.validateEmail = function(email) {
-	return /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test(email);
+	return config.validations.email.test(email);
 };
 
 /**
@@ -33,7 +34,7 @@ userHelper.validateEmail = function(email) {
  */
 userHelper.validatePassword = function(password) {
 	// The password should have at least 6 characters
-	return password.length >= 6;
+	return config.validations.password.test(password);
 };
 
 /**

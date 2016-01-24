@@ -309,6 +309,14 @@
     "SOMETHING_WENT_WRONG": {
       "en": "Oops! Something went wrong...",
       "el": "Ωχ! Κάτι πήγε στραβά..."
+    },
+    "TOO_LONG_TEXT":{
+      "en": "Text is too long",
+      "el": "Πολύ μεγάλο κείμενο"
+    },
+    "WRONG_DATE_FORMAT":{
+      "en": "Wrong date format",
+      "el": "Η μορφή ημερομηνίας είναι λανθασμένη"
     }
   },
   "PROFILE": {
@@ -348,17 +356,9 @@
       "en": "Performance is required",
       "el": "Η επίδοση είναι υποχρεωτική"
     },
-    "TOO_LONG_TEXT":{
-      "en": "Text is too long",
-      "el": "Πολύ μεγάλο κείμενο"
-    },
     "INVALID_RANK":{
       "en": "Invalid rank value",
       "el": "Μη έγκυρη θέση"
-    },
-    "WRONG_DATE_FORMAT":{
-      "en": "Wrong date format",
-      "el": "Η μορφή ημερομηνίας είναι λανθασμένη"
     },
     "DATE_IS_REQUIRED":{
       "en": "Date is required",
@@ -477,6 +477,10 @@
     "WRONG_OLD_PASSWORD": {
       "en": "The old password is wrong",
       "el": "Ο παλιός κωδικός είναι λανθασμένος"
+    },
+    "INVALID_PRIVACY": {
+      "en": "Invalid privacy setting",
+      "el": "Λανθασμένη ρύθμιση ιδιωτικότητας"
     }
   },
   "OUTER": {

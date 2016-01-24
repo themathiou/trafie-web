@@ -32,7 +32,7 @@ exports.get = function(req, res) {
 	// Else, fetch the first name and the last name of the user from the database
 	Profile.schema.findOne({
 		'_id': userId
-	}, 'firstName lastName discipline about male country birthday picture language dateFormat username private')
+	}, 'firstName lastName discipline about isMale country birthday picture language dateFormat username private')
 	.then(function(profile) {
 		// If the user was not found, return null
 		if (typeof profile.firstName === 'undefined') {
@@ -42,9 +42,9 @@ exports.get = function(req, res) {
 
 		// Format the data that will go to the front end
 		var gender = '';
-		if (profile.male === true) {
+		if (profile.isMale === true) {
 			gender = 'male';
-		} else if (profile.male === false) {
+		} else if (profile.isMale === false) {
 			gender = 'female';
 		} else {
 			gender = 'no_gender_selected';
@@ -142,7 +142,7 @@ exports.post = function(req, res) {
 			// Validating gender
 			if (typeof req.body.gender !== 'undefined') {
 				if (profileHelper.validateGender(req.body.gender)) {
-					profile_data.male = req.body.gender == 'male';
+					profile_data.isMale = req.body.gender == 'male';
 					response.value = req.body.gender;
 				} else {
 					response.error = 'invalid_gender';

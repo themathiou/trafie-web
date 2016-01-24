@@ -12,7 +12,18 @@ const mongoose = require('mongoose'),
 var userSchema = mongoose.Schema({
 	email 		: { type: String, required: true, unique: true, index: true },
 	password 	: { type: String, required: true },
-	valid		: { type: Boolean, required: true, default: false}
+	valid		: { type: Boolean, required: true, default: false},
+    dateCreated : { type: Date },
+    dateUpdated : { type: Date }
+});
+
+userSchema.pre('save', function(next){
+    var now = new Date();
+    this.dateUpdated = now;
+    if ( !this.dateCreated ) {
+        this.dateCreated = now;
+    }
+    next();
 });
 
 /**

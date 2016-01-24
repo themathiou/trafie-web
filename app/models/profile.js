@@ -9,23 +9,31 @@ const mongoose = require('mongoose'),
 var profileSchema = mongoose.Schema({
 	firstName	: { type: String, 	required: true },
 	lastName	: { type: String, 	required: true },
-	username 	: { type: String, 	required: false, 	default: null },
-	male		: { type: Boolean, 	required: false, 	default: null },
-	birthday	: {
-					day: 	{ type: Number, required: false, default: null },
-					month: 	{ type: Number, required: false, default: null },
-					year: 	{ type: Number, required: false, default: null } 
-				},
-	discipline	: { type: String, 	required: false, 	default: '' },
-	about 		: { type: String, 	required: false, 	default: '' },
-	country 	: { type: String, 	required: false, 	default: '' },
-	picture 	: { type: String, 	required: false, 	default: '' },
-	dateFormat 	: { type: String, 	required: true, 	default: 'd-m-y' },
+	username 	: { type: String, 	required: true, 	default: '' },
+	isMale		: { type: Boolean, 	required: true, 	default: true },
+	birthday	: { type: String, 	required: true, 	default: '' },
+	discipline	: { type: String, 	required: true, 	default: '' },
+	about 		: { type: String, 	required: true, 	default: '' },
+	country 	: { type: String, 	required: true, 	default: '' },
+	picture 	: { type: String, 	required: true, 	default: '' },
+	dateFormat 	: { type: String, 	required: true, 	default: 'D-M-YYYY' },
 	language 	: { type: String, 	required: true, 	default: 'en' },
 	private 	: { type: Boolean, 	required: true, 	default: false },
+	role 		: { type: String, 	required: true, 	default: 'athlete'},
+	dateCreated : { type: Date },
+	dateUpdated : { type: Date },
 	keywords 	: {
 					names: [ { type: String, required: false, default: '' } ]
 				}
+});
+
+profileSchema.pre('save', function(next){
+	var now = new Date();
+	this.dateUpdated = now;
+	if ( !this.dateCreated ) {
+		this.dateCreated = now;
+	}
+	next();
 });
 
 /**

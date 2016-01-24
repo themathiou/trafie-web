@@ -12,11 +12,13 @@ var activitySchema = mongoose.Schema({
 	discipline	: { type: String, required: true },
 	performance	: { type: Number, required: true },
 	date 		: { type: Date, required: true },
-	rank 		: { type: Number },
-	location 	: { type: String },
-	competition : { type: String },
-	notes 		: { type: String },
+	rank 		: { type: Number, required: true, default: null },
+	location 	: { type: String, required: true, default: '' },
+	competition : { type: String, required: true, default: '' },
+	notes 		: { type: String, required: true, default: '' },
 	private 	: { type: Boolean, required: true, default: false },
+	type 		: { type: String, required: true, default: 'competition' },
+    isOutdoor 	: { type: Boolean, required: true, default: true },
 	dateCreated : { type: Date },
 	dateUpdated : { type: Date }
 });

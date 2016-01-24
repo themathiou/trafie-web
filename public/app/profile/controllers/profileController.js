@@ -1,6 +1,6 @@
 (function(angular) {
     angular.module('trafie')
-    .controller('ProfileController', function($rootScope, $scope, $routeParams, $location, Activity,
+    .controller('ProfileController', function($rootScope, $scope, $routeParams, $window, Activity,
                                               User, userService) {
         $scope.profileFound = true;
         $scope.loading = true;
@@ -9,7 +9,7 @@
 
         if(!('userIdentifier' in $routeParams)) {
             userService.loadCurrentUser().then(loadProfile, function() {
-                $location.path('/register');
+                $window.location.href = 'register';
             });
         } else {
             User.get({userId: $routeParams.userIdentifier}, loadProfile, function() {

@@ -70,7 +70,7 @@ accessHelper.validateAccess = function(user, profileId) {
 		// Find the profile by id
 		Profile.schema.findOne({
 			'_id': profileId
-		}, '_id firstName lastName discipline country male picture username private about')
+		}, '_id firstName lastName discipline country isMale picture username private about birthday')
 		.then(function(profileData) {
 			// If the profile was found, get the data of the user
 			if (profileData !== null && profileData !== undefined) {
@@ -81,7 +81,7 @@ accessHelper.validateAccess = function(user, profileId) {
 				// If the profile wasn't found, try to find it by username
 				return Profile.schema.findOne({
 					'username': profileId
-				}, '_id firstName lastName discipline country male picture username private about');
+				}, '_id firstName lastName discipline country isMale picture username private about birthday');
 			}
 		})
 		.then(function(profileData) {
