@@ -5,7 +5,8 @@ var q = require('q');
 var Profile = require('../models/profile.js'),
 	Activity = require('../models/activity.js');
 // Loading helpers
-var accessHelper = require('../helpers/accessHelper.js');
+var accessHelper = require('../helpers/accessHelper.js'),
+	profileHelper = require('../helpers/profileHelper.js');
 // Get the config file
 const config = require('../config/config.js');
 const SEARCH_RESULTS_LENGTH = 10;
