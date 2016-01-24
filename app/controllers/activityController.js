@@ -1,8 +1,8 @@
 'use strict';
 
 // Loading models
-var Profile = require('../models/profile.js'),
-	Activity = require('../models/activity.js');
+var Activity = require('../models/activity.js');
+
 // Loading helpers
 var accessHelper = require('../helpers/accessHelper.js'),
 	activityHelper = require('../helpers/activityHelper.js');
@@ -39,7 +39,7 @@ exports.get = function(req, res) {
 						$and: [{
 							_id: activityId
 						}, {
-							private: false
+							isPrivate: false
 						}, {
 							user_id: profileId
 						}]
@@ -80,7 +80,7 @@ exports.get = function(req, res) {
 				where.userId = response.profile._id;
 
 				if (!response.user._id || response.user._id.toString() !== response.profile._id.toString()) {
-					where.private = false;
+					where.isPrivate = false;
 				}
 
 				Activity.schema.getActivitiesOfUser(where, '', -1)
@@ -123,7 +123,7 @@ exports.post = function(req, res) {
 			location: req.body.location || null,
 			competition: req.body.competition || null,
 			notes: req.body.notes || null,
-			private: req.body.private || false
+			isPrivate: req.body.isPrivate || false
 		},
 		activity = new Activity(activityData),
 		errors = activity.checkValid();
@@ -167,7 +167,7 @@ exports.put = function(req, res) {
 			activity.location = typeof req.body.location !== 'undefined' ? req.body.location : activity.location;
 			activity.competition = typeof req.body.competition !== 'undefined' ? req.body.competition : activity.competition;
 			activity.notes = typeof req.body.notes !== 'undefined' ? req.body.notes : activity.notes;
-			activity.private = typeof req.body.private !== 'undefined' ? req.body.private : activity.private;
+			activity.isPrivate = typeof req.body.isPrivate !== 'undefined' ? req.body.isPrivate : activity.isPrivate;
 
 			var errors = activity.checkValid();
 

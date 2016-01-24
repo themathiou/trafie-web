@@ -16,7 +16,7 @@ var activitySchema = mongoose.Schema({
 	location 	: { type: String, required: true, default: '' },
 	competition : { type: String, required: true, default: '' },
 	notes 		: { type: String, required: true, default: '' },
-	private 	: { type: Boolean, required: true, default: false },
+	isPrivate 	: { type: Boolean, required: true, default: false },
 	type 		: { type: String, required: true, default: 'competition' },
     isOutdoor 	: { type: Boolean, required: true, default: true },
 	dateCreated : { type: Date },
@@ -187,9 +187,9 @@ activitySchema.methods.checkValid = function() {
 	}
 
 	// Validating privacy (required field)
-	if (!('private' in this) || ('private' in this && !activityHelper.privacyIsValid(this.private))) {
+	if (!('isPrivate' in this) || ('isPrivate' in this && !activityHelper.privacyIsValid(this.isPrivate))) {
 		errors = true;
-		errorMessages.private = 'invalid_privacy';
+		errorMessages.isPrivate = 'invalid_privacy';
 	}
 
 	return errors ? errorMessages : null;

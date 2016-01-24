@@ -9,17 +9,17 @@ const mongoose = require('mongoose'),
 var profileSchema = mongoose.Schema({
 	firstName	: { type: String, 	required: true },
 	lastName	: { type: String, 	required: true },
-	username 	: { type: String, 	required: true, 	default: '' },
-	isMale		: { type: Boolean, 	required: true, 	default: true },
-	birthday	: { type: String, 	required: true, 	default: '' },
-	discipline	: { type: String, 	required: true, 	default: '' },
-	about 		: { type: String, 	required: true, 	default: '' },
-	country 	: { type: String, 	required: true, 	default: '' },
-	picture 	: { type: String, 	required: true, 	default: '' },
-	dateFormat 	: { type: String, 	required: true, 	default: 'D-M-YYYY' },
-	language 	: { type: String, 	required: true, 	default: 'en' },
-	private 	: { type: Boolean, 	required: true, 	default: false },
-	role 		: { type: String, 	required: true, 	default: 'athlete'},
+	username 	: { type: String, 	required: false, 	default: '' },
+	isMale		: { type: Boolean, 	required: false, 	default: true },
+	birthday	: { type: String, 	required: false, 	default: '' },
+	discipline	: { type: String, 	required: false, 	default: '' },
+	about 		: { type: String, 	required: false, 	default: '' },
+	country 	: { type: String, 	required: false, 	default: '' },
+	picture 	: { type: String, 	required: false, 	default: '' },
+	dateFormat 	: { type: String, 	required: false, 	default: 'D-M-YYYY' },
+	language 	: { type: String, 	required: false, 	default: 'en' },
+	isPrivate 	: { type: Boolean, 	required: false, 	default: true },
+	role 		: { type: String, 	required: false, 	default: 'athlete'},
 	dateCreated : { type: Date },
 	dateUpdated : { type: Date },
 	keywords 	: {
@@ -90,8 +90,8 @@ profileSchema.save = function( profile ) {
 				firstNames = profile.firstName.split(' '),
 				lastNames = profile.lastName.split(' '),
 				names = firstNames.concat( lastNames ),
-				names_length = names.length;
-			for ( var i=0 ; i<names_length ; i++ ) {
+                namesLength = names.length;
+			for ( var i=0 ; i<namesLength ; i++ ) {
 				names[i] = names[i].toLowerCase();
 			}
 			Profile.update( { '_id': res.id }, { $set: { 'keywords' : { 'names': names } } }, function( error ) {

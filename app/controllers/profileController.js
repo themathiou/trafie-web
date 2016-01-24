@@ -102,7 +102,7 @@ function generateSearchQuery(req) {
 
 	// Do not fetch private profiles
 	ands.push({
-		private: false
+		isPrivate: false
 	});
 
 	if(req.user) {
@@ -140,7 +140,7 @@ function sendProfileData(req, res, profileData, userData) {
         about:          profileData.about
     };
     if('_id' in userData && profileData._id.toString() === userData._id.toString()) {
-        profile.private = profileData.private;
+        profile.isPrivate = profileData.isPrivate;
         profile.birthday = profileData.birthday;
         profile.language = userData.language;
         profile.dateFormat = userData.dateFormat;
@@ -264,9 +264,9 @@ exports.post = function(req, res) {
 			}
 
 			// Validating privacy
-			if (typeof req.body.private !== 'undefined') {
-				if (profileHelper.validatePrivacy(req.body.private)) {
-					profileData.private = req.body.private;
+			if (typeof req.body.isPrivate !== 'undefined') {
+				if (profileHelper.validatePrivacy(req.body.isPrivate)) {
+					profileData.isPrivate = req.body.isPrivate;
 				} else {
                     response.errors.push('SETTINGS.INVALID_PRIVACY');
 				}
