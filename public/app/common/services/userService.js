@@ -19,7 +19,7 @@
             }
             else {
                 if(self._userId) {
-                    User.get({userId: self._userId}, function(user) {
+                    User.get({_id: self._userId}, function(user) {
                         if(user) {
                             self._user = user;
                             deferred.resolve(self._user);

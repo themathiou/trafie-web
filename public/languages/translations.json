@@ -481,6 +481,10 @@
     "INVALID_PRIVACY": {
       "en": "Invalid privacy setting",
       "el": "Λανθασμένη ρύθμιση ιδιωτικότητας"
+    },
+    "ERROR_OCCURRED": {
+      "en": "There was an error while updating your settings. Please try again.",
+      "el": "Υπήρξε πρόβλημα κατά την αποθήκευση των ρυθμίσεων. Παρακαλούμε προσπαθήστε πάλι."
     }
   },
   "OUTER": {

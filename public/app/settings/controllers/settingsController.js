@@ -1,7 +1,8 @@
 (function(angular) {
     angular.module('trafie')
     .controller('SettingsController', function($scope, $http, $window, $translate, userService, COUNTRIES,
-                                               DISCIPLINES, LANGUAGES_MAP, DATE_FORMATS_MAP, VALIDATIONS) {
+                                               DISCIPLINES, LANGUAGES_MAP, DATE_FORMATS_MAP, VALIDATIONS,
+                                               User) {
         $scope.user = null;
         $scope.countries = [''].concat(COUNTRIES);
         $scope.disciplines = [''].concat(DISCIPLINES);
@@ -40,8 +41,15 @@
                 $translate.use($scope.user.language);
                 currentLanguage = $scope.user.language;
             }
-
             console.log($scope.user);
+
+            var user = new User($scope.user);
+            user.$save()
+                .then(function(res) {
+                    console.log(res);
+                }, function(res) {
+                    console.log(2, res);
+                });
         };
 
         $scope.logout = function() {

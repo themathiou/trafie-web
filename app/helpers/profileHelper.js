@@ -30,9 +30,11 @@ profileHelper.validateUsername = function(username) {
  * @return boolean
  */
 profileHelper.validateBirthday = function(birthday) {
+	if(typeof birthday === "string" && !birthday) return true;
+	else if(typeof birthday !== "string") return false;
     let birthdayObj = moment(birthday, config.validations.birthdayFormat);
 
-	return birthdayObj.isValid() ? birthdayObj.format(config.validations.birthdayFormat) : '';
+	return birthdayObj.isValid();
 };
 
 /**
@@ -50,7 +52,7 @@ profileHelper.validateGender = function(gender) {
  * @return boolean
  */
 profileHelper.validateCountry = function(country) {
-	return config.countries.indexOf(country) >= 0;
+	return !country || config.countries.indexOf(country) >= 0;
 };
 
 /**
@@ -67,7 +69,8 @@ profileHelper.validateLanguage = function(language) {
  * @param string discipline
  * @return boolean
  */
-profileHelper.validateDiscipline = function(discipline) {
+profileHelper.validateDiscipline = function(discipline, allowEmptyString) {
+    if(typeof allowEmptyString !== 'undefined' && allowEmptyString && !discipline) return true;
 	return config.disciplines.indexOf(discipline) >= 0;
 };
 
@@ -77,7 +80,7 @@ profileHelper.validateDiscipline = function(discipline) {
  * @return boolean
  */
 profileHelper.validateAbout = function(about) {
-	return config.validations.name.test(about);
+	return config.validations.about.test(about);
 };
 
 /**

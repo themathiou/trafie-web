@@ -1,9 +1,7 @@
 'use strict';
 
-var q = require('q');
 // Loading models
-var Profile = require('../models/profile.js'),
-	Activity = require('../models/activity.js');
+var Profile = require('../models/profile.js');
 // Loading helpers
 var accessHelper = require('../helpers/accessHelper.js'),
 	profileHelper = require('../helpers/profileHelper.js');
@@ -175,142 +173,152 @@ exports.post = function(req, res) {
 			}
 
 			var profileData = {},
-				response = {
-					value: '',
-					message: '',
-					errors: []
-				};
+                promises = [];
 
-			// Validating first name
-			if (typeof req.body.firstName !== 'undefined') {
-				if (profileHelper.validateName(req.body.firstName)) {
-					profileData.firstName = req.body.firstName;
-				} else {
-					response.errors.push('SETTINGS.INVALID_FIRST_NAME');
-				}
-			}
+            // Validating first name
+            if (typeof req.body.firstName !== 'undefined') {
+                promises.push(new Promise(function(resolve, reject) {
+                    if (profileHelper.validateName(req.body.firstName)) {
+                        profileData.firstName = req.body.firstName;
+                        resolve(profileData.firstName);
+                    } else {
+                        reject('SETTINGS.INVALID_FIRST_NAME');
+                    }
+                }));
+            }
 
-			// Validating last name
-			if (typeof req.body.lastName !== 'undefined') {
-				if (profileHelper.validateName(req.body.lastName)) {
-					profileData.lastName = req.body.lastName;
-				} else {
-                    response.errors.push('SETTINGS.INVALID_LAST_NAME');
-				}
-			}
+            // Validating last name
+            if (typeof req.body.lastName !== 'undefined') {
+                promises.push(new Promise(function(resolve, reject) {
+                    if (profileHelper.validateName(req.body.lastName)) {
+                        profileData.lastName = req.body.lastName;
+                        resolve(profileData.lastName);
+                    } else {
+                        reject('SETTINGS.INVALID_LAST_NAME');
+                    }
+                }));
+            }
 
-			// Validating birthday
-			if (typeof req.body.birthday !== 'undefined') {
-				var birthday = profileHelper.validateBirthday(req.body.birthday);
-				if (birthday) {
-					profileData.birthday = birthday;
-				} else {
-                    response.errors.push('SETTINGS.INVALID_BIRTHDAY');
-				}
-			}
+            // Validating birthday
+            if (typeof req.body.birthday !== 'undefined') {
+                promises.push(new Promise(function(resolve, reject) {
+                    if (profileHelper.validateBirthday(req.body.birthday)) {
+                        profileData.birthday = req.body.birthday;
+                        resolve(profileData.birthday);
+                    } else {
+                        reject('SETTINGS.INVALID_BIRTHDAY');
+                    }
+                }));
+            }
 
-			// Validating gender
-			if (typeof req.body.isMale !== 'undefined') {
-				if (profileHelper.validateGender(req.body.isMale)) {
-					profileData.isMale = req.body.isMale;
-				} else {
-                    response.errors.push('SETTINGS.INVALID_GENDER');
-				}
-			}
+            // Validating gender
+            if (typeof req.body.isMale !== 'undefined') {
+                promises.push(new Promise(function(resolve, reject) {
+                    if (profileHelper.validateGender(req.body.isMale)) {
+                        profileData.isMale = req.body.isMale;
+                        resolve(profileData.isMale);
+                    } else {
+                        reject('SETTINGS.INVALID_GENDER');
+                    }
+                }));
+            }
 
-			// Validating country
-			if (typeof req.body.country !== 'undefined') {
-				if (profileHelper.validateCountry(req.body.country)) {
-					profileData.country = req.body.country;
-				} else {
-                    response.errors.push('SETTINGS.INVALID_COUNTRY');
-				}
-			}
+            // Validating country
+            if (typeof req.body.country !== 'undefined') {
+                promises.push(new Promise(function(resolve, reject) {
+                    if (profileHelper.validateCountry(req.body.country)) {
+                        profileData.country = req.body.country;
+                        resolve(profileData.country);
+                    } else {
+                        reject('SETTINGS.INVALID_COUNTRY');
+                    }
+                }));
+            }
 
-			// Validating discipline
-			if (typeof req.body.discipline !== 'undefined') {
-				if (profileHelper.validateDiscipline(req.body.discipline)) {
-					profileData.discipline = req.body.discipline;
-				} else {
-                    response.errors.push('SETTINGS.INVALID_DISCIPLINE');
-				}
-			}
+            // Validating discipline
+            if (typeof req.body.discipline !== 'undefined') {
+                promises.push(new Promise(function(resolve, reject) {
+                    if (profileHelper.validateDiscipline(req.body.discipline, true)) {
+                        profileData.discipline = req.body.discipline;
+                        resolve(profileData.discipline);
+                    } else {
+                        reject('SETTINGS.INVALID_DISCIPLINE');
+                    }
+                }));
+            }
 
-			// Validating the about me text
-			if (typeof req.body.about !== 'undefined') {
-				if (profileHelper.validateAbout(req.body.about)) {
-					profileData.about = req.body.about;
-				} else {
-                    response.errors.push('COMMON.TOO_LONG_TEXT');
-				}
-			}
+            // Validating the about me text
+            if (typeof req.body.about !== 'undefined') {
+                promises.push(new Promise(function(resolve, reject) {
+                    if (profileHelper.validateAbout(req.body.about)) {
+                        profileData.about = req.body.about;
+                        resolve(profileData.about);
+                    } else {
+                        reject('COMMON.TOO_LONG_TEXT');
+                    }
+                }));
+            }
 
-			// Validating language
-			if (typeof req.body.language !== 'undefined') {
-				if (profileHelper.validateLanguage(req.body.language)) {
-					profileData.language = req.body.language;
-				} else {
-                    response.errors.push('SETTINGS.INVALID_LANGUAGE');
-				}
-			}
+            // Validating language
+            if (typeof req.body.language !== 'undefined') {
+                promises.push(new Promise(function(resolve, reject) {
+                    if (profileHelper.validateLanguage(req.body.language)) {
+                        profileData.language = req.body.language;
+                        resolve(profileData.language);
+                    } else {
+                        reject('SETTINGS.INVALID_LANGUAGE');
+                    }
+                }));
+            }
 
-			// Validating date format
-			if (typeof req.body.dateFormat !== 'undefined') {
-				if (profileHelper.validateDateFormat(req.body.dateFormat)) {
-					profileData.dateFormat = req.body.dateFormat;
-				} else {
-                    response.errors.push('COMMON.WRONG_DATE_FORMAT');
-				}
-			}
+            // Validating date format
+            if (typeof req.body.dateFormat !== 'undefined') {
+                promises.push(new Promise(function(resolve, reject) {
+                    if (profileHelper.validateDateFormat(req.body.dateFormat)) {
+                        profileData.dateFormat = req.body.dateFormat;
+                        resolve(profileData.dateFormat);
+                    } else {
+                        reject('COMMON.WRONG_DATE_FORMAT');
+                    }
+                }));
+            }
 
-			// Validating privacy
-			if (typeof req.body.isPrivate !== 'undefined') {
-				if (profileHelper.validatePrivacy(req.body.isPrivate)) {
-					profileData.isPrivate = req.body.isPrivate;
-				} else {
-                    response.errors.push('SETTINGS.INVALID_PRIVACY');
-				}
-			}
+            // Validating privacy
+            if (typeof req.body.isPrivate !== 'undefined') {
+                promises.push(new Promise(function(resolve, reject) {
+                    if (profileHelper.validatePrivacy(req.body.isPrivate)) {
+                        profileData.isPrivate = req.body.isPrivate;
+                        resolve(profileData.isPrivate);
+                    } else {
+                        reject('SETTINGS.INVALID_PRIVACY');
+                    }
+                }));
+            }
 
-			// Validating username
-			if (typeof req.body.username !== 'undefined') {
-				if (profileHelper.validateUsername(req.body.username)) {
-                    var username = req.body.username.toLowerCase();
-                    Profile.schema.findOne({
-                            'username': username
-                        }, '_id')
-                        .then(function(profile) {
-                            if (profile == null) {
-                                profileData.username = username;
-                                Profile.update({
-                                        '_id': userId
-                                    }, {
-                                        $set: profileData
-                                    }, {
-                                        upsert: true
-                                    }, function(error) {
-                                        if(!error) {
-                                            res.status(200).json(response);
-                                        }
-                                        return;
-                                    })
-                                    .catch(function(error) {
-                                        response.errors.push('COMMON.SOMETHING_WENT_WRONG');
-                                        res.status(500).json(response);
-                                        return;
-                                    });
-                            } else {
-                                if (profile._id !== userId) {
-                                    response.errors.push('SETTINGS.USERNAME_TAKEN');
+            // Validating username
+            if (typeof req.body.username !== 'undefined') {
+                promises.push(new Promise(function(resolve, reject) {
+                    if (profileHelper.validateUsername(req.body.username)) {
+                        var username = req.body.username.toLowerCase();
+                        Profile.schema.findOne({
+                                'username': username
+                            }, '_id')
+                            .then(function (profile) {
+                                if (profile == null || (profile && profile._id === userId)) {
+                                    profileData.username = username;
+                                    resolve(profileData.username);
+                                } else {
+                                    reject('SETTINGS.USERNAME_TAKEN');
                                 }
-                                res.status(422).json(response);
-                            }
-                        });
-				} else {
-                    response.errors.push('SETTINGS.INVALID_USERNAME');
-                    res.status(400).json(response);
-                }
-			}
+                            })
+                            .catch(function (error) {
+                                reject('SETTINGS.ERROR_OCCURRED');
+                            });
+                    } else {
+                        reject('SETTINGS.INVALID_USERNAME');
+                    }
+                }));
+            }
 
 			// Checking if the uploaded file is a valid image file
 			/*else if (typeof req.files !== 'undefined' && typeof req.files.profile_pic !== 'undefined') {
@@ -383,56 +391,51 @@ exports.post = function(req, res) {
 			}*/
 
 			// Validating the change password request
-			else if (typeof req.body.oldPassword !== 'undefined' && typeof req.body.password !== 'undefined') {
-				// Find the old password of the user
-				User.schema.findOne({
-						'_id': userId
-					}, 'password')
-					.then(function(user) {
-						if (typeof user.password === 'undefined') {
-							response.error = 'wrong_old_password';
-							res.status(400).json(response);
-						} else {
-							// Generating errors
-							if (user.password !== userHelper.encryptPassword(req.body.oldPassword)) {
-								response.error = 'wrong_old_password';
-							}
-							if (!userHelper.validatePassword(req.body.password)) {
-								response.error = 'password_should_be_at_least_6_characters_long';
-							}
-							if (!response.error) {
-								// If there are no errors, the password gets reset
-								User.schema.resetPassword(userId, req.body.password)
-									.then(function() {
-										response.message = 'data_updated_successfully';
-										res.status(200).json(response);
-									})
-									.catch(function(error) {
-										response.error = 'something_went_wrong';
-										res.status(500).json(response);
-									});
-							} else {
-								res.json(response);
-							}
-						}
-					});
-			} else {
-				// Else, fetch the first name and the last name of the user from the database
-				if (!response.error) {
-					Profile.schema.update({
-							'_id': userId
-						}, profileData)
-						.then(function(profile) {
-							res.status(200).json(response);
-						})
-						.catch(function(error) {
-							response.error = 'something_went_wrong';
-							res.status(500).json(response);
-						});
-					// If there are errors, do not update the profile
-				} else {
-					res.status(400).json(response);
-				}
-			}
+			if (typeof req.body.oldPassword !== 'undefined' && typeof req.body.password !== 'undefined') {
+                promises.push(new Promise(function (resolve, reject) {
+                    // Find the old password of the user
+                    User.schema.findOne({
+                            '_id': userId
+                        }, 'password')
+                        .then(function (user) {
+                            if (typeof user.password === 'undefined') {
+                                reject('SETTINGS.WRONG_OLD_PASSWORD');
+                            } else {
+                                // Generating errors
+                                if (user.password !== userHelper.encryptPassword(req.body.oldPassword)) {
+                                    reject('SETTINGS.WRONG_OLD_PASSWORD');
+                                }
+                                else if (!userHelper.validatePassword(req.body.password)) {
+                                    reject('SETTINGS.PASSWORD_SHOULD_BE_AT_LEAST_6_CHARACTERS_LONG');
+                                }
+                                else {
+                                    // If there are no errors, the password gets reset
+                                    User.schema.resetPassword(userId, req.body.password)
+                                        .then(function () {
+                                            resolve();
+                                        })
+                                        .catch(function (error) {
+                                            reject('SETTINGS.ERROR_OCCURRED');
+                                        });
+                                }
+                            }
+                        });
+                }));
+            }
+
+            Promise.all(promises).then(function(value) {
+                Profile.schema.update({
+                        '_id': userId
+                    }, profileData)
+                    .then(function(profile) {
+                        res.status(200).json(profile);
+                    })
+                    .catch(function(error) {
+                        res.status(500).json({messages: ['SETTINGS.ERROR_OCCURRED']});
+                    });
+            }, function(reason) {
+                // If there are errors, do not update the profile
+                res.status(400).json({messages: reason});
+            });
 		});
 };

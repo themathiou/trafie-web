@@ -11,7 +11,7 @@
     .constant('DATE_FORMATS_MAP', {'D-M-YYYY': 'DAY_MONTH_YEAR', 'M-D-YYYY': 'MONTH_DAY_YEAR'})
     .constant('VALIDATIONS', {
         username: /^[A-Za-z_.0-9]{0,20}$/,
-        name: /^[A-Za-z ]+$/,
+        name: /^[A-Za-z\- ]{2,35}$/,
         birthdayFormat: 'YYYY-MM-DD',
         about: /^.{0,400}$/,
         dateFormat: /^(D-M-YYYY|M-D-YYYY)$/,
