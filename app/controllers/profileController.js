@@ -1,10 +1,12 @@
 'use strict';
 
 // Loading models
-var Profile = require('../models/profile.js');
+var Profile = require('../models/profile.js'),
+    User = require('../models/user.js');
 // Loading helpers
 var accessHelper = require('../helpers/accessHelper.js'),
-	profileHelper = require('../helpers/profileHelper.js');
+	profileHelper = require('../helpers/profileHelper.js'),
+    userHelper = require('../helpers/userHelper.js');
 // Get the config file
 const config = require('../config/config.js');
 const SEARCH_RESULTS_LENGTH = 10;
@@ -299,21 +301,27 @@ exports.post = function(req, res) {
             if (typeof req.body.username !== 'undefined') {
                 promises.push(new Promise(function(resolve, reject) {
                     if (profileHelper.validateUsername(req.body.username)) {
-                        var username = req.body.username.toLowerCase();
-                        Profile.schema.findOne({
-                                'username': username
-                            }, '_id')
-                            .then(function (profile) {
-                                if (profile == null || (profile && profile._id === userId)) {
-                                    profileData.username = username;
-                                    resolve(profileData.username);
-                                } else {
-                                    reject('SETTINGS.USERNAME_TAKEN');
-                                }
-                            })
-                            .catch(function (error) {
-                                reject('SETTINGS.ERROR_OCCURRED');
-                            });
+                        if(!req.body.username) {
+                            profileData.username = req.body.username;
+                            resolve(profileData.username);
+                        } else {
+                            var username = req.body.username.toLowerCase();
+                            Profile.schema.findOne({
+                                    'username': username
+                                }, '_id')
+                                .then(function (profile) {
+                                    if (profile == null || (profile && profile._id.toString() === userId.toString())) {
+                                        profileData.username = username;
+                                        resolve(profileData.username);
+                                    }
+                                    else if(profile && profile._id !== userId) {
+                                        reject('SETTINGS.USERNAME_TAKEN');
+                                    }
+                                })
+                                .catch(function (error) {
+                                    reject('SETTINGS.ERROR_OCCURRED');
+                                });
+                        }
                     } else {
                         reject('SETTINGS.INVALID_USERNAME');
                     }
@@ -375,7 +383,6 @@ exports.post = function(req, res) {
 								if(!error) {
 									response.message = 'data_updated_successfully';
 									response.value = s3response.req.url;
-									console.log(response);
 									res.status(200).json(response);
 								} else {
 									response.error = 'something_went_wrong';
@@ -412,7 +419,7 @@ exports.post = function(req, res) {
                                     // If there are no errors, the password gets reset
                                     User.schema.resetPassword(userId, req.body.password)
                                         .then(function () {
-                                            resolve();
+                                            resolve(req.body.password);
                                         })
                                         .catch(function (error) {
                                             reject('SETTINGS.ERROR_OCCURRED');

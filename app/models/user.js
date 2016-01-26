@@ -34,6 +34,7 @@ userSchema.pre('save', function(next){
 userSchema.findOne = function( where, select ) {
 	var d = q.defer();
 	User.findOne(where, select, function ( err, user ) {
+        if(err) d.reject(err);
 		d.resolve(user);
 	});
 	return d.promise;
@@ -48,6 +49,7 @@ userSchema.resetPassword = function( userId, password ) {
 	var d = q.defer();
 	password = userHelper.encryptPassword( password );
 	User.findByIdAndUpdate( userId, { password: password }, '', function ( err, user ) {
+		if(err) d.reject(err);
 		d.resolve(user);
 	});
 	return d.promise;
@@ -60,6 +62,7 @@ userSchema.resetPassword = function( userId, password ) {
 userSchema.emailIsUnique = function( email ) {
 	var d = q.defer();
 	User.findOne({'email': email}, '_id', function ( err, user ) {
+		if(err) d.reject(err);
 		d.resolve(!user);
 	});
 	return d.promise;

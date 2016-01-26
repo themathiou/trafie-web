@@ -35,6 +35,7 @@
 
         $scope.saveSettings = function() {
             console.log($scope.setting.birthday);
+            console.log($scope.user.dateFormat);
             $scope.user.birthday = $scope.setting.birthday ? moment($scope.setting.birthday, $scope.user.dateFormat).format('YYYY-MM-DD') : '';
             $scope.user.isMale = $scope.setting.isMale === 'true';
             if(currentLanguage != $scope.user.language) {
