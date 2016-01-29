@@ -28,7 +28,7 @@ Example:
 	"message": "Validation Failed",
 	"errors": [
 		{
-			"resource": "user",
+			"resource": "profile",
 			"field": "username",
 			"code": "already_exists"
 		}
@@ -36,12 +36,10 @@ Example:
 }
 ```
 The possible error codes are:
-| Error name      | Description  |
-| --------------- |------------- |
-| missing         | This means a resource does not exist. |
-| missing_field   | This means a required field on a resource has not been set. |
-| invalid         | This means the formatting of a field is invalid. The documentation for that resource should be able to give you more specific information. |
-| already_exists  | This means another resource has the same value as this field. This can happen in resources that must have some unique key (such as Label names). |
+* missing: This means a resource does not exist.
+* missing_field: This means a required field on a resource has not been set.
+* invalid: This means the formatting of a field is invalid. The documentation for that resource should be able to give you more specific information.
+* already_exists: This means another resource has the same value as this field. This can happen in resources that must have some unique key (such as Label names).
 
 #### c) 500 Server Error
 
