@@ -6,6 +6,7 @@
             $scope.loading = true;
             $scope.user = null;
             $scope.loadError = false;
+            $scope.activities = [];
 
             function loadError() {
                 $scope.loadError = true;
@@ -26,6 +27,7 @@
                 console.log($scope.user);
                 Activity.get({userId: $scope.user._id}, function(activities) {
                     console.log('activities', activities);
+                    $scope.activities = activities;
                 }, loadError);
             }
         });

@@ -19,13 +19,14 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "~1.4.7",
+    "angular": "~1.4.9",
     "angular-resource": "~1.4.7",
     "angular-route": "~1.4.7",
     "angular-sanitize": "~1.4.7",
     "angular-translate": "~2.8.1",
     "angular-translate-loader-static-files": "~2.8.1",
     "angular-bootstrap": "~1.0.3",
+    "angular-notify": "~2.5.0",
     "moment": "~2.10.6",
     "bootstrap": "~3.3.6"
   }

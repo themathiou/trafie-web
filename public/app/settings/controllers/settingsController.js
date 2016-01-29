@@ -1,8 +1,8 @@
 (function(angular) {
     angular.module('trafie')
-    .controller('SettingsController', function($scope, $http, $window, $translate, userService, COUNTRIES,
-                                               DISCIPLINES, LANGUAGES_MAP, DATE_FORMATS_MAP, VALIDATIONS,
-                                               User) {
+    .controller('SettingsController', function($scope, $http, $window, $translate, $filter, userService,
+                                               COUNTRIES, DISCIPLINES, LANGUAGES_MAP, DATE_FORMATS_MAP,
+                                               VALIDATIONS, User, notify) {
         $scope.user = null;
         $scope.countries = [''].concat(COUNTRIES);
         $scope.disciplines = [''].concat(DISCIPLINES);
@@ -15,6 +15,21 @@
             birthday: '',
             isMale: ''
         };
+        var fieldErrorsMap = {
+            firstName: {invalid: 'SETTINGS.INVALID_FIRST_NAME'},
+            lastName: {invalid: 'SETTINGS.INVALID_LAST_NAME'},
+            birthday: {invalid: 'SETTINGS.INVALID_BIRTHDAY'},
+            isMale: {invalid: 'SETTINGS.INVALID_GENDER'},
+            country: {invalid: 'SETTINGS.INVALID_COUNTRY'},
+            discipline: {invalid: 'SETTINGS.INVALID_DISCIPLINE'},
+            about: {invalid: 'COMMON.TOO_LONG_TEXT'},
+            language: {invalid: 'SETTINGS.INVALID_LANGUAGE'},
+            dateFormat: {invalid: 'COMMON.WRONG_DATE_FORMAT'},
+            isPrivate: {invalid: 'SETTINGS.INVALID_PRIVACY'},
+            username: {already_exists: 'SETTINGS.USERNAME_TAKEN', invalid: 'SETTINGS.INVALID_USERNAME'},
+            oldPassword: {invalid: 'SETTINGS.WRONG_OLD_PASSWORD'},
+            password: {invalid: 'SETTINGS.PASSWORD_SHOULD_BE_AT_LEAST_6_CHARACTERS_LONG'}
+        }
         var currentLanguage = '';
 
         userService.loadCurrentUser().then(function(user) {
@@ -34,22 +49,28 @@
         });
 
         $scope.saveSettings = function() {
-            console.log($scope.setting.birthday);
-            console.log($scope.user.dateFormat);
             $scope.user.birthday = $scope.setting.birthday ? moment($scope.setting.birthday, $scope.user.dateFormat).format('YYYY-MM-DD') : '';
             $scope.user.isMale = $scope.setting.isMale === 'true';
             if(currentLanguage != $scope.user.language) {
                 $translate.use($scope.user.language);
                 currentLanguage = $scope.user.language;
             }
-            console.log($scope.user);
 
             var user = new User($scope.user);
             user.$save()
                 .then(function(res) {
-                    console.log(res);
+                    notify({
+                        message: $filter('translate')('SETTINGS.DATA_WAS_UPDATED_SUCCESSFULLY'),
+                        classes: 'alert-success'
+                    });
                 }, function(res) {
-                    console.log(2, res);
+                    /*var messages = res.messages.map(function(message) {
+                        return $filter('translate')(message);
+                    });
+                    notify({
+                        messageTemplate: '<span>' + messages.join('<br>') + '</span>',
+                        classes: 'alert-danger'
+                    });*/
                 });
         };
 

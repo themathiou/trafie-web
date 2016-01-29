@@ -184,7 +184,11 @@ exports.post = function(req, res) {
                         profileData.firstName = req.body.firstName;
                         resolve(profileData.firstName);
                     } else {
-                        reject('SETTINGS.INVALID_FIRST_NAME');
+                        reject([422, {
+                            resource: 'user',
+                            field: 'firstName',
+                            code: 'invalid'
+                        }]);
                     }
                 }));
             }
@@ -196,7 +200,11 @@ exports.post = function(req, res) {
                         profileData.lastName = req.body.lastName;
                         resolve(profileData.lastName);
                     } else {
-                        reject('SETTINGS.INVALID_LAST_NAME');
+                        reject([422, {
+                            resource: 'user',
+                            field: 'lastName',
+                            code: 'invalid'
+                        }]);
                     }
                 }));
             }
@@ -208,7 +216,11 @@ exports.post = function(req, res) {
                         profileData.birthday = req.body.birthday;
                         resolve(profileData.birthday);
                     } else {
-                        reject('SETTINGS.INVALID_BIRTHDAY');
+                        reject([422, {
+                            resource: 'user',
+                            field: 'birthday',
+                            code: 'invalid'
+                        }]);
                     }
                 }));
             }
@@ -220,7 +232,11 @@ exports.post = function(req, res) {
                         profileData.isMale = req.body.isMale;
                         resolve(profileData.isMale);
                     } else {
-                        reject('SETTINGS.INVALID_GENDER');
+                        reject([422, {
+                            resource: 'user',
+                            field: 'isMale',
+                            code: 'invalid'
+                        }]);
                     }
                 }));
             }
@@ -232,7 +248,11 @@ exports.post = function(req, res) {
                         profileData.country = req.body.country;
                         resolve(profileData.country);
                     } else {
-                        reject('SETTINGS.INVALID_COUNTRY');
+                        reject([422, {
+                            resource: 'user',
+                            field: 'country',
+                            code: 'invalid'
+                        }]);
                     }
                 }));
             }
@@ -244,7 +264,11 @@ exports.post = function(req, res) {
                         profileData.discipline = req.body.discipline;
                         resolve(profileData.discipline);
                     } else {
-                        reject('SETTINGS.INVALID_DISCIPLINE');
+                        reject([422, {
+                            resource: 'user',
+                            field: 'discipline',
+                            code: 'invalid'
+                        }]);
                     }
                 }));
             }
@@ -256,7 +280,11 @@ exports.post = function(req, res) {
                         profileData.about = req.body.about;
                         resolve(profileData.about);
                     } else {
-                        reject('COMMON.TOO_LONG_TEXT');
+                        reject([422, {
+                            resource: 'user',
+                            field: 'about',
+                            code: 'invalid'
+                        }]);
                     }
                 }));
             }
@@ -268,7 +296,11 @@ exports.post = function(req, res) {
                         profileData.language = req.body.language;
                         resolve(profileData.language);
                     } else {
-                        reject('SETTINGS.INVALID_LANGUAGE');
+                        reject([422, {
+                            resource: 'user',
+                            field: 'language',
+                            code: 'invalid'
+                        }]);
                     }
                 }));
             }
@@ -280,7 +312,11 @@ exports.post = function(req, res) {
                         profileData.dateFormat = req.body.dateFormat;
                         resolve(profileData.dateFormat);
                     } else {
-                        reject('COMMON.WRONG_DATE_FORMAT');
+                        reject([422, {
+                            resource: 'user',
+                            field: 'dateFormat',
+                            code: 'invalid'
+                        }]);
                     }
                 }));
             }
@@ -292,7 +328,11 @@ exports.post = function(req, res) {
                         profileData.isPrivate = req.body.isPrivate;
                         resolve(profileData.isPrivate);
                     } else {
-                        reject('SETTINGS.INVALID_PRIVACY');
+                        reject([422, {
+                            resource: 'user',
+                            field: 'isPrivate',
+                            code: 'invalid'
+                        }]);
                     }
                 }));
             }
@@ -315,15 +355,23 @@ exports.post = function(req, res) {
                                         resolve(profileData.username);
                                     }
                                     else if(profile && profile._id !== userId) {
-                                        reject('SETTINGS.USERNAME_TAKEN');
+                                        reject([422, {
+                                            resource: 'user',
+                                            field: 'username',
+                                            code: 'already_exists'
+                                        }]);
                                     }
                                 })
                                 .catch(function (error) {
-                                    reject('SETTINGS.ERROR_OCCURRED');
+                                    reject([500, null]);
                                 });
                         }
                     } else {
-                        reject('SETTINGS.INVALID_USERNAME');
+                        reject([422, {
+                            resource: 'user',
+                            field: 'username',
+                            code: 'invalid'
+                        }]);
                     }
                 }));
             }
@@ -406,14 +454,22 @@ exports.post = function(req, res) {
                         }, 'password')
                         .then(function (user) {
                             if (typeof user.password === 'undefined') {
-                                reject('SETTINGS.WRONG_OLD_PASSWORD');
+                                reject([404, null]);
                             } else {
                                 // Generating errors
                                 if (user.password !== userHelper.encryptPassword(req.body.oldPassword)) {
-                                    reject('SETTINGS.WRONG_OLD_PASSWORD');
+                                    reject([422, {
+                                        resource: 'user',
+                                        field: 'oldPassword',
+                                        code: 'invalid'
+                                    }]);
                                 }
                                 else if (!userHelper.validatePassword(req.body.password)) {
-                                    reject('SETTINGS.PASSWORD_SHOULD_BE_AT_LEAST_6_CHARACTERS_LONG');
+                                    reject([422, {
+                                        resource: 'user',
+                                        field: 'password',
+                                        code: 'invalid'
+                                    }]);
                                 }
                                 else {
                                     // If there are no errors, the password gets reset
@@ -422,10 +478,13 @@ exports.post = function(req, res) {
                                             resolve(req.body.password);
                                         })
                                         .catch(function (error) {
-                                            reject('SETTINGS.ERROR_OCCURRED');
+                                            reject([500, null]);
                                         });
                                 }
                             }
+                        })
+                        .catch(function (error) {
+                            reject([500, null]);
                         });
                 }));
             }
@@ -437,12 +496,20 @@ exports.post = function(req, res) {
                     .then(function(profile) {
                         res.status(200).json(profile);
                     })
-                    .catch(function(error) {
-                        res.status(500).json({messages: ['SETTINGS.ERROR_OCCURRED']});
+                    .catch(function(statusCode, error) {
+                        res.status(statusCode).json({message: 'Server error'});
                     });
-            }, function(reason) {
+            }, function(error) {
                 // If there are errors, do not update the profile
-                res.status(400).json({messages: reason});
+                if(error[0] === 500) {
+                    res.status(error[0]).json({message: 'Server error'});
+                }
+                else if(error[0] === 404) {
+                    res.status(error[0]).json({message: 'Resource not found'});
+                }
+                else {
+                    res.status(error[0]).json({message: 'Invalid data', errors: [error[1]]});
+                }
             });
 		});
 };
