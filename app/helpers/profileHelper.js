@@ -32,9 +32,10 @@ profileHelper.validateUsername = function(username) {
 profileHelper.validateBirthday = function(birthday) {
 	if(typeof birthday === "string" && !birthday) return true;
 	else if(typeof birthday !== "string") return false;
-    let birthdayObj = moment(birthday, config.validations.birthdayFormat);
+	else if(!config.validations.birthday.regex.test(birthday)) return false;
+    let birthdayObj = moment(birthday, config.validations.birthday.format);
 
-	return birthdayObj.isValid();
+    return birthdayObj.isValid() && birthdayObj.year() < moment().subtract(10, 'years').year();
 };
 
 /**

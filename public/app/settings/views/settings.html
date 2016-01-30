@@ -23,7 +23,7 @@
                         </div>
                         <div class="form-group">
                             <label for="birthday">{{'COMMON.BIRTHDAY' | translate}} ({{'SETTINGS.' + dateFormatsMap[user.dateFormat] | translate}})</label>
-                            <input type="text" id="birthday" class="form-control" uib-datepicker-popup="{{toDatepickerFormat(user.dateFormat)}}" ng-model="setting.birthday">
+                            <input type="text" id="birthday" class="form-control" ng-model="setting.birthday">
                         </div>
                         <div class="form-group">
                             <label for="aboutMe" translate="COMMON.ABOUT_ME"></label>

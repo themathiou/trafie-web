@@ -29,7 +29,7 @@
             username: {already_exists: 'SETTINGS.USERNAME_TAKEN', invalid: 'SETTINGS.INVALID_USERNAME'},
             oldPassword: {invalid: 'SETTINGS.WRONG_OLD_PASSWORD'},
             password: {invalid: 'SETTINGS.PASSWORD_SHOULD_BE_AT_LEAST_6_CHARACTERS_LONG'}
-        }
+        };
         var currentLanguage = '';
 
         userService.loadCurrentUser().then(function(user) {
