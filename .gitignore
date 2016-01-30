@@ -10,11 +10,7 @@
 
 .git
 
-.gitignore~
-
 .idea
-
-README~
 
 node_modules
 
