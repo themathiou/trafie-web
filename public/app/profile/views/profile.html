@@ -1,8 +1,59 @@
-<div>
-    <div ng-if="profileFound">
-        <span>{{user.firstName + ' ' + user.lastName}}</span>
+<div ng-if="profileFound">
+    <div class="jumbotron">
+        <div class="container">
+            <div class="col-xs-12">
+                    <h2 class="text-center">{{user.firstName + ' ' + user.lastName}}</h2>
+                    <h4 class="text-center" ng-if="user.discipline || user.country">
+                        <span ng-if="user.discipline">{{'DISCIPLINES.' + user.discipline.toUpperCase() | translate}}</span>
+                        <span ng-if="user.discipline && user.country">&bull;</span>
+                        <span ng-if="user.country">{{'COUNTRIES.' + user.country.toUpperCase() | translate}}</span>
+                    </h4>
+            </div>
+        </div>
     </div>
-    <div ng-if="!profileFound">
-        Profile not found
+    <div class="container">
+        <div class="col-xs-12">
+            <div class="col-md-12">
+                <div class="text-center">
+                    <div class="panel-body">
+                        <button class="btn btn-primary" ng-click="App.openActivityEditorModal()">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            {{'PROFILE.ADD_NEW_ACTIVITY' | translate}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        Filters
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <!--<div class="panel panel-default"  ng-repeat="activity in activities">
+                    <div class="panel-body">
+                        {{activity.discipline}} - {{activity.performance}}
+                    </div>
+                </div>-->
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        Post
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        Post
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-if="!profileFound">
+    <div class="container">
+        <div class="col-xs-12">
+            Profile not found
+        </div>
     </div>
 </div>

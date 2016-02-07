@@ -14,16 +14,8 @@ html(ng-app="trafie")
             };
 
     body(ng-controller="AppController as App" ng-cloak)
-        nav.navbar.navbar-default
-            div.container
-                div.container-fluid
-                    div.navbar-header
-                        a.navbar-brand(href="/") trafie
-                    div#navbar.navbar-collapse.collapse
-                        ul.nav.navbar-nav.navbar-right
-                            li(ng-if="App.user")
-                                a(href='/settings' translate="COMMON.SETTINGS")
-        div.container
-            div.col-xs-12(ng-view)
+        include ./partials/navbar.jade
+
+        div(ng-view)
 
         include ./partials/scripts.jade

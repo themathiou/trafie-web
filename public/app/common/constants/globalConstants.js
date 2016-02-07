@@ -12,7 +12,10 @@
     .constant('VALIDATIONS', {
         username: /^[A-Za-z_.0-9]{0,20}$/,
         name: /^[A-Za-z\- ]{2,35}$/,
-        birthdayFormat: 'YYYY-MM-DD',
+        birthday: {
+            format: 'YYYY-MM-DD',
+            regex: /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/
+        },
         about: /^.{0,400}$/,
         dateFormat: /^(D-M-YYYY|M-D-YYYY)$/,
         password: /^.{6,}$/,

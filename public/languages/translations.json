@@ -194,6 +194,10 @@
     }
   },
   "COMMON": {
+    "DISCIPLINE": {
+      "en": "Discipline",
+      "el": "Αγώνισμα"
+    },
     "DATE": {
       "en": "Date",
       "el": "Ημερομηνία"
@@ -286,6 +290,10 @@
       "en": "Logout",
       "el": "Έξοδος"
     },
+    "PROFILE": {
+      "en": "Profile",
+      "el": "Προφίλ"
+    },
     "SETTINGS": {
       "en": "Settings",
       "el": "Ρυθμίσεις"
@@ -293,6 +301,10 @@
     "STATISTICS": {
       "en": "Statistics",
       "el": "Στατιστικά"
+    },
+    "SEARCH": {
+      "en": "Search",
+      "el": "Αναζήτηση"
     },
     "GENERAL_SETTINGS": {
       "en": "General settings",
@@ -324,6 +336,14 @@
       "en": "Add New Activity",
       "el": "Προσθήκη νέας δραστηριότητας"
     },
+    "NEW_ACTIVITY": {
+      "en": "New activity",
+      "el": "Νέα δραστηριότητα"
+    },
+    "EDIT_ACTIVITY": {
+      "en": "Edit activity",
+      "el": "Επεξεργασία δραστηριότητας"
+    },
     "RANK": {
       "en": "Rank",
       "el": "Θέση"
@@ -339,6 +359,10 @@
     "NOTES": {
       "en": "Notes",
       "el": "Σημειώσεις"
+    },
+    "PERFORMANCE": {
+      "en": "Performance",
+      "el": "Επίδοση"
     },
     "ENTER_YOUR_PERFORMANCE": {
       "en": "Enter your performance",
@@ -368,7 +392,7 @@
   "SETTINGS": {
     "CHOOSE_YOUR_DISCIPLINE": {
       "en": "Choose your discipline",
-      "el": "Διάλεξε άθλημα"
+      "el": "Διάλεξε αγώνισμα"
     },
     "CHOOSE_YOUR_COUNTRY": {
       "en": "Choose your country",

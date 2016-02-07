@@ -1,0 +1,23 @@
+nav.navbar.navbar-default.navbar-fixed-top
+    div.container
+        div.container-fluid
+            div.navbar-collapse.collapse.navbar-left.row
+                ul.nav.navbar-nav
+                    li(ng-if="App.user")
+                        a(href='/' translate="COMMON.PROFILE")
+                    li(ng-if="App.user")
+                        a(href='/settings' translate="COMMON.SETTINGS")
+            div.navbar-header
+                a.navbar-brand(href="/") trafie
+            div.navbar-collapse.collapse.navbar-right
+                ul.nav.navbar-nav.pull-right(ng-if="App.user")
+                    li
+                        button.btn.btn-default.navbar-btn(ng-click="App.openActivityEditorModal()")
+                            i.glyphicon.glyphicon-plus
+                form.navbar-form.pull-left(role="search")
+                    .form-group
+                        .input-group
+                            input.form-control(type="text" placeholder="{{'COMMON.SEARCH' | translate}}")
+                            span.input-group-btn
+                                button.btn.btn-default(type="submit")
+                                    i.glyphicon.glyphicon-search
