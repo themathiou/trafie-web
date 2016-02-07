@@ -31,19 +31,22 @@
                 </div>
             </div>
             <div class="col-md-9">
-                <!--<div class="panel panel-default"  ng-repeat="activity in activities">
+                <div class="panel panel-default"  ng-repeat="activity in activities">
                     <div class="panel-body">
-                        {{activity.discipline}} - {{activity.performance}}
-                    </div>
-                </div>-->
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        Post
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        Post
+                        <span class="col-xs-9"><b>{{activity.performance}}</b>  <span class="text-muted">{{activity.discipline}}</span></span>
+                        <span class="col-xs-3 text-right">
+                            <span class="glyphicon glyphicon-edit text-warning" aria-hidden="true"></span> | <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
+                        </span>
+                        <div class="col-xs-12">{{activity.competition}}</div>
+                        <div class="col-xs-12">{{activity.date}}</div>
+                        <div class="col-xs-12" ng-click="isCollapsed = !isCollapsed">Details</div>
+                        <div class="col-xs-12" uib-collapse="!isCollapsed">
+                            <dl>
+                              <dt>Rank</dt><dd>{{activity.rank}}</dd>
+                              <dt>Location</dt><dd>{{activity.location}}</dd>
+                              <dt>Notes</dt><dd>{{activity.notes}}</dd>
+                            </dl>
+                        </div>
                     </div>
                 </div>
             </div>
