@@ -13,7 +13,7 @@
             });
         }];
     }])
-    .factory("Activity", function (ActivityResource, userService) {
+    .factory("Activity", function (ActivityResource, userService, DISCIPLINE_CATEGORIES) {
         var currentUser = null;
         userService.loadCurrentUser().then(function(user) {
             currentUser = user;
@@ -32,16 +32,76 @@
             this.isPrivate = angular.isDefined(activityData.isPrivate) ? activityData.isPrivate : false;
             this.type = angular.isDefined(activityData.type) ? activityData.type : 'competition';
             this.isOutdoor = angular.isDefined(activityData.isOutdoor) ? activityData.isOutdoor : false;
+            this._private = {
+                readablePerformance: '',
+                disciplineCategory: ''
+            };
+            this._setReadablePerformance();
+            this._setDisciplineCategory();
         }
 
         Activity = angular.extend(Activity, ActivityResource);
 
         Activity.prototype = new ActivityResource();
 
-        Activity.prototype.validate = function() {
-
+        Activity.prototype._setDisciplineCategory = function() {
+            if(DISCIPLINE_CATEGORIES.time.indexOf(this.discipline) >= 0) {
+                return 'time';
+            }
+            else if(DISCIPLINE_CATEGORIES.distance.indexOf(this.discipline) >= 0) {
+                return 'distance';
+            }
+            else {
+                return 'points';
+            }
         };
-console.log(Activity);
+
+        Activity.prototype._setReadablePerformance = function() {
+            var performance = '';
+            switch(this._private.disciplineCategory) {
+                case 'time':
+                    var viewPerformance = [];
+                    viewPerformance.push(Math.floor(this.performance / 360000));
+                    var performanceNoHours = this.performance  - viewPerformance[0] * 360000;
+                    viewPerformance.push(Math.floor(performanceNoHours / 6000));
+                    var performanceNoMinutes = performanceNoHours - viewPerformance[1] * 6000;
+                    viewPerformance.push(Math.floor(performanceNoMinutes / 100));
+                    viewPerformance.push(performanceNoMinutes - seconds * 100);
+
+                    var filtering = true;
+                    viewPerformance = viewPerformance
+                        .filter(function(value) {
+                            filtering = filtering && !value;
+                            return filtering ? value : true;
+                        })
+                        .map(function(value, index) {
+                            return index ? ('0' + value).substr(-2, 2) : value;
+                        });
+                    var lastIndex = viewPerformance.length-1;
+                    performance = viewPerformance.slice(0, lastIndex).join(':') + '.' + viewPerformance[lastIndex];
+                    break;
+                case 'distance':
+                    var meters = Math.floor(this.performance / 10000);
+                    var centimeters = (this.performance - meters * 10000) / 100;
+
+                    performance = meters + '.' + ('0' + centimeters).substr(-2, 2);
+                    break;
+                case 'points':
+                    performance = '' + this.performance;
+                    break;
+            }
+            this._private.readablePerformance = performance;
+        };
+
+        Activity.prototype._updatePrivate = function() {
+            this._setDisciplineCategory();
+            this._setReadablePerformance();
+        };
+
+        Activity.prototype.getReadablePerformance = function() {
+            return this._private.readablePerformance;
+        };
+
         return Activity;
     });
 })(angular);
