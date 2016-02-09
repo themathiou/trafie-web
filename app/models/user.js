@@ -12,7 +12,7 @@ const mongoose = require('mongoose'),
 var userSchema = mongoose.Schema({
 	email 		: { type: String, required: true, unique: true, index: true },
 	password 	: { type: String, required: true },
-	valid		: { type: Boolean, required: true, default: false},
+	isValid		: { type: Boolean, required: true, default: false},
     dateCreated : { type: Date },
     dateUpdated : { type: Date }
 });

@@ -8,8 +8,10 @@
             <select class="form-control" id="discipline" name="discipline" ng-model="activity.discipline" ng-options="discipline as (discipline && 'DISCIPLINES.' + discipline.toUpperCase() || 'SETTINGS.CHOOSE_YOUR_DISCIPLINE' | translate) for discipline in disciplines"></select>
         </div>
         <div class="form-group">
-            <label for="performance" translate="PROFILE.PERFORMANCE"></label>
-            <performance-picker discipline="activity.discipline" ng-model="activity.performance"></performance-picker>
+            <label translate="PROFILE.PERFORMANCE"></label>
+            <tf-time-performance-picker ng-model="activity.performance" ng-show="getCategory() === 'time'"></tf-time-performance-picker>
+            <tf-distance-performance-picker ng-model="activity.performance" ng-show="getCategory() === 'distance'"></tf-distance-performance-picker>
+            <tf-points-performance-picker ng-model="activity.performance" ng-show="getCategory() === 'points'"></tf-points-performance-picker>
         </div>
     </form>
 </div>
