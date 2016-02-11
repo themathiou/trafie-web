@@ -37,7 +37,6 @@
             $scope.setting.birthday = user.birthday ? moment(user.birthday, 'YYYY-MM-DD').format(user.dateFormat) : '';
             $scope.setting.isMale = user.isMale ? 'true' : 'false';
             currentLanguage = user.language;
-            console.log($scope.user);
         }, redirectToLogin);
 
         $scope.$watch('user.dateFormat', function(newValue, oldValue) {

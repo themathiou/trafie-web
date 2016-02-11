@@ -7,11 +7,11 @@ var User = require('../models/user.js'),
 
 // Loading helpers
 var profileHelper = require('../helpers/profileHelper.js'),
-	userHelper = require('../helpers/userHelper.js');
+	userHelper = require('../helpers/userHelper.js'),
+	emailHelper = require('../helpers/emailHelper.js');
 
 // Loading libraries
-var Email = require('../libs/email'),
-	passport = require('passport');
+var passport = require('passport');
 
 
 exports.post = function(req, res) {
@@ -98,8 +98,8 @@ exports.post = function(req, res) {
 					return UserHashes.schema.createVerificationHash(newUser.email, user._id);
 				})
 				.then(function(emailHash) {
-					Email.sendVerificationEmail(newUser.email, newProfile.firstName, newProfile.lastName, emailHash, req.headers.host);
-					res.json({_id: user._id});
+					emailHelper.sendVerificationEmail(newUser.email, newProfile.firstName, newProfile.lastName, emailHash, req.headers.host);
+					res.status(201).json({_id: user._id});
 				});
 		});
 

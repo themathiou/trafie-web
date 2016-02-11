@@ -1,6 +1,9 @@
 'use strict';
+// Loading models
+const User = require('../models/user.js');
 
-var crypto = require('crypto');
+var crypto = require('crypto'),
+    q = require('q');
 const config = require('../config/config.js');
 
 var userHelper = {};
@@ -44,9 +47,10 @@ userHelper.validatePassword = function(password) {
 userHelper.validateUser = function(userId) {
 	var d = q.defer();
 	User.findByIdAndUpdate(userId, {
-		valid: true
+		isValid: true
 	}, '', function(err, user) {
-		d.resolve(!user);
+		if(err) d.reject;
+		else d.resolve(!!user);
 	});
 	return d.promise;
 };

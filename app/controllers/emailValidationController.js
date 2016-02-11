@@ -6,40 +6,41 @@ const User = require('../models/user.js'),
 	UserHashes = require('../models/userHashes.js');
 
 // Loading helpers
-const userHelper = require('../helpers/userHelper.js');
-
-const Email = require('../libs/email');
+const userHelper = require('../helpers/userHelper.js'),
+    emailHelper = require('../helpers/emailHelper.js');
 
 /**
  * Validate - GET
  * Validates the newly created user
  */
 exports.validate = function(req, res) {
-	if (typeof req.session.userId !== 'undefined') {
-		res.redirect('/');
-	}
-
-	var userId = '';
 	// Find the user to whom the hash belongs
 	UserHashes.schema.findUserIdByHash(req.params.hash, 'verify')
 	.then(function(response) {
 		if (response) {
-			userId = response.userId;
 			// Validate the user
+            console.log(userHelper.validateUser)
 			return userHelper.validateUser(response.userId);
 		} else {
-			res.redirect('/login');
+			return false;
 		}
 	})
-	.then(function() {
-		// Delete the hash after validation
-		UserHashes.schema.deleteHash(req.params.hash, 'verify');
-		// Storing the user id in the session
-		req.session.userId = userId;
-		res.redirect('/');
+	.then(function(validated) {
+        if(validated) {
+            // Delete the hash after validation
+            UserHashes.schema.deleteHash(req.params.hash, 'verify');
+            // Storing the user id in the session
+            res.json(null);
+        } else {
+            res.status(404).json({message: 'Resource not found', errors: [{
+                resource: 'userHash',
+                field: 'hash',
+                code: 'not_found'
+            }]});
+        }
 	})
 	.catch(function(error) {
-		send_error_page(error, res);
+        res.status(500).json({message: 'Server error'});
 	});
 };
 
@@ -48,22 +49,38 @@ exports.validate = function(req, res) {
  * Resend validation email - GET
  * Resends the validation email
  */
-exports.resend_validation_email = function(req, res) {
-	if (typeof req.session.userId !== 'undefined') {
-		res.redirect('/');
-	}
+exports.resendEmail = function(req, res) {
+    // Get the user id from the session
+    var userId = req.user && req.user._id || null;
+    // If there is no user id, or the user id is different than the one in the session
+    if (!userId) {
+        res.status(403).json({message: 'Forbidden'});
+        return;
+    }
 
-	var email = '';
-	var firstName = '';
-	var lastName = '';
-	var userId = req.params.userId;
+	var email = '',
+	    firstName = '',
+	    lastName = '',
+        responseSent = false;
 	User.schema.findOne({
 		'_id': userId
-	}, 'email valid')
+	}, 'email isValid')
 	.then(function(response) {
-		// If the email wasn't found or the user is already valid
-		if (!response.email || response.valid) {
-			res.redirect('/login');
+        if (!response.email) {
+            res.status(422).json({message: 'Resource not found', errors: [{
+                resource: 'user',
+                field: 'userId',
+                code: 'not_found'
+            }]});
+            responseSent = true;
+        }
+		if (response.isValid) {
+            res.status(422).json({message: 'Invalid data', errors: [{
+                resource: 'user',
+                field: 'valid',
+                code: 'already_processed'
+            }]});
+            responseSent = true;
 		}
 		email = response.email;
 		// Find the user's first name and last name
@@ -72,28 +89,31 @@ exports.resend_validation_email = function(req, res) {
 		}, 'firstName lastName');
 	})
 	.then(function(response) {
-		firstName = response.firstName;
-		lastName = response.lastName;
-		// Find the validation has that was stored in the db for the user
-		return UserHashes.schema.findValidationHashByUserId(userId);
+        if(response) {
+            firstName = response.firstName;
+            lastName = response.lastName;
+            // Find the validation has that was stored in the db for the user
+            return UserHashes.schema.findValidationHashByUserId(userId);
+        } else {
+            return false;
+        }
 	})
 	.then(function(response) {
-		// Send an email with the hash to the user
-		Email.send_verification_email(email, firstName, lastName, response.hash, req.headers.host);
+        if(response) {
+            // Send an email with the hash to the user
+            emailHelper.sendVerificationEmail(email, firstName, lastName, response.hash, req.headers.host);
 
-		res.redirect('/validation_email_sent/1/' + userId);
+            res.json(null);
+        }
+        else if(!responseSent) {
+            res.status(404).json({message: 'Resource not found', errors: [{
+                resource: 'user',
+                field: '_id',
+                code: 'not_found'
+            }]});
+        }
 	})
 	.catch(function(error) {
-		send_error_page(error, res);
+        res.status(500).json({message: 'Server error'});
 	});
 };
-
-/**
- * Sends an error page in case a query fails
- * @param string error
- * @param object res
- */
-function send_error_page(error, res) {
-	res.statusCode = 500;
-	res.sendFile('../views/five_oh_oh.html',  {"root": __dirname});
-}

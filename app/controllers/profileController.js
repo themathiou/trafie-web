@@ -140,7 +140,6 @@ function sendProfileData(req, res, profileData, userData) {
         about:          profileData.about
     };
     if('_id' in userData && profileData._id.toString() === userData._id.toString()) {
-        console.log(req.user.isValid);
         profile.isPrivate = profileData.isPrivate;
         profile.birthday = profileData.birthday;
         profile.language = userData.language;

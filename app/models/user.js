@@ -13,6 +13,8 @@ var userSchema = mongoose.Schema({
 	email 		: { type: String, required: true, unique: true, index: true },
 	password 	: { type: String, required: true },
 	isValid		: { type: Boolean, required: true, default: false},
+    lastIp      : { type: String },
+	lastLogin   : { type: Date },
     dateCreated : { type: Date },
     dateUpdated : { type: Date }
 });

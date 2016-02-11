@@ -7,10 +7,8 @@ var User = require('../models/user.js'),
 
 // Loading helpers
 var profileHelper = require('../helpers/profileHelper.js'),
-	userHelper = require('../helpers/userHelper.js');
-
-// Loading libraries
-var Email = require('../libs/email');
+	userHelper = require('../helpers/userHelper.js'),
+	emailHelper = require('../helpers/emailHelper.js');
 
 
 exports.request = {};
@@ -50,7 +48,7 @@ exports.request.post = function(req, res) {
 		})
 		.then(function(response) {
 			// Send an email with the hash
-			Email.send_reset_password_email(email, firstName, lastName, response, req.headers.host);
+			emailHelper.sendResetPasswordEmail(email, firstName, lastName, response, req.headers.host);
             res.status(200).json(response);
 		})
 		.catch(function(error) {

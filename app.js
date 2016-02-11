@@ -52,7 +52,7 @@ var index = require('./app/controllers/index'),
     profile = require('./app/controllers/profileController'),
     activities = require('./app/controllers/activityController'),
     disciplines = require('./app/controllers/disciplineController'),
-//email_validation = require('./app/controllers/emailValidationController'),
+    emailValidation = require('./app/controllers/emailValidationController'),
     resetPassword = require('./app/controllers/resetPasswordController'),
     dummyData = require('./app/controllers/dummyDataController'),
     api = require('./app/controllers/apiController'),
@@ -134,35 +134,35 @@ trafie.post('/api/users/:userId?', passport.authenticate('bearer', { session: fa
  * ACTIVITIES                                                                                                                  *
  ******************************************************************************************************************************/
 
-trafie.get('/users/:userId/activities/:activityId?', activities.get );
-trafie.post('/users/:userId/activities', activities.post );
-trafie.put('/users/:userId/activities/:activityId', activities.put );
-trafie.delete('/users/:userId/activities/:activityId', activities.delete );
-trafie.get('/users/:userId/disciplines', disciplines.get );
+trafie.get('/users/:userId/activities/:activityId?', activities.get);
+trafie.post('/users/:userId/activities', activities.post);
+trafie.put('/users/:userId/activities/:activityId', activities.put);
+trafie.delete('/users/:userId/activities/:activityId', activities.delete);
+trafie.get('/users/:userId/disciplines', disciplines.get);
 
-trafie.get('/api/users/:userId/activities/:activityId?', passport.authenticate('bearer', { session: false }), activities.get );
+trafie.get('/api/users/:userId/activities/:activityId?', passport.authenticate('bearer', { session: false }), activities.get);
 trafie.post('/api/users/:userId/activities', passport.authenticate('bearer', { session: false }), activities.post );
-trafie.put('/api/users/:userId/activities/:activityId', passport.authenticate('bearer', { session: false }), activities.put );
-trafie.delete('/api/users/:userId/activities/:activityId', passport.authenticate('bearer', { session: false }), activities.delete );
-trafie.get('/api/users/:userId/disciplines', passport.authenticate('bearer', { session: false }), disciplines.get );
+trafie.put('/api/users/:userId/activities/:activityId', passport.authenticate('bearer', { session: false }), activities.put);
+trafie.delete('/api/users/:userId/activities/:activityId', passport.authenticate('bearer', { session: false }), activities.delete);
+trafie.get('/api/users/:userId/disciplines', passport.authenticate('bearer', { session: false }), disciplines.get);
 
 
 /*******************************************************************************************************************************
  * REGISTER                                                                                                                    *
  ******************************************************************************************************************************/
 
-trafie.get( '/register', index.getOuterView );
-trafie.post( '/register', register.post );
+trafie.get('/register', index.getOuterView);
+trafie.post('/register', register.post);
 
 
 /*******************************************************************************************************************************
  * LOGIN                                                                                                                       *
  ******************************************************************************************************************************/
 
-trafie.get( '/login', index.getOuterView );
-trafie.post( '/login', passport.authenticate('local'), login.post );
+trafie.get('/login', index.getOuterView);
+trafie.post('/login', passport.authenticate('local'), login.post);
 
-trafie.post( '/authorize', oAuth.authorize);
+trafie.post('/authorize', oAuth.authorize);
 
 
 /*******************************************************************************************************************************
@@ -173,13 +173,14 @@ trafie.post( '/authorize', oAuth.authorize);
  * Validate - GET
  * Validates the newly created user
  */
-//trafie.get( '/validate/:hash', email_validation.validate );
+trafie.get('/validate/:hash', emailValidation.validate);
 
 /**
  * Resend validation email - GET
  * Resends the validation email
  */
-//trafie.get( '/resend_validation_email/:userId', email_validation.resend_validation_email );
+trafie.get('/resend-validation-email', emailValidation.resendEmail);
+trafie.get('/api/resend-validation-email', passport.authenticate('bearer', { session: false }), emailValidation.resendEmail);
 
 
 /*******************************************************************************************************************************
@@ -187,16 +188,16 @@ trafie.post( '/authorize', oAuth.authorize);
  ******************************************************************************************************************************/
 
 // Reset Password Request - GET
-trafie.get( '/reset-password-request', index.getOuterView );
+trafie.get('/reset-password-request', index.getOuterView );
 
 // Reset Password Request - GET
-trafie.post( '/reset-password-request', resetPassword.request.post );
+trafie.post('/reset-password-request', resetPassword.request.post );
 
 // Reset Password - GET
-trafie.get( '/reset-password/:hash', index.getOuterView );
+trafie.get('/reset-password/:hash', index.getOuterView);
 
 // Reset Password - GET
-trafie.post( '/reset-password/:hash', resetPassword.post );
+trafie.post('/reset-password/:hash', resetPassword.post);
 
 
 /*******************************************************************************************************************************
@@ -217,8 +218,8 @@ trafie.get('/logout', function( req, res ) {
  ******************************************************************************************************************************/
 
 if( trafie.get('env') === 'development' ) {
-    trafie.get( '/dummy-data', dummyData.get );
-    trafie.post( '/dummy-data', dummyData.post );
+    trafie.get('/dummy-data', dummyData.get);
+    trafie.post('/dummy-data', dummyData.post);
 }
 
 
@@ -227,8 +228,8 @@ if( trafie.get('env') === 'development' ) {
  ******************************************************************************************************************************/
 
 if( trafie.get('env') === 'development' ) {
-    trafie.get( '/api', api.get );
-    trafie.get( '/api-table', api.get_view );
+    trafie.get('/api', api.get);
+    trafie.get('/api-table', api.get_view);
 }
 
 
@@ -236,15 +237,15 @@ if( trafie.get('env') === 'development' ) {
  * FEEDBACK                                                                                                                    *
  ******************************************************************************************************************************/
 
-trafie.post( '/feedback', feedback.post );
+trafie.post('/feedback', feedback.post);
 
 
 /*******************************************************************************************************************************
  * NUCLEAR TEST GROUND                                                                                                         *
  ******************************************************************************************************************************/
 
-if( trafie.get('env') === 'development' ) {
-    trafie.get( '/nuke', nuke.get );
+if( trafie.get('env') === 'development') {
+    trafie.get('/nuke', nuke.get);
 }
 
 
@@ -252,17 +253,7 @@ if( trafie.get('env') === 'development' ) {
  * VIEWS                                                                                                                       *
  ******************************************************************************************************************************/
 
-trafie.get( '*', index.getView );
-
-
-/*******************************************************************************************************************************
- * 404                                                                                                                         *
- ******************************************************************************************************************************/
-
-/*trafie.use( function( req, res ) {
-    res.status( 404 );
-    res.sendFile('/app/views/four-oh-four.html', {"root": __dirname});
-});*/
+trafie.get('*', index.getView);
 
 
 /*******************************************************************************************************************************

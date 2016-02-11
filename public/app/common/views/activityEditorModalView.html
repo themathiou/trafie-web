@@ -7,11 +7,63 @@
             <label for="discipline" translate="COMMON.DISCIPLINE"></label>
             <select class="form-control" id="discipline" name="discipline" ng-model="activity.discipline" ng-options="discipline as (discipline && 'DISCIPLINES.' + discipline.toUpperCase() || 'SETTINGS.CHOOSE_YOUR_DISCIPLINE' | translate) for discipline in disciplines"></select>
         </div>
-        <div class="form-group">
+        <div class="form-group" ng-show="activity.discipline">
             <label translate="PROFILE.PERFORMANCE"></label>
             <tf-time-performance-picker ng-model="activity.performance" ng-show="getCategory() === 'time'"></tf-time-performance-picker>
             <tf-distance-performance-picker ng-model="activity.performance" ng-show="getCategory() === 'distance'"></tf-distance-performance-picker>
             <tf-points-performance-picker ng-model="activity.performance" ng-show="getCategory() === 'points'"></tf-points-performance-picker>
+        </div>
+        <div class="row">
+            <div class="col-xs-9">
+                <div class="form-group">
+                    <label for="date" translate="COMMON.DATE"></label>
+                    <div class="input-group">
+                        <input type="text" id="date" class="form-control" uib-datepicker-popup="{{datepicker.activityDateFormat}}" ng-model="datepicker.activityDate" is-open="datepicker.popup.opened" max-date="datepicker.maxDate" datepicker-options="datepicker.dateOptions" ng-required="true" close-text="{{'COMMON.CANCEL' | translate}}" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="datepicker.popup.opened = true"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="form-group">
+                    <uib-timepicker id="time" class="pull-right" ng-model="datepicker.activityDate" hour-step="1" minute-step="1" show-meridian="false"></uib-timepicker>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label translate="PROFILE.COMPETITION"></label>
+            <input type="text" class="form-control" ng-model="activity.competition">
+        </div>
+        <div class="form-group">
+            <label translate="PROFILE.LOCATION"></label>
+            <input type="text" class="form-control" ng-model="activity.location">
+        </div>
+        <div class="form-group">
+            <label translate="PROFILE.RANK"></label>
+            <input type="text" class="form-control" ng-model="activity.rank">
+        </div>
+        <div class="form-group">
+            <label translate="PROFILE.NOTES"></label>
+            <textarea type="text" class="form-control" ng-model="activity.notes"></textarea>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" value="activity.isPrivate">
+                {{'PROFILE.PRIVATE' | translate}}
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="isOutdoor" value="activity.isOutdoor" checked>
+                Indoor
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="isOutdoor" value="activity.isOutdoor">
+                Outdoor
+            </label>
         </div>
     </form>
 </div>

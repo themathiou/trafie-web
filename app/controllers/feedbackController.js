@@ -2,7 +2,7 @@
 
 const Profile = require('../models/profile.js'),
 	User = require('../models/user.js');
-const Email = require('../libs/email');
+const emailHelper = require('../helpers/emailHelper.js');
 
 /**
  * Feedback - POST
@@ -46,7 +46,7 @@ exports.post = function(req, res) {
 
 
 		let recipients = ['geobal87@yahoo.gr', 'tmathioudakis@gmail.com', 'trafie.app@gmail.com'];
-		Email.send_email(recipients, email_text, email_subject);
+		emailHelper.sendEmail(recipients, email_text, email_subject);
 
 		res.status(200).json({
 			'success': true
