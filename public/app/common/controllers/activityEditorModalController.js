@@ -1,11 +1,12 @@
 angular.module('trafie')
-    .controller('ActivityEditorModalController', function ($scope, $uibModalInstance, activityToEdit,
-                                                           DISCIPLINES, Activity, DISCIPLINE_CATEGORIES,
-                                                           userService) {
+    .controller('ActivityEditorModalController', function ($scope, $uibModalInstance, $filter, activityToEdit,
+                                                           DISCIPLINES, userService, DISCIPLINE_CATEGORIES,
+                                                           Activity, notify) {
         activityToEdit = activityToEdit || null;
         $scope.isNewActivity = !activityToEdit;
         $scope.activity = activityToEdit || new Activity;
         $scope.disciplines = [''].concat(DISCIPLINES);
+        $scope.saving = false;
         $scope.datepicker = {
             maxDate: moment().toDate(),
             activityDate: moment().toDate(),
@@ -16,7 +17,7 @@ angular.module('trafie')
             dateOptions: {
                 startingDay: 1
             }
-        }
+        };
         userService.loadCurrentUser().then(function(user) {
             $scope.format = user.dateFormat.split('-')
                 .map(function(datePart) {
@@ -34,9 +35,20 @@ angular.module('trafie')
 
         $scope.save = function () {
             $scope.activity.date = moment($scope.datepicker.activityDate).seconds(0).unix();
+            $scope.saving = true;
             console.log($scope.activity);
-            //$scope.activity.$save();
-            //$uibModalInstance.close($scope.selected.item);
+            $scope.activity.$save()
+            .then(function(res) {
+                $scope.saving = false;
+                notify({
+                    message: $filter('translate')('PROFILE.THE_ACTIVITY_WAS_CREATED_SUCCESSFULLY'),
+                    classes: 'alert-success'
+                });
+                $uibModalInstance.close();
+            }, function(res) {
+                $scope.saving = false;
+                console.log(res);
+            });
         };
 
         $scope.cancel = function () {

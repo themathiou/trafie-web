@@ -52,6 +52,7 @@ activitySchema.findOne = function(where, select) {
  * @param number sort (-1 == descending)
  */
 activitySchema.getActivitiesOfUser = function(where, select, sort) {
+	select = select || 'discipline performance date rank location competition notes isPrivate type isOutdoor';
 	var d = q.defer();
 	Activity.find(
 		// Where
@@ -153,8 +154,7 @@ activitySchema.methods.checkValid = function() {
 	if(!this.date) {
 		errors = true;
 		errorMessages.date = 'date_is_required';
-	} 
-	else {
+	} else {
 		this.date = activityHelper.parseDate(this.date);
 		if(!this.date) {
 			errors = true;

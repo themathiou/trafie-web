@@ -67,9 +67,9 @@ exports.resendEmail = function(req, res) {
 	}, 'email isValid')
 	.then(function(response) {
         if (!response.email) {
-            res.status(422).json({message: 'Resource not found', errors: [{
+            res.status(404).json({message: 'Resource not found', errors: [{
                 resource: 'user',
-                field: 'userId',
+                field: '_id',
                 code: 'not_found'
             }]});
             responseSent = true;

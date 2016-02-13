@@ -278,6 +278,10 @@
       "en": "Save",
       "el": "Αποθήκευση"
     },
+    "SAVING": {
+      "en": "Saving...",
+      "el": "Αποθηκεύεται..."
+    },
     "SAVE_CHANGES": {
       "en": "Save changes",
       "el": "Αποθήκευση αλλαγών"
@@ -391,6 +395,10 @@
     "DATE_IS_REQUIRED":{
       "en": "Date is required",
       "el": "Η ημερομηνία είναι υποχρεωτική"
+    },
+    "THE_ACTIVITY_WAS_CREATED_SUCCESSFULLY": {
+      "en": "The activity was created successfully",
+      "el": "Η δραστηριότητα δημιουργήθηκε με επιτυχία"
     }
   },
   "SETTINGS": {

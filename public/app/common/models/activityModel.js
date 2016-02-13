@@ -21,7 +21,7 @@
 
         function Activity(activityData) {
             activityData = activityData || {};
-            this.userId = angular.isDefined(activityData.userId) ? activityData.userId : currentUser.userId;
+            this.userId = angular.isDefined(activityData.userId) ? activityData.userId : currentUser._id;
             this.discipline = angular.isDefined(activityData.discipline) ? activityData.discipline : '';
             this.performance = angular.isDefined(activityData.performance) ? activityData.performance : null;
             this.date = angular.isDefined(activityData.date) ? activityData.date : moment().unix();

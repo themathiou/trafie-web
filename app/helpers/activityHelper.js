@@ -87,10 +87,14 @@ activityHelper.validatePoints = function(performance) {
  */
 activityHelper.parseDate = function(date) {
 	if(date instanceof Date) {
-		return date;
-	}
-	var momentDate = moment(date + ' +0000', 'YYYY-MM-DD HH:mm:ss Z');
-	return momentDate.isValid() ? momentDate.toDate() : null;
+		date = moment(date);
+	} else if(parseInt(date)) {
+		date = moment.unix(parseInt(date));
+	} else {
+        return null;
+    }
+
+	return date.isValid() && moment().unix() > date.unix() && date.unix() >= 0 ? date.toDate() : null;
 };
 
 /**

@@ -118,7 +118,7 @@ exports.post = function(req, res) {
 			userId: userId,
 			discipline: req.body.discipline || null,
 			performance: typeof req.body.performance !== 'undefined' ? req.body.performance : null,
-			date: req.body.date && activityHelper.parseDate(req.body.date) || null,
+			date: req.body.date || null,
 			rank: req.body.rank || null,
 			location: req.body.location || null,
 			competition: req.body.competition || null,
