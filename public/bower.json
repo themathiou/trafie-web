@@ -29,5 +29,8 @@
     "angular-notify": "~2.5.0",
     "moment": "~2.10.6",
     "bootstrap": "~3.3.6"
+  },
+  "resolutions": {
+    "angular": "~1.4.9"
   }
 }
