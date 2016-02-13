@@ -17,7 +17,7 @@
     "nodemailer-smtp-transport": "~2.0.0",
     "q": "~1.4.1",
     "moment": "~2.11.1",
-    "mongoose": "~4.3.6",
+    "mongoose": "~4.4.3",
     "less-middleware": "~2.0.1",
     "knox": "~0.9.2",
     "passport": "~0.3.2",
