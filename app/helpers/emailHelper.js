@@ -20,9 +20,7 @@ var emailHelper = {
             'Follow the link to verify your email:<br>' +
             '<a href="' + host + '/validate/' + hash + '">This is the link</a>';
 
-        console.log('sending');
         transporter.sendMail(message, function(error) {
-            console.log('sent', error);
             if (error) {
                 console.warn('Error occured while sending email: ' + error);
                 return;

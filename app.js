@@ -118,17 +118,16 @@ if (trafie.get('env') === 'development') {
     trafie.use(errorHandler());
 }
 // Production only
-if (trafie.get('env') === 'production') {
+/*if (trafie.get('env') === 'production') {
     trafie.use(requireHTTPS);
 }
 
 function requireHTTPS(req, res, next) {
     if (!req.secure) {
-        //FYI this should work for local development as well
         return res.redirect('https://' + req.get('host') + req.url);
     }
     next();
-}
+}*/
 
 /*******************************************************************************************************************************
  * PROFILE                                                                                                                     *
