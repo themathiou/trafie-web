@@ -119,7 +119,7 @@ if (trafie.get('env') === 'development') {
 }
 // Production only
 if (trafie.get('env') === 'production') {
-    app.use(requireHTTPS);
+    trafie.use(requireHTTPS);
 }
 
 function requireHTTPS(req, res, next) {
