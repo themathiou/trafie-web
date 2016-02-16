@@ -101,7 +101,7 @@ exports.resendEmail = function(req, res) {
 	.then(function(response) {
         if(response) {
             // Send an email with the hash to the user
-            emailHelper.sendVerificationEmail(email, firstName, lastName, response.hash, req.headers.host);
+            emailHelper.sendVerificationEmail(email, firstName, lastName, response.hash);
 
             res.json(null);
         }

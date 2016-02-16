@@ -1,7 +1,7 @@
 'use strict';
 
 // Get the config file
-const config = require('../config/config.js'),
+const config = require('../config/constantConfig.js'),
     moment = require('moment');
 
 

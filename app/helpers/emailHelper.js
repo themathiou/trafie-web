@@ -1,25 +1,20 @@
 'use strict';
 
 const nodemailer = require('nodemailer');
-var transporter = nodemailer.createTransport({
-    direct: false,
-    port: 25,
-    host: 'mail.name.com',
-    auth: {
-        user: 'support@trafie.com',
-        pass: 'tr@f!e4'
-    }
-});
+const emailConfig = require('../config/emailConfig');
+const host = process.env.NODE_ENV === 'production' ? 'https://www.trafie.com' : 'localhost:3000';
+
+var transporter = nodemailer.createTransport(emailConfig);
 
 // Message object
 var message = {
-    from: 'trafie support <support@trafie.com>'
+    from: 'Trafie support <support@trafie.com>'
 };
 
 var emailHelper = {
-    sendVerificationEmail: function(email, firstName, lastName, hash, host) {
+    sendVerificationEmail: function(email, firstName, lastName, hash) {
         message.to = email;
-        message.subject = 'Welcome to trafie ✔';
+        message.subject = 'Welcome to Trafie!';
         message.html = '<h2>Hello ' + firstName + ' ' + lastName + '</h2>' +
             '<p>You have successfully registered to trafie.</p><br><p>The <b><i>trafie</i></b> team</p><br>' +
             'Follow the link to verify your email:<br>' +
@@ -35,7 +30,7 @@ var emailHelper = {
         });
     },
 
-    sendResetPasswordEmail: function(email, firstName, lastName, hash, host) {
+    sendResetPasswordEmail: function(email, firstName, lastName, hash) {
         message.to = email;
         message.subject = 'Password reset request';
         message.html = '<h2>Hello ' + firstName + ' ' + lastName + '</h2>' +

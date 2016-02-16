@@ -48,7 +48,7 @@ exports.request.post = function(req, res) {
 		})
 		.then(function(response) {
 			// Send an email with the hash
-			emailHelper.sendResetPasswordEmail(email, firstName, lastName, response, req.headers.host);
+			emailHelper.sendResetPasswordEmail(email, firstName, lastName, response);
             res.status(200).json(response);
 		})
 		.catch(function(error) {

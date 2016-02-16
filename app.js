@@ -44,7 +44,7 @@ var express = require('express'),
 // Initialize express
 var trafie = express();
 
-var passportSessions = require('./app/config/sessions');
+var passportSessions = require('./app/config/sessionsConfig');
 // Initialize the routes
 var index = require('./app/controllers/index'),
     login = require('./app/controllers/loginController'),
@@ -61,7 +61,7 @@ var index = require('./app/controllers/index'),
     auth = require('./app/controllers/authController'),
     oAuth = require('./app/controllers/oAuthController');
 
-    const db = require('./app/config/db.js');
+    const db = require('./app/config/dbConfig.js');
 
 
 /*******************************************************************************************************************************
@@ -113,11 +113,22 @@ trafie.use(express.static(path.join(__dirname, 'public')));
 trafie.use(passport.initialize());
 trafie.use(passport.session());
 
-// Development Only
+// Development only
 if (trafie.get('env') === 'development') {
     trafie.use(errorHandler());
 }
+// Production only
+if (trafie.get('env') === 'production') {
+    app.use(requireHTTPS);
+}
 
+function requireHTTPS(req, res, next) {
+    if (!req.secure) {
+        //FYI this should work for local development as well
+        return res.redirect('https://' + req.get('host') + req.url);
+    }
+    next();
+}
 
 /*******************************************************************************************************************************
  * PROFILE                                                                                                                     *

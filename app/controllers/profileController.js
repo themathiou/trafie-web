@@ -8,7 +8,7 @@ var accessHelper = require('../helpers/accessHelper.js'),
 	profileHelper = require('../helpers/profileHelper.js'),
     userHelper = require('../helpers/userHelper.js');
 // Get the config file
-const config = require('../config/config.js');
+const config = require('../config/constantConfig.js');
 const SEARCH_RESULTS_LENGTH = 10;
 
 /**

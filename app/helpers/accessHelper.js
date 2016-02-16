@@ -3,7 +3,7 @@
 // Loading models
 var Profile = require('../models/profile.js'),
 	q = require('q'),
-	sessions = require('../config/sessions.js');
+	sessions = require('../config/sessionsConfig.js');
 
 var accessHelper = {};
 

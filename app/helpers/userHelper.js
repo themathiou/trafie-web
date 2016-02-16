@@ -4,7 +4,7 @@ const User = require('../models/user.js');
 
 var crypto = require('crypto'),
     q = require('q');
-const config = require('../config/config.js');
+const config = require('../config/constantConfig.js');
 
 var userHelper = {};
 
