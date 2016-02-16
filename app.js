@@ -90,6 +90,7 @@ mongoose.connect(db[process.env.NODE_ENV].mongo.url, function (err) {
  * MODULES                                                                                                                     *
  ******************************************************************************************************************************/
 
+trafie.enable('trust proxy');
 trafie.set('port', process.env.PORT || 3000);
 trafie.set('views', path.join(__dirname, 'app/views'));
 trafie.set('view engine', 'jade');
@@ -118,7 +119,7 @@ if (trafie.get('env') === 'development') {
     trafie.use(errorHandler());
 }
 // Production only
-/*if (trafie.get('env') === 'production') {
+if (trafie.get('env') === 'production') {
     trafie.use(requireHTTPS);
 }
 
@@ -127,7 +128,7 @@ function requireHTTPS(req, res, next) {
         return res.redirect('https://' + req.get('host') + req.url);
     }
     next();
-}*/
+}
 
 /*******************************************************************************************************************************
  * PROFILE                                                                                                                     *
