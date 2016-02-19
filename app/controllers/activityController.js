@@ -26,20 +26,22 @@ exports.get = function(req, res) {
 			if (typeof req.params.activityId !== 'undefined') {
 				var where = {};
 				if(userId && profileId && userId === profileId) {
-					$and: [{
-						_id: activityId
-					},{
-						user_id: profileId
-					}]
+					where = {
+						$and: [{
+							_id: req.params.activityId
+						}, {
+							userId: profileId
+						}]
+					};
 				} 
 				else {
 					where = {
 						$and: [{
-							_id: activityId
+							_id: req.params.activityId
 						}, {
 							isPrivate: false
 						}, {
-							user_id: profileId
+							userId: profileId
 						}]
 					};
 				}
@@ -48,6 +50,7 @@ exports.get = function(req, res) {
 				Activity.schema.findOne(where, '').then(function(activity) {
 					var statusCode = activity ? 200 : 404;
 					res.status(statusCode).json(activity);
+                    return;
 				})
 				.catch(function(error) {
 					res.status(500).json(null);
@@ -62,16 +65,16 @@ exports.get = function(req, res) {
 				}
 				if (typeof req.query.from !== 'undefined' && req.query.from && typeof req.query.to !== 'undefined' && req.query.to) {
 					where.date = {
-						"$gte": activityHelper.parseDbDate(req.query.from),
-						"$lte": activityHelper.parseDbDate(req.query.to)
+						"$gte": parseInt(req.query.from),
+						"$lte": parseInt(req.query.to)
 					};
 				} else if (typeof req.query.from !== 'undefined') {
 					where.date = {
-						"$gte": activityHelper.parseDbDate(req.query.from)
+						"$gte": parseInt(req.query.from)
 					};
 				} else if (typeof req.query.to !== 'undefined') {
 					where.date = {
-						"$lte": activityHelper.parseDbDate(req.query.to)
+						"$lte": parseInt(req.query.to)
 					};
 				}
 
