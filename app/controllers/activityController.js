@@ -89,7 +89,7 @@ exports.get = function(req, res) {
 					res.json(activities);
 				})
 				.catch(function(error) {
-					res.status(500).json(error);
+					res.status(500).json(null);
 				});
 			}
 		} else {
@@ -127,7 +127,7 @@ exports.post = function(req, res) {
 			isPrivate: req.body.isPrivate || false
 		};
 		var activity = new Activity(activityData),
-		errors = activity.checkValid();
+		    errors = activity.checkValid();
 
 		if(!errors) {
 			// Save the activity
@@ -162,13 +162,13 @@ exports.put = function(req, res) {
 
 			// Create the record that will be inserted in the db
 			activity.discipline = req.body.discipline || activity.discipline;
-			activity.performance = typeof req.body.performance !== 'undefined' ? req.body.performance : activity.performance;
-			activity.date = typeof req.body.date !== 'undefined' ? activityHelper.parseDate(req.body.date) : activity.date;
-			activity.rank = typeof req.body.performance !== 'undefined' ? req.body.rank : activity.date;
-			activity.location = typeof req.body.location !== 'undefined' ? req.body.location : activity.location;
-			activity.competition = typeof req.body.competition !== 'undefined' ? req.body.competition : activity.competition;
-			activity.notes = typeof req.body.notes !== 'undefined' ? req.body.notes : activity.notes;
-			activity.isPrivate = typeof req.body.isPrivate !== 'undefined' ? req.body.isPrivate : activity.isPrivate;
+			activity.performance = req.body.performance || activity.performance;
+			activity.date = req.body.date || activity.date;
+			activity.rank = req.body.rank || activity.rank;
+			activity.location = req.body.location || activity.location;
+			activity.competition = req.body.competition || activity.competition;
+			activity.notes = req.body.notes || activity.notes;
+			activity.isPrivate = req.body.isPrivate || activity.isPrivate;
 
 			var errors = activity.checkValid();
 
