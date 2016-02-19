@@ -35,7 +35,7 @@
                     <div class="panel-body">
                         <span class="col-xs-9"><b>{{activity.performance}}</b>  <span class="text-muted">{{activity.discipline}}</span></span>
                         <span class="col-xs-3 text-right">
-                            <span class="glyphicon glyphicon-edit text-warning" aria-hidden="true"></span> | <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
+                            <span class="glyphicon glyphicon-edit text-warning" aria-hidden="true"></span> | <a href="javascript:;" ng-click="deleteActivity(activity)"><i class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></i></a>
                         </span>
                         <div class="col-xs-12">{{activity.competition}}</div>
                         <div class="col-xs-12">{{activity.date}}</div>

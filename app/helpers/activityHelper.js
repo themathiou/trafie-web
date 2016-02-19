@@ -80,6 +80,10 @@ activityHelper.validatePoints = function(performance) {
 	return isPositiveInteger(performance) ? parseInt(performance) : null;
 };
 
+activityHelper.timestampIsValid = function(timestamp) {
+	return isPositiveInteger(timestamp) ? parseInt(timestamp) : null;
+};
+
 /**
  * Parses the given date, from format "YYYY-MM-DD HH:mm:ss" to
  * a JavaScript date object

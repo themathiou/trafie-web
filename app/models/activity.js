@@ -2,6 +2,7 @@
 
 var mongoose = require('mongoose');
 var db = mongoose.connection;
+var moment = require('moment');
 var q = require('q');
 // Loading helpers
 var activityHelper = require('../helpers/activityHelper.js');
@@ -11,7 +12,7 @@ var activitySchema = mongoose.Schema({
 	userId		: { type: String, 	required: true, 	index: true },
 	discipline	: { type: String, 	required: true },
 	performance	: { type: Number, 	required: true },
-	date 		: { type: Date, 	required: true },
+	date 		: { type: Number, 	required: true },
 	rank 		: { type: Number, 	required: false, 	default: null },
 	location 	: { type: String, 	required: false, 	default: '' },
 	competition : { type: String, 	required: false, 	default: '' },
@@ -52,7 +53,7 @@ activitySchema.findOne = function(where, select) {
  * @param number sort (-1 == descending)
  */
 activitySchema.getActivitiesOfUser = function(where, select, sort) {
-	select = select || 'discipline performance date rank location competition notes isPrivate type isOutdoor';
+	select = select || 'userId discipline performance date rank location competition notes isPrivate type isOutdoor';
 	var d = q.defer();
 	Activity.find(
 		// Where
@@ -155,7 +156,7 @@ activitySchema.methods.checkValid = function() {
 		errors = true;
 		errorMessages.date = 'date_is_required';
 	} else {
-		this.date = activityHelper.parseDate(this.date);
+		this.date = activityHelper.timestampIsValid(this.date);
 		if(!this.date) {
 			errors = true;
 			errorMessages.date = 'wrong_date_format';

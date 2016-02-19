@@ -24,11 +24,25 @@
 
             function loadProfile(user) {
                 $scope.user = user;
-                console.log($scope.user);
                 Activity.get({userId: $scope.user._id}, function(activities) {
-                    console.log('activities', activities);
                     $scope.activities = activities;
                 }, loadError);
             }
+
+            $scope.deleteActivity = function(activity) {
+                activity.$delete()
+                .then(function() {
+                    var deletedActivityIndex = index = -1;
+                    $scope.activities.forEach(function(item, index) {
+                        if(item._id === activity._id) {
+                            deletedActivityIndex = index;
+                        }
+                    });
+
+                    $scope.activities.splice(deletedActivityIndex, 1);
+                }, function() {
+
+                });
+            };
         });
 })(angular);

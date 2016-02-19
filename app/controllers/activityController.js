@@ -24,8 +24,6 @@ exports.get = function(req, res) {
 		if (response.success) {
 			// If the activity id was specified, try to find the activity
 			if (typeof req.params.activityId !== 'undefined') {
-				returnActivity(res, 200, req.params.activityId, userId);
-
 				var where = {};
 				if(userId && profileId && userId === profileId) {
 					$and: [{
@@ -124,8 +122,8 @@ exports.post = function(req, res) {
 			competition: req.body.competition || null,
 			notes: req.body.notes || null,
 			isPrivate: req.body.isPrivate || false
-		},
-		activity = new Activity(activityData),
+		};
+		var activity = new Activity(activityData),
 		errors = activity.checkValid();
 
 		if(!errors) {

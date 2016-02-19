@@ -2,7 +2,7 @@
     angular.module('trafie')
     .provider('ActivityResource', [function () {
         this.$get = ['$resource', function ($resource) {
-            return $resource('/users/:userId/activities/:activityId', {userId: "@userId", activityId: "@activityId"}, {
+            return $resource('/users/:userId/activities/:_id', {userId: "@userId", _id: "@_id"}, {
                 update: {
                     method: "PUT"
                 },

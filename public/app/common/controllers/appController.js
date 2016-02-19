@@ -10,7 +10,6 @@
         });
 
         self.openActivityEditorModal = function (activity) {
-            console.log('opening');
             var modalInstance = $uibModal.open({
                 animation: true,
                 templateUrl: 'app/common/views/activityEditorModalView.html',
