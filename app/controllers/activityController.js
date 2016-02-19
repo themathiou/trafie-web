@@ -124,7 +124,8 @@ exports.post = function(req, res) {
 			location: req.body.location || null,
 			competition: req.body.competition || null,
 			notes: req.body.notes || null,
-			isPrivate: req.body.isPrivate || false
+			isPrivate: req.body.isPrivate || false,
+            isOutdoor: req.body.isOutoor || false
 		};
 		var activity = new Activity(activityData),
 		    errors = activity.checkValid();
@@ -161,16 +162,17 @@ exports.put = function(req, res) {
 			if (!activity || typeof activity._id == 'undefined') res.status(404).json(null);
 
 			// Create the record that will be inserted in the db
-			activity.discipline = req.body.discipline || activity.discipline;
-			activity.performance = req.body.performance || activity.performance;
-			activity.date = req.body.date || activity.date;
-			activity.rank = req.body.rank || activity.rank;
-			activity.location = req.body.location || activity.location;
-			activity.competition = req.body.competition || activity.competition;
-			activity.notes = req.body.notes || activity.notes;
-			activity.isPrivate = req.body.isPrivate || activity.isPrivate;
+			activity.discipline = typeof req.body.discipline !== 'undefined' ? req.body.discipline : activity.discipline;
+			activity.performance = typeof req.body.performance !== 'undefined' ? req.body.performance : activity.performance;
+			activity.date = typeof req.body.date !== 'undefined' ? req.body.date : activity.date;
+			activity.rank = typeof req.body.rank !== 'undefined' ? req.body.rank : activity.rank;
+			activity.location = typeof req.body.location !== 'undefined' ? req.body.location : activity.location;
+			activity.competition = typeof req.body.competition !== 'undefined' ? req.body.competition : activity.competition;
+			activity.notes = typeof req.body.notes !== 'undefined' ? req.body.notes : activity.notes;
+			activity.isPrivate = typeof req.body.isPrivate !== 'undefined' ? req.body.isPrivate : activity.isPrivate;
+            activity.isOutdoor = typeof req.body.isOutdoor !== 'undefined' ? req.body.isOutdoor : activity.isOutdoor;
 
-			var errors = activity.checkValid();
+            var errors = activity.checkValid();
 
 			// If there are no errors
 			if (!errors) {

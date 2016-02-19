@@ -2,16 +2,18 @@ angular.module('trafie')
     .directive('tfDistancePerformancePicker', function () {
         function link(scope, element, attrs, ngModel) {
             function modelFormatter(value) {
-                return value;
+                scope.inputs = [0,0];
+                scope.inputs[0] = Math.floor(value / 10000);
+                scope.inputs[1] = Math.floor((value - scope.inputs[0] * 10000) / 100);
+                return scope.inputs.join(',');
             }
             function modelParser(value) {
-                value = value.split(',').map(function(v) {return parseInt(v)});
+                value = value.split(',').map(function(v) {return parseInt(v);});
                 return value[0] * 10000 + value[1] * 100;
             }
             ngModel.$formatters.push(modelFormatter);
             ngModel.$parsers.push(modelParser);
 
-            scope.inputs = [0,0];
             scope.$watchCollection('inputs', function() {
                 ngModel.$setViewValue(scope.inputs.join(','));
             });

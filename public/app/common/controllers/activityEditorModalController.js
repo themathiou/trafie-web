@@ -4,12 +4,12 @@ angular.module('trafie')
                                                            Activity, notify) {
         activityToEdit = activityToEdit || null;
         $scope.isNewActivity = !activityToEdit;
-        $scope.activity = activityToEdit || new Activity;
+        $scope.activity = activityToEdit && angular.copy(activityToEdit) || new Activity();
         $scope.disciplines = [''].concat(DISCIPLINES);
         $scope.saving = false;
         $scope.datepicker = {
             maxDate: moment().toDate(),
-            activityDate: moment().toDate(),
+            activityDate: moment.unix($scope.activity.date).toDate(),
             activityDateFormat: 'dd-MM-yyyy',
             popup: {
                 opened: false
@@ -18,6 +18,7 @@ angular.module('trafie')
                 startingDay: 1
             }
         };
+
         userService.loadCurrentUser().then(function(user) {
             $scope.format = user.dateFormat.split('-')
                 .map(function(datePart) {
@@ -36,9 +37,8 @@ angular.module('trafie')
         $scope.save = function () {
             $scope.activity.date = moment($scope.datepicker.activityDate).seconds(0).unix();
             $scope.saving = true;
-            console.log($scope.activity);
-            $scope.activity.$save()
-            .then(function(res) {
+            var promise = $scope.isNewActivity ? $scope.activity.$save() : $scope.activity.$update();
+            promise.then(function(res) {
                 $scope.saving = false;
                 notify({
                     message: $filter('translate')('PROFILE.THE_ACTIVITY_WAS_CREATED_SUCCESSFULLY'),
@@ -47,7 +47,6 @@ angular.module('trafie')
                 $uibModalInstance.close();
             }, function(res) {
                 $scope.saving = false;
-                console.log(res);
             });
         };
 

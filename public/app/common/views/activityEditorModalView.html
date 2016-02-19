@@ -9,9 +9,9 @@
         </div>
         <div class="form-group" ng-show="activity.discipline">
             <label translate="PROFILE.PERFORMANCE"></label>
-            <tf-time-performance-picker ng-model="activity.performance" ng-show="getCategory() === 'time'"></tf-time-performance-picker>
-            <tf-distance-performance-picker ng-model="activity.performance" ng-show="getCategory() === 'distance'"></tf-distance-performance-picker>
-            <tf-points-performance-picker ng-model="activity.performance" ng-show="getCategory() === 'points'"></tf-points-performance-picker>
+            <tf-time-performance-picker ng-model="activity.performance" ng-if="getCategory() === 'time'"></tf-time-performance-picker>
+            <tf-distance-performance-picker ng-model="activity.performance" ng-if="getCategory() === 'distance'"></tf-distance-performance-picker>
+            <tf-points-performance-picker ng-model="activity.performance" ng-if="getCategory() === 'points'"></tf-points-performance-picker>
         </div>
         <div class="row">
             <div class="col-xs-9">
@@ -55,13 +55,13 @@
         </div>
         <div class="radio">
             <label>
-                <input type="radio" name="isOutdoor" value="activity.isOutdoor" checked>
+                <input type="radio" name="isOutdoor" ng-model="activity.isOutdoor" ng-value="false">
                 Indoor
             </label>
         </div>
         <div class="radio">
             <label>
-                <input type="radio" name="isOutdoor" value="activity.isOutdoor">
+                <input type="radio" name="isOutdoor" ng-model="activity.isOutdoor" ng-value="true">
                 Outdoor
             </label>
         </div>

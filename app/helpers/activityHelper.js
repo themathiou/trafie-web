@@ -158,6 +158,10 @@ activityHelper.privacyIsValid = function(privateSetting) {
 	return typeof privateSetting === 'boolean' || privateSetting.toLowerCase() === 'true' || privateSetting.toLowerCase() === 'false';
 };
 
+activityHelper.outdoorIsValid = function(outdoorSetting) {
+	return typeof outdoorSetting === 'boolean' || outdoorSetting.toLowerCase() === 'true' || outdoorSetting.toLowerCase() === 'false';
+};
+
 /**
  * Parses the privacy setting, in case it's represented by a string
  * @param  string|boolean privateSetting

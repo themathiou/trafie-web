@@ -2,6 +2,7 @@ angular.module('trafie')
     .directive('tfPointsPerformancePicker', function () {
         function link(scope, element, attrs, ngModel) {
             function modelFormatter(value) {
+                scope.input = value;
                 return value;
             }
             function modelParser(value) {
@@ -10,7 +11,6 @@ angular.module('trafie')
             ngModel.$formatters.push(modelFormatter);
             ngModel.$parsers.push(modelParser);
 
-            scope.input = 0;
             scope.$watch('input', function() {
                 ngModel.$setViewValue(scope.input);
             });

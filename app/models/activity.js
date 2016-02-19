@@ -193,6 +193,11 @@ activitySchema.methods.checkValid = function() {
 		errorMessages.isPrivate = 'invalid_privacy';
 	}
 
+	// Validating privacy (required field)
+	if (!('isOutdoor' in this) || ('isOutdoor' in this && !activityHelper.outdoorIsValid(this.isOutdoor))) {
+		errors = true;
+		errorMessages.isOutdoor = 'invalid_outdoor';
+	}
 	return errors ? errorMessages : null;
 };
 
