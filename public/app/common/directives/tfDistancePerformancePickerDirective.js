@@ -24,7 +24,7 @@ angular.module('trafie')
             scope: true,
             template:   '<span class="row">' +
                             '<div class="col-xs-6">' +
-                                '<input type="number" ng-model="inputs[0]" class="form-control" maxlength="2" ng-pattern="/^[0-9]{2}$/" min="0" max="99">' +
+                                '<input type="number" ng-model="inputs[0]" class="form-control" maxlength="2" ng-pattern="/^[0-9]{1,2}$/" min="0" max="99">' +
                             '</div>' +
                             '<div class="col-xs-6">' +
                                 '<input type="number" ng-model="inputs[1]" class="form-control" maxlength="2" ng-pattern="/^[0-9]{2}$/" min="0" max="99">' +
