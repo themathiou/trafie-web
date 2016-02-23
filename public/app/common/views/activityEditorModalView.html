@@ -13,21 +13,21 @@
             <tf-distance-performance-picker ng-model="activity.performance" ng-if="getCategory() === 'distance'"></tf-distance-performance-picker>
             <tf-points-performance-picker ng-model="activity.performance" ng-if="getCategory() === 'points'"></tf-points-performance-picker>
         </div>
-        <div class="row">
-            <div class="col-xs-9">
-                <div class="form-group">
-                    <label for="date" translate="COMMON.DATE"></label>
+        <div class="form-group">
+            <label for="date" translate="COMMON.DATE"></label>
+            <div class="row">
+                <div class="col-xs-9">
                     <div class="input-group">
                         <input type="text" id="date" class="form-control" uib-datepicker-popup="{{datepicker.activityDateFormat}}" ng-model="datepicker.activityDate" is-open="datepicker.popup.opened" max-date="datepicker.maxDate" datepicker-options="datepicker.dateOptions" ng-required="true" close-text="{{'COMMON.CANCEL' | translate}}" />
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="datepicker.popup.opened = true"><i class="glyphicon glyphicon-calendar"></i></button>
-                        </span>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="datepicker.popup.opened = true"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
                     </div>
                 </div>
-            </div>
-            <div class="col-xs-3">
-                <div class="form-group">
-                    <uib-timepicker id="time" class="pull-right" ng-model="datepicker.activityDate" hour-step="1" minute-step="1" show-meridian="false"></uib-timepicker>
+                <div class="col-xs-3">
+                    <div class="form-group">
+                        <uib-timepicker id="time" class="pull-right" ng-model="datepicker.activityDate" hour-step="1" minute-step="1" show-meridian="false" show-spinners="false"></uib-timepicker>
+                    </div>
                 </div>
             </div>
         </div>
@@ -49,7 +49,7 @@
         </div>
         <div class="checkbox">
             <label>
-                <input type="checkbox" value="activity.isPrivate">
+                <input type="checkbox" ng-model="activity.isPrivate">
                 {{'COMMON.PRIVATE' | translate}}
             </label>
         </div>

@@ -124,8 +124,8 @@ exports.post = function(req, res) {
 			location: req.body.location || null,
 			competition: req.body.competition || null,
 			notes: req.body.notes || null,
-			isPrivate: req.body.isPrivate || false,
-            isOutdoor: req.body.isOutoor || false
+			isPrivate: typeof req.body.isPrivate !== 'undefined' ? req.body.isPrivate : false,
+            isOutdoor: typeof req.body.isOutdoor !== 'undefined' ? req.body.isOutdoor : false
 		};
 		var activity = new Activity(activityData),
 		    errors = activity.checkValid();

@@ -1,7 +1,7 @@
 (function (angular) {
     angular.module('trafie')
-    .provider('ActivityResource', [function () {
-        this.$get = ['$resource', function ($resource) {
+    .provider('ActivityResource', function () {
+        this.$get = function ($resource) {
             return $resource('/users/:userId/activities/:_id', {userId: "@userId", _id: "@_id"}, {
                 update: {
                     method: "PUT"
@@ -11,8 +11,8 @@
                     isArray: true
                 }
             });
-        }];
-    }])
+        };
+    })
     .factory("Activity", function (ActivityResource, userService, DISCIPLINE_CATEGORIES) {
         var currentUser = null;
         userService.loadCurrentUser().then(function(user) {
@@ -21,7 +21,8 @@
 
         function Activity(activityData) {
             activityData = activityData || {};
-            this.userId = angular.isDefined(activityData.userId) ? activityData.userId : currentUser._id;
+            this._id = activityData._id || null;
+            this.userId = angular.isDefined(activityData.userId) ? activityData.userId : currentUser && currentUser._id || '';
             this.discipline = angular.isDefined(activityData.discipline) ? activityData.discipline : '';
             this.performance = angular.isDefined(activityData.performance) ? activityData.performance : null;
             this.date = angular.isDefined(activityData.date) ? activityData.date : moment().unix();
@@ -32,19 +33,12 @@
             this.isPrivate = angular.isDefined(activityData.isPrivate) ? activityData.isPrivate : false;
             this.type = angular.isDefined(activityData.type) ? activityData.type : 'competition';
             this.isOutdoor = angular.isDefined(activityData.isOutdoor) ? activityData.isOutdoor : false;
-            this._private = {
-                readablePerformance: '',
-                disciplineCategory: ''
-            };
-            this._setReadablePerformance();
-            this._setDisciplineCategory();
         }
 
         Activity = angular.extend(Activity, ActivityResource);
-
         Activity.prototype = new ActivityResource();
 
-        Activity.prototype._setDisciplineCategory = function() {
+        Activity.prototype._getDisciplineCategory = function() {
             if(DISCIPLINE_CATEGORIES.time.indexOf(this.discipline) >= 0) {
                 return 'time';
             }
@@ -56,9 +50,9 @@
             }
         };
 
-        Activity.prototype._setReadablePerformance = function() {
+        Activity.prototype.getReadablePerformance = function() {
             var performance = '';
-            switch(this._private.disciplineCategory) {
+            switch(this._getDisciplineCategory()) {
                 case 'time':
                     var viewPerformance = [];
                     viewPerformance.push(Math.floor(this.performance / 360000));
@@ -66,7 +60,7 @@
                     viewPerformance.push(Math.floor(performanceNoHours / 6000));
                     var performanceNoMinutes = performanceNoHours - viewPerformance[1] * 6000;
                     viewPerformance.push(Math.floor(performanceNoMinutes / 100));
-                    viewPerformance.push(performanceNoMinutes - seconds * 100);
+                    viewPerformance.push(performanceNoMinutes - viewPerformance[2] * 100);
 
                     var filtering = true;
                     viewPerformance = viewPerformance
@@ -90,16 +84,7 @@
                     performance = '' + this.performance;
                     break;
             }
-            this._private.readablePerformance = performance;
-        };
-
-        Activity.prototype._updatePrivate = function() {
-            this._setDisciplineCategory();
-            this._setReadablePerformance();
-        };
-
-        Activity.prototype.getReadablePerformance = function() {
-            return this._private.readablePerformance;
+            return performance;
         };
 
         return Activity;
