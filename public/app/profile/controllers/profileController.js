@@ -14,7 +14,9 @@
                 $scope.loadError = true;
             }
 
-            userService.loadCurrentUser().then(function(currentUser) {
+            userService.loadCurrentUser().then(getProfileFromUrl, getProfileFromUrl);
+
+            function getProfileFromUrl(currentUser) {
                 $scope.currentUser = currentUser;
                 if (!('userIdentifier' in $routeParams)) {
                     if(currentUser) {
@@ -27,7 +29,7 @@
                         $scope.profileFound = false;
                     }, loadError);
                 }
-            });
+            }
 
             function loadProfile(user) {
                 $scope.ownProfile = $scope.currentUser && $scope.currentUser._id === user._id;
@@ -41,7 +43,6 @@
             }
 
             $scope.deleteActivity = function(activity) {
-                console.log(activity);
                 activity.$delete()
                 .then(function() {
                     var deletedActivityIndex = index = -1;

@@ -107,7 +107,7 @@ accessHelper.validateAccess = function(user, profileId) {
 	function handlePrivacy(profileData) {
 		// If the profile requested is a private profile and the user who tries to access it
 		// is not the user who owns it
-		if (profileData.private && (!userData || profileData._id.toString() !== userData._id.toString())) {
+		if (profileData.isPrivate && (!userData || profileData._id.toString() !== userData._id.toString())) {
 			// Deny access
 			response.error = 'profile_not_valid';
 			defer.resolve(response);
