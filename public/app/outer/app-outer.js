@@ -19,6 +19,10 @@
             .when('/reset-password-request', {
                 templateUrl: '/app/outer/views/reset-password-request.html',
                 controller: 'ResetPasswordRequestController'
+            })
+            .when('/validate-email/:hash', {
+                templateUrl: '/app/outer/views/validate-email.html',
+                controller: 'ValidateEmailController'
             });
     });
 })(angular);

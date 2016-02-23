@@ -185,6 +185,7 @@ trafie.post('/authorize', oAuth.authorize);
  * Validate - GET
  * Validates the newly created user
  */
+trafie.get('/validate-email/:hash', index.getOuterView);
 trafie.get('/validate/:hash', emailValidation.validate);
 
 /**

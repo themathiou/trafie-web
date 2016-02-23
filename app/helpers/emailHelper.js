@@ -18,7 +18,7 @@ var emailHelper = {
         message.html = '<h2>Hello ' + firstName + ' ' + lastName + '</h2>' +
             '<p>You have successfully registered to trafie.</p><br><p>The <b><i>trafie</i></b> team</p><br>' +
             'Follow the link to verify your email:<br>' +
-            '<a href="' + host + '/validate/' + hash + '">This is the link</a>';
+            '<a href="' + host + '/validate-email/' + hash + '">This is the link</a>';
 
         transporter.sendMail(message, function(error) {
             if (error) {
