@@ -1,6 +1,6 @@
 (function(angular) {
     angular.module('trafie')
-    .controller('AppController', function($translate, userService, $uibModal) {
+    .controller('AppController', function($translate, userService, $uibModal, $rootScope) {
         self = this;
         self.user = null;
         userService.loadCurrentUser().then(function(user) {
@@ -22,8 +22,8 @@
                 }
             });
 
-            modalInstance.result.then(function () {
-
+            modalInstance.result.then(function (activity) {
+                $rootScope.$broadcast('activityCreated', activity);
             }, function () {
 
             });

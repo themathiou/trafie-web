@@ -44,7 +44,7 @@ angular.module('trafie')
                     message: $filter('translate')('PROFILE.THE_ACTIVITY_WAS_CREATED_SUCCESSFULLY'),
                     classes: 'alert-success'
                 });
-                $uibModalInstance.close();
+                $uibModalInstance.close(res);
             }, function(res) {
                 $scope.saving = false;
             });
