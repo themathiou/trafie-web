@@ -399,6 +399,10 @@
     "THE_ACTIVITY_WAS_CREATED_SUCCESSFULLY": {
       "en": "The activity was created successfully",
       "el": "Η δραστηριότητα δημιουργήθηκε με επιτυχία"
+    },
+    "PROFILE_NOT_FOUND": {
+      "en": "Profile not found",
+      "el": "Το προφίλ δε βρέθηκε"
     }
   },
   "SETTINGS": {
