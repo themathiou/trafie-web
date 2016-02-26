@@ -1,11 +1,23 @@
 'use strict';
 
+var redisHost = '',
+    redisPort = '',
+    redisPassword = '';
+
+if(typeof process.env.REDIS_URL === 'string') {
+    var urlParts = url.split(process.env.REDIS_URL);
+    redisPassword = urlParts[0].split(':').pop();
+    urlParts = urlParts[1].split(':');
+    redisHost = urlParts[0];
+    redisPort = urlParts[1];
+}
+
 const db = {
     production : {
         redis: {
-            host: "ec2-54-217-234-142.eu-west-1.compute.amazonaws.com",
-            port: 17199,
-            password: 'pfnv4tdfed5nm6fhashpp4mbt0s'
+            host: redisHost,
+            port: redisPort,
+            password: redisPassword
         },
         mongo: {
             url: process.env.MONGOHQ_URL
