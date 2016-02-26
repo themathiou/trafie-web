@@ -5,7 +5,7 @@ var redisHost = '',
     redisPassword = '';
 
 if(typeof process.env.REDIS_URL === 'string') {
-    var urlParts = url.split(process.env.REDIS_URL);
+    var urlParts = process.env.REDIS_URL.split('@');
     redisPassword = urlParts[0].split(':').pop();
     urlParts = urlParts[1].split(':');
     redisHost = urlParts[0];
