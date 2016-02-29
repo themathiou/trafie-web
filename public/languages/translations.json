@@ -380,6 +380,14 @@
       "en": "Notes",
       "el": "Σημειώσεις"
     },
+    "INDOOR": {
+      "en": "Indoor",
+      "el": "Κλειστός στίβος"
+    },
+    "OUTDOOR": {
+      "en": "Outdoor",
+      "el": "Ανοιχτός στίβος"
+    },
     "PERFORMANCE": {
       "en": "Performance",
       "el": "Επίδοση"
