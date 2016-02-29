@@ -194,6 +194,14 @@
     }
   },
   "COMMON": {
+    "YES": {
+      "en": "Yes",
+      "el": "Ναι"
+    },
+    "NO": {
+      "en": "No",
+      "el": "Όχι"
+    },
     "DISCIPLINE": {
       "en": "Discipline",
       "el": "Αγώνισμα"
@@ -400,6 +408,10 @@
       "en": "Date is required",
       "el": "Η ημερομηνία είναι υποχρεωτική"
     },
+    "DELETE_ACTIVITY": {
+      "en": "Delete activity",
+      "el": "Διαγραφή δραστηριότητας"
+    },
     "THE_ACTIVITY_WAS_CREATED_SUCCESSFULLY": {
       "en": "The activity was created successfully",
       "el": "Η δραστηριότητα δημιουργήθηκε με επιτυχία"
@@ -407,6 +419,10 @@
     "THE_ACTIVITY_WAS_UPDATED_SUCCESSFULLY": {
       "en": "The activity was updated successfully",
       "el": "Η δραστηριότητα τροποποιήθηκε με επιτυχία"
+    },
+    "ARE_YOU_SURE_YOU_WANT_TO_DELETE_THIS_ACTIVITY": {
+      "en": "Are you sure you want to delete this activity?",
+      "el": "Είστε σίγουροι πως θέλετε να διαγράψετε αυτή τη δραστηριότητα;"
     },
     "PROFILE_NOT_FOUND": {
       "en": "Profile not found",

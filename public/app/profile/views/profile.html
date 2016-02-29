@@ -36,7 +36,10 @@
                         <span class="col-xs-9"><h4>{{activity.getReadablePerformance()}} <small class="text-muted" translate="{{'DISCIPLINES.' + activity.discipline.toUpperCase()}}"></small></h4></span>
                         <span class="col-xs-3 text-right" ng-if="ownProfile">
                             <a href="javascript:;" ng-click="App.openActivityEditorModal(activity)" title="{{'COMMON.EDIT' | translate}}"><i class="glyphicon glyphicon-edit text-warning" aria-hidden="true"></i></a>
-                            | <a href="javascript:;" ng-click="deleteActivity(activity)" title="{{'COMMON.DELETE' | translate}}"><i class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></i></a>
+                            |
+                            <a href="javascript:;" ng-click="deleteActivity(activity)" title="{{'COMMON.DELETE' | translate}}" confirm="{{'PROFILE.ARE_YOU_SURE_YOU_WANT_TO_DELETE_THIS_ACTIVITY' | translate}}" confirm-title="{{'PROFILE.DELETE_ACTIVITY' | translate}}" confirm-ok="{{'COMMON.YES' | translate}}" confirm-cancel="{{'COMMON.CANCEL' | translate}}" confirm-settings="{size: 'sm'}">
+                                <i class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></i>
+                            </a>
                         </span>
                         <div class="col-xs-12">{{activity.competition}}</div>
                         <div class="col-xs-12">{{formatUnixTimestamp(activity.date)}}</div>
