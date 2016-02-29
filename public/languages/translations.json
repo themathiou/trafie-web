@@ -435,6 +435,10 @@
     "HIDE_DETAILS": {
       "en": "Hide details",
       "el": "Απόκρυψη λεπτομερειών"
+    },
+    "FILTERS": {
+      "en": "Filters",
+      "el": "Φίλτρα"
     }
   },
   "SETTINGS": {
