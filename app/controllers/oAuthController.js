@@ -1,10 +1,10 @@
 // Load required packages
 var oauth2orize = require('oauth2orize'),
 	passport = require('passport'),
-	User = require('../models/user'),
-    userHelper = require('../helpers/userHelper.js'),
-	Client = require('../models/client'),
-	Token = require('../models/token'),
+	User = require('../models/userModel'),
+    userHelper = require('../helpers/userHelper'),
+	Client = require('../models/clientModel'),
+	Token = require('../models/tokenModel'),
 	crypto = require('crypto');
 
 // Create OAuth 2.0 server

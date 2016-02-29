@@ -1,14 +1,14 @@
 'use strict';
 
 // Loading models
-var Profile = require('../models/profile.js'),
-    User = require('../models/user.js');
+var Profile = require('../models/profileModel'),
+    User = require('../models/userModel');
 // Loading helpers
-var accessHelper = require('../helpers/accessHelper.js'),
-	profileHelper = require('../helpers/profileHelper.js'),
-    userHelper = require('../helpers/userHelper.js');
+var accessHelper = require('../helpers/accessHelper'),
+	profileHelper = require('../helpers/profileHelper'),
+    userHelper = require('../helpers/userHelper');
 // Get the config file
-const config = require('../config/constantConfig.js');
+const config = require('../config/constantConfig');
 const SEARCH_RESULTS_LENGTH = 10;
 
 /**

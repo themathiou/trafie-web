@@ -1,11 +1,11 @@
 'use strict';
 
 // Loading models
-const Profile = require('../models/profile.js'),
-	Activity = require('../models/activity.js');
+const Profile = require('../models/profileModel'),
+	Activity = require('../models/activityModel');
 
 // Loading helpers
-const accessHelper = require('../helpers/accessHelper.js');
+const accessHelper = require('../helpers/accessHelper');
 
 /**
  * Disciplines - GET

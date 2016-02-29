@@ -1,8 +1,8 @@
 'use strict';
 
-const Profile = require('../models/profile.js'),
-	User = require('../models/user.js');
-const emailHelper = require('../helpers/emailHelper.js');
+const Profile = require('../models/profileModel'),
+	User = require('../models/userModel');
+const emailHelper = require('../helpers/emailHelper');
 
 /**
  * Feedback - POST

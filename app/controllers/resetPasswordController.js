@@ -1,14 +1,14 @@
 'use strict';
 
 // Loading models
-var User = require('../models/user.js'),
-	Profile = require('../models/profile.js'),
-	UserHashes = require('../models/userHashes.js');
+var User = require('../models/userModel'),
+	Profile = require('../models/profileModel'),
+	UserHashes = require('../models/userHashesModel');
 
 // Loading helpers
-var profileHelper = require('../helpers/profileHelper.js'),
-	userHelper = require('../helpers/userHelper.js'),
-	emailHelper = require('../helpers/emailHelper.js');
+var profileHelper = require('../helpers/profileHelper'),
+	userHelper = require('../helpers/userHelper'),
+	emailHelper = require('../helpers/emailHelper');
 
 
 exports.request = {};

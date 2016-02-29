@@ -5,12 +5,12 @@ const passport = require('passport'),
     BearerStrategy = require('passport-http-bearer').Strategy,
     crypto = require('crypto');
 
-var userHelper = require('../helpers/userHelper.js');
+var userHelper = require('../helpers/userHelper');
 
 // Loading models
-var User = require('../models/user'),
-    Token = require('../models/token'),
-    Client = require('../models/client');
+var User = require('../models/userModel'),
+    Token = require('../models/tokenModel'),
+    Client = require('../models/clientModel');
 
 passport.serializeUser(function(user, done) {
     done(null, user);

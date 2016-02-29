@@ -1,9 +1,9 @@
 'use strict';
 
 // Loading models
-var Profile = require('../models/profile.js'),
+var Profile = require('../models/profileModel'),
 	q = require('q'),
-	sessions = require('../config/sessionsConfig.js');
+	sessions = require('../config/sessionsConfig');
 
 var accessHelper = {};
 

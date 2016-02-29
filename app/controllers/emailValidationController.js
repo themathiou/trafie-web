@@ -1,13 +1,13 @@
 'use strict';
 
 // Loading models
-const User = require('../models/user.js'),
-	Profile = require('../models/profile.js'),
-	UserHashes = require('../models/userHashes.js');
+const User = require('../models/userModel'),
+	Profile = require('../models/profileModel'),
+	UserHashes = require('../models/userHashesModel');
 
 // Loading helpers
-const userHelper = require('../helpers/userHelper.js'),
-    emailHelper = require('../helpers/emailHelper.js');
+const userHelper = require('../helpers/userHelper'),
+    emailHelper = require('../helpers/emailHelper');
 
 /**
  * Validate - GET

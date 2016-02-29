@@ -1,8 +1,5 @@
 'use strict';
 
-var Profile = require('../models/profile.js'),
-	Activity = require('../models/activity.js');
-
 exports.getView = function(req, res) {
     //var angularRoutes = ['/', '/settings'];
 	if (typeof req.user === 'undefined' && req.originalUrl === '/') {

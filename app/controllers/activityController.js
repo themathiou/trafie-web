@@ -1,11 +1,11 @@
 'use strict';
 
 // Loading models
-var Activity = require('../models/activity.js');
+var Activity = require('../models/activityModel');
 
 // Loading helpers
-var accessHelper = require('../helpers/accessHelper.js'),
-	activityHelper = require('../helpers/activityHelper.js');
+var accessHelper = require('../helpers/accessHelper'),
+	activityHelper = require('../helpers/activityHelper');
 
 /**
  * Activities - GET

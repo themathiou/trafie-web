@@ -55,10 +55,10 @@ var index = require('./app/controllers/index'),
     disciplines = require('./app/controllers/disciplineController'),
     emailValidation = require('./app/controllers/emailValidationController'),
     resetPassword = require('./app/controllers/resetPasswordController'),
-    dummyData = require('./app/controllers/dummyDataController'),
-    api = require('./app/controllers/apiController'),
+    //dummyData = require('./app/controllers/dummyDataController'),
+    //api = require('./app/controllers/apiController'),
     feedback = require('./app/controllers/feedbackController'),
-    nuke = require('./app/controllers/nukeController'),
+    //nuke = require('./app/controllers/nukeController'),
     auth = require('./app/controllers/authController'),
     oAuth = require('./app/controllers/oAuthController');
 
@@ -230,20 +230,20 @@ trafie.get('/logout', function( req, res ) {
  * DUMMY DATA                                                                                                                  *
  ******************************************************************************************************************************/
 
-if( trafie.get('env') === 'development' ) {
+/*if( trafie.get('env') === 'development' ) {
     trafie.get('/dummy-data', dummyData.get);
     trafie.post('/dummy-data', dummyData.post);
-}
+}*/
 
 
 /*******************************************************************************************************************************
  * API                                                                                                                         *
  ******************************************************************************************************************************/
 
-if( trafie.get('env') === 'development' ) {
+/*if( trafie.get('env') === 'development' ) {
     trafie.get('/api', api.get);
     trafie.get('/api-table', api.get_view);
-}
+}*/
 
 
 /*******************************************************************************************************************************
@@ -257,9 +257,9 @@ trafie.post('/feedback', feedback.post);
  * NUCLEAR TEST GROUND                                                                                                         *
  ******************************************************************************************************************************/
 
-if( trafie.get('env') === 'development') {
+/*if( trafie.get('env') === 'development') {
     trafie.get('/nuke', nuke.get);
-}
+}*/
 
 
 /*******************************************************************************************************************************

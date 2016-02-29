@@ -74,7 +74,7 @@
             function setActivityCreationListener() {
                 listeners.activityCreated = $rootScope.$on('activityCreated', function(event, activity) {
                     var found = false;
-                    $scope.activities.forEach(function(scopeActivity, index) {
+                    $scope.activities.forEach(function(scopeActivity) {
                         if(scopeActivity._id === activity._id) {
                             for(i in scopeActivity) {
                                 if(scopeActivity.hasOwnProperty(i)) {

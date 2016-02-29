@@ -1,10 +1,10 @@
 'use strict';
 // Loading models
-const User = require('../models/user.js');
+const User = require('../models/userModel');
 
 var crypto = require('crypto'),
     q = require('q');
-const config = require('../config/constantConfig.js');
+const config = require('../config/constantConfig');
 
 var userHelper = {};
 
