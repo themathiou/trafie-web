@@ -9,9 +9,7 @@
             $scope.activities = [];
             $scope.ownProfile = false;
             $scope.currentUser = null;
-            var listeners = {
-
-            };
+            var listeners = {};
 
             function loadError() {
                 $scope.loadError = true;
@@ -75,36 +73,21 @@
 
             function setActivityCreationListener() {
                 listeners.activityCreated = $rootScope.$on('activityCreated', function(event, activity) {
-                    var activityIndex = -1;
+                    var found = false;
                     $scope.activities.forEach(function(scopeActivity, index) {
                         if(scopeActivity._id === activity._id) {
-                            activityIndex = index;
+                            for(i in scopeActivity) {
+                                if(scopeActivity.hasOwnProperty(i)) {
+                                    scopeActivity[i] = activity[i];
+                                }
+                            }
+                            found = true;
                         }
                     });
-                    if(activityIndex !== -1) {
-                        $scope.activities.splice(activityIndex, 1);
+                    if(!found) {
+                        $scope.activities.push(activity);
                     }
-                    $scope.activities = insertAndSort(activity, $scope.activities, 'date');
                 });
-            }
-
-            function insertAndSort(item, arr, attr) {
-                var arrayLength = arr.length,
-                    positionFound = false;
-                for(var i=arrayLength ; i-- ;) {
-                    if(arr[i][attr] <= item[attr]) {
-                        arr[i+1] = arr[i];
-                    }
-                    else {
-                        arr[i+1] = item;
-                        positionFound = true;
-                        break;
-                    }
-                }
-                if(!positionFound) {
-                    arr[0] = item;
-                }
-                return arr;
             }
 
             $scope.$on('$destroy', function() {

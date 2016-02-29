@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div class="col-md-9">
-                <div class="panel panel-default"  ng-repeat="activity in activities">
+                <div class="panel panel-default"  ng-repeat="activity in activities | orderBy:'-date'">
                     <div class="panel-body">
                         <span class="col-xs-9"><b>{{activity.getReadablePerformance()}}</b>  <span class="text-muted" translate="{{'DISCIPLINES.' + activity.discipline.toUpperCase()}}"></span></span>
                         <span class="col-xs-3 text-right" ng-if="ownProfile">
