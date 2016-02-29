@@ -294,6 +294,10 @@
       "en": "Edit",
       "el": "Επεξεργασία"
     },
+    "DELETE": {
+      "en": "Delete",
+      "el": "Διαγραφή"
+    },
     "LOGOUT": {
       "en": "Logout",
       "el": "Έξοδος"
@@ -403,6 +407,14 @@
     "PROFILE_NOT_FOUND": {
       "en": "Profile not found",
       "el": "Το προφίλ δε βρέθηκε"
+    },
+    "SHOW_DETAILS": {
+      "en": "Show details",
+      "el": "Εμφάνιση λεπτομερειών"
+    },
+    "HIDE_DETAILS": {
+      "en": "Hide details",
+      "el": "Απόκρυψη λεπτομερειών"
     }
   },
   "SETTINGS": {

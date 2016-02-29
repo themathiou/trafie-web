@@ -33,20 +33,27 @@
             <div class="col-md-9">
                 <div class="panel panel-default"  ng-repeat="activity in activities | orderBy:'-date'">
                     <div class="panel-body">
-                        <span class="col-xs-9"><b>{{activity.getReadablePerformance()}}</b>  <span class="text-muted" translate="{{'DISCIPLINES.' + activity.discipline.toUpperCase()}}"></span></span>
+                        <span class="col-xs-9"><h4>{{activity.getReadablePerformance()}} <small class="text-muted" translate="{{'DISCIPLINES.' + activity.discipline.toUpperCase()}}"></small></h4></span>
                         <span class="col-xs-3 text-right" ng-if="ownProfile">
-                            <a href="javascript:;" ng-click="App.openActivityEditorModal(activity)"><i class="glyphicon glyphicon-edit text-warning" aria-hidden="true"></i></a>
-                            | <a href="javascript:;" ng-click="deleteActivity(activity)"><i class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></i></a>
+                            <a href="javascript:;" ng-click="App.openActivityEditorModal(activity)" title="{{'COMMON.EDIT' | translate}}"><i class="glyphicon glyphicon-edit text-warning" aria-hidden="true"></i></a>
+                            | <a href="javascript:;" ng-click="deleteActivity(activity)" title="{{'COMMON.DELETE' | translate}}"><i class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></i></a>
                         </span>
                         <div class="col-xs-12">{{activity.competition}}</div>
                         <div class="col-xs-12">{{formatUnixTimestamp(activity.date)}}</div>
-                        <div class="col-xs-12" ng-click="isCollapsed = !isCollapsed">Details</div>
-                        <div class="col-xs-12" uib-collapse="!isCollapsed">
-                            <dl>
-                              <dt>Rank</dt><dd>{{activity.rank}}</dd>
-                              <dt>Location</dt><dd>{{activity.location}}</dd>
-                              <dt>Notes</dt><dd>{{activity.notes}}</dd>
-                            </dl>
+                        <a href="javascript:;" ng-show="activity.rank || activity.location || activity.notes" class="col-xs-12" ng-init="isCollapsed = true" ng-click="isCollapsed = !isCollapsed">{{(isCollapsed ? 'PROFILE.SHOW_DETAILS' : 'PROFILE.HIDE_DETAILS') | translate}}</a>
+                        <div class="col-xs-12" uib-collapse="isCollapsed">
+                            <div ng-if="activity.rank">
+                                <b translate="PROFILE.RANK"></b>:
+                                <span>{{activity.rank}}</span>
+                            </div>
+                            <div ng-if="activity.location">
+                                <b translate="PROFILE.LOCATION"></b>:
+                                <span>{{activity.location}}</span>
+                            </div>
+                            <div ng-if="activity.notes">
+                                <b translate="PROFILE.NOTES"></b>:
+                                <span>{{activity.notes}}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
