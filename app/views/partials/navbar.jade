@@ -19,5 +19,5 @@ nav.navbar.navbar-default.navbar-fixed-top
                         .input-group
                             input.form-control(type="text" placeholder="{{'COMMON.SEARCH' | translate}}" ng-model="App.profileResult" uib-typeahead="user as (user.firstName + ' ' + user.lastName) for user in App.searchUsers($viewValue)")
                             span.input-group-btn
-                                button.btn.btn-default(type="submit")
+                                button.btn.btn-default(type="submit" ng-click="App.goToUser()")
                                     i.glyphicon.glyphicon-search

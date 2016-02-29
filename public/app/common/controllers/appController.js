@@ -40,12 +40,14 @@
             });
         };
 
+        self.goToUser = function() {
+            if(self.profileResult && angular.isObject(self.profileResult)) {
+                $location.path('/' + (self.profileResult.username || self.profileResult._id));
+            }
+        };
+
         $scope.$watch(function() {
             return self.profileResult;
-        }, function(user) {
-            if(user && angular.isObject(user)) {
-                $location.path('/' + (user.username || user._id));
-            }
-        });
+        }, self.goToUser);
     });
 })(angular);
