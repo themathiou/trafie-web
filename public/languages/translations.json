@@ -404,6 +404,10 @@
       "en": "The activity was created successfully",
       "el": "Η δραστηριότητα δημιουργήθηκε με επιτυχία"
     },
+    "THE_ACTIVITY_WAS_UPDATED_SUCCESSFULLY": {
+      "en": "The activity was updated successfully",
+      "el": "Η δραστηριότητα τροποποιήθηκε με επιτυχία"
+    },
     "PROFILE_NOT_FOUND": {
       "en": "Profile not found",
       "el": "Το προφίλ δε βρέθηκε"

@@ -41,7 +41,7 @@ angular.module('trafie')
             promise.then(function(res) {
                 $scope.saving = false;
                 notify({
-                    message: $filter('translate')('PROFILE.THE_ACTIVITY_WAS_CREATED_SUCCESSFULLY'),
+                    message: $filter('translate')($scope.isNewActivity ? 'PROFILE.THE_ACTIVITY_WAS_CREATED_SUCCESSFULLY' : 'PROFILE.THE_ACTIVITY_WAS_UPDATED_SUCCESSFULLY'),
                     classes: 'alert-success'
                 });
                 $uibModalInstance.close(res);
