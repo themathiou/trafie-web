@@ -1,6 +1,6 @@
 (function(angular) {
     angular.module('trafie')
-    .controller('AppController', function($translate, userService, $uibModal, $rootScope) {
+    .controller('AppController', function($translate, $location, userService, $uibModal, $rootScope, $http, $scope) {
         self = this;
         self.user = null;
         userService.loadCurrentUser().then(function(user) {
@@ -28,5 +28,24 @@
 
             });
         };
+
+        // @TODO: Different page for search results, triggered by the magnifying glass
+        self.searchUsers = function(val) {
+            return $http.get('/users', {
+                params: {
+                    keywords: val
+                }
+            }).then(function(response) {
+                return response.data;
+            });
+        };
+
+        $scope.$watch(function() {
+            return self.profileResult;
+        }, function(user) {
+            if(user && angular.isObject(user)) {
+                $location.path('/' + (user.username || user._id));
+            }
+        });
     });
 })(angular);
