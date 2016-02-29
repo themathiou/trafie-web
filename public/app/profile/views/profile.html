@@ -42,7 +42,7 @@
                         <div class="col-xs-12">{{formatUnixTimestamp(activity.date)}}</div>
                         <a href="javascript:;" ng-show="activity.rank || activity.location || activity.notes" class="col-xs-12" ng-init="isCollapsed = true" ng-click="isCollapsed = !isCollapsed">{{(isCollapsed ? 'PROFILE.SHOW_DETAILS' : 'PROFILE.HIDE_DETAILS') | translate}}</a>
                         <div class="col-xs-12" uib-collapse="isCollapsed">
-                            <div ng-if="activity.rank">
+                            <div ng-if="activity.rank">`
                                 <b translate="PROFILE.RANK"></b>:
                                 <span>{{activity.rank}}</span>
                             </div>
