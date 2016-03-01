@@ -220,9 +220,9 @@ trafie.post('/reset-password/:hash', resetPassword.post);
 /**
  * Logout - GET
  */
-trafie.get('/logout', function( req, res ) {
-    req.session.destroy();
-    res.redirect('/');
+trafie.get('/logout', function(req, res) {
+    req.logout();
+    res.json(null);
 });
 
 
