@@ -6,7 +6,7 @@ var crypto = require('crypto'),
     q = require('q');
 const config = require('../config/constantConfig');
 
-var userHelper = {};
+var userHelper = require('../helpers/userHelper');
 
 
 /**
@@ -16,7 +16,6 @@ var userHelper = {};
 userHelper.encryptPassword = function(password) {
 	var sha512Hash = crypto.createHash('sha512');
 	sha512Hash.update('23tR@Ck@nDF!3lD04' + password);
-
 	// Return the encrypted password
 	return sha512Hash.digest('hex');
 };

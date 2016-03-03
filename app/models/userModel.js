@@ -47,9 +47,9 @@ userSchema.findOne = function( where, select ) {
  * @param string userId
  * @param string password
  */
-userSchema.resetPassword = function( userId, password ) {
+userSchema.resetPassword = function(userId, password) {
 	var d = q.defer();
-	password = userHelper.encryptPassword( password );
+	password = userHelper.encryptPassword(password);
 	User.findByIdAndUpdate( userId, { password: password }, '', function ( err, user ) {
 		if(err) d.reject(err);
 		d.resolve(user);
@@ -61,9 +61,9 @@ userSchema.resetPassword = function( userId, password ) {
  * Checks if the email exists in the database
  * @param email
  */
-userSchema.emailIsUnique = function( email ) {
+userSchema.emailIsUnique = function(email) {
 	var d = q.defer();
-	User.findOne({'email': email}, '_id', function ( err, user ) {
+	User.findOne({'email': email}, '_id', function (err, user) {
 		if(err) d.reject(err);
 		d.resolve(!user);
 	});

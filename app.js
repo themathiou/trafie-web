@@ -201,10 +201,10 @@ trafie.get('/api/resend-validation-email', passport.authenticate('bearer', { ses
  ******************************************************************************************************************************/
 
 // Reset Password Request - GET
-trafie.get('/reset-password-request', index.getOuterView );
+trafie.get('/reset-password-request', index.getOuterView);
 
 // Reset Password Request - GET
-trafie.post('/reset-password-request', resetPassword.request.post );
+trafie.post('/reset-password-request', resetPassword.request.post);
 
 // Reset Password - GET
 trafie.get('/reset-password/:hash', index.getOuterView);
