@@ -31,13 +31,13 @@ server.exchange(oauth2orize.exchange.password(function (client, email, password,
             var token = uid(256);
             var refreshToken = uid(256);
  
-            var expirationDate = new Date(new Date().getTime() + (24 * 3600 * 1));
+            var expirationDate = new Date(new Date().getTime() + (24 * 3600 * 1000));
             var tokenObject = {value: token, expirationDate: expirationDate, clientId: client.id, userId: user._id, scope: 0};
 
             var tokenObj = new Token(tokenObject);
             tokenObj.save(function (err) {
                 if (err) return callback(err);
-                var refreshTokenObj = new Token({value: refreshToken, clientId: client.id, userId: user._id, scope: 0});
+                var refreshTokenObj = new Token({value: refreshToken, clientId: client.id, userId: user._id, scope: 0, refresh: true});
                 refreshTokenObj.save(function (err) {
                     if (err) return callback(err);
                     callback(null, token, refreshToken, {expires_in: expirationDate, user_id: user._id});
@@ -66,7 +66,7 @@ server.exchange(oauth2orize.exchange.refreshToken(function (client, refreshToken
         Token.update({userId: token.userId}, {$set: {value: accessTokenHash, scope: scope, expirationDate: expirationDate}}, function (err) {
             if (err) return callback(err);
             callback(null, newAccessToken, refreshToken, {expires_in: expirationDate});
-        })
+        });
     })
 }));
 

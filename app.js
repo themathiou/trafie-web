@@ -221,6 +221,9 @@ trafie.post('/reset-password/:hash', resetPassword.post);
  * Logout - GET
  */
 trafie.get('/logout', function(req, res) {
+    if(req.headers.hasOwnProperty('authorization')) {
+        console.log(req.headers.authorization);
+    }
     req.logout();
     res.json(null);
 });

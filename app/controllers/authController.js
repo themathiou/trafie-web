@@ -50,7 +50,7 @@ passport.use('client-basic', new BasicStrategy(
             if (err) { return callback(err); }
 
             // No client found with that id or bad password
-            if (!client || client.secret !== clientSecret) { return callback(null, false); }
+            if (!client || client.secret !== Client.schema.hashSecret(clientSecret)) { return callback(null, false); }
 
             // Success
             return callback(null, client);
@@ -64,7 +64,7 @@ passport.use('client-password', new ClientPasswordStrategy(
             if (err) { return callback(err); }
 
             // No client found with that id or bad password
-            if (!client || client.secret !== clientSecret) { return callback(null, false); }
+            if (!client || client.secret !== Client.schema.hashSecret(clientSecret)) { return callback(null, false); }
 
             // Success
             return callback(null, client);
@@ -77,7 +77,7 @@ passport.use(new BearerStrategy(
     function(accessToken, callback) {
         var hashedToken = crypto.createHash('sha512').update('23tR@Ck@nDF!3lD04T0k3N' + accessToken).digest('hex');
 
-        Token.findOne({value: hashedToken }, function (err, token) {
+        Token.findOne({value: hashedToken, expirationDate: {$gte: new Date()}}, function (err, token) {
             if (err) { return callback(err); }
 
             // No token found
@@ -97,6 +97,5 @@ passport.use(new BearerStrategy(
 ));
 
 
-//exports.isAuthenticated = passport.authenticate(['bearer']);
 exports.isClientAuthenticated = passport.authenticate('client-basic', { session : false });
 exports.isBearerAuthenticated = passport.authenticate('bearer', { session: false });
