@@ -216,5 +216,4 @@ exports.delete = function(req, res) {
 			res.status(500).json(null);
 		});
 	}
-
 };

@@ -53,7 +53,7 @@ exports.post = function(req, res) {
 		});
 	}
 
-	if (typeof req.body.feedback_text !== 'undefined') {
+	if (typeof req.body.feedbackText !== 'undefined') {
 		let user_data_text = '';
 		if (typeof req.session.userId !== 'undefined') {
 			User.schema.findOne({
@@ -79,8 +79,6 @@ exports.post = function(req, res) {
 			send_email();
 		}
 	} else {
-		res.status(500).json({
-			'success': false
-		});
+		res.status(422).json();
 	}
 };

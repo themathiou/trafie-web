@@ -49,6 +49,7 @@ var passportSessions = require('./app/config/sessionsConfig');
 // Initialize the routes
 var index = require('./app/controllers/index'),
     login = require('./app/controllers/loginController'),
+    logout = require('./app/controllers/logoutController'),
     register = require('./app/controllers/registerController'),
     profile = require('./app/controllers/profileController'),
     activities = require('./app/controllers/activityController'),
@@ -220,13 +221,7 @@ trafie.post('/reset-password/:hash', resetPassword.post);
 /**
  * Logout - GET
  */
-trafie.get('/logout', function(req, res) {
-    if(req.headers.hasOwnProperty('authorization')) {
-        console.log(req.headers.authorization);
-    }
-    req.logout();
-    res.json(null);
-});
+trafie.get('/logout', logout.get);
 
 
 /*******************************************************************************************************************************
