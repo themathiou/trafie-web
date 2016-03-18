@@ -30,7 +30,6 @@ exports.post = function(req, res) {
         .then(function() {
             res.json(null);
         }, function(err) {
-            console.log(err)
             res.status(500).json(null);
         });
 
