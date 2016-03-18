@@ -447,6 +447,10 @@
     "FILTERS": {
       "en": "Filters",
       "el": "Φίλτρα"
+    },
+    "TERMS_OF_SERVICE": {
+      "en": "Terms of service",
+      "el": "Όροι χρήσης"
     }
   },
   "SETTINGS": {
@@ -569,6 +573,54 @@
     "ERROR_OCCURRED": {
       "en": "There was an error while updating your settings. Please try again.",
       "el": "Υπήρξε πρόβλημα κατά την αποθήκευση των ρυθμίσεων. Παρακαλούμε προσπαθήστε πάλι."
+    }
+  },
+  "FEEDBACK": {
+    "FEEDBACK": {
+      "en": "Feedback",
+      "el": "Επικοινωνία"
+    },
+    "FEEDBACK_TYPE": {
+      "en": "Feedback type",
+      "el": "Τύπος μηνύματος"
+    },
+    "LET_US_HEAR_FROM_YOU": {
+      "en": "Let us hear from you",
+      "el": "Πείτε μας τη γνώμη σας"
+    },
+    "COMMENT": {
+      "en": "Comment",
+      "el": "Σχόλιο"
+    },
+    "BUG": {
+      "en": "Bug",
+      "el": "Πρόβλημα"
+    },
+    "FEATURE_REQUEST": {
+      "en": "Feature request",
+      "el": "Νέα λειτουργικότητα"
+    },
+    "WRITE_YOUR_FEEDBACK_HERE": {
+      "en": "Write your feedback here",
+      "el": "Γράψτε εδώ το μήνυμά σας"
+    },
+    "THANK_YOU_YOUR_FEEDBACK_HAS_BEEN_SENT": {
+      "en": "Thank you! Your feedback has been sent!",
+      "el": "Ευχαριστούμε! Το μήνυμά σας στάλθηκε!"
+    },
+    "SEND": {
+      "en": "Send",
+      "el": "Αποστολή"
+    },
+    "SENDING": {
+      "en": "Sending",
+      "el": "Αποστέλεται"
+    }
+  },
+  "ABOUT": {
+    "ABOUT": {
+      "en": "About",
+      "el": "Σχετικά"
     }
   },
   "OUTER": {

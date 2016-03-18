@@ -5,11 +5,17 @@
         $locationProvider.html5Mode(true);
         $routeProvider
             .when('/settings', {
-                templateUrl: '/app/settings/views/settings.html',
+                templateUrl: '/app/settings/views/settingsView.html',
                 controller: 'SettingsController'
             })
+            .when('/terms-of-service', {
+                templateUrl: '/app/common/views/termsOfServiceView.html'
+            })
+            .when('/about', {
+                templateUrl: '/app/common/views/aboutView.html'
+            })
             .when('/:userIdentifier?', {
-                templateUrl: '/app/profile/views/profile.html',
+                templateUrl: '/app/profile/views/profileView.html',
                 controller: 'ProfileController'
             })
             .otherwise({

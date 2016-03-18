@@ -2,12 +2,12 @@
     <div class="jumbotron">
         <div class="container">
             <div class="col-xs-12">
-                    <h2 class="text-center">{{user.firstName + ' ' + user.lastName}}</h2>
-                    <h4 class="text-center" ng-if="user.discipline || user.country">
-                        <span ng-if="user.discipline">{{'DISCIPLINES.' + user.discipline.toUpperCase() | translate}}</span>
-                        <span ng-if="user.discipline && user.country">&bull;</span>
-                        <span ng-if="user.country">{{'COUNTRIES.' + user.country.toUpperCase() | translate}}</span>
-                    </h4>
+                <h2 class="text-center">{{user.firstName + ' ' + user.lastName}}</h2>
+                <h4 class="text-center" ng-if="user.discipline || user.country">
+                    <span ng-if="user.discipline">{{'DISCIPLINES.' + user.discipline.toUpperCase() | translate}}</span>
+                    <span ng-if="user.discipline && user.country">&bull;</span>
+                    <span ng-if="user.country">{{'COUNTRIES.' + user.country.toUpperCase() | translate}}</span>
+                </h4>
             </div>
         </div>
     </div>
@@ -28,6 +28,11 @@
                     <div class="panel-body">
                         {{'PROFILE.FILTERS' | translate}}
                     </div>
+                </div>
+                <div class="col-xs-12 text-muted">
+                    <a href="/terms-of-service" class="text-muted small" translate="PROFILE.TERMS_OF_SERVICE"></a> &bull;
+                    <a href="/about" class="text-muted small" translate="ABOUT.ABOUT"></a> &bull;
+                    <a href="javascript:;" class="text-muted small" translate="FEEDBACK.FEEDBACK" ng-click="showFeedbackModal()"></a>
                 </div>
             </div>
             <div class="col-md-9">

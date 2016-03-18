@@ -1,7 +1,7 @@
 (function(angular) {
     angular.module('trafie')
         .controller('ProfileController', function($rootScope, $scope, $routeParams, $window, Activity,
-                                                  User, userService) {
+                                                  User, userService, $uibModal) {
             $scope.profileFound = true;
             $scope.loading = true;
             $scope.user = null;
@@ -89,6 +89,19 @@
                     }
                 });
             }
+
+            $scope.showFeedbackModal = function (activity) {
+                var modalInstance = $uibModal.open({
+                    animation: true,
+                    templateUrl: 'app/feedback/views/feedbackModalView.html',
+                    controller: 'FeedbackModalController',
+                    size: 'md'
+                });
+
+                modalInstance.result.then(function () {
+                }, function () {
+                });
+            };
 
             $scope.$on('$destroy', function() {
                 if($scope.ownProfile && listeners.hasOwnProperty('activityCreated')) {

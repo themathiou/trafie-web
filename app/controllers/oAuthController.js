@@ -71,7 +71,7 @@ server.exchange(oauth2orize.exchange.refreshToken(function (client, refreshToken
             if (err) return callback(err);
             callback(null, newAccessToken, refreshToken, {expires_in: expirationDate});
         });
-    })
+    });
 }));
 
 function uid (len) {

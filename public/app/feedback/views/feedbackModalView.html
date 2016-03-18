@@ -1,0 +1,25 @@
+<div class="modal-header">
+    <h3 class="modal-title" translate="FEEDBACK.LET_US_HEAR_FROM_YOU"></h3>
+</div>
+<div class="modal-body">
+    <form name="form" method="POST">
+        <div class="form-group">
+            <div>
+                <label translate="FEEDBACK.FEEDBACK_TYPE"></label>
+            </div>
+            <div class="btn-group">
+                <label class="btn btn-primary" ng-model="formData.feedbackType" uib-btn-radio="'comment'">{{'FEEDBACK.COMMENT' | translate}}</label>
+                <label class="btn btn-primary" ng-model="formData.feedbackType" uib-btn-radio="'bug'">{{'FEEDBACK.BUG' | translate}}</label>
+                <label class="btn btn-primary" ng-model="formData.feedbackType" uib-btn-radio="'feature'">{{'FEEDBACK.FEATURE_REQUEST' | translate}}</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label translate="FEEDBACK.WRITE_YOUR_FEEDBACK_HERE"></label>
+            <textarea type="text" class="form-control vertical-resize" ng-model="formData.feedback" required ng-minlength="10"></textarea>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancel()" translate="COMMON.CANCEL"></button>
+    <button class="btn btn-primary" type="button" ng-click="send()" ng-disabled="!form.$valid">{{(sending ? 'FEEDBACK.SENDING' : 'FEEDBACK.SEND') | translate}}</button>
+</div>

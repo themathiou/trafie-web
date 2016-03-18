@@ -5,23 +5,23 @@
         $locationProvider.html5Mode(true);
         $routeProvider
             .when('/login', {
-                templateUrl: '/app/outer/views/login.html',
+                templateUrl: '/app/outer/views/loginView.html',
                 controller: 'LoginController'
             })
             .when('/register', {
-                templateUrl: '/app/outer/views/register.html',
+                templateUrl: '/app/outer/views/registerView.html',
                 controller: 'RegisterController'
             })
             .when('/reset-password/:hash', {
-                templateUrl: '/app/outer/views/reset-password.html',
+                templateUrl: '/app/outer/views/resetPasswordView.html',
                 controller: 'ResetPasswordController'
             })
             .when('/reset-password-request', {
-                templateUrl: '/app/outer/views/reset-password-request.html',
+                templateUrl: '/app/outer/views/resetPasswordRequestView.html',
                 controller: 'ResetPasswordRequestController'
             })
             .when('/validate-email/:hash', {
-                templateUrl: '/app/outer/views/validate-email.html',
+                templateUrl: '/app/outer/views/validateEmailView.html',
                 controller: 'ValidateEmailController'
             });
     });
