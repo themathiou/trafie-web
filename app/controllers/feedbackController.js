@@ -6,6 +6,12 @@ const Feedback = require('../models/feedbackModel');
  * Feedback - POST
  */
 exports.post = function(req, res) {
+    if(!req.user) {
+        passport.authenticate('bearer', function(err, user) {
+            req.user = user;
+        })(req, res);
+    }
+
 	var userId = req.user && req.user._id || null;
     if(!userId) res.status(403).json(null);
 

@@ -248,11 +248,7 @@ trafie.get('/logout', logout.get);
  * FEEDBACK                                                                                                                    *
  ******************************************************************************************************************************/
 
-trafie.post('/feedback', function(req, res, next) {
-    passport.authenticate('bearer', function(err, user, info) {
-        next(err, user, info);
-    })(req, res, next);
-}, feedback.post);
+trafie.post('/feedback', feedback.post);
 
 /*******************************************************************************************************************************
  * NUCLEAR TEST GROUND                                                                                                         *
