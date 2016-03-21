@@ -1,6 +1,7 @@
 'use strict';
 
-const Feedback = require('../models/feedbackModel');
+const Feedback = require('../models/feedbackModel'),
+    passport = require('passport');
 
 /**
  * Feedback - POST

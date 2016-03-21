@@ -17,7 +17,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(user, done) {
-    User.schema.findOne({_id: user._id})
+    User.schema.findOne({_id: user._id}, '_id email')
         .then(function(user) {
             done(null, user);
         })
@@ -31,7 +31,7 @@ passport.use(new LocalStrategy({
         passwordField: 'password'
     },
     function(email, password, done) {
-        User.findOne({ email: email }, function(err, user) {
+        User.findOne({ email: email }, '_id email password', function(err, user) {
             if(err) { return done(err); }
             if(!user) {
                 return done(null, false, { message: 'Incorrect email.' });
@@ -39,6 +39,7 @@ passport.use(new LocalStrategy({
             if(user.password !== userHelper.encryptPassword(password)) {
                 return done(null, false, { message: 'Incorrect password.' });
             }
+            delete user._doc.password;
             return done(null, user);
         });
     }
