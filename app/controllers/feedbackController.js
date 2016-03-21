@@ -10,13 +10,18 @@ exports.post = function(req, res) {
     if(!req.user) {
         passport.authenticate('bearer', function(err, user) {
             req.user = user;
-        })(req, res);
+            saveFeedback(req, res);
+        });
+    } else {
+        saveFeedback(req, res);
     }
+};
 
-	var userId = req.user && req.user._id || null;
+function saveFeedback(req, res) {
+    var userId = req.user && req.user._id || null;
     if(!userId) res.status(403).json(null);
 
-	if (typeof req.body.feedback === 'string' && req.body.feedback.length >= 10 && typeof req.body.feedbackType === 'string') {
+    if (typeof req.body.feedback === 'string' && req.body.feedback.length >= 10 && typeof req.body.feedbackType === 'string') {
         let platform = req.body.hasOwnProperty('platform') ? req.body.platform : 'web',
             userAgent = req.headers.hasOwnProperty('user-agent') ? req.headers['user-agent'] : '',
             osVersion = req.body.hasOwnProperty('osVersion') ? req.body.osVersion : '',
@@ -34,13 +39,13 @@ exports.post = function(req, res) {
 
         let feedback = new Feedback(feedbackData);
         feedback.save()
-        .then(function() {
-            res.json(null);
-        }, function(err) {
-            res.status(500).json(null);
-        });
+            .then(function() {
+                res.json(null);
+            }, function(err) {
+                res.status(500).json(null);
+            });
 
-	} else {
-		res.status(422).json(null);
-	}
-};
+    } else {
+        res.status(422).json(null);
+    }
+}
