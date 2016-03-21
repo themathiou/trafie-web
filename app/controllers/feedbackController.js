@@ -1,6 +1,8 @@
 'use strict';
 
 const Feedback = require('../models/feedbackModel'),
+    auth = require('../controllers/authController'),
+    oAuth = require('../controllers/oAuthController'),
     passport = require('passport');
 
 /**
@@ -9,9 +11,10 @@ const Feedback = require('../models/feedbackModel'),
 exports.post = function(req, res) {
     if(!req.user) {
         passport.authenticate('bearer', function(err, user) {
+            if(err) res.status(500).json(null);
             req.user = user;
             saveFeedback(req, res);
-        });
+        })(req, res);
     } else {
         saveFeedback(req, res);
     }
