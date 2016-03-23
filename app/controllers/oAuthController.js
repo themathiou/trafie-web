@@ -7,7 +7,7 @@ var oauth2orize = require('oauth2orize'),
 	Token = require('../models/tokenModel'),
 	crypto = require('crypto');
 
-const EXPIRATION_DURATION = 24 * 3600 * 1000;
+const EXPIRATION_DURATION = 24 * 3600;
 
 // Create OAuth 2.0 server
 var server = oauth2orize.createServer();
@@ -19,7 +19,6 @@ server.serializeClient(function(client, callback) {
 
 // Register deserialization function
 server.deserializeClient(function(id, callback) {
-    console.log(id);
   Client.findOne({ _id: id }, function (err, client) {
     if (err) { return callback(err); }
     return callback(null, client);
@@ -33,18 +32,17 @@ server.exchange(oauth2orize.exchange.password(function (client, email, password,
         if(userHelper.encryptPassword(password) === user.password) {
             var token = uid(256);
             var refreshToken = uid(256);
- 
-            var expirationDate = new Date(new Date().getTime() + EXPIRATION_DURATION);
-            var tokenObject = {value: token, expirationDate: expirationDate, clientId: client.id, userId: user._id, scope: 0};
+
+            var tokenObject = {value: token, clientId: client.id, userId: user._id.toString(), scope: '', refresh: false, refreshToken: refreshToken};
 
             var tokenObj = new Token(tokenObject);
             tokenObj.save(function (err) {
                 if (err) return callback(err);
 
-                var refreshTokenObj = new Token({value: refreshToken, clientId: client.id, userId: user._id, scope: 0, refresh: true});
+                var refreshTokenObj = new Token({value: refreshToken, clientId: client.id, userId: user._id.toString(), scope: '', refresh: true});
                 refreshTokenObj.save(function (err) {
                     if (err) return callback(err);
-                    callback(null, token, refreshToken, {expires_in: expirationDate, user_id: user._id});
+                    callback(null, token, refreshToken, {user_id: user._id});
                 });
             });
         } else {
@@ -55,21 +53,17 @@ server.exchange(oauth2orize.exchange.password(function (client, email, password,
 
 //Refresh Token
 server.exchange(oauth2orize.exchange.refreshToken(function (client, refreshToken, scope, callback) {
-    var refreshTokenHash = Token.schema.hashToken(refreshToken);
-    Token.findOne({value: refreshTokenHash}, function (err, token) {
+    Token.get(Token.hashToken(refreshToken), function (err, token) {
         if (err) return callback(err);
         if (!token) return callback(null, false);
         if (client.id !== token.clientId) return callback(null, false);
         
         var newAccessToken = uid(256);
-        
-        var expirationDate = new Date(new Date().getTime() + EXPIRATION_DURATION);
 
-        Token.remove({userId: token.userId, clientId: client.id, expirationDate: {$lte: new Date()}}, function(err, deleted) {});
-        var tokenObj = new Token({value: newAccessToken, expirationDate: expirationDate, clientId: client.id, userId: token.userId, scope: 0});
+        var tokenObj = new Token({value: newAccessToken, clientId: client.id, userId: token.userId, scope: '', refresh: false});
         tokenObj.save(function (err) {
             if (err) return callback(err);
-            callback(null, newAccessToken, refreshToken, {expires_in: expirationDate});
+            callback(null, newAccessToken, refreshToken, {});
         });
     });
 }));
@@ -92,7 +86,7 @@ function getRandomInt(min, max) {
 
 // token endpoint
 exports.authorize = [
-    passport.authenticate(['client-basic', 'client-password'], {session: false }),
+    passport.authenticate(['client-basic', 'client-password'], {session: false}),
     server.token(),
     server.errorHandler()
 ];

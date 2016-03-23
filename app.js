@@ -102,7 +102,8 @@ trafie.use(session({
     store: new redisStore({
         host: db[process.env.NODE_ENV].redis.host,
         port: db[process.env.NODE_ENV].redis.port,
-        client: redisClient
+        client: redisClient,
+        ttl: 2592000
     }),
     secret: '23tR@Ck@nDF!3lD_s3cur3535s!0n504',
     resave: true,

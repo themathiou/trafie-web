@@ -76,9 +76,7 @@ passport.use('client-password', new ClientPasswordStrategy(
 
 passport.use(new BearerStrategy(
     function(accessToken, callback) {
-        var hashedToken = crypto.createHash('sha512').update('23tR@Ck@nDF!3lD04T0k3N' + accessToken).digest('hex');
-
-        Token.findOne({value: hashedToken, expirationDate: {$gte: new Date()}}, function (err, token) {
+        Token.get(Token.hashToken(accessToken), function (err, token) {
             if (err) { return callback(err); }
 
             // No token found
@@ -90,7 +88,6 @@ passport.use(new BearerStrategy(
                 // No user found
                 if (!user) { return callback(null, false); }
 
-                // Simple example with no scope
                 callback(null, user, { scope: '*' });
             });
         });
