@@ -98,17 +98,24 @@ trafie.set('views', path.join(__dirname, 'app/views'));
 trafie.set('view engine', 'jade');
 trafie.set('view cache', true);
 trafie.use(methodOverride());
-trafie.use(session({
-    store: new redisStore({
-        host: db[process.env.NODE_ENV].redis.host,
-        port: db[process.env.NODE_ENV].redis.port,
-        client: redisClient,
-        ttl: 2592000
-    }),
-    secret: '23tR@Ck@nDF!3lD_s3cur3535s!0n504',
-    resave: true,
-    saveUninitialized: true
-}));
+trafie.use(function(req, res, next) {
+    if(req.url.startsWith('/api') || ['/authorize', '/logout'].indexOf(req.url) >= 0) {
+        return next();
+    } else {
+        var sessionObj = session({
+            store: new redisStore({
+                host: db[process.env.NODE_ENV].redis.host,
+                port: db[process.env.NODE_ENV].redis.port,
+                client: redisClient,
+                ttl: 2592000
+            }),
+            secret: '23tR@Ck@nDF!3lD_s3cur3535s!0n504',
+            resave: true,
+            saveUninitialized: true
+        });
+        sessionObj(req, res, next);
+    }
+});
 trafie.use(bodyParser.json());
 trafie.use(bodyParser.urlencoded({ extended: true }));
 trafie.use(cookieParser('23tR@Ck@nDF!3lD_s3cur3535s!0n504'));
