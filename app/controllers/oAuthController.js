@@ -7,8 +7,6 @@ var oauth2orize = require('oauth2orize'),
 	Token = require('../models/tokenModel'),
 	crypto = require('crypto');
 
-const EXPIRATION_DURATION = 24 * 3600;
-
 // Create OAuth 2.0 server
 var server = oauth2orize.createServer();
 

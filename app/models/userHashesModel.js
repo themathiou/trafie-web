@@ -83,7 +83,7 @@ userHashSchema.deleteHash = function(hash, type) {
  */
 userHashSchema.createVerificationHash = function(email, userId) {
 	var sha512Hash = crypto.createHash('sha512');
-	sha512Hash.update('23tR@Ck@nDF!3lD04' + email + (new Date().getTime()));
+	sha512Hash.update((process.env.EMAIL_VERIFICATION_SALT || 'emailVerificationSalt') + email + (new Date().getTime()));
 
 	// The verification hash
 	var hash = sha512Hash.digest('hex');
@@ -118,7 +118,7 @@ userHashSchema.createResetPasswordHash = function(userId) {
 			d.resolve(response.hash);
 		} else {
 			var sha512Hash = crypto.createHash('sha512');
-			sha512Hash.update('23tR@Ck@nDF!3lD04' + userId + (new Date().getTime()));
+			sha512Hash.update((process.env.RESET_PASSWORD_SALT || 'resetPasswordSalt') + userId + (new Date().getTime()));
 
 			// The reset password hash
 			var hash = sha512Hash.digest('hex');

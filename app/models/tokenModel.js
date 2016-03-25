@@ -1,18 +1,10 @@
 // Load required packages
-var redis = require('redis'),
-	crypto = require('crypto'),
-    db = require('../config/dbConfig.js');
+var crypto = require('crypto'),
+    redisClient = require('../config/redisClientConfig');
 
 const REFRESH_TOKEN_DURATION = 60 * 60 * 24 * 365,
     ACCESS_TOKEN_DURATION = 60 * 60 * 24;
 
-var redisClient = null;
-if(db[process.env.NODE_ENV].redis.password) {
-    redisClient = redis.createClient(db[process.env.NODE_ENV].redis.port, db[process.env.NODE_ENV].redis.host, {auth_pass: true});
-    redisClient.auth(db[process.env.NODE_ENV].redis.password);
-} else {
-    redisClient = redis.createClient(db[process.env.NODE_ENV].redis.port, db[process.env.NODE_ENV].redis.host);
-}
 
 function Token(token) {
     this.token = token;
@@ -69,7 +61,7 @@ Token.remove = function(tokenValue, callback) {
 };
 
 Token.hashToken = function(code) {
-    return crypto.createHash('sha512').update('23tR@Ck@nDF!3lD04T0k3N' + code).digest('hex');
+    return crypto.createHash('sha512').update((process.env.TOKEN_SALT || 'tokenSalt') + code).digest('hex');
 };
 
 // Export the model

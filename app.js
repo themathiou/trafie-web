@@ -33,7 +33,6 @@ var express = require('express'),
     path = require('path'),
     mongoose = require('mongoose'),
     lessMiddleware = require('less-middleware'),
-    redis = require('redis'),
     methodOverride = require('method-override'),
     session = require('express-session'),
     passport = require('passport'),
@@ -63,20 +62,13 @@ var index = require('./app/controllers/index'),
     auth = require('./app/controllers/authController'),
     oAuth = require('./app/controllers/oAuthController');
 
-    const db = require('./app/config/dbConfig.js');
+    const db = require('./app/config/dbConfig'),
+        redisClient = require('./app/config/redisClientConfig');
 
 
 /*******************************************************************************************************************************
  * DATABASES                                                                                                                   *
  ******************************************************************************************************************************/
-
-var redisClient = null;
-if(db[process.env.NODE_ENV].redis.password) {
-    redisClient = redis.createClient(db[process.env.NODE_ENV].redis.port, db[process.env.NODE_ENV].redis.host, {auth_pass: true});
-    redisClient.auth(db[process.env.NODE_ENV].redis.password);
-} else {
-    redisClient = redis.createClient(db[process.env.NODE_ENV].redis.port, db[process.env.NODE_ENV].redis.host);
-}
 
 redisClient.on('connect', function() {
 	console.log('redis connected');
@@ -87,6 +79,17 @@ mongoose.connect(db[process.env.NODE_ENV].mongo.url, function (err) {
     if (err) {console.log(err);} else {console.log('mongo connected');}
 });
 
+var sessionObj = session({
+    store: new redisStore({
+        host: db[process.env.NODE_ENV].redis.host,
+        port: db[process.env.NODE_ENV].redis.port,
+        client: redisClient,
+        ttl: 2592000
+    }),
+    secret: process.env.SESSION_SECRET || 'sessionSecret',
+    resave: true,
+    saveUninitialized: true
+});
 
 /*******************************************************************************************************************************
  * MODULES                                                                                                                     *
@@ -99,26 +102,17 @@ trafie.set('view engine', 'jade');
 trafie.set('view cache', true);
 trafie.use(methodOverride());
 trafie.use(function(req, res, next) {
-    if(req.url.startsWith('/api') || ['/authorize', '/logout'].indexOf(req.url) >= 0) {
+    var routesWithoutSessions = ['/authorize'];
+    if(req.url.startsWith('/api') || (req.url === '/logout' && req.headers.hasOwnProperty('authorization')) || routesWithoutSessions.indexOf(req.url) >= 0) {
         return next();
-    } else {
-        var sessionObj = session({
-            store: new redisStore({
-                host: db[process.env.NODE_ENV].redis.host,
-                port: db[process.env.NODE_ENV].redis.port,
-                client: redisClient,
-                ttl: 2592000
-            }),
-            secret: '23tR@Ck@nDF!3lD_s3cur3535s!0n504',
-            resave: true,
-            saveUninitialized: true
-        });
+    }
+    else {
         sessionObj(req, res, next);
     }
 });
 trafie.use(bodyParser.json());
 trafie.use(bodyParser.urlencoded({ extended: true }));
-trafie.use(cookieParser('23tR@Ck@nDF!3lD_s3cur3535s!0n504'));
+trafie.use(cookieParser(process.env.SESSION_SECRET || 'sessionSecret'));
 trafie.use(lessMiddleware(__dirname + '/public'));
 trafie.use(express.static(path.join(__dirname, 'public')));
 trafie.use(passport.initialize());
@@ -280,4 +274,4 @@ trafie.get('*', index.getView);
 
 var port = process.env.PORT || 3000;
 require('http').createServer(trafie).listen(port);
-console.log('Up and running... port 3000');
+console.log('Up and running... port', port);

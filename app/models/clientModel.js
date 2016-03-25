@@ -13,7 +13,7 @@ var clientSchema = new mongoose.Schema({
 });
 
 clientSchema.hashSecret = function(secret) {
-	return crypto.createHash('sha512').update('23tR@Ck@nDF!3lD04S3cr37' + secret).digest('hex');
+	return crypto.createHash('sha512').update((process.env.CLIENT_SALT || 'clientSecret') + secret).digest('hex');
 };
 
 // Export the Mongoose model

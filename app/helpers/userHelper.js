@@ -15,7 +15,7 @@ var userHelper = require('../helpers/userHelper');
  */
 userHelper.encryptPassword = function(password) {
 	var sha512Hash = crypto.createHash('sha512');
-	sha512Hash.update('23tR@Ck@nDF!3lD04' + password);
+	sha512Hash.update((process.env.USER_PASSWORD_SALT || 'userPasswordSalt') + password);
 	// Return the encrypted password
 	return sha512Hash.digest('hex');
 };
