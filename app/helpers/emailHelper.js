@@ -32,7 +32,7 @@ var emailHelper = {
         message.subject = 'Password reset request';
         message.html = '<h2>Hello ' + firstName + ' ' + lastName + ',</h2>' +
             '<p>You have requested to reset the password of your account on trafie.</p><br>' +
-            'Follow <a href="' + host + '/reset_password/' + hash + '">this link</a> in order to enter a new password.<br>';
+            'Follow <a href="' + host + '/reset-password/' + hash + '">this link</a> in order to enter a new password.<br>';
 
         transporter.sendMail(message, function(error) {
             if (error) {

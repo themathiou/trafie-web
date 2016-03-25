@@ -46,10 +46,10 @@ exports.request.post = function(req, res) {
 			// Create a new reset password hash
 			return UserHashes.schema.createResetPasswordHash(userId);
 		})
-		.then(function(response) {
+		.then(function(hash) {
 			// Send an email with the hash
-			emailHelper.sendResetPasswordEmail(email, firstName, lastName, response);
-            res.status(200).json(response);
+			emailHelper.sendResetPasswordEmail(email, firstName, lastName, hash);
+            res.status(200).json(hash);
 		})
 		.catch(function(error) {
             sendError(error, res);
