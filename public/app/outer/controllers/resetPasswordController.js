@@ -25,8 +25,7 @@
                         });
                     }
                 }, function(res) {
-                    $scope.errors = res.data.errors;
-                    $scope.errorsArray = _.values(res.data.errors);
+                    $scope.errors = res.data.errors.pop();
                 });
             };
         });
