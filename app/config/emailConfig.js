@@ -6,7 +6,7 @@ const email = {
     host: 'mail.name.com',
     auth: {
         user: 'support@trafie.com',
-        pass: 'tr@f!e4'
+        pass: 'tr@f!email'
     }
 };
 

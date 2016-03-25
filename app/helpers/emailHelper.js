@@ -15,10 +15,9 @@ var emailHelper = {
     sendVerificationEmail: function(email, firstName, lastName, hash) {
         message.to = email;
         message.subject = 'Welcome to Trafie!';
-        message.html = '<h2>Hello ' + firstName + ' ' + lastName + '</h2>' +
+        message.html = '<h2>Hello ' + firstName + ' ' + lastName + ',</h2>' +
             '<p>You have successfully registered to trafie.</p><br><p>The <b><i>trafie</i></b> team</p><br>' +
-            'Follow the link to verify your email:<br>' +
-            '<a href="' + host + '/validate-email/' + hash + '">This is the link</a>';
+            'Follow <a href="' + host + '/validate-email/' + hash + '">this link</a> to verify your email.<br>';
 
         transporter.sendMail(message, function(error) {
             if (error) {
@@ -31,10 +30,9 @@ var emailHelper = {
     sendResetPasswordEmail: function(email, firstName, lastName, hash) {
         message.to = email;
         message.subject = 'Password reset request';
-        message.html = '<h2>Hello ' + firstName + ' ' + lastName + '</h2>' +
+        message.html = '<h2>Hello ' + firstName + ' ' + lastName + ',</h2>' +
             '<p>You have requested to reset the password of your account on trafie.</p><br>' +
-            'Follow the link in order to enter a new password:<br>' +
-            '<a href="' + host + '/reset_password/' + hash + '">This is the link</a>';
+            'Follow <a href="' + host + '/reset_password/' + hash + '">this link</a> in order to enter a new password.<br>';
 
         transporter.sendMail(message, function(error) {
             if (error) {
