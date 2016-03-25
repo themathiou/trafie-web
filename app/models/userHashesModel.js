@@ -115,30 +115,25 @@ userHashSchema.encryptResetPasswordHash = function(hash) {
  */
 userHashSchema.createResetPasswordHash = function(userId) {
 	var d = q.defer();
-	UserHash.findOne({
+	UserHash.remove({
 		'userId': userId,
 		'type': 'reset'
-	}, 'userId hash', function(err, response) {
-		if (response !== null && typeof response.hash !== 'undefined') {
-			d.resolve(response.hash);
-		} else {
-            var sha512Hash = crypto.createHash('sha512');
-            sha512Hash.update((process.env.RESET_PASSWORD_SALT || 'resetPasswordSalt') + userId + (new Date().getTime()));
-            var hash = sha512Hash.digest('hex');
+	}, function(err) {
+        var sha512Hash = crypto.createHash('sha512');
+        sha512Hash.update((process.env.RESET_PASSWORD_SALT || 'resetPasswordSalt') + userId + (new Date().getTime()));
+        var hash = sha512Hash.digest('hex');
 
-            var encryptedHash = userHashSchema.encryptResetPasswordHash(hash);
+        var encryptedHash = userHashSchema.encryptResetPasswordHash(hash);
+        var newUserHash = {
+            'userId': userId,
+            'hash': encryptedHash,
+            'type': 'reset'
+        };
+        var userHash = new UserHash(newUserHash);
 
-			var newUserHash = {
-				'userId': userId,
-				'hash': encryptedHash,
-				'type': 'reset'
-			};
-			var userHash = new UserHash(newUserHash);
-
-			userHash.save(function(err, userHash) {
-				d.resolve(hash);
-			});
-		}
+        userHash.save(function(err, userHash) {
+            d.resolve(hash);
+        });
 	});
 
 	return d.promise;
