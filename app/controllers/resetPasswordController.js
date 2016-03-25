@@ -75,7 +75,7 @@ exports.post = function(req, res) {
 	}
 
 	// Check if the hash provided is valid. If it is, reset the password.
-	UserHashes.schema.findUserIdByHash(hash, 'reset')
+	UserHashes.schema.findUserIdByHash(UserHashes.schema.encryptResetPasswordHash(hash), 'reset')
 		.then(function(response) {
 			if (response) {
 				userId = response.userId;

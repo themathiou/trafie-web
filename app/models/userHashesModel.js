@@ -103,6 +103,11 @@ userHashSchema.createVerificationHash = function(email, userId) {
 	return d.promise;
 };
 
+userHashSchema.encryptResetPasswordHash = function(hash) {
+    var sha512Hash = crypto.createHash('sha512');
+    sha512Hash.update((process.env.RESET_PASSWORD_SALT || 'resetPasswordSalt') + hash);
+    return sha512Hash.digest('hex');
+};
 
 /**
  * Create and save reset password hash
@@ -117,27 +122,27 @@ userHashSchema.createResetPasswordHash = function(userId) {
 		if (response !== null && typeof response.hash !== 'undefined') {
 			d.resolve(response.hash);
 		} else {
-			var sha512Hash = crypto.createHash('sha512');
-			sha512Hash.update((process.env.RESET_PASSWORD_SALT || 'resetPasswordSalt') + userId + (new Date().getTime()));
+            var sha512Hash = crypto.createHash('sha512');
+            sha512Hash.update((process.env.RESET_PASSWORD_SALT || 'resetPasswordSalt') + userId + (new Date().getTime()));
+            var hash = sha512Hash.digest('hex');
 
-			// The reset password hash
-			var hash = sha512Hash.digest('hex');
+            var encryptedHash = userHashSchema.encryptResetPasswordHash(hash);
+
 			var newUserHash = {
 				'userId': userId,
-				'hash': hash,
+				'hash': encryptedHash,
 				'type': 'reset'
 			};
 			var userHash = new UserHash(newUserHash);
 
 			userHash.save(function(err, userHash) {
-				d.resolve(newUserHash.hash);
+				d.resolve(hash);
 			});
 		}
 	});
 
 	return d.promise;
 };
-
 
 var UserHash = mongoose.model('UserHash', userHashSchema);
 
