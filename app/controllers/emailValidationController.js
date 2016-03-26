@@ -15,11 +15,11 @@ const userHelper = require('../helpers/userHelper'),
  */
 exports.validate = function(req, res) {
 	// Find the user to whom the hash belongs
-	UserHashes.schema.findUserIdByHash(req.params.hash, 'verify')
+    var encryptedHash = UserHashes.schema.encryptUserHash(req.params.hash, 'verify');
+	UserHashes.schema.findUserIdByHash(encryptedHash, 'verify')
 	.then(function(response) {
 		if (response) {
 			// Validate the user
-            console.log(userHelper.validateUser)
 			return userHelper.validateUser(response.userId);
 		} else {
 			return false;
@@ -28,7 +28,7 @@ exports.validate = function(req, res) {
 	.then(function(validated) {
         if(validated) {
             // Delete the hash after validation
-            UserHashes.schema.deleteHash(req.params.hash, 'verify');
+            UserHashes.schema.deleteHash(encryptedHash, 'verify');
             // Storing the user id in the session
             res.json(null);
         } else {
