@@ -43,7 +43,7 @@ Example:
 
 ```javascript
 {
-	"message": "Validation Failed",
+	"message": "Invalid data",
 	"errors": [
 		{
 			"resource": "profile",
