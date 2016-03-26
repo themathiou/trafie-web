@@ -34,7 +34,6 @@ exports.validate = function(req, res) {
         } else {
             res.status(404).json({message: 'Resource not found', errors: [{
                 resource: 'userHash',
-                field: 'hash',
                 code: 'not_found'
             }]});
         }
@@ -69,7 +68,6 @@ exports.resendEmail = function(req, res) {
         if (!response.email) {
             res.status(404).json({message: 'Resource not found', errors: [{
                 resource: 'user',
-                field: '_id',
                 code: 'not_found'
             }]});
             responseSent = true;
@@ -108,7 +106,6 @@ exports.resendEmail = function(req, res) {
         else if(!responseSent) {
             res.status(404).json({message: 'Resource not found', errors: [{
                 resource: 'user',
-                field: '_id',
                 code: 'not_found'
             }]});
         }

@@ -25,10 +25,13 @@ exports.get = function(req, res) {
 			} else {
 				// Otherwise, if it's a server error, send the error
 				if (response.error === 'query_error') {
-					res.status(500).json(null);
+					res.status(500).json({message: 'Server error'});
 				} else {
 					// If the user doesn't have access to the data, or the data don't exist, do not send anything
-					res.status(404).json(null);
+					res.status(404).json({message: 'Resource not found', errors: [{
+                        resource: 'user',
+                        code: 'not_found'
+                    }]});
 				}
 			}
 		});
@@ -44,7 +47,7 @@ function userSearch(req, res) {
 		res.json(results);
 	})
 	.catch(function(error) {
-		res.status(500).json(null);
+		res.status(500).json({message: 'Server error'});
 	});
 }
 
@@ -171,7 +174,10 @@ exports.post = function(req, res) {
 		.then(function(profile) {
 			// If the profile doesn't exist, return null
 			if (typeof profile._id === 'undefined') {
-				res.status(404).json(null);
+				res.status(404).json({message: 'Resource not found', errors: [{
+                    resource: 'user',
+                    code: 'not_found'
+                }]});
 				return false;
 			}
 
@@ -506,7 +512,10 @@ exports.post = function(req, res) {
                     res.status(error[0]).json({message: 'Server error'});
                 }
                 else if(error[0] === 404) {
-                    res.status(error[0]).json({message: 'Resource not found'});
+                    res.status(error[0]).json({message: 'Resource not found', errors: [{
+                        resource: 'user',
+                        code: 'not_found'
+                    }]});
                 }
                 else {
                     res.status(error[0]).json({message: 'Invalid data', errors: [error[1]]});

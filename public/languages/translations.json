@@ -624,10 +624,6 @@
     }
   },
   "OUTER": {
-    "EMAIL_NOT_FOUND": {
-      "en": "Email not found",
-      "el": "Το email δεν βρέθηκε"
-    },
     "RESET_PASSWORD_INSTRUCTIONS_EMAIL": {
       "en": "An email with instructions of resetting your password, has been sent to your email address",
       "el": "Ένα email με οδηγίες για την αλλαγή του κωδικού σας, έχει σταλλεί στην διεύθυνση σας"

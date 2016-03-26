@@ -29,7 +29,10 @@ exports.request.post = function(req, res) {
 		.then(function(response) {
 			// If the provided email wasn't found
 			if (!response) {
-                res.status(404).json({errors: ['OUTER.EMAIL_NOT_FOUND']});
+                res.status(404).json({message: 'Resource not found', errors: [{
+					resource: 'user',
+					code: 'not_found'
+				}]});
 				return;
 			}
 			userId = response._id;
@@ -106,5 +109,5 @@ exports.post = function(req, res) {
  * @param object res
  */
 function sendError(error, res) {
-    res.status(500).json({errors: ['Something went wrong']});
+    res.status(500).json({message: 'Server error'});
 }

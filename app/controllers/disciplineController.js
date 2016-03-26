@@ -33,13 +33,19 @@ exports.get = function(req, res) {
 					res.status(200).json(disciplines);
 				})
 				.catch(function(error) {
-					res.status(500).json(null);
+					res.status(500).json({message: 'Server error'});
 				});
 			} else {
-				res.status(404).json(null);
+				res.status(404).json({message: 'Resource not found', errors: [{
+					resource: 'discipline',
+					code: 'not_found'
+				}]});
 			}
 		});
 	} else {
-		res.status(404).json(null);
+		res.status(404).json({message: 'Resource not found', errors: [{
+			resource: 'user',
+			code: 'not_found'
+		}]});
 	}
 };

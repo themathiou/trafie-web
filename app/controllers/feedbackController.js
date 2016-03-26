@@ -11,7 +11,7 @@ const Feedback = require('../models/feedbackModel'),
 exports.post = function(req, res) {
     if(!req.user) {
         passport.authenticate('bearer', function(err, user) {
-            if(err) res.status(500).json(null);
+            if(err) res.status(500).json({message: 'Server error'});
             req.user = user;
             saveFeedback(req, res);
         })(req, res);
@@ -45,7 +45,7 @@ function saveFeedback(req, res) {
             .then(function() {
                 res.json(null);
             }, function(err) {
-                res.status(500).json(null);
+                res.status(500).json({message: 'Server error'});
             });
 
     } else {

@@ -15,7 +15,10 @@ exports.get = function(req, res) {
 		userId = req.user && req.user._id || null;
 
 	if (typeof req.params.userId === 'undefined') {
-		res.status(404).json(null);
+		res.status(404).json({message: 'Resource not found', errors: [{
+            resource: 'user',
+            code: 'not_found'
+        }]});
 		return;
 	}
 	accessHelper.validateAccess(req.user, profileId)
@@ -48,12 +51,18 @@ exports.get = function(req, res) {
 
 				// Find the activity and return it
 				Activity.schema.findOne(where, '').then(function(activity) {
-					var statusCode = activity ? 200 : 404;
-					res.status(statusCode).json(activity);
+					if(activity) {
+                        res.status(200).json(activity);
+                    } else {
+                        res.status(404).json({message: 'Resource not found', errors: [{
+                            resource: 'activity',
+                            code: 'not_found'
+                        }]});
+                    }
                     return;
 				})
 				.catch(function(error) {
-					res.status(500).json(null);
+					res.status(500).json({message: 'Server error'});
 				});
 			} else {
 				// If the activity id wasn't specified, try to fetch all the activities of the user
@@ -89,16 +98,19 @@ exports.get = function(req, res) {
 					res.json(activities);
 				})
 				.catch(function(error) {
-					res.status(500).json(null);
+					res.status(500).json({message: 'Server error'});
 				});
 			}
 		} else {
 			// Otherwise, if it's a server error, send the error
 			if (response.error === 'query_error') {
-				res.status(500).json(null);
+				res.status(500).json({message: 'Server error'});
 			} else {
 				// If the user doesn't have access to the data, or the data don't exist, do not send anything
-				res.status(404).json(null);
+				res.status(404).json({message: 'Resource not found', errors: [{
+                    resource: 'activity',
+                    code: 'not_found'
+                }]});
 			}
 		}
 	});
@@ -136,7 +148,7 @@ exports.post = function(req, res) {
 			.then(function(activityRes) {
 				res.status(201).json(activityRes);
 			}, function(err) {
-				res.status(500).json(null);
+				res.status(500).json({message: 'Server error'});
 			});
 		} else {
 			// If there are errors, send the error messages to the client
@@ -159,7 +171,10 @@ exports.put = function(req, res) {
 	} else {
 		Activity.schema.findOne({_id: activityId, userId: userId}, '')
 		.then(function(activity) {
-			if (!activity || typeof activity._id == 'undefined') res.status(404).json(null);
+			if (!activity || typeof activity._id == 'undefined') res.status(404).json({message: 'Resource not found', errors: [{
+                resource: 'activity',
+                code: 'not_found'
+            }]});
 
 			// Create the record that will be inserted in the db
 			activity.discipline = typeof req.body.discipline !== 'undefined' ? req.body.discipline : activity.discipline;
@@ -178,7 +193,7 @@ exports.put = function(req, res) {
 			if (!errors) {
 				activity.save(function(err, activity) {
 					if(err) {
-						res.status(500).json(null);
+						res.status(500).json({message: 'Server error'});
 					} else {
 						res.status(200).json(activity);
 					}
@@ -189,7 +204,7 @@ exports.put = function(req, res) {
 			}
 		})
 		.catch(function(error) {
-			res.status(500).json(null);
+			res.status(500).json({message: 'Server error'});
 		});
 	}
 };
@@ -213,7 +228,7 @@ exports.delete = function(req, res) {
 			res.status(status).json(null);
 		})
 		.catch(function(error) {
-			res.status(500).json(null);
+			res.status(500).json({message: 'Server error'});
 		});
 	}
 };
