@@ -17,7 +17,7 @@ Example:
 }
 ```
 
-#### b) 422 Resource not found
+#### b) 404 Resource not found
 
 Returned when the request is understood but the requested resource was not found.
 
