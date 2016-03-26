@@ -55,8 +55,7 @@ Example:
 ```
 The possible error codes are:
 
-* missing: This means a resource does not exist.
-* missing_field: This means a required field on a resource has not been set.
+* missing: This means a required field on a resource has not been set.
 * invalid: This means the formatting of a field is invalid. The documentation for that resource should be able to give you more specific information.
 * already_exists: This means another resource has the same value as this field. This can happen in resources that must have some unique key (such as Label names).
 * already_processed: This means that the value has changed previously and can not be changed again (e.g. account validation)
