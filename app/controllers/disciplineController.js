@@ -18,9 +18,6 @@ exports.get = function(req, res) {
 		accessHelper.validateAccess(userId, profileId, function(validation) {
 			// If the user has a valid session and they are not visiting a private profile
 			if (validation.success) {
-				let user = validation.user;
-				let profile = validation.profile;
-
 				let where = {
 					'userId': profileId
 				};

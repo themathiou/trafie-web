@@ -113,24 +113,32 @@ activitySchema.delete = function(where) {
  * Checks if all the data in the model are valid
  */
 activitySchema.methods.checkValid = function() {
-	var errors = false,
-		errorMessages = {},
+	var errors = [],
 		disciplineType = '';
 
 	if(!this.discipline) {
-		errors = true;
-		errorMessages.performance = 'discipline_is_required';
+		errors.push({
+			resource: 'activity',
+			field: 'discipline',
+			code: 'missing'
+		});
 	} else {
 		disciplineType = activityHelper.validateDiscipline(this.discipline);
 		if(!disciplineType) {
-			errors = true;
-			errorMessages.performance = 'invalid_discipline';
+			errors.push({
+				resource: 'activity',
+				field: 'discipline',
+				code: 'invalid'
+			});
 		}
 	}
 
 	if(!('performance' in this)) {
-		errors = true;
-		errorMessages.performance = 'performance_is_required';
+        errors.push({
+            resource: 'activity',
+            field: 'performance',
+            code: 'missing'
+        });
 	} 
 	else if(disciplineType) {
 		var performance = null;
@@ -146,59 +154,86 @@ activitySchema.methods.checkValid = function() {
 				break;
 		}
 		if(this.performance === null) {
-			errors = true;
-			errorMessages.performance = 'invalid_performance';
+            errors.push({
+                resource: 'activity',
+                field: 'performance',
+                code: 'invalid'
+            });
 		}
 	}
 
 	// Validating date (required field)
 	if(!this.date) {
-		errors = true;
-		errorMessages.date = 'date_is_required';
+        errors.push({
+            resource: 'activity',
+            field: 'date',
+            code: 'missing'
+        });
 	} else {
 		this.date = activityHelper.timestampIsValid(this.date);
 		if(!this.date) {
-			errors = true;
-			errorMessages.date = 'wrong_date_format';
+            errors.push({
+                resource: 'activity',
+                field: 'date',
+                code: 'invalid'
+            });
 		}
 	}
 
 	// Validating location
 	if (this.location && !activityHelper.locationIsValid(this.location)) {
-		errors = true;
-		errorMessages.location = 'too_long_text';
+        errors.push({
+            resource: 'activity',
+            field: 'location',
+            code: 'invalid'
+        });
 	}
 
 	// Validating rank
 	if (this.rank && !activityHelper.rankIsValid(this.rank)) {
-		errors = true;
-		errorMessages.rank = 'invalid_rank';
+        errors.push({
+            resource: 'activity',
+            field: 'rank',
+            code: 'invalid'
+        });
 	}
 
 	// Validating competition
 	if (this.competition && !activityHelper.competitionIsValid(this.competition)) {
-		errors = true;
-		errorMessages.competition = 'too_long_text';
+        errors.push({
+            resource: 'activity',
+            field: 'competition',
+            code: 'invalid'
+        });
 	}
 
 	// Validating notes
 	if (this.notes && !activityHelper.notesAreValid(this.notes)) {
-		errors = true;
-		errorMessages.notes = 'too_long_text';
+        errors.push({
+            resource: 'activity',
+            field: 'notes',
+            code: 'invalid'
+        });
 	}
 
 	// Validating privacy (required field)
 	if (!('isPrivate' in this) || ('isPrivate' in this && !activityHelper.privacyIsValid(this.isPrivate))) {
-		errors = true;
-		errorMessages.isPrivate = 'invalid_privacy';
+        errors.push({
+            resource: 'activity',
+            field: 'isPrivate',
+            code: 'invalid'
+        });
 	}
 
 	// Validating privacy (required field)
 	if (!('isOutdoor' in this) || ('isOutdoor' in this && !activityHelper.outdoorIsValid(this.isOutdoor))) {
-		errors = true;
-		errorMessages.isOutdoor = 'invalid_outdoor';
+        errors.push({
+            resource: 'activity',
+            field: 'isOutdoor',
+            code: 'invalid'
+        });
 	}
-	return errors ? errorMessages : null;
+	return errors.length ? errors: null;
 };
 
 var Activity = mongoose.model('Activity', activitySchema);

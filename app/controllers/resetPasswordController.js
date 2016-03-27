@@ -73,7 +73,11 @@ exports.post = function(req, res) {
 		errorMessages.push('Password should be at least 6 characters long');
 
 	if (errorMessages.length) {
-		res.status(400).json({errors: errorMessages});
+		res.status(422).json({message: 'Invalid data', errors: [{
+			resource: 'user',
+			field: 'password',
+			code: 'invalid'
+		}]});
 		return;
 	}
 
@@ -84,14 +88,19 @@ exports.post = function(req, res) {
 				userId = response.userId;
 				return User.schema.resetPassword(userId, password);
 			} else {
-				errorMessages.push('Invalid url');
-				res.status(400).json({errors: errorMessages});
+				res.status(404).json({message: 'Resource not found', errors: [{
+					resource: 'userHash',
+					code: 'not_found'
+				}]});
 				return null;
 			}
 		})
 		.then(function(user) {
             if(!user)
-                res.status(400).json({errors: errorMessages});
+                res.status(404).json({message: 'Resource not found', errors: [{
+					resource: 'user',
+					code: 'not_found'
+				}]});
 			// Delete the hash
 			UserHashes.schema.deleteHash(hash, 'reset');
 			// Storing the user id in the session

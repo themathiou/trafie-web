@@ -22,7 +22,7 @@ exports.post = function(req, res) {
 
 function saveFeedback(req, res) {
     var userId = req.user && req.user._id || null;
-    if(!userId) res.status(403).json(null);
+    res.status(403).json({message: 'Forbidden'});
 
     if (typeof req.body.feedback === 'string' && req.body.feedback.length >= 10 && typeof req.body.feedbackType === 'string') {
         let platform = req.body.hasOwnProperty('platform') ? req.body.platform : 'web',
@@ -49,6 +49,28 @@ function saveFeedback(req, res) {
             });
 
     } else {
-        res.status(422).json(null);
+        var errors = [];
+        if(typeof req.body.feedback !== 'string') {
+            errors.push({
+                resource: 'feedback',
+                field: 'feedback',
+                code: 'missing'
+            });
+        }
+        if(req.body.feedback.length < 10) {
+            errors.push({
+                resource: 'feedback',
+                field: 'feedback',
+                code: 'invalid'
+            });
+        }
+        if(typeof req.body.feedbackType !== 'string') {
+            errors.push({
+                resource: 'feedback',
+                field: 'feedbackType',
+                code: 'missing'
+            });
+        }
+        res.status(422).json({message: 'Invalid data', errors: errors});
     }
 }

@@ -19,57 +19,93 @@ exports.post = function(req, res) {
 		res.redirect('/');
 	}
 
-	var errorMessages = {};
-	var errors = false;
-
 	// Initializing the input values
-	var firstName = typeof req.body.firstName !== 'undefined' ? req.body.firstName.trim() : '';
-	var lastName = typeof req.body.lastName !== 'undefined' ? req.body.lastName.trim() : '';
-	var email = typeof req.body.email !== 'undefined' ? req.body.email.trim().toLowerCase() : '';
-	var password = typeof req.body.password !== 'undefined' ? req.body.password : '';
+    let firstName = '',
+        lastName = '',
+        email = '',
+        password = '',
+        errors = [];
+
+    if(typeof req.body.firstName === 'string') {
+        firstName = req.body.firstName.trim();
+    } else {
+        errors.push({
+            resource: 'user',
+            field: 'firstName',
+            code: 'missing'
+        });
+    }
+    if(typeof req.body.lastName === 'string') {
+        firstName = req.body.lastName.trim();
+    } else {
+        errors.push({
+            resource: 'user',
+            field: 'lastName',
+            code: 'missing'
+        });
+    }
+    if(typeof req.body.email === 'string') {
+        firstName = req.body.email.trim().toLowerCase();
+    } else {
+        errors.push({
+            resource: 'user',
+            field: 'email',
+            code: 'missing'
+        });
+    }
+    if(typeof req.body.password === 'string') {
+        firstName = req.body.password;
+    } else {
+        errors.push({
+            resource: 'user',
+            field: 'password',
+            code: 'missing'
+        });
+    }
 
 	// Generating error messages
-	if (!password) {
-		errorMessages.password = 'Password is required';
-		errors = true;
-	} else if (!errors && !userHelper.validatePassword(password)) {
-        errorMessages.password = 'Password should be at least 6 characters long';
-		errors = true;
+    if (typeof password === 'string' && !userHelper.validatePassword(password)) {
+        errors.push({
+            resource: 'user',
+            field: 'password',
+            code: 'invalid'
+        });
 	}
-	if (!email) {
-        errorMessages.email = 'Email is required';
-		errors = true;
-	} else if (!userHelper.validateEmail(email)) {
-        errorMessages.email = 'Email is not valid';
-		errors = true;
+    if (typeof email === 'string' && !userHelper.validateEmail(email)) {
+        errors.push({
+            resource: 'user',
+            field: 'email',
+            code: 'invalid'
+        });
 	}
-	if (!firstName) {
-        errorMessages.firstName = 'First name is required';
-		errors = true;
-	} else if (!profileHelper.validateName(firstName)) {
-        errorMessages.firstName = 'First name can only have latin characters';
-		errors = true;
+	if (typeof firstName === 'string' && !profileHelper.validateName(firstName)) {
+        errors.push({
+            resource: 'user',
+            field: 'firstName',
+            code: 'invalid'
+        });
 
 	}
-	if (!lastName) {
-        errorMessages.lastName = 'Last name is required';
-		errors = true;
-	} else if (!profileHelper.validateName(lastName)) {
-        errorMessages.lastName = 'Last name can only have latin characters';
-		errors = true;
+	if (typeof lastName === 'string' && !profileHelper.validateName(lastName)) {
+        errors.push({
+            resource: 'user',
+            field: 'lastName',
+            code: 'invalid'
+        });
 	}
 
 	// Checking if the given email already exists in the database
 	User.schema.emailIsUnique(email).then(function(unique_email) {
 		// If the email is not unique, add it to the errors
-		if (!unique_email) {
-            errorMessages.email = 'Email is already in use';
-			errors = true;
-		}
+        errors.push({
+            resource: 'user',
+            field: 'email',
+            code: 'already_exists'
+        });
 
 		// If there are any errors, show the messages to the user
-		if (errors) {
-			res.status(400).json({errors: errorMessages});
+		if (errors.length) {
+            res.status(422).json({message: 'Invalid data', errors: errors});
 			return;
 		}
 
@@ -101,7 +137,10 @@ exports.post = function(req, res) {
 					console.log(emailHash);
 					emailHelper.sendVerificationEmail(newUser.email, newProfile.firstName, newProfile.lastName, emailHash);
 					res.status(201).json({_id: user._id});
-				});
+				})
+                .catch(function(error) {
+                    res.status(500).json({message: 'Server error'});
+                });
 		});
 
 	});

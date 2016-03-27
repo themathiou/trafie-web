@@ -124,7 +124,7 @@ exports.post = function(req, res) {
 	var userId = req.user && req.user._id || null;
 	// If there is no user id, or the user id is different than the one in the session
 	if (!userId || (userId.toString() !== req.params.userId)) {
-		res.status(403).json(null);
+		res.status(401).json({message: 'Unauthorized'});
 	} else {
 		// Create the record that will be inserted in the db
 		var activityData = {
@@ -152,7 +152,7 @@ exports.post = function(req, res) {
 			});
 		} else {
 			// If there are errors, send the error messages to the client
-			res.status(400).json({errors: errors});
+			res.status(422).json({message: 'Invalid data', errors: errors});
 		}
 	}
 };
@@ -167,7 +167,7 @@ exports.put = function(req, res) {
 	var activityId = typeof req.params.activityId !== 'undefined' ? req.params.activityId : null;
 
 	if (!userId || !activityId || (userId !== req.params.userId)) {
-		res.status(403).json(null);
+        res.status(401).json({message: 'Unauthorized'});
 	} else {
 		Activity.schema.findOne({_id: activityId, userId: userId}, '')
 		.then(function(activity) {
@@ -200,7 +200,7 @@ exports.put = function(req, res) {
 				});
 			} else {
 				// If there are errors, send the error messages to the client
-				res.status(400).json({errors: errors});
+                res.status(422).json({message: 'Invalid data', errors: errors});
 			}
 		})
 		.catch(function(error) {
@@ -220,12 +220,18 @@ exports.delete = function(req, res) {
 
 	// If there is no user id, return an empty json
 	if (!userId || !activityId || (userId !== req.params.userId)) {
-		res.status(403).json(null);
+        res.status(401).json({message: 'Unauthorized'});
 	} else {
 		Activity.schema.delete({'_id': activityId, 'userId': userId})
 		.then(function(deleted) {
-			var status = deleted ? 200 : 403;
-			res.status(status).json(null);
+            if(deleted) {
+                res.status(200).json(null);
+            } else {
+                res.status(404).json({message: 'Resource not found', errors: [{
+                    resource: 'activity',
+                    code: 'not_found'
+                }]});
+            }
 		})
 		.catch(function(error) {
 			res.status(500).json({message: 'Server error'});
