@@ -11,7 +11,7 @@ var crypto = require('crypto');
  * @param type string (valid input is ['verify', 'reset'])
  */
 var userHashSchema = mongoose.Schema({
-	userId: 	{type: String, required: true, index: true, unique: true},
+	userId: 	{type: String, required: true},
 	hash: 		{type: String, required: true},
 	type: 		{type: String, required: true},
 	dateCreated:{ type: Date }
@@ -116,6 +116,7 @@ userHashSchema.createResetPasswordHash = function(userId) {
 		'userId': userId,
 		'type': 'reset'
 	}, function(err) {
+		if(err) d.reject(err);
         var hash = userHashSchema.encryptUserHash(userId + (new Date().getTime()), 'reset');
         var encryptedHash = userHashSchema.encryptUserHash(hash, 'reset');
         var newUserHash = {
@@ -125,7 +126,8 @@ userHashSchema.createResetPasswordHash = function(userId) {
         };
         var userHash = new UserHash(newUserHash);
 
-        userHash.save(function(err, userHash) {
+        userHash.save(function(err) {
+            if(err) d.reject(err);
             d.resolve(hash);
         });
 	});

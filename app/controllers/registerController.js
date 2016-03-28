@@ -36,7 +36,7 @@ exports.post = function(req, res) {
         });
     }
     if(typeof req.body.lastName === 'string') {
-        firstName = req.body.lastName.trim();
+        lastName = req.body.lastName.trim();
     } else {
         errors.push({
             resource: 'user',
@@ -45,7 +45,7 @@ exports.post = function(req, res) {
         });
     }
     if(typeof req.body.email === 'string') {
-        firstName = req.body.email.trim().toLowerCase();
+        email = req.body.email.trim().toLowerCase();
     } else {
         errors.push({
             resource: 'user',
@@ -54,7 +54,7 @@ exports.post = function(req, res) {
         });
     }
     if(typeof req.body.password === 'string') {
-        firstName = req.body.password;
+        password = req.body.password;
     } else {
         errors.push({
             resource: 'user',
@@ -64,21 +64,21 @@ exports.post = function(req, res) {
     }
 
 	// Generating error messages
-    if (typeof password === 'string' && !userHelper.validatePassword(password)) {
+    if (typeof password !== 'string' && !userHelper.validatePassword(password)) {
         errors.push({
             resource: 'user',
             field: 'password',
             code: 'invalid'
         });
 	}
-    if (typeof email === 'string' && !userHelper.validateEmail(email)) {
+    if (typeof email !== 'string' && !userHelper.validateEmail(email)) {
         errors.push({
             resource: 'user',
             field: 'email',
             code: 'invalid'
         });
 	}
-	if (typeof firstName === 'string' && !profileHelper.validateName(firstName)) {
+	if (typeof firstName !== 'string' && !profileHelper.validateName(firstName)) {
         errors.push({
             resource: 'user',
             field: 'firstName',
@@ -86,7 +86,7 @@ exports.post = function(req, res) {
         });
 
 	}
-	if (typeof lastName === 'string' && !profileHelper.validateName(lastName)) {
+	if (typeof lastName !== 'string' && !profileHelper.validateName(lastName)) {
         errors.push({
             resource: 'user',
             field: 'lastName',
@@ -95,13 +95,15 @@ exports.post = function(req, res) {
 	}
 
 	// Checking if the given email already exists in the database
-	User.schema.emailIsUnique(email).then(function(unique_email) {
+	User.schema.emailIsUnique(email).then(function(emailIsUnique) {
 		// If the email is not unique, add it to the errors
-        errors.push({
-            resource: 'user',
-            field: 'email',
-            code: 'already_exists'
-        });
+        if(!emailIsUnique) {
+            errors.push({
+                resource: 'user',
+                field: 'email',
+                code: 'already_exists'
+            });
+        }
 
 		// If there are any errors, show the messages to the user
 		if (errors.length) {
@@ -127,6 +129,10 @@ exports.post = function(req, res) {
 
 		// Saving the user and the profile data
 		user.save(function(err, user) {
+            if(err) {
+                res.status(500).json({message: 'Server error'});
+                return;
+            }
             newProfile._id = user._id;
 			var profile = new Profile(newProfile);
 			Profile.schema.save(profile)
