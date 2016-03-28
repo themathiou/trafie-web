@@ -134,7 +134,6 @@ exports.post = function(req, res) {
 					return UserHashes.schema.createVerificationHash(newUser.email, user._id);
 				})
 				.then(function(emailHash) {
-					console.log(emailHash);
 					emailHelper.sendVerificationEmail(newUser.email, newProfile.firstName, newProfile.lastName, emailHash);
 					res.status(201).json({_id: user._id});
 				})

@@ -1,5 +1,5 @@
 <form class="form-signin" method="post" role="form">
-    <h2 class="form-signin-heading">trafie</h2>
+    <h2 class="text-center">trafie</h2>
     <div class="alert alert-danger" role="alert" ng-if="errorsArray.length" ng-bind-html="errorsArray.join('<br>')">
 
     </div>
@@ -23,11 +23,11 @@
         <input id="password" class="form-control" name="password" type="password" ng-model="formData.password" required>
     </div>
 
-    <div>
+    <div class="form-group">
         <input class="btn btn-success btn-lg btn-block" type="submit" ng-click="register()" value="Register">
     </div>
 
-    <div>
+    <div class="form-group">
         <small>Already a member?</small>&nbsp;
         <a href="/login">Login</a>
     </div>
