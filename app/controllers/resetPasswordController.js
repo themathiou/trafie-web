@@ -55,7 +55,7 @@ exports.request.post = function(req, res) {
             res.status(200).json(hash);
 		})
 		.catch(function(error) {
-            sendError(error, res);
+            res.status(500).json({message: 'Server error'});
 		});
 };
 
@@ -65,14 +65,10 @@ exports.request.post = function(req, res) {
 exports.post = function(req, res) {
 	var password = req.body.password;
 	var hash = req.params.hash;
-	var errorMessages = [];
 	var userId = '';
 
 	// Generate post error messages
-	if (!userHelper.validatePassword(password))
-		errorMessages.push('Password should be at least 6 characters long');
-
-	if (errorMessages.length) {
+	if (!userHelper.validatePassword(password)) {
 		res.status(422).json({message: 'Invalid data', errors: [{
 			resource: 'user',
 			field: 'password',
@@ -107,16 +103,6 @@ exports.post = function(req, res) {
             res.status(200).json({_id: userId, email: user.email});
 		})
 		.catch(function(error) {
-            sendError(error, res);
+            res.status(500).json({message: 'Server error'});
 		});
 };
-
-
-/**
- * Sends an error page in case a query fails
- * @param string error
- * @param object res
- */
-function sendError(error, res) {
-    res.status(500).json({message: 'Server error'});
-}

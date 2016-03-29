@@ -5,21 +5,21 @@
                 email: ''
             };
             $scope.error = '';
+            $scope.fieldError = false;
 
             $scope.resetPassword = function() {
                 $scope.error = '';
                 $http.post('/reset-password-request', $scope.formData)
                     .then(function(res) {
                         if(res.status === 200) {
-                            var message = encodeURIComponent('An email with instructions of resetting your password, has been sent to your email address');
-                            console.log(message);
-                            $window.location.href = '/login?message=' + message + '&message_type=success';
+                            $window.location.href = '/login?message=password_reset';
                         }
                     }, function(res) {
                         if (res.status === 404) {
                             $scope.error = 'The provided email address was not found';
+                            $scope.fieldError = true;
                         } else {
-                            $scope.error = 'Something went wrong';
+                            $scope.error = 'There was a problem processing your request. Please try later.';
                         }
                     });
             };

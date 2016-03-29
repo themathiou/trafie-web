@@ -8,10 +8,10 @@
         $scope.error = '';
         $scope.success = '';
 
-        if('message_type' in $location.search()) {
+        if('message' in $location.search()) {
             var query = angular.copy($location.search());
-            if(query.message_type === 'success') {
-                $scope.success = decodeURIComponent(query.message);
+            if(query.message === 'password_reset') {
+                $scope.success = 'An email with instructions of resetting your password, has been sent to your email address';
             }
         }
 

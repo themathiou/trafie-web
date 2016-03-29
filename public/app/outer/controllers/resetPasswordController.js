@@ -25,7 +25,15 @@
                         });
                     }
                 }, function(res) {
-                    $scope.errors = res.data.errors.pop();
+                    if(res.status === 422) {
+                        $scope.error = 'The password should be at least 6 characters long';
+                    }
+                    else if(res.status === 404) {
+                        $scope.error = 'We couldn\'t find your request to reset your password';
+                    }
+                    else {
+                        $scope.error = 'There was a problem processing your request. Please try later.';
+                    }
                 });
             };
         });
