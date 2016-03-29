@@ -64,21 +64,21 @@ exports.post = function(req, res) {
     }
 
 	// Generating error messages
-    if (typeof password !== 'string' && !userHelper.validatePassword(password)) {
+    if (typeof password === 'string' && !userHelper.validatePassword(password)) {
         errors.push({
             resource: 'user',
             field: 'password',
             code: 'invalid'
         });
 	}
-    if (typeof email !== 'string' && !userHelper.validateEmail(email)) {
+    if (typeof email === 'string' && !userHelper.validateEmail(email)) {
         errors.push({
             resource: 'user',
             field: 'email',
             code: 'invalid'
         });
 	}
-	if (typeof firstName !== 'string' && !profileHelper.validateName(firstName)) {
+	if (typeof firstName === 'string' && !profileHelper.validateName(firstName)) {
         errors.push({
             resource: 'user',
             field: 'firstName',
@@ -86,7 +86,7 @@ exports.post = function(req, res) {
         });
 
 	}
-	if (typeof lastName !== 'string' && !profileHelper.validateName(lastName)) {
+	if (typeof lastName === 'string' && !profileHelper.validateName(lastName)) {
         errors.push({
             resource: 'user',
             field: 'lastName',

@@ -127,6 +127,7 @@ userHashSchema.createResetPasswordHash = function(userId) {
         var userHash = new UserHash(newUserHash);
 
         userHash.save(function(err) {
+            console.log(err);
             if(err) d.reject(err);
             d.resolve(hash);
         });
