@@ -162,10 +162,14 @@ exports.post = function(req, res) {
 	var userId = req.user && req.user._id.toString();
 
 	// If there is no user id in the session, redirect to register screen
-	if (!userId || !req.params.userId || userId !== req.params.userId) {
-		res.status(401).json(null);
-		return false;
-	}
+    if (!userId || !req.params.userId) {
+        res.status(401).json({message: 'Unauthorized'});
+        return false;
+    }
+    else if(userId.toString() !== req.params.userId) {
+        res.status(403).json({message: 'Forbidden'});
+        return false;
+    }
 
 	// Check if the profile really exists
 	Profile.schema.findOne({

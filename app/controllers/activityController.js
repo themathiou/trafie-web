@@ -123,9 +123,13 @@ exports.post = function(req, res) {
 	// Get the user id from the session
 	var userId = req.user && req.user._id || null;
 	// If there is no user id, or the user id is different than the one in the session
-	if (!userId || (userId.toString() !== req.params.userId)) {
+	if (!userId) {
 		res.status(401).json({message: 'Unauthorized'});
-	} else {
+	}
+    else if(userId.toString() !== req.params.userId) {
+        res.status(403).json({message: 'Forbidden'});
+    }
+	else {
 		// Create the record that will be inserted in the db
 		var activityData = {
 			userId: userId,
@@ -166,9 +170,16 @@ exports.put = function(req, res) {
 	// Get the activity id from the url
 	var activityId = typeof req.params.activityId !== 'undefined' ? req.params.activityId : null;
 
-	if (!userId || !activityId || (userId !== req.params.userId)) {
+	if (!userId) {
         res.status(401).json({message: 'Unauthorized'});
-	} else {
+	}
+    else if (!activityId) {
+        res.status(400).json({message: 'Bad Request'});
+    }
+    else if(userId.toString() !== req.params.userId) {
+        res.status(403).json({message: 'Forbidden'});
+    }
+    else {
 		Activity.schema.findOne({_id: activityId, userId: userId}, '')
 		.then(function(activity) {
 			if (!activity || typeof activity._id == 'undefined') res.status(404).json({message: 'Resource not found', errors: [{
@@ -218,10 +229,16 @@ exports.delete = function(req, res) {
 	// Get the activity id from the url
 	var activityId = req.params.activityId;
 
-	// If there is no user id, return an empty json
-	if (!userId || !activityId || (userId !== req.params.userId)) {
+    if (!userId) {
         res.status(401).json({message: 'Unauthorized'});
-	} else {
+    }
+    else if (!activityId) {
+        res.status(400).json({message: 'Bad Request'});
+    }
+    else if(userId.toString() !== req.params.userId) {
+        res.status(403).json({message: 'Forbidden'});
+    }
+    else {
 		Activity.schema.delete({'_id': activityId, 'userId': userId})
 		.then(function(deleted) {
             if(deleted) {
