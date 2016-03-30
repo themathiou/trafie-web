@@ -84,7 +84,6 @@ exports.post = function(req, res) {
             field: 'firstName',
             code: 'invalid'
         });
-
 	}
 	if (typeof lastName === 'string' && !profileHelper.validateName(lastName)) {
         errors.push({

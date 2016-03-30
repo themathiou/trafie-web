@@ -90,8 +90,7 @@ exports.resendEmail = function(req, res) {
         if(response) {
             firstName = response.firstName;
             lastName = response.lastName;
-            // Find the validation has that was stored in the db for the user
-            return UserHashes.schema.findValidationHashByUserId(userId);
+            return UserHashes.schema.createVerificationHash(email, userId);
         } else {
             return false;
         }
@@ -99,8 +98,7 @@ exports.resendEmail = function(req, res) {
 	.then(function(response) {
         if(response) {
             // Send an email with the hash to the user
-            emailHelper.sendVerificationEmail(email, firstName, lastName, response.hash);
-
+            emailHelper.sendVerificationEmail(email, firstName, lastName, response);
             res.json(null);
         }
         else if(!responseSent) {

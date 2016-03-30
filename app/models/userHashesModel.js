@@ -91,16 +91,22 @@ userHashSchema.createVerificationHash = function(email, userId) {
     var hash = userHashSchema.encryptUserHash(email + (new Date().getTime()), 'verify');
     var encryptedHash = userHashSchema.encryptUserHash(hash, 'verify');
 	var d = q.defer();
-	var newUserHash = {
+	UserHash.remove({
 		'userId': userId,
-		'hash': encryptedHash,
 		'type': 'verify'
-	};
+	}, function(err) {
+		if (err) d.reject(err);
+		var newUserHash = {
+			'userId': userId,
+			'hash': encryptedHash,
+			'type': 'verify'
+		};
 
-	var userHash = new UserHash(newUserHash);
+		var userHash = new UserHash(newUserHash);
 
-	userHash.save(function(err, userHash) {
-		d.resolve(hash);
+		userHash.save(function (err, userHash) {
+			d.resolve(hash);
+		});
 	});
 
 	return d.promise;

@@ -52,7 +52,7 @@ exports.request.post = function(req, res) {
 		.then(function(hash) {
 			// Send an email with the hash
 			emailHelper.sendResetPasswordEmail(email, firstName, lastName, hash);
-            res.status(200).json(hash);
+            res.status(200).json(null);
 		})
 		.catch(function(error) {
             res.status(500).json({message: 'Server error'});
