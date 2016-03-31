@@ -22,7 +22,11 @@ exports.post = function(req, res) {
 
 function saveFeedback(req, res) {
     var userId = req.user && req.user._id || null;
-    res.status(403).json({message: 'Forbidden'});
+
+    if(!userId) {
+        res.status(403).json({message: 'Forbidden'});
+        return;
+    }
 
     if (typeof req.body.feedback === 'string' && req.body.feedback.length >= 10 && typeof req.body.feedbackType === 'string') {
         let platform = req.body.hasOwnProperty('platform') ? req.body.platform : 'web',
