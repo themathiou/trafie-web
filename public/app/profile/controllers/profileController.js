@@ -90,19 +90,6 @@
                 });
             }
 
-            $scope.showFeedbackModal = function (activity) {
-                var modalInstance = $uibModal.open({
-                    animation: true,
-                    templateUrl: 'app/feedback/views/feedbackModalView.html',
-                    controller: 'FeedbackModalController',
-                    size: 'md'
-                });
-
-                modalInstance.result.then(function () {
-                }, function () {
-                });
-            };
-
             $scope.$on('$destroy', function() {
                 if($scope.ownProfile && listeners.hasOwnProperty('activityCreated')) {
                     listeners.activityCreated();

@@ -2,7 +2,7 @@
     angular.module('trafie')
     .controller('SettingsController', function($scope, $http, $window, $translate, $filter, $routeParams,
                                                userService, COUNTRIES, DISCIPLINES, LANGUAGES_MAP,
-                                               DATE_FORMATS_MAP, VALIDATIONS, User, notify) {
+                                               DATE_FORMATS_MAP, VALIDATIONS, User, notify, $uibModal) {
         var tabsList = ['profile', 'account', 'password'];
         var fieldErrorsMap = {
             firstName: {invalid: 'SETTINGS.INVALID_FIRST_NAME'},
@@ -29,6 +29,7 @@
         $scope.dateFormatsMap = DATE_FORMATS_MAP;
         $scope.dateFormats = Object.keys(DATE_FORMATS_MAP);
         $scope.validations = VALIDATIONS;
+        $scope.saving = false;
         $scope.setting = {
             birthday: '',
             isMale: ''
@@ -57,6 +58,7 @@
                 currentLanguage = $scope.user.language;
             }
 
+            $scope.saving = true;
             var user = new User($scope.user);
             user.$save()
                 .then(function(res) {
@@ -64,7 +66,9 @@
                         message: $filter('translate')('SETTINGS.DATA_WAS_UPDATED_SUCCESSFULLY'),
                         classes: 'alert-success'
                     });
+                    $scope.saving = false;
                 }, function(res) {
+                    $scope.saving = false;
                     /*var messages = res.messages.map(function(message) {
                         return $filter('translate')(message);
                     });
@@ -77,6 +81,19 @@
 
         $scope.logout = function() {
             $http.get('/logout').then(redirectToLogin);
+        };
+
+        $scope.deactivateAccount = function() {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'app/settings/views/deactivateAccountModalView.html',
+                controller: 'DeactivateAccountModalController',
+                size: 'md'
+            });
+
+            modalInstance.result.then(function () {
+            }, function () {
+            });
         };
 
         $scope.toDatepickerFormat = function(format) {

@@ -55,6 +55,7 @@ var index = require('./app/controllers/index'),
     disciplines = require('./app/controllers/disciplineController'),
     emailValidation = require('./app/controllers/emailValidationController'),
     resetPassword = require('./app/controllers/resetPasswordController'),
+    deactivate = require('./app/controllers/deactivateAccountController'),
     //dummyData = require('./app/controllers/dummyDataController'),
     //api = require('./app/controllers/apiController'),
     feedback = require('./app/controllers/feedbackController'),
@@ -224,6 +225,16 @@ trafie.post('/reset-password/:hash', resetPassword.post);
  * Logout - GET
  */
 trafie.get('/logout', logout.get);
+
+
+/*******************************************************************************************************************************
+ * LOGOUT                                                                                                                      *
+ ******************************************************************************************************************************/
+
+/**
+ * Logout - GET
+ */
+trafie.post('/deactivate-account', deactivate.post);
 
 
 /*******************************************************************************************************************************

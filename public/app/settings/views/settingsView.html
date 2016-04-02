@@ -45,7 +45,7 @@
                         </div>
                         <div class="form-group">
                             <label for="aboutMe" translate="COMMON.ABOUT_ME"></label>
-                            <textarea class="form-control" id="aboutMe" ng-model="user.about" name="about" ng-maxlength="400"></textarea>
+                            <textarea class="form-control vertical-resize" id="aboutMe" ng-model="user.about" name="about" ng-maxlength="400"></textarea>
                         </div>
                         <div class="form-group">
                             <label translate="COMMON.GENDER"></label>
@@ -66,7 +66,7 @@
                         </div>
                     </div>
                     <div class="panel-footer clearfix">
-                        <input type="submit" class="btn btn-primary pull-right" ng-click="saveSettings()" value="{{'COMMON.SAVE_CHANGES' | translate}}">
+                        <input type="submit" class="btn btn-primary pull-right" ng-click="saveSettings('profile')" value="{{(saving ? 'COMMON.SAVING' : 'COMMON.SAVE_CHANGES') | translate}}">
                     </div>
                 </div>
             </form>
@@ -95,11 +95,11 @@
                         </div>
                     </div>
                     <div class="panel-footer clearfix">
-                        <input type="submit" class="btn btn-primary pull-right" ng-click="saveSettings()" value="{{'COMMON.SAVE_CHANGES' | translate}}">
+                        <input type="submit" class="btn btn-primary pull-right" ng-click="saveSettings('account')" value="{{(saving ? 'COMMON.SAVING' : 'COMMON.SAVE_CHANGES') | translate}}">
                     </div>
                 </div>
                 <div class="text-center">
-                    <a href="javascript:;" class="text-warning" translate="SETTINGS.DEACTIVATE_MY_ACCOUNT"></a>
+                    <a href="javascript:;" ng-click="deactivateAccount()" class="text-warning" translate="SETTINGS.DEACTIVATE_MY_ACCOUNT"></a>
                 </div>
             </form>
             <form method="POST" name="passwordForm" ng-show="tab === 'password'">
@@ -120,7 +120,7 @@
                         </div>
                     </div>
                     <div class="panel-footer clearfix">
-                        <input type="submit" class="btn btn-primary pull-right" ng-click="saveSettings()" value="{{'COMMON.SAVE_CHANGES' | translate}}">
+                        <input type="submit" class="btn btn-primary pull-right" ng-click="saveSettings('password')" value="{{(saving ? 'COMMON.SAVING' : 'COMMON.SAVE_CHANGES') | translate}}">
                     </div>
                 </div>
             </form>

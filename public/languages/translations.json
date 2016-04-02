@@ -593,6 +593,18 @@
     "ERROR_OCCURRED": {
       "en": "There was an error while updating your settings. Please try again.",
       "el": "Υπήρξε πρόβλημα κατά την αποθήκευση των ρυθμίσεων. Παρακαλούμε προσπαθήστε πάλι."
+    },
+    "WE_ARE_SORRY_TO_SEE_YOU_GO": {
+      "en": "We are sorry to see you go. Please, type your password in order to verify that you are the owner of this account.",
+      "el": "Λυπούμαστε που θέλετε να φύγετε. Παρακαλούμε, πληκτρολογήστε τον κωδικό σας για να βεβαιωθούμε πως είστε ο κάτωχος αυτού του λογαριασμού."
+    },
+    "DEACTIVATE": {
+      "en": "Deactivate",
+      "el": "Απενεργοποίηση"
+    },
+    "DEACTIVATING": {
+      "en": "Deactivating",
+      "el": "Απενεργοποιείται"
     }
   },
   "FEEDBACK": {

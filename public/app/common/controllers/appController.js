@@ -50,9 +50,25 @@
             if($location.path().substr(0, 9) === '/settings') {
                 return 'settings'
             }
-            else {
+            else if($location.path() === '/') {
                 return 'profile';
             }
+            else if(self.user && ['/' + self.user._id, '/' + self.user.username].indexOf($location.path()) >= 0) {
+                return 'profile';
+            }
+        };
+
+        self.showFeedbackModal = function (activity) {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'app/feedback/views/feedbackModalView.html',
+                controller: 'FeedbackModalController',
+                size: 'md'
+            });
+
+            modalInstance.result.then(function () {
+            }, function () {
+            });
         };
 
         $scope.$watch(function() {
