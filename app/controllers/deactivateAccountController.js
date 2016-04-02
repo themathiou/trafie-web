@@ -40,7 +40,6 @@ exports.post = function(req, res) {
         }
     })
     .catch(function(error) {
-        console.log(error);
         res.status(500).json({message: 'Server error'});
     });
 };
