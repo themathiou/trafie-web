@@ -3,9 +3,9 @@ nav.navbar.navbar-default.navbar-fixed-top
         div.container-fluid
             div.navbar-collapse.collapse.navbar-left.row
                 ul.nav.navbar-nav
-                    li(ng-if="App.user")
+                    li(ng-if="App.user" ng-class="{'active': App.getCurrentPage() === 'profile'}")
                         a(href='/' translate="COMMON.PROFILE")
-                    li(ng-if="App.user")
+                    li(ng-if="App.user" ng-class="{'active': App.getCurrentPage() === 'settings'}")
                         a(href='/settings' translate="COMMON.SETTINGS")
             div.navbar-header
                 a.navbar-brand(href="/") trafie

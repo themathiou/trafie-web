@@ -46,6 +46,15 @@
             }
         };
 
+        self.getCurrentPage = function() {
+            if($location.path().substr(0, 9) === '/settings') {
+                return 'settings'
+            }
+            else {
+                return 'profile';
+            }
+        };
+
         $scope.$watch(function() {
             return self.profileResult;
         }, self.goToUser);

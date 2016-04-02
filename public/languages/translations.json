@@ -263,7 +263,7 @@
       "el": "Γλώσσα"
     },
     "ABOUT_ME": {
-      "en": "About Me",
+      "en": "About me",
       "el": "Σχετικά με εμένα"
     },
     "PRIVACY": {
@@ -326,18 +326,6 @@
       "en": "Search",
       "el": "Αναζήτηση"
     },
-    "GENERAL_SETTINGS": {
-      "en": "General settings",
-      "el": "Γενικές ρυθμίσεις"
-    },
-    "PROFILE_SETTINGS": {
-      "en": "Profile settings",
-      "el": "Ρυθμίσεις προφίλ"
-    },
-    "ACCOUNT_SETTINGS": {
-      "en": "Account settings",
-      "el": "Ρυθμίσεις λογαριασμού"
-    },
     "SOMETHING_WENT_WRONG": {
       "en": "Oops! Something went wrong...",
       "el": "Ωχ! Κάτι πήγε στραβά..."
@@ -353,7 +341,7 @@
   },
   "PROFILE": {
     "ADD_NEW_ACTIVITY": {
-      "en": "Add New Activity",
+      "en": "Add new activity",
       "el": "Προσθήκη νέας δραστηριότητας"
     },
     "NEW_ACTIVITY": {
@@ -454,6 +442,26 @@
     }
   },
   "SETTINGS": {
+    "PROFILE_SETTINGS": {
+      "en": "Profile settings",
+      "el": "Ρυθμίσεις προφίλ"
+    },
+    "ACCOUNT_SETTINGS": {
+      "en": "Account settings",
+      "el": "Ρυθμίσεις λογαριασμού"
+    },
+    "PASSWORD_SETTINGS": {
+      "en": "Password settings",
+      "el": "Ρυθμίσεις κωδικού"
+    },
+    "ACCOUNT": {
+      "en": "Account",
+      "el": "Λογαριασμός"
+    },
+    "DEACTIVATE_MY_ACCOUNT": {
+      "en": "Deactivate my account",
+      "el": "Απενεργοποίηση του λογαριασμού μου"
+    },
     "CHOOSE_YOUR_DISCIPLINE": {
       "en": "Choose your discipline",
       "el": "Διάλεξε αγώνισμα"
@@ -474,25 +482,37 @@
       "en": "Write something about you",
       "el": "Γράψε κάτι για εσένα"
     },
+    "PASSWORD": {
+      "en": "Password",
+      "el": "Κωδικός"
+    },
     "CHANGE_PASSWORD": {
-      "en": "Change Password",
-      "el": "Αλλαγή Κωδικού"
+      "en": "Change password",
+      "el": "Αλλαγή κωδικού"
     },
     "OLD_PASSWORD": {
-      "en": "Old Password",
-      "el": "Παλιός Κωδικός"
+      "en": "Old password",
+      "el": "Παλιός κωδικός"
     },
     "NEW_PASSWORD": {
-      "en": "New Password",
-      "el": "Καινούριος Κωδικός"
+      "en": "New password",
+      "el": "Καινούριος κωδικός"
     },
     "REPEAT_PASSWORD": {
-      "en": "Repeat Password",
-      "el": "Επανέλαβε τον Κωδικό"
+      "en": "Repeat password",
+      "el": "Επανέλαβε τον κωδικό"
+    },
+    "PROFILE_PRIVACY": {
+      "en": "Profile privacy",
+      "el": "Ιδιωτικότητα προφίλ"
     },
     "DATE_FORMAT": {
-      "en": "Date Format",
-      "el": "Μορφή Ημερομηνίας"
+      "en": "Date format",
+      "el": "Μορφή ημερομηνίας"
+    },
+    "HIDE_MY_PROFILE_FROM_ALL_USERS": {
+      "en": "Hide my profile from all users",
+      "el": "Απόκρυψη του προφίλ μου από όλους τους χρήστες"
     },
     "DATA_WAS_UPDATED_SUCCESSFULLY": {
       "en": "Data was updated successfully",

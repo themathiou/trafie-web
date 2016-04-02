@@ -1,20 +1,9 @@
 (function(angular) {
     angular.module('trafie')
-    .controller('SettingsController', function($scope, $http, $window, $translate, $filter, userService,
-                                               COUNTRIES, DISCIPLINES, LANGUAGES_MAP, DATE_FORMATS_MAP,
-                                               VALIDATIONS, User, notify) {
-        $scope.user = null;
-        $scope.countries = [''].concat(COUNTRIES);
-        $scope.disciplines = [''].concat(DISCIPLINES);
-        $scope.languagesMap = LANGUAGES_MAP;
-        $scope.languages = Object.keys(LANGUAGES_MAP);
-        $scope.dateFormatsMap = DATE_FORMATS_MAP;
-        $scope.dateFormats = Object.keys(DATE_FORMATS_MAP);
-        $scope.validations = VALIDATIONS;
-        $scope.setting = {
-            birthday: '',
-            isMale: ''
-        };
+    .controller('SettingsController', function($scope, $http, $window, $translate, $filter, $routeParams,
+                                               userService, COUNTRIES, DISCIPLINES, LANGUAGES_MAP,
+                                               DATE_FORMATS_MAP, VALIDATIONS, User, notify) {
+        var tabsList = ['profile', 'account', 'password'];
         var fieldErrorsMap = {
             firstName: {invalid: 'SETTINGS.INVALID_FIRST_NAME'},
             lastName: {invalid: 'SETTINGS.INVALID_LAST_NAME'},
@@ -31,6 +20,19 @@
             password: {invalid: 'SETTINGS.PASSWORD_SHOULD_BE_AT_LEAST_6_CHARACTERS_LONG'}
         };
         var currentLanguage = '';
+        $scope.user = null;
+        $scope.tab = $routeParams.tab && tabsList.indexOf($routeParams.tab) >= 0 ? $routeParams.tab : tabsList[0];
+        $scope.countries = [''].concat(COUNTRIES);
+        $scope.disciplines = [''].concat(DISCIPLINES);
+        $scope.languagesMap = LANGUAGES_MAP;
+        $scope.languages = Object.keys(LANGUAGES_MAP);
+        $scope.dateFormatsMap = DATE_FORMATS_MAP;
+        $scope.dateFormats = Object.keys(DATE_FORMATS_MAP);
+        $scope.validations = VALIDATIONS;
+        $scope.setting = {
+            birthday: '',
+            isMale: ''
+        };
 
         userService.loadCurrentUser().then(function(user) {
             $scope.user = user;

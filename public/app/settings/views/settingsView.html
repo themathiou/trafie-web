@@ -1,97 +1,129 @@
 <div class="container">
     <div class="col-xs-12">
-        <h2 translate="COMMON.SETTINGS"></h2>
-        <form method="POST" name="form">
-            <uib-tabset ng-cloak>
-                <uib-tab heading="{{'COMMON.PROFILE_SETTINGS' | translate}}">
-                    <div class="panel">
-                        <div class="panel-body">
-                            <div class="form-group">
-                                <label for="firstName" translate="COMMON.FIRST_NAME"></label>
-                                <input type="text" class="form-control" name="firstName" id="firstName" ng-model="user.firstName" ng-pattern="validations.name" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="lastName" translate="COMMON.LAST_NAME"></label>
-                                <input type="text" class="form-control" name="lastName" id="lastName" ng-model="user.lastName" ng-pattern="validations.name" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="discipline" translate="COMMON.MAIN_DISCIPLINE"></label>
-                                <select class="form-control" id="discipline" name="discipline" ng-model="user.discipline" ng-options="discipline as (discipline && 'DISCIPLINES.' + discipline.toUpperCase() || 'SETTINGS.CHOOSE_YOUR_DISCIPLINE' | translate) for discipline in disciplines"></select>
-                            </div>
-                            <div class="form-group">
-                                <label for="country" translate="COMMON.COUNTRY"></label>
-                                <select class="form-control" id="country" name="country" ng-model="user.country" ng-options="country as (country && 'COUNTRIES.' + country.toUpperCase() || 'SETTINGS.CHOOSE_YOUR_COUNTRY' | translate) for country in countries"></select>
-                            </div>
-                            <div class="form-group">
-                                <label for="birthday">{{'COMMON.BIRTHDAY' | translate}} ({{'SETTINGS.' + dateFormatsMap[user.dateFormat] | translate}})</label>
-                                <input type="text" id="birthday" class="form-control" ng-model="setting.birthday">
-                            </div>
-                            <div class="form-group">
-                                <label for="aboutMe" translate="COMMON.ABOUT_ME"></label>
-                                <textarea class="form-control" id="aboutMe" ng-model="user.about" name="about" ng-maxlength="400"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" name="gender" ng-model="setting.isMale" value="true"> {{'COMMON.MALE' | translate}}
-                                    </label>
+        <div class="col-md-3">
+            <div class="list-group">
+                <a href="/settings/profile" class="list-group-item" ng-class="{'active': tab === 'profile'}">
+                    {{'COMMON.PROFILE' | translate}}
+                    <i class="glyphicon glyphicon-chevron-right pull-right"></i>
+                </a>
+                <a href="/settings/account" class="list-group-item" ng-class="{'active': tab === 'account'}">
+                    {{'SETTINGS.ACCOUNT' | translate}}
+                    <i class="glyphicon glyphicon-chevron-right pull-right"></i>
+                </a>
+                <a href="/settings/password" class="list-group-item" ng-class="{'active': tab === 'password'}">
+                    {{'SETTINGS.PASSWORD' | translate}}
+                    <i class="glyphicon glyphicon-chevron-right pull-right"></i>
+                </a>
+                <a href="javascript:;" class="list-group-item" ng-click="logout()" translate="COMMON.LOGOUT"></a>
+            </div>
+            <div ng-include="'/app/common/views/footerLinksView.html'"></div>
+        </div>
+        <div class="col-md-9">
+            <form method="POST" name="profileForm" ng-show="tab === 'profile'">
+                <div class="panel panel-default">
+                    <div class="panel-heading" translate="SETTINGS.PROFILE_SETTINGS"></div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="firstName" translate="COMMON.FIRST_NAME"></label>
+                            <input type="text" class="form-control" name="firstName" id="firstName" ng-model="user.firstName" ng-pattern="validations.name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName" translate="COMMON.LAST_NAME"></label>
+                            <input type="text" class="form-control" name="lastName" id="lastName" ng-model="user.lastName" ng-pattern="validations.name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="discipline" translate="COMMON.MAIN_DISCIPLINE"></label>
+                            <select class="form-control" id="discipline" name="discipline" ng-model="user.discipline" ng-options="discipline as (discipline && 'DISCIPLINES.' + discipline.toUpperCase() || 'SETTINGS.CHOOSE_YOUR_DISCIPLINE' | translate) for discipline in disciplines"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="country" translate="COMMON.COUNTRY"></label>
+                            <select class="form-control" id="country" name="country" ng-model="user.country" ng-options="country as (country && 'COUNTRIES.' + country.toUpperCase() || 'SETTINGS.CHOOSE_YOUR_COUNTRY' | translate) for country in countries"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="birthday">{{'COMMON.BIRTHDAY' | translate}} ({{'SETTINGS.' + dateFormatsMap[user.dateFormat] | translate}})</label>
+                            <input type="text" id="birthday" class="form-control" ng-model="setting.birthday">
+                        </div>
+                        <div class="form-group">
+                            <label for="aboutMe" translate="COMMON.ABOUT_ME"></label>
+                            <textarea class="form-control" id="aboutMe" ng-model="user.about" name="about" ng-maxlength="400"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label translate="COMMON.GENDER"></label>
+                            <div>
+                                <div class="btn-group">
+                                    <label class="btn btn-primary" ng-model="setting.isMale" uib-btn-radio="'true'" translate="COMMON.MALE"></label>
+                                    <label class="btn btn-primary" ng-model="setting.isMale" uib-btn-radio="'false'" translate="COMMON.FEMALE"></label>
                                 </div>
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" name="gender" ng-model="setting.isMale" value="false"> {{'COMMON.FEMALE' | translate}}
-                                    </label>
-                                </div>
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <label translate="SETTINGS.PROFILE_PRIVACY"></label>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" ng-model="user.isPrivate"> {{'COMMON.PRIVATE' | translate}}
+                                    <input type="checkbox" ng-model="user.isPrivate"> {{'SETTINGS.HIDE_MY_PROFILE_FROM_ALL_USERS' | translate}}
                                 </label>
                             </div>
                         </div>
                     </div>
-                </uib-tab>
-                <uib-tab heading="{{'COMMON.ACCOUNT_SETTINGS' | translate}}">
-                    <div class="panel">
-                        <div class="panel-body">
-                            <div class="form-group">
-                                <label for="email" translate="COMMON.EMAIL"></label>
-                                <input type="email" class="form-control" name="email" id="email" ng-model="user.email" disabled required ng-pattern="validations.email">
-                            </div>
-                            <div class="form-group">
-                                <label for="language" translate="COMMON.LANGUAGE"></label>
-                                <select class="form-control" id="language" name="language" ng-model="user.language" ng-options="language as languagesMap[language] for language in languages" required></select>
-                            </div>
-                            <div class="form-group">
-                                <label for="date-format" translate="SETTINGS.DATE_FORMAT"></label>
-                                <select class="form-control" id="date-format" name="dateFormat" ng-model="user.dateFormat" ng-options="dateFormat as ('SETTINGS.' + dateFormatsMap[dateFormat] | translate) for dateFormat in dateFormats" required></select>
-                            </div>
-                            <div class="form-group">
-                                <label for="username" translate="COMMON.USERNAME"></label>
-                                <div class="input-group">
-                                    <span class="input-group-addon">https://trafie.com/</span>
-                                    <input type="text" id="username" name="username" class="form-control" ng-model="user.username" ng-pattern="validations.username">
-                                </div>
-                            </div>
-                            <hr>
-                            <h4 translate="SETTINGS.CHANGE_PASSWORD"></h4>
-                            <div class="form-group">
-                                <label for="old-password" translate="SETTINGS.OLD_PASSWORD"></label>
-                                <input type="password" id="old-password" name="oldPassword" class="form-control" ng-model="user.oldPassword" ng-minlength="6">
-                            </div>
-                            <div class="form-group">
-                                <label for="password" translate="SETTINGS.NEW_PASSWORD"></label>
-                                <input type="password" id="password" name="password" class="form-control" ng-model="user.password" ng-minlength="6">
-                            </div>
-                            <div class="form-group">
-                                <label for="repeat-password" translate="SETTINGS.REPEAT_PASSWORD"></label>
-                                <input type="password" id="repeat-password" name="repeatPassword" class="form-control" ng-model="repeatPassword" ng-minlength="6">
+                    <div class="panel-footer clearfix">
+                        <input type="submit" class="btn btn-primary pull-right" ng-click="saveSettings()" value="{{'COMMON.SAVE_CHANGES' | translate}}">
+                    </div>
+                </div>
+            </form>
+            <form method="POST" name="accountForm" ng-show="tab === 'account'">
+                <div class="panel panel-default">
+                    <div class="panel-heading" translate="SETTINGS.ACCOUNT_SETTINGS"></div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="email" translate="COMMON.EMAIL"></label>
+                            <input type="email" class="form-control" name="email" id="email" ng-model="user.email" disabled required ng-pattern="validations.email">
+                        </div>
+                        <div class="form-group">
+                            <label for="language" translate="COMMON.LANGUAGE"></label>
+                            <select class="form-control" id="language" name="language" ng-model="user.language" ng-options="language as languagesMap[language] for language in languages" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="date-format" translate="SETTINGS.DATE_FORMAT"></label>
+                            <select class="form-control" id="date-format" name="dateFormat" ng-model="user.dateFormat" ng-options="dateFormat as ('SETTINGS.' + dateFormatsMap[dateFormat] | translate) for dateFormat in dateFormats" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="username" translate="COMMON.USERNAME"></label>
+                            <div class="input-group">
+                                <span class="input-group-addon">https://trafie.com/</span>
+                                <input type="text" id="username" name="username" class="form-control" ng-model="user.username" ng-pattern="validations.username">
                             </div>
                         </div>
                     </div>
-                </uib-tab>
-            </uib-tabset>
-            <input type="submit" class="btn btn-success" ng-click="saveSettings()" value="{{'COMMON.SAVE_CHANGES' | translate}}">
-            <button class="btn btn-link pull-right" ng-click="logout()" translate="COMMON.LOGOUT"></button>
-        </form>
+                    <div class="panel-footer clearfix">
+                        <input type="submit" class="btn btn-primary pull-right" ng-click="saveSettings()" value="{{'COMMON.SAVE_CHANGES' | translate}}">
+                    </div>
+                </div>
+                <div class="text-center">
+                    <a href="javascript:;" class="text-warning" translate="SETTINGS.DEACTIVATE_MY_ACCOUNT"></a>
+                </div>
+            </form>
+            <form method="POST" name="passwordForm" ng-show="tab === 'password'">
+                <div class="panel panel-default">
+                    <div class="panel-heading" translate="SETTINGS.PASSWORD_SETTINGS"></div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="old-password" translate="SETTINGS.OLD_PASSWORD"></label>
+                            <input type="password" id="old-password" name="oldPassword" class="form-control" ng-model="user.oldPassword" ng-minlength="6">
+                        </div>
+                        <div class="form-group">
+                            <label for="password" translate="SETTINGS.NEW_PASSWORD"></label>
+                            <input type="password" id="password" name="password" class="form-control" ng-model="user.password" ng-minlength="6">
+                        </div>
+                        <div class="form-group">
+                            <label for="repeat-password" translate="SETTINGS.REPEAT_PASSWORD"></label>
+                            <input type="password" id="repeat-password" name="repeatPassword" class="form-control" ng-model="repeatPassword" ng-minlength="6">
+                        </div>
+                    </div>
+                    <div class="panel-footer clearfix">
+                        <input type="submit" class="btn btn-primary pull-right" ng-click="saveSettings()" value="{{'COMMON.SAVE_CHANGES' | translate}}">
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
