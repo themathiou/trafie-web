@@ -19,17 +19,20 @@
             <div ng-include="'/app/common/views/footerLinksView.html'"></div>
         </div>
         <div class="col-md-9">
-            <form method="POST" name="profileForm" ng-show="tab === 'profile'">
+            <form method="POST" name="profileForm" ng-show="tab === 'profile'" novalidate>
                 <div class="panel panel-default">
                     <div class="panel-heading" translate="SETTINGS.PROFILE_SETTINGS"></div>
                     <div class="panel-body">
-                        <div class="form-group">
+                        <uib-alert type="{{alerts.profileForm.type}}" ng-show="alerts.profileForm.message" close="closeAlert('profileForm')">
+                            <span ng-bind-html="alerts.profileForm.message"></span>
+                        </uib-alert>
+                        <div class="form-group" ng-class="{'has-error': fieldErrors.profileForm.firstName.hasError}">
                             <label for="firstName" translate="COMMON.FIRST_NAME"></label>
-                            <input type="text" class="form-control" name="firstName" id="firstName" ng-model="user.firstName" ng-pattern="validations.name" required>
+                            <input type="text" class="form-control" name="firstName" id="firstName" ng-model="user.firstName" ng-change="fieldErrors.profileForm.firstName.hasError = false" ng-pattern="validations.name" required>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" ng-class="{'has-error': fieldErrors.profileForm.lastName.hasError}">
                             <label for="lastName" translate="COMMON.LAST_NAME"></label>
-                            <input type="text" class="form-control" name="lastName" id="lastName" ng-model="user.lastName" ng-pattern="validations.name" required>
+                            <input type="text" class="form-control" name="lastName" id="lastName" ng-model="user.lastName" ng-change="fieldErrors.profileForm.lastName.hasError = false" ng-pattern="validations.name" required>
                         </div>
                         <div class="form-group">
                             <label for="discipline" translate="COMMON.MAIN_DISCIPLINE"></label>
@@ -39,13 +42,13 @@
                             <label for="country" translate="COMMON.COUNTRY"></label>
                             <select class="form-control" id="country" name="country" ng-model="user.country" ng-options="country as (country && 'COUNTRIES.' + country.toUpperCase() || 'SETTINGS.CHOOSE_YOUR_COUNTRY' | translate) for country in countries"></select>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" ng-class="{'has-error': fieldErrors.profileForm.birthday.hasError}">
                             <label for="birthday">{{'COMMON.BIRTHDAY' | translate}} ({{'SETTINGS.' + dateFormatsMap[user.dateFormat] | translate}})</label>
-                            <input type="text" id="birthday" class="form-control" ng-model="setting.birthday">
+                            <input type="text" id="birthday" name="birthday" class="form-control" ng-change="fieldErrors.profileForm.birthday.hasError = false" ng-model="setting.birthday">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" ng-class="{'has-error': fieldErrors.profileForm.about.hasError}">
                             <label for="aboutMe" translate="COMMON.ABOUT_ME"></label>
-                            <textarea class="form-control vertical-resize" id="aboutMe" ng-model="user.about" name="about" ng-maxlength="400"></textarea>
+                            <textarea class="form-control vertical-resize" name="about" id="aboutMe" ng-model="user.about" ng-change="fieldErrors.profileForm.about.hasError = false" ng-maxlength="400"></textarea>
                         </div>
                         <div class="form-group">
                             <label translate="COMMON.GENDER"></label>
@@ -60,20 +63,23 @@
                             <label translate="SETTINGS.PROFILE_PRIVACY"></label>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" ng-model="user.isPrivate"> {{'SETTINGS.HIDE_MY_PROFILE_FROM_ALL_USERS' | translate}}
+                                    <input type="checkbox" name="isPrivate" ng-model="user.isPrivate"> {{'SETTINGS.HIDE_MY_PROFILE_FROM_ALL_USERS' | translate}}
                                 </label>
                             </div>
                         </div>
                     </div>
                     <div class="panel-footer clearfix">
-                        <input type="submit" class="btn btn-primary pull-right" ng-click="saveSettings('profile')" value="{{(saving ? 'COMMON.SAVING' : 'COMMON.SAVE_CHANGES') | translate}}">
+                        <input type="submit" class="btn btn-primary pull-right" ng-disabled="saving" ng-click="saveSettings('profileForm')" value="{{(saving ? 'COMMON.SAVING' : 'COMMON.SAVE_CHANGES') | translate}}">
                     </div>
                 </div>
             </form>
-            <form method="POST" name="accountForm" ng-show="tab === 'account'">
+            <form method="POST" name="accountForm" ng-show="tab === 'account'" novalidate>
                 <div class="panel panel-default">
                     <div class="panel-heading" translate="SETTINGS.ACCOUNT_SETTINGS"></div>
                     <div class="panel-body">
+                        <uib-alert type="{{alerts.accountForm.type}}" ng-show="alerts.accountForm.message" close="closeAlert('accountForm')">
+                            <span ng-bind-html="alerts.accountForm.message"></span>
+                        </uib-alert>
                         <div class="form-group">
                             <label for="email" translate="COMMON.EMAIL"></label>
                             <input type="email" class="form-control" name="email" id="email" ng-model="user.email" disabled required ng-pattern="validations.email">
@@ -86,41 +92,44 @@
                             <label for="date-format" translate="SETTINGS.DATE_FORMAT"></label>
                             <select class="form-control" id="date-format" name="dateFormat" ng-model="user.dateFormat" ng-options="dateFormat as ('SETTINGS.' + dateFormatsMap[dateFormat] | translate) for dateFormat in dateFormats" required></select>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" ng-class="{'has-error': fieldErrors.accountForm.username.hasError}">
                             <label for="username" translate="COMMON.USERNAME"></label>
                             <div class="input-group">
                                 <span class="input-group-addon">https://trafie.com/</span>
-                                <input type="text" id="username" name="username" class="form-control" ng-model="user.username" ng-pattern="validations.username">
+                                <input type="text" id="username" name="username" class="form-control" ng-model="user.username"  ng-change="fieldErrors.accountForm.username.hasError = false" ng-pattern="validations.username">
                             </div>
                         </div>
                     </div>
                     <div class="panel-footer clearfix">
-                        <input type="submit" class="btn btn-primary pull-right" ng-click="saveSettings('account')" value="{{(saving ? 'COMMON.SAVING' : 'COMMON.SAVE_CHANGES') | translate}}">
+                        <input type="submit" class="btn btn-primary pull-right" ng-disabled="saving" ng-click="saveSettings('accountForm')" value="{{(saving ? 'COMMON.SAVING' : 'COMMON.SAVE_CHANGES') | translate}}">
                     </div>
                 </div>
                 <div class="text-center">
                     <a href="javascript:;" ng-click="deactivateAccount()" class="text-warning" translate="SETTINGS.DEACTIVATE_MY_ACCOUNT"></a>
                 </div>
             </form>
-            <form method="POST" name="passwordForm" ng-show="tab === 'password'">
+            <form method="POST" name="passwordForm" ng-show="tab === 'password'" novalidate>
                 <div class="panel panel-default">
                     <div class="panel-heading" translate="SETTINGS.PASSWORD_SETTINGS"></div>
                     <div class="panel-body">
-                        <div class="form-group">
+                        <uib-alert type="{{alerts.passwordForm.type}}" ng-show="alerts.passwordForm.message" close="closeAlert('passwordForm')">
+                            <span ng-bind-html="alerts.passwordForm.message"></span>
+                        </uib-alert>
+                        <div class="form-group" ng-class="{'has-error': fieldErrors.passwordForm.oldPassword.hasError}">
                             <label for="old-password" translate="SETTINGS.OLD_PASSWORD"></label>
-                            <input type="password" id="old-password" name="oldPassword" class="form-control" ng-model="user.oldPassword" ng-minlength="6">
+                            <input type="password" id="old-password" name="oldPassword" class="form-control" ng-model="user.oldPassword" ng-change="fieldErrors.passwordForm.oldPassword.hasError = false" ng-minlength="6">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" ng-class="{'has-error': fieldErrors.passwordForm.password.hasError}">
                             <label for="password" translate="SETTINGS.NEW_PASSWORD"></label>
-                            <input type="password" id="password" name="password" class="form-control" ng-model="user.password" ng-minlength="6">
+                            <input type="password" id="password" name="password" class="form-control" ng-model="user.password" ng-change="fieldErrors.passwordForm.password.hasError = false" ng-minlength="6">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" ng-class="{'has-error': fieldErrors.passwordForm.repeatPassword.hasError}">
                             <label for="repeat-password" translate="SETTINGS.REPEAT_PASSWORD"></label>
-                            <input type="password" id="repeat-password" name="repeatPassword" class="form-control" ng-model="repeatPassword" ng-minlength="6">
+                            <input type="password" id="repeat-password" name="repeatPassword" class="form-control" ng-model="repeatPassword" ng-change="fieldErrors.passwordForm.repeatPassword.hasError = false" ng-minlength="6">
                         </div>
                     </div>
                     <div class="panel-footer clearfix">
-                        <input type="submit" class="btn btn-primary pull-right" ng-click="saveSettings('password')" value="{{(saving ? 'COMMON.SAVING' : 'COMMON.SAVE_CHANGES') | translate}}">
+                        <input type="submit" class="btn btn-primary pull-right" ng-disabled="saving" ng-click="saveSettings('passwordForm')" value="{{(saving ? 'COMMON.SAVING' : 'COMMON.SAVE_CHANGES') | translate}}">
                     </div>
                 </div>
             </form>

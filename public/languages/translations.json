@@ -330,10 +330,6 @@
       "en": "Oops! Something went wrong...",
       "el": "Ωχ! Κάτι πήγε στραβά..."
     },
-    "TOO_LONG_TEXT":{
-      "en": "Text is too long",
-      "el": "Πολύ μεγάλο κείμενο"
-    },
     "WRONG_DATE_FORMAT":{
       "en": "Wrong date format",
       "el": "Η μορφή ημερομηνίας είναι λανθασμένη"
@@ -534,6 +530,14 @@
       "en": "Invalid last name",
       "el": "Μη αποδεκτό επίθετο"
     },
+    "FIRST_NAME_IS_REQUIRED": {
+      "en": "The first name is required",
+      "el": "Το όνομα είναι υποχρεωτικό πεδίο"
+    },
+    "LAST_NAME_IS_REQUIRED": {
+      "en": "The last name is required",
+      "el": "Το επίθετο είναι υποχρεωτικό πεδίο"
+    },
     "INVALID_BIRTHDAY": {
       "en": "Invalid birthday",
       "el": "Μη αποδεκτή ημερομηνία γενεθλίων"
@@ -557,6 +561,10 @@
     "INVALID_USERNAME": {
       "en": "Invalid username",
       "el": "Μη αποδεκτό όνομα χρήστη"
+    },
+    "THE_TEXT_ENTERED_IN_THE_ABOUT_ME_FIELD_IS_TOO_LONG": {
+      "en": "The text entered in the 'about me' field is too long",
+      "el": "Το κείμενο στο πεδίο 'Σχετικά με εμένα' είναι πολύ μεγάλο"
     },
     "PASSWORDS_DO_NOT_MATCH": {
       "en": "Passwords do not match",
