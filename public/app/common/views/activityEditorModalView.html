@@ -47,22 +47,18 @@
             <label translate="PROFILE.NOTES"></label>
             <textarea type="text" class="form-control vertical-resize" ng-model="activity.notes"></textarea>
         </div>
+        <div class="form-group">
+            <div>
+                <div class="btn-group">
+                    <label class="btn btn-primary" ng-model="activity.isOutdoor" uib-btn-radio="true" translate="PROFILE.OUTDOOR"></label>
+                    <label class="btn btn-primary" ng-model="activity.isOutdoor" uib-btn-radio="false" translate="PROFILE.INDOOR"></label>
+                </div>
+            </div>
+        </div>
         <div class="checkbox">
             <label>
                 <input type="checkbox" ng-model="activity.isPrivate">
                 {{'COMMON.PRIVATE' | translate}}
-            </label>
-        </div>
-        <div class="radio">
-            <label>
-                <input type="radio" name="isOutdoor" ng-model="activity.isOutdoor" ng-value="false">
-                {{'PROFILE.INDOOR' | translate}}
-            </label>
-        </div>
-        <div class="radio">
-            <label>
-                <input type="radio" name="isOutdoor" ng-model="activity.isOutdoor" ng-value="true">
-                {{'PROFILE.OUTDOOR' | translate}}
             </label>
         </div>
     </form>

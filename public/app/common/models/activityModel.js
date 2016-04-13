@@ -32,7 +32,7 @@
             this.notes = angular.isDefined(activityData.notes) ? activityData.notes : '';
             this.isPrivate = angular.isDefined(activityData.isPrivate) ? activityData.isPrivate : false;
             this.type = angular.isDefined(activityData.type) ? activityData.type : 'competition';
-            this.isOutdoor = angular.isDefined(activityData.isOutdoor) ? activityData.isOutdoor : false;
+            this.isOutdoor = angular.isDefined(activityData.isOutdoor) ? activityData.isOutdoor : true;
         }
 
         Activity = angular.extend(Activity, ActivityResource);
