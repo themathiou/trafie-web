@@ -431,10 +431,6 @@
     "FILTERS": {
       "en": "Filters",
       "el": "Φίλτρα"
-    },
-    "TERMS_OF_SERVICE": {
-      "en": "Terms of service",
-      "el": "Όροι χρήσης"
     }
   },
   "SETTINGS": {
@@ -661,6 +657,18 @@
     "ABOUT": {
       "en": "About",
       "el": "Σχετικά"
+    }
+  },
+  "TERMS_OF_SERVICE": {
+    "TERMS_OF_SERVICE": {
+      "en": "Terms of service",
+      "el": "Όροι χρήσης"
+    }
+  },
+  "LEGAL": {
+    "LEGAL": {
+      "en": "Legal",
+      "el": "Νομικά"
     }
   },
   "OUTER": {

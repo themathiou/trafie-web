@@ -14,6 +14,9 @@
             .when('/about', {
                 templateUrl: '/app/common/views/aboutView.html'
             })
+            .when('/legal', {
+                templateUrl: '/app/common/views/legalView.html'
+            })
             .when('/:userIdentifier?', {
                 templateUrl: '/app/profile/views/profileView.html',
                 controller: 'ProfileController'
