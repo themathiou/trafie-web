@@ -1,8 +1,8 @@
 <div class="container">
     <div class="col-xs-12">
         <div class="col-md-3">
-            <div class="list-group">
-                <a href="/settings/profile" class="list-group-item" ng-class="{'active': tab === 'profile'}">
+            <div class="list-group" ng-cloak>
+                <a href="/settings/profile" class="list-group-item" ng-class="{'active': tab === 'profile'}" ng-cloak>
                     {{'COMMON.PROFILE' | translate}}
                     <i class="glyphicon glyphicon-chevron-right pull-right"></i>
                 </a>
@@ -42,7 +42,7 @@
                             <label for="country" translate="COMMON.COUNTRY"></label>
                             <select class="form-control" id="country" name="country" ng-model="user.country" ng-options="country as (country && 'COUNTRIES.' + country.toUpperCase() || 'SETTINGS.CHOOSE_YOUR_COUNTRY' | translate) for country in countries"></select>
                         </div>
-                        <div class="form-group" ng-class="{'has-error': fieldErrors.profileForm.birthday.hasError}">
+                        <div class="form-group" ng-class="{'has-error': fieldErrors.profileForm.birthday.hasError}" ng-cloak>
                             <label for="birthday">{{'COMMON.BIRTHDAY' | translate}} ({{'SETTINGS.' + dateFormatsMap[user.dateFormat] | translate}})</label>
                             <input type="text" id="birthday" name="birthday" class="form-control" ng-change="fieldErrors.profileForm.birthday.hasError = false" ng-model="setting.birthday">
                         </div>
