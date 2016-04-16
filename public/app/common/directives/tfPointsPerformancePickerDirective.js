@@ -1,12 +1,14 @@
 angular.module('trafie')
-    .directive('tfPointsPerformancePicker', function () {
+    .directive('tfPointsPerformancePicker', function (VALIDATIONS) {
         function link(scope, element, attrs, ngModel) {
             function modelFormatter(value) {
                 scope.input = value;
                 return value;
             }
             function modelParser(value) {
-                return parseInt(value);
+                var valid = value <= VALIDATIONS.activity.performance.pointsMaxValue && value > 0;
+                ngModel.$setValidity('range', valid);
+                return valid ? parseInt(value) : undefined;
             }
             ngModel.$formatters.push(modelFormatter);
             ngModel.$parsers.push(modelParser);
@@ -21,9 +23,9 @@ angular.module('trafie')
             require: 'ngModel',
             replace: true,
             scope: true,
-            template:   '<span>' +
+            template:   '<div>' +
                             '<input type="number" class="form-control" ng-model="input" maxlength="4" ng-pattern="/^[0-9]{0,4}$/" min="0" max="9999">' +
-                        '</span>',
+                        '</div>',
             link: link
         }
     });

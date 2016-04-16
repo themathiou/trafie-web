@@ -180,6 +180,22 @@ activitySchema.methods.checkValid = function() {
 		}
 	}
 
+	// Validating competition
+    if(!this.competition) {
+        errors.push({
+            resource: 'activity',
+            field: 'competition',
+            code: 'missing'
+        });
+    }
+	else if (this.competition && !activityHelper.competitionIsValid(this.competition)) {
+		errors.push({
+			resource: 'activity',
+			field: 'competition',
+			code: 'invalid'
+		});
+	}
+
 	// Validating location
 	if (this.location && !activityHelper.locationIsValid(this.location)) {
         errors.push({
@@ -194,15 +210,6 @@ activitySchema.methods.checkValid = function() {
         errors.push({
             resource: 'activity',
             field: 'rank',
-            code: 'invalid'
-        });
-	}
-
-	// Validating competition
-	if (this.competition && !activityHelper.competitionIsValid(this.competition)) {
-        errors.push({
-            resource: 'activity',
-            field: 'competition',
             code: 'invalid'
         });
 	}

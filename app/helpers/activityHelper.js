@@ -1,4 +1,6 @@
 'use strict';
+
+const config = require('../config/constantConfig');
 let moment = require('moment');
 
 let activityHelper = {};
@@ -55,33 +57,20 @@ activityHelper.validateDiscipline = function(discipline) {
 	}
 };
 
-/**
- * Checks time inputs for validity, if they are valid, it adds leading zeros to
- * single digit values and it creates the performance string, ready to be stored
- * If the values are invalid, it returns an empty string
- * @param object performance
- * @return string
- */
 activityHelper.validateTime = function(performance) {
-	return isPositiveInteger(performance) ? parseInt(performance) : null;
+	return isPositiveInteger(performance) && parseInt(performance) < config.validations.activity.performance.timeMaxValue ? parseInt(performance) : null;
 };
 
 activityHelper.validateDistance = function(performance) {
-	return isPositiveInteger(performance) ? parseInt(performance) : null;
+	return isPositiveInteger(performance) && parseInt(performance) < config.validations.activity.performance.distanceMaxValue ? parseInt(performance) : null;
 };
 
-/**
- * Checks points inputs for validity
- * If the values are invalid, it returns an empty string
- * @param object performance
- * @return string
- */
 activityHelper.validatePoints = function(performance) {
-	return isPositiveInteger(performance) ? parseInt(performance) : null;
+	return isPositiveInteger(performance) && parseInt(performance) < config.validations.activity.performance.pointsMaxValue ? parseInt(performance) : null;
 };
 
 activityHelper.timestampIsValid = function(timestamp) {
-	return isPositiveInteger(timestamp) ? parseInt(timestamp) : null;
+	return isPositiveInteger(timestamp) && parseInt(timestamp) < moment().unix() ? parseInt(timestamp) : null;
 };
 
 /**
@@ -107,7 +96,7 @@ activityHelper.parseDate = function(date) {
  * @return boolean
  */
 activityHelper.locationIsValid = function(location) {
-	return typeof location === 'string' && location.length < 120;
+	return config.validations.activity.location.test(location);
 };
 
 /**
@@ -125,7 +114,7 @@ activityHelper.rankIsValid = function(rank) {
  * @return boolean
  */
 activityHelper.competitionIsValid = function(competition) {
-	return typeof competition === 'string' && competition.length < 120;
+	return config.validations.activity.competition.test(competition);
 };
 
 /**
@@ -134,19 +123,7 @@ activityHelper.competitionIsValid = function(competition) {
  * @return boolean
  */
 activityHelper.notesAreValid = function(notes) {
-	return typeof notes === 'string' && notes.length < 1000;
-};
-
-/**
- * Parses the dates as they are stored in the db
- * @param  string 		date
- * @return date object
- */
-activityHelper.parseDbDate = function(date) {
-	date = date.split('T')[0];
-	let dateParts = date.split('-');
-
-	return new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
+	return config.validations.activity.notes.test(notes);
 };
 
 /**
@@ -160,21 +137,6 @@ activityHelper.privacyIsValid = function(privateSetting) {
 
 activityHelper.outdoorIsValid = function(outdoorSetting) {
 	return typeof outdoorSetting === 'boolean' || outdoorSetting.toLowerCase() === 'true' || outdoorSetting.toLowerCase() === 'false';
-};
-
-/**
- * Parses the privacy setting, in case it's represented by a string
- * @param  string|boolean privateSetting
- * @return boolean
- */
-activityHelper.parsePrivacy = function(privateSetting) {
-	if (typeof privateSetting === 'boolean') {
-		return privateSetting;
-	} else if (privateSetting.toLowerCase() === 'true') {
-		return true;
-	} else {
-		return false;
-	}
 };
 
 /**

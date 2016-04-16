@@ -380,17 +380,17 @@
       "en": "Enter your performance",
       "el": "Βάλε την επίδοσή σου"
     },
-    "DISCIPLINE_IS_REQUIRED":{
+    "DISCIPLINE_IS_REQUIRED": {
       "en": "Discipline is required",
       "el": "Το αγώνισμα είναι υποχρεωτικό"
+    },
+    "COMPETITION_IS_REQUIRED": {
+      "en": "Competition is required",
+      "el": "Το όνομα του αγώνα είναι υποχρεωτικό"
     },
     "INVALID_PERFORMANCE":{
       "en": "Invalid performance",
       "el": "Μη έγκυρη επίδοση"
-    },
-    "PERFORMANCE_IS_REQUIRED":{
-      "en": "Performance is required",
-      "el": "Η επίδοση είναι υποχρεωτική"
     },
     "INVALID_RANK":{
       "en": "Invalid rank value",
@@ -399,6 +399,18 @@
     "DATE_IS_REQUIRED":{
       "en": "Date is required",
       "el": "Η ημερομηνία είναι υποχρεωτική"
+    },
+    "INVALID_COMPETITION": {
+      "en": "Invalid competition",
+      "el": "Μη έγκυρος αγώνας"
+    },
+    "THE_TEXT_OF_THE_LOCATION_IS_TOO_LONG": {
+      "en": "The text of the location is too long",
+      "el": "Το κείμενο της τοποθεσίας είναι πολύ μεγάλο"
+    },
+    "THE_TEXT_OF_THE_NOTES_IS_TOO_LONG": {
+      "en": "The text of the notes is too long",
+      "el": "Το κείμενο των σημειώσεων είναι πολύ μεγάλο"
     },
     "DELETE_ACTIVITY": {
       "en": "Delete activity",
@@ -431,6 +443,14 @@
     "FILTERS": {
       "en": "Filters",
       "el": "Φίλτρα"
+    },
+    "SHOW_ADDITIONAL_INFO": {
+      "en": "Show additional info",
+      "el": "Εμφάνιση επιπρόσθετων πληροφοριών"
+    },
+    "HIDE_ADDITIONAL_INFO": {
+      "en": "Hide additional info",
+      "el": "Απόκρυψη επιπρόσθετων πληροφοριών"
     }
   },
   "SETTINGS": {

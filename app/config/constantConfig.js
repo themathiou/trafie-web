@@ -23,7 +23,18 @@ const config = {
         password: /^.{6,}$/,
         email: /^([\w-\.]+@([\w-]+\.)+[\w-]{2,})?$/,
         role: /^(athlete|coach)$/,
-        activityType: /^(competition|training)$/
+        activityType: /^(competition|training)$/,
+        activity: {
+            notes: /^.{0,1000}$/,
+            rank: /^\d+$/,
+            competition: /^.{2,100}$/,
+            location: /^.{0,100}$/,
+            performance: {
+                timeMaxValue: 8640000,
+                distanceMaxValue: 1200000,
+                pointsMaxValue: 9999
+            }
+        }
     }
 };
 

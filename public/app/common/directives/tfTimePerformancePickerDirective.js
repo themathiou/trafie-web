@@ -1,5 +1,5 @@
 angular.module('trafie')
-    .directive('tfTimePerformancePicker', function () {
+    .directive('tfTimePerformancePicker', function (VALIDATIONS) {
         function link(scope, element, attrs, ngModel) {
             function modelFormatter(value) {
                 scope.inputs = [0,0,0,0];
@@ -20,7 +20,10 @@ angular.module('trafie')
                     parsedValue += value[length-4] * 360000;
                 }
 
-                return parsedValue;
+                var valid = parsedValue <= VALIDATIONS.activity.performance.timeMaxValue && parsedValue > 0;
+                ngModel.$setValidity('range', valid);
+
+                return valid ? parsedValue : undefined;
             }
             ngModel.$formatters.push(modelFormatter);
             ngModel.$parsers.push(modelParser);
@@ -37,16 +40,16 @@ angular.module('trafie')
             scope: true,
             template:   '<div class="row">' +
                             '<div class="col-xs-3">' +
-                                '<input type="number" class="form-control" ng-model="inputs[0]" maxlength="1" ng-pattern="/^[0-9]$/" min="0" max="9">' +
+                                '<input type="number" class="form-control" ng-model="inputs[0]" min="0" max="24">' +
                             '</div>' +
                             '<div class="col-xs-3">' +
-                                '<input type="number" class="form-control" ng-model="inputs[1]" maxlength="2" ng-pattern="/^[0-5]?[0-9]?$/" min="0" max="59">' +
+                                '<input type="number" class="form-control" ng-model="inputs[1]" min="0" max="59">' +
                             '</div>' +
                             '<div class="col-xs-3">' +
-                                '<input type="number" class="form-control" ng-model="inputs[2]" maxlength="2" ng-pattern="/^[0-5]?[0-9]$/" min="0" max="59">' +
+                                '<input type="number" class="form-control" ng-model="inputs[2]" min="0" max="59">' +
                             '</div>' +
                             '<div class="col-xs-3">' +
-                                '<input type="number" class="form-control" ng-model="inputs[3]" maxlength="2" ng-pattern="/^[0-9]{1,2}$/" min="0" max="99">' +
+                                '<input type="number" class="form-control" ng-model="inputs[3]" min="0" max="99">' +
                             '</div>' +
                         '</div>',
             link: link

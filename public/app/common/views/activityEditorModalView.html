@@ -3,22 +3,25 @@
 </div>
 <div class="modal-body">
     <form name="form" method="POST">
-        <div class="form-group">
+        <uib-alert type="danger" ng-show="alertMessage" close="alertMessage = ''">
+            <span ng-bind-html="alertMessage"></span>
+        </uib-alert>
+        <div class="form-group" ng-class="{'has-error': fieldErrors.discipline.hasError}">
             <label for="discipline" translate="COMMON.DISCIPLINE"></label>
-            <select class="form-control" id="discipline" name="discipline" ng-model="activity.discipline" ng-options="discipline as (discipline && 'DISCIPLINES.' + discipline.toUpperCase() || 'SETTINGS.CHOOSE_YOUR_DISCIPLINE' | translate) for discipline in disciplines"></select>
+            <select class="form-control" id="discipline" name="discipline" ng-model="activity.discipline" ng-options="discipline as (discipline && 'DISCIPLINES.' + discipline.toUpperCase() || 'SETTINGS.CHOOSE_YOUR_DISCIPLINE' | translate) for discipline in disciplines" ng-change="fieldErrors.discipline.hasError = false" required></select>
         </div>
-        <div class="form-group" ng-show="activity.discipline">
+        <div class="form-group" ng-class="{'has-error': fieldErrors.performance.hasError}" ng-show="activity.discipline">
             <label translate="PROFILE.PERFORMANCE"></label>
-            <tf-time-performance-picker ng-model="activity.performance" ng-if="getCategory() === 'time'"></tf-time-performance-picker>
-            <tf-distance-performance-picker ng-model="activity.performance" ng-if="getCategory() === 'distance'"></tf-distance-performance-picker>
-            <tf-points-performance-picker ng-model="activity.performance" ng-if="getCategory() === 'points'"></tf-points-performance-picker>
+            <tf-time-performance-picker name="performance" ng-model="activity.performance" ng-if="getCategory() === 'time'" ng-change="fieldErrors.performance.hasError = false" required></tf-time-performance-picker>
+            <tf-distance-performance-picker name="performance" ng-model="activity.performance" ng-if="getCategory() === 'distance'" ng-change="fieldErrors.performance.hasError = false" required></tf-distance-performance-picker>
+            <tf-points-performance-picker name="performance" ng-model="activity.performance" ng-if="getCategory() === 'points'" ng-change="fieldErrors.performance.hasError = false" required></tf-points-performance-picker>
         </div>
-        <div class="form-group">
+        <div class="form-group" ng-class="{'has-error': fieldErrors.date.hasError}">
             <label for="date" translate="COMMON.DATE"></label>
             <div class="row">
                 <div class="col-xs-9">
                     <div class="input-group">
-                        <input type="text" id="date" class="form-control" uib-datepicker-popup="{{datepicker.activityDateFormat}}" ng-model="datepicker.activityDate" is-open="datepicker.popup.opened" max-date="datepicker.maxDate" datepicker-options="datepicker.dateOptions" ng-required="true" close-text="{{'COMMON.CANCEL' | translate}}" />
+                        <input type="text" id="date" class="form-control" uib-datepicker-popup="{{datepicker.activityDateFormat}}" ng-model="datepicker.activityDate" is-open="datepicker.popup.opened" max-date="datepicker.maxDate" datepicker-options="datepicker.dateOptions" ng-required="true" close-text="{{'COMMON.CANCEL' | translate}}" ng-change="fieldErrors.date.hasError = false" />
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="datepicker.popup.opened = true"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
@@ -26,44 +29,49 @@
                 </div>
                 <div class="col-xs-3">
                     <div class="form-group">
-                        <uib-timepicker id="time" class="pull-right" ng-model="datepicker.activityDate" hour-step="1" minute-step="1" show-meridian="false" show-spinners="false"></uib-timepicker>
+                        <uib-timepicker id="time" class="pull-right" ng-model="datepicker.activityDate" hour-step="1" minute-step="1" show-meridian="false" ng-required="true" show-spinners="false" ng-change="fieldErrors.date.hasError = false"></uib-timepicker>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" ng-class="{'has-error': fieldErrors.competition.hasError}">
             <label translate="PROFILE.COMPETITION"></label>
-            <input type="text" class="form-control" ng-model="activity.competition">
+            <input type="text" class="form-control" name="competition" ng-model="activity.competition" ng-change="fieldErrors.competition.hasError = false" required>
         </div>
         <div class="form-group">
-            <label translate="PROFILE.LOCATION"></label>
-            <input type="text" class="form-control" ng-model="activity.location">
+            <a href="javascript:;" ng-click="showAdditionalInfo()">{{(additionalInfoVisible ? 'PROFILE.HIDE_ADDITIONAL_INFO' : 'PROFILE.SHOW_ADDITIONAL_INFO') | translate}}</a>
         </div>
-        <div class="form-group">
-            <label translate="PROFILE.RANK"></label>
-            <input type="text" class="form-control" ng-model="activity.rank">
-        </div>
-        <div class="form-group">
-            <label translate="PROFILE.NOTES"></label>
-            <textarea type="text" class="form-control vertical-resize" ng-model="activity.notes"></textarea>
-        </div>
-        <div class="form-group">
-            <div>
-                <div class="btn-group">
-                    <label class="btn btn-primary" ng-model="activity.isOutdoor" uib-btn-radio="true" translate="PROFILE.OUTDOOR"></label>
-                    <label class="btn btn-primary" ng-model="activity.isOutdoor" uib-btn-radio="false" translate="PROFILE.INDOOR"></label>
+        <div ng-show="additionalInfoVisible">
+            <div class="form-group" ng-class="{'has-error': fieldErrors.location.hasError}">
+                <label translate="PROFILE.LOCATION"></label>
+                <input type="text" name="location" class="form-control" ng-model="activity.location" ng-pattern="validations.activity.location" ng-change="fieldErrors.location.hasError = false">
+            </div>
+            <div class="form-group" ng-class="{'has-error': fieldErrors.rank.hasError}">
+                <label translate="PROFILE.RANK"></label>
+                <input type="text" name="rank" class="form-control" ng-model="activity.rank" ng-change="fieldErrors.rank.hasError = false" ng-pattern="validations.activity.rank">
+            </div>
+            <div class="form-group" ng-class="{'has-error': fieldErrors.notes.hasError}">
+                <label translate="PROFILE.NOTES"></label>
+                <textarea type="text" name="notes" class="form-control vertical-resize" ng-model="activity.notes" ng-change="fieldErrors.notes.hasError = false" ng-pattern="validations.activity.notes"></textarea>
+            </div>
+            <div class="form-group">
+                <div>
+                    <div class="btn-group">
+                        <label class="btn btn-primary" ng-model="activity.isOutdoor" uib-btn-radio="true" translate="PROFILE.OUTDOOR"></label>
+                        <label class="btn btn-primary" ng-model="activity.isOutdoor" uib-btn-radio="false" translate="PROFILE.INDOOR"></label>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" ng-model="activity.isPrivate">
-                {{'COMMON.PRIVATE' | translate}}
-            </label>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" ng-model="activity.isPrivate">
+                    {{'COMMON.PRIVATE' | translate}}
+                </label>
+            </div>
         </div>
     </form>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-warning" type="button" ng-click="cancel()">{{'COMMON.CANCEL' | translate}}</button>
-    <button class="btn btn-primary" type="button" ng-click="save()">{{(saving ? 'COMMON.SAVING' : 'COMMON.SAVE') | translate}}</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()" ng-disabled="saving">{{'COMMON.CANCEL' | translate}}</button>
+    <button class="btn btn-primary" type="button" ng-click="save()" ng-disabled="saving">{{(saving ? 'COMMON.SAVING' : 'COMMON.SAVE') | translate}}</button>
 </div>

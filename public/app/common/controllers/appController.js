@@ -11,7 +11,7 @@
 
         self.openActivityEditorModal = function (activity) {
             var modalInstance = $uibModal.open({
-                animation: true,
+                animation: false,
                 templateUrl: 'app/common/views/activityEditorModalView.html',
                 controller: 'ActivityEditorModalController',
                 size: 'md',
@@ -60,7 +60,7 @@
 
         self.showFeedbackModal = function (activity) {
             var modalInstance = $uibModal.open({
-                animation: true,
+                animation: false,
                 templateUrl: 'app/feedback/views/feedbackModalView.html',
                 controller: 'FeedbackModalController',
                 size: 'md'

@@ -164,7 +164,7 @@
 
         $scope.deactivateAccount = function() {
             var modalInstance = $uibModal.open({
-                animation: true,
+                animation: false,
                 templateUrl: 'app/settings/views/deactivateAccountModalView.html',
                 controller: 'DeactivateAccountModalController',
                 size: 'md'

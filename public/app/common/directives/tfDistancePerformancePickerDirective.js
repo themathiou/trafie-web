@@ -1,5 +1,5 @@
 angular.module('trafie')
-    .directive('tfDistancePerformancePicker', function () {
+    .directive('tfDistancePerformancePicker', function (VALIDATIONS) {
         function link(scope, element, attrs, ngModel) {
             function modelFormatter(value) {
                 scope.inputs = [0,0];
@@ -9,7 +9,12 @@ angular.module('trafie')
             }
             function modelParser(value) {
                 value = value.split(',').map(function(v) {return parseInt(v);});
-                return value[0] * 10000 + value[1] * 100;
+                value = value[0] * 10000 + value[1] * 100;
+
+                var valid = value <= VALIDATIONS.activity.performance.distanceMaxValue && value > 0;
+                ngModel.$setValidity('range', valid);
+
+                return valid ? value : undefined;
             }
             ngModel.$formatters.push(modelFormatter);
             ngModel.$parsers.push(modelParser);
@@ -24,14 +29,14 @@ angular.module('trafie')
             require: 'ngModel',
             replace: true,
             scope: true,
-            template:   '<span class="row">' +
+            template:   '<div class="row">' +
                             '<div class="col-xs-6">' +
                                 '<input type="number" ng-model="inputs[0]" class="form-control" maxlength="2" ng-pattern="/^[0-9]{1,2}$/" min="0" max="99">' +
                             '</div>' +
                             '<div class="col-xs-6">' +
                                 '<input type="number" ng-model="inputs[1]" class="form-control" maxlength="2" ng-pattern="/^[0-9]{2}$/" min="0" max="99">' +
                             '</div>' +
-                        '</span>',
+                        '</div>',
             link: link
         }
     });
