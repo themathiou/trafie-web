@@ -4,9 +4,13 @@ nav.navbar.navbar-default.navbar-fixed-top
             div.navbar-collapse.collapse.navbar-left.row
                 ul.nav.navbar-nav
                     li(ng-if="App.user" ng-class="{'active': App.getCurrentPage() === 'profile'}")
-                        a(href='/' translate="COMMON.PROFILE")
+                        a(href='/')
+                            i.glyphicon.glyphicon-user
+                            span(translate="COMMON.PROFILE")
                     li(ng-if="App.user" ng-class="{'active': App.getCurrentPage() === 'settings'}")
-                        a(href='/settings' translate="COMMON.SETTINGS")
+                        a(href='/settings')
+                            i.glyphicon.glyphicon-cog
+                            span(translate="COMMON.SETTINGS")
             div.navbar-header
                 a.navbar-brand(href="/") trafie
             div.navbar-collapse.collapse.navbar-right

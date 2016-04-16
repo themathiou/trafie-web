@@ -14,8 +14,8 @@
             .when('/about', {
                 templateUrl: '/app/common/views/aboutView.html'
             })
-            .when('/legal', {
-                templateUrl: '/app/common/views/legalView.html'
+            .when('/privacy', {
+                templateUrl: '/app/common/views/privacyView.html'
             })
             .when('/:userIdentifier?', {
                 templateUrl: '/app/profile/views/profileView.html',
