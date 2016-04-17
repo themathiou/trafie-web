@@ -462,11 +462,11 @@
     },
     "YEAR": {
       "en": "Year",
-      "el": "Χρονιά"
+      "el": "Έτος"
     },
     "SELECT_YEARS_TO_FILTER": {
       "en": "Select years to filter",
-      "el": "Επιλέξτε χρονιές για φιλτράρισμα"
+      "el": "Επιλέξτε έτη για φιλτράρισμα"
     },
     "SELECT_DISCIPLINES_TO_FILTER": {
       "en": "Select disciplines to filter",
