@@ -1,7 +1,7 @@
 (function(angular) {
     angular.module('trafie')
         .controller('ProfileController', function($rootScope, $scope, $routeParams, $window, Activity,
-                                                  User, userService, $uibModal) {
+                                                  User, userService) {
             $scope.profileFound = true;
             $scope.loading = true;
             $scope.user = null;
@@ -61,9 +61,7 @@
                     });
 
                     $scope.activities.splice(deletedActivityIndex, 1);
-                }, function() {
-
-                });
+                }, function() {});
             };
 
             $scope.formatUnixTimestamp = function(timestamp) {
