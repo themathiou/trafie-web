@@ -649,6 +649,18 @@
     "DEACTIVATING": {
       "en": "Deactivating",
       "el": "Απενεργοποιείται"
+    },
+    "YOU_HAVENT_VERIFIED_YOUR_EMAIL_YET": {
+      "en": "You haven't verified your email address yet. If you did not receive the verification email, we can resend it to you.",
+      "el": "Δεν έχετε επιβεβαιώσει την διεύθυνση του email σας ακόμα. Εάν δεν λάβατε το email επιβεβαίωσης, μπορούμε να σας το ξαναστείλουμε."
+    },
+    "RESEND_VERIFICATION_EMAIL": {
+      "en": "Resend the verification email.",
+      "el": "Αποστολή του email επιβεβαίωσης."
+    },
+    "AN_EMAIL_HAS_BEEN_SENT_TO_EMAIL_ADDRESS": {
+      "en": "An email has been sent to {{emailAddress}}!",
+      "el": "Στάλθηκε email στη διεύθυνση {{emailAddress}}!"
     }
   },
   "FEEDBACK": {

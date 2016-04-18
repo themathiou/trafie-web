@@ -15,6 +15,7 @@
         $scope.dateFormatsMap = DATE_FORMATS_MAP;
         $scope.dateFormats = Object.keys(DATE_FORMATS_MAP);
         $scope.validations = VALIDATIONS;
+        $scope.validationEmailSent = false;
         $scope.saving = false;
         $scope.setting = {
             birthday: '',
@@ -172,6 +173,14 @@
 
             modalInstance.result.then(function () {
             }, function () {
+            });
+        };
+
+        $scope.resendValidationEmail = function() {
+            $http.get('/resend-validation-email').then(function() {
+                $scope.validationEmailSent = true;
+            }, function() {
+                $scope.validationEmailSent = true;
             });
         };
 

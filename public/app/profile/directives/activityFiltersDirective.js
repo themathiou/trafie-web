@@ -50,7 +50,7 @@ angular.module('trafie')
 
             function modelParser(value) {
                 var filters = JSON.parse(value);
-                Object.keys(filters).forEach((filterCategory) => {
+                Object.keys(filters).forEach(function(filterCategory) {
                     filters[filterCategory].forEach(function(filterObject, index) {
                         filters[filterCategory][index] = filterObject.value;
                     });

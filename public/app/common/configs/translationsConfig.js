@@ -6,6 +6,6 @@
                 suffix: '.json'
             });
             $translateProvider.preferredLanguage('en');
-            $translateProvider.useSanitizeValueStrategy('escape');
+            $translateProvider.useSanitizeValueStrategy('sanitizeParameters');
         }]);
 })(angular);
