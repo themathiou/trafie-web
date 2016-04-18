@@ -15,7 +15,7 @@ var passport = require('passport');
 
 
 exports.post = function(req, res) {
-	if (typeof req.session.userId !== 'undefined') {
+	if (req.session && typeof req.session.userId !== 'undefined') {
 		res.redirect('/');
 	}
 
