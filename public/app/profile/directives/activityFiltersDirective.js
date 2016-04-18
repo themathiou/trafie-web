@@ -74,7 +74,7 @@ angular.module('trafie')
                 activities: '='
             },
             link: link,
-            template:   '<div class="panel panel-default" ng-show="activities.length">' +
+            template:   '<div class="panel panel-default">' +
                             '<div class="panel-heading" translate="PROFILE.FILTERS"></div>' +
                             '<div class="panel-body" ng-if="!filterOptionsExist()">' +
                                 '<span translate="PROFILE.THERE_ARE_NO_FILTERS_AVAILABLE"></span>' +

@@ -1,5 +1,7 @@
 'use strict';
 
+var moment = require('moment');
+
 // Loading models
 var Activity = require('../models/activityModel');
 
@@ -72,20 +74,48 @@ exports.get = function(req, res) {
 				if (typeof req.query.discipline !== 'undefined' && req.query.discipline) {
 					where.discipline = req.query.discipline;
 				}
-				if (typeof req.query.from !== 'undefined' && req.query.from && typeof req.query.to !== 'undefined' && req.query.to) {
-					where.date = {
-						"$gte": parseInt(req.query.from),
-						"$lte": parseInt(req.query.to)
-					};
-				} else if (typeof req.query.from !== 'undefined') {
-					where.date = {
-						"$gte": parseInt(req.query.from)
-					};
-				} else if (typeof req.query.to !== 'undefined') {
-					where.date = {
-						"$lte": parseInt(req.query.to)
-					};
+
+                if (typeof req.query.from !== 'undefined') {
+                    let from = parseInt(req.query.from);
+                    if(from >= 0 && from <= moment().unix()) {
+                        where.date = {
+                            "$gte": from
+                        };
+                    }
+                }
+				if (typeof req.query.to !== 'undefined') {
+					let to = parseInt(req.query.to);
+                    if(to >= 0 && to <= moment().unix()) {
+                        if(where.hasOwnProperty('date')) {
+                            where.date.$lte = to;
+                        } else {
+                            where.date = {
+                                "$lte": to
+                            };
+                        }
+                    }
 				}
+
+                if (typeof req.query.updatedFrom !== 'undefined') {
+                    let from = parseInt(req.query.updatedFrom);
+                    if(from >= 0 && from <= moment().unix()) {
+                        where.dateUpdated = {
+                            "$gte": from
+                        };
+                    }
+                }
+                if (typeof req.query.updatedTo !== 'undefined') {
+                    let to = parseInt(req.query.updatedTo);
+                    if(to >= 0 && to <= moment().unix()) {
+                        if(where.hasOwnProperty('dateUpdated')) {
+                            where.dateUpdated.$lte = to;
+                        } else {
+                            where.dateUpdated = {
+                                "$lte": to
+                            };
+                        }
+                    }
+                }
 
 				where.userId = response.profile._id;
 

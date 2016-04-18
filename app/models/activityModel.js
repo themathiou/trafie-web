@@ -20,12 +20,12 @@ var activitySchema = mongoose.Schema({
 	isPrivate 	: { type: Boolean, 	required: false, 	default: false },
 	type 		: { type: String, 	required: false, 	default: 'competition' },
     isOutdoor 	: { type: Boolean, 	required: false, 	default: true },
-	dateCreated : { type: Date },
-	dateUpdated : { type: Date }
+	dateCreated : { type: Number },
+	dateUpdated : { type: Number }
 });
 
 activitySchema.pre('save', function(next){
-	var now = new Date();
+	var now = moment().unix();
 	this.dateUpdated = now;
 	if ( !this.dateCreated ) {
 		this.dateCreated = now;
