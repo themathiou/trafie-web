@@ -100,7 +100,7 @@ exports.get = function(req, res) {
                     let from = parseInt(req.query.updatedFrom);
                     if(from >= 0 && from <= moment().unix()) {
                         where.dateUpdated = {
-                            "$gte": from
+                            "$gte": moment.unix(from).toDate()
                         };
                     }
                 }
@@ -108,10 +108,10 @@ exports.get = function(req, res) {
                     let to = parseInt(req.query.updatedTo);
                     if(to >= 0 && to <= moment().unix()) {
                         if(where.hasOwnProperty('dateUpdated')) {
-                            where.dateUpdated.$lte = to;
+                            where.dateUpdated.$lte = moment.unix(to).toDate();
                         } else {
                             where.dateUpdated = {
-                                "$lte": to
+                                "$lte": moment.unix(to).toDate()
                             };
                         }
                     }
