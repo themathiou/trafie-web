@@ -104,8 +104,8 @@ trafie.set('view cache', true);
 trafie.use(methodOverride());
 trafie.use(function(req, res, next) {
     var routesWithoutSessions = ['/authorize'];
-    if(req.url.startsWith('/api') || (req.url === '/logout' && req.headers.hasOwnProperty('authorization')) || routesWithoutSessions.indexOf(req.url) >= 0) {
-        return next();
+    if(req.url.startsWith('/api/') || (req.url === '/logout' && req.headers.hasOwnProperty('authorization')) || routesWithoutSessions.indexOf(req.url) >= 0) {
+        next();
     }
     else {
         sessionObj(req, res, next);
