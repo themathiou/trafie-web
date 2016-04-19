@@ -2,15 +2,31 @@ angular.module('trafie')
     .directive('activityFilters', function () {
         function link(scope, element, attrs, ngModel) {
             scope.filters = {
+                outdoor: {
+                    property: 'isOutdoor',
+                    inputType: 'toggle',
+                    options: [],
+                    label: 'PROFILE.COMPETITION_TYPE',
+                    valueLabels: {
+                        'true': 'PROFILE.OUTDOOR',
+                        'false': 'PROFILE.INDOOR'
+                    }
+                },
                 years: {
+                    property: 'year',
+                    inputType: 'multiSelect',
                     options: [],
                     label: 'PROFILE.YEAR',
-                    placeholder: 'PROFILE.SELECT_YEARS_TO_FILTER'
+                    placeholder: 'PROFILE.SELECT_YEARS_TO_FILTER',
+                    translationPrefix: ''
                 },
                 disciplines: {
+                    property: 'discipline',
+                    inputType: 'multiSelect',
                     options: [],
-                    label: 'COMMON.DISCIPLINES',
-                    placeholder: 'PROFILE.SELECT_DISCIPLINES_TO_FILTER'
+                    label: 'COMMON.DISCIPLINE',
+                    placeholder: 'PROFILE.SELECT_DISCIPLINES_TO_FILTER',
+                    translationPrefix: 'DISCIPLINES.'
                 }
             };
             scope.selectedFilters = {};
@@ -20,28 +36,29 @@ angular.module('trafie')
             });
 
             scope.$watchCollection('activities', function() {
-                var selectedYears = [];
-                var selectedDisciplines = [];
+                var selected = {};
                 Object.keys(scope.filters).forEach(function(filterCategory) {
+                    selected[filterCategory] = [];
                     scope.filters[filterCategory].options = [];
                 });
-                scope.activities.forEach(function(activity) {
-                    var year = moment.unix(activity.date).format('YYYY');
-                    if(selectedYears.indexOf(year) < 0) {
-                        selectedYears.push(year);
-                        scope.filters.years.options.push({
-                            text: year,
-                            value: year
-                        });
-                    }
-                    if(selectedDisciplines.indexOf(activity.discipline) < 0) {
-                        selectedDisciplines.push(activity.discipline);
-                        scope.filters.disciplines.options.push({
-                            text: 'DISCIPLINES.' + activity.discipline.toUpperCase(),
-                            value: activity.discipline
-                        });
-                    }
+                angular.copy(scope.activities).forEach(function(activity) {
+                    activity.year = moment.unix(activity.date).format('YYYY');
+                    Object.keys(scope.filters).forEach(function(filterCategory) {
+                        var filterProperty = scope.filters[filterCategory].property;
+                        if(selected[filterCategory].indexOf(activity[filterProperty]) < 0) {
+                            selected[filterCategory].push(activity[filterProperty]);
+                            var text = activity[filterProperty];
+                            if(scope.filters[filterCategory].translationPrefix) {
+                                text = scope.filters[filterCategory].translationPrefix + activity[filterProperty].toUpperCase();
+                            }
+                            scope.filters[filterCategory].options.push({
+                                text: text,
+                                value: activity[filterProperty]
+                            });
+                        }
+                    });
                 });
+                console.log(scope.filters);
             });
 
             scope.$watch('selectedFilters', function(filters) {
@@ -81,14 +98,17 @@ angular.module('trafie')
                             '</div>' +
                             '<ul class="list-group">' +
                                 '<li class="list-group-item" ng-repeat="filterCategory in filterCategories" ng-if="filters[filterCategory].options.length > 1">' +
-                                    '<label translate="{{::filters[filterCategory].label}}"></label>' +
+                                    '<label ng-if="filters[filterCategory].label" translate="{{::filters[filterCategory].label}}"></label>' +
                                     '<div>' +
-                                        '<ui-select multiple ng-model="selectedFilters[filterCategory]">' +
+                                        '<ui-select ng-if="filters[filterCategory].inputType === \'multiSelect\'" multiple ng-model="selectedFilters[filterCategory]">' +
                                             '<ui-select-match placeholder="{{::filters[filterCategory].placeholder | translate}}">{{$select.selected[$index].text | translate}}</ui-select-match>' +
                                             '<ui-select-choices repeat="option in filters[filterCategory].options | filter: $select.search">' +
                                                 '<div ng-bind-html="option.text | translate"></div>' +
                                             '</ui-select-choices>' +
                                         '</ui-select>' +
+                                        '<div class="btn-group" ng-if="filters[filterCategory].inputType === \'toggle\'">' +
+                                            '<label ng-repeat="option in filters[filterCategory].options" class="btn btn-default" ng-model="radioModel" uib-btn-radio="\'{{option.value}}\'" uncheckable translate="{{filters[filterCategory].valueLabels[option.text]}}"></label>' +
+                                        '</div>' +
                                     '</div>' +
                                 '</li>' +
                             '</ul>' +

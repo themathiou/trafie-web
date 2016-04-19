@@ -206,10 +206,6 @@
       "en": "Discipline",
       "el": "Αγώνισμα"
     },
-    "DISCIPLINES": {
-      "en": "Disciplines",
-      "el": "Αγωνίσματα"
-    },
     "DATE": {
       "en": "Date",
       "el": "Ημερομηνία"
@@ -419,6 +415,10 @@
     "DELETE_ACTIVITY": {
       "en": "Delete activity",
       "el": "Διαγραφή δραστηριότητας"
+    },
+    "COMPETITION_TYPE": {
+      "en": "Competition type",
+      "el": "Τύπος αγώνα"
     },
     "THE_ACTIVITY_WAS_CREATED_SUCCESSFULLY": {
       "en": "The activity was created successfully",
