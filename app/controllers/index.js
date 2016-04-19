@@ -2,6 +2,7 @@
 
 exports.getView = function(req, res) {
     //var angularRoutes = ['/', '/settings'];
+    console.log(req.user);
 	if (typeof req.user === 'undefined' && req.originalUrl === '/') {
 		res.redirect(301, '/register');
 		return false;
