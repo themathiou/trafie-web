@@ -5,11 +5,11 @@ nav.navbar.navbar-default.navbar-fixed-top
                 ul.nav.navbar-nav
                     li(ng-if="App.user" ng-class="{'active': App.getCurrentPage() === 'profile'}")
                         a(href='/')
-                            i.glyphicon.glyphicon-user
+                            i.fa.fa-user
                             span(translate="COMMON.PROFILE")
                     li(ng-if="App.user" ng-class="{'active': App.getCurrentPage() === 'settings'}")
                         a(href='/settings')
-                            i.glyphicon.glyphicon-cog
+                            i.fa.fa-cog
                             span(translate="COMMON.SETTINGS")
             div.navbar-header
                 a.navbar-brand(href="/") trafie
@@ -17,11 +17,11 @@ nav.navbar.navbar-default.navbar-fixed-top
                 ul.nav.navbar-nav.pull-right(ng-if="App.user")
                     li
                         button.btn.btn-default.navbar-btn(ng-click="App.openActivityEditorModal()")
-                            i.glyphicon.glyphicon-plus
+                            i.fa.fa-plus
                 form.navbar-form.pull-left(role="search")
                     .form-group
                         .input-group
                             input.form-control(type="text" placeholder="{{'COMMON.SEARCH' | translate}}" ng-model="App.profileResult" uib-typeahead="user as (user.firstName + ' ' + user.lastName) for user in App.searchUsers($viewValue)" ng-cloak)
                             span.input-group-btn
                                 button.btn.btn-default(type="submit" ng-click="App.goToUser()")
-                                    i.glyphicon.glyphicon-search
+                                    i.fa.fa-search
