@@ -58,7 +58,6 @@ angular.module('trafie')
                         }
                     });
                 });
-                console.log(scope.filters);
             });
 
             scope.$watch('selectedFilters', function(filters) {
@@ -68,6 +67,7 @@ angular.module('trafie')
             function modelParser(value) {
                 var filters = JSON.parse(value);
                 Object.keys(filters).forEach(function(filterCategory) {
+                    filters[filterCategory] = filters[filterCategory] || [];
                     filters[filterCategory].forEach(function(filterObject, index) {
                         filters[filterCategory][index] = filterObject.value;
                     });
@@ -107,7 +107,7 @@ angular.module('trafie')
                                             '</ui-select-choices>' +
                                         '</ui-select>' +
                                         '<div class="btn-group" ng-if="filters[filterCategory].inputType === \'toggle\'">' +
-                                            '<label ng-repeat="option in filters[filterCategory].options" class="btn btn-default" ng-model="radioModel" uib-btn-radio="\'{{option.value}}\'" uncheckable translate="{{filters[filterCategory].valueLabels[option.text]}}"></label>' +
+                                            '<label ng-repeat="option in filters[filterCategory].options" class="btn btn-default" ng-model="selectedFilters[filterCategory]" uib-btn-radio="{{[option]}}" uncheckable translate="{{filters[filterCategory].valueLabels[option.text]}}"></label>' +
                                         '</div>' +
                                     '</div>' +
                                 '</li>' +

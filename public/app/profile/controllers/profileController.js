@@ -9,6 +9,9 @@
             $scope.activities = [];
             $scope.ownProfile = false;
             $scope.currentUser = null;
+            $scope.filters = {
+                values: {}
+            };
             var listeners = {};
 
             function loadError() {
