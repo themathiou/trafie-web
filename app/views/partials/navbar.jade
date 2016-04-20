@@ -16,7 +16,7 @@ nav.navbar.navbar-default.navbar-fixed-top
             div.navbar-collapse.collapse.navbar-right
                 ul.nav.navbar-nav.pull-right(ng-if="App.user")
                     li
-                        button.btn.btn-default.navbar-btn(ng-click="App.openActivityEditorModal()")
+                        button.btn.btn-default.navbar-btn(ng-click="App.openActivityEditorModal()" title="{{'COMMON.ADD_NEW_ACTIVITY' | translate}}")
                             i.fa.fa-plus
                 form.navbar-form.pull-left(role="search")
                     .form-group

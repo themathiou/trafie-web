@@ -333,13 +333,13 @@
     "WRONG_DATE_FORMAT":{
       "en": "Wrong date format",
       "el": "Η μορφή ημερομηνίας είναι λανθασμένη"
-    }
-  },
-  "PROFILE": {
+    },
     "ADD_NEW_ACTIVITY": {
       "en": "Add new activity",
       "el": "Προσθήκη νέας δραστηριότητας"
-    },
+    }
+  },
+  "PROFILE": {
     "NEW_ACTIVITY": {
       "en": "New activity",
       "el": "Νέα δραστηριότητα"
