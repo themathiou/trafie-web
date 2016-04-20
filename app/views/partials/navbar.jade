@@ -5,11 +5,11 @@ nav.navbar.navbar-default.navbar-fixed-top
                 ul.nav.navbar-nav
                     li(ng-if="App.user" ng-class="{'active': App.getCurrentPage() === 'profile'}")
                         a(href='/')
-                            i.fa.fa-user
+                            i.fa.fa-user.nav-icon
                             span(translate="COMMON.PROFILE")
                     li(ng-if="App.user" ng-class="{'active': App.getCurrentPage() === 'settings'}")
                         a(href='/settings')
-                            i.fa.fa-cog
+                            i.fa.fa-cog.nav-icon
                             span(translate="COMMON.SETTINGS")
             div.navbar-header
                 a.navbar-brand(href="/") trafie
