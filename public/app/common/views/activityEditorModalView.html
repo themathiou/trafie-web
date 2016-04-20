@@ -55,6 +55,7 @@
                 <textarea type="text" name="notes" class="form-control vertical-resize" ng-model="activity.notes" ng-change="fieldErrors.notes.hasError = false" ng-pattern="validations.activity.notes"></textarea>
             </div>
             <div class="form-group">
+                <label translate="PROFILE.COMPETITION_TYPE"></label>
                 <div>
                     <div class="btn-group">
                         <label class="btn btn-default" ng-model="activity.isOutdoor" uib-btn-radio="true" translate="PROFILE.OUTDOOR"></label>
@@ -62,11 +63,14 @@
                     </div>
                 </div>
             </div>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" ng-model="activity.isPrivate">
-                    {{'COMMON.PRIVATE' | translate}}
-                </label>
+            <div class="form-group">
+                <label translate="PROFILE.ACTIVITY_PRIVACY"></label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="activity.isPrivate">
+                        {{'PROFILE.HIDE_THIS_ACTIVITY_FROM_EVERYONE' | translate}}
+                    </label>
+                </div>
             </div>
         </div>
     </form>
