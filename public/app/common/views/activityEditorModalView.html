@@ -36,7 +36,7 @@
         </div>
         <div class="form-group" ng-class="{'has-error': fieldErrors.competition.hasError}">
             <label translate="PROFILE.COMPETITION"></label>
-            <input type="text" class="form-control" name="competition" ng-model="activity.competition" ng-change="fieldErrors.competition.hasError = false" required>
+            <input type="text" class="form-control" name="competition" placeholder="{{'PROFILE.EG_OLYMPIC_GAMES_2016' | translate}}" ng-model="activity.competition" ng-change="fieldErrors.competition.hasError = false" required>
         </div>
         <div class="form-group">
             <a href="javascript:;" ng-click="showAdditionalInfo()">{{(additionalInfoVisible ? 'PROFILE.HIDE_ADDITIONAL_INFO' : 'PROFILE.SHOW_ADDITIONAL_INFO') | translate}}</a>
@@ -44,15 +44,15 @@
         <div ng-show="additionalInfoVisible">
             <div class="form-group" ng-class="{'has-error': fieldErrors.location.hasError}">
                 <label translate="PROFILE.LOCATION"></label>
-                <input type="text" name="location" class="form-control" ng-model="activity.location" ng-pattern="validations.activity.location" ng-change="fieldErrors.location.hasError = false">
+                <input type="text" name="location" class="form-control" placeholder="{{'PROFILE.EG_RIO_DE_JANEIRO_BRAZIL' | translate}}" ng-model="activity.location" ng-pattern="validations.activity.location" ng-change="fieldErrors.location.hasError = false">
             </div>
             <div class="form-group" ng-class="{'has-error': fieldErrors.rank.hasError}">
                 <label translate="PROFILE.RANK"></label>
-                <input type="text" name="rank" class="form-control" ng-model="activity.rank" ng-change="fieldErrors.rank.hasError = false" ng-pattern="validations.activity.rank">
+                <input type="text" name="rank" class="form-control" placeholder="{{'PROFILE.EG_1ST' | translate}}" ng-model="activity.rank" ng-change="fieldErrors.rank.hasError = false" ng-pattern="validations.activity.rank">
             </div>
             <div class="form-group" ng-class="{'has-error': fieldErrors.notes.hasError}">
                 <label translate="PROFILE.NOTES"></label>
-                <textarea type="text" name="notes" class="form-control vertical-resize" ng-model="activity.notes" ng-change="fieldErrors.notes.hasError = false" ng-pattern="validations.activity.notes"></textarea>
+                <textarea type="text" name="notes" class="form-control vertical-resize" placeholder="{{'PROFILE.A_FEW_WORDS_ABOUT_THE_COMPETITION' | translate}}" ng-model="activity.notes" ng-change="fieldErrors.notes.hasError = false" ng-pattern="validations.activity.notes"></textarea>
             </div>
             <div class="form-group">
                 <label translate="PROFILE.COMPETITION_TYPE"></label>

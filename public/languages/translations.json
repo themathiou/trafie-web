@@ -479,6 +479,22 @@
     "HIDE_THIS_ACTIVITY_FROM_EVERYONE": {
       "en": "Hide this activity from everyone",
       "el": "Απόκρυψη αυτής της δραστηριότητας από όλους"
+    },
+    "EG_OLYMPIC_GAMES_2016": {
+      "en": "E.g. Olympic Games 2016",
+      "el": "Πχ Ολυμπιακοί Αγώνες 2016"
+    },
+    "EG_RIO_DE_JANEIRO_BRAZIL": {
+      "en": "E.g. Rio de Janeiro, Brazil",
+      "el": "Πχ Ρίο ντε Τζανέιρο, Βραζιλία"
+    },
+    "EG_1ST": {
+      "en": "E.g. 1st",
+      "el": "Πχ 1ος"
+    },
+    "A_FEW_WORDS_ABOUT_THE_COMPETITION": {
+      "en": "A few words about the competition",
+      "el": "Λίγα λόγια για τον αγώνα"
     }
   },
   "SETTINGS": {
