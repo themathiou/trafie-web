@@ -12,7 +12,8 @@ const config = {
 	languages: ['en', 'el'],
 	dateFormats: ['D-M-YYYY', 'M-D-YYYY'],
     validations: {
-        username: /^[A-Za-z_.0-9]{0,20}$/,
+        username: /^[[A-Za-z_0-9]{1,20}\.?[A-Za-z_0-9]{1,20}]{0,20}$/,
+        forbiddenUsernames: ['trafie','trafie.com','app','bower_components','fonts','images','languages','styles','assets','public','user','users','api','apiV2','api-v2','api2','apiV3','api-v3','api3','register','login','authorize','validate-email','validate','resend-validation-email','reset-password-request','reset-password','logout','deactivate-account','deactivate','settings','terms-of-service','tos','about','privacy','legal','news','blog','page','contact','feedback','admin','administrator','help','mathiou','geobalas','delete','remove','db', '404'],
         name: /^[A-Za-z\- ]{2,35}$/,
         birthday: {
             format: 'YYYY-MM-DD',

@@ -20,8 +20,7 @@ profileHelper.validateName = function(name) {
  * @param string name
  */
 profileHelper.validateUsername = function(username) {
-	var routes = ['users','register','login','validate','resend_validation_email','reset_password_request','reset_password','four_oh_four','logout','feedback','settings','statistics','api'];
-	return config.validations.username.test(username) && routes.indexOf(username) < 0;
+	return config.validations.username.test(username) && config.validations.forbiddenUsernames.indexOf(username) < 0;
 };
 
 /**
