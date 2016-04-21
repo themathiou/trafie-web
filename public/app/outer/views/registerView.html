@@ -1,10 +1,18 @@
 <div class="page page-auth clearfix">
     <div class="auth-container">
+        <div class="logo-container">
+            <div class="logo">
+            </div>
+            <div class="text-center text-light h1">
+                trafie
+            </div>
+            <div class="text-center text-light lead">
+                Revolutionize track and field
+            </div>
+        </div>
         <div class="form-container">
             <form class="form-horizontal" method="post" role="form">
-                <h2 class="text-center">trafie</h2>
                 <div class="alert alert-danger" role="alert" ng-if="errorMessages.length" ng-bind-html="errorMessages.join('<br>')">
-
                 </div>
                 <div class="row">
                     <div class="form-group form-group-lg col-lg-6" ng-class="{'has-error': fieldsWithErrors.firstName}">
