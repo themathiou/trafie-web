@@ -16,6 +16,7 @@
         $scope.dateFormats = Object.keys(DATE_FORMATS_MAP);
         $scope.validations = VALIDATIONS;
         $scope.validationEmailSent = false;
+        $scope.showUsernameWarning = false;
         $scope.saving = false;
         $scope.setting = {
             birthday: '',
@@ -125,22 +126,30 @@
             }
 
             $scope.saving = true;
+            $scope.showUsernameWarning = false;
+            $scope[formName].$setPristine();
             $scope.user.birthday = $scope.setting.birthday ? moment($scope.setting.birthday, $scope.user.dateFormat).format('YYYY-MM-DD') : '';
             $scope.user.isMale = $scope.setting.isMale === 'true';
-            if(currentLanguage != $scope.user.language) {
-                $translate.use($scope.user.language);
-                currentLanguage = $scope.user.language;
-            }
 
             var formData = usersFormValues(formName);
             var user = new User(formData);
+            if($scope.user.usernameChangesCount > 1) {
+                delete user.username;
+            }
             user.$save()
                 .then(function(res) {
                     $scope.alerts[formName].type = 'success';
                     $scope.alerts[formName].message = $filter('translate')('SETTINGS.DATA_WAS_UPDATED_SUCCESSFULLY');
                     $scope.saving = false;
                     angular.extend(globalUser, formData);
-                    $scope[formName].$setPristine();
+                    if(currentLanguage != $scope.user.language) {
+                        $translate.use($scope.user.language);
+                        currentLanguage = $scope.user.language;
+                    }
+                    console.log(res);
+                    if(res.hasOwnProperty('usernameChangesCount')) {
+                        $scope.user.usernameChangesCount = res.usernameChangesCount;
+                    }
                 }, function(res) {
                     $scope.saving = false;
                     if(res.data.errors) {

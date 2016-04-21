@@ -20,6 +20,7 @@ var profileSchema = mongoose.Schema({
 	language 	: { type: String, 	required: false, 	default: 'en' },
 	isPrivate 	: { type: Boolean, 	required: false, 	default: true },
 	role 		: { type: String, 	required: false, 	default: 'athlete'},
+    usernameChangesCount: { type: Number, required: false, default: 0 },
 	dateCreated : { type: Date },
 	dateUpdated : { type: Date },
 	keywords 	: {

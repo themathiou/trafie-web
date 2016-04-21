@@ -145,6 +145,7 @@ function sendProfileData(req, res, profileData, userData) {
     if('_id' in userData && profileData._id.toString() === userData._id.toString()) {
         profile.isPrivate = profileData.isPrivate;
         profile.birthday = profileData.birthday;
+        profile.usernameChangesCount = profileData.usernameChangesCount;
         profile.language = userData.language;
         profile.dateFormat = userData.dateFormat;
         profile.isValid = req.user.isValid;
@@ -173,8 +174,8 @@ exports.post = function(req, res) {
 
 	// Check if the profile really exists
 	Profile.schema.findOne({
-			'_id': userId
-		}, '_id')
+			'_id': userId,
+		}, '_id usernameChangesCount')
 		.then(function(profile) {
 			// If the profile doesn't exist, return null
 			if (typeof profile._id === 'undefined') {
@@ -351,32 +352,38 @@ exports.post = function(req, res) {
             // Validating username
             if (typeof req.body.username !== 'undefined') {
                 promises.push(new Promise(function(resolve, reject) {
-                    if (profileHelper.validateUsername(req.body.username)) {
-                        if(!req.body.username) {
-                            profileData.username = req.body.username;
-                            resolve(profileData.username);
-                        } else {
-                            var username = req.body.username.toLowerCase();
-                            Profile.schema.findOne({
-                                    'username': username
-                                }, '_id')
-                                .then(function (profile) {
-                                    if (profile == null || (profile && profile._id.toString() === userId.toString())) {
-                                        profileData.username = username;
-                                        resolve(profileData.username);
-                                    }
-                                    else if(profile && profile._id !== userId) {
-                                        reject([422, {
-                                            resource: 'user',
-                                            field: 'username',
-                                            code: 'already_exists'
-                                        }]);
-                                    }
-                                })
-                                .catch(function (error) {
-                                    reject([500, null]);
-                                });
-                        }
+                    if(profile.usernameChangesCount === 2) {
+                        reject([422, {
+                            resource: 'user',
+                            field: 'username',
+                            code: 'already_processed'
+                        }]);
+                    }
+                    else if (profileHelper.validateUsername(req.body.username)) {
+                        var username = req.body.username.toLowerCase();
+                        Profile.schema.findOne({
+                                'username': username
+                            }, '_id')
+                            .then(function (foundProfile) {
+                                if (foundProfile == null) {
+                                    profileData.username = username;
+                                    profileData.usernameChangesCount = profile.usernameChangesCount + 1;
+                                    resolve(profileData.username);
+                                }
+                                else if(profile && profile._id.toString() === userId.toString()) {
+                                    resolve();
+                                }
+                                else if(profile && profile._id !== userId) {
+                                    reject([422, {
+                                        resource: 'user',
+                                        field: 'username',
+                                        code: 'already_exists'
+                                    }]);
+                                }
+                            })
+                            .catch(function (error) {
+                                reject([500, null]);
+                            });
                     } else {
                         reject([422, {
                             resource: 'user',
@@ -504,8 +511,8 @@ exports.post = function(req, res) {
                 Profile.schema.update({
                         '_id': userId
                     }, profileData)
-                    .then(function(profile) {
-                        res.status(200).json(profile);
+                    .then(function() {
+                        res.status(200).json(profileData);
                     })
                     .catch(function(statusCode, error) {
                         res.status(statusCode).json({message: 'Server error'});

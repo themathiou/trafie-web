@@ -67,10 +67,11 @@ accessHelper.validateAccess = function(user, profileId) {
 			return;
 		}
 
+		var selectQuery = '_id firstName lastName discipline country isMale picture username isPrivate about birthday usernameChangesCount';
 		// Find the profile by id
 		Profile.schema.findOne({
 			'_id': profileId
-		}, '_id firstName lastName discipline country isMale picture username isPrivate about birthday')
+		}, selectQuery)
 		.then(function(profileData) {
 			// If the profile was found, get the data of the user
 			if (profileData !== null && profileData !== undefined) {
@@ -81,7 +82,7 @@ accessHelper.validateAccess = function(user, profileId) {
 				// If the profile wasn't found, try to find it by username
 				return Profile.schema.findOne({
 					'username': profileId
-				}, '_id firstName lastName discipline country isMale picture username isPrivate about birthday');
+				}, selectQuery);
 			}
 		})
 		.then(function(profileData) {

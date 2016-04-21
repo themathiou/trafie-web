@@ -84,7 +84,7 @@
                         <input type="email" class="form-control" name="email" id="email" ng-model="user.email" disabled required ng-pattern="validations.email">
                         <p class="help-block" ng-if="!user.isValid">
                             <span ng-show="!validationEmailSent">
-                                <span class="text-warning" translate="{{'SETTINGS.YOU_HAVENT_VERIFIED_YOUR_EMAIL_YET'}}"></span>
+                                <span class="text-warning" translate="{{'SETTINGS.YOU_HAVENT_VERIFIED_YOUR_EMAIL_YET'}}"></span><br>
                                 <a href="" ng-click="resendValidationEmail()" translate="SETTINGS.RESEND_VERIFICATION_EMAIL"></a>
                             </span>
                             <span class="text-success" ng-show="validationEmailSent" translate="{{'SETTINGS.AN_EMAIL_HAS_BEEN_SENT_TO_EMAIL_ADDRESS'}}" translate-values="{emailAddress: user.email}" translate-compile></span>
@@ -100,10 +100,13 @@
                     </div>
                     <div class="form-group" ng-class="{'has-error': fieldErrors.accountForm.username.hasError}">
                         <label for="username" translate="COMMON.USERNAME"></label>
-                        <div class="input-group">
+                        <div class="input-group no-bottom-margin">
                             <span class="input-group-addon">https://trafie.com/</span>
-                            <input type="text" id="username" name="username" class="form-control" ng-model="user.username"  ng-change="fieldErrors.accountForm.username.hasError = false" ng-pattern="validations.username">
+                            <input type="text" id="username" name="username" class="form-control" ng-model="user.username" ng-change="showUsernameWarning = true; fieldErrors.accountForm.username.hasError = false" ng-pattern="validations.username" ng-disabled="user.usernameChangesCount > 1">
                         </div>
+                        <p class="help-block" ng-show="showUsernameWarning && user.usernameChangesCount === 1">
+                            <span class="text-warning" translate="{{'SETTINGS.YOU_CAN_CHANGE_YOUR_USERNAME_ONLY_ONE_MORE_TIME'}}"></span>
+                        </p>
                     </div>
                 </div>
                 <div class="panel-footer clearfix">

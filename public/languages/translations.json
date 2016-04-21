@@ -685,6 +685,10 @@
     "AN_EMAIL_HAS_BEEN_SENT_TO_EMAIL_ADDRESS": {
       "en": "An email has been sent to {{emailAddress}}!",
       "el": "Στάλθηκε email στη διεύθυνση {{emailAddress}}!"
+    },
+    "YOU_CAN_CHANGE_YOUR_USERNAME_ONLY_ONE_MORE_TIME": {
+      "en": "You can change your username only one more time",
+      "el": "Μπορείτε να αλλάξετε το όνομα χρήστη σας μόνο ακόμα μία φορά"
     }
   },
   "FEEDBACK": {
