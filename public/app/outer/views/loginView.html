@@ -1,31 +1,35 @@
-<form class="form-signin" method="post" role="form" name="form">
-    <h2 class="text-center">trafie</h2>
-    <div class="alert alert-danger" role="alert" ng-if="error">
-        {{error}}
-    </div>
-    <div class="alert alert-success" role="alert" ng-if="success">
-        {{success}}
-    </div>
-    <div class="form-group">
-        <label for="email-input">Email:</label>
-        <input id="email-input" class="form-control" name="email" type="email" ng-model="formData.email" autofocus required>
-    </div>
+<div class="page page-auth clearfix">
+    <div class="auth-container">
+        <div class="form-container">
+            <form class="form-horizontal" method="post" role="form" name="form">
+                <h2 class="text-center">trafie</h2>
+                <div class="alert alert-danger" role="alert" ng-if="error">
+                    {{error}}
+                </div>
+                <div class="alert alert-success" role="alert" ng-if="success">
+                    {{success}}
+                </div>
+                <div class="form-group form-group-lg">
+                    <input id="email-input" placeholder="Email"class="form-control" name="email" type="email" ng-model="formData.email" autofocus required>
+                </div>
 
-    <div class="form-group">
-        <label for="password-input">Password:</label>
-        <input id="password-input" class="form-control" name="password" type="password" ng-model="formData.password" value="" required>
-    </div>
+                <div class="form-group form-group-lg">
+                    <input id="password-input" placeholder="Password" class="form-control" name="password" type="password" ng-model="formData.password" value="" required>
+                </div>
 
-    <div class="form-group">
-        <input class="btn btn-success btn-lg btn-block" type="submit" ng-click="login()" value="Login" ng-disabled="!form.$valid">
-    </div>
+                <div class="form-group form-group-lg">
+                    <input class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" ng-click="login()" value="Login" ng-disabled="!form.$valid">
+                </div>
 
-    <div>
-        <small>Not a member?</small>&nbsp;
-        <a href="/register">Register</a>
+                <div class="clearfix text-center">
+                    <p>Don't have an account? <a href="/register">Register Now</a></p>
+                </div>
+
+                <div class="clearfix text-center">
+                    <p>Forget your password? <a href="/reset-password-request">Reset Here</a></p>
+                </div>
+
+            </form>
+        </div>
     </div>
-    <div class="form-group">
-        <small>Forgot Password?</small>&nbsp;
-        <a href="/reset-password-request">Reset Here</a>
-    </div>
-</form>
+</div>

@@ -6,9 +6,11 @@ html(ng-app="trafie-outer")
         base(href="/")
         title trafie
 
-        link(href='/styles/styles.css' rel='stylesheet' type='text/css')
+        link(href='/styles/styles-outer.css' rel='stylesheet' type='text/css')
 
-    body
-        div.container(ng-view)
+    body.app.on-canvas.nav-min.layout-horizontal.body-full
+        div.main-container.clearfix
+            div.content-container(ng-view)
+            include ./partials/footer-outer.jade
 
         include ./partials/scripts-outer.jade
