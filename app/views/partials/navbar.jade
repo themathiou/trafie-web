@@ -14,14 +14,9 @@ nav.navbar.navbar-default.navbar-fixed-top
             div.navbar-header
                 a.navbar-brand(href="/") trafie
             div.navbar-collapse.collapse.navbar-right
-                ul.nav.navbar-nav.pull-right(ng-if="App.user")
-                    li
-                        button.btn.btn-default.navbar-btn(ng-click="App.openActivityEditorModal()" title="{{'COMMON.ADD_NEW_ACTIVITY' | translate}}")
-                            i.fa.fa-plus
-                form.navbar-form.pull-left(role="search")
-                    .form-group
-                        .input-group
-                            input.form-control(type="text" placeholder="{{'COMMON.SEARCH' | translate}}" ng-model="App.profileResult" uib-typeahead="user as (user.firstName + ' ' + user.lastName) for user in App.searchUsers($viewValue)" ng-cloak)
-                            span.input-group-btn
-                                button.btn.btn-default(type="submit" ng-click="App.goToUser()")
-                                    i.fa.fa-search
+                form.navbar-form.navbar-right-form(role="search")
+                    .input-group
+                        input.form-control(type="text" placeholder="{{'COMMON.SEARCH' | translate}}" ng-model="App.profileResult" uib-typeahead="user as (user.firstName + ' ' + user.lastName) for user in App.searchUsers($viewValue)" ng-cloak)
+                        span.input-group-btn
+                            button.btn.btn-default(type="submit" ng-click="App.goToUser()")
+                                i.fa.fa-search

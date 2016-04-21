@@ -13,7 +13,7 @@
     <div ng-include="'/app/common/views/footerLinksView.html'"></div>
 </div>
 <div class="col-md-9">
-    <div class="panel panel-default"  ng-repeat="activity in activities | orderBy:'-date'">
+    <div class="panel panel-default"  ng-repeat="activity in activities | orderBy:'-date' | usersFilters:filters.values">
         <div class="panel-heading">
             <span>{{activity.competition}}</span> |
             <span>{{formatUnixTimestamp(activity.date)}}</span>

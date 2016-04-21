@@ -77,7 +77,7 @@
                     var found = false;
                     $scope.activities.forEach(function(scopeActivity) {
                         if(scopeActivity._id === activity._id) {
-                            for(i in scopeActivity) {
+                            for(var i in scopeActivity) {
                                 if(scopeActivity.hasOwnProperty(i)) {
                                     scopeActivity[i] = activity[i];
                                 }
