@@ -10,7 +10,7 @@
     .constant('LANGUAGES_MAP', {en: 'English', el: 'Ελληνικά'})
     .constant('DATE_FORMATS_MAP', {'D-M-YYYY': 'DAY_MONTH_YEAR', 'M-D-YYYY': 'MONTH_DAY_YEAR'})
     .constant('VALIDATIONS', {
-        username: /^[A-Za-z_.0-9]{0,20}$/,
+        username: /^[[A-Za-z_0-9]{1,20}\.?[A-Za-z_0-9]{1,20}]{0,20}$/,
         name: /^[A-Za-z\- ]{2,35}$/,
         birthday: {
             format: 'YYYY-MM-DD',

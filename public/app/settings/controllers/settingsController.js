@@ -140,6 +140,7 @@
                     $scope.alerts[formName].message = $filter('translate')('SETTINGS.DATA_WAS_UPDATED_SUCCESSFULLY');
                     $scope.saving = false;
                     angular.extend(globalUser, formData);
+                    $scope[formName].$setPristine();
                 }, function(res) {
                     $scope.saving = false;
                     if(res.data.errors) {
