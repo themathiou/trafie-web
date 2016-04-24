@@ -1,7 +1,6 @@
 'use strict';
 
 exports.getView = function(req, res) {
-    console.log('gv', req.originalUrl);
     //var angularRoutes = ['/', '/settings'];
 	if (typeof req.user === 'undefined' && req.originalUrl === '/') {
 		res.redirect(301, '/register');
@@ -15,7 +14,6 @@ exports.getView = function(req, res) {
 };
 
 exports.getOuterView = function(req, res) {
-    console.log('gov', req.originalUrl);
     var routesWithoutSession = ['/login', '/register', '/reset-password', '/reset-password-request'];
     if (req.user && routesWithoutSession.indexOf(req.originalUrl) >= 0) {
         res.redirect(301, '/');
