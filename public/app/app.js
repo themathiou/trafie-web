@@ -8,15 +8,6 @@
                 templateUrl: '/app/settings/views/settingsView.html',
                 controller: 'SettingsController'
             })
-            .when('/terms-of-service', {
-                templateUrl: '/app/common/views/termsOfServiceView.html'
-            })
-            .when('/about', {
-                templateUrl: '/app/common/views/aboutView.html'
-            })
-            .when('/privacy', {
-                templateUrl: '/app/common/views/privacyView.html'
-            })
             .when('/:userIdentifier?', {
                 templateUrl: '/app/profile/views/profileView.html',
                 controller: 'ProfileController'

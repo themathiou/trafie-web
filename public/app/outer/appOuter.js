@@ -23,6 +23,15 @@
             .when('/validate-email/:hash', {
                 templateUrl: '/app/outer/views/validateEmailView.html',
                 controller: 'ValidateEmailController'
+            })
+            .when('/terms-of-service', {
+                templateUrl: '/app/outer/views/termsOfServiceView.html'
+            })
+            .when('/about', {
+                templateUrl: '/app/outer/views/aboutView.html'
+            })
+            .when('/privacy', {
+                templateUrl: '/app/outer/views/privacyView.html'
             });
     });
 })(angular);

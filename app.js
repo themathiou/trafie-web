@@ -276,6 +276,9 @@ trafie.post('/feedback', feedback.post);
  * VIEWS                                                                                                                       *
  ******************************************************************************************************************************/
 
+trafie.get('/terms-of-service', index.getOuterView);
+trafie.get('/privacy', index.getOuterView);
+trafie.get('/about', index.getOuterView);
 trafie.get('*', index.getView);
 
 
