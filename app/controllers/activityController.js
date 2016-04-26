@@ -275,17 +275,24 @@ exports.delete = function(req, res) {
         res.status(403).json({message: 'Forbidden'});
     }
     else {
-        Activity.schema.findOneAndUpdate({'_id': activityId, 'userId': userId}, {isDeleted: true})
-		.then(function(deleted) {
-            if(deleted) {
-                res.status(200).json(null);
-            } else {
+        Activity.schema.findOne({_id: activityId, userId: userId}, '')
+        .then(function(activity) {
+            if(!activity) {
                 res.status(404).json({message: 'Resource not found', errors: [{
                     resource: 'activity',
                     code: 'not_found'
                 }]});
+            } else {
+                activity.isDeleted = true;
+                activity.save(function(err, activity) {
+                    if(err) {
+                        res.status(500).json({message: 'Server error'});
+                    } else {
+                        res.status(200).json(activity);
+                    }
+                });
             }
-		})
+        })
 		.catch(function(error) {
 			res.status(500).json({message: 'Server error'});
 		});
