@@ -160,34 +160,40 @@ exports.post = function(req, res) {
         res.status(403).json({message: 'Forbidden'});
     }
 	else {
-		// Create the record that will be inserted in the db
-		var activityData = {
-			userId: userId,
-			discipline: req.body.discipline || null,
-			performance: typeof req.body.performance !== 'undefined' ? req.body.performance : null,
-			date: req.body.date || null,
-			rank: req.body.rank || null,
-			location: req.body.location || null,
-			competition: req.body.competition || null,
-			notes: req.body.notes || null,
-			isPrivate: typeof req.body.isPrivate !== 'undefined' ? req.body.isPrivate : false,
-            isOutdoor: typeof req.body.isOutdoor !== 'undefined' ? req.body.isOutdoor : false
-		};
-		var activity = new Activity(activityData),
-		    errors = activity.checkValid();
+		Activity.count({userId: userId}, function(err, activitiesCount) {
+			if(activitiesCount >= 500) {
+				res.status(413).json(null);
+				return;
+			}
+			// Create the record that will be inserted in the db
+			var activityData = {
+				userId: userId,
+				discipline: req.body.discipline || null,
+				performance: typeof req.body.performance !== 'undefined' ? req.body.performance : null,
+				date: req.body.date || null,
+				rank: req.body.rank || null,
+				location: req.body.location || null,
+				competition: req.body.competition || null,
+				notes: req.body.notes || null,
+				isPrivate: typeof req.body.isPrivate !== 'undefined' ? req.body.isPrivate : false,
+				isOutdoor: typeof req.body.isOutdoor !== 'undefined' ? req.body.isOutdoor : false
+			};
+			var activity = new Activity(activityData),
+				errors = activity.checkValid();
 
-		if(!errors) {
-			// Save the activity
-			activity.save()
-			.then(function(activityRes) {
-				res.status(201).json(activityRes);
-			}, function(err) {
-				res.status(500).json({message: 'Server error'});
-			});
-		} else {
-			// If there are errors, send the error messages to the client
-			res.status(422).json({message: 'Invalid data', errors: errors});
-		}
+			if(!errors) {
+				// Save the activity
+				activity.save()
+					.then(function(activityRes) {
+						res.status(201).json(activityRes);
+					}, function(err) {
+						res.status(500).json({message: 'Server error'});
+					});
+			} else {
+				// If there are errors, send the error messages to the client
+				res.status(422).json({message: 'Invalid data', errors: errors});
+			}
+		});
 	}
 };
 
