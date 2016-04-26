@@ -18,6 +18,7 @@ var activitySchema = mongoose.Schema({
 	competition : { type: String, 	required: false, 	default: '' },
 	notes 		: { type: String, 	required: false, 	default: '' },
 	isPrivate 	: { type: Boolean, 	required: false, 	default: false },
+	isDeleted 	: { type: Boolean,  required: false,    default: false },
 	type 		: { type: String, 	required: false, 	default: 'competition' },
     isOutdoor 	: { type: Boolean, 	required: false, 	default: true },
 	dateCreated : { type: Date },
@@ -106,6 +107,17 @@ activitySchema.delete = function(where) {
 	});
 
 	return d.promise;
+};
+
+activitySchema.findOneAndUpdate = function(where, update) {
+    var d = q.defer();
+
+    Activity.findOneAndUpdate(where, update, function(err, doc) {
+        if (err) d.reject(err);
+        d.resolve(doc);
+    });
+    
+    return d.promise;
 };
 
 /**

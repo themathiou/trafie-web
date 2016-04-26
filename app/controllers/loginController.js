@@ -3,7 +3,6 @@ var user = require('../models/userModel')
 
 exports.post = function(req, res) {
     if (req.user) {
-        console.log(req.ip)
         var ip = req.ip.substr(req.ip.lastIndexOf(':') + 1);
         var now = new Date();
         user.findOneAndUpdate(req.user._id, {lastLogin: now, lastIp: ip}, function(err, doc) {});

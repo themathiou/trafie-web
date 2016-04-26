@@ -275,7 +275,7 @@ exports.delete = function(req, res) {
         res.status(403).json({message: 'Forbidden'});
     }
     else {
-		Activity.schema.delete({'_id': activityId, 'userId': userId})
+        Activity.schema.findOneAndUpdate({'_id': activityId, 'userId': userId}, {isDeleted: true})
 		.then(function(deleted) {
             if(deleted) {
                 res.status(200).json(null);
