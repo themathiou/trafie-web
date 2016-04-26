@@ -109,17 +109,6 @@ activitySchema.delete = function(where) {
 	return d.promise;
 };
 
-activitySchema.findOneAndUpdate = function(where, update) {
-    var d = q.defer();
-
-    Activity.findOneAndUpdate(where, update, function(err, doc) {
-        if (err) d.reject(err);
-        d.resolve(doc);
-    });
-    
-    return d.promise;
-};
-
 /**
  * WARNING: DO NOT RENAME TO VALIDATE, IT MAKES MONGOOSE HANG
  * Checks if all the data in the model are valid
