@@ -75,6 +75,10 @@ exports.get = function(req, res) {
 					where.discipline = req.query.discipline;
 				}
 
+                if(typeof req.query.isDeleted !== 'boolean') {
+                    where.isDeleted = req.query.isDeleted;
+                }
+
                 if (typeof req.query.from !== 'undefined') {
                     let from = parseInt(req.query.from);
                     if(from >= 0 && from <= moment().unix()) {

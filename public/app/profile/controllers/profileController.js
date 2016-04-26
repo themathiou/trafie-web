@@ -45,7 +45,7 @@
                     setActivityCreationListener();
                 }
                 $scope.user = user;
-                Activity.get({userId: $scope.user._id}, function(activities) {
+                Activity.get({userId: $scope.user._id, isDeleted: false}, function(activities) {
                     $scope.activities = [];
                     activities.forEach(function(activity) {
                         $scope.activities.push(new Activity(activity));
