@@ -75,8 +75,8 @@ exports.get = function(req, res) {
 					where.discipline = req.query.discipline;
 				}
 
-                if(typeof req.query.isDeleted !== 'boolean') {
-                    where.isDeleted = req.query.isDeleted;
+                if(typeof req.query.isDeleted !== 'undefined' && ['true', 'false'].indexOf(req.query.isDeleted) >= 0) {
+                    where.isDeleted = req.query.isDeleted === 'true';
                 }
 
                 if (typeof req.query.from !== 'undefined') {
@@ -126,7 +126,7 @@ exports.get = function(req, res) {
 				if (!response.user._id || response.user._id.toString() !== response.profile._id.toString()) {
 					where.isPrivate = false;
 				}
-
+console.log(where);
 				Activity.schema.getActivitiesOfUser(where, '', -1)
 				.then(function(activities) {
 					res.json(activities);
