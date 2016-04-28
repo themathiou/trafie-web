@@ -126,7 +126,7 @@ exports.get = function(req, res) {
 				if (!response.user._id || response.user._id.toString() !== response.profile._id.toString()) {
 					where.isPrivate = false;
 				}
-console.log(where);
+                
 				Activity.schema.getActivitiesOfUser(where, '', -1)
 				.then(function(activities) {
 					res.json(activities);

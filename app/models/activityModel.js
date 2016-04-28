@@ -54,7 +54,7 @@ activitySchema.findOne = function(where, select) {
  * @param number sort (-1 == descending)
  */
 activitySchema.getActivitiesOfUser = function(where, select, sort) {
-	select = select || 'userId discipline performance date rank location competition notes isPrivate type isOutdoor';
+	select = select || 'userId discipline performance date rank location competition notes isPrivate type isOutdoor isDeleted';
 	var d = q.defer();
 	Activity.find(
 		// Where
