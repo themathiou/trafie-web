@@ -41,15 +41,22 @@ angular.module('trafie')
             template:   '<div class="row">' +
                             '<div class="col-xs-3">' +
                                 '<input type="number" class="form-control" ng-model="inputs[0]" min="0" max="24">' +
+                                '<span class="picker-time-separator">:</span>' +
+                                '<p class="help-block pull-right" translate="MEASUREMENTS.HOURS"></p>' +
                             '</div>' +
                             '<div class="col-xs-3">' +
                                 '<input type="number" class="form-control" ng-model="inputs[1]" min="0" max="59">' +
+                                '<span class="picker-time-separator">:</span>' +
+                                '<p class="help-block pull-right" translate="MEASUREMENTS.MINUTES"></p>' +
                             '</div>' +
                             '<div class="col-xs-3">' +
                                 '<input type="number" class="form-control" ng-model="inputs[2]" min="0" max="59">' +
+                                '<span class="picker-time-separator">:</span>' +
+                                '<p class="help-block pull-right" translate="MEASUREMENTS.SECONDS"></p>' +
                             '</div>' +
                             '<div class="col-xs-3">' +
                                 '<input type="number" class="form-control" ng-model="inputs[3]" min="0" max="99">' +
+                                '<p class="help-block pull-right" translate="MEASUREMENTS.CENTISECONDS"></p>' +
                             '</div>' +
                         '</div>',
             link: link
