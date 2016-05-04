@@ -164,11 +164,22 @@ exports.post = function(req, res) {
         res.status(403).json({message: 'Forbidden'});
     }
 	else {
-		Activity.count({userId: userId}, function(err, activitiesCount) {
+		Activity.count({userId: userId, isDeleted: false}, function(err, activitiesCount) {
 			if(activitiesCount >= 500) {
-				res.status(413).json(null);
+				res.status(403).json({message: 'Forbidden', errors: [{
+					resource: 'activity',
+					code: 'user_activity_limit'
+				}]});
 				return;
 			}
+            else if(!req.user.isValid && activitiesCount >= 10) {
+                res.status(403).json({message: 'Forbidden', errors: [{
+                    resource: 'activity',
+                    code: 'non_verified_user_activity_limit'
+                }]});
+                return;
+            }
+
 			// Create the record that will be inserted in the db
 			var activityData = {
 				userId: userId,
