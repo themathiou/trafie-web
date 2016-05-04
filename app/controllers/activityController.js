@@ -231,7 +231,7 @@ exports.put = function(req, res) {
         res.status(403).json({message: 'Forbidden'});
     }
     else {
-		Activity.schema.findOne({_id: activityId, userId: userId}, '')
+		Activity.schema.findOne({_id: activityId, userId: userId, isDeleted: false}, '')
 		.then(function(activity) {
 			if (!activity || typeof activity._id == 'undefined') res.status(404).json({message: 'Resource not found', errors: [{
                 resource: 'activity',
