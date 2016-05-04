@@ -337,6 +337,10 @@
     "ADD_NEW_ACTIVITY": {
       "en": "Add new activity",
       "el": "Προσθήκη νέας δραστηριότητας"
+    },
+    "RESEND_VERIFICATION_EMAIL": {
+      "en": "Resend the verification email.",
+      "el": "Αποστολή του email επιβεβαίωσης."
     }
   },
   "PROFILE": {
@@ -495,6 +499,10 @@
     "A_FEW_WORDS_ABOUT_THE_COMPETITION": {
       "en": "A few words about the competition",
       "el": "Λίγα λόγια για τον αγώνα"
+    },
+    "PLEASE_VERIFY_YOUR_EMAIL_EMAIL_IN_ORDER_TO_ADD_MORE_ACTIVITIES": {
+      "en": "Please verify your email {{email}} in order to add more activities.",
+      "el": "Παρακαλούμε επιβεβαιώστε το email σας {{email}} για να προσθέσετε κι άλλες δραστηριότητες."
     }
   },
   "SETTINGS": {
@@ -683,8 +691,8 @@
       "el": "Αποστολή του email επιβεβαίωσης."
     },
     "AN_EMAIL_HAS_BEEN_SENT_TO_EMAIL_ADDRESS": {
-      "en": "An email has been sent to {{emailAddress}}!",
-      "el": "Στάλθηκε email στη διεύθυνση {{emailAddress}}!"
+      "en": "An email has been sent to {{email}}!",
+      "el": "Στάλθηκε email στη διεύθυνση {{email}}!"
     },
     "YOU_CAN_CHANGE_YOUR_USERNAME_ONLY_ONE_MORE_TIME": {
       "en": "You can change your username only one more time",

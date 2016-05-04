@@ -175,7 +175,7 @@ exports.post = function(req, res) {
 	// Check if the profile really exists
 	Profile.schema.findOne({
 			'_id': userId,
-		}, '_id usernameChangesCount')
+		}, '_id usernameChangesCount username')
 		.then(function(profile) {
 			// If the profile doesn't exist, return null
 			if (typeof profile._id === 'undefined') {
@@ -350,7 +350,7 @@ exports.post = function(req, res) {
             }
 
             // Validating username
-            if (typeof req.body.username !== 'undefined') {
+            if (typeof req.body.username !== 'undefined' && (req.body.username || (!req.body.username && profile.username))) {
                 promises.push(new Promise(function(resolve, reject) {
                     if(profile.usernameChangesCount === 2) {
                         reject([422, {

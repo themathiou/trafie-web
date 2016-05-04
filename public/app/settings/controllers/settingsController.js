@@ -15,7 +15,7 @@
         $scope.dateFormatsMap = DATE_FORMATS_MAP;
         $scope.dateFormats = Object.keys(DATE_FORMATS_MAP);
         $scope.validations = VALIDATIONS;
-        $scope.validationEmailSent = false;
+        $scope.verificationEmailSent = false;
         $scope.showUsernameWarning = false;
         $scope.saving = false;
         $scope.setting = {
@@ -146,7 +146,6 @@
                         $translate.use($scope.user.language);
                         currentLanguage = $scope.user.language;
                     }
-                    console.log(res);
                     if(res.hasOwnProperty('usernameChangesCount')) {
                         $scope.user.usernameChangesCount = res.usernameChangesCount;
                     }
@@ -186,12 +185,11 @@
             });
         };
 
-        $scope.resendValidationEmail = function() {
-            $http.get('/resend-validation-email').then(function() {
-                $scope.validationEmailSent = true;
-            }, function() {
-                $scope.validationEmailSent = true;
-            });
+        $scope.resendVerificationEmail = function() {
+            function verificationEmailSent() {
+                $scope.verificationEmailSent = true;
+            }
+            $http.get('/resend-validation-email').then(verificationEmailSent, verificationEmailSent);
         };
 
         $scope.toDatepickerFormat = function(format) {

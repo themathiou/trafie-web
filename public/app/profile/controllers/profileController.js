@@ -1,7 +1,7 @@
 (function(angular) {
     angular.module('trafie')
-        .controller('ProfileController', function($rootScope, $scope, $routeParams, $window, Activity,
-                                                  User, userService) {
+        .controller('ProfileController', function($rootScope, $scope, $routeParams, $window, $http,
+                                                  Activity, User, userService) {
             $scope.profileFound = true;
             $scope.loading = true;
             $scope.user = null;
@@ -90,6 +90,13 @@
                     }
                 });
             }
+
+            $scope.resendVerificationEmail = function() {
+                function verificationEmailSent() {
+                    $scope.verificationEmailSent = true;
+                }
+                $http.get('/resend-validation-email').then(verificationEmailSent, verificationEmailSent);
+            };
 
             $scope.$on('$destroy', function() {
                 if($scope.ownProfile && listeners.hasOwnProperty('activityCreated')) {
