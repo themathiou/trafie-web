@@ -25,6 +25,7 @@ angular.module('trafie')
             scope: true,
             template:   '<div>' +
                             '<input type="number" class="form-control" ng-model="input" maxlength="4" ng-pattern="/^[0-9]{0,4}$/" min="0" max="9999">' +
+                            '<p class="help-block pull-right" translate="MEASUREMENTS.POINTS"></p>' +
                         '</div>',
             link: link
         }
