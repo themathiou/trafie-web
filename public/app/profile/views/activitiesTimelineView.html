@@ -1,11 +1,11 @@
 <div class="col-md-12">
     <div class="text-center">
         <div class="panel-body">
-            <button class="btn btn-primary" ng-click="App.openActivityEditorModal()" ng-if="ownProfile" ng-disabled="!currentUser.isValid && activities.length >= 10">
+            <button class="btn btn-primary" ng-click="App.openActivityEditorModal()" ng-if="ownProfile" ng-disabled="!currentUser.isVerified && activities.length >= 10">
                 <i class="fa fa-plus"></i>
                 {{'COMMON.ADD_NEW_ACTIVITY' | translate}}
             </button>
-            <div ng-if="ownProfile && !currentUser.isValid && activities.length >= 10">
+            <div ng-if="ownProfile && !currentUser.isVerified && activities.length >= 10">
                 <br>
                 <i class="fa fa-info-circle text-warning"></i>
                 <span class="text-warning" translate="PROFILE.PLEASE_VERIFY_YOUR_EMAIL_EMAIL_IN_ORDER_TO_ADD_MORE_ACTIVITIES" translate-values="{email: currentUser.email}"></span>

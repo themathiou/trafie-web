@@ -46,7 +46,7 @@ userHelper.validatePassword = function(password) {
 userHelper.validateUser = function(userId) {
 	var d = q.defer();
 	User.findByIdAndUpdate(userId, {
-		isValid: true
+		isVerified: true
 	}, '', function(err, user) {
 		if(err) d.reject;
 		else d.resolve(!!user);

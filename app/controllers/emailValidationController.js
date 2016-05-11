@@ -72,7 +72,7 @@ exports.resendEmail = function(req, res) {
             }]});
             responseSent = true;
         }
-		if (response.isValid) {
+		if (response.isVerified) {
             res.status(422).json({message: 'Invalid data', errors: [{
                 resource: 'user',
                 field: 'valid',

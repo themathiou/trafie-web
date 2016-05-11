@@ -148,7 +148,7 @@ function sendProfileData(req, res, profileData, userData) {
         profile.usernameChangesCount = profileData.usernameChangesCount;
         profile.language = userData.language;
         profile.dateFormat = userData.dateFormat;
-        profile.isValid = req.user.isValid;
+        profile.isVerified = req.user.isVerified;
         profile.email = req.user.email;
     }
 

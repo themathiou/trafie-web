@@ -82,7 +82,7 @@
                     <div class="form-group">
                         <label for="email" translate="COMMON.EMAIL"></label>
                         <input type="email" class="form-control" name="email" id="email" ng-model="user.email" disabled required ng-pattern="validations.email">
-                        <p class="help-block" ng-if="!user.isValid">
+                        <p class="help-block" ng-if="!user.isVerified">
                             <span ng-show="!verificationEmailSent">
                                 <span class="text-warning" translate="{{'SETTINGS.YOU_HAVENT_VERIFIED_YOUR_EMAIL_YET'}}"></span><br>
                                 <a href="" ng-click="resendVerificationEmail()" translate="COMMON.RESEND_VERIFICATION_EMAIL"></a>
