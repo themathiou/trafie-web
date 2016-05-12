@@ -34,7 +34,7 @@
         </div>
         <div class="panel-body">
             <span class="col-xs-9">
-                <h4>{{activity.getReadablePerformance()}} <small class="text-muted" translate="{{'DISCIPLINES.' + activity.discipline.toUpperCase()}}"></small></h4>
+                <h4><span ng-bind-html="activity.getReadablePerformance()"></span> <small class="text-muted" translate="{{'DISCIPLINES.' + activity.discipline.toUpperCase()}}"></small></h4>
             </span>
             <a href="javascript:;" ng-show="activity.rank || activity.location || activity.notes" class="col-xs-12" ng-init="isCollapsed = true" ng-click="isCollapsed = !isCollapsed">{{(isCollapsed ? 'PROFILE.SHOW_DETAILS' : 'PROFILE.HIDE_DETAILS') | translate}}</a>
             <div class="col-xs-12" uib-collapse="isCollapsed">

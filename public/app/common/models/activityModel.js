@@ -75,10 +75,33 @@
                     performance = viewPerformance.slice(0, lastIndex).join(':') + '.' + viewPerformance[lastIndex];
                     break;
                 case 'distance':
-                    var meters = Math.floor(this.performance / 10000);
-                    var centimeters = (this.performance - meters * 10000) / 100;
+                    if(currentUser && currentUser.units.distance === 'feet') {
+                        var inches = this.performance * 0.003937007874;
+                        var feet = Math.floor(inches / 12);
+                        inches = inches - 12 * feet;
+                        var inchesFloor = Math.floor(inches);
+                        var inchesDecimal = inches - inchesFloor;
+                        var inchesFraction = '';
+                        if(inchesDecimal >= 0.125 && inchesDecimal < 0.375) {
+                            inchesFraction = '&frac14;';
+                        }
+                        else if(inchesDecimal >= 0.375 && inchesDecimal < 0.625) {
+                            inchesFraction = '&frac12;';
+                        }
+                        else if(inchesDecimal >= 0.625 && inchesDecimal < 0.875) {
+                            inchesFraction = '&frac34;';
+                        }
+                        else if(inchesDecimal >= 0.875) {
+                            inchesFloor++;
+                        }
 
-                    performance = meters + '.' + ('0' + centimeters).substr(-2, 2);
+                        performance = feet + "' " + inchesFloor + inchesFraction + '"';
+                    } else {
+                        var meters = Math.floor(this.performance / 10000);
+                        var centimeters = (this.performance - meters * 10000) / 100;
+
+                        performance = meters + '.' + ('0' + centimeters).substr(-2, 2);
+                    }
                     break;
                 case 'points':
                     performance = '' + this.performance;
