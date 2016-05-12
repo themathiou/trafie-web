@@ -2,8 +2,8 @@
 
 // Loading models
 const User = require('../models/userModel'),
-	Profile = require('../models/profileModel'),
-	UserHashes = require('../models/userHashesModel');
+    Profile = require('../models/profileModel'),
+    UserHashes = require('../models/userHashesModel');
 
 // Loading helpers
 const userHelper = require('../helpers/userHelper'),
@@ -14,18 +14,18 @@ const userHelper = require('../helpers/userHelper'),
  * Validates the newly created user
  */
 exports.validate = function(req, res) {
-	// Find the user to whom the hash belongs
+    // Find the user to whom the hash belongs
     var encryptedHash = UserHashes.schema.encryptUserHash(req.params.hash, 'verify');
-	UserHashes.schema.findUserIdByHash(encryptedHash, 'verify')
-	.then(function(response) {
-		if (response) {
-			// Validate the user
-			return userHelper.validateUser(response.userId);
-		} else {
-			return false;
-		}
-	})
-	.then(function(validated) {
+    UserHashes.schema.findUserIdByHash(encryptedHash, 'verify')
+    .then(function(response) {
+        if (response) {
+            // Validate the user
+            return userHelper.validateUser(response.userId);
+        } else {
+            return false;
+        }
+    })
+    .then(function(validated) {
         if(validated) {
             // Delete the hash after validation
             UserHashes.schema.deleteHash(encryptedHash, 'verify');
@@ -37,10 +37,10 @@ exports.validate = function(req, res) {
                 code: 'not_found'
             }]});
         }
-	})
-	.catch(function(error) {
+    })
+    .catch(function(error) {
         res.status(500).json({message: 'Server error'});
-	});
+    });
 };
 
 
@@ -57,14 +57,14 @@ exports.resendEmail = function(req, res) {
         return;
     }
 
-	var email = '',
-	    firstName = '',
-	    lastName = '',
+    var email = '',
+        firstName = '',
+        lastName = '',
         responseSent = false;
-	User.schema.findOne({
-		'_id': userId
-	}, 'email isValid')
-	.then(function(response) {
+    User.schema.findOne({
+        '_id': userId
+    }, 'email isValid')
+    .then(function(response) {
         if (!response.email) {
             res.status(404).json({message: 'Resource not found', errors: [{
                 resource: 'user',
@@ -72,21 +72,21 @@ exports.resendEmail = function(req, res) {
             }]});
             responseSent = true;
         }
-		if (response.isVerified) {
+        if (response.isVerified) {
             res.status(422).json({message: 'Invalid data', errors: [{
                 resource: 'user',
                 field: 'valid',
                 code: 'already_processed'
             }]});
             responseSent = true;
-		}
-		email = response.email;
-		// Find the user's first name and last name
-		return Profile.schema.findOne({
-			'_id': userId
-		}, 'firstName lastName');
-	})
-	.then(function(response) {
+        }
+        email = response.email;
+        // Find the user's first name and last name
+        return Profile.schema.findOne({
+            '_id': userId
+        }, 'firstName lastName');
+    })
+    .then(function(response) {
         if(response) {
             firstName = response.firstName;
             lastName = response.lastName;
@@ -94,8 +94,8 @@ exports.resendEmail = function(req, res) {
         } else {
             return false;
         }
-	})
-	.then(function(response) {
+    })
+    .then(function(response) {
         if(response) {
             // Send an email with the hash to the user
             emailHelper.sendVerificationEmail(email, firstName, lastName, response);
@@ -107,8 +107,8 @@ exports.resendEmail = function(req, res) {
                 code: 'not_found'
             }]});
         }
-	})
-	.catch(function(error) {
+    })
+    .catch(function(error) {
         res.status(500).json({message: 'Server error'});
-	});
+    });
 };

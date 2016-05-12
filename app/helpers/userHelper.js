@@ -14,10 +14,10 @@ var userHelper = require('../helpers/userHelper');
  * @param String password
  */
 userHelper.encryptPassword = function(password) {
-	var sha512Hash = crypto.createHash('sha512');
-	sha512Hash.update((process.env.USER_PASSWORD_SALT || 'userPasswordSalt') + password);
-	// Return the encrypted password
-	return sha512Hash.digest('hex');
+    var sha512Hash = crypto.createHash('sha512');
+    sha512Hash.update((process.env.USER_PASSWORD_SALT || 'userPasswordSalt') + password);
+    // Return the encrypted password
+    return sha512Hash.digest('hex');
 };
 
 /**
@@ -26,7 +26,7 @@ userHelper.encryptPassword = function(password) {
  * @return boolean
  */
 userHelper.validateEmail = function(email) {
-	return config.validations.email.test(email);
+    return config.validations.email.test(email);
 };
 
 /**
@@ -35,8 +35,8 @@ userHelper.validateEmail = function(email) {
  * @return boolean
  */
 userHelper.validatePassword = function(password) {
-	// The password should have at least 6 characters
-	return config.validations.password.test(password);
+    // The password should have at least 6 characters
+    return config.validations.password.test(password);
 };
 
 /**
@@ -44,14 +44,14 @@ userHelper.validatePassword = function(password) {
  * @param string userId
  */
 userHelper.validateUser = function(userId) {
-	var d = q.defer();
-	User.findByIdAndUpdate(userId, {
-		isVerified: true
-	}, '', function(err, user) {
-		if(err) d.reject;
-		else d.resolve(!!user);
-	});
-	return d.promise;
+    var d = q.defer();
+    User.findByIdAndUpdate(userId, {
+        isVerified: true
+    }, '', function(err, user) {
+        if(err) d.reject;
+        else d.resolve(!!user);
+    });
+    return d.promise;
 };
 
 

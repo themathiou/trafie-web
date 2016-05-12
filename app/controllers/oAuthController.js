@@ -1,11 +1,11 @@
 // Load required packages
 var oauth2orize = require('oauth2orize'),
-	passport = require('passport'),
-	User = require('../models/userModel'),
+    passport = require('passport'),
+    User = require('../models/userModel'),
     userHelper = require('../helpers/userHelper'),
-	Client = require('../models/clientModel'),
-	Token = require('../models/tokenModel'),
-	crypto = require('crypto');
+    Client = require('../models/clientModel'),
+    Token = require('../models/tokenModel'),
+    crypto = require('crypto');
 
 // Create OAuth 2.0 server
 var server = oauth2orize.createServer();
@@ -44,7 +44,7 @@ server.exchange(oauth2orize.exchange.password(function (client, email, password,
                 });
             });
         } else {
-        	callback(null, false);
+            callback(null, false);
         }
     });
 }));

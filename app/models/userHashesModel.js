@@ -11,19 +11,19 @@ var crypto = require('crypto');
  * @param type string (valid input is ['verify', 'reset'])
  */
 var userHashSchema = mongoose.Schema({
-	userId: 	{type: String, required: true},
-	hash: 		{type: String, required: true},
-	type: 		{type: String, required: true},
-	dateCreated:{ type: Date }
+    userId:     {type: String, required: true},
+    hash:       {type: String, required: true},
+    type:       {type: String, required: true},
+    dateCreated:{ type: Date }
 });
 
 userHashSchema.pre('save', function(next){
-	var now = new Date();
-	this.dateUpdated = now;
-	if ( !this.dateCreated ) {
-		this.dateCreated = now;
-	}
-	next();
+    var now = new Date();
+    this.dateUpdated = now;
+    if ( !this.dateCreated ) {
+        this.dateCreated = now;
+    }
+    next();
 });
 
 /**
@@ -32,14 +32,14 @@ userHashSchema.pre('save', function(next){
  * @param string type (can be 'verify' and 'reset')
  */
 userHashSchema.findUserIdByHash = function(hash, type) {
-	var d = q.defer();
-	UserHash.findOne({
-		'hash': hash,
-		'type': type
-	}, 'userId hash', function(err, response) {
-		d.resolve(response);
-	});
-	return d.promise;
+    var d = q.defer();
+    UserHash.findOne({
+        'hash': hash,
+        'type': type
+    }, 'userId hash', function(err, response) {
+        d.resolve(response);
+    });
+    return d.promise;
 };
 
 
@@ -48,14 +48,14 @@ userHashSchema.findUserIdByHash = function(hash, type) {
  * @param string userId
  */
 userHashSchema.findValidationHashByUserId = function(userId) {
-	var d = q.defer();
-	UserHash.findOne({
-		'userId': userId,
-		'type': 'verify'
-	}, 'userId hash', function(err, response) {
-		d.resolve(response);
-	});
-	return d.promise;
+    var d = q.defer();
+    UserHash.findOne({
+        'userId': userId,
+        'type': 'verify'
+    }, 'userId hash', function(err, response) {
+        d.resolve(response);
+    });
+    return d.promise;
 };
 
 
@@ -65,14 +65,14 @@ userHashSchema.findValidationHashByUserId = function(userId) {
  * @param string type (can be 'verify' and 'reset')
  */
 userHashSchema.deleteHash = function(hash, type) {
-	var d = q.defer();
-	UserHash.find({
-		'hash': hash,
-		'type': type
-	}).remove(function(err, response) {
-		d.resolve(response);
-	});
-	return d.promise;
+    var d = q.defer();
+    UserHash.find({
+        'hash': hash,
+        'type': type
+    }).remove(function(err, response) {
+        d.resolve(response);
+    });
+    return d.promise;
 };
 
 userHashSchema.encryptUserHash = function(hash, type) {
@@ -90,26 +90,26 @@ userHashSchema.encryptUserHash = function(hash, type) {
 userHashSchema.createVerificationHash = function(email, userId) {
     var hash = userHashSchema.encryptUserHash(email + (new Date().getTime()), 'verify');
     var encryptedHash = userHashSchema.encryptUserHash(hash, 'verify');
-	var d = q.defer();
-	UserHash.remove({
-		'userId': userId,
-		'type': 'verify'
-	}, function(err) {
-		if (err) d.reject(err);
-		var newUserHash = {
-			'userId': userId,
-			'hash': encryptedHash,
-			'type': 'verify'
-		};
+    var d = q.defer();
+    UserHash.remove({
+        'userId': userId,
+        'type': 'verify'
+    }, function(err) {
+        if (err) d.reject(err);
+        var newUserHash = {
+            'userId': userId,
+            'hash': encryptedHash,
+            'type': 'verify'
+        };
 
-		var userHash = new UserHash(newUserHash);
+        var userHash = new UserHash(newUserHash);
 
-		userHash.save(function (err, userHash) {
-			d.resolve(hash);
-		});
-	});
+        userHash.save(function (err, userHash) {
+            d.resolve(hash);
+        });
+    });
 
-	return d.promise;
+    return d.promise;
 };
 
 /**
@@ -117,12 +117,12 @@ userHashSchema.createVerificationHash = function(email, userId) {
  * @param string userId
  */
 userHashSchema.createResetPasswordHash = function(userId) {
-	var d = q.defer();
-	UserHash.remove({
-		'userId': userId,
-		'type': 'reset'
-	}, function(err) {
-		if(err) d.reject(err);
+    var d = q.defer();
+    UserHash.remove({
+        'userId': userId,
+        'type': 'reset'
+    }, function(err) {
+        if(err) d.reject(err);
         var hash = userHashSchema.encryptUserHash(userId + (new Date().getTime()), 'reset');
         var encryptedHash = userHashSchema.encryptUserHash(hash, 'reset');
         var newUserHash = {
@@ -137,9 +137,9 @@ userHashSchema.createResetPasswordHash = function(userId) {
             if(err) d.reject(err);
             d.resolve(hash);
         });
-	});
+    });
 
-	return d.promise;
+    return d.promise;
 };
 
 var UserHash = mongoose.model('UserHash', userHashSchema);

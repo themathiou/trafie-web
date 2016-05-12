@@ -12,7 +12,7 @@ var profileHelper = {};
  * @param string name
  */
 profileHelper.validateName = function(name) {
-	return config.validations.name.test(name);
+    return config.validations.name.test(name);
 };
 
 /**
@@ -20,7 +20,7 @@ profileHelper.validateName = function(name) {
  * @param string name
  */
 profileHelper.validateUsername = function(username) {
-	return config.validations.username.test(username) && config.validations.forbiddenUsernames.indexOf(username) < 0;
+    return config.validations.username.test(username) && config.validations.forbiddenUsernames.indexOf(username) < 0;
 };
 
 /**
@@ -29,9 +29,9 @@ profileHelper.validateUsername = function(username) {
  * @return boolean
  */
 profileHelper.validateBirthday = function(birthday) {
-	if(typeof birthday === "string" && !birthday) return true;
-	else if(typeof birthday !== "string") return false;
-	else if(!config.validations.birthday.regex.test(birthday)) return false;
+    if(typeof birthday === "string" && !birthday) return true;
+    else if(typeof birthday !== "string") return false;
+    else if(!config.validations.birthday.regex.test(birthday)) return false;
     let birthdayObj = moment(birthday, config.validations.birthday.format);
 
     return birthdayObj.isValid() && birthdayObj.year() < moment().subtract(10, 'years').year();
@@ -43,7 +43,7 @@ profileHelper.validateBirthday = function(birthday) {
  * @return boolean
  */
 profileHelper.validateGender = function(gender) {
-	return typeof gender === "boolean";
+    return typeof gender === "boolean";
 };
 
 /**
@@ -52,7 +52,7 @@ profileHelper.validateGender = function(gender) {
  * @return boolean
  */
 profileHelper.validateCountry = function(country) {
-	return !country || config.countries.indexOf(country) >= 0;
+    return !country || config.countries.indexOf(country) >= 0;
 };
 
 /**
@@ -61,7 +61,7 @@ profileHelper.validateCountry = function(country) {
  * @return boolean
  */
 profileHelper.validateLanguage = function(language) {
-	return config.languages.indexOf(language) >= 0;
+    return config.languages.indexOf(language) >= 0;
 };
 
 /**
@@ -71,7 +71,7 @@ profileHelper.validateLanguage = function(language) {
  */
 profileHelper.validateDiscipline = function(discipline, allowEmptyString) {
     if(typeof allowEmptyString !== 'undefined' && allowEmptyString && !discipline) return true;
-	return config.disciplines.indexOf(discipline) >= 0;
+    return config.disciplines.indexOf(discipline) >= 0;
 };
 
 /**
@@ -80,7 +80,7 @@ profileHelper.validateDiscipline = function(discipline, allowEmptyString) {
  * @return boolean
  */
 profileHelper.validateAbout = function(about) {
-	return config.validations.about.test(about);
+    return config.validations.about.test(about);
 };
 
 /**
@@ -89,7 +89,7 @@ profileHelper.validateAbout = function(about) {
  * @return boolean
  */
 profileHelper.validateDateFormat = function(dateFormat) {
-	return config.validations.dateFormat.test(dateFormat);
+    return config.validations.dateFormat.test(dateFormat);
 };
 
 /**

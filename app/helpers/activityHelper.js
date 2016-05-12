@@ -11,66 +11,66 @@ let activityHelper = {};
  * @return string
  */
 activityHelper.validateDiscipline = function(discipline) {
-	// Validating discipline and performance
-	switch (discipline) {
-		case '60m':
-		case '100m':
-		case '200m':
-		case '400m':
-		case '800m':
-		case '1500m':
-		case '3000m':
-		case '5000m':
-		case '10000m':
-		case '60m_hurdles':
-		case '100m_hurdles':
-		case '110m_hurdles':
-		case '400m_hurdles':
-		case '3000m_steeplechase':
-		case '4x100m_relay':
-		case '4x400m_relay':
-		case 'half_marathon':
-		case 'marathon':
-    	case '20km_race_walk':
-    	case '50km_race_walk':
-    	case 'cross_country_running':
-			return 'time';
-			break;
-		case 'high_jump':
-		case 'long_jump':
-		case 'triple_jump':
-		case 'pole_vault':
-		case 'shot_put':
-		case 'discus':
-		case 'hammer':
-		case 'javelin':
-			return 'distance';
-			break;
-		case 'pentathlon':
-		case 'heptathlon':
-		case 'decathlon':
-			return 'points';
-			break;
-		default:
-			return '';
-			break;
-	}
+    // Validating discipline and performance
+    switch (discipline) {
+        case '60m':
+        case '100m':
+        case '200m':
+        case '400m':
+        case '800m':
+        case '1500m':
+        case '3000m':
+        case '5000m':
+        case '10000m':
+        case '60m_hurdles':
+        case '100m_hurdles':
+        case '110m_hurdles':
+        case '400m_hurdles':
+        case '3000m_steeplechase':
+        case '4x100m_relay':
+        case '4x400m_relay':
+        case 'half_marathon':
+        case 'marathon':
+        case '20km_race_walk':
+        case '50km_race_walk':
+        case 'cross_country_running':
+            return 'time';
+            break;
+        case 'high_jump':
+        case 'long_jump':
+        case 'triple_jump':
+        case 'pole_vault':
+        case 'shot_put':
+        case 'discus':
+        case 'hammer':
+        case 'javelin':
+            return 'distance';
+            break;
+        case 'pentathlon':
+        case 'heptathlon':
+        case 'decathlon':
+            return 'points';
+            break;
+        default:
+            return '';
+            break;
+    }
 };
 
 activityHelper.validateTime = function(performance) {
-	return isPositiveInteger(performance) && parseInt(performance) < config.validations.activity.performance.timeMaxValue ? parseInt(performance) : null;
+    return isPositiveInteger(performance) && parseInt(performance) < config.validations.activity.performance.timeMaxValue ? parseInt(performance) : null;
 };
 
 activityHelper.validateDistance = function(performance) {
-	return isPositiveInteger(performance) && parseInt(performance) < config.validations.activity.performance.distanceMaxValue ? parseInt(performance) : null;
+    return isPositiveInteger(performance) && parseInt(performance) < config.validations.activity.performance.distanceMaxValue ? parseInt(performance) : null;
 };
 
 activityHelper.validatePoints = function(performance) {
-	return isPositiveInteger(performance) && parseInt(performance) < config.validations.activity.performance.pointsMaxValue ? parseInt(performance) : null;
+    return isPositiveInteger(performance) && parseInt(performance) < config.validations.activity.performance.pointsMaxValue ? parseInt(performance) : null;
 };
 
 activityHelper.timestampIsValid = function(timestamp) {
-	return isPositiveInteger(timestamp) && parseInt(timestamp) < moment().unix() ? parseInt(timestamp) : null;
+    return isPositiveInteger(timestamp) && parseInt(timestamp) < moment().unix() ? parseInt(timestamp) : null;
 };
 
 /**
@@ -79,15 +79,15 @@ activityHelper.timestampIsValid = function(timestamp) {
  * @param string date
  */
 activityHelper.parseDate = function(date) {
-	if(date instanceof Date) {
-		date = moment(date);
-	} else if(parseInt(date)) {
-		date = moment.unix(parseInt(date));
-	} else {
+    if(date instanceof Date) {
+        date = moment(date);
+    } else if(parseInt(date)) {
+        date = moment.unix(parseInt(date));
+    } else {
         return null;
     }
 
-	return date.isValid() && moment().unix() > date.unix() && date.unix() >= 0 ? date.toDate() : null;
+    return date.isValid() && moment().unix() > date.unix() && date.unix() >= 0 ? date.toDate() : null;
 };
 
 /**
@@ -96,7 +96,7 @@ activityHelper.parseDate = function(date) {
  * @return boolean
  */
 activityHelper.locationIsValid = function(location) {
-	return config.validations.activity.location.test(location);
+    return config.validations.activity.location.test(location);
 };
 
 /**
@@ -105,7 +105,7 @@ activityHelper.locationIsValid = function(location) {
  * @return boolean
  */
 activityHelper.rankIsValid = function(rank) {
-	return isPositiveInteger(rank);
+    return isPositiveInteger(rank);
 };
 
 /**
@@ -114,7 +114,7 @@ activityHelper.rankIsValid = function(rank) {
  * @return boolean
  */
 activityHelper.competitionIsValid = function(competition) {
-	return config.validations.activity.competition.test(competition);
+    return config.validations.activity.competition.test(competition);
 };
 
 /**
@@ -123,7 +123,7 @@ activityHelper.competitionIsValid = function(competition) {
  * @return boolean
  */
 activityHelper.notesAreValid = function(notes) {
-	return config.validations.activity.notes.test(notes);
+    return config.validations.activity.notes.test(notes);
 };
 
 /**
@@ -132,11 +132,11 @@ activityHelper.notesAreValid = function(notes) {
  * @return boolean
  */
 activityHelper.privacyIsValid = function(privateSetting) {
-	return typeof privateSetting === 'boolean' || privateSetting.toLowerCase() === 'true' || privateSetting.toLowerCase() === 'false';
+    return typeof privateSetting === 'boolean' || privateSetting.toLowerCase() === 'true' || privateSetting.toLowerCase() === 'false';
 };
 
 activityHelper.outdoorIsValid = function(outdoorSetting) {
-	return typeof outdoorSetting === 'boolean' || outdoorSetting.toLowerCase() === 'true' || outdoorSetting.toLowerCase() === 'false';
+    return typeof outdoorSetting === 'boolean' || outdoorSetting.toLowerCase() === 'true' || outdoorSetting.toLowerCase() === 'false';
 };
 
 /**
@@ -145,7 +145,7 @@ activityHelper.outdoorIsValid = function(outdoorSetting) {
  * @return boolean
  */
 function isPositiveInteger(value) {
-	return typeof value !== 'undefined' && !isNaN(parseInt(value)) && isFinite(value) && value >= 0 && value % 1 === 0;
+    return typeof value !== 'undefined' && !isNaN(parseInt(value)) && isFinite(value) && value >= 0 && value % 1 === 0;
 };
 
 module.exports = activityHelper;

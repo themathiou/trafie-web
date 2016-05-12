@@ -5,7 +5,7 @@ var Profile = require('../models/profileModel'),
     User = require('../models/userModel');
 // Loading helpers
 var accessHelper = require('../helpers/accessHelper'),
-	profileHelper = require('../helpers/profileHelper'),
+    profileHelper = require('../helpers/profileHelper'),
     userHelper = require('../helpers/userHelper');
 // Get the config file
 const config = require('../config/constantConfig');
@@ -15,111 +15,111 @@ const SEARCH_RESULTS_LENGTH = 10;
  * Profile - GET
  */
 exports.get = function(req, res) {
-	if (typeof req.params.userId !== 'undefined') {
-		accessHelper.validateAccess(req.user, req.params.userId)
-		.then(function(response) {
-			// If the user has a valid session and they are not visiting a private profile
-			if (response.success) {
-				// Send the profile data to the client
-				sendProfileData(req, res, response.profile, response.user);
-			} else {
-				// Otherwise, if it's a server error, send the error
-				if (response.error === 'query_error') {
-					res.status(500).json({message: 'Server error'});
-				} else {
-					// If the user doesn't have access to the data, or the data don't exist, do not send anything
-					res.status(404).json({message: 'Resource not found', errors: [{
+    if (typeof req.params.userId !== 'undefined') {
+        accessHelper.validateAccess(req.user, req.params.userId)
+        .then(function(response) {
+            // If the user has a valid session and they are not visiting a private profile
+            if (response.success) {
+                // Send the profile data to the client
+                sendProfileData(req, res, response.profile, response.user);
+            } else {
+                // Otherwise, if it's a server error, send the error
+                if (response.error === 'query_error') {
+                    res.status(500).json({message: 'Server error'});
+                } else {
+                    // If the user doesn't have access to the data, or the data don't exist, do not send anything
+                    res.status(404).json({message: 'Resource not found', errors: [{
                         resource: 'user',
                         code: 'not_found'
                     }]});
-				}
-			}
-		});
-	} else {
-		userSearch(req, res);
-	}
+                }
+            }
+        });
+    } else {
+        userSearch(req, res);
+    }
 };
 
 function userSearch(req, res) {
-	let query = generateSearchQuery(req);
-	Profile.schema.find(query, 'firstName lastName discipline country username _id', SEARCH_RESULTS_LENGTH)
-	.then(function(results) {
-		res.json(results);
-	})
-	.catch(function(error) {
-		res.status(500).json({message: 'Server error'});
-	});
+    let query = generateSearchQuery(req);
+    Profile.schema.find(query, 'firstName lastName discipline country username _id', SEARCH_RESULTS_LENGTH)
+    .then(function(results) {
+        res.json(results);
+    })
+    .catch(function(error) {
+        res.status(500).json({message: 'Server error'});
+    });
 }
 
 function generateSearchQuery(req) {
-	let ands = [];
-	var searchQuery = req.query;
+    let ands = [];
+    var searchQuery = req.query;
 
-	if (typeof searchQuery.keywords === 'string') {
-		let requestedKeywordsString = searchQuery.keywords.trim(),
-			requestedKeywords = requestedKeywordsString.split(' '),
-			requestedKeywordsLength = requestedKeywords.length;
-		if (!requestedKeywordsString) {
-			res.json([]);
-		}
+    if (typeof searchQuery.keywords === 'string') {
+        let requestedKeywordsString = searchQuery.keywords.trim(),
+            requestedKeywords = requestedKeywordsString.split(' '),
+            requestedKeywordsLength = requestedKeywords.length;
+        if (!requestedKeywordsString) {
+            res.json([]);
+        }
 
-		requestedKeywords.forEach(function(requestedKeyword, i) {
-			requestedKeyword = requestedKeyword.toLowerCase();
-			if (i == requestedKeywordsLength - 1) {
-				ands.push({
-					'keywords.names': {
-						$regex: new RegExp("^" + requestedKeyword + ".*")
-					}
-				});
-			} else {
-				ands.push({
-					'keywords.names': requestedKeyword
-				});
-			}
-		});
-	}
+        requestedKeywords.forEach(function(requestedKeyword, i) {
+            requestedKeyword = requestedKeyword.toLowerCase();
+            if (i == requestedKeywordsLength - 1) {
+                ands.push({
+                    'keywords.names': {
+                        $regex: new RegExp("^" + requestedKeyword + ".*")
+                    }
+                });
+            } else {
+                ands.push({
+                    'keywords.names': requestedKeyword
+                });
+            }
+        });
+    }
 
-	if (typeof searchQuery.firstName === 'string') {
-		ands.push({
-			firstName: searchQuery.firstName
-		});
-	}
+    if (typeof searchQuery.firstName === 'string') {
+        ands.push({
+            firstName: searchQuery.firstName
+        });
+    }
 
-	if (typeof searchQuery.lastName === 'string') {
-		ands.push({
-			lastName: searchQuery.lastName
-		});
-	}
+    if (typeof searchQuery.lastName === 'string') {
+        ands.push({
+            lastName: searchQuery.lastName
+        });
+    }
 
-	if (typeof searchQuery.discipline === 'string') {
-		ands.push({
-			discipline: searchQuery.discipline
-		});
-	}
+    if (typeof searchQuery.discipline === 'string') {
+        ands.push({
+            discipline: searchQuery.discipline
+        });
+    }
 
-	if (typeof searchQuery.country === 'string') {
-		ands.push({
-			country: searchQuery.country
-		});
-	}
+    if (typeof searchQuery.country === 'string') {
+        ands.push({
+            country: searchQuery.country
+        });
+    }
 
-	// Do not fetch private profiles
-	ands.push({
-		isPrivate: false
-	});
+    // Do not fetch private profiles
+    ands.push({
+        isPrivate: false
+    });
 
-	if(req.user) {
-		ands.push({
-			_id: {$ne: req.user._id}
-		});
-	}
+    if(req.user) {
+        ands.push({
+            _id: {$ne: req.user._id}
+        });
+    }
 
-	var query = {};
-	if (ands.length) {
-		query.$and = ands;
-	}
+    var query = {};
+    if (ands.length) {
+        query.$and = ands;
+    }
 
-	return query;
+    return query;
 }
 
 /**
@@ -132,13 +132,13 @@ function generateSearchQuery(req) {
  */
 function sendProfileData(req, res, profileData, userData) {
     var profile = {
-        _id: 			profileData._id,
-        firstName: 		profileData.firstName,
-        lastName: 		profileData.lastName,
-        discipline: 	profileData.discipline,
-        isMale:    		profileData.isMale,
-        picture: 		profileData.picture || config.defaultProfilePic,
-        username: 	    profileData.username,
+        _id:            profileData._id,
+        firstName:      profileData.firstName,
+        lastName:       profileData.lastName,
+        discipline:     profileData.discipline,
+        isMale:         profileData.isMale,
+        picture:        profileData.picture || config.defaultProfilePic,
+        username:       profileData.username,
         country:        profileData.country,
         about:          profileData.about
     };
@@ -153,17 +153,17 @@ function sendProfileData(req, res, profileData, userData) {
         profile.email = req.user.email;
     }
 
-	res.json(profile);
+    res.json(profile);
 }
 
 /**
  * PROFILE - POST
  */
 exports.post = function(req, res) {
-	// Get the user id from the session
-	var userId = req.user && req.user._id.toString();
+    // Get the user id from the session
+    var userId = req.user && req.user._id.toString();
 
-	// If there is no user id in the session, redirect to register screen
+    // If there is no user id in the session, redirect to register screen
     if (!userId || !req.params.userId) {
         res.status(401).json({message: 'Unauthorized'});
         return false;
@@ -173,21 +173,21 @@ exports.post = function(req, res) {
         return false;
     }
 
-	// Check if the profile really exists
-	Profile.schema.findOne({
-			'_id': userId,
-		}, '_id usernameChangesCount username')
-		.then(function(profile) {
-			// If the profile doesn't exist, return null
-			if (typeof profile._id === 'undefined') {
-				res.status(404).json({message: 'Resource not found', errors: [{
+    // Check if the profile really exists
+    Profile.schema.findOne({
+            '_id': userId,
+        }, '_id usernameChangesCount username')
+        .then(function(profile) {
+            // If the profile doesn't exist, return null
+            if (typeof profile._id === 'undefined') {
+                res.status(404).json({message: 'Resource not found', errors: [{
                     resource: 'user',
                     code: 'not_found'
                 }]});
-				return false;
-			}
+                return false;
+            }
 
-			var profileData = {},
+            var profileData = {},
                 promises = [];
 
             // Validating first name
@@ -418,77 +418,77 @@ exports.post = function(req, res) {
                 }));
             }
 
-			// Checking if the uploaded file is a valid image file
-			/*else if (typeof req.files !== 'undefined' && typeof req.files.profile_pic !== 'undefined') {
-				// Read the image file
-				fs.readFile(req.files.profile_pic.path, function(err, data) {
-					// Get the file extension
-					var pic = req.files.profile_pic;
-					var extension = pic.name.substring(pic.name.lastIndexOf('.')+1);
+            // Checking if the uploaded file is a valid image file
+            /*else if (typeof req.files !== 'undefined' && typeof req.files.profile_pic !== 'undefined') {
+                // Read the image file
+                fs.readFile(req.files.profile_pic.path, function(err, data) {
+                    // Get the file extension
+                    var pic = req.files.profile_pic;
+                    var extension = pic.name.substring(pic.name.lastIndexOf('.')+1);
 
-					var accepted_file_types = ['image/jpeg', 'image/png'];
-					// File size in MB
-					var accepted_file_size = 5;
+                    var accepted_file_types = ['image/jpeg', 'image/png'];
+                    // File size in MB
+                    var accepted_file_size = 5;
 
-					var accepted_size = false;
-					var accepted_type = false;
+                    var accepted_size = false;
+                    var accepted_type = false;
 
-					// If the file size is acceptable
-					if (pic.size > accepted_file_size * 1048576) {
-						response.error = 'uploaded_image_too_large';
-					} else {
-						accepted_size = true;
-					}
+                    // If the file size is acceptable
+                    if (pic.size > accepted_file_size * 1048576) {
+                        response.error = 'uploaded_image_too_large';
+                    } else {
+                        accepted_size = true;
+                    }
 
-					// If the file type is acceptable
-					if (accepted_file_types.indexOf(pic.type) < 0) {
-						response.error = 'uploaded_image_wrong_type';
-					} else {
-						accepted_type = true;
-					}
+                    // If the file type is acceptable
+                    if (accepted_file_types.indexOf(pic.type) < 0) {
+                        response.error = 'uploaded_image_wrong_type';
+                    } else {
+                        accepted_type = true;
+                    }
 
-					if (accepted_type && accepted_size) {
-						var s3 = knox.createClient({
-							key: 'AKIAIQBX4EEBSV6QVPRA', //process.env.AWS_ACCESS_KEY_ID,
-							secret: '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', //process.env.AWS_SECRET_ACCESS_KEY,
-							bucket: 'trafie' //process.env.S3_BUCKET_NAME
-						});
+                    if (accepted_type && accepted_size) {
+                        var s3 = knox.createClient({
+                            key: 'AKIAIQBX4EEBSV6QVPRA', //process.env.AWS_ACCESS_KEY_ID,
+                            secret: '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', //process.env.AWS_SECRET_ACCESS_KEY,
+                            bucket: 'trafie' //process.env.S3_BUCKET_NAME
+                        });
 
-						var s3Headers = {
-							'Content-Type': pic.type,
-							'x-amz-acl': 'public-read'
-						};
+                        var s3Headers = {
+                            'Content-Type': pic.type,
+                            'x-amz-acl': 'public-read'
+                        };
 
-						s3.putFile(pic.path, userId + '.' + extension, s3Headers, function(err, s3response){
-							if (err) throw err;
-							// Update the database
-							profileData.picture = s3response.req.url;
-							Profile.update({
-								'_id': userId
-							}, {
-								$set: profileData
-							}, {
-								upsert: true
-							}, function(error) {
-								if(!error) {
-									response.message = 'data_updated_successfully';
-									response.value = s3response.req.url;
-									res.status(200).json(response);
-								} else {
-									response.error = 'something_went_wrong';
-									res.status(500).json(response);
-								}
-							});
-						});
-					} else {
-						res.status(400).json(response);
-					}
+                        s3.putFile(pic.path, userId + '.' + extension, s3Headers, function(err, s3response){
+                            if (err) throw err;
+                            // Update the database
+                            profileData.picture = s3response.req.url;
+                            Profile.update({
+                                '_id': userId
+                            }, {
+                                $set: profileData
+                            }, {
+                                upsert: true
+                            }, function(error) {
+                                if(!error) {
+                                    response.message = 'data_updated_successfully';
+                                    response.value = s3response.req.url;
+                                    res.status(200).json(response);
+                                } else {
+                                    response.error = 'something_went_wrong';
+                                    res.status(500).json(response);
+                                }
+                            });
+                        });
+                    } else {
+                        res.status(400).json(response);
+                    }
 
-				});
-			}*/
+                });
+            }*/
 
-			// Validating the change password request
-			if (typeof req.body.oldPassword !== 'undefined' && typeof req.body.password !== 'undefined') {
+            // Validating the change password request
+            if (typeof req.body.oldPassword !== 'undefined' && typeof req.body.password !== 'undefined') {
                 promises.push(new Promise(function (resolve, reject) {
                     // Find the old password of the user
                     User.schema.findOne({
@@ -556,5 +556,5 @@ exports.post = function(req, res) {
                     res.status(error[0]).json({message: 'Invalid data', errors: [error[1]]});
                 }
             });
-		});
+        });
 };
