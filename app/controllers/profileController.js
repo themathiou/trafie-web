@@ -149,6 +149,7 @@ function sendProfileData(req, res, profileData, userData) {
         profile.language = userData.language;
         profile.dateFormat = userData.dateFormat;
         profile.isVerified = req.user.isVerified;
+        profile.units = profileData.units;
         profile.email = req.user.email;
     }
 
@@ -343,6 +344,29 @@ exports.post = function(req, res) {
                         reject([422, {
                             resource: 'user',
                             field: 'isPrivate',
+                            code: 'invalid'
+                        }]);
+                    }
+                }));
+            }
+
+            // Validating privacy
+            if (typeof req.body.units === 'object') {
+                promises.push(new Promise(function(resolve, reject) {
+                    if (profileHelper.validateUnits(req.body.units)) {
+                        for(let i in req.body.units) {
+                            if(!profileData.hasOwnProperty('units')) {
+                                profileData.units = {};
+                            }
+                            if(req.body.units.hasOwnProperty(i)) {
+                                profileData.units[i] = req.body.units[i];
+                            }
+                        }
+                        resolve(profileData.units);
+                    } else {
+                        reject([422, {
+                            resource: 'user',
+                            field: 'units',
                             code: 'invalid'
                         }]);
                     }

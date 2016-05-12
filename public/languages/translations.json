@@ -188,6 +188,14 @@
       "en": "cm",
       "el": "εκ"
     },
+    "FEET": {
+      "en": "Feet",
+      "el": "Πόδια"
+    },
+    "INCHES": {
+      "en": "Inches",
+      "el": "Ίντσες"
+    },
     "POINTS": {
       "en": "points",
       "el": "πόντοι"
@@ -573,6 +581,10 @@
     "DATE_FORMAT": {
       "en": "Date format",
       "el": "Μορφή ημερομηνίας"
+    },
+    "LENGTH_UNIT": {
+      "en": "Length unit",
+      "el": "Μονάδα μήκους"
     },
     "HIDE_MY_PROFILE_FROM_EVERYONE": {
       "en": "Hide my profile from everyone",

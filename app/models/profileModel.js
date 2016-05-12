@@ -21,6 +21,9 @@ var profileSchema = mongoose.Schema({
 	isPrivate 	: { type: Boolean, 	required: false, 	default: true },
 	role 		: { type: String, 	required: false, 	default: 'athlete'},
     usernameChangesCount: { type: Number, required: false, default: 0 },
+    units: {
+		distance: { type: String,   required: false, 	default: 'meters'}
+	},
 	dateCreated : { type: Date },
 	dateUpdated : { type: Date },
 	keywords 	: {

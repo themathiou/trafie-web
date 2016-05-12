@@ -67,7 +67,7 @@ accessHelper.validateAccess = function(user, profileId) {
 			return;
 		}
 
-		var selectQuery = '_id firstName lastName discipline country isMale picture username isPrivate about birthday usernameChangesCount';
+		var selectQuery = '_id firstName lastName discipline country isMale picture username isPrivate about birthday usernameChangesCount units';
 		// Find the profile by id
 		Profile.schema.findOne({
 			'_id': profileId

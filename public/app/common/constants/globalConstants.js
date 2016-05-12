@@ -21,6 +21,9 @@
         password: /^.{6,}$/,
         email: /^([\w-\.]+@([\w-]+\.)+[\w-]{2,})?$/,
         role: /^(athlete|coach)$/,
+        units: {
+            distance: /^(meters|feet)$/
+        },
         activityType: /^(competition|training)$/,
         activity: {
             notes: /^.{0,1000}$/,

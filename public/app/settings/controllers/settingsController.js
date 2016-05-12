@@ -51,7 +51,8 @@
                 language: {invalid: 'SETTINGS.INVALID_LANGUAGE', hasError: false},
                 dateFormat: {invalid: 'COMMON.WRONG_DATE_FORMAT', hasError: false},
                 isPrivate: {invalid: 'SETTINGS.INVALID_PRIVACY', hasError: false},
-                username: {already_exists: 'SETTINGS.USERNAME_TAKEN', invalid: 'SETTINGS.INVALID_USERNAME', hasError: false}
+                username: {already_exists: 'SETTINGS.USERNAME_TAKEN', invalid: 'SETTINGS.INVALID_USERNAME', hasError: false},
+                units: {hasError: false}
             },
             passwordForm: {
                 oldPassword: {invalid: 'SETTINGS.WRONG_OLD_PASSWORD', hasError: false},

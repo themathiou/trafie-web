@@ -92,7 +92,6 @@ profileHelper.validateDateFormat = function(dateFormat) {
 	return config.validations.dateFormat.test(dateFormat);
 };
 
-
 /**
  * Checks the privacy for validity
  * @param boolean privacy
@@ -100,6 +99,17 @@ profileHelper.validateDateFormat = function(dateFormat) {
  */
 profileHelper.validatePrivacy = function(privacy) {
     return typeof privacy === 'boolean';
+};
+
+profileHelper.validateUnits = function(units) {
+    if(typeof units !== 'object') return false;
+    let isValid = true;
+    for(let i in units) {
+        if(!units.hasOwnProperty(i) || !config.validations.units.hasOwnProperty(i) || !config.validations.units[i].test(units[i])) {
+            isValid = false;
+        }
+    }
+    return isValid;
 };
 
 module.exports = profileHelper;
