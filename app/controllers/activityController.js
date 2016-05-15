@@ -172,7 +172,7 @@ exports.post = function(req, res) {
                 }]});
                 return;
             }
-            else if(!req.user.isVerified && activitiesCount >= 10) {
+            else if(!req.user.isVerified && activitiesCount >= 5) {
                 res.status(403).json({message: 'Forbidden', errors: [{
                     resource: 'activity',
                     code: 'non_verified_user_activity_limit'
