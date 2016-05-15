@@ -55,12 +55,12 @@
             switch(this._getDisciplineCategory()) {
                 case 'time':
                     var viewPerformance = [];
-                    viewPerformance.push(Math.floor(this.performance / 3600000));
-                    var performanceNoHours = this.performance  - viewPerformance[0] * 3600000;
-                    viewPerformance.push(Math.floor(performanceNoHours / 60000));
-                    var performanceNoMinutes = performanceNoHours - viewPerformance[1] * 60000;
-                    viewPerformance.push(Math.floor(performanceNoMinutes / 1000));
-                    viewPerformance.push(performanceNoMinutes - viewPerformance[2] * 1000);
+                    viewPerformance.push(Math.floor(this.performance / 360000));
+                    var performanceNoHours = this.performance  - viewPerformance[0] * 360000;
+                    viewPerformance.push(Math.floor(performanceNoHours / 6000));
+                    var performanceNoMinutes = performanceNoHours - viewPerformance[1] * 6000;
+                    viewPerformance.push(Math.floor(performanceNoMinutes / 100));
+                    viewPerformance.push(performanceNoMinutes - viewPerformance[2] * 100);
 
                     var filtering = true;
                     viewPerformance = viewPerformance

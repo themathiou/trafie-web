@@ -36,7 +36,7 @@ const config = {
             performance: {
                 timeMaxValue: 8640000,
                 distanceMaxValue: 12000000,
-                pointsMaxValue: 9999
+                pointsMaxValue: 10000
             }
         }
     }
