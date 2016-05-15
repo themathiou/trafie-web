@@ -511,6 +511,10 @@
     "PLEASE_VERIFY_YOUR_EMAIL_EMAIL_IN_ORDER_TO_ADD_MORE_ACTIVITIES": {
       "en": "Please verify your email {{email}} in order to add more activities.",
       "el": "Παρακαλούμε επιβεβαιώστε το email σας {{email}} για να προσθέσετε κι άλλες δραστηριότητες."
+    },
+    "FRACTION": {
+      "en": "Fraction",
+      "el": "Κλάσμα"
     }
   },
   "SETTINGS": {

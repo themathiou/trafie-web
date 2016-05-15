@@ -55,12 +55,12 @@
             switch(this._getDisciplineCategory()) {
                 case 'time':
                     var viewPerformance = [];
-                    viewPerformance.push(Math.floor(this.performance / 360000));
-                    var performanceNoHours = this.performance  - viewPerformance[0] * 360000;
-                    viewPerformance.push(Math.floor(performanceNoHours / 6000));
-                    var performanceNoMinutes = performanceNoHours - viewPerformance[1] * 6000;
-                    viewPerformance.push(Math.floor(performanceNoMinutes / 100));
-                    viewPerformance.push(performanceNoMinutes - viewPerformance[2] * 100);
+                    viewPerformance.push(Math.floor(this.performance / 3600000));
+                    var performanceNoHours = this.performance  - viewPerformance[0] * 3600000;
+                    viewPerformance.push(Math.floor(performanceNoHours / 60000));
+                    var performanceNoMinutes = performanceNoHours - viewPerformance[1] * 60000;
+                    viewPerformance.push(Math.floor(performanceNoMinutes / 1000));
+                    viewPerformance.push(performanceNoMinutes - viewPerformance[2] * 1000);
 
                     var filtering = true;
                     viewPerformance = viewPerformance
@@ -76,11 +76,11 @@
                     break;
                 case 'distance':
                     if(currentUser && currentUser.units.distance === 'feet') {
-                        var inches = this.performance * 0.003937007874;
+                        var inches = this.performance * 0.0003937007874;
                         var feet = Math.floor(inches / 12);
                         inches = inches - 12 * feet;
-                        var inchesFloor = Math.floor(inches);
-                        var inchesDecimal = inches - inchesFloor;
+                        var inchesInteger = Math.floor(inches);
+                        var inchesDecimal = inches - inchesInteger;
                         var inchesFraction = '';
                         if(inchesDecimal >= 0.125 && inchesDecimal < 0.375) {
                             inchesFraction = '&frac14;';
@@ -92,13 +92,13 @@
                             inchesFraction = '&frac34;';
                         }
                         else if(inchesDecimal >= 0.875) {
-                            inchesFloor++;
+                            inchesInteger++;
                         }
 
-                        performance = feet + "' " + inchesFloor + inchesFraction + '"';
+                        performance = feet + "' " + inchesInteger + inchesFraction + '"';
                     } else {
-                        var meters = Math.floor(this.performance / 10000);
-                        var centimeters = (this.performance - meters * 10000) / 100;
+                        var meters = Math.floor(this.performance / 100000);
+                        var centimeters = Math.round((this.performance - meters * 100000) / 1000);
 
                         performance = meters + '.' + ('0' + centimeters).substr(-2, 2);
                     }

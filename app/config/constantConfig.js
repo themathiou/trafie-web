@@ -35,7 +35,7 @@ const config = {
             location: /^.{0,100}$/,
             performance: {
                 timeMaxValue: 8640000,
-                distanceMaxValue: 1200000,
+                distanceMaxValue: 12000000,
                 pointsMaxValue: 9999
             }
         }
