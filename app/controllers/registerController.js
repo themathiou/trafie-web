@@ -11,7 +11,8 @@ var profileHelper = require('../helpers/profileHelper'),
     emailHelper = require('../helpers/emailHelper');
 
 // Loading libraries
-var passport = require('passport');
+var passport = require('passport'),
+    moment = require('moment');
 
 
 exports.post = function(req, res) {
@@ -24,6 +25,7 @@ exports.post = function(req, res) {
         lastName = '',
         email = '',
         password = '',
+        ip = req.ip.substr(req.ip.lastIndexOf(':') + 1),
         errors = [];
 
     if(typeof req.body.firstName === 'string') {
@@ -110,42 +112,67 @@ exports.post = function(req, res) {
             return;
         }
 
-        // Encrypting the password
-        password = userHelper.encryptPassword(password);
-
-        var newUser = {
-            email: email,
-            password: password
-        };
-
-        var newProfile = {
-            firstName: firstName,
-            lastName: lastName
-        };
-
-        // Creating the user and profile objects
-        var user = new User(newUser);
-
-        // Saving the user and the profile data
-        user.save(function(err, user) {
-            if(err) {
-                res.status(500).json({message: 'Server error'});
-                return;
-            }
-            newProfile._id = user._id;
-            var profile = new Profile(newProfile);
-            Profile.schema.save(profile)
-                .then(function(profile) {
-                    return UserHashes.schema.createVerificationHash(newUser.email, user._id);
-                })
-                .then(function(emailHash) {
-                    emailHelper.sendVerificationEmail(newUser.email, newProfile.firstName, newProfile.lastName, emailHash);
-                    res.status(201).json({_id: user._id});
-                })
-                .catch(function(error) {
-                    res.status(500).json({message: 'Server error'});
-                });
+        var registrationsPastHour = new Promise(function(resolve, reject) {
+            // Protect from scripts that create users automatically
+            User.count({lastIp: ip, dateCreated: {$gte: moment.unix(moment().unix() - 3600).toDate()}}, function(err, count) {
+                if(err) reject(err);
+                else resolve(count);
+            });
         });
 
+        registrationsPastHour.then(function(count) {
+            if(count >= 4) {
+                res.status(403).json({message: 'Forbidden', errors: [{
+                    resource: 'user',
+                    code: 'user_registration_limit_per_hour'
+                }]});
+                return;
+            }
+
+            // Encrypting the password
+            password = userHelper.encryptPassword(password);
+
+            var newUser = {
+                email: email,
+                password: password,
+                lastIp: ip,
+                dateCreated: new Date()
+            };
+
+            var newProfile = {
+                firstName: firstName,
+                lastName: lastName
+            };
+
+            // Creating the user and profile objects
+            var user = new User(newUser);
+
+            // Saving the user and the profile data
+            user.save(function(err, user) {
+                if(err) {
+                    res.status(500).json({message: 'Server error'});
+                    return;
+                }
+                newProfile._id = user._id;
+                var profile = new Profile(newProfile);
+                Profile.schema.save(profile)
+                    .then(function(profile) {
+                        return UserHashes.schema.createVerificationHash(newUser.email, user._id);
+                    })
+                    .then(function(emailHash) {
+                        emailHelper.sendVerificationEmail(newUser.email, newProfile.firstName, newProfile.lastName, emailHash);
+                        res.status(201).json({_id: user._id});
+                    })
+                    .catch(function(error) {
+                        res.status(500).json({message: 'Server error'});
+                    });
+            });
+        })
+        .catch(function(err) {
+            res.status(500).json({message: 'Server error'});
+        });
+    })
+    .catch(function(err) {
+        res.status(500).json({message: 'Server error'});
     });
 };
