@@ -1,7 +1,7 @@
 (function(angular) {
     angular.module('trafie')
         .controller('ProfileController', function($rootScope, $scope, $routeParams, $window, $http,
-                                                  Activity, User, userService) {
+                                                  $uibModal, Activity, User, userService) {
             $scope.profileFound = true;
             $scope.loading = true;
             $scope.user = null;
@@ -90,6 +90,24 @@
                     }
                 });
             }
+
+            $scope.openActivityEditorModal = function (activity) {
+                var modalInstance = $uibModal.open({
+                    animation: false,
+                    templateUrl: 'app/common/views/activityEditorModalView.html',
+                    controller: 'ActivityEditorModalController',
+                    size: 'md',
+                    resolve: {
+                        activityToEdit: function () {
+                            return activity || null;
+                        }
+                    }
+                });
+
+                modalInstance.result.then(function () {
+                }, function () {
+                });
+            };
 
             $scope.resendVerificationEmail = function() {
                 function verificationEmailSent() {

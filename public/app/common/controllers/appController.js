@@ -9,26 +9,6 @@
                 $translate.use(user.language);
         });
 
-        self.openActivityEditorModal = function (activity) {
-            var modalInstance = $uibModal.open({
-                animation: false,
-                templateUrl: 'app/common/views/activityEditorModalView.html',
-                controller: 'ActivityEditorModalController',
-                size: 'md',
-                resolve: {
-                    activityToEdit: function () {
-                        return activity || null;
-                    }
-                }
-            });
-
-            modalInstance.result.then(function (activity) {
-                $rootScope.$broadcast('activityCreated', activity);
-            }, function () {
-
-            });
-        };
-
         // @TODO: Different page for search results, triggered by the magnifying glass
         self.searchUsers = function(val) {
             return $http.get('/users', {
