@@ -1,7 +1,7 @@
 <div class="col-md-12">
     <div class="text-center">
         <div class="panel-body">
-            <button class="btn btn-primary" ng-click="App.openActivityEditorModal()" ng-if="ownProfile" ng-disabled="!currentUser.isVerified && activities.length >= 5">
+            <button class="btn btn-primary" ng-click="openActivityEditorModal()" ng-if="ownProfile" ng-disabled="!currentUser.isVerified && activities.length >= 5">
                 <i class="fa fa-plus"></i>
                 {{'COMMON.ADD_NEW_ACTIVITY' | translate}}
             </button>

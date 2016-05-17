@@ -1,7 +1,8 @@
 angular.module('trafie')
-    .controller('ActivityEditorModalController', function ($scope, $uibModalInstance, $filter, activityToEdit,
-                                                           DISCIPLINES, VALIDATIONS, DISCIPLINE_CATEGORIES,
-                                                           Activity, userService, notify) {
+    .controller('ActivityEditorModalController', function ($scope, $rootScope, $uibModalInstance, $filter,
+                                                           activityToEdit, DISCIPLINES, VALIDATIONS,
+                                                           DISCIPLINE_CATEGORIES, Activity, userService,
+                                                           notify) {
         activityToEdit = activityToEdit || null;
         $scope.isNewActivity = !activityToEdit;
         $scope.activity = activityToEdit && angular.copy(activityToEdit) || new Activity();
@@ -81,7 +82,8 @@ angular.module('trafie')
                     message: $filter('translate')($scope.isNewActivity ? 'PROFILE.THE_ACTIVITY_WAS_CREATED_SUCCESSFULLY' : 'PROFILE.THE_ACTIVITY_WAS_UPDATED_SUCCESSFULLY'),
                     classes: 'alert-success'
                 });
-                $uibModalInstance.close(res);
+                $rootScope.$broadcast('activityCreated', res);
+                $uibModalInstance.close();
             }, function(res) {
                 $scope.saving = false;
             });
