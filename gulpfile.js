@@ -9,8 +9,6 @@ var gulp = require('gulp'),
     ngAnnotate = require('gulp-ng-annotate'),
     fs = require('fs'),
     translations = require('./public/languages/translations.json'),
-/*var mainScripts = ['public/app/!**!/!*.js', '!public/app/outer/!*.js'],
-    outerScripts = 'public/app/outer/!*.js',*/
     scriptsDest = 'public/app';
 
 function handleError(err) {
@@ -19,8 +17,7 @@ function handleError(err) {
 }
 
 function fetchScripts(filename) {
-    var scriptsJade = fs.readFileSync(filename, 'utf8').split(/\r?\n/);
-    return scriptsJade
+    return fs.readFileSync(filename, 'utf8').split(/\r?\n/)
         .map((row) => {
             if(row.startsWith('script')) {
                 return './public' + row.match(/src=["|'](.*?)["|']/)[1];
