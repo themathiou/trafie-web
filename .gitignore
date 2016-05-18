@@ -16,6 +16,9 @@ node_modules
 
 bower_components
 
+public/app/trafie.min.js
+public/app/trafieOuter.min.js
+
 public/languages/el.json
 public/languages/en.json
 

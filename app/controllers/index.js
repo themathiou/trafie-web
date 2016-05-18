@@ -6,19 +6,24 @@ exports.getView = function(req, res) {
         res.redirect(301, '/register');
         return false;
     }
-    var data = {
-        userId: req.user ? req.user._id : ''
+    let data = {
+        userId: req.user ? req.user._id : '',
+        env: process.env.NODE_ENV
     };
 
     res.render('layout', data);
 };
 
 exports.getOuterView = function(req, res) {
-    var routesWithoutSession = ['/login', '/register', '/reset-password', '/reset-password-request'];
+    let routesWithoutSession = ['/login', '/register', '/reset-password', '/reset-password-request'];
     if (req.user && routesWithoutSession.indexOf(req.originalUrl) >= 0) {
         res.redirect(301, '/');
         return false;
     }
 
-    res.render('layout-outer');
+    let data = {
+        env: process.env.NODE_ENV
+    };
+
+    res.render('layout-outer', data);
 };

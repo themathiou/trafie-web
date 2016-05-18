@@ -15,4 +15,7 @@ html(ng-app="trafie-outer")
             div.content-container(ng-view)
             include ./partials/footer-outer.jade
 
-        include ./partials/scripts-outer.jade
+        if env === "development"
+            include ./partials/scripts-outer.jade
+        else
+            script(type="text/javascript", src="/app/trafieOuter.min.js")

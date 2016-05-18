@@ -3,15 +3,54 @@ var gulp = require('gulp'),
     path = require('path'),
     gutil = require('gulp-util'),
     rename = require('gulp-rename'),
+    concat = require('gulp-concat'),
+    uglify = require('gulp-uglify'),
     _ = require('lodash'),
     ngAnnotate = require('gulp-ng-annotate'),
     fs = require('fs'),
-    translations = require('./public/languages/translations.json');
+    translations = require('./public/languages/translations.json'),
+/*var mainScripts = ['public/app/!**!/!*.js', '!public/app/outer/!*.js'],
+    outerScripts = 'public/app/outer/!*.js',*/
+    scriptsDest = 'public/app';
 
 function handleError(err) {
     gutil.log(err.toString());
     this.emit('end');
 }
+
+function fetchScripts(filename) {
+    var scriptsJade = fs.readFileSync(filename, 'utf8').split(/\r?\n/);
+    return scriptsJade
+        .map((row) => {
+            if(row.startsWith('script')) {
+                return './public' + row.match(/src=["|'](.*?)["|']/)[1];
+            }
+            return '';
+        })
+        .filter((value) => !!value);
+}
+
+gulp.task('production-scripts', function() {
+    var mainScripts = fetchScripts('./app/views/partials/scripts.jade');
+    return gulp.src(mainScripts)
+        .pipe(ngAnnotate())
+        .pipe(concat('trafie.min.js'))
+        .pipe(gulp.dest(scriptsDest))
+        .pipe(rename('trafie.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest(scriptsDest));
+});
+
+gulp.task('production-outer-scripts', function() {
+    var outerScripts = fetchScripts('./app/views/partials/scripts-outer.jade');
+    return gulp.src(outerScripts)
+        .pipe(ngAnnotate())
+        .pipe(concat('trafieOuter.min.js'))
+        .pipe(gulp.dest(scriptsDest))
+        .pipe(rename('trafieOuter.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest(scriptsDest));
+});
 
 gulp.task('app-less', function () {
     return gulp.src('./public/styles/less/styles.less')
@@ -36,4 +75,4 @@ gulp.task('split-translations', function() {
     });
 });
 
-gulp.task('default', ['app-less', 'outer-less', 'split-translations']);
+gulp.task('default', ['production-scripts', 'production-outer-scripts', 'app-less', 'outer-less', 'split-translations']);

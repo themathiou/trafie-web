@@ -20,4 +20,7 @@ html(ng-app="trafie")
 
         div(ng-view)
 
-        include ./partials/scripts.jade
+        if env === "development"
+            include ./partials/scripts.jade
+        else
+            script(type="text/javascript", src="/app/trafie.min.js")
