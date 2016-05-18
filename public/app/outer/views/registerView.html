@@ -23,7 +23,7 @@
                         <input id="last-name" placeholder="Last name" class="form-control" name="lastName" type="text" ng-model="formData.lastName" ng-change="fieldsWithErrors.lastName = false" required>
                     </div>
                 </div>
-                
+
 
                 <div class="form-group form-group-lg" ng-class="{'has-error': fieldsWithErrors.email}">
                     <input id="email" placeholder="Email" class="form-control" name="email" type="email" ng-model="formData.email" ng-change="fieldsWithErrors.email = false" required>
@@ -33,8 +33,15 @@
                     <input id="password" placeholder="Password" class="form-control" name="password" type="password" ng-model="formData.password" ng-change="fieldsWithErrors.password = false" required>
                 </div>
 
+                <div class="ui-checkbox ui-checkbox-primary">
+                    <label>
+                        <input type="checkbox" checked="" ng-model="formData.termsCheckbox">
+                        <span>I agree to the <a href="/terms-of-service" target="_blank">Terms of Service</a></span>
+                    </label>
+                </div>
+
                 <div class="form-group">
-                    <input class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" ng-click="register()" value="Register">
+                    <input class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" ng-click="register()" value="Register" ng-disabled="!formData.termsCheckbox">
                 </div>
 
                 <div class="form-group">
