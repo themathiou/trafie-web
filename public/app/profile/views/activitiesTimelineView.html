@@ -26,7 +26,7 @@
             <span>{{activity.competition}}</span> |
             <span>{{formatUnixTimestamp(activity.date)}}</span>
             <span class="pull-right text-right" ng-if="ownProfile">
-                <a href="javascript:;" ng-click="App.openActivityEditorModal(activity)" title="{{'COMMON.EDIT' | translate}}"><i class="fa fa-edit text-warning" aria-hidden="true"></i></a>
+                <a href="javascript:;" ng-click="openActivityEditorModal(activity)" title="{{'COMMON.EDIT' | translate}}"><i class="fa fa-edit text-warning" aria-hidden="true"></i></a>
                 <a href="javascript:;" ng-click="deleteActivity(activity)" title="{{'COMMON.DELETE' | translate}}" confirm="{{'PROFILE.ARE_YOU_SURE_YOU_WANT_TO_DELETE_THIS_ACTIVITY' | translate}}" confirm-title="{{'PROFILE.DELETE_ACTIVITY' | translate}}" confirm-ok="{{'COMMON.YES' | translate}}" confirm-cancel="{{'COMMON.CANCEL' | translate}}" confirm-settings="{size: 'sm'}">
                     <i class="fa fa-remove text-danger" aria-hidden="true"></i>
                 </a>
