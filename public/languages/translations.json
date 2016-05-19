@@ -713,6 +713,10 @@
     "YOU_CAN_CHANGE_YOUR_USERNAME_ONLY_ONE_MORE_TIME": {
       "en": "You can change your username only one more time",
       "el": "Μπορείτε να αλλάξετε το όνομα χρήστη σας μόνο ακόμα μία φορά"
+    },
+    "VERIFY_YOUR_EMAIL_TO_ENABLE_THIS_OPTION": {
+      "en": "Verify your email to enable this option.",
+      "el": "Επιβεβαιώστε το email σας για να ενεργοποιήσετε αυτήν την επιλογή."
     }
   },
   "FEEDBACK": {

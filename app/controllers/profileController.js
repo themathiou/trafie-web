@@ -176,7 +176,7 @@ exports.post = function(req, res) {
     // Check if the profile really exists
     Profile.schema.findOne({
             '_id': userId,
-        }, '_id usernameChangesCount username')
+        }, '_id usernameChangesCount username isPrivate')
         .then(function(profile) {
             // If the profile doesn't exist, return null
             if (typeof profile._id === 'undefined') {
@@ -337,10 +337,18 @@ exports.post = function(req, res) {
             // Validating privacy
             if (typeof req.body.isPrivate !== 'undefined') {
                 promises.push(new Promise(function(resolve, reject) {
-                    if (profileHelper.validatePrivacy(req.body.isPrivate)) {
+                    if(!req.user.isVerified && profile.isPrivate !== req.body.isPrivate) {
+                        reject([403, {
+                            resource: 'user',
+                            field: 'isPrivate',
+                            code: 'unverified_user'
+                        }]);
+                    }
+                    else if (profileHelper.validatePrivacy(req.body.isPrivate)) {
                         profileData.isPrivate = req.body.isPrivate;
                         resolve(profileData.isPrivate);
-                    } else {
+                    }
+                    else {
                         reject([422, {
                             resource: 'user',
                             field: 'isPrivate',
@@ -551,6 +559,9 @@ exports.post = function(req, res) {
                         resource: 'user',
                         code: 'not_found'
                     }]});
+                }
+                else if(error[0] === 403) {
+                    res.status(error[0]).json({message: 'Forbidden', errors: [error[1]]});
                 }
                 else {
                     res.status(error[0]).json({message: 'Invalid data', errors: [error[1]]});
