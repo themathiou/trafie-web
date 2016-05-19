@@ -40,6 +40,9 @@ angular.module('trafie')
                    return datePart[0] !== 'm' ? datePart : datePart.toUpperCase();
                 })
                 .join('-');
+            if($scope.isNewActivity && user.discipline) {
+                $scope.activity.discipline = user.discipline;
+            }
         });
 
         $scope.showAdditionalInfo = function() {
