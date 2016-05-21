@@ -89,7 +89,7 @@ var sessionObj = session({
     }),
     secret: process.env.SESSION_SECRET || 'sessionSecret',
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: false
 });
 
 /*******************************************************************************************************************************
