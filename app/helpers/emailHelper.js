@@ -15,9 +15,18 @@ var emailHelper = {
     sendVerificationEmail: function(email, firstName, lastName, hash) {
         message.to = email;
         message.subject = 'Welcome to Trafie!';
-        message.html = '<h2>Hello ' + firstName + ' ' + lastName + ',</h2>' +
-            '<p>You have successfully registered to trafie.</p><br><p>The <b><i>trafie</i></b> team</p><br>' +
-            'Follow <a href="' + host + '/validate-email/' + hash + '">this link</a> to verify your email.<br>';
+        message.html = '<h3>Hello ' + firstName + ',</h3>' +
+            '<p>Welcome to trafie!</p>' +
+            '<p>&nbsp;</p>' +
+            'Click <a href="' + host + '/validate-email/' + hash + '">this link</a> to complete you registration and ' +
+            'get full access to our features.<br>' +
+            'If you have any questions, you can contact the trafie team by sending an email to support@trafie.com, ' +
+            'by replying to this email, or by sending a message to ' +
+            '<a href="https://www.facebook.com/trafie">www.facebook.com/trafie</a> on facebook.' +
+            '<p>&nbsp;</p>' +
+            '<p>Cheers!</p>' +
+            '<p>&nbsp;</p>' +
+            '<p><i>- The trafie team</i></p>';
 
         transporter.sendMail(message, function(error) {
             if (error) {
