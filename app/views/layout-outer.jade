@@ -13,7 +13,7 @@ html(ng-app="trafie-outer")
     body.app.on-canvas.nav-min.layout-horizontal.body-full
         div.main-container.clearfix
             div.content-container(ng-view)
-            //include ./partials/footer-outer.jade
+            include ./partials/footer-outer.jade
 
         if env === "development"
             include ./partials/scripts-outer.jade
