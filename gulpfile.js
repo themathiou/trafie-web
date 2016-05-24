@@ -72,4 +72,5 @@ gulp.task('split-translations', function() {
     });
 });
 
+gulp.task('default-dev', ['app-less', 'outer-less', 'split-translations']);
 gulp.task('default', ['production-scripts', 'production-outer-scripts', 'app-less', 'outer-less', 'split-translations']);

@@ -1,14 +1,24 @@
-<div>
-    <h3 class="text-center" ng-if="validated === null">
-        Validating...
-    </h3>
-    <div ng-if="validated === true" class="text-center">
-        <h3>
-            Your email has been validated! Thanks!
-        </h3>
-        <a class="text-center" href="/login" ng-click="goToProfile()">Go to your profile</a>
+<div class="page page-auth clearfix">
+    <div class="auth-container">
+        <div class="panel panel-default panel-form-outer">
+            <h3 class="text-center" ng-if="validated === null">
+                Validating...
+            </h3>
+            <div ng-if="validated === true" class="text-center">
+                <span>
+                    <i class="fa fa-check text-success outer-success-mark"></i>
+                </span>
+                <h4>
+                    Your email has been successfully verified!
+                </h4>
+                <p>
+                    <a class="text-center" href="/login" ng-click="goToProfile()">Go to your profile</a>
+                </p>
+            </div>
+            <h3 class="text-center" ng-if="validated === false">
+                The hash you provided is not valid.
+            </h3>
+        </div>
     </div>
-    <h3 class="text-center" ng-if="validated === false">
-        The hash you provided is not valid.
-    </h3>
 </div>
+<span class="photo-credits" ng-include="'/app/outer/views/partial/photoCreditsView.html'"></span>

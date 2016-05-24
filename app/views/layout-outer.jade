@@ -10,10 +10,9 @@ html(ng-app="trafie-outer")
 
         link(href='/styles/styles-outer.css' rel='stylesheet' type='text/css')
 
-    body.app.on-canvas.nav-min.layout-horizontal.body-full
-        div.main-container.clearfix
-            div.content-container(ng-view)
-            include ./partials/footer-outer.jade
+    body.app.on-canvas.nav-min.layout-horizontal.body-has-background
+        div.main-container.clearfix.screen-height
+            div.content-container.screen-height(ng-view)
 
         if env === "development"
             include ./partials/scripts-outer.jade
