@@ -14,7 +14,7 @@ var userSchema = mongoose.Schema({
     password    : { type: String, required: true },
     isVerified  : { type: Boolean, required: true, default: false},
     lastIp      : { type: String },
-    lastLogin   : { type: Date },
+    lastActive  : { type: Date },
     dateCreated : { type: Date },
     dateUpdated : { type: Date }
 });

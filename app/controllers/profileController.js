@@ -143,6 +143,10 @@ function sendProfileData(req, res, profileData, userData) {
         about:          profileData.about
     };
     if('_id' in userData && profileData._id.toString() === userData._id.toString()) {
+        var ip = req.ip.substr(req.ip.lastIndexOf(':') + 1);
+        var now = new Date();
+        User.findOneAndUpdate({_id: req.user._id}, {lastActive: now, lastIp: ip}, function(err, doc) {});
+        
         profile.isPrivate = profileData.isPrivate;
         profile.birthday = profileData.birthday;
         profile.usernameChangesCount = profileData.usernameChangesCount;
