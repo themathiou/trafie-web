@@ -1,7 +1,8 @@
 (function(angular) {
     angular.module('trafie-outer')
-        .controller('AppOuterController', function($scope, outerTitleService) {
+        .controller('AppOuterController', function($scope, outerPageDataService) {
             var self = this;
-            self.getTitle = outerTitleService.getTitle;
+            self.getTitle = outerPageDataService.getTitle;
+            self.getDescription = outerPageDataService.getDescription;
         });
 })(angular);
