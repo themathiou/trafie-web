@@ -10,7 +10,8 @@ exports.get = function(req, res) {
                 Token.remove(tokenObj.refreshToken, function (err, token) {});
             }
         });
+    } else {
+        req.session.destroy();
     }
-    req.session.destroy();
     res.json(null);
 };
