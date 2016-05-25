@@ -1,12 +1,12 @@
 doctype html
-html(ng-app="trafie-outer")
+html(ng-app="trafie-outer", ng-controller="AppOuterController as App")
     head
         meta(charset="utf-8")
         meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no")
         meta(name="apple-itunes-app" content="app-id=1055761534")
         base(href="/")
         link(rel="shortcut icon" type="image/png" href="images/favicon.png")
-        title trafie
+        title(ng-bind="'Trafie' + App.getTitle()")
 
         link(href='/styles/styles-outer.css' rel='stylesheet' type='text/css')
 
