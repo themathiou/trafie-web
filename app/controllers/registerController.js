@@ -136,7 +136,8 @@ exports.post = function(req, res) {
                 email: email,
                 password: password,
                 lastIp: ip,
-                dateCreated: new Date()
+                dateCreated: new Date(),
+                lastActive: new Date()
             };
 
             var newProfile = {
