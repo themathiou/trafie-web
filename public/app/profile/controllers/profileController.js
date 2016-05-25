@@ -1,7 +1,7 @@
 (function(angular) {
     angular.module('trafie')
         .controller('ProfileController', function($rootScope, $scope, $routeParams, $window, $http,
-                                                  $uibModal, Activity, User, userService) {
+                                                  $uibModal, Activity, User, userService, pageDataService) {
             $scope.profileFound = true;
             $scope.loading = true;
             $scope.user = null;
@@ -45,6 +45,7 @@
                     setActivityCreationListener();
                 }
                 $scope.user = user;
+                pageDataService.setUserInTitle(user);
                 Activity.get({userId: $scope.user._id, isDeleted: false}, function(activities) {
                     $scope.activities = [];
                     activities.forEach(function(activity) {

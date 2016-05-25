@@ -7,7 +7,7 @@ html(ng-app="trafie-outer", ng-controller="AppOuterController as App")
         base(href="/")
         link(rel="shortcut icon" type="image/png" href="images/favicon.png")
         title(ng-bind="'Trafie' + App.getTitle()")
-        meta(name="description" content="{{App.getDescription()}}")
+        meta(name="description", content="{{App.getDescription()}}")
 
         link(href='/styles/styles-outer.css' rel='stylesheet' type='text/css')
 

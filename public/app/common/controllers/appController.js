@@ -1,8 +1,12 @@
 (function(angular) {
     angular.module('trafie')
-    .controller('AppController', function($translate, $location, userService, $uibModal, $rootScope, $http, $scope) {
+    .controller('AppController', function($translate, $location, userService, $uibModal, $rootScope, $http, $scope,
+                                          pageDataService) {
         self = this;
         self.user = null;
+        self.getTitle = pageDataService.getTitle;
+        self.getDescription = pageDataService.getDescription;
+
         userService.loadCurrentUser().then(function(user) {
             self.user = user;
             if(user && user.language !== 'en')
