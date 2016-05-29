@@ -1,4 +1,4 @@
-<div class="col-md-12">
+<div class="col-md-12" ng-if="activities.length">
     <div class="text-center">
         <div class="panel-body">
             <button class="btn btn-primary" ng-click="openActivityEditorModal()" ng-if="ownProfile" ng-disabled="!currentUser.isVerified && activities.length >= 5">
@@ -16,12 +16,29 @@
         </div>
     </div>
 </div>
-<div class="col-md-3">
+<div class="col-md-3" ng-class="{'hidden-sm hidden-xs': !activities.length}">
     <activity-filters activities="activities" ng-model="filters.values"></activity-filters>
     <div ng-include="'/app/common/views/footerLinksView.html'"></div>
 </div>
+<div class="text-center col-md-6" ng-if="!activities.length && ownProfile">
+    <h3 class="text-muted text-center" translate="PROFILE.WELCOME_FIRST_NAME_LETS_ADD_SOME_ACTIVITIES" translate-values="{first_name: user.firstName}"></h3>
+    <br>
+    <button class="btn btn-primary btn-lg" ng-click="openActivityEditorModal()" ng-if="ownProfile" ng-disabled="!currentUser.isVerified && activities.length >= 5">
+        <i class="fa fa-plus"></i>
+        {{'PROFILE.ADD_YOUR_FIRST_ACTIVITY_ACTIVITY' | translate}}
+    </button>
+</div>
+<div class="text-center col-md-6" ng-if="!activities.length && !ownProfile">
+    <h3 class="text-muted text-center" translate="PROFILE.THIS_USER_HASNT_CREATED_ANY_ACTIITIES_YET"></h3>
+</div>
+<div class="text-center col-md-6" ng-if="activities.length && !filteredActivities.length">
+    <h3 class="text-muted text-center" translate="PROFILE.THERE_ARE_NO_ACTIVITIES_WITH_THESE_FILTERED_VALUES"></h3>
+</div>
+<div class="col-md-3" ng-if="!activities.length && ownProfile">
+    &nbsp;
+</div>
 <div class="col-md-9">
-    <div class="panel panel-default"  ng-repeat="activity in activities | orderBy:'-date' | usersFilters:filters.values">
+    <div class="panel panel-default" ng-repeat="activity in filteredActivities = (activities | orderBy:'-date' | usersFilters:filters.values)">
         <div class="panel-heading">
             <span>{{activity.competition}}</span> |
             <span>{{formatUnixTimestamp(activity.date)}}</span>

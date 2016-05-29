@@ -94,7 +94,7 @@ angular.module('trafie')
             template:   '<div class="panel panel-default">' +
                             '<div class="panel-heading" translate="PROFILE.FILTERS"></div>' +
                             '<div class="panel-body" ng-if="!filterOptionsExist()">' +
-                                '<span translate="PROFILE.THERE_ARE_NO_FILTERS_AVAILABLE"></span>' +
+                                '<span translate="PROFILE.FILTERS_APPEAR_WHEN_THERE_ARE_ENOUGH_ACTIVITIES"></span>' +
                             '</div>' +
                             '<ul class="list-group">' +
                                 '<li class="list-group-item" ng-repeat="filterCategory in filterCategories" ng-if="filters[filterCategory].options.length > 1">' +

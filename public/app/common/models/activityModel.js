@@ -72,7 +72,7 @@
                             return index ? ('0' + value).substr(-2, 2) : value;
                         });
                     var lastIndex = viewPerformance.length-1;
-                    performance = viewPerformance.slice(0, lastIndex).join(':') + '.' + viewPerformance[lastIndex];
+                    performance = (lastIndex ? viewPerformance.slice(0, lastIndex).join(':') : '0') + '.' + viewPerformance[lastIndex];
                     break;
                 case 'distance':
                     if(currentUser && currentUser.units.distance === 'feet') {
