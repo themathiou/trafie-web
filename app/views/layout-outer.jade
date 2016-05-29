@@ -10,6 +10,8 @@ html(ng-app="trafie-outer", ng-controller="AppOuterController as App")
         meta(name="description", content="{{App.getDescription()}}")
 
         link(href='/styles/styles-outer.css' rel='stylesheet' type='text/css')
+        if env === "production"
+            include ./partials/external-scripts.jade
 
     body.app.on-canvas.nav-min.layout-horizontal.body-has-background
         div.main-container.clearfix.screen-height

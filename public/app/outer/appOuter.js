@@ -1,6 +1,13 @@
 (function (angular) {
     angular.module('trafie-outer', ['ngRoute', 'ngResource', 'ngSanitize'])
-    .run(function (){})
+    .run(function ($window, $rootScope, $location) {
+        if($window.hasOwnProperty('ga')) {
+            $window.ga('create', 'UA-47166136-1', 'auto');
+            $rootScope.$on('$routeChangeSuccess', function (event) {
+                $window.ga('send', 'pageview', $location.path());
+            });
+        }
+    })
     .config(function ($routeProvider, $locationProvider) {
         $locationProvider.html5Mode(true);
         $routeProvider
