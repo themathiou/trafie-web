@@ -11,6 +11,12 @@ nav.navbar.navbar-default.navbar-fixed-top.navbar-trafie
                         a(href='/settings')
                             i.fa.fa-cog.nav-icon
                             span.hidden-xs(translate="COMMON.SETTINGS")
+                    li(ng-if="!App.user")
+                        a(href='/register' ng-click="App.forceRedirect('register')")
+                            span(translate="COMMON.REGISTER")
+                    li.hidden-xs(ng-if="!App.user")
+                        a(href='/login' ng-click="App.forceRedirect('login')")
+                            span(translate="COMMON.LOGIN")
             div.navbar-header
                 a.navbar-brand(href="/") trafie
             div.navbar-collapse.collapse.navbar-right

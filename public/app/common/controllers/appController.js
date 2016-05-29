@@ -1,7 +1,7 @@
 (function(angular) {
     angular.module('trafie')
-    .controller('AppController', function($translate, $location, userService, $uibModal, $rootScope, $http, $scope,
-                                          pageDataService) {
+    .controller('AppController', function($translate, $location, $window, userService, $uibModal, $rootScope,
+                                          $http, $scope, pageDataService) {
         self = this;
         self.user = null;
         self.getTitle = pageDataService.getTitle;
@@ -53,6 +53,10 @@
             modalInstance.result.then(function () {
             }, function () {
             });
+        };
+
+        self.forceRedirect = function(path) {
+            $window.location.href = '/' + path;
         };
 
         $scope.$watch(function() {
