@@ -80,7 +80,7 @@ angular.module('trafie')
                                     '<p class="help-block pull-right" translate="MEASUREMENTS.METERS"></p>' +
                                 '</div>' +
                                 '<div class="col-xs-6">' +
-                                    '<input type="number" ng-model="inputs[1]" class="form-control" maxlength="2" ng-pattern="/^[0-9]{2}$/" min="0" max="99">' +
+                                    '<input type="number" ng-model="inputs[1]" class="form-control" maxlength="2" ng-pattern="/^[0-9]{0,2}$/" min="0" max="99">' +
                                     '<p class="help-block pull-right" translate="MEASUREMENTS.CENTIMETERS"></p>' +
                                 '</div>' +
                             '</div>' +
