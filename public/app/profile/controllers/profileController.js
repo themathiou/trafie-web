@@ -3,7 +3,7 @@
         .controller('ProfileController', function($rootScope, $scope, $routeParams, $window, $http,
                                                   $uibModal, Activity, User, userService, pageDataService) {
             $scope.profileFound = true;
-            $scope.loading = true;
+            $scope.activitiesLoading = true;
             $scope.user = null;
             $scope.loadError = false;
             $scope.activities = [];
@@ -47,6 +47,7 @@
                 $scope.user = user;
                 pageDataService.setUserInTitle(user);
                 Activity.get({userId: $scope.user._id, isDeleted: false}, function(activities) {
+                    $scope.activitiesLoading = true;
                     $scope.activities = [];
                     activities.forEach(function(activity) {
                         $scope.activities.push(new Activity(activity));
