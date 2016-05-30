@@ -47,7 +47,7 @@
                 $scope.user = user;
                 pageDataService.setUserInTitle(user);
                 Activity.get({userId: $scope.user._id, isDeleted: false}, function(activities) {
-                    $scope.activitiesLoading = true;
+                    $scope.activitiesLoading = false;
                     $scope.activities = [];
                     activities.forEach(function(activity) {
                         $scope.activities.push(new Activity(activity));

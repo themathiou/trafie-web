@@ -13,3 +13,52 @@ body > [uib-modal-window]:not([modal-render]) {
 .text-ultra-big {
   font-size: 64px;
 }
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+
+  position: relative;
+  margin: 0px auto;
+
+  &.block-spinner {
+    display: block;
+    width: 100%;
+  }
+
+  &:before, &:after {
+    width: 32px;
+    height: 100%;
+    border-radius: 50%;
+    background-color: @trafie-logo-color;
+    opacity: 0.6;
+    position: absolute;
+    top: 0;
+    left: calc(~"50% - 16px");
+    content: " ";
+
+    -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+    animation: sk-bounce 2.0s infinite ease-in-out;
+  }
+
+  &:after {
+    -webkit-animation-delay: -1.0s;
+    animation-delay: -1.0s;
+  }
+
+  @-webkit-keyframes sk-bounce {
+    0%, 100% { -webkit-transform: scale(0.0) }
+    50% { -webkit-transform: scale(1.0) }
+  }
+
+  @keyframes sk-bounce {
+    0%, 100% {
+      transform: scale(0.0);
+      -webkit-transform: scale(0.0);
+    } 50% {
+        transform: scale(1.0);
+        -webkit-transform: scale(1.0);
+      }
+  }
+}
