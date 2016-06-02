@@ -32,7 +32,7 @@
 
 * **Sample Calls:**
 
-  ```javascript
+  ```
     url: /authorize
     data: {
       "username": "mathiou@icloud.com",
@@ -68,7 +68,7 @@
 
 * **Sample Calls:**
 
-  ```javascript
+  ```
     url: /authorize
     data: {
       "refresh_token": "1b88ee37911b8555758c8cdf677b9f59886ee5c647473f58042abf6b1aa198a6ea8115693b841b3ce92d80ff1f7f16f69ce31cbc6d9ce7373f1b8542ceb8e9b3",
@@ -105,7 +105,7 @@
 
 * **Sample Calls:**
 
-  ```javascript
+  ```
     url: /authorize
     data: {
       "firstName": "Theodore",
@@ -133,7 +133,7 @@
 
 * **Sample Calls:**
 
-  ```javascript
+  ```
     url: /reset-password-request
     data: {
       "email": "some@one.com",
@@ -155,7 +155,7 @@
 
 * **Sample Calls:**
 
-  ```javascript
+  ```
     url: /logout
     headers: {
       "Authorization": "Bearer theAccessTokenHere"
@@ -193,7 +193,7 @@
 
 * **Sample Calls:**
 
-  ```javascript
+  ```
     url: /api/users/
     headers: {
       "Authorization": "Bearer theAccessTokenHere"
@@ -214,7 +214,7 @@
 
   * **Code:** `200`
   * **Content:** 
-  ```javascript
+  ```
     {
         "_id" = 5733764a0a0b600300659b7c;
         "about" = "";
@@ -281,7 +281,7 @@
 
 * **Sample Call:**
 
-  ```javascript
+  ```
     url: /api/users/5745d1d482d4602947b66478
     headers: {
       "Authorization": "Bearer theAccessTokenHere"
@@ -306,7 +306,7 @@
 
   * **Code:** `200`
   * **Content:** 
-  ```javascript
+  ```
     {
         "_id" = 5745d1d482d4602947b66478;
         "about" = "";
@@ -349,7 +349,7 @@
 
 * **Sample Calls:**
 
-  ```javascript
+  ```
     url: api/users/5733764a0a0b600300659b7c/
     headers: {
       "Authorization": "Bearer theAccessTokenHere"
@@ -374,7 +374,7 @@
     None
 * **Sample Calls:**
 
-  ```javascript
+  ```
     url: /api/resend-verification-email
     headers: {
       "Authorization": "Bearer theAccessTokenHere"
@@ -404,7 +404,7 @@
 
 * **Sample Calls:**
 
-  ```javascript
+  ```
     url: /api/users/5733764a0a0b600300659b7c/activities/574b0f7fff232a03001e43c6
     headers: {
       "Authorization": "Bearer theAccessTokenHere"
@@ -415,7 +415,7 @@
 
   * **Code:** `200`
   * **Content:** 
-  ```javascript
+  ```
     {
         "__v" = 0;
         "_id" = 574b0f7fff232a03001e43c6;
@@ -436,7 +436,7 @@
     }
     ```
 ##### TODO: 2. Update an activity based on activityId
-##### TODO: 3. Deletes an activity based on activityId
+##### 3. Deletes an activity based on activityId
 **URL**
   `/api/users/:userId/activities/:activityId`
 
@@ -450,7 +450,7 @@
 
 * **Sample Calls:**
 
-  ```javascript
+  ```
     url: /api/users/5733764a0a0b600300659b7c/activities/574b0f7fff232a03001e43c6
     headers: {
       "Authorization": "Bearer theAccessTokenHere"
@@ -491,7 +491,7 @@
 
 * **Sample Calls:**
 
-  ```javascript
+  ```
     url: /api/users/5733764a0a0b600300659b7c/activities
     headers: {
       "Authorization": "Bearer theAccessTokenHere"
@@ -506,7 +506,7 @@
 
   * **Code:** `200`
   * **Content:** 
-  ```javascript
+  ```
     [{
         "_id" = 574b2651ff232a03001e43c7;
         "competition" = "National Indoor Junior Championships";
