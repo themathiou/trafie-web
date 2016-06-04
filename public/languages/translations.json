@@ -590,6 +590,10 @@
       "en": "Write something about you",
       "el": "Γράψε κάτι για εσένα"
     },
+    "PROFILE_PICTURE": {
+      "en": "Profile picture",
+      "el": "Εικόνα προφίλ"
+    },
     "PASSWORD": {
       "en": "Password",
       "el": "Κωδικός"

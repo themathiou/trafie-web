@@ -12,9 +12,9 @@
         </div>
         <div class="form-group" ng-class="{'has-error': fieldErrors.performance.hasError}" ng-show="activity.discipline">
             <label translate="PROFILE.PERFORMANCE"></label>
-            <tf-time-performance-picker name="performance" ng-model="activity.performance" ng-if="getCategory() === 'time'" ng-change="fieldErrors.performance.hasError = false" required></tf-time-performance-picker>
-            <tf-distance-performance-picker name="performance" ng-model="activity.performance" ng-if="getCategory() === 'distance'" ng-change="fieldErrors.performance.hasError = false" required></tf-distance-performance-picker>
-            <tf-points-performance-picker name="performance" ng-model="activity.performance" ng-if="getCategory() === 'points'" ng-change="fieldErrors.performance.hasError = false" required></tf-points-performance-picker>
+            <time-performance-picker name="performance" ng-model="activity.performance" ng-if="getCategory() === 'time'" ng-change="fieldErrors.performance.hasError = false" required></time-performance-picker>
+            <distance-performance-picker name="performance" ng-model="activity.performance" ng-if="getCategory() === 'distance'" ng-change="fieldErrors.performance.hasError = false" required></distance-performance-picker>
+            <points-performance-picker name="performance" ng-model="activity.performance" ng-if="getCategory() === 'points'" ng-change="fieldErrors.performance.hasError = false" required></points-performance-picker>
         </div>
         <div class="form-group" ng-class="{'has-error': fieldErrors.date.hasError}">
             <label for="date" translate="COMMON.DATE"></label>

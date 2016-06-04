@@ -137,7 +137,7 @@ function sendProfileData(req, res, profileData, userData) {
         lastName:       profileData.lastName,
         discipline:     profileData.discipline,
         isMale:         profileData.isMale,
-        picture:        profileData.picture || config.defaultProfilePic,
+        picture:        profileData.picture || '/images/user-128x128.png',
         username:       profileData.username,
         country:        profileData.country,
         about:          profileData.about
@@ -431,73 +431,69 @@ exports.post = function(req, res) {
             }
 
             // Checking if the uploaded file is a valid image file
-            /*else if (typeof req.files !== 'undefined' && typeof req.files.profile_pic !== 'undefined') {
-                // Read the image file
-                fs.readFile(req.files.profile_pic.path, function(err, data) {
-                    // Get the file extension
-                    var pic = req.files.profile_pic;
-                    var extension = pic.name.substring(pic.name.lastIndexOf('.')+1);
+            else if (typeof req.files !== 'undefined' && typeof req.files.picture !== 'undefined') {
+                promises.push(new Promise(function(resolve, reject) {
+                    // Read the image file
+                    fs.readFile(req.files.files.path, function (err, data) {
+                        if (err) {
+                            reject([500, null]);
+                            return;
+                        }
+                        // Get the file extension
+                        var pic = req.files.picture;
+                        var extension = pic.name.substring(pic.name.lastIndexOf('.') + 1);
 
-                    var accepted_file_types = ['image/jpeg', 'image/png'];
-                    // File size in MB
-                    var accepted_file_size = 5;
+                        var acceptedFileTypes = ['image/jpeg', 'image/png'];
 
-                    var accepted_size = false;
-                    var accepted_type = false;
+                        // File size 512 KB
+                        var acceptedFileSize = 512 * 1024;
 
-                    // If the file size is acceptable
-                    if (pic.size > accepted_file_size * 1048576) {
-                        response.error = 'uploaded_image_too_large';
-                    } else {
-                        accepted_size = true;
-                    }
-
-                    // If the file type is acceptable
-                    if (accepted_file_types.indexOf(pic.type) < 0) {
-                        response.error = 'uploaded_image_wrong_type';
-                    } else {
-                        accepted_type = true;
-                    }
-
-                    if (accepted_type && accepted_size) {
-                        var s3 = knox.createClient({
-                            key: 'AKIAIQBX4EEBSV6QVPRA', //process.env.AWS_ACCESS_KEY_ID,
-                            secret: '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', //process.env.AWS_SECRET_ACCESS_KEY,
-                            bucket: 'trafie' //process.env.S3_BUCKET_NAME
-                        });
-
-                        var s3Headers = {
-                            'Content-Type': pic.type,
-                            'x-amz-acl': 'public-read'
-                        };
-
-                        s3.putFile(pic.path, userId + '.' + extension, s3Headers, function(err, s3response){
-                            if (err) throw err;
-                            // Update the database
-                            profileData.picture = s3response.req.url;
-                            Profile.update({
-                                '_id': userId
-                            }, {
-                                $set: profileData
-                            }, {
-                                upsert: true
-                            }, function(error) {
-                                if(!error) {
-                                    response.message = 'data_updated_successfully';
-                                    response.value = s3response.req.url;
-                                    res.status(200).json(response);
-                                } else {
-                                    response.error = 'something_went_wrong';
-                                    res.status(500).json(response);
-                                }
+                        if (pic.size <= acceptedFileSize && accepted_file_types.indexOf(pic.type) >= 0) {
+                            console.log(pic);
+                            resolve();
+                            /*var s3 = knox.createClient({
+                                key: 'AKIAIQBX4EEBSV6QVPRA', //process.env.AWS_ACCESS_KEY_ID,
+                                secret: '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', //process.env.AWS_SECRET_ACCESS_KEY,
+                                bucket: 'trafie' //process.env.S3_BUCKET_NAME
                             });
-                        });
-                    } else {
-                        res.status(400).json(response);
-                    }
 
-                });
-            }*/
+                            var s3Headers = {
+                                'Content-Type': pic.type,
+                                'x-amz-acl': 'public-read'
+                            };
+
+                            s3.putFile(pic.path, userId + '.' + extension, s3Headers, function (err, s3response) {
+                                if (err) throw err;
+                                // Update the database
+                                profileData.picture = s3response.req.url;
+                                Profile.update({
+                                    '_id': userId
+                                }, {
+                                    $set: profileData
+                                }, {
+                                    upsert: true
+                                }, function (error) {
+                                    if (!error) {
+                                        response.message = 'data_updated_successfully';
+                                        response.value = s3response.req.url;
+                                        res.status(200).json(response);
+                                    } else {
+                                        response.error = 'something_went_wrong';
+                                        res.status(500).json(response);
+                                    }
+                                });
+                            });*/
+                        } else {
+                            reject([422, {
+                                resource: 'user',
+                                field: 'picture',
+                                code: 'invalid'
+                            }]);
+                        }
+
+                    });
+                }));
+            }
 
             // Validating the change password request
             if (typeof req.body.oldPassword !== 'undefined' && typeof req.body.password !== 'undefined') {

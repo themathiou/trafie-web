@@ -1,5 +1,5 @@
 angular.module('trafie')
-    .directive('tfDistancePerformancePicker', function (VALIDATIONS, userService, $timeout) {
+    .directive('distancePerformancePicker', function (VALIDATIONS, userService, $timeout) {
         function link(scope, element, attrs, ngModel) {
             scope.unit = 'meters';
             scope.unitLoaded = false;
@@ -90,7 +90,7 @@ angular.module('trafie')
                                     '<p class="help-block pull-right" translate="MEASUREMENTS.FEET"></p>' +
                                 '</div>' +
                                 '<div class="col-xs-6">' +
-                                    '<tf-inches-picker ng-model="inputs[1]"></tf-inches-picker>' +
+                                    '<inches-picker ng-model="inputs[1]"></inches-picker>' +
                                     '<p class="help-block pull-right" translate="PROFILE.FRACTION"></p>' +
                                 '</div>' +
                             '</div>' +

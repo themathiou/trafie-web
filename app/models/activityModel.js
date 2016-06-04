@@ -80,21 +80,6 @@ activitySchema.getActivitiesOfUser = function(where, select, sort) {
 };
 
 /**
- * Returns all the names of the disciplines, that are included
- * in the user's activities
- * @param json where( { userId: hash } )
- */
-activitySchema.getDisciplinesPerformedByUser = function(where) {
-    var d = q.defer();
-    Activity.distinct('discipline', where, function(err, activity) {
-        if (err) d.reject(err);
-        d.resolve(activity);
-    });
-
-    return d.promise;
-};
-
-/**
  * Delete an activity
  * @param json where
  */

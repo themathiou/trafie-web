@@ -52,14 +52,10 @@ var index = require('./app/controllers/index'),
     register = require('./app/controllers/registerController'),
     profile = require('./app/controllers/profileController'),
     activities = require('./app/controllers/activityController'),
-    disciplines = require('./app/controllers/disciplineController'),
     emailValidation = require('./app/controllers/emailValidationController'),
     resetPassword = require('./app/controllers/resetPasswordController'),
     deactivate = require('./app/controllers/deactivateAccountController'),
-    //dummyData = require('./app/controllers/dummyDataController'),
-    //api = require('./app/controllers/apiController'),
     feedback = require('./app/controllers/feedbackController'),
-    //nuke = require('./app/controllers/nukeController'),
     auth = require('./app/controllers/authController'),
     oAuth = require('./app/controllers/oAuthController');
 
@@ -91,6 +87,7 @@ var sessionObj = session({
     resave: true,
     saveUninitialized: false
 });
+
 
 /*******************************************************************************************************************************
  * MODULES                                                                                                                     *
@@ -135,6 +132,7 @@ function requireHTTPS(req, res, next) {
     next();
 }
 
+
 /*******************************************************************************************************************************
  * PROFILE                                                                                                                     *
  ******************************************************************************************************************************/
@@ -154,13 +152,11 @@ trafie.get('/users/:userId/activities/:activityId?', activities.get);
 trafie.post('/users/:userId/activities', activities.post);
 trafie.put('/users/:userId/activities/:activityId', activities.put);
 trafie.delete('/users/:userId/activities/:activityId', activities.delete);
-trafie.get('/users/:userId/disciplines', disciplines.get);
 
 trafie.get('/api/users/:userId/activities/:activityId?', passport.authenticate('bearer', { session: false }), activities.get);
 trafie.post('/api/users/:userId/activities', passport.authenticate('bearer', { session: false }), activities.post );
 trafie.put('/api/users/:userId/activities/:activityId', passport.authenticate('bearer', { session: false }), activities.put);
 trafie.delete('/api/users/:userId/activities/:activityId', passport.authenticate('bearer', { session: false }), activities.delete);
-trafie.get('/api/users/:userId/disciplines', passport.authenticate('bearer', { session: false }), disciplines.get);
 
 
 /*******************************************************************************************************************************
@@ -238,38 +234,10 @@ trafie.post('/deactivate-account', deactivate.post);
 
 
 /*******************************************************************************************************************************
- * DUMMY DATA                                                                                                                  *
- ******************************************************************************************************************************/
-
-/*if( trafie.get('env') === 'development' ) {
-    trafie.get('/dummy-data', dummyData.get);
-    trafie.post('/dummy-data', dummyData.post);
-}*/
-
-
-/*******************************************************************************************************************************
- * API                                                                                                                         *
- ******************************************************************************************************************************/
-
-/*if( trafie.get('env') === 'development' ) {
-    trafie.get('/api', api.get);
-    trafie.get('/api-table', api.get_view);
-}*/
-
-
-/*******************************************************************************************************************************
  * FEEDBACK                                                                                                                    *
  ******************************************************************************************************************************/
 
 trafie.post('/feedback', feedback.post);
-
-/*******************************************************************************************************************************
- * NUCLEAR TEST GROUND                                                                                                         *
- ******************************************************************************************************************************/
-
-/*if( trafie.get('env') === 'development') {
-    trafie.get('/nuke', nuke.get);
-}*/
 
 
 /*******************************************************************************************************************************
