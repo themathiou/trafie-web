@@ -20,7 +20,7 @@ const db = {
             password: redisPassword
         },
         mongo: {
-            url: process.env.MONGOHQ_URL
+            url: process.env.MONGODB_URI
         }
     },
     development: {
