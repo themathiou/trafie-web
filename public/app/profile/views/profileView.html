@@ -3,8 +3,8 @@
         <div class="container">
             <div class="col-xs-12">
                 <div class="text-center">
-                    <div class="avatar-profile-wrapper" ng-mouseenter="uploadPromptShown = true" ng-mouseleave="uploadPromptShown = false">
-                        <a href="/settings?showImageUploadModal=true" class="avatar-upload-prompt" ng-show="uploadPromptShown" translate="COMMON.CHANGE_PICTURE"></a>
+                    <div class="avatar-profile-wrapper ng-cloak" ng-mouseenter="uploadPromptShown = true" ng-mouseleave="uploadPromptShown = false">
+                        <a href="/settings?showImageUploadModal=true" class="avatar-upload-prompt" ng-if="ownProfile" ng-show="uploadPromptShown" translate="COMMON.CHANGE_PICTURE"></a>
                         <img class="avatar avatar-md avatar-with-padding" ng-src="{{user.getPicture('md')}}"
                              ng-class="{'upload-prompt-visible': ownProfile && uploadPromptShown}">
                     </div>
