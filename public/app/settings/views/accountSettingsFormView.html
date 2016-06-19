@@ -1,0 +1,52 @@
+<div class="panel panel-default">
+    <div class="panel-heading" translate="SETTINGS.ACCOUNT_SETTINGS"></div>
+    <div class="panel-body">
+        <uib-alert type="{{alerts.accountForm.type}}" ng-show="alerts.accountForm.message" close="closeAlert('accountForm')">
+            <span ng-bind-html="alerts.accountForm.message"></span>
+        </uib-alert>
+        <div class="form-group">
+            <label for="email" translate="COMMON.EMAIL"></label>
+            <input type="email" class="form-control" name="email" id="email" ng-model="user.email" disabled required ng-pattern="validations.email">
+            <p class="help-block" ng-if="!user.isVerified">
+                            <span ng-show="!verificationEmailSent">
+                                <span class="text-warning" translate="{{'SETTINGS.YOU_HAVENT_VERIFIED_YOUR_EMAIL_YET'}}"></span><br>
+                                <a href="" ng-click="resendVerificationEmail()" translate="COMMON.RESEND_VERIFICATION_EMAIL"></a>
+                            </span>
+                <span class="text-success" ng-show="verificationEmailSent" translate="{{'SETTINGS.AN_EMAIL_HAS_BEEN_SENT_TO_EMAIL_ADDRESS'}}" translate-values="{email: user.email}" translate-compile></span>
+            </p>
+        </div>
+        <div class="form-group">
+            <label for="language" translate="COMMON.LANGUAGE"></label>
+            <select class="form-control" id="language" name="language" ng-model="user.language" ng-options="language as languagesMap[language] for language in languages" required></select>
+        </div>
+        <div class="form-group">
+            <label for="date-format" translate="SETTINGS.DATE_FORMAT"></label>
+            <select class="form-control" id="date-format" name="dateFormat" ng-model="user.dateFormat" ng-options="dateFormat as ('SETTINGS.' + dateFormatsMap[dateFormat] | translate) for dateFormat in dateFormats" required></select>
+        </div>
+        <div class="form-group">
+            <label for="date-format" translate="SETTINGS.LENGTH_UNIT"></label>
+            <div>
+                <div class="btn-group">
+                    <label class="btn btn-default" ng-model="user.units.distance" uib-btn-radio="'meters'" translate="MEASUREMENTS.METERS"></label>
+                    <label class="btn btn-default" ng-model="user.units.distance" uib-btn-radio="'feet'" translate="MEASUREMENTS.FEET"></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': fieldErrors.accountForm.username.hasError}">
+            <label for="username" translate="COMMON.USERNAME"></label>
+            <div class="input-group no-bottom-margin">
+                <span class="input-group-addon">https://trafie.com/</span>
+                <input type="text" id="username" name="username" class="form-control" ng-model="user.username" ng-change="showUsernameWarning = true; fieldErrors.accountForm.username.hasError = false" ng-pattern="validations.username" ng-disabled="user.usernameChangesCount > 1">
+            </div>
+            <p class="help-block" ng-show="showUsernameWarning && user.usernameChangesCount === 1">
+                <span class="text-warning" translate="{{'SETTINGS.YOU_CAN_CHANGE_YOUR_USERNAME_ONLY_ONE_MORE_TIME'}}"></span>
+            </p>
+        </div>
+    </div>
+    <div class="panel-footer clearfix">
+        <input type="submit" class="btn btn-primary pull-right" ng-disabled="saving" ng-click="saveSettings('accountForm')" value="{{(saving ? 'COMMON.SAVING' : 'COMMON.SAVE_CHANGES') | translate}}">
+    </div>
+</div>
+<div class="text-center">
+    <a href="javascript:;" ng-click="deactivateAccount()" class="text-warning" translate="SETTINGS.DEACTIVATE_MY_ACCOUNT"></a>
+</div>

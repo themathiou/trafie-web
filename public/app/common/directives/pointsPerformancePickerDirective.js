@@ -1,5 +1,5 @@
 angular.module('trafie')
-    .directive('tfPointsPerformancePicker', function (VALIDATIONS) {
+    .directive('pointsPerformancePicker', function (VALIDATIONS) {
         function link(scope, element, attrs, ngModel) {
             function modelFormatter(value) {
                 scope.input = value;

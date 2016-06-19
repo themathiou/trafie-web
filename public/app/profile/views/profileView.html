@@ -2,6 +2,13 @@
     <div class="jumbotron">
         <div class="container">
             <div class="col-xs-12">
+                <div class="text-center">
+                    <div class="avatar-profile-wrapper" ng-mouseenter="uploadPromptShown = true" ng-mouseleave="uploadPromptShown = false">
+                        <a href="/settings?showImageUploadModal=true" class="avatar-upload-prompt" ng-show="uploadPromptShown" translate="COMMON.CHANGE_PICTURE"></a>
+                        <img class="avatar avatar-md avatar-with-padding" ng-src="{{user.getPicture('md')}}"
+                             ng-class="{'upload-prompt-visible': ownProfile && uploadPromptShown}">
+                    </div>
+                </div>
                 <h2 class="text-center">{{user.firstName + ' ' + user.lastName}}</h2>
                 <h4 class="text-center" ng-if="user.discipline || user.country">
                     <span ng-if="user.discipline">{{'DISCIPLINES.' + user.discipline.toUpperCase() | translate}}</span>

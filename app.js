@@ -25,7 +25,7 @@
  ******************************************************************************************************************************/
 
 'use strict';
-process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+require('dotenv').config({silent: true})
 process.env.TZ = 'UTC';
 
 var express = require('express'),
@@ -39,7 +39,8 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     errorHandler = require('errorhandler'),
     cookieParser = require('cookie-parser'),
-    redisStore = require('connect-redis')(session);
+    redisStore = require('connect-redis')(session),
+    formidable = require('formidable');
 
 // Initialize express
 var trafie = express();
@@ -111,7 +112,7 @@ trafie.use(function(req, res, next) {
 trafie.use(bodyParser.json());
 trafie.use(bodyParser.urlencoded({ extended: true }));
 trafie.use(cookieParser(process.env.SESSION_SECRET || 'sessionSecret'));
-trafie.use(lessMiddleware(__dirname + '/public'));
+trafie.use(lessMiddleware(path.join(__dirname, 'public')));
 trafie.use(express.static(path.join(__dirname, 'public')));
 trafie.use(passport.initialize());
 trafie.use(passport.session());
@@ -132,13 +133,34 @@ function requireHTTPS(req, res, next) {
     next();
 }
 
+function filesParserMiddleware(req, res, next) {
+    if(req.get('Content-Type').startsWith('multipart/form-data;')) {
+        var form = new formidable.IncomingForm();
+        form.encoding = 'utf-8';
+        form.keepExtensions = true;
+
+        form.parse(req, function(err, fields, files) {
+            for(let i in fields) {
+                if(fields.hasOwnProperty(i) && ['true', 'false'].indexOf(fields[i]) >= 0) {
+                    fields[i] = fields[i] === 'true';
+                }
+            }
+            req.body = fields;
+            req.files = files;
+            next();
+        });
+    } else {
+        next();
+    }
+}
+
 
 /*******************************************************************************************************************************
  * PROFILE                                                                                                                     *
  ******************************************************************************************************************************/
 
 trafie.get('/users/:userId?', profile.get );
-trafie.post('/users/:userId?', profile.post );
+trafie.post('/users/:userId?', filesParserMiddleware, profile.post );
 
 trafie.get('/api/users/:userId?', passport.authenticate('bearer', { session: false }), profile.get);
 trafie.post('/api/users/:userId?', passport.authenticate('bearer', { session: false }), profile.post);

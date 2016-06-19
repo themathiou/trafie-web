@@ -1,0 +1,71 @@
+<div class="panel panel-default">
+    <div class="panel-heading" translate="SETTINGS.PROFILE_SETTINGS"></div>
+    <div class="panel-body">
+        <uib-alert type="{{alerts.profileForm.type}}" ng-show="alerts.profileForm.message" close="closeAlert('profileForm')">
+            <span ng-bind-html="alerts.profileForm.message"></span>
+        </uib-alert>
+        <div class="form-group clearfix">
+            <label translate="SETTINGS.PROFILE_PICTURE"></label>
+            <div>
+                <span class="col-avatar-image">
+                    <profile-picture ng-model="user.picture"></profile-picture>
+                </span>
+                <span ng-show="pictureChanged" class="col-avatar-notification">
+                    <span class="text-success" translate="SETTINGS.SUBMIT_THE_FORM_TO_CHANGE_YOUR_PROFILE_PICTURE"></span>
+                    <a href="" ng-click="revertProfileImage()" translate="SETTINGS.REVERT_TO_THE_PREVIOUS_PICTURE"></a>
+                </span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': fieldErrors.profileForm.firstName.hasError}">
+            <label for="firstName" translate="COMMON.FIRST_NAME"></label>
+            <input type="text" class="form-control" name="firstName" id="firstName" ng-model="user.firstName" ng-change="fieldErrors.profileForm.firstName.hasError = false" ng-pattern="validations.name" required>
+        </div>
+        <div class="form-group" ng-class="{'has-error': fieldErrors.profileForm.lastName.hasError}">
+            <label for="lastName" translate="COMMON.LAST_NAME"></label>
+            <input type="text" class="form-control" name="lastName" id="lastName" ng-model="user.lastName" ng-change="fieldErrors.profileForm.lastName.hasError = false" ng-pattern="validations.name" required>
+        </div>
+        <div class="form-group">
+            <label for="discipline" translate="COMMON.MAIN_DISCIPLINE"></label>
+            <select class="form-control" id="discipline" name="discipline" ng-model="user.discipline" ng-options="discipline as (discipline && 'DISCIPLINES.' + discipline.toUpperCase() || 'SETTINGS.CHOOSE_YOUR_DISCIPLINE' | translate) for discipline in disciplines"></select>
+        </div>
+        <div class="form-group">
+            <label for="country" translate="COMMON.COUNTRY"></label>
+            <select class="form-control" id="country" name="country" ng-model="user.country" ng-options="country as (country && 'COUNTRIES.' + country.toUpperCase() || 'SETTINGS.CHOOSE_YOUR_COUNTRY' | translate) for country in countries"></select>
+        </div>
+        <div class="form-group" ng-class="{'has-error': fieldErrors.profileForm.birthday.hasError}" ng-cloak>
+            <label for="birthday">{{'COMMON.BIRTHDAY' | translate}} ({{'SETTINGS.' + dateFormatsMap[user.dateFormat] | translate}})</label>
+            <input type="text" id="birthday" name="birthday" class="form-control" ng-change="fieldErrors.profileForm.birthday.hasError = false" ng-model="setting.birthday">
+        </div>
+        <div class="form-group" ng-class="{'has-error': fieldErrors.profileForm.about.hasError}">
+            <label for="aboutMe" translate="COMMON.ABOUT_ME"></label>
+            <textarea class="form-control vertical-resize" name="about" id="aboutMe" ng-model="user.about" ng-change="fieldErrors.profileForm.about.hasError = false" ng-maxlength="400"></textarea>
+        </div>
+        <div class="form-group">
+            <label translate="COMMON.GENDER"></label>
+            <div>
+                <div class="btn-group">
+                    <label class="btn btn-default" ng-model="setting.isMale" uib-btn-radio="'true'" translate="COMMON.MALE"></label>
+                    <label class="btn btn-default" ng-model="setting.isMale" uib-btn-radio="'false'" translate="COMMON.FEMALE"></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label translate="SETTINGS.PROFILE_PRIVACY"></label>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="isPrivate" ng-disabled="!user.isVerified" ng-model="user.isPrivate"> {{'SETTINGS.HIDE_MY_PROFILE_FROM_EVERYONE' | translate}}
+                </label>
+            </div>
+            <p class="help-block" ng-if="!user.isVerified">
+                            <span ng-show="!verificationEmailSent">
+                                <span class="text-warning" translate="{{'SETTINGS.VERIFY_YOUR_EMAIL_TO_ENABLE_THIS_OPTION'}}"></span>
+                                <a href="" rel="nofollow" ng-click="resendVerificationEmail()" translate="COMMON.RESEND_VERIFICATION_EMAIL"></a>
+                            </span>
+                <span class="text-success" ng-show="verificationEmailSent" translate="{{'SETTINGS.AN_EMAIL_HAS_BEEN_SENT_TO_EMAIL_ADDRESS'}}" translate-values="{email: user.email}" translate-compile></span>
+            </p>
+        </div>
+    </div>
+    <div class="panel-footer clearfix">
+        <input type="submit" class="btn btn-primary pull-right" ng-disabled="saving" ng-click="saveSettings('profileForm')" value="{{(saving ? 'COMMON.SAVING' : 'COMMON.SAVE_CHANGES') | translate}}">
+    </div>
+</div>

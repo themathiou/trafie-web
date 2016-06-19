@@ -1,6 +1,6 @@
 (function (angular) {
     angular.module('trafie', ['ngRoute', 'ngResource', 'ngSanitize', 'pascalprecht.translate', 'ui.bootstrap',
-        'cgNotify', 'angular-confirm', 'ui.select', 'ngImgCrop'])
+        'cgNotify', 'angular-confirm', 'ui.select', 'ngFileUpload', 'ngImgCrop'])
     .run(function ($window, $rootScope, $location) {
         if($window.hasOwnProperty('ga')) {
             $window.ga('create', 'UA-47166136-1', 'auto');
@@ -14,7 +14,8 @@
         $routeProvider
             .when('/settings/:tab?', {
                 templateUrl: '/app/settings/views/settingsView.html',
-                controller: 'SettingsController'
+                controller: 'SettingsController',
+                reloadOnSearch: false
             })
             .when('/:userIdentifier?', {
                 templateUrl: '/app/profile/views/profileView.html',

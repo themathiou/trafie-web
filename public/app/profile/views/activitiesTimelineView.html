@@ -3,7 +3,7 @@
         <div class="panel-body">
             <button class="btn btn-primary" ng-click="openActivityEditorModal()" ng-if="ownProfile" ng-disabled="!currentUser.isVerified && activities.length >= 5">
                 <i class="fa fa-plus"></i>
-                {{'COMMON.ADD_NEW_ACTIVITY' | translate}}
+                {{'PROFILE.ADD_NEW_ACTIVITY' | translate}}
             </button>
             <div ng-if="ownProfile && !currentUser.isVerified && activities.length >= 5">
                 <br>

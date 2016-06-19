@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <h3 class="modal-title" translate="COMMON.CHANGE_PICTURE"></h3>
+</div>
+<div class="modal-body">
+    <form name="form" method="POST">
+        <div class="form-group text-center">
+            <button ngf-select ng-model="pictureFile" accept="image/*" class="btn btn-primary">{{"SETTINGS.CHOOSE_A_PICTURE" | translate}}</button>
+        </div>
+        <div class="form-group" ng-show="pictureFile">
+            <div ngf-drop ng-model="pictureFile" ngf-pattern="image/*" class="crop-area">
+                <img-crop image="pictureFile  | ngfDataUrl" result-image="croppedDataUrl" result-image-size="600">
+                </img-crop>
+            </div>
+        </div>
+        <div class="form-group text-center" ng-show="pictureFile">
+            <img ng-src="{{croppedDataUrl}}" class="avatar avatar-md" />
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <a href="" class="text-warning m-right-5" ng-show="!pictureFile && !userHasDefaultPicture" ng-click="removeCurrent()" translate="SETTINGS.REMOVE_CURRENT_PICTURE"></a>
+    <button class="btn btn-warning" type="button" ng-click="cancel()" translate="COMMON.CANCEL"></button>
+    <button class="btn btn-primary" type="button" ng-click="ok(croppedDataUrl)" translate="COMMON.OK"></button>
+</div>

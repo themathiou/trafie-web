@@ -1,12 +1,22 @@
 'use strict';
 
+let fs = require('fs'),
+    path = require('path'),
+    crypto = require('crypto'),
+    sharp = require('sharp'),
+    knox = require('knox'),
+    moment = require('moment'),
+    streamifier = require('streamifier');
+
 // Loading models
-var Profile = require('../models/profileModel'),
+let Profile = require('../models/profileModel'),
     User = require('../models/userModel');
+
 // Loading helpers
-var accessHelper = require('../helpers/accessHelper'),
+let accessHelper = require('../helpers/accessHelper'),
     profileHelper = require('../helpers/profileHelper'),
     userHelper = require('../helpers/userHelper');
+
 // Get the config file
 const config = require('../config/constantConfig');
 const SEARCH_RESULTS_LENGTH = 10;
@@ -53,7 +63,7 @@ function userSearch(req, res) {
 
 function generateSearchQuery(req) {
     let ands = [];
-    var searchQuery = req.query;
+    let searchQuery = req.query;
 
     if (typeof searchQuery.keywords === 'string') {
         let requestedKeywordsString = searchQuery.keywords.trim(),
@@ -114,7 +124,7 @@ function generateSearchQuery(req) {
         });
     }
 
-    var query = {};
+    let query = {};
     if (ands.length) {
         query.$and = ands;
     }
@@ -131,20 +141,20 @@ function generateSearchQuery(req) {
  * @return object              (the profile data as a json object)
  */
 function sendProfileData(req, res, profileData, userData) {
-    var profile = {
+    let profile = {
         _id:            profileData._id,
         firstName:      profileData.firstName,
         lastName:       profileData.lastName,
         discipline:     profileData.discipline,
         isMale:         profileData.isMale,
-        picture:        profileData.picture || '/images/user-128x128.png',
+        picture:        profileData.picture || config.defaultPicture,
         username:       profileData.username,
         country:        profileData.country,
         about:          profileData.about
     };
     if('_id' in userData && profileData._id.toString() === userData._id.toString()) {
-        var ip = req.ip.substr(req.ip.lastIndexOf(':') + 1);
-        var now = new Date();
+        let ip = req.ip.substr(req.ip.lastIndexOf(':') + 1);
+        let now = new Date();
         User.findOneAndUpdate({_id: req.user._id}, {lastActive: now, lastIp: ip}, function(err, doc) {});
         
         profile.isPrivate = profileData.isPrivate;
@@ -165,7 +175,7 @@ function sendProfileData(req, res, profileData, userData) {
  */
 exports.post = function(req, res) {
     // Get the user id from the session
-    var userId = req.user && req.user._id.toString();
+    let userId = req.user && req.user._id.toString();
 
     // If there is no user id in the session, redirect to register screen
     if (!userId || !req.params.userId) {
@@ -191,7 +201,7 @@ exports.post = function(req, res) {
                 return false;
             }
 
-            var profileData = {},
+            let profileData = {},
                 promises = [];
 
             // Validating first name
@@ -396,7 +406,7 @@ exports.post = function(req, res) {
                         }]);
                     }
                     else if (profileHelper.validateUsername(req.body.username)) {
-                        var username = req.body.username.toLowerCase();
+                        let username = req.body.username.toLowerCase();
                         Profile.schema.findOne({
                                 'username': username
                             }, '_id')
@@ -431,58 +441,127 @@ exports.post = function(req, res) {
             }
 
             // Checking if the uploaded file is a valid image file
-            else if (typeof req.files !== 'undefined' && typeof req.files.picture !== 'undefined') {
+            else if (typeof req.body.picture !== 'undefined' || (typeof req.files !== 'undefined' && typeof req.files.picture !== 'undefined')) {
                 promises.push(new Promise(function(resolve, reject) {
+                    var s3 = knox.createClient({
+                        key: process.env.AWS_ACCESS_KEY_ID,
+                        secret: process.env.AWS_SECRET_ACCESS_KEY,
+                        bucket: process.env.S3_BUCKET_NAME,
+                        region: process.env.S3_BUCKET_REGION
+                    });
+
+                    if(!req.body.picture && (typeof req.files === 'undefined' || (req.files && req.files.picture === 'undefined'))) {
+                        profileData.picture = '';
+                        s3.list({prefix: 'users/' + userId + '/profile'}, function(err, data){
+                            if(!err) {
+                                let filesToDelete = data.Contents.map(function(s3Object) {
+                                   return s3Object.Key;
+                                });
+                                s3.deleteMultiple(filesToDelete, function(err, res) {});
+                            }
+                        });
+                        resolve(profileData.picture);
+                    }
+                    else if(req.body.picture && (typeof req.files === 'undefined' || (req.files && req.files.picture === 'undefined'))) {
+                        resolve();
+                    }
+
                     // Read the image file
-                    fs.readFile(req.files.files.path, function (err, data) {
+                    fs.readFile(req.files.picture.path, (err, data) => {
                         if (err) {
                             reject([500, null]);
                             return;
                         }
                         // Get the file extension
-                        var pic = req.files.picture;
-                        var extension = pic.name.substring(pic.name.lastIndexOf('.') + 1);
-
-                        var acceptedFileTypes = ['image/jpeg', 'image/png'];
+                        let pic = req.files.picture;
+                        let acceptedFileTypes = ['image/jpeg', 'image/png'];
 
                         // File size 512 KB
-                        var acceptedFileSize = 512 * 1024;
+                        let acceptedFileSize = 2 * 1024 * 1024;
+                        let imageSizes = [
+                            {size: 'full', pixels: 600},
+                            {size: 'md', pixels: 128},
+                            {size: 'sm', pixels: 64},
+                            {size: 'xs', pixels: 32}
+                        ];
 
-                        if (pic.size <= acceptedFileSize && accepted_file_types.indexOf(pic.type) >= 0) {
-                            console.log(pic);
-                            resolve();
-                            /*var s3 = knox.createClient({
-                                key: 'AKIAIQBX4EEBSV6QVPRA', //process.env.AWS_ACCESS_KEY_ID,
-                                secret: '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', //process.env.AWS_SECRET_ACCESS_KEY,
-                                bucket: 'trafie' //process.env.S3_BUCKET_NAME
+                        if (pic.size <= acceptedFileSize && acceptedFileTypes.indexOf(pic.type) >= 0) {
+                            let image = sharp(pic.path);
+                            image.metadata()
+                            .then(function(metadata) {
+                                if(metadata.width > imageSizes[0].pixels || metadata.height > imageSizes[0].pixels
+                                || metadata.width !== metadata.height || ['jpeg', 'png'].indexOf(metadata.format) < 0) {
+                                    reject([422, {
+                                        resource: 'user',
+                                        field: 'picture',
+                                        code: 'invalid'
+                                    }]);
+                                }
+
+                                let imageUploadPromises = [],
+                                    s3ImagePrefixes = [];
+
+                                imageSizes.forEach((size) => {
+                                    imageUploadPromises.push(new Promise(function(resolveImage, rejectImage) {
+                                        let md5sum = crypto.createHash('md5');
+                                        md5sum.update(moment().unix() + userId);
+                                        let fileName = md5sum.digest('hex');
+
+                                        if(size.size === 'full') {
+                                            image.clone()
+                                                .jpeg()
+                                                .toBuffer(uploadToS3);
+                                        } else {
+                                            image.clone()
+                                                .resize(size.pixels, size.pixels)
+                                                .jpeg()
+                                                .toBuffer(uploadToS3);
+                                        }
+
+                                        function uploadToS3(err, buffer, info) {
+                                            if(err) rejectImage();
+                                            let s3Headers = {
+                                                'Content-Type': 'image/' + info.format,
+                                                'x-amz-acl': 'public-read',
+                                                'Content-Length': info.size
+                                            };
+
+                                            let sizeSuffix = size.size === 'full' ? '' : '.' + size.size,
+                                                s3ImagePrefix = 'users/' + userId + '/profile/' + fileName + sizeSuffix + '.' + info.format,
+                                                s3ImagePath = '/' + s3ImagePrefix;
+                                            s3ImagePrefixes.push(s3ImagePrefix);
+
+                                            s3.putStream(streamifier.createReadStream(buffer), s3ImagePath, s3Headers, function (err, s3response) {
+                                                if (err || typeof s3response === 'undefined' || !s3response || (s3response && !s3response.req)) rejectImage();
+                                                if(size.size === 'full') {
+                                                    profileData.picture = s3response.req.url;
+                                                }
+                                                resolveImage();
+                                            });
+                                        };
+                                    }));
+                                });
+
+                                Promise.all(imageUploadPromises).then(function(value) {
+                                    fs.unlink(pic.path);
+                                    s3.list({ prefix: 'users/' + userId + '/profile'}, function(err, data){
+                                        if(!err && data.Contents) {
+                                            let filesToDelete = [];
+                                            data.Contents.forEach(function(s3Object) {
+                                                if(s3ImagePrefixes.indexOf(s3Object.Key) < 0) {
+                                                    filesToDelete.push(s3Object.Key);
+                                                }
+                                            });
+                                            s3.deleteMultiple(filesToDelete, function(err, res) {});
+                                        }
+                                    });
+                                    resolve(profileData.picture);
+                                }, function(error) {
+                                    fs.unlink(pic.path);
+                                    reject();
+                                });
                             });
 
-                            var s3Headers = {
-                                'Content-Type': pic.type,
-                                'x-amz-acl': 'public-read'
-                            };
-
-                            s3.putFile(pic.path, userId + '.' + extension, s3Headers, function (err, s3response) {
-                                if (err) throw err;
-                                // Update the database
-                                profileData.picture = s3response.req.url;
-                                Profile.update({
-                                    '_id': userId
-                                }, {
-                                    $set: profileData
-                                }, {
-                                    upsert: true
-                                }, function (error) {
-                                    if (!error) {
-                                        response.message = 'data_updated_successfully';
-                                        response.value = s3response.req.url;
-                                        res.status(200).json(response);
-                                    } else {
-                                        response.error = 'something_went_wrong';
-                                        res.status(500).json(response);
-                                    }
-                                });
-                            });*/
                         } else {
                             reject([422, {
                                 resource: 'user',
@@ -490,7 +569,6 @@ exports.post = function(req, res) {
                                 code: 'invalid'
                             }]);
                         }
-
                     });
                 }));
             }
@@ -544,6 +622,9 @@ exports.post = function(req, res) {
                         '_id': userId
                     }, profileData)
                     .then(function() {
+                        if(profileData.hasOwnProperty('picture') && !profileData.picture) {
+                            profileData.picture = config.defaultPicture;
+                        }
                         res.status(200).json(profileData);
                     })
                     .catch(function(statusCode, error) {
