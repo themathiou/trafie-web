@@ -6,7 +6,7 @@ nav.navbar.navbar-default.navbar-fixed-top.navbar-trafie
                     i.fa.fa-navicon
                     span(class="sr-only") Toggle navigation
                 a.navbar-brand(href="/") trafie
-            div.navbar-collapse.collapse.navbar-left.row(uib-collapse="App.sidebarIsCollapsed")
+            div.navbar-collapse.collapse.navbar-left.row(uib-collapse="App.sidebarIsCollapsed", ng-cloak)
                 ul.nav.navbar-nav
                     li(ng-if="App.user" ng-class="{'active': App.getCurrentPage() === 'profile'}")
                         a(href='/', ng-click="App.sidebarIsCollapsed = true; App.profileResult = '';")
@@ -24,8 +24,8 @@ nav.navbar.navbar-default.navbar-fixed-top.navbar-trafie
                             span(translate="COMMON.LOGIN")
             div.navbar-collapse.collapse.navbar-right
                 form.navbar-form.navbar-right-form(role="search")
-                    .input-group
-                        input.form-control(type="text" placeholder="{{'COMMON.SEARCH' | translate}}" ng-model="App.profileResult" uib-typeahead="user as (user.firstName + ' ' + user.lastName) for user in App.searchUsers($viewValue)" ng-cloak)
+                    .input-group(ng-cloak)
+                        input.form-control(type="text" placeholder="{{'COMMON.SEARCH' | translate}}" ng-model="App.profileResult" uib-typeahead="user as (user.firstName + ' ' + user.lastName) for user in App.searchUsers($viewValue)")
                         span.input-group-btn
                             button.btn.btn-default(type="submit" ng-click="App.goToUser()")
                                 i.fa.fa-search

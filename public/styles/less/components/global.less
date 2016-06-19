@@ -6,12 +6,49 @@ body > [uib-modal-window]:not([modal-render]) {
   display: none;
 }
 
+.m-right-5 {
+  margin-right: 5px;
+}
+
+.m-left-5 {
+  margin-left: 5px;
+}
+
 .text-light {
   font-weight: lighter;
 }
 
 .text-ultra-big {
   font-size: 64px;
+}
+
+.avatar {
+  border-radius: 50%;
+  width: 128px;
+  height: 128px;
+  position: relative;
+
+  &.avatar-md {
+    width: 128px;
+    height: 128px;
+
+    &.avatar-with-padding {
+      width: 146px;
+      height: 146px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+  }
+
+  &.avatar-sm {
+    width: 64px;
+    height: 64px;
+  }
+  &.avatar-xs {
+    width: 32px;
+    height: 32px;
+  }
 }
 
 .spinner {

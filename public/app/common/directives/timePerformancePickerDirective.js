@@ -1,5 +1,5 @@
 angular.module('trafie')
-    .directive('tfTimePerformancePicker', function (VALIDATIONS) {
+    .directive('timePerformancePicker', function (VALIDATIONS) {
         function link(scope, element, attrs, ngModel) {
             function modelFormatter(value) {
                 scope.inputs = [0,0,0,0];

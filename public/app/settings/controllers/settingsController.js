@@ -1,11 +1,13 @@
 (function(angular) {
     angular.module('trafie')
     .controller('SettingsController', function($scope, $http, $window, $translate, $filter, $routeParams,
-                                               userService, COUNTRIES, DISCIPLINES, LANGUAGES_MAP,
-                                               DATE_FORMATS_MAP, VALIDATIONS, User, $uibModal) {
-        var tabsList = ['profile', 'account', 'password'];
-        var globalUser = null;
-        var currentLanguage = '';
+                                               $timeout, userService, COUNTRIES, DISCIPLINES, LANGUAGES_MAP,
+                                               DATE_FORMATS_MAP, VALIDATIONS, User, $uibModal, Upload) {
+        var tabsList = ['profile', 'account', 'password'],
+            globalUser = null,
+            currentLanguage = '';
+
+        $scope.pictureChanged = false;
         $scope.user = null;
         $scope.tab = $routeParams.tab && tabsList.indexOf($routeParams.tab) >= 0 ? $routeParams.tab : tabsList[0];
         $scope.countries = [''].concat(COUNTRIES);
@@ -45,7 +47,8 @@
                 country: {invalid: 'SETTINGS.INVALID_COUNTRY', hasError: false},
                 discipline: {invalid: 'SETTINGS.INVALID_DISCIPLINE', hasError: false},
                 about: {invalid: 'SETTINGS.THE_TEXT_ENTERED_IN_THE_ABOUT_ME_FIELD_IS_TOO_LONG', hasError: false},
-                isPrivate: {hasError: false}
+                isPrivate: {hasError: false},
+                picture: {hasError: false}
             },
             accountForm: {
                 language: {invalid: 'SETTINGS.INVALID_LANGUAGE', hasError: false},
@@ -75,6 +78,12 @@
                 if(birthdayObj.isValid()) {
                     $scope.setting.birthday = birthdayObj.format(newValue);
                 }
+            }
+        });
+
+        $scope.$watch('user.picture', function(newValue, oldValue) {
+            if(angular.isDefined(oldValue) && oldValue !== newValue) {
+                $scope.pictureChanged = true;
             }
         });
 
@@ -137,33 +146,65 @@
             if($scope.user.usernameChangesCount > 1) {
                 delete user.username;
             }
-            user.$save()
-                .then(function(res) {
-                    $scope.alerts[formName].type = 'success';
-                    $scope.alerts[formName].message = $filter('translate')('SETTINGS.DATA_WAS_UPDATED_SUCCESSFULLY');
-                    $scope.saving = false;
-                    angular.extend(globalUser, formData);
-                    if(currentLanguage != $scope.user.language) {
-                        $translate.use($scope.user.language);
-                        currentLanguage = $scope.user.language;
-                    }
-                    if(res.hasOwnProperty('usernameChangesCount')) {
-                        $scope.user.usernameChangesCount = res.usernameChangesCount;
-                    }
-                }, function(res) {
-                    $scope.saving = false;
-                    if(res.data.errors) {
-                        $scope.alerts[formName].type = 'danger';
-                        var errors = [];
-                        res.data.errors.forEach(function(error) {
-                            var errorMessage = $filter('translate')($scope.fieldErrors[formName][error.field][error.code]);
-                            $scope.fieldErrors[formName][error.field].hasError = true;
-                            errors.push(errorMessage);
-                        });
-                        $scope.alerts[formName].message = errors.join('<br>');
-                    }
+
+            if(formData.hasOwnProperty('picture') && formData.picture && $scope.pictureChanged) {
+                formData.picture = Upload.dataUrltoBlob(formData.picture, name);
+                Upload.upload({
+                    url: '/users/' + $scope.user._id,
+                    data: formData
+                }).then(function (res) {
+                    $timeout(function () {
+                        handleSaveSuccess(res.data, formName, formData);
+                    });
+                }, function (res) {
+                    handleSaveError(res, formName);
+                }, function (evt) {
+                    $scope.progress = parseInt(100.0 * evt.loaded / evt.total);
                 });
+            } else {
+                user.$save()
+                    .then(function(res) {
+                        handleSaveSuccess(res, formName, formData);
+                    }, function(res) {
+                        handleSaveError(res, formName);
+                    });
+            }
         };
+
+        function handleSaveSuccess(res, formName, formData) {
+            if(res.hasOwnProperty('picture')) {
+                formData.picture = res.picture;
+            }
+            $scope.pictureChanged = false;
+            $scope.alerts[formName].type = 'success';
+            $scope.alerts[formName].message = $filter('translate')('SETTINGS.DATA_WAS_UPDATED_SUCCESSFULLY');
+            $scope.saving = false;
+            angular.extend(globalUser, formData);
+            if(currentLanguage != $scope.user.language) {
+                $translate.use($scope.user.language);
+                currentLanguage = $scope.user.language;
+            }
+            if(res.hasOwnProperty('usernameChangesCount')) {
+                $scope.user.usernameChangesCount = res.usernameChangesCount;
+            }
+        }
+
+        function handleSaveError(res, formName) {
+            $scope.saving = false;
+            if(angular.isDefined(res.data) && res.data && res.data.errors) {
+                $scope.alerts[formName].type = 'danger';
+                var errors = [];
+                res.data.errors.forEach(function(error) {
+                    var errorMessage = $filter('translate')($scope.fieldErrors[formName][error.field][error.code]);
+                    $scope.fieldErrors[formName][error.field].hasError = true;
+                    errors.push(errorMessage);
+                });
+                $scope.alerts[formName].message = errors.join('<br>');
+            } else {
+                $scope.alerts[formName].type = 'danger';
+                $scope.alerts[formName].message = $filter('translate')('COMMON.SOMETHING_WENT_WRONG_PLEASE_TRY_AGAIN_LATER');
+            }
+        }
 
         $scope.closeAlert = function(formName) {
             $scope.alerts[formName].message = '';
@@ -183,6 +224,13 @@
 
             modalInstance.result.then(function () {
             }, function () {
+            });
+        };
+
+        $scope.revertProfileImage = function() {
+            $scope.user.picture = globalUser.picture;
+            $timeout(function() {
+                $scope.pictureChanged = false;
             });
         };
 

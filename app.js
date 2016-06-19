@@ -25,7 +25,7 @@
  ******************************************************************************************************************************/
 
 'use strict';
-process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+require('dotenv').config({silent: true})
 process.env.TZ = 'UTC';
 
 var express = require('express'),
@@ -39,7 +39,8 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     errorHandler = require('errorhandler'),
     cookieParser = require('cookie-parser'),
-    redisStore = require('connect-redis')(session);
+    redisStore = require('connect-redis')(session),
+    formidable = require('formidable');
 
 // Initialize express
 var trafie = express();
@@ -52,14 +53,10 @@ var index = require('./app/controllers/index'),
     register = require('./app/controllers/registerController'),
     profile = require('./app/controllers/profileController'),
     activities = require('./app/controllers/activityController'),
-    disciplines = require('./app/controllers/disciplineController'),
     emailValidation = require('./app/controllers/emailValidationController'),
     resetPassword = require('./app/controllers/resetPasswordController'),
     deactivate = require('./app/controllers/deactivateAccountController'),
-    //dummyData = require('./app/controllers/dummyDataController'),
-    //api = require('./app/controllers/apiController'),
     feedback = require('./app/controllers/feedbackController'),
-    //nuke = require('./app/controllers/nukeController'),
     auth = require('./app/controllers/authController'),
     oAuth = require('./app/controllers/oAuthController');
 
@@ -92,6 +89,7 @@ var sessionObj = session({
     saveUninitialized: false
 });
 
+
 /*******************************************************************************************************************************
  * MODULES                                                                                                                     *
  ******************************************************************************************************************************/
@@ -114,7 +112,7 @@ trafie.use(function(req, res, next) {
 trafie.use(bodyParser.json());
 trafie.use(bodyParser.urlencoded({ extended: true }));
 trafie.use(cookieParser(process.env.SESSION_SECRET || 'sessionSecret'));
-trafie.use(lessMiddleware(__dirname + '/public'));
+trafie.use(lessMiddleware(path.join(__dirname, 'public')));
 trafie.use(express.static(path.join(__dirname, 'public')));
 trafie.use(passport.initialize());
 trafie.use(passport.session());
@@ -135,12 +133,34 @@ function requireHTTPS(req, res, next) {
     next();
 }
 
+function filesParserMiddleware(req, res, next) {
+    if(req.get('Content-Type').startsWith('multipart/form-data;')) {
+        var form = new formidable.IncomingForm();
+        form.encoding = 'utf-8';
+        form.keepExtensions = true;
+
+        form.parse(req, function(err, fields, files) {
+            for(let i in fields) {
+                if(fields.hasOwnProperty(i) && ['true', 'false'].indexOf(fields[i]) >= 0) {
+                    fields[i] = fields[i] === 'true';
+                }
+            }
+            req.body = fields;
+            req.files = files;
+            next();
+        });
+    } else {
+        next();
+    }
+}
+
+
 /*******************************************************************************************************************************
  * PROFILE                                                                                                                     *
  ******************************************************************************************************************************/
 
 trafie.get('/users/:userId?', profile.get );
-trafie.post('/users/:userId?', profile.post );
+trafie.post('/users/:userId?', filesParserMiddleware, profile.post );
 
 trafie.get('/api/users/:userId?', passport.authenticate('bearer', { session: false }), profile.get);
 trafie.post('/api/users/:userId?', passport.authenticate('bearer', { session: false }), profile.post);
@@ -154,13 +174,11 @@ trafie.get('/users/:userId/activities/:activityId?', activities.get);
 trafie.post('/users/:userId/activities', activities.post);
 trafie.put('/users/:userId/activities/:activityId', activities.put);
 trafie.delete('/users/:userId/activities/:activityId', activities.delete);
-trafie.get('/users/:userId/disciplines', disciplines.get);
 
 trafie.get('/api/users/:userId/activities/:activityId?', passport.authenticate('bearer', { session: false }), activities.get);
 trafie.post('/api/users/:userId/activities', passport.authenticate('bearer', { session: false }), activities.post );
 trafie.put('/api/users/:userId/activities/:activityId', passport.authenticate('bearer', { session: false }), activities.put);
 trafie.delete('/api/users/:userId/activities/:activityId', passport.authenticate('bearer', { session: false }), activities.delete);
-trafie.get('/api/users/:userId/disciplines', passport.authenticate('bearer', { session: false }), disciplines.get);
 
 
 /*******************************************************************************************************************************
@@ -238,38 +256,10 @@ trafie.post('/deactivate-account', deactivate.post);
 
 
 /*******************************************************************************************************************************
- * DUMMY DATA                                                                                                                  *
- ******************************************************************************************************************************/
-
-/*if( trafie.get('env') === 'development' ) {
-    trafie.get('/dummy-data', dummyData.get);
-    trafie.post('/dummy-data', dummyData.post);
-}*/
-
-
-/*******************************************************************************************************************************
- * API                                                                                                                         *
- ******************************************************************************************************************************/
-
-/*if( trafie.get('env') === 'development' ) {
-    trafie.get('/api', api.get);
-    trafie.get('/api-table', api.get_view);
-}*/
-
-
-/*******************************************************************************************************************************
  * FEEDBACK                                                                                                                    *
  ******************************************************************************************************************************/
 
 trafie.post('/feedback', feedback.post);
-
-/*******************************************************************************************************************************
- * NUCLEAR TEST GROUND                                                                                                         *
- ******************************************************************************************************************************/
-
-/*if( trafie.get('env') === 'development') {
-    trafie.get('/nuke', nuke.get);
-}*/
 
 
 /*******************************************************************************************************************************

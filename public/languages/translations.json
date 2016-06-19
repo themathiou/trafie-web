@@ -210,6 +210,10 @@
       "en": "No",
       "el": "Όχι"
     },
+    "OK": {
+      "en": "Ok",
+      "el": "Εντάξει"
+    },
     "DISCIPLINE": {
       "en": "Discipline",
       "el": "Αγώνισμα"
@@ -346,20 +350,28 @@
       "en": "Oops! Something went wrong...",
       "el": "Ωχ! Κάτι πήγε στραβά..."
     },
+    "SOMETHING_WENT_WRONG_PLEASE_TRY_AGAIN_LATER": {
+      "en": "Oops! Something went wrong... Please, try again later.",
+      "el": "Ωχ! Κάτι πήγε στραβά... Παρακαλούμε προσπαθήστε αργότερα."
+    },
     "WRONG_DATE_FORMAT":{
       "en": "Wrong date format",
       "el": "Η μορφή ημερομηνίας είναι λανθασμένη"
     },
+    "RESEND_VERIFICATION_EMAIL": {
+      "en": "Resend the verification email.",
+      "el": "Αποστολή του email επιβεβαίωσης."
+    },
+    "CHANGE_PICTURE": {
+      "en": "Change picture",
+      "el": "Αλλαγή εικόνας"
+    }
+  },
+  "PROFILE": {
     "ADD_NEW_ACTIVITY": {
       "en": "Add new activity",
       "el": "Προσθήκη νέας δραστηριότητας"
     },
-    "RESEND_VERIFICATION_EMAIL": {
-      "en": "Resend the verification email.",
-      "el": "Αποστολή του email επιβεβαίωσης."
-    }
-  },
-  "PROFILE": {
     "NEW_ACTIVITY": {
       "en": "New activity",
       "el": "Νέα δραστηριότητα"
@@ -589,6 +601,26 @@
     "WRITE_SOMETHING_ABOUT_YOU": {
       "en": "Write something about you",
       "el": "Γράψε κάτι για εσένα"
+    },
+    "PROFILE_PICTURE": {
+      "en": "Profile picture",
+      "el": "Εικόνα προφίλ"
+    },
+    "REMOVE_CURRENT_PICTURE": {
+      "en": "Remove current picture",
+      "el": "Αφαίρεση υπάρχουσας εικόνας"
+    },
+    "SUBMIT_THE_FORM_TO_CHANGE_YOUR_PROFILE_PICTURE": {
+      "en": "Submit the form to change your profile picture.",
+      "el": "Υποβάλλετε τη φόρμα για αλλάξετε την εικόνα του προφίλ σας."
+    },
+    "REVERT_TO_THE_PREVIOUS_PICTURE": {
+      "en": "Revert to the previous picture.",
+      "el": "Επαναφορά της προηγούμενης εικόνας."
+    },
+    "CHOOSE_A_PICTURE": {
+      "en": "Choose a picture",
+      "el": "Επιλογή εικόνας"
     },
     "PASSWORD": {
       "en": "Password",
