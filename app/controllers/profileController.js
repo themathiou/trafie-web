@@ -538,7 +538,7 @@ exports.post = function(req, res) {
                                                 }
                                                 resolveImage();
                                             });
-                                        };
+                                        }
                                     }));
                                 });
 
