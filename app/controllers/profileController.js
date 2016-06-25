@@ -558,7 +558,7 @@ exports.post = function(req, res) {
                                     resolve(profileData.picture);
                                 }, function(error) {
                                     fs.unlink(pic.path);
-                                    reject();
+                                    reject([500, null]);
                                 });
                             });
 
