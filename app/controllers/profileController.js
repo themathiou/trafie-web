@@ -532,7 +532,7 @@ exports.post = function(req, res) {
                                             s3ImagePrefixes.push(s3ImagePrefix);
 
                                             s3.putStream(streamifier.createReadStream(buffer), s3ImagePath, s3Headers, function (err, s3response) {
-                                                if (err || typeof s3response === 'undefined' || !s3response || (s3response && !s3response.req)) rejectImage();
+                                                if (err || !s3response || (s3response && !s3response.req) || (s3response.req && s3response.req.res.statusCode !== 200)) rejectImage();
                                                 if(size.size === 'full') {
                                                     profileData.picture = s3response.req.url;
                                                 }
