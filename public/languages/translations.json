@@ -416,6 +416,10 @@
       "en": "Notes",
       "el": "Σημειώσεις"
     },
+    "COMMENTS": {
+      "en": "Comments",
+      "el": "Σχόλια"
+    },
     "INDOOR": {
       "en": "Indoor",
       "el": "Κλειστός στίβος"
@@ -463,6 +467,10 @@
     "THE_TEXT_OF_THE_NOTES_IS_TOO_LONG": {
       "en": "The text of the notes is too long",
       "el": "Το κείμενο των σημειώσεων είναι πολύ μεγάλο"
+    },
+    "THE_TEXT_OF_THE_COMMENTS_IS_TOO_LONG": {
+      "en": "The text of the comments is too long",
+      "el": "Το κείμενο των σχολίων είναι πολύ μεγάλο"
     },
     "DELETE_ACTIVITY": {
       "en": "Delete activity",
@@ -551,6 +559,10 @@
     "A_FEW_WORDS_ABOUT_THE_COMPETITION": {
       "en": "A few words about the competition",
       "el": "Λίγα λόγια για τον αγώνα"
+    },
+    "PERSONAL_NOTES_THAT_YOU_WANT_TO_REMEMBER": {
+      "en": "Personal notes that you want to remember, visible only by you",
+      "el": "Προσωπικές σημειώσεις που θα ήθελες να θυμάσαι, ορατές μόνο από εσένα"
     },
     "PLEASE_VERIFY_YOUR_EMAIL_EMAIL_IN_ORDER_TO_ADD_MORE_ACTIVITIES": {
       "en": "Please verify your email {{email}} in order to add more activities.",

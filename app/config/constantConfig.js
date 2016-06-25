@@ -31,6 +31,7 @@ const config = {
         activityType: /^(competition|training)$/,
         activity: {
             notes: /^.{0,1000}$/,
+            comments: /^.{0,1000}$/,
             rank: /^\d+$/,
             competition: /^.{2,100}$/,
             location: /^.{0,100}$/,

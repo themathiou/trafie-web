@@ -42,6 +42,7 @@
     <div class="panel panel-default" ng-repeat="activity in filteredActivities = (activities | orderBy:'-date' | usersFilters:filters.values)">
         <div class="panel-heading">
             <span>{{activity.competition}}</span> |
+            <span>{{(activity.isOutdoor ? 'PROFILE.OUTDOOR' : 'PROFILE.INDOOR') | translate}}</span> |
             <span>{{formatUnixTimestamp(activity.date)}}</span>
             <span class="pull-right text-right" ng-if="ownProfile">
                 <a href="javascript:;" ng-click="openActivityEditorModal(activity)" title="{{'COMMON.EDIT' | translate}}"><i class="fa fa-edit text-warning" aria-hidden="true"></i></a>
@@ -62,6 +63,10 @@
                 <div ng-if="activity.location">
                     <b translate="PROFILE.LOCATION"></b>:
                     <span>{{activity.location}}</span>
+                </div>
+                <div ng-if="activity.comments">
+                    <b translate="PROFILE.COMMENTS"></b>:
+                    <span>{{activity.comments}}</span>
                 </div>
                 <div ng-if="activity.notes">
                     <b translate="PROFILE.NOTES"></b>:

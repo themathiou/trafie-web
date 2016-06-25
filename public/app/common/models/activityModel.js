@@ -30,6 +30,7 @@
             this.location = angular.isDefined(activityData.location) ? activityData.location : '';
             this.competition = angular.isDefined(activityData.competition) ? activityData.competition : '';
             this.notes = angular.isDefined(activityData.notes) ? activityData.notes : '';
+            this.comments = angular.isDefined(activityData.comments) ? activityData.comments : '';
             this.isPrivate = angular.isDefined(activityData.isPrivate) ? activityData.isPrivate : false;
             this.type = angular.isDefined(activityData.type) ? activityData.type : 'competition';
             this.isOutdoor = angular.isDefined(activityData.isOutdoor) ? activityData.isOutdoor : true;

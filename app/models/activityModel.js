@@ -17,6 +17,7 @@ var activitySchema = mongoose.Schema({
     location    : { type: String,   required: false,    default: '' },
     competition : { type: String,   required: false,    default: '' },
     notes       : { type: String,   required: false,    default: '' },
+    comments    : { type: String,   required: false,    default: '' },
     isPrivate   : { type: Boolean,  required: false,    default: false },
     isDeleted   : { type: Boolean,  required: false,    default: false },
     type        : { type: String,   required: false,    default: 'competition' },
@@ -54,7 +55,6 @@ activitySchema.findOne = function(where, select) {
  * @param number sort (-1 == descending)
  */
 activitySchema.getActivitiesOfUser = function(where, select, sort) {
-    select = select || 'userId discipline performance date rank location competition notes isPrivate type isOutdoor isDeleted';
     var d = q.defer();
     Activity.find(
         // Where
@@ -205,6 +205,15 @@ activitySchema.methods.checkValid = function() {
         errors.push({
             resource: 'activity',
             field: 'notes',
+            code: 'invalid'
+        });
+    }
+
+    // Validating comments
+    if (this.comments && !activityHelper.commentsAreValid(this.comments)) {
+        errors.push({
+            resource: 'activity',
+            field: 'comments',
             code: 'invalid'
         });
     }

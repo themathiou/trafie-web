@@ -127,6 +127,15 @@ activityHelper.notesAreValid = function(notes) {
 };
 
 /**
+ * Checks if the length of the comments string is acceptable
+ * @param  string  location
+ * @return boolean
+ */
+activityHelper.commentsAreValid = function(comments) {
+    return config.validations.activity.comments.test(comments);
+};
+
+/**
  * Checks if private is true/false
  * @param  boolean  private
  * @return boolean

@@ -27,10 +27,12 @@ exports.get = function(req, res) {
     .then(function(response) {
         // If the user has a valid session and they are not visiting a private profile
         if (response.success) {
+            let where = {};
+            let select = 'userId discipline performance date rank location competition comments isPrivate type isOutdoor isDeleted';
             // If the activity id was specified, try to find the activity
             if (typeof req.params.activityId !== 'undefined') {
-                var where = {};
-                if(userId && profileId && userId === profileId) {
+                if(userId && profileId && userId.toString() === profileId.toString()) {
+                    select += ' notes';
                     where = {
                         $and: [{
                             _id: req.params.activityId
@@ -52,7 +54,7 @@ exports.get = function(req, res) {
                 }
 
                 // Find the activity and return it
-                Activity.schema.findOne(where, '').then(function(activity) {
+                Activity.schema.findOne(where, select).then(function(activity) {
                     if(activity) {
                         res.status(200).json(activity);
                     } else {
@@ -67,8 +69,6 @@ exports.get = function(req, res) {
                     res.status(500).json({message: 'Server error'});
                 });
             } else {
-                // If the activity id wasn't specified, try to fetch all the activities of the user
-                let where = {};
                 // If there was a discipline in the parameters of the GET request,
                 // fetch the activities only of this discipline
                 if (typeof req.query.discipline !== 'undefined' && req.query.discipline) {
@@ -125,9 +125,11 @@ exports.get = function(req, res) {
 
                 if (!response.user._id || response.user._id.toString() !== response.profile._id.toString()) {
                     where.isPrivate = false;
+                } else {
+                    select += ' notes';
                 }
                 
-                Activity.schema.getActivitiesOfUser(where, '', -1)
+                Activity.schema.getActivitiesOfUser(where, select, -1)
                 .then(function(activities) {
                     res.json(activities);
                 })
@@ -187,9 +189,10 @@ exports.post = function(req, res) {
                 performance: typeof req.body.performance !== 'undefined' ? req.body.performance : null,
                 date: req.body.date || null,
                 rank: req.body.rank || null,
-                location: req.body.location || null,
-                competition: req.body.competition || null,
-                notes: req.body.notes || null,
+                location: req.body.location || '',
+                competition: req.body.competition || '',
+                notes: req.body.notes || '',
+                comments: req.body.comments || '',
                 isPrivate: typeof req.body.isPrivate !== 'undefined' ? req.body.isPrivate : false,
                 isOutdoor: typeof req.body.isOutdoor !== 'undefined' ? req.body.isOutdoor : false
             };
@@ -246,6 +249,7 @@ exports.put = function(req, res) {
             activity.location = typeof req.body.location !== 'undefined' ? req.body.location : activity.location;
             activity.competition = typeof req.body.competition !== 'undefined' ? req.body.competition : activity.competition;
             activity.notes = typeof req.body.notes !== 'undefined' ? req.body.notes : activity.notes;
+            activity.comments = typeof req.body.comments !== 'undefined' ? req.body.comments : activity.comments;
             activity.isPrivate = typeof req.body.isPrivate !== 'undefined' ? req.body.isPrivate : activity.isPrivate;
             activity.isOutdoor = typeof req.body.isOutdoor !== 'undefined' ? req.body.isOutdoor : activity.isOutdoor;
 

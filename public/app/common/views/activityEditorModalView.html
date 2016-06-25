@@ -50,9 +50,13 @@
                 <label translate="PROFILE.RANK"></label>
                 <input type="text" name="rank" class="form-control" placeholder="{{'PROFILE.EG_1' | translate}}" ng-model="activity.rank" ng-change="fieldErrors.rank.hasError = false" ng-pattern="validations.activity.rank">
             </div>
+            <div class="form-group" ng-class="{'has-error': fieldErrors.comments.hasError}">
+                <label translate="PROFILE.COMMENTS"></label>
+                <textarea type="text" name="comments" class="form-control vertical-resize" placeholder="{{'PROFILE.A_FEW_WORDS_ABOUT_THE_COMPETITION' | translate}}" ng-model="activity.comments" ng-change="fieldErrors.notes.hasError = false" ng-pattern="validations.activity.comments"></textarea>
+            </div>
             <div class="form-group" ng-class="{'has-error': fieldErrors.notes.hasError}">
                 <label translate="PROFILE.NOTES"></label>
-                <textarea type="text" name="notes" class="form-control vertical-resize" placeholder="{{'PROFILE.A_FEW_WORDS_ABOUT_THE_COMPETITION' | translate}}" ng-model="activity.notes" ng-change="fieldErrors.notes.hasError = false" ng-pattern="validations.activity.notes"></textarea>
+                <textarea type="text" name="notes" class="form-control vertical-resize" placeholder="{{'PROFILE.PERSONAL_NOTES_THAT_YOU_WANT_TO_REMEMBER' | translate}}" ng-model="activity.notes" ng-change="fieldErrors.notes.hasError = false" ng-pattern="validations.activity.notes"></textarea>
             </div>
             <div class="form-group">
                 <label translate="PROFILE.COMPETITION_TYPE"></label>

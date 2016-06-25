@@ -30,6 +30,7 @@ angular.module('trafie')
             location: {invalid: 'PROFILE.THE_TEXT_OF_THE_LOCATION_IS_TOO_LONG', hasError: false},
             rank: {invalid: 'PROFILE.INVALID_RANK', hasError: false},
             notes: {invalid: 'PROFILE.THE_TEXT_OF_THE_NOTES_IS_TOO_LONG', hasError: false},
+            comments: {invalid: 'PROFILE.THE_TEXT_OF_THE_COMMENTS_IS_TOO_LONG', hasError: false},
             isOutdoor: {hasError: false},
             isPrivate: {hasError: false}
         };
