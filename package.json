@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "engines": {
-    "node": "5.4.1"
+    "node": "6.2.1"
   },
   "dependencies": {
     "body-parser": "~1.14.2",
