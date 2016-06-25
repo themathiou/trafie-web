@@ -25,7 +25,7 @@
  ******************************************************************************************************************************/
 
 'use strict';
-require('dotenv').config({silent: true})
+require('dotenv').config({silent: true});
 process.env.TZ = 'UTC';
 
 var express = require('express'),
