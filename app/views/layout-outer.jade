@@ -2,15 +2,17 @@ doctype html
 html(ng-app="trafie-outer", ng-controller="AppOuterController as App")
     head
         meta(charset="utf-8")
-        meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no")
-        meta(name="apple-itunes-app" content="app-id=1055761534")
-        base(href="/")
-        link(rel="shortcut icon" type="image/png" href="images/favicon.png")
-        title(ng-bind="'Trafie' + App.getTitle()")
+        meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no")
+        meta(name="apple-itunes-app", content="app-id=1055761534")
         meta(name="description", content="{{App.getDescription()}}")
+        if env === "production" && envInstance === "staging"
+            meta(name="robots", content="noindex")
+        base(href="/")
+        link(rel="shortcut icon", type="image/png", href="images/favicon.png")
+        title(ng-bind="'Trafie' + App.getTitle()")
 
-        link(href='/styles/styles-outer.css' rel='stylesheet' type='text/css')
-        if env === "production"
+        link(href="/styles/styles-outer.css", rel="stylesheet", type="text/css")
+        if env === "production" && envInstance !== "staging"
             include ./partials/external-scripts.jade
 
     body.app.on-canvas.nav-min.layout-horizontal.body-has-background

@@ -1,14 +1,15 @@
 'use strict';
 
 exports.getView = function(req, res) {
-    //var angularRoutes = ['/', '/settings'];
     if (typeof req.user === 'undefined' && req.originalUrl === '/') {
         res.redirect(301, '/register');
         return false;
     }
+    
     let data = {
         userId: req.user ? req.user._id : '',
-        env: process.env.NODE_ENV
+        env: process.env.NODE_ENV,
+        envInstance: process.env.NODE_ENV_INSTANCE || ""
     };
 
     res.render('layout', data);
@@ -22,7 +23,8 @@ exports.getOuterView = function(req, res) {
     }
 
     let data = {
-        env: process.env.NODE_ENV
+        env: process.env.NODE_ENV,
+        envInstance: process.env.NODE_ENV_INSTANCE || ""
     };
 
     res.render('layout-outer', data);

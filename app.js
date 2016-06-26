@@ -122,7 +122,7 @@ if (trafie.get('env') === 'development') {
     trafie.use(errorHandler());
 }
 // Production only
-if (trafie.get('env') === 'production') {
+if (trafie.get('env') === 'production' && process.env.NODE_ENV_INSTANCE !== 'staging') {
     trafie.use(requireHTTPS);
 }
 
