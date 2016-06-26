@@ -2,17 +2,17 @@ doctype html
 html(ng-app="trafie", ng-controller="AppController as App")
     head
         meta(charset="utf-8")
-        meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no")
+        meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no")
         meta(name="description", content="{{App.getDescription()}}")
         if env === "production" && envInstance === "staging"
-            meta(name="robots" content="noindex")
+            meta(name="robots", content="noindex")
         base(href="/")
-        link(rel="shortcut icon" type="image/png" href="images/favicon.png")
+        link(rel="shortcut icon", type="image/png", href="images/favicon.png")
         title(ng-bind="'Trafie' + App.getTitle()")
 
-        link(href="/bower_components/angular-notify/dist/angular-notify.min.css" rel="stylesheet" type="text/css")
-        link(href="/bower_components/angular-ui-select/dist/select.min.css" rel="stylesheet" type="text/css")
-        link(href="/styles/styles.css" rel="stylesheet" type="text/css")
+        link(href="/bower_components/angular-notify/dist/angular-notify.min.css", rel="stylesheet", type="text/css")
+        link(href="/bower_components/angular-ui-select/dist/select.min.css", rel="stylesheet", type="text/css")
+        link(href="/styles/styles.css", rel="stylesheet", type="text/css")
         script(type="text/javascript").
             trafie = {
                 userId: "#{userId}"
