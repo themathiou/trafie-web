@@ -2,7 +2,7 @@ angular.module('trafie')
     .controller('ActivityEditorModalController', function ($scope, $rootScope, $uibModalInstance, $filter,
                                                            activityToEdit, DISCIPLINES, VALIDATIONS,
                                                            DISCIPLINE_CATEGORIES, Activity, userService,
-                                                           notify) {
+                                                           notify, Upload) {
         activityToEdit = activityToEdit || null;
         $scope.isNewActivity = !activityToEdit;
         $scope.activity = activityToEdit && angular.copy(activityToEdit) || new Activity();
@@ -11,6 +11,7 @@ angular.module('trafie')
         $scope.alertMessage = '';
         $scope.additionalInfoVisible = false;
         $scope.validations = VALIDATIONS;
+        $scope.user = null;
         $scope.datepicker = {
             maxDate: moment().toDate(),
             activityDate: moment.unix($scope.activity.date).toDate(),
@@ -36,6 +37,7 @@ angular.module('trafie')
         };
 
         userService.loadCurrentUser().then(function(user) {
+            $scope.user = user;
             $scope.format = user.dateFormat.split('-')
                 .map(function(datePart) {
                    return datePart[0] !== 'm' ? datePart : datePart.toUpperCase();
@@ -74,24 +76,48 @@ angular.module('trafie')
         }
 
         $scope.save = function () {
-            if(!validateForm()) {
-                return;
-            }
+            if(!validateForm()) return;
             $scope.activity.date = moment($scope.datepicker.activityDate).seconds(0).unix();
             $scope.saving = true;
-            var promise = $scope.isNewActivity ? $scope.activity.$save() : $scope.activity.$update();
-            promise.then(function(res) {
-                $scope.saving = false;
-                notify({
-                    message: $filter('translate')($scope.isNewActivity ? 'PROFILE.THE_ACTIVITY_WAS_CREATED_SUCCESSFULLY' : 'PROFILE.THE_ACTIVITY_WAS_UPDATED_SUCCESSFULLY'),
-                    classes: 'alert-success'
+
+            if($scope.activity.picture && !angular.isString($scope.activity.picture)) {
+                var method = 'POST',
+                    url = '/users/' + $scope.user._id + '/activities';
+                if(!$scope.isNewActivity) {
+                    method = 'PUT';
+                    url += '/' + $scope.activity._id;
+                }
+                Upload.upload({
+                    url: url,
+                    method: method,
+                    data: $scope.activity
+                }).then(function (res) {
+                    handleSaveSuccess(res.data);
+                }, function (res) {
+                    handleSaveError(res);
+                }, function (evt) {
+                    $scope.progress = parseInt(100.0 * evt.loaded / evt.total);
                 });
-                $rootScope.$broadcast('activityCreated', res);
-                $uibModalInstance.close();
-            }, function(res) {
-                $scope.saving = false;
-            });
+            } else {
+                var promise = $scope.isNewActivity ? $scope.activity.$save() : $scope.activity.$update();
+                promise.then(handleSaveSuccess, handleSaveError);
+            }
+
         };
+
+        function handleSaveSuccess(res) {
+            $scope.saving = false;
+            notify({
+                message: $filter('translate')($scope.isNewActivity ? 'PROFILE.THE_ACTIVITY_WAS_CREATED_SUCCESSFULLY' : 'PROFILE.THE_ACTIVITY_WAS_UPDATED_SUCCESSFULLY'),
+                classes: 'alert-success'
+            });
+            $rootScope.$broadcast('activityCreated', res);
+            $uibModalInstance.close();
+        }
+
+        function handleSaveError(res) {
+            $scope.saving = false;
+        }
 
         $scope.cancel = function () {
             $uibModalInstance.dismiss('cancel');

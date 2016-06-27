@@ -182,6 +182,9 @@ exports.post = function(req, res) {
                 return;
             }
 
+            let picture = '';
+            console.log(req.files);
+
             // Create the record that will be inserted in the db
             var activityData = {
                 userId: userId,
@@ -193,12 +196,13 @@ exports.post = function(req, res) {
                 competition: req.body.competition || '',
                 notes: req.body.notes || '',
                 comments: req.body.comments || '',
+                picture: picture || null,
                 isPrivate: typeof req.body.isPrivate !== 'undefined' ? req.body.isPrivate : false,
                 isOutdoor: typeof req.body.isOutdoor !== 'undefined' ? req.body.isOutdoor : false
             };
             var activity = new Activity(activityData),
                 errors = activity.checkValid();
-
+            
             if(!errors) {
                 // Save the activity
                 activity.save()

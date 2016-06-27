@@ -171,8 +171,8 @@ trafie.post('/api/users/:userId?', passport.authenticate('bearer', { session: fa
  ******************************************************************************************************************************/
 
 trafie.get('/users/:userId/activities/:activityId?', activities.get);
-trafie.post('/users/:userId/activities', activities.post);
-trafie.put('/users/:userId/activities/:activityId', activities.put);
+trafie.post('/users/:userId/activities', filesParserMiddleware, activities.post);
+trafie.put('/users/:userId/activities/:activityId', filesParserMiddleware, activities.put);
 trafie.delete('/users/:userId/activities/:activityId', activities.delete);
 
 trafie.get('/api/users/:userId/activities/:activityId?', passport.authenticate('bearer', { session: false }), activities.get);

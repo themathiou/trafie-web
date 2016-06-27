@@ -22,6 +22,7 @@ var activitySchema = mongoose.Schema({
     isDeleted   : { type: Boolean,  required: false,    default: false },
     type        : { type: String,   required: false,    default: 'competition' },
     isOutdoor   : { type: Boolean,  required: false,    default: true },
+    picture     : { type: String,   required: false,    default: '' },
     dateCreated : { type: Date },
     dateUpdated : { type: Date }
 });
