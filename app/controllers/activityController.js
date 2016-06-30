@@ -7,7 +7,23 @@ var Activity = require('../models/activityModel');
 
 // Loading helpers
 var accessHelper = require('../helpers/accessHelper'),
-    activityHelper = require('../helpers/activityHelper');
+    activityHelper = require('../helpers/activityHelper'),
+    imageUploadHelper = require('../helpers/imageUploadHelper');
+
+const activityPictureOptions = {
+    acceptedTypes: ['image/jpeg', 'image/png'],
+    acceptedSize: 4 * 1024 * 1024,
+    maxAcceptedWidth: 4000,
+    maxAcceptedHeight: 3000,
+    minAcceptedWidth: 400,
+    minAcceptedHeight: 300,
+    isSquare: false,
+    sizes: [
+        {size: 'full', pixels: 0},
+        {size: 'md', pixels: 800},
+        {size: 'sm', pixels: 400}
+    ]
+};
 
 /**
  * Activities - GET
@@ -182,9 +198,6 @@ exports.post = function(req, res) {
                 return;
             }
 
-            let picture = '';
-            console.log(req.files);
-
             // Create the record that will be inserted in the db
             var activityData = {
                 userId: userId,
@@ -196,23 +209,55 @@ exports.post = function(req, res) {
                 competition: req.body.competition || '',
                 notes: req.body.notes || '',
                 comments: req.body.comments || '',
-                picture: picture || null,
+                picture: '',
                 isPrivate: typeof req.body.isPrivate !== 'undefined' ? req.body.isPrivate : false,
                 isOutdoor: typeof req.body.isOutdoor !== 'undefined' ? req.body.isOutdoor : false
             };
             var activity = new Activity(activityData),
                 errors = activity.checkValid();
-            
+
             if(!errors) {
                 // Save the activity
                 activity.save()
-                    .then(function(activityRes) {
+                .then(function(activityRes) {
+                    if (typeof req.body.picture !== 'undefined' || (typeof req.files !== 'undefined' && typeof req.files.picture !== 'undefined')) {
+                        let bodyFile = typeof req.files !== 'undefined' && typeof req.files.picture !== 'undefined' ? req.files.picture : undefined,
+                            s3Folder = 'users/' + userId + '/activities';
+
+                        imageUploadHelper.uploadImage(s3Folder, bodyFile, req.body.picture, activity._id, activityPictureOptions)
+                        .then(function(imageUrl) {
+                            if (typeof imageUrl === "string") {
+                                activity.picture = imageUrl;
+                                activity.save()
+                                .then(function(activityRes) {
+                                    res.status(201).json(activityRes);
+                                }, function(err) {
+                                    res.status(500).json({message: 'Server error'});
+                                });
+                            }
+                        }).catch(function(reason) {
+                            if(reason === 422) {
+                                // Invalid image
+                                res.status(422).json({message: 'Invalid data', errors: [{
+                                    resource: 'user',
+                                    field: 'picture',
+                                    code: 'invalid'
+                                }]});
+                            } else {
+                                // Image upload failed
+                                res.status(500).json({message: 'Server error'});
+                            }
+                        });
+                    } else {
+                        // Activity created without an image
                         res.status(201).json(activityRes);
-                    }, function(err) {
-                        res.status(500).json({message: 'Server error'});
-                    });
+                    }
+                }, function(err) {
+                    // activity.save failed, db error
+                    res.status(500).json({message: 'Server error'});
+                });
             } else {
-                // If there are errors, send the error messages to the client
+                // If there are errors in the activity object, send the error messages to the client
                 res.status(422).json({message: 'Invalid data', errors: errors});
             }
         });

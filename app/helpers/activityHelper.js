@@ -155,6 +155,6 @@ activityHelper.outdoorIsValid = function(outdoorSetting) {
  */
 function isPositiveInteger(value) {
     return typeof value !== 'undefined' && !isNaN(parseInt(value)) && isFinite(value) && value >= 0 && value % 1 === 0;
-};
+}
 
 module.exports = activityHelper;

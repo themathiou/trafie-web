@@ -1,13 +1,5 @@
 'use strict';
 
-let fs = require('fs'),
-    path = require('path'),
-    crypto = require('crypto'),
-    sharp = require('sharp'),
-    knox = require('knox'),
-    moment = require('moment'),
-    streamifier = require('streamifier');
-
 // Loading models
 let Profile = require('../models/profileModel'),
     User = require('../models/userModel');
@@ -15,7 +7,8 @@ let Profile = require('../models/profileModel'),
 // Loading helpers
 let accessHelper = require('../helpers/accessHelper'),
     profileHelper = require('../helpers/profileHelper'),
-    userHelper = require('../helpers/userHelper');
+    userHelper = require('../helpers/userHelper'),
+    imageUploadHelper = require('../helpers/imageUploadHelper');
 
 // Get the config file
 const config = require('../config/constantConfig');
@@ -441,133 +434,38 @@ exports.post = function(req, res) {
             }
 
             // Checking if the uploaded file is a valid image file
-            else if (typeof req.body.picture !== 'undefined' || (typeof req.files !== 'undefined' && typeof req.files.picture !== 'undefined')) {
-                promises.push(new Promise(function(resolve, reject) {
-                    var s3 = knox.createClient({
-                        key: process.env.AWS_ACCESS_KEY_ID,
-                        secret: process.env.AWS_SECRET_ACCESS_KEY,
-                        bucket: process.env.S3_BUCKET_NAME,
-                        region: process.env.S3_BUCKET_REGION
-                    });
-
-                    if(!req.body.picture && (typeof req.files === 'undefined' || (req.files && req.files.picture === 'undefined'))) {
-                        profileData.picture = '';
-                        s3.list({prefix: 'users/' + userId + '/profile'}, function(err, data){
-                            if(!err) {
-                                let filesToDelete = data.Contents.map(function(s3Object) {
-                                   return s3Object.Key;
-                                });
-                                s3.deleteMultiple(filesToDelete, function(err, res) {});
-                            }
-                        });
-                        resolve(profileData.picture);
-                    }
-                    else if(req.body.picture && (typeof req.files === 'undefined' || (req.files && req.files.picture === 'undefined'))) {
-                        resolve();
-                    }
-
-                    // Read the image file
-                    fs.readFile(req.files.picture.path, (err, data) => {
-                        if (err) {
-                            reject([500, null]);
-                            return;
+            if (typeof req.body.picture !== 'undefined' || (typeof req.files !== 'undefined' && typeof req.files.picture !== 'undefined')) {
+                promises.push(new Promise(function (resolve, reject) {
+                    let pictureOptions = {
+                            acceptedTypes: ['image/jpeg', 'image/png'],
+                            acceptedSize: 2 * 1024 * 1024,
+                            acceptedWidth: 600,
+                            acceptedHeight: 600,
+                            isSquare: true,
+                            sizes: [
+                                {size: 'full', pixels: 600},
+                                {size: 'md', pixels: 128},
+                                {size: 'sm', pixels: 64},
+                                {size: 'xs', pixels: 32}
+                            ]
+                        },
+                        bodyFile = typeof req.files !== 'undefined' && typeof req.files.picture !== 'undefined' ? req.files.picture : undefined,
+                        s3Folder = 'users/' + userId + '/profile';
+                    imageUploadHelper.uploadImage(s3Folder, bodyFile, req.body.picture, userId, pictureOptions)
+                    .then(function(imageUrl) {
+                        if (typeof imageUrl === "string") {
+                            profileData.picture = imageUrl;
                         }
-                        // Get the file extension
-                        let pic = req.files.picture;
-                        let acceptedFileTypes = ['image/jpeg', 'image/png'];
-
-                        // File size 512 KB
-                        let acceptedFileSize = 2 * 1024 * 1024;
-                        let imageSizes = [
-                            {size: 'full', pixels: 600},
-                            {size: 'md', pixels: 128},
-                            {size: 'sm', pixels: 64},
-                            {size: 'xs', pixels: 32}
-                        ];
-
-                        if (pic.size <= acceptedFileSize && acceptedFileTypes.indexOf(pic.type) >= 0) {
-                            let image = sharp(pic.path);
-                            image.metadata()
-                            .then(function(metadata) {
-                                if(metadata.width > imageSizes[0].pixels || metadata.height > imageSizes[0].pixels
-                                || metadata.width !== metadata.height || ['jpeg', 'png'].indexOf(metadata.format) < 0) {
-                                    reject([422, {
-                                        resource: 'user',
-                                        field: 'picture',
-                                        code: 'invalid'
-                                    }]);
-                                }
-
-                                let imageUploadPromises = [],
-                                    s3ImagePrefixes = [];
-
-                                imageSizes.forEach((size) => {
-                                    imageUploadPromises.push(new Promise(function(resolveImage, rejectImage) {
-                                        let md5sum = crypto.createHash('md5');
-                                        md5sum.update(moment().unix() + userId);
-                                        let fileName = md5sum.digest('hex');
-
-                                        if(size.size === 'full') {
-                                            image.clone()
-                                                .jpeg()
-                                                .toBuffer(uploadToS3);
-                                        } else {
-                                            image.clone()
-                                                .resize(size.pixels, size.pixels)
-                                                .jpeg()
-                                                .toBuffer(uploadToS3);
-                                        }
-
-                                        function uploadToS3(err, buffer, info) {
-                                            if(err) rejectImage();
-                                            let s3Headers = {
-                                                'Content-Type': 'image/' + info.format,
-                                                'x-amz-acl': 'public-read',
-                                                'Content-Length': info.size
-                                            };
-
-                                            let sizeSuffix = size.size === 'full' ? '' : '.' + size.size,
-                                                s3ImagePrefix = 'users/' + userId + '/profile/' + fileName + sizeSuffix + '.' + info.format,
-                                                s3ImagePath = '/' + s3ImagePrefix;
-                                            s3ImagePrefixes.push(s3ImagePrefix);
-
-                                            s3.putStream(streamifier.createReadStream(buffer), s3ImagePath, s3Headers, function (err, s3response) {
-                                                if (err || !s3response || (s3response && !s3response.req) || (s3response.req && s3response.req.res.statusCode !== 200)) rejectImage();
-                                                if(size.size === 'full') {
-                                                    profileData.picture = s3response.req.url;
-                                                }
-                                                resolveImage();
-                                            });
-                                        }
-                                    }));
-                                });
-
-                                Promise.all(imageUploadPromises).then(function(value) {
-                                    fs.unlink(pic.path);
-                                    s3.list({ prefix: 'users/' + userId + '/profile'}, function(err, data){
-                                        if(!err && data.Contents) {
-                                            let filesToDelete = [];
-                                            data.Contents.forEach(function(s3Object) {
-                                                if(s3ImagePrefixes.indexOf(s3Object.Key) < 0) {
-                                                    filesToDelete.push(s3Object.Key);
-                                                }
-                                            });
-                                            s3.deleteMultiple(filesToDelete, function(err, res) {});
-                                        }
-                                    });
-                                    resolve(profileData.picture);
-                                }, function(error) {
-                                    fs.unlink(pic.path);
-                                    reject([500, null]);
-                                });
-                            });
-
-                        } else {
+                        resolve(imageUrl || "");
+                    }).catch(function(reason) {
+                        if(reason === 422) {
                             reject([422, {
                                 resource: 'user',
                                 field: 'picture',
                                 code: 'invalid'
                             }]);
+                        } else {
+                            reject([500, null])
                         }
                     });
                 }));

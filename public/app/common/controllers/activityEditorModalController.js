@@ -94,7 +94,7 @@ angular.module('trafie')
                 }).then(function (res) {
                     handleSaveSuccess(res.data);
                 }, function (res) {
-                    handleSaveError(res);
+                    handleSaveError(res.data);
                 }, function (evt) {
                     $scope.progress = parseInt(100.0 * evt.loaded / evt.total);
                 });
