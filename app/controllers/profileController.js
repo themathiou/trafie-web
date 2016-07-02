@@ -439,8 +439,10 @@ exports.post = function(req, res) {
                     let pictureOptions = {
                             acceptedTypes: ['image/jpeg', 'image/png'],
                             acceptedSize: 2 * 1024 * 1024,
-                            acceptedWidth: 600,
-                            acceptedHeight: 600,
+                            maxAcceptedWidth: 600,
+                            maxAcceptedHeight: 600,
+                            minAcceptedWidth: 300,
+                            minAcceptedHeight: 300,
                             isSquare: true,
                             sizes: [
                                 {size: 'full', pixels: 600},

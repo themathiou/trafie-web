@@ -141,8 +141,11 @@ function filesParserMiddleware(req, res, next) {
 
         form.parse(req, function(err, fields, files) {
             for(let i in fields) {
-                if(fields.hasOwnProperty(i) && ['true', 'false'].indexOf(fields[i]) >= 0) {
-                    fields[i] = fields[i] === 'true';
+                if(fields.hasOwnProperty(i)) {
+                    if(['true', 'false'].indexOf(fields[i]) >= 0)
+                        fields[i] = fields[i] === 'true';
+                    else if(fields[i] === 'null')
+                        fields[i] = null;
                 }
             }
             req.body = fields;

@@ -22,7 +22,8 @@
         $scope.saving = false;
         $scope.setting = {
             birthday: '',
-            isMale: ''
+            isMale: '',
+            repeatPassword: ''
         };
         $scope.alerts = {
             profileForm: {
@@ -109,7 +110,7 @@
                     }
                 }
             });
-            if(formName === 'passwordForm' && angular.isDefined($scope.user.password) && angular.isDefined($scope.repeatPassword) && $scope.user.password !== $scope.repeatPassword) {
+            if(formName === 'passwordForm' && angular.isDefined($scope.user.password) && angular.isDefined($scope.setting.repeatPassword) && $scope.user.password !== $scope.setting.repeatPassword) {
                 var errorMessage = $filter('translate')($scope.fieldErrors[formName]['repeatPassword']['noMatch']);
                 $scope.fieldErrors[formName]['password'].hasError = true;
                 $scope.fieldErrors[formName]['repeatPassword'].hasError = true;
@@ -130,7 +131,7 @@
 
         $scope.saveSettings = function(formName) {
             resetAlertsAndErrors();
-            if($scope[formName].$invalid || (formName === 'passwordForm' && $scope.user.password !== $scope.repeatPassword)) {
+            if($scope[formName].$invalid || (formName === 'passwordForm' && $scope.user.password !== $scope.setting.repeatPassword)) {
                 printErrors(formName);
                 return;
             }
@@ -174,6 +175,11 @@
         function handleSaveSuccess(res, formName, formData) {
             if(res.hasOwnProperty('picture')) {
                 formData.picture = res.picture;
+            }
+            if(formName === 'passwordForm') {
+                $scope.user.password = '';
+                $scope.user.oldPassword = '';
+                $scope.setting.repeatPassword = '';
             }
             $scope.pictureChanged = false;
             $scope.alerts[formName].type = 'success';

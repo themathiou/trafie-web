@@ -7,7 +7,7 @@
 
             function modelFormatter(value) {
                 if(value) {
-                    scope.picture = imageService.resizeProfileImage(value, 'sm');
+                    scope.picture = imageService.resizeImage(value, 'sm');
                 }
                 return value || '';
             }

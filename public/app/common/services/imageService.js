@@ -1,7 +1,7 @@
 (function (angular) {
     angular.module("trafie")
         .factory("imageService", function () {
-            function resizeProfileImage(picture, size) {
+            function resizeImage(picture, size) {
                 if(size) {
                     var lastIndexOfPeriod = picture.lastIndexOf('.');
                     return [picture.substr(0, lastIndexOfPeriod), picture.substr(lastIndexOfPeriod)].join('.' + size);
@@ -11,7 +11,7 @@
             }
 
             return {
-                resizeProfileImage: resizeProfileImage
+                resizeImage: resizeImage
             };
         });
 })(angular);

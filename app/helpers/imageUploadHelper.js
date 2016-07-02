@@ -32,7 +32,7 @@ function _s3DeleteFilesInPath(path, excludePaths = []) {
     });
 }
 
-function _uploadImagePromise(image, size, s3Folder, resourceId) {
+function _uploadImagePromise(image, size, pictureOptions, metadata, s3Folder, resourceId) {
     return new Promise(function(resolve, reject) {
         let fileName = crypto.createHash('md5').update(moment().unix() + resourceId).digest('hex');
 
@@ -41,8 +41,13 @@ function _uploadImagePromise(image, size, s3Folder, resourceId) {
                 .jpeg()
                 .toBuffer(uploadToS3);
         } else {
+            let width = size.pixels,
+                height = size.pixels;
+            if(!pictureOptions.isSquare) {
+                height = Math.round(width * (metadata.height / metadata.width));
+            }
             image.clone()
-                .resize(size.pixels, size.pixels)
+                .resize(width, height)
                 .jpeg()
                 .toBuffer(uploadToS3);
         }
@@ -77,7 +82,7 @@ function uploadImage(s3Folder, pictureFile, bodyPicturePath, resourceId, picture
             acceptedFormats = pictureOptions.acceptedTypes.map((type) => type.split('/').pop());
 
         if(!bodyPicturePath && typeof pictureFile === 'undefined') {
-            _s3DeleteFilesInPath(path);
+            _s3DeleteFilesInPath(s3Folder);
             resolve(pictureUrl);
         }
         else if(bodyPicturePath && typeof pictureFile === 'undefined') {
@@ -88,14 +93,15 @@ function uploadImage(s3Folder, pictureFile, bodyPicturePath, resourceId, picture
             let image = sharp(pictureFile.path);
             image.metadata()
                 .then(function(metadata) {
-                    if(metadata.width > pictureOptions.acceptedWidth || metadata.height > pictureOptions.acceptedHeight
+                    if(metadata.width > pictureOptions.maxAcceptedWidth || metadata.height > pictureOptions.maxAcceptedHeight
+                        || metadata.width < pictureOptions.minAcceptedWidth || metadata.height < pictureOptions.minAcceptedHeight
                         || (pictureOptions.isSquare && metadata.width !== metadata.height) || acceptedFormats.indexOf(metadata.format) < 0) {
                         reject(422);
                     }
 
                     let imageUploadPromises = [];
                     pictureOptions.sizes.forEach((size) => {
-                        imageUploadPromises.push(_uploadImagePromise(image, size, s3Folder, resourceId));
+                        imageUploadPromises.push(_uploadImagePromise(image, size, pictureOptions, metadata, s3Folder, resourceId));
                     });
 
                     Promise.all(imageUploadPromises).then(function(values) {
@@ -110,6 +116,7 @@ function uploadImage(s3Folder, pictureFile, bodyPicturePath, resourceId, picture
                         _s3DeleteFilesInPath(s3Folder, s3ImagePrefixes);
                         resolve(pictureUrl);
                     }, function(error) {
+                        console.log(error);
                         fs.unlink(pictureFile.path);
                         reject(500);
                     });

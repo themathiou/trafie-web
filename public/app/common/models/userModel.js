@@ -8,7 +8,7 @@
         });
 
         User.prototype.getPicture = function(size) {
-            return imageService.resizeProfileImage(this.picture, size);
+            return imageService.resizeImage(this.picture, size);
         };
         return User;
     });

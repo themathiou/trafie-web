@@ -13,7 +13,7 @@
             });
         };
     })
-    .factory("Activity", function (ActivityResource, userService, DISCIPLINE_CATEGORIES) {
+    .factory("Activity", function (ActivityResource, userService, imageService, DISCIPLINE_CATEGORIES) {
         var currentUser = null;
         userService.loadCurrentUser().then(function(user) {
             currentUser = user;
@@ -50,6 +50,10 @@
             else {
                 return 'points';
             }
+        };
+
+        Activity.prototype.getPicture = function(size) {
+            return imageService.resizeImage(this.picture, size);
         };
 
         Activity.prototype.getReadablePerformance = function() {

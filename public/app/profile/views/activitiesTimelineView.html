@@ -52,6 +52,9 @@
             </span>
         </div>
         <div class="panel-body">
+            <div class="col-xs-12 activity-picture-wrapper" ng-if="activity.picture">
+                <img ng-src="{{activity.getPicture('md')}}" class="activity-picture">
+            </div>
             <span class="col-xs-9">
                 <h4><span ng-bind-html="activity.getReadablePerformance()"></span> <small class="text-muted" translate="{{'DISCIPLINES.' + activity.discipline.toUpperCase()}}"></small></h4>
             </span>

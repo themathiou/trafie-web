@@ -365,6 +365,10 @@
     "CHANGE_PICTURE": {
       "en": "Change picture",
       "el": "Αλλαγή εικόνας"
+    },
+    "CHOOSE_A_PICTURE": {
+      "en": "Choose a picture",
+      "el": "Επιλογή εικόνας"
     }
   },
   "PROFILE": {
@@ -436,6 +440,10 @@
       "en": "Picture",
       "el": "Εικόνα"
     },
+    "REMOVE_PICTURE": {
+      "en": "Remove picture",
+      "el": "Αφαίρεση εικόνας"
+    },
     "ENTER_YOUR_PERFORMANCE": {
       "en": "Enter your performance",
       "el": "Βάλε την επίδοσή σου"
@@ -475,6 +483,10 @@
     "THE_TEXT_OF_THE_COMMENTS_IS_TOO_LONG": {
       "en": "The text of the comments is too long",
       "el": "Το κείμενο των σχολίων είναι πολύ μεγάλο"
+    },
+    "INVALID_PICTURE": {
+      "en": "Invalid picture",
+      "el": "Μη έγκυρη εικόνα"
     },
     "DELETE_ACTIVITY": {
       "en": "Delete activity",
@@ -633,10 +645,6 @@
     "REVERT_TO_THE_PREVIOUS_PICTURE": {
       "en": "Revert to the previous picture.",
       "el": "Επαναφορά της προηγούμενης εικόνας."
-    },
-    "CHOOSE_A_PICTURE": {
-      "en": "Choose a picture",
-      "el": "Επιλογή εικόνας"
     },
     "PASSWORD": {
       "en": "Password",

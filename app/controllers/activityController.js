@@ -12,7 +12,7 @@ var accessHelper = require('../helpers/accessHelper'),
 
 const activityPictureOptions = {
     acceptedTypes: ['image/jpeg', 'image/png'],
-    acceptedSize: 4 * 1024 * 1024,
+    acceptedSize: 5 * 1024 * 1024,
     maxAcceptedWidth: 4000,
     maxAcceptedHeight: 3000,
     minAcceptedWidth: 400,
@@ -44,7 +44,7 @@ exports.get = function(req, res) {
         // If the user has a valid session and they are not visiting a private profile
         if (response.success) {
             let where = {};
-            let select = 'userId discipline performance date rank location competition comments isPrivate type isOutdoor isDeleted';
+            let select = 'userId discipline performance date rank location competition comments isPrivate type isOutdoor isDeleted picture';
             // If the activity id was specified, try to find the activity
             if (typeof req.params.activityId !== 'undefined') {
                 if(userId && profileId && userId.toString() === profileId.toString()) {
@@ -220,38 +220,7 @@ exports.post = function(req, res) {
                 // Save the activity
                 activity.save()
                 .then(function(activityRes) {
-                    if (typeof req.body.picture !== 'undefined' || (typeof req.files !== 'undefined' && typeof req.files.picture !== 'undefined')) {
-                        let bodyFile = typeof req.files !== 'undefined' && typeof req.files.picture !== 'undefined' ? req.files.picture : undefined,
-                            s3Folder = 'users/' + userId + '/activities';
-
-                        imageUploadHelper.uploadImage(s3Folder, bodyFile, req.body.picture, activity._id, activityPictureOptions)
-                        .then(function(imageUrl) {
-                            if (typeof imageUrl === "string") {
-                                activity.picture = imageUrl;
-                                activity.save()
-                                .then(function(activityRes) {
-                                    res.status(201).json(activityRes);
-                                }, function(err) {
-                                    res.status(500).json({message: 'Server error'});
-                                });
-                            }
-                        }).catch(function(reason) {
-                            if(reason === 422) {
-                                // Invalid image
-                                res.status(422).json({message: 'Invalid data', errors: [{
-                                    resource: 'user',
-                                    field: 'picture',
-                                    code: 'invalid'
-                                }]});
-                            } else {
-                                // Image upload failed
-                                res.status(500).json({message: 'Server error'});
-                            }
-                        });
-                    } else {
-                        // Activity created without an image
-                        res.status(201).json(activityRes);
-                    }
+                    uploadImageAndSave(req, res, activity, userId);
                 }, function(err) {
                     // activity.save failed, db error
                     res.status(500).json({message: 'Server error'});
@@ -285,7 +254,7 @@ exports.put = function(req, res) {
     else {
         Activity.schema.findOne({_id: activityId, userId: userId, isDeleted: false}, '')
         .then(function(activity) {
-            if (!activity || typeof activity._id == 'undefined') res.status(404).json({message: 'Resource not found', errors: [{
+            if (!activity || typeof activity._id === 'undefined') res.status(404).json({message: 'Resource not found', errors: [{
                 resource: 'activity',
                 code: 'not_found'
             }]});
@@ -299,6 +268,7 @@ exports.put = function(req, res) {
             activity.competition = typeof req.body.competition !== 'undefined' ? req.body.competition : activity.competition;
             activity.notes = typeof req.body.notes !== 'undefined' ? req.body.notes : activity.notes;
             activity.comments = typeof req.body.comments !== 'undefined' ? req.body.comments : activity.comments;
+            activity.picture = typeof req.body.picture !== 'undefined' ? req.body.picture : activity.picture;
             activity.isPrivate = typeof req.body.isPrivate !== 'undefined' ? req.body.isPrivate : activity.isPrivate;
             activity.isOutdoor = typeof req.body.isOutdoor !== 'undefined' ? req.body.isOutdoor : activity.isOutdoor;
 
@@ -306,13 +276,7 @@ exports.put = function(req, res) {
 
             // If there are no errors
             if (!errors) {
-                activity.save(function(err, activity) {
-                    if(err) {
-                        res.status(500).json({message: 'Server error'});
-                    } else {
-                        res.status(200).json(activity);
-                    }
-                });
+                uploadImageAndSave(req, res, activity, userId);
             } else {
                 // If there are errors, send the error messages to the client
                 res.status(422).json({message: 'Invalid data', errors: errors});
@@ -366,3 +330,38 @@ exports.delete = function(req, res) {
         });
     }
 };
+
+function uploadImageAndSave(req, res, activity, userId) {
+    if (typeof req.body.picture !== 'undefined' || (typeof req.files !== 'undefined' && typeof req.files.picture !== 'undefined')) {
+        let bodyFile = typeof req.files !== 'undefined' && typeof req.files.picture !== 'undefined' ? req.files.picture : undefined,
+            s3Folder = 'users/' + userId + '/activities/' + activity._id;
+
+        imageUploadHelper.uploadImage(s3Folder, bodyFile, req.body.picture, activity._id, activityPictureOptions)
+        .then(function(imageUrl) {
+            if (typeof imageUrl === "string") {
+                activity.picture = imageUrl;
+                activity.save()
+                .then(function(activityRes) {
+                    res.status(201).json(activity);
+                }, function(err) {
+                    res.status(500).json({message: 'Server error'});
+                });
+            }
+        }).catch(function(reason) {
+            if(reason === 422) {
+                // Invalid image
+                res.status(422).json({message: 'Invalid data', errors: [{
+                    resource: 'user',
+                    field: 'picture',
+                    code: 'invalid'
+                }]});
+            } else {
+                // Image upload failed
+                res.status(500).json({message: 'Server error'});
+            }
+        });
+    } else {
+        // Activity created without an image
+        res.status(201).json(activity);
+    }
+}

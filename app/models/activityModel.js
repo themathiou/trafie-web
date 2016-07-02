@@ -228,7 +228,7 @@ activitySchema.methods.checkValid = function() {
         });
     }
 
-    // Validating privacy (required field)
+    // Validating the outdoor flag (required field)
     if (!('isOutdoor' in this) || ('isOutdoor' in this && !activityHelper.outdoorIsValid(this.isOutdoor))) {
         errors.push({
             resource: 'activity',
