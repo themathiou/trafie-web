@@ -12,11 +12,11 @@ var accessHelper = require('../helpers/accessHelper'),
 
 const activityPictureOptions = {
     acceptedTypes: ['image/jpeg', 'image/png'],
-    acceptedSize: 5 * 1024 * 1024,
-    maxAcceptedWidth: 4000,
-    maxAcceptedHeight: 3000,
+    acceptedSize: 6 * 1024 * 1024,
+    maxAcceptedWidth: 4320,
+    maxAcceptedHeight: 4320,
     minAcceptedWidth: 400,
-    minAcceptedHeight: 300,
+    minAcceptedHeight: 400,
     isSquare: false,
     sizes: [
         {size: 'full', pixels: 0},

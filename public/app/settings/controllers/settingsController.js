@@ -2,7 +2,7 @@
     angular.module('trafie')
     .controller('SettingsController', function($scope, $http, $window, $translate, $filter, $routeParams,
                                                $timeout, userService, COUNTRIES, DISCIPLINES, LANGUAGES_MAP,
-                                               DATE_FORMATS_MAP, VALIDATIONS, User, $uibModal, Upload) {
+                                               DATE_FORMATS_MAP, VALIDATIONS, User, $uibModal, notify, Upload) {
         var tabsList = ['profile', 'account', 'password'],
             globalUser = null,
             currentLanguage = '';
