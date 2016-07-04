@@ -95,13 +95,16 @@ angular.module('trafie')
                     method = 'PUT';
                     url += '/' + $scope.activity._id;
                 }
+                $scope.progress = 1;
                 Upload.upload({
                     url: url,
                     method: method,
                     data: $scope.activity
                 }).then(function (res) {
+                    $scope.progress = 0;
                     handleSaveSuccess(res.data);
                 }, function (res) {
+                    $scope.progress = 0;
                     handleSaveError(res.data);
                 }, function (evt) {
                     $scope.progress = parseInt(100.0 * evt.loaded / evt.total);

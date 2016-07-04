@@ -1,8 +1,9 @@
 angular.module('trafie')
-    .controller('UploadImageModalController', function ($scope, $uibModalInstance, currentPicture, DEFAULT_PICTURE) {
+    .controller('UploadImageModalController', function ($scope, $location, $uibModalInstance, currentPicture, DEFAULT_PICTURE) {
+        var baseUrl = $location.protocol() + '://' + $location.host() + ($location.port() ? ':' + $location.port() : '');
         $scope.croppedDataUrl = '';
         $scope.pictureFile = null;
-        $scope.userHasDefaultPicture = currentPicture === DEFAULT_PICTURE;
+        $scope.userHasDefaultPicture = currentPicture === baseUrl + DEFAULT_PICTURE;
 
         $scope.removeCurrent = function() {
             $uibModalInstance.close();

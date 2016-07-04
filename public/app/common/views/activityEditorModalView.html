@@ -94,5 +94,8 @@
 </div>
 <div class="modal-footer">
     <button class="btn btn-warning" type="button" ng-click="cancel()" ng-disabled="saving">{{'COMMON.CANCEL' | translate}}</button>
-    <button class="btn btn-primary" type="button" ng-click="save()" ng-disabled="saving">{{(saving ? 'COMMON.SAVING' : 'COMMON.SAVE') | translate}}</button>
+    <button class="btn btn-primary btn-has-progress" type="button" ng-click="save()" ng-disabled="saving">
+        <span class="btn-progress" ng-show="progress && progress != 100" ng-style="{width: progress + '%'}"></span>
+        {{(saving ? (progress && progress != 100 ? 'COMMON.UPLOADING' : 'COMMON.SAVING') : 'COMMON.SAVE') | translate}}
+    </button>
 </div>

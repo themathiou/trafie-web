@@ -302,6 +302,10 @@
       "en": "Saving...",
       "el": "Αποθηκεύεται..."
     },
+    "UPLOADING": {
+      "en": "Uploading...",
+      "el": "Μεταφορτώνεται..."
+    },
     "SAVE_CHANGES": {
       "en": "Save changes",
       "el": "Αποθήκευση αλλαγών"

@@ -340,13 +340,13 @@ function uploadImageAndSave(req, res, activity, userId) {
         .then(function(imageUrl) {
             if (typeof imageUrl === "string") {
                 activity.picture = imageUrl;
-                activity.save()
-                .then(function(activityRes) {
-                    res.status(201).json(activity);
-                }, function(err) {
-                    res.status(500).json({message: 'Server error'});
-                });
             }
+            activity.save()
+            .then(function(activityRes) {
+                res.status(201).json(activity);
+            }, function(err) {
+                res.status(500).json({message: 'Server error'});
+            });
         }).catch(function(reason) {
             if(reason === 422) {
                 // Invalid image

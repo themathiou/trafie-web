@@ -20,6 +20,7 @@
         $scope.verificationEmailSent = false;
         $scope.showUsernameWarning = false;
         $scope.saving = false;
+        $scope.progress = 0;
         $scope.setting = {
             birthday: '',
             isMale: '',
@@ -150,14 +151,17 @@
 
             if(formData.hasOwnProperty('picture') && formData.picture && $scope.pictureChanged) {
                 formData.picture = Upload.dataUrltoBlob(formData.picture, name);
+                $scope.progress = 1;
                 Upload.upload({
                     url: '/users/' + $scope.user._id,
                     data: formData
                 }).then(function (res) {
                     $timeout(function () {
+                        $scope.progress = 0;
                         handleSaveSuccess(res.data, formName, formData);
                     });
                 }, function (res) {
+                    $scope.progress = 0;
                     handleSaveError(res, formName);
                 }, function (evt) {
                     $scope.progress = parseInt(100.0 * evt.loaded / evt.total);
@@ -173,19 +177,16 @@
         };
 
         function handleSaveSuccess(res, formName, formData) {
+            $scope.saving = false;
             if(res.hasOwnProperty('picture')) {
                 formData.picture = res.picture;
+                $scope.user.picture = res.picture;
             }
             if(formName === 'passwordForm') {
                 $scope.user.password = '';
                 $scope.user.oldPassword = '';
                 $scope.setting.repeatPassword = '';
             }
-            $scope.pictureChanged = false;
-            $scope.alerts[formName].type = 'success';
-            $scope.alerts[formName].message = $filter('translate')('SETTINGS.DATA_WAS_UPDATED_SUCCESSFULLY');
-            $scope.saving = false;
-            angular.extend(globalUser, formData);
             if(currentLanguage != $scope.user.language) {
                 $translate.use($scope.user.language);
                 currentLanguage = $scope.user.language;
@@ -193,6 +194,12 @@
             if(res.hasOwnProperty('usernameChangesCount')) {
                 $scope.user.usernameChangesCount = res.usernameChangesCount;
             }
+            angular.extend(globalUser, formData);
+            $timeout(function() {
+                $scope.alerts[formName].type = 'success';
+                $scope.alerts[formName].message = $filter('translate')('SETTINGS.DATA_WAS_UPDATED_SUCCESSFULLY');
+                $scope.pictureChanged = false;
+            });
         }
 
         function handleSaveError(res, formName) {
