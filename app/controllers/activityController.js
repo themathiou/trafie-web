@@ -79,7 +79,6 @@ exports.get = function(req, res) {
                             code: 'not_found'
                         }]});
                     }
-                    return;
                 })
                 .catch(function(error) {
                     res.status(500).json({message: 'Server error'});
