@@ -1,7 +1,7 @@
 (function(angular) {
     angular.module('trafie')
-    .controller('SettingsController', function($scope, $http, $window, $translate, $filter, $routeParams,
-                                               $timeout, userService, COUNTRIES, DISCIPLINES, LANGUAGES_MAP,
+    .controller('SettingsController', function($scope, $http, $window, $translate, $filter, $routeParams, $anchorScroll,
+                                               $timeout, $location, userService, COUNTRIES, DISCIPLINES, LANGUAGES_MAP,
                                                DATE_FORMATS_MAP, VALIDATIONS, User, $uibModal, notify, Upload) {
         var tabsList = ['profile', 'account', 'password'],
             globalUser = null,
@@ -118,6 +118,7 @@
                 errors.push(errorMessage);
             }
             $scope.alerts[formName].message = errors.join('<br>');
+            scrollToTop();
         }
 
         function resetAlertsAndErrors() {
@@ -196,8 +197,10 @@
             }
             angular.extend(globalUser, formData);
             $timeout(function() {
-                $scope.alerts[formName].type = 'success';
-                $scope.alerts[formName].message = $filter('translate')('SETTINGS.DATA_WAS_UPDATED_SUCCESSFULLY');
+                notify({
+                    message: $filter('translate')('SETTINGS.DATA_WAS_UPDATED_SUCCESSFULLY'),
+                    classes: 'alert-success'
+                });
                 $scope.pictureChanged = false;
             });
         }
@@ -216,6 +219,15 @@
             } else {
                 $scope.alerts[formName].type = 'danger';
                 $scope.alerts[formName].message = $filter('translate')('COMMON.SOMETHING_WENT_WRONG_PLEASE_TRY_AGAIN_LATER');
+            }
+            scrollToTop();
+        }
+
+        function scrollToTop() {
+            if($location.hash()) {
+                $anchorScroll();
+            } else {
+                $location.hash('settings-panel-wrapper');
             }
         }
 
