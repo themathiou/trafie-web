@@ -20,6 +20,7 @@ html(ng-app="trafie-outer", ng-controller="AppOuterController as App")
             div.content-container.screen-height(ng-view)
 
         if env === "development"
+            include ./partials/scripts-packages-outer.jade
             include ./partials/scripts-outer.jade
         else
             script(type="text/javascript", src="/app/trafieOuter.min.js")
