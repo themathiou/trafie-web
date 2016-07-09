@@ -40,12 +40,12 @@ angular.module('trafie')
 
         userService.loadCurrentUser().then(function(user) {
             $scope.user = user;
-            $scope.format = user.dateFormat.split('-')
+            $scope.datepicker.activityDateFormat = user.dateFormat.split('-')
                 .map(function(datePart) {
-                   return datePart[0] !== 'm' ? datePart : datePart.toUpperCase();
+                    return datePart[0] !== 'M' ? datePart.toLowerCase() : datePart;
                 })
                 .join('-');
-            
+
             if($scope.isNewActivity && user.discipline) {
                 $scope.activity.discipline = user.discipline;
             }

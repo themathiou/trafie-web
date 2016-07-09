@@ -70,7 +70,7 @@
             };
 
             $scope.formatUnixTimestamp = function(timestamp) {
-                var format = ($scope.currentUser ? $scope.currentUser.dateFormat : 'DD-MM-YYYY') + ' HH:mm:ss';
+                var format = ($scope.currentUser ? $scope.currentUser.dateFormat : 'DD-MM-YYYY') + ' HH:mm';
                 return moment.unix(timestamp).format(format);
             };
 
