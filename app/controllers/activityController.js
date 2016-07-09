@@ -23,7 +23,9 @@ const activityPictureOptions = {
         {size: 'md', pixels: 800},
         {size: 'sm', pixels: 400}
     ]
-};
+},
+    activityFields = ['_id', 'userId', 'discipline', 'performance', 'date', 'rank', 'location', 'competition', 'comments', 'isPrivate', 'type', 'isOutdoor', 'isDeleted', 'picture'],
+    ownActivityFields = activityFields.concat('notes');
 
 /**
  * Activities - GET
@@ -44,11 +46,11 @@ exports.get = function(req, res) {
         // If the user has a valid session and they are not visiting a private profile
         if (response.success) {
             let where = {};
-            let select = 'userId discipline performance date rank location competition comments isPrivate type isOutdoor isDeleted picture';
+            let select = activityFields.join(' ');
             // If the activity id was specified, try to find the activity
             if (typeof req.params.activityId !== 'undefined') {
                 if(userId && profileId && userId.toString() === profileId.toString()) {
-                    select += ' notes';
+                    select = ownActivityFields.join(' ');
                     where = {
                         $and: [{
                             _id: req.params.activityId
@@ -341,8 +343,12 @@ function uploadImageAndSave(req, res, activity, userId) {
                 activity.picture = imageUrl;
             }
             activity.save()
-            .then(function(activityRes) {
-                res.status(201).json(activity);
+            .then(function() {
+                var activityRes = {};
+                ownActivityFields.forEach(field => {
+                    activityRes[field] = activity[field];
+                });
+                res.status(201).json(activityRes);
             }, function(err) {
                 res.status(500).json({message: 'Server error'});
             });
