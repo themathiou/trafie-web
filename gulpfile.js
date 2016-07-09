@@ -31,10 +31,10 @@ function fetchScripts(filename) {
 
 function generateProductionScripts(scriptName, appScriptsPath, packageScriptsPath) {
     return es.merge(
-        gulp.src(appScriptsPath)
-            .pipe(ngAnnotate())
-            .pipe(babel()),
-        gulp.src(packageScriptsPath)
+            gulp.src(packageScriptsPath),
+            gulp.src(appScriptsPath)
+                .pipe(ngAnnotate())
+                .pipe(babel())
         )
         .pipe(concat(scriptName))
         .pipe(gulp.dest(scriptsDest))
