@@ -58,7 +58,7 @@
             $scope.deleteActivity = function(activity) {
                 activity.$delete()
                 .then(function() {
-                    var deletedActivityIndex = index = -1;
+                    var deletedActivityIndex = -1;
                     $scope.activities.forEach(function(item, index) {
                         if(item._id === activity._id) {
                             deletedActivityIndex = index;
