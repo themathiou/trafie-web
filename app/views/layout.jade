@@ -17,8 +17,7 @@ html(ng-app="trafie", ng-controller="AppController as App")
             trafie = {
                 userId: "#{userId}"
             };
-        if env === "production" && envInstance !== "staging"
-            include ./partials/external-scripts.jade
+        include ./partials/external-scripts.jade
     body
         include ./partials/navbar.jade
 

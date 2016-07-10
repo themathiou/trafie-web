@@ -314,6 +314,10 @@
       "en": "Cancel",
       "el": "Ακύρωση"
     },
+    "CLOSE": {
+      "en": "Close",
+      "el": "Κλείσιμο"
+    },
     "EDIT": {
       "en": "Edit",
       "el": "Επεξεργασία"
@@ -595,6 +599,14 @@
     "FRACTION": {
       "en": "Fraction",
       "el": "Κλάσμα"
+    },
+    "ACTIVITY_URL": {
+      "en": "Activity URL",
+      "el": "Διεύθυνση δραστηριότητας"
+    },
+    "SOCIAL": {
+      "en": "Social",
+      "el": "Κοινωνικά δίκτυα"
     }
   },
   "SETTINGS": {

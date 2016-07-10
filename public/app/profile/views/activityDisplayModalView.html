@@ -1,0 +1,16 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="close()" aria-label="{{'COMMON.CLOSE' | translate}}" title="{{'COMMON.CLOSE' | translate}}">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h3 class="modal-title">{{activity.competition}}</h3>
+</div>
+<div class="modal-body">
+    <activity-panel is-embedded></activity-panel>
+</div>
+<hr>
+<div class="modal-body">
+    <div class="form-group">
+        <label for="activity-url" translate="PROFILE.ACTIVITY_URL"></label>
+        <input type="text" id="activity-url" class="form-control" ng-model="activityUrl" readonly autoselect-text>
+    </div>
+</div>

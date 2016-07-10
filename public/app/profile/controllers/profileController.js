@@ -1,6 +1,6 @@
 (function(angular) {
     angular.module('trafie')
-        .controller('ProfileController', function($rootScope, $scope, $routeParams, $window, $http,
+        .controller('ProfileController', function($rootScope, $scope, $routeParams, $window, $http, $location,
                                                   $uibModal, Activity, User, userService, pageDataService) {
             $scope.profileFound = true;
             $scope.activitiesLoading = true;
@@ -26,16 +26,20 @@
             }
 
             function getProfileFromUrl(currentUser) {
-                if (!('userIdentifier' in $routeParams)) {
+                if (!$routeParams.hasOwnProperty('userIdentifier')) {
                     if(currentUser) {
-                        loadProfile(currentUser);
+                        $location.path('/' + (currentUser.username || currentUser._id)).replace();
                     } else {
                         $window.location.href = 'register';
                     }
                 } else {
-                    User.get({_id: $routeParams.userIdentifier}, loadProfile, function() {
-                        $scope.profileFound = false;
-                    }, loadError);
+                    if(angular.isObject(currentUser) && ($routeParams.userIdentifier === currentUser._id || $routeParams.userIdentifier === currentUser.username)) {
+                        loadProfile(currentUser);
+                    } else {
+                        User.get({_id: $routeParams.userIdentifier}, loadProfile, function() {
+                            $scope.profileFound = false;
+                        }, loadError);
+                    }
                 }
             }
 
@@ -52,6 +56,21 @@
                     activities.forEach(function(activity) {
                         $scope.activities.push(new Activity(activity));
                     });
+                    let args = $location.search();
+                    if(args.hasOwnProperty('activityId')) {
+                        //@TODO: Replace with array.prototype.find after installing a polyfill
+                        let found = false;
+                        $scope.activities.forEach(function(activity) {
+                            if(activity._id === args.activityId) {
+                                found = true;
+                                $scope.openActivityDisplayModal(activity);
+                            }
+                        });
+                        if(!found) {
+                            delete args.activityId;
+                            $location.search(args);
+                        }
+                    }
                 }, loadError);
             }
 
@@ -67,11 +86,6 @@
 
                     $scope.activities.splice(deletedActivityIndex, 1);
                 }, function() {});
-            };
-
-            $scope.formatUnixTimestamp = function(timestamp) {
-                var format = ($scope.currentUser ? $scope.currentUser.dateFormat : 'DD-MM-YYYY') + ' HH:mm';
-                return moment.unix(timestamp).format(format);
             };
 
             function setActivityCreationListener() {
@@ -96,7 +110,7 @@
             $scope.openActivityEditorModal = function (activity) {
                 var modalInstance = $uibModal.open({
                     animation: false,
-                    templateUrl: 'app/common/views/activityEditorModalView.html',
+                    templateUrl: 'app/profile/views/activityEditorModalView.html',
                     controller: 'ActivityEditorModalController',
                     size: 'md',
                     resolve: {
@@ -109,6 +123,28 @@
                 modalInstance.result.then(function () {
                 }, function () {
                 });
+            };
+
+            $scope.openActivityDisplayModal = function(activity) {
+                var modalInstance = $uibModal.open({
+                    animation: false,
+                    templateUrl: 'app/profile/views/activityDisplayModalView.html',
+                    controller: 'ActivityDisplayModalController',
+                    size: 'md',
+                    resolve: {
+                        activityToDisplay: function () {
+                            return activity;
+                        }
+                    }
+                });
+
+                modalInstance.result.then(removeActivityParam, removeActivityParam);
+
+                function removeActivityParam() {
+                    let args = $location.search();
+                    delete args.activityId;
+                    $location.search(args);
+                }
             };
 
             $scope.resendVerificationEmail = function() {
