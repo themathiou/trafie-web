@@ -1,5 +1,5 @@
 (function (angular) {
-    angular.module('trafie-outer', ['ngRoute', 'ngResource', 'ngSanitize'])
+    angular.module('trafie-outer', ['trafie-shared', 'ngRoute', 'ngResource', 'ngSanitize'])
     .run(function ($window, $rootScope, $location) {
         if($window.hasOwnProperty('ga')) {
             $window.ga('create', 'UA-47166136-1', 'auto');

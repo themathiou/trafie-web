@@ -2,7 +2,7 @@
 
 (function (angular) {
     angular.module('trafie',
-        ['ngRoute', 'ngResource', 'ngSanitize', 'pascalprecht.translate', 'ui.bootstrap', 'cgNotify', 'angular-confirm',
+        ['trafie-shared', 'ngRoute', 'ngResource', 'ngSanitize', 'pascalprecht.translate', 'ui.bootstrap', 'cgNotify', 'angular-confirm',
             'ui.select', 'ngFileUpload', 'ngImgCrop']
     ).run(function ($window, $rootScope, $location) {
         if ($window.hasOwnProperty('ga')) {
