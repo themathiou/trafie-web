@@ -11,7 +11,7 @@
         if('message' in $location.search()) {
             var query = angular.copy($location.search());
             if(query.message === 'password_reset') {
-                $scope.success = 'An email with instructions of resetting your password, has been sent to your email address';
+                $scope.success = 'An email with instructions to reset your password, has been sent to your email address';
             }
         }
 

@@ -1,5 +1,4 @@
 'use strict';
-
 (function (angular) {
     angular.module('trafie',
         ['trafie-shared', 'ngRoute', 'ngResource', 'ngSanitize', 'pascalprecht.translate', 'ui.bootstrap', 'cgNotify', 'angular-confirm',
