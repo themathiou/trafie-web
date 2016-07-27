@@ -142,10 +142,17 @@ function filesParserMiddleware(req, res, next) {
         form.parse(req, function(err, fields, files) {
             for(let i in fields) {
                 if(fields.hasOwnProperty(i)) {
-                    if(['true', 'false'].indexOf(fields[i]) >= 0)
+                    if(['true', 'false'].indexOf(fields[i]) >= 0) {
                         fields[i] = fields[i] === 'true';
-                    else if(fields[i] === 'null')
+                    }
+                    else if(fields[i] === 'null') {
                         fields[i] = null;
+                    }
+                    else if(typeof fields[i] === 'string' && fields[i].startsWith('{') && fields[i].endsWith('}')) {
+                        try {
+                            fields[i] = JSON.parse(fields[i]);
+                        } catch(e) {}
+                    }
                 }
             }
             req.body = fields;
