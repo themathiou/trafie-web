@@ -221,7 +221,7 @@ exports.post = function(req, res) {
                 // Save the activity
                 activity.save()
                 .then(function(activityRes) {
-                    uploadImageAndSave(req, res, activity, userId);
+                    uploadImageAndSave(req, res, activity, userId, "POST");
                 }, function(err) {
                     // activity.save failed, db error
                     res.status(500).json({message: 'Server error'});
@@ -277,7 +277,7 @@ exports.put = function(req, res) {
 
             // If there are no errors
             if (!errors) {
-                uploadImageAndSave(req, res, activity, userId);
+                uploadImageAndSave(req, res, activity, userId, "PUT");
             } else {
                 // If there are errors, send the error messages to the client
                 res.status(422).json({message: 'Invalid data', errors: errors});
@@ -332,7 +332,7 @@ exports.delete = function(req, res) {
     }
 };
 
-function uploadImageAndSave(req, res, activity, userId) {
+function uploadImageAndSave(req, res, activity, userId, method) {
     if (typeof req.body.picture !== 'undefined' || (typeof req.files !== 'undefined' && typeof req.files.picture !== 'undefined')) {
         let bodyFile = typeof req.files !== 'undefined' && typeof req.files.picture !== 'undefined' ? req.files.picture : undefined,
             s3Folder = 'users/' + userId + '/activities/' + activity._id;
@@ -366,7 +366,15 @@ function uploadImageAndSave(req, res, activity, userId) {
             }
         });
     } else {
-        // Activity created without an image
-        res.status(201).json(activity);
+        if(method === "PUT") {
+            activity.save()
+                .then(function() {
+                    res.status(201).json(activity);
+                }, function(err) {
+                    res.status(500).json({message: 'Server error'});
+                });
+        } else {
+            res.status(201).json(activity);
+        }
     }
 }
