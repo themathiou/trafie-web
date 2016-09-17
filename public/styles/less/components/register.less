@@ -1,0 +1,82 @@
+.register-page {
+  // Outer Theme
+  @import (less) "../outerTheme/main.css";
+  @import (less) "../outerTheme/animate.css";
+
+  header {
+    background: url(/images/outer/photo-1457470572216-1240fac24b37.jpeg) no-repeat center center;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+  }
+
+  .navbar-inverse {
+    background-color: #FF2534;
+
+    .navbar-brand {
+      color: #fff;
+      padding-top: 10px;
+
+      &:hover {
+        color: #fff;
+      }
+    }
+
+    .navbar-nav > li > a {
+      font-weight: 400;
+      text-transform: none;
+    }
+  }
+
+  .navbar-brand {
+    color: #fff;
+    font-family: sans-serif;
+    font-size: 2em;
+    font-weight: 300;
+    letter-spacing: -1px;
+    padding-top: 0;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+  .logo-svg {
+    display: block;
+    height: 80px;
+    width: 80px;
+    border-radius: 30%;
+    margin: 0px auto;
+    margin-top: 50px;
+  }
+
+  .btn-primary {
+    background-color: @btn-primary-bg;
+
+    &:hover, &:active, &:focus {
+      background-color: darken(@btn-primary-bg, 6%);
+    }
+  }
+
+  #be-the-first {
+    background: url(/images/outer/photo-1472641955678-034fe941324c.jpeg) #231f20 no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+    p, h2 {
+      text-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+    }
+  }
+
+  #pricing {
+    background-color: #CE272F;
+  }
+
+  .register-heading {
+    color: inherit;
+    margin-bottom: 40px;
+  }
+}

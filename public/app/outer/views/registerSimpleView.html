@@ -1,0 +1,63 @@
+<div class="main-container clearfix screen-height">
+    <div class="content-container screen-height">
+        <div class="page page-auth clearfix">
+            <div class="auth-container">
+                <div class="panel panel-default panel-form-outer">
+                    <div class="logo-container">
+                        <img src="/images/logo.svg" class="logo" alt="trafie logo">
+                        <h1 class="text-center text-light">
+                            trafie
+                        </h1>
+                        <div class="text-center lead">
+                            <h3 class="text-light h4">Your personal track and field profile</h3>
+                        </div>
+                    </div>
+                    <div class="form-container">
+                        <form class="form-horizontal" method="post" role="form">
+                            <div class="alert alert-danger" role="alert" ng-if="errorMessages.length" ng-bind-html="errorMessages.join('<br>')">
+                            </div>
+                            <div class="row">
+                                <div class="form-group form-group-lg col-lg-6" ng-class="{'has-error': fieldsWithErrors.firstName}">
+                                    <input id="first-name" placeholder="First name" class="form-control" name="firstName" type="text" ng-model="formData.firstName" ng-change="fieldsWithErrors.firstName = false" autofocus required>
+                                </div>
+
+                                <div class="form-group form-group-lg col-lg-6" ng-class="{'has-error': fieldsWithErrors.lastName}">
+                                    <input id="last-name" placeholder="Last name" class="form-control" name="lastName" type="text" ng-model="formData.lastName" ng-change="fieldsWithErrors.lastName = false" required>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group form-group-lg" ng-class="{'has-error': fieldsWithErrors.email}">
+                                <input id="email" placeholder="Email" class="form-control" name="email" type="email" ng-model="formData.email" ng-change="fieldsWithErrors.email = false" required>
+                            </div>
+
+                            <div class="form-group form-group-lg" ng-class="{'has-error': fieldsWithErrors.password}">
+                                <input id="password" placeholder="Password" class="form-control" name="password" type="password" ng-model="formData.password" ng-change="fieldsWithErrors.password = false" required>
+                            </div>
+
+                            <div class="ui-checkbox ui-checkbox-primary">
+                                <label>
+                                    <input type="checkbox" checked="" ng-model="formData.termsCheckbox">
+                                    <span>I agree to the <a href="/terms-of-service" target="_blank">Terms of Service</a></span>
+                                </label>
+                            </div>
+
+                            <div class="form-group">
+                                <input class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" ng-click="register()" value="Register" ng-disabled="!formData.termsCheckbox">
+                            </div>
+
+                            <div class="form-group">
+                                Already a member?&nbsp;
+                                <a href="/login">Login</a>
+
+                                <a class="pull-right" target="_blank" href="/about">What is Trafie?</a>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="panel-footer text-muted" ng-include="'/app/outer/views/partial/outerPanelFooterView.html'"></div>
+                </div>
+            </div>
+        </div>
+        <span class="photo-credits" ng-include="'/app/outer/views/partial/photoCreditsView.html'"></span>
+    </div>
+</div>

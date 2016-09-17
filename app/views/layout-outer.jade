@@ -14,10 +14,8 @@ html(ng-app="trafie-outer", ng-controller="AppOuterController as App")
         link(href="/styles/styles-outer.css", rel="stylesheet", type="text/css")
         include ./partials/external-scripts.jade
 
-    body.app.on-canvas.nav-min.layout-horizontal.body-has-background
-        div.main-container.clearfix.screen-height
-            div.content-container.screen-height(ng-view)
-
+    body(ng-class="App.bodyClasses")
+        div(ng-view)
         if env === "development"
             include ./partials/scripts-packages-outer.jade
             include ./partials/scripts-outer.jade
