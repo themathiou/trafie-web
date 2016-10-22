@@ -1,7 +1,6 @@
 'use strict';
 
 const getView = function(req, res) {
-    console.log("Will redirect?");
     if (typeof req.user === 'undefined' && req.originalUrl === '/') {
         getOuterView(req, res);
         return false;
