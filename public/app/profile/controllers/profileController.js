@@ -30,7 +30,7 @@
                     if(currentUser) {
                         $location.path('/' + (currentUser.username || currentUser._id)).replace();
                     } else {
-                        $window.location.href = 'register';
+                        $window.location.href = '/';
                     }
                 } else {
                     if(angular.isObject(currentUser) && ($routeParams.userIdentifier === currentUser._id || $routeParams.userIdentifier === currentUser.username)) {

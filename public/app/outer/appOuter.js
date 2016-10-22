@@ -11,6 +11,10 @@
     .config(function ($routeProvider, $locationProvider) {
         $locationProvider.html5Mode(true);
         $routeProvider
+            .when('/', {
+                templateUrl: '/app/outer/views/landingView.html',
+                controller: 'RegisterController'
+            })
             .when('/login', {
                 templateUrl: '/app/outer/views/loginView.html',
                 controller: 'LoginController'

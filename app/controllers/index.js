@@ -1,8 +1,9 @@
 'use strict';
 
-exports.getView = function(req, res) {
+const getView = function(req, res) {
+    console.log("Will redirect?");
     if (typeof req.user === 'undefined' && req.originalUrl === '/') {
-        res.redirect(301, '/register');
+        getOuterView(req, res);
         return false;
     }
     
@@ -15,8 +16,8 @@ exports.getView = function(req, res) {
     res.render('layout', data);
 };
 
-exports.getOuterView = function(req, res) {
-    let routesWithoutSession = ['/login', '/register', '/reset-password', '/reset-password-request'];
+const getOuterView = function(req, res) {
+    let routesWithoutSession = ['/', '/login', '/register', '/reset-password', '/reset-password-request'];
     if (req.user && routesWithoutSession.indexOf(req.originalUrl) >= 0) {
         res.redirect(301, '/');
         return false;
@@ -29,3 +30,6 @@ exports.getOuterView = function(req, res) {
 
     res.render('layout-outer', data);
 };
+
+exports.getView = getView;
+exports.getOuterView = getOuterView;

@@ -1,14 +1,27 @@
 .register-page {
   // Outer Theme
   @import (less) "../outerTheme/main.css";
-  @import (less) "../outerTheme/animate.css";
+
+  h1 {
+    font-weight: 300;
+    letter-spacing: -3px;
+    text-shadow: 0 0 4px rgba(0,0,0,0.5);
+  }
+
+  .lead {
+    text-shadow: 0 0 4px rgba(0,0,0,0.5);
+  }
 
   header {
-    background: url(/images/outer/photo-1457470572216-1240fac24b37.jpeg) no-repeat center center;
-    background-size: cover;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
+    background: url(/images/outer/racetrack-lg.jpeg) no-repeat center center/cover;
+
+    .header-info {
+      margin-bottom: 30vmin;
+    }
+  }
+
+  .logo-link {
+    display: inline-block;
   }
 
   .navbar-inverse {
@@ -60,11 +73,7 @@
   }
 
   #be-the-first {
-    background: url(/images/outer/photo-1472641955678-034fe941324c.jpeg) #231f20 no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+    background: url(/images/outer/stadium-lg.jpeg) #231f20 no-repeat center center/cover;
 
     p, h2 {
       text-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
@@ -78,5 +87,29 @@
   .register-heading {
     color: inherit;
     margin-bottom: 40px;
+  }
+
+  #main-info {
+    background-color: #fff;
+
+    .img-container {
+      text-align: center;
+      margin-top: 40px;
+
+      img {
+        border-radius: 8px;
+        box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+        margin: 0 auto;
+        text-align: center;
+        width: 100%;
+      }
+    }
+  }
+
+  @media (max-width: 767px) {
+    footer,
+    footer .text-right {
+      text-align: center;
+    }
   }
 }

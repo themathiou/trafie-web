@@ -6,7 +6,7 @@
             self.getDescription = outerPageDataService.getDescription;
             self.bodyClasses = [];
             $scope.$on('$routeChangeSuccess', function() {
-                if($location.path() === '/register') {
+                if($location.path() === '/') {
                     self.bodyClasses = ['register-page'];
                 } else {
                     self.bodyClasses = ['app', 'on-canvas', 'nav-min', 'layout-horizontal', 'body-has-background', 'generic-outer-page'];
