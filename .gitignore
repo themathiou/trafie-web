@@ -18,6 +18,8 @@ node_modules
 
 bower_components
 
+app/views/dist
+
 public/app/trafie.min.js
 public/app/trafieOuter.min.js
 

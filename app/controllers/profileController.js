@@ -550,3 +550,8 @@ exports.post = function(req, res) {
             });
         });
 };
+
+exports.getUserId = function(req, res) {
+    const userId = req.user && req.user._id.toString() || "";
+    res.status(userId ? 200 : 404).json({_id: userId});
+};
