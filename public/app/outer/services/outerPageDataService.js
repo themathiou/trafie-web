@@ -9,6 +9,10 @@
                 var locationPath = angular.copy($location.path());
                 locationPath = typeof locationPath === 'string' ? locationPath.split('/').filter(function(v){return v;}).shift() || '' : '';
                 switch(locationPath) {
+                    case '':
+                        title = 'Join';
+                        description = 'Trafie, the professional tool for managing, analyzing and sharing your personal track and field profile.';
+                        break;
                     case 'login':
                         title = 'Login';
                         description = 'Log into Trafie. The professional tool for managing, analyzing and sharing your personal track and field profile.';

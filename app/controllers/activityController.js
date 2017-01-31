@@ -12,18 +12,20 @@ var accessHelper = require('../helpers/accessHelper'),
 
 const activityPictureOptions = {
     acceptedTypes: ['image/jpeg', 'image/png'],
-    acceptedSize: 5 * 1024 * 1024,
-    maxAcceptedWidth: 4000,
-    maxAcceptedHeight: 3000,
+    acceptedSize: 6 * 1024 * 1024,
+    maxAcceptedWidth: 4320,
+    maxAcceptedHeight: 4320,
     minAcceptedWidth: 400,
-    minAcceptedHeight: 300,
+    minAcceptedHeight: 400,
     isSquare: false,
     sizes: [
         {size: 'full', pixels: 0},
         {size: 'md', pixels: 800},
         {size: 'sm', pixels: 400}
     ]
-};
+},
+    activityFields = ['_id', 'userId', 'discipline', 'performance', 'date', 'rank', 'location', 'competition', 'comments', 'isPrivate', 'type', 'isOutdoor', 'isDeleted', 'picture'],
+    ownActivityFields = activityFields.concat('notes');
 
 /**
  * Activities - GET
@@ -44,11 +46,11 @@ exports.get = function(req, res) {
         // If the user has a valid session and they are not visiting a private profile
         if (response.success) {
             let where = {};
-            let select = 'userId discipline performance date rank location competition comments isPrivate type isOutdoor isDeleted picture';
+            let select = activityFields.join(' ');
             // If the activity id was specified, try to find the activity
             if (typeof req.params.activityId !== 'undefined') {
                 if(userId && profileId && userId.toString() === profileId.toString()) {
-                    select += ' notes';
+                    select = ownActivityFields.join(' ');
                     where = {
                         $and: [{
                             _id: req.params.activityId
@@ -79,7 +81,6 @@ exports.get = function(req, res) {
                             code: 'not_found'
                         }]});
                     }
-                    return;
                 })
                 .catch(function(error) {
                     res.status(500).json({message: 'Server error'});
@@ -220,7 +221,7 @@ exports.post = function(req, res) {
                 // Save the activity
                 activity.save()
                 .then(function(activityRes) {
-                    uploadImageAndSave(req, res, activity, userId);
+                    uploadImageAndSave(req, res, activity, userId, "POST");
                 }, function(err) {
                     // activity.save failed, db error
                     res.status(500).json({message: 'Server error'});
@@ -276,7 +277,7 @@ exports.put = function(req, res) {
 
             // If there are no errors
             if (!errors) {
-                uploadImageAndSave(req, res, activity, userId);
+                uploadImageAndSave(req, res, activity, userId, "PUT");
             } else {
                 // If there are errors, send the error messages to the client
                 res.status(422).json({message: 'Invalid data', errors: errors});
@@ -331,7 +332,7 @@ exports.delete = function(req, res) {
     }
 };
 
-function uploadImageAndSave(req, res, activity, userId) {
+function uploadImageAndSave(req, res, activity, userId, method) {
     if (typeof req.body.picture !== 'undefined' || (typeof req.files !== 'undefined' && typeof req.files.picture !== 'undefined')) {
         let bodyFile = typeof req.files !== 'undefined' && typeof req.files.picture !== 'undefined' ? req.files.picture : undefined,
             s3Folder = 'users/' + userId + '/activities/' + activity._id;
@@ -340,13 +341,17 @@ function uploadImageAndSave(req, res, activity, userId) {
         .then(function(imageUrl) {
             if (typeof imageUrl === "string") {
                 activity.picture = imageUrl;
-                activity.save()
-                .then(function(activityRes) {
-                    res.status(201).json(activity);
-                }, function(err) {
-                    res.status(500).json({message: 'Server error'});
-                });
             }
+            activity.save()
+            .then(function() {
+                var activityRes = {};
+                ownActivityFields.forEach(field => {
+                    activityRes[field] = activity[field];
+                });
+                res.status(201).json(activityRes);
+            }, function(err) {
+                res.status(500).json({message: 'Server error'});
+            });
         }).catch(function(reason) {
             if(reason === 422) {
                 // Invalid image
@@ -361,7 +366,15 @@ function uploadImageAndSave(req, res, activity, userId) {
             }
         });
     } else {
-        // Activity created without an image
-        res.status(201).json(activity);
+        if(method === "PUT") {
+            activity.save()
+                .then(function() {
+                    res.status(201).json(activity);
+                }, function(err) {
+                    res.status(500).json({message: 'Server error'});
+                });
+        } else {
+            res.status(201).json(activity);
+        }
     }
 }

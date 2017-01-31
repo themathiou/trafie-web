@@ -35,7 +35,7 @@
         <div class="form-group" ng-class="{'has-error': fieldErrors.accountForm.username.hasError}">
             <label for="username" translate="COMMON.USERNAME"></label>
             <div class="input-group no-bottom-margin">
-                <span class="input-group-addon">https://trafie.com/</span>
+                <span class="input-group-addon">https://www.trafie.com/</span>
                 <input type="text" id="username" name="username" class="form-control" ng-model="user.username" ng-change="showUsernameWarning = true; fieldErrors.accountForm.username.hasError = false" ng-pattern="validations.username" ng-disabled="user.usernameChangesCount > 1">
             </div>
             <p class="help-block" ng-show="showUsernameWarning && user.usernameChangesCount === 1">
@@ -44,7 +44,9 @@
         </div>
     </div>
     <div class="panel-footer clearfix">
-        <input type="submit" class="btn btn-primary pull-right" ng-disabled="saving" ng-click="saveSettings('accountForm')" value="{{(saving ? 'COMMON.SAVING' : 'COMMON.SAVE_CHANGES') | translate}}">
+        <button class="btn btn-primary pull-right" ng-disabled="saving" ng-click="saveSettings('accountForm')">
+            {{(saving ? 'COMMON.SAVING' : 'COMMON.SAVE_CHANGES') | translate}}
+        </button>
     </div>
 </div>
 <div class="text-center">

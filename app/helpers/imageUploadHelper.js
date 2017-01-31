@@ -116,7 +116,6 @@ function uploadImage(s3Folder, pictureFile, bodyPicturePath, resourceId, picture
                         _s3DeleteFilesInPath(s3Folder, s3ImagePrefixes);
                         resolve(pictureUrl);
                     }, function(error) {
-                        console.log(error);
                         fs.unlink(pictureFile.path);
                         reject(500);
                     });

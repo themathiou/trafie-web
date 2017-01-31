@@ -2,6 +2,57 @@
   display: none !important;
 }
 
+.pull-xs-left {
+  float: left !important;
+}
+
+.pull-xs-right {
+  float: right !important;
+}
+
+.pull-xs-none {
+  float: none !important;
+}
+
+// 768px
+@media (min-width: @screen-sm-min) {
+  .pull-sm-left {
+    float: left !important;
+  }
+  .pull-sm-right {
+    float: right !important;
+  }
+  .pull-sm-none {
+    float: none !important;
+  }
+}
+
+// 992px
+@media (min-width: @screen-md-min) {
+  .pull-md-left {
+    float: left !important;
+  }
+  .pull-md-right {
+    float: right !important;
+  }
+  .pull-md-none {
+    float: none !important;
+  }
+}
+
+// 1200px
+@media (min-width: @screen-lg-min) {
+  .pull-lg-left {
+    float: left !important;
+  }
+  .pull-lg-right {
+    float: right !important;
+  }
+  .pull-lg-none {
+    float: none !important;
+  }
+}
+
 body > [uib-modal-window]:not([modal-render]) {
   display: none;
 }
@@ -10,8 +61,37 @@ body > [uib-modal-window]:not([modal-render]) {
   margin-right: 5px;
 }
 
+.m-right-15 {
+  margin-right: 15px;
+}
+
+.m-right-20 {
+  margin-right: 20px;
+}
+
+.m-right-30 {
+  margin-right: 30px;
+}
+
 .m-left-5 {
   margin-left: 5px;
+}
+
+.m-left-15 {
+  margin-left: 15px;
+}
+
+.m-left-30 {
+  margin-left: 30px;
+}
+
+.p-right-45 {
+  padding-right: 45px;
+}
+
+.full-inline-block {
+  width: 100%;
+  display: inline-block;
 }
 
 .text-light {

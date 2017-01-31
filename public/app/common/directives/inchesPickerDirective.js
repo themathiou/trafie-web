@@ -1,5 +1,5 @@
 angular.module('trafie')
-    .directive('tfInchesPicker', function () {
+    .directive('inchesPicker', function () {
         function link(scope, element, attrs, ngModel) {
             scope.unit = '';
             scope.fractions = [

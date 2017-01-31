@@ -140,7 +140,7 @@ function sendProfileData(req, res, profileData, userData) {
         lastName:       profileData.lastName,
         discipline:     profileData.discipline,
         isMale:         profileData.isMale,
-        picture:        profileData.picture || config.defaultPicture,
+        picture:        profileData.picture || req.protocol + '://' + req.get('host') + config.defaultPicture,
         username:       profileData.username,
         country:        profileData.country,
         about:          profileData.about
@@ -523,7 +523,7 @@ exports.post = function(req, res) {
                     }, profileData)
                     .then(function() {
                         if(profileData.hasOwnProperty('picture') && !profileData.picture) {
-                            profileData.picture = config.defaultPicture;
+                            profileData.picture = req.protocol + '://' + req.get('host') + config.defaultPicture;
                         }
                         res.status(200).json(profileData);
                     })

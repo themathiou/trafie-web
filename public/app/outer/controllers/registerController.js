@@ -7,6 +7,7 @@
             email: '',
             password: ''
         };
+        $scope.loading = false;
         $scope.errorMessages = [];
         $scope.fieldsWithErrors = {};
         for(var i in $scope.formData) {
@@ -35,6 +36,7 @@
 
         $scope.register = function() {
             $scope.errorMessages = [];
+            $scope.loading = true;
             $http.post('/register', $scope.formData)
                 .then(function(res) {
                     if(res.status === 201 && res.data._id) {
@@ -43,7 +45,11 @@
                             if(res.status === 200 && res.data._id) {
                                 $window.location.href = '/';
                             }
+                        }, function() {
+                            $scope.loading = false;
                         });
+                    } else {
+                        $scope.loading = false;
                     }
                 }, function(res) {
                     res.data.errors.forEach(function(error) {
@@ -54,6 +60,7 @@
                             $scope.errorMessages.push(errorCaptions.server);
                         }
                     });
+                    $scope.loading = false;
                 });
         };
     });

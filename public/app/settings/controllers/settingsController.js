@@ -1,8 +1,8 @@
 (function(angular) {
     angular.module('trafie')
-    .controller('SettingsController', function($scope, $http, $window, $translate, $filter, $routeParams,
-                                               $timeout, userService, COUNTRIES, DISCIPLINES, LANGUAGES_MAP,
-                                               DATE_FORMATS_MAP, VALIDATIONS, User, $uibModal, Upload) {
+    .controller('SettingsController', function($scope, $http, $window, $translate, $filter, $routeParams, $anchorScroll,
+                                               $timeout, $location, userService, COUNTRIES, DISCIPLINES, LANGUAGES_MAP,
+                                               DATE_FORMATS_MAP, VALIDATIONS, User, $uibModal, notify, Upload) {
         var tabsList = ['profile', 'account', 'password'],
             globalUser = null,
             currentLanguage = '';
@@ -20,6 +20,7 @@
         $scope.verificationEmailSent = false;
         $scope.showUsernameWarning = false;
         $scope.saving = false;
+        $scope.progress = 0;
         $scope.setting = {
             birthday: '',
             isMale: '',
@@ -117,6 +118,7 @@
                 errors.push(errorMessage);
             }
             $scope.alerts[formName].message = errors.join('<br>');
+            scrollToTop();
         }
 
         function resetAlertsAndErrors() {
@@ -150,14 +152,17 @@
 
             if(formData.hasOwnProperty('picture') && formData.picture && $scope.pictureChanged) {
                 formData.picture = Upload.dataUrltoBlob(formData.picture, name);
+                $scope.progress = 1;
                 Upload.upload({
                     url: '/users/' + $scope.user._id,
                     data: formData
                 }).then(function (res) {
                     $timeout(function () {
+                        $scope.progress = 0;
                         handleSaveSuccess(res.data, formName, formData);
                     });
                 }, function (res) {
+                    $scope.progress = 0;
                     handleSaveError(res, formName);
                 }, function (evt) {
                     $scope.progress = parseInt(100.0 * evt.loaded / evt.total);
@@ -173,19 +178,16 @@
         };
 
         function handleSaveSuccess(res, formName, formData) {
+            $scope.saving = false;
             if(res.hasOwnProperty('picture')) {
                 formData.picture = res.picture;
+                $scope.user.picture = res.picture;
             }
             if(formName === 'passwordForm') {
                 $scope.user.password = '';
                 $scope.user.oldPassword = '';
                 $scope.setting.repeatPassword = '';
             }
-            $scope.pictureChanged = false;
-            $scope.alerts[formName].type = 'success';
-            $scope.alerts[formName].message = $filter('translate')('SETTINGS.DATA_WAS_UPDATED_SUCCESSFULLY');
-            $scope.saving = false;
-            angular.extend(globalUser, formData);
             if(currentLanguage != $scope.user.language) {
                 $translate.use($scope.user.language);
                 currentLanguage = $scope.user.language;
@@ -193,6 +195,14 @@
             if(res.hasOwnProperty('usernameChangesCount')) {
                 $scope.user.usernameChangesCount = res.usernameChangesCount;
             }
+            angular.extend(globalUser, formData);
+            $timeout(function() {
+                notify({
+                    message: $filter('translate')('SETTINGS.DATA_WAS_UPDATED_SUCCESSFULLY'),
+                    classes: 'alert-success'
+                });
+                $scope.pictureChanged = false;
+            });
         }
 
         function handleSaveError(res, formName) {
@@ -209,6 +219,15 @@
             } else {
                 $scope.alerts[formName].type = 'danger';
                 $scope.alerts[formName].message = $filter('translate')('COMMON.SOMETHING_WENT_WRONG_PLEASE_TRY_AGAIN_LATER');
+            }
+            scrollToTop();
+        }
+
+        function scrollToTop() {
+            if($location.hash()) {
+                $anchorScroll();
+            } else {
+                $location.hash('settings-panel-wrapper');
             }
         }
 

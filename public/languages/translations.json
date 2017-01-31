@@ -302,6 +302,10 @@
       "en": "Saving...",
       "el": "Αποθηκεύεται..."
     },
+    "UPLOADING": {
+      "en": "Uploading...",
+      "el": "Μεταφορτώνεται..."
+    },
     "SAVE_CHANGES": {
       "en": "Save changes",
       "el": "Αποθήκευση αλλαγών"
@@ -310,6 +314,10 @@
       "en": "Cancel",
       "el": "Ακύρωση"
     },
+    "CLOSE": {
+      "en": "Close",
+      "el": "Κλείσιμο"
+    },
     "EDIT": {
       "en": "Edit",
       "el": "Επεξεργασία"
@@ -317,6 +325,10 @@
     "DELETE": {
       "en": "Delete",
       "el": "Διαγραφή"
+    },
+    "SHARE": {
+      "en": "Share",
+      "el": "Κοινοποίηση"
     },
     "REGISTER": {
       "en": "Register",
@@ -587,6 +599,14 @@
     "FRACTION": {
       "en": "Fraction",
       "el": "Κλάσμα"
+    },
+    "ACTIVITY_URL": {
+      "en": "Activity URL",
+      "el": "Διεύθυνση δραστηριότητας"
+    },
+    "SOCIAL": {
+      "en": "Social",
+      "el": "Κοινωνικά δίκτυα"
     }
   },
   "SETTINGS": {
@@ -869,7 +889,7 @@
   },
   "OUTER": {
     "RESET_PASSWORD_INSTRUCTIONS_EMAIL": {
-      "en": "An email with instructions of resetting your password, has been sent to your email address",
+      "en": "An email with instructions to reset your password, has been sent to your email address",
       "el": "Ένα email με οδηγίες για την αλλαγή του κωδικού σας, έχει σταλλεί στην διεύθυνση σας"
     }
   },

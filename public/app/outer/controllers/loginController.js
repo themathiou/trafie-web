@@ -7,16 +7,18 @@
         };
         $scope.error = '';
         $scope.success = '';
+        $scope.loading = false;
 
         if('message' in $location.search()) {
             var query = angular.copy($location.search());
             if(query.message === 'password_reset') {
-                $scope.success = 'An email with instructions of resetting your password, has been sent to your email address';
+                $scope.success = 'An email with instructions to reset your password, has been sent to your email address';
             }
         }
 
         $scope.login = function() {
             $scope.error = '';
+            $scope.loading = true;
             $http.post('/login', $scope.formData)
             .then(function(res) {
                 if(res.status === 200 && res.data._id) {
@@ -24,6 +26,7 @@
                 }
             }, function(res) {
                 $scope.error = 'Wrong email or password';
+                $scope.loading = false;
             });
         };
     });

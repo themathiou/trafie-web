@@ -27,7 +27,7 @@
                         break;
                     default:
                         title = '';
-                        description = 'The user\'s profile shows the athlete\'s data and the activities performed in a timeline.';
+                        description = "View the athlete's profile page and the activities performed in a timeline.";
                         break;
                 }
             });

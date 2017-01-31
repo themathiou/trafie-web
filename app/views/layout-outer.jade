@@ -4,22 +4,20 @@ html(ng-app="trafie-outer", ng-controller="AppOuterController as App")
         meta(charset="utf-8")
         meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no")
         meta(name="apple-itunes-app", content="app-id=1055761534")
-        meta(name="description", content="{{App.getDescription()}}")
+        meta(name="description", content="Create an account on Trafie. The professional tool for managing, analyzing and sharing your personal track and field profile." replace-meta-content="{{App.getDescription()}}")
         if env === "production" && envInstance === "staging"
             meta(name="robots", content="noindex")
         base(href="/")
         link(rel="shortcut icon", type="image/png", href="images/favicon.png")
-        title(ng-bind="'Trafie' + App.getTitle()")
+        title(ng-bind="'Trafie' + App.getTitle()") Trafie | Your personal track and field profile
 
         link(href="/styles/styles-outer.css", rel="stylesheet", type="text/css")
-        if env === "production" && envInstance !== "staging"
-            include ./partials/external-scripts.jade
+        include ./partials/external-scripts.jade
 
-    body.app.on-canvas.nav-min.layout-horizontal.body-has-background
-        div.main-container.clearfix.screen-height
-            div.content-container.screen-height(ng-view)
-
+    body(ng-class="App.bodyClasses")
+        div(ng-view)
         if env === "development"
+            include ./partials/scripts-packages-outer.jade
             include ./partials/scripts-outer.jade
         else
             script(type="text/javascript", src="/app/trafieOuter.min.js")

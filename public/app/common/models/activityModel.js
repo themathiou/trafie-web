@@ -24,7 +24,7 @@
             this._id = activityData._id || null;
             this.userId = angular.isDefined(activityData.userId) ? activityData.userId : currentUser && currentUser._id || '';
             this.discipline = angular.isDefined(activityData.discipline) ? activityData.discipline : '';
-            this.performance = angular.isDefined(activityData.performance) ? activityData.performance : null;
+            this.performance = angular.isDefined(activityData.performance) ? activityData.performance : 0;
             this.date = angular.isDefined(activityData.date) ? activityData.date : moment().unix();
             this.rank = angular.isDefined(activityData.rank) ? activityData.rank : null;
             this.location = angular.isDefined(activityData.location) ? activityData.location : '';
@@ -70,8 +70,8 @@
 
                     var filtering = true;
                     viewPerformance = viewPerformance
-                        .filter(function(value) {
-                            filtering = filtering && !value;
+                        .filter(function(value, index) {
+                            filtering = filtering && !value && index < 2;
                             return filtering ? value : true;
                         })
                         .map(function(value, index) {

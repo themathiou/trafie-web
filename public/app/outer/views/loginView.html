@@ -1,46 +1,42 @@
-<div class="page page-auth clearfix">
-    <div class="auth-container">
-        <div class="panel panel-default panel-form-outer">
-            <div class="logo-container">
-                <img src="/images/logo.svg" class="logo" alt="trafie logo">
-                <h1 class="text-center text-light">
-                    trafie
-                </h1>
-                <div class="text-center lead">
-                    <h3 class="text-light h4">Your personal track and field profile</h3>
+<div class="main-container clearfix screen-height">
+    <div class="content-container screen-height">
+        <div class="page page-auth clearfix">
+            <div class="auth-container">
+                <div class="panel panel-default panel-form-outer">
+                    <logo></logo>
+                    <div class="form-container">
+                        <form class="form-horizontal" method="post" role="form" name="form">
+                            <div class="alert alert-danger" role="alert" ng-if="error">
+                                {{error}}
+                            </div>
+                            <div class="alert alert-success" role="alert" ng-if="success">
+                                {{success}}
+                            </div>
+                            <div class="form-group form-group-lg">
+                                <input id="email-input" placeholder="Email"class="form-control" name="email" type="email" ng-model="formData.email" autofocus required>
+                            </div>
+
+                            <div class="form-group form-group-lg">
+                                <input id="password-input" placeholder="Password" class="form-control" name="password" type="password" ng-model="formData.password" value="" required>
+                            </div>
+
+                            <div class="form-group form-group-lg">
+                                <input class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" ng-click="login()" value="Login" ng-disabled="!form.$valid || loading">
+                            </div>
+
+                            <div class="clearfix">
+                                <p>Don't have an account? <a href="/register">Register Now</a></p>
+                            </div>
+
+                            <div class="clearfix">
+                                <p>Forget your password? <a href="/reset-password-request">Reset Here</a></p>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="panel-footer text-muted" ng-include="'/app/outer/views/partial/outerPanelFooterView.html'"></div>
                 </div>
             </div>
-            <div class="form-container">
-                <form class="form-horizontal" method="post" role="form" name="form">
-                    <div class="alert alert-danger" role="alert" ng-if="error">
-                        {{error}}
-                    </div>
-                    <div class="alert alert-success" role="alert" ng-if="success">
-                        {{success}}
-                    </div>
-                    <div class="form-group form-group-lg">
-                        <input id="email-input" placeholder="Email"class="form-control" name="email" type="email" ng-model="formData.email" autofocus required>
-                    </div>
-
-                    <div class="form-group form-group-lg">
-                        <input id="password-input" placeholder="Password" class="form-control" name="password" type="password" ng-model="formData.password" value="" required>
-                    </div>
-
-                    <div class="form-group form-group-lg">
-                        <input class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" ng-click="login()" value="Login" ng-disabled="!form.$valid">
-                    </div>
-
-                    <div class="clearfix">
-                        <p>Don't have an account? <a href="/register">Register Now</a></p>
-                    </div>
-
-                    <div class="clearfix">
-                        <p>Forget your password? <a href="/reset-password-request">Reset Here</a></p>
-                    </div>
-                </form>
-            </div>
-            <div class="panel-footer text-muted" ng-include="'/app/outer/views/partial/outerPanelFooterView.html'"></div>
         </div>
+        <span class="photo-credits" ng-include="'/app/outer/views/partial/photoCreditsView.html'"></span>
     </div>
 </div>
-<span class="photo-credits" ng-include="'/app/outer/views/partial/photoCreditsView.html'"></span>

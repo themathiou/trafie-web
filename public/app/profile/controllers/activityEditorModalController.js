@@ -40,11 +40,12 @@ angular.module('trafie')
 
         userService.loadCurrentUser().then(function(user) {
             $scope.user = user;
-            $scope.format = user.dateFormat.split('-')
+            $scope.datepicker.activityDateFormat = user.dateFormat.split('-')
                 .map(function(datePart) {
-                   return datePart[0] !== 'm' ? datePart : datePart.toUpperCase();
+                    return datePart[0] !== 'M' ? datePart.toLowerCase() : datePart;
                 })
                 .join('-');
+
             if($scope.isNewActivity && user.discipline) {
                 $scope.activity.discipline = user.discipline;
             }
@@ -95,13 +96,16 @@ angular.module('trafie')
                     method = 'PUT';
                     url += '/' + $scope.activity._id;
                 }
+                $scope.progress = 1;
                 Upload.upload({
                     url: url,
                     method: method,
                     data: $scope.activity
                 }).then(function (res) {
+                    $scope.progress = 0;
                     handleSaveSuccess(res.data);
                 }, function (res) {
+                    $scope.progress = 0;
                     handleSaveError(res.data);
                 }, function (evt) {
                     $scope.progress = parseInt(100.0 * evt.loaded / evt.total);

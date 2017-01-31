@@ -5,11 +5,13 @@ const gutil = require("gulp-util");
 const rename = require("gulp-rename");
 const concat = require("gulp-concat");
 const uglify = require("gulp-uglify");
+const babel = require("gulp-babel");
+const es = require("event-stream");
 const _ = require("lodash");
 const ngAnnotate = require("gulp-ng-annotate");
 const fs = require("fs");
-const translations = require("./public/languages/translations.json");
 const jade = require("gulp-jade");
+const translations = require("./public/languages/translations.json"),
 const scriptsDest = "public/app";
 
 function handleError(err) {
@@ -39,26 +41,33 @@ gulp.task("compile-jade", function() {
         .pipe(gulp.dest("./app/views/dist/"))
 });
 
-gulp.task("production-scripts", function() {
-    var mainScripts = fetchScripts("./app/views/partials/scripts.jade");
-    return gulp.src(mainScripts)
-        .pipe(ngAnnotate())
-        .pipe(concat("trafie.min.js"))
+function generateProductionScripts(scriptName, appScriptsPath, packageScriptsPath) {
+    return es.merge(
+            gulp.src(packageScriptsPath),
+            gulp.src(appScriptsPath)
+                .pipe(ngAnnotate())
+                .pipe(babel())
+        )
+        .pipe(concat(scriptName))
         .pipe(gulp.dest(scriptsDest))
-        .pipe(rename("trafie.min.js"))
+        .pipe(rename(scriptName))
         .pipe(uglify())
         .pipe(gulp.dest(scriptsDest));
+}
+
+gulp.task('production-scripts', function() {
+    let trafieScripts = fetchScripts('./app/views/partials/scripts.jade'),
+        packageScripts = fetchScripts('./app/views/partials/scripts-packages.jade'),
+        scriptName = 'trafie.min.js';
+    generateProductionScripts(scriptName, trafieScripts, packageScripts);
+
 });
 
-gulp.task("production-outer-scripts", function() {
-    var outerScripts = fetchScripts("./app/views/partials/scripts-outer.jade");
-    return gulp.src(outerScripts)
-        .pipe(ngAnnotate())
-        .pipe(concat("trafieOuter.min.js"))
-        .pipe(gulp.dest(scriptsDest))
-        .pipe(rename("trafieOuter.min.js"))
-        .pipe(uglify())
-        .pipe(gulp.dest(scriptsDest));
+gulp.task('production-outer-scripts', function() {
+    let outerScripts = fetchScripts('./app/views/partials/scripts-outer.jade'),
+        outerPackageScripts = fetchScripts('./app/views/partials/scripts-packages-outer.jade'),
+        scriptName = 'trafieOuter.min.js';
+    generateProductionScripts(scriptName, outerScripts, outerPackageScripts);
 });
 
 gulp.task("app-less", function () {

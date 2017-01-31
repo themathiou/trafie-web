@@ -142,10 +142,17 @@ function filesParserMiddleware(req, res, next) {
         form.parse(req, function(err, fields, files) {
             for(let i in fields) {
                 if(fields.hasOwnProperty(i)) {
-                    if(['true', 'false'].indexOf(fields[i]) >= 0)
+                    if(['true', 'false'].indexOf(fields[i]) >= 0) {
                         fields[i] = fields[i] === 'true';
-                    else if(fields[i] === 'null')
+                    }
+                    else if(fields[i] === 'null') {
                         fields[i] = null;
+                    }
+                    else if(typeof fields[i] === 'string' && fields[i].startsWith('{') && fields[i].endsWith('}')) {
+                        try {
+                            fields[i] = JSON.parse(fields[i]);
+                        } catch(e) {}
+                    }
                 }
             }
             req.body = fields;
@@ -173,7 +180,7 @@ trafie.get('/users/:userId?', profile.get );
 trafie.post('/users/:userId?', filesParserMiddleware, profile.post );
 
 trafie.get('/api/users/:userId?', passport.authenticate('bearer', { session: false }), profile.get);
-trafie.post('/api/users/:userId?', passport.authenticate('bearer', { session: false }), profile.post);
+trafie.post('/api/users/:userId?', filesParserMiddleware, passport.authenticate('bearer', { session: false }), profile.post);
 
 
 /*******************************************************************************************************************************
@@ -186,8 +193,8 @@ trafie.put('/users/:userId/activities/:activityId', filesParserMiddleware, activ
 trafie.delete('/users/:userId/activities/:activityId', activities.delete);
 
 trafie.get('/api/users/:userId/activities/:activityId?', passport.authenticate('bearer', { session: false }), activities.get);
-trafie.post('/api/users/:userId/activities', passport.authenticate('bearer', { session: false }), activities.post );
-trafie.put('/api/users/:userId/activities/:activityId', passport.authenticate('bearer', { session: false }), activities.put);
+trafie.post('/api/users/:userId/activities', filesParserMiddleware, passport.authenticate('bearer', { session: false }), activities.post );
+trafie.put('/api/users/:userId/activities/:activityId', filesParserMiddleware, passport.authenticate('bearer', { session: false }), activities.put);
 trafie.delete('/api/users/:userId/activities/:activityId', passport.authenticate('bearer', { session: false }), activities.delete);
 
 
