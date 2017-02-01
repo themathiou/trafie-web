@@ -13,6 +13,12 @@
                 <a href="" ng-show="!verificationEmailSent" ng-click="resendVerificationEmail()" translate="COMMON.RESEND_VERIFICATION_EMAIL"></a>
                 <span class="text-success" ng-show="verificationEmailSent" translate="{{'SETTINGS.AN_EMAIL_HAS_BEEN_SENT_TO_EMAIL_ADDRESS'}}" translate-values="{email: currentUser.email}" translate-compile></span>
             </div>
+            <div>
+                <div class="btn-group">
+                    <label class="btn btn-default" ng-model="timeLine.mode" uib-btn-radio="'timeline'" translate="PROFILE.TIMELINE"></label>
+                    <label class="btn btn-default" ng-model="timeLine.mode" uib-btn-radio="'graph'" translate="PROFILE.GRAPH"></label>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -30,7 +36,7 @@
     </button>
 </div>
 <div class="text-center col-md-6" ng-if="!activitiesLoading && !activities.length && !ownProfile" ng-cloak>
-    <h3 class="text-muted text-center" translate="PROFILE.THIS_USER_HASNT_CREATED_ANY_ACTIITIES_YET"></h3>
+    <h3 class="text-muted text-center" translate="PROFILE.THIS_USER_HASNT_CREATED_ANY_ACTIVITIES_YET"></h3>
 </div>
 <div class="text-center col-md-6" ng-if="!activitiesLoading && activities.length && !filteredActivities.length" ng-cloak>
     <h3 class="text-muted text-center" translate="PROFILE.THERE_ARE_NO_ACTIVITIES_WITH_THESE_FILTERED_VALUES"></h3>
@@ -38,6 +44,9 @@
 <div class="col-md-3" ng-if="!activitiesLoading && !activities.length && ownProfile" ng-cloak>
     &nbsp;
 </div>
-<div class="col-md-9">
+<div class="col-md-9" ng-show="timeLine.mode === 'timeline'">
     <activity-panel ng-repeat="activity in filteredActivities = (activities | orderBy:'-date' | usersFilters:filters.values)"></activity-panel>
+</div>
+<div class="col-md-9" ng-show="timeLine.mode === 'graph'">
+    <div ng-include="'/app/profile/views/graphView.html'"></div>
 </div>

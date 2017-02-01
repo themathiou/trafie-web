@@ -7,8 +7,16 @@
             $scope.user = null;
             $scope.loadError = false;
             $scope.activities = [];
+            $scope.graphActivities = {
+                order: [],
+                activities: {},
+                options: {}
+            };
             $scope.ownProfile = false;
             $scope.currentUser = null;
+            $scope.timeLine = {
+                mode: 'timeline'
+            };
             $scope.filters = {
                 values: {}
             };
@@ -71,6 +79,7 @@
                             $location.search(args);
                         }
                     }
+                    parseGraphActivities();
                 }, loadError);
             }
 
@@ -85,6 +94,7 @@
                     });
 
                     $scope.activities.splice(deletedActivityIndex, 1);
+                    parseGraphActivities();
                 }, function() {});
             };
 
@@ -104,6 +114,7 @@
                     if(!found) {
                         $scope.activities.push(activity);
                     }
+                    parseGraphActivities();
                 });
             }
 
@@ -153,6 +164,69 @@
                 }
                 $http.get('/resend-validation-email').then(verificationEmailSent, verificationEmailSent);
             };
+
+            function parseGraphActivities() {
+                $scope.graphActivities = {
+                    order: [],
+                    activities: {},
+                    options: {}
+                };
+                const activities = angular.copy($scope.activities);
+                activities.forEach(function(activity) {
+                    if(!$scope.graphActivities.activities.hasOwnProperty(activity.discipline)) {
+                        $scope.graphActivities.activities[activity.discipline] = [];
+                        $scope.graphActivities.order.push(activity.discipline);
+                    }
+
+                    $scope.graphActivities.activities[activity.discipline].push({
+                        x: new Date(activity.date * 1000),
+                        activity: activity,
+                        val_0: activity.performance
+                    });
+                });
+
+                $scope.graphActivities.order.sort((a, b) => {
+                    return $scope.graphActivities.activities[b].length - $scope.graphActivities.activities[a].length;
+                });
+
+                $scope.graphActivities.order.forEach(drawChart);
+                console.log("$scope.graphActivities", $scope.graphActivities);
+            }
+
+            function drawChart(discipline) {
+                console.log(discipline);
+                $scope.graphActivities.options[discipline] = {
+                    margin: {
+                        top: 20
+                    },
+                    series: [
+                        {
+                            axis: "y",
+                            dataset: discipline,
+                            key: "val_0",
+                            label: discipline,
+                            color: "hsla(88, 48%, 48%, 1)",
+                            type: [
+                                "line"
+                            ],
+                            id: `mySeries${discipline}`
+                        }
+                    ],
+                    axes: {
+                        x: {
+                            key: "x",
+                            type: "date"
+                        },
+                        y: {
+                            tickFormat: function(value, index) {
+                                return value;
+                            }
+                        }
+                    }
+                };
+            }
+
+            $scope.$watch("timeLine.mode", () => setTimeout(parseGraphActivities, 0));
 
             $scope.$on('$destroy', function() {
                 if($scope.ownProfile && listeners.hasOwnProperty('activityCreated')) {

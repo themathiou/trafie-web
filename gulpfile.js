@@ -11,7 +11,7 @@ const _ = require("lodash");
 const ngAnnotate = require("gulp-ng-annotate");
 const fs = require("fs");
 const jade = require("gulp-jade");
-const translations = require("./public/languages/translations.json"),
+const translations = require("./public/languages/translations.json");
 const scriptsDest = "public/app";
 
 function handleError(err) {
@@ -55,18 +55,18 @@ function generateProductionScripts(scriptName, appScriptsPath, packageScriptsPat
         .pipe(gulp.dest(scriptsDest));
 }
 
-gulp.task('production-scripts', function() {
-    let trafieScripts = fetchScripts('./app/views/partials/scripts.jade'),
-        packageScripts = fetchScripts('./app/views/partials/scripts-packages.jade'),
-        scriptName = 'trafie.min.js';
+gulp.task("production-scripts", function() {
+    let trafieScripts = fetchScripts("./app/views/partials/scripts.jade"),
+        packageScripts = fetchScripts("./app/views/partials/scripts-packages.jade"),
+        scriptName = "trafie.min.js";
     generateProductionScripts(scriptName, trafieScripts, packageScripts);
 
 });
 
-gulp.task('production-outer-scripts', function() {
-    let outerScripts = fetchScripts('./app/views/partials/scripts-outer.jade'),
-        outerPackageScripts = fetchScripts('./app/views/partials/scripts-packages-outer.jade'),
-        scriptName = 'trafieOuter.min.js';
+gulp.task("production-outer-scripts", function() {
+    let outerScripts = fetchScripts("./app/views/partials/scripts-outer.jade"),
+        outerPackageScripts = fetchScripts("./app/views/partials/scripts-packages-outer.jade"),
+        scriptName = "trafieOuter.min.js";
     generateProductionScripts(scriptName, outerScripts, outerPackageScripts);
 });
 

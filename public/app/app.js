@@ -2,7 +2,7 @@
 (function (angular) {
     angular.module('trafie',
         ['trafie-shared', 'ngRoute', 'ngResource', 'ngSanitize', 'pascalprecht.translate', 'ui.bootstrap', 'cgNotify', 'angular-confirm',
-            'ui.select', 'ngFileUpload', 'ngImgCrop']
+            'ui.select', 'ngFileUpload', 'ngImgCrop', 'n3-line-chart']
     ).run(function ($window, $rootScope, $location) {
         if ($window.hasOwnProperty('ga')) {
             $window.ga('create', 'UA-47166136-1', 'auto');

@@ -396,6 +396,14 @@
       "en": "Edit activity",
       "el": "Επεξεργασία δραστηριότητας"
     },
+    "TIMELINE": {
+      "en": "Timeline",
+      "el": "Χρονοδιάγραμμα"
+    },
+    "GRAPH": {
+      "en": "Graph",
+      "el": "Γράφημα"
+    },
     "ADD_YOUR_FIRST_ACTIVITY_ACTIVITY": {
       "en": "Add your first activity",
       "el": "Πρόσθεσε την πρώτη σου δραστηριότητα"
@@ -404,7 +412,7 @@
       "en": "Welcome {{first_name}}! Let's add some activities.",
       "el": "Καλώς ήρθες {{first_name}}! Ας προσθέσουμε μερικές δραστηριότητες."
     },
-    "THIS_USER_HASNT_CREATED_ANY_ACTIITIES_YET": {
+    "THIS_USER_HASNT_CREATED_ANY_ACTIVITIES_YET": {
       "en": "This user hasn't created any activities yet.",
       "el": "Αυτός ο χρήστης δεν έχει δημιουργήσει δραστηριότητες ακόμα."
     },
