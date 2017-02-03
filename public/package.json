@@ -1,0 +1,10 @@
+{
+  "name": "trafie",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "n3-charts": "^2.0.28"
+  },
+  "devDependencies": {},
+  "scripts": {}
+}
