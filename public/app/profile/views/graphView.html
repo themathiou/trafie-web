@@ -1,3 +1,9 @@
-<div class="chart-wrapper"  ng-repeat="discipline in graphActivities.order">
-    <linechart class="graph" data="graphActivities.activities" options="graphActivities.options[discipline]"></linechart>
+<div class="panel panel-default activity-panel" ng-repeat="discipline in graphActivities.order">
+    <div class="panel-body">
+        <div class="activity-lead full-inline-block">
+            <div class="chart-wrapper row">
+                <linechart class="graph" data="graphActivities.activities" options="graphActivities.options[discipline]"></linechart>
+            </div>
+        </div>
+    </div>
 </div>

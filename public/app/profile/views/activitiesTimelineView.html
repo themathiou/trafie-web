@@ -13,8 +13,8 @@
                 <a href="" ng-show="!verificationEmailSent" ng-click="resendVerificationEmail()" translate="COMMON.RESEND_VERIFICATION_EMAIL"></a>
                 <span class="text-success" ng-show="verificationEmailSent" translate="{{'SETTINGS.AN_EMAIL_HAS_BEEN_SENT_TO_EMAIL_ADDRESS'}}" translate-values="{email: currentUser.email}" translate-compile></span>
             </div>
-            <div>
-                <div class="btn-group">
+            <div class="btn-toolbar mb15">
+                <div class="btn-group pull-right">
                     <label class="btn btn-default" ng-model="timeLine.mode" uib-btn-radio="'timeline'" translate="PROFILE.TIMELINE"></label>
                     <label class="btn btn-default" ng-model="timeLine.mode" uib-btn-radio="'graph'" translate="PROFILE.GRAPH"></label>
                 </div>

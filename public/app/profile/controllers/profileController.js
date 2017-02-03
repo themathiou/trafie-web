@@ -1,7 +1,7 @@
 (function(angular) {
     angular.module('trafie')
         .controller('ProfileController', function($rootScope, $scope, $routeParams, $window, $http, $location,
-                                                  $uibModal, Activity, User, userService, pageDataService) {
+                                                  $uibModal, $timeout, Activity, User, userService, pageDataService) {
             $scope.profileFound = true;
             $scope.activitiesLoading = true;
             $scope.user = null;
@@ -209,7 +209,8 @@
                             type: [
                                 "line"
                             ],
-                            id: `mySeries${discipline}`
+                            id: `mySeries${discipline}`,
+                            visible: true
                         }
                     ],
                     axes: {
@@ -226,12 +227,23 @@
                 };
             }
 
-            $scope.$watch("timeLine.mode", () => setTimeout(parseGraphActivities, 0));
+            /**
+             * Watchers
+             */
+            $scope.$watch("timeLine.mode", () => $timeout(parseGraphActivities, 0));
 
+            /**
+             * Subscribe on events
+             */
             $scope.$on('$destroy', function() {
                 if($scope.ownProfile && listeners.hasOwnProperty('activityCreated')) {
                     listeners.activityCreated();
                 }
             });
+
+            /**
+             * Initializations
+             */
+            // parseGraphActivities();
         });
 })(angular);
