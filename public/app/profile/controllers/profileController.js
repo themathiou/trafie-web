@@ -1,7 +1,7 @@
 (function(angular) {
     angular.module('trafie')
         .controller('ProfileController', function($rootScope, $scope, $routeParams, $window, $http, $location,
-                                                  $uibModal, $timeout, Activity, User, userService, pageDataService) {
+                                                  $uibModal, $timeout, $filter, DISCIPLINES, Activity, User, userService, pageDataService) {
             $scope.profileFound = true;
             $scope.activitiesLoading = true;
             $scope.user = null;
@@ -181,7 +181,7 @@
                     $scope.graphActivities.activities[activity.discipline].push({
                         x: new Date(activity.date * 1000),
                         activity: activity,
-                        val_0: activity.performance
+                        val_0: activity.getReadablePerformance()
                     });
                 });
 
@@ -197,18 +197,19 @@
                 console.log(discipline);
                 $scope.graphActivities.options[discipline] = {
                     margin: {
-                        top: 20
+                    top: 20,
+                    right: 50,
+                    bottom: 50,
+                    left: 50
                     },
                     series: [
                         {
                             axis: "y",
                             dataset: discipline,
                             key: "val_0",
-                            label: discipline,
+                            label: $filter('translate')(discipline.toUpperCase()),
                             color: "hsla(88, 48%, 48%, 1)",
-                            type: [
-                                "line"
-                            ],
+                            type: ["line", "area"],
                             id: `mySeries${discipline}`,
                             visible: true
                         }
@@ -244,6 +245,6 @@
             /**
              * Initializations
              */
-            // parseGraphActivities();
+
         });
 })(angular);
