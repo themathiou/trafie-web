@@ -172,29 +172,29 @@
                     options: {}
                 };
                 const activities = angular.copy($scope.activities);
-                activities.forEach(function(activity) {
-                    if(!$scope.graphActivities.activities.hasOwnProperty(activity.discipline)) {
-                        $scope.graphActivities.activities[activity.discipline] = [];
-                        $scope.graphActivities.order.push(activity.discipline);
-                    }
+                activities
+                    .sort((a, b) => b.date - a.date)
+                    .forEach(function(activity) {
+                        if(!$scope.graphActivities.activities.hasOwnProperty(activity.discipline)) {
+                            $scope.graphActivities.activities[activity.discipline] = [];
+                            $scope.graphActivities.order.push(activity.discipline);
+                        }
 
-                    $scope.graphActivities.activities[activity.discipline].push({
-                        x: new Date(activity.date * 1000),
-                        activity: activity,
-                        val_0: activity.getReadablePerformance()
+                        $scope.graphActivities.activities[activity.discipline].push({
+                            x: new Date(activity.date * 1000),
+                            activity: activity,
+                            val_0: activity.getReadablePerformance()
+                        });
                     });
-                });
 
                 $scope.graphActivities.order.sort((a, b) => {
                     return $scope.graphActivities.activities[b].length - $scope.graphActivities.activities[a].length;
                 });
 
                 $scope.graphActivities.order.forEach(drawChart);
-                console.log("$scope.graphActivities", $scope.graphActivities);
             }
 
             function drawChart(discipline) {
-                console.log(discipline);
                 $scope.graphActivities.options[discipline] = {
                     margin: {
                     top: 20,
@@ -207,7 +207,7 @@
                             axis: "y",
                             dataset: discipline,
                             key: "val_0",
-                            label: $filter('translate')(discipline.toUpperCase()),
+                            label: $filter('translate')(`DISCIPLINES.${discipline.toUpperCase()}`),
                             color: "hsla(88, 48%, 48%, 1)",
                             type: ["line", "area"],
                             id: `mySeries${discipline}`,
