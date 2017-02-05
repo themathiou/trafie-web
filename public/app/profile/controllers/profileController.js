@@ -23,6 +23,9 @@
             };
             var listeners = {};
 
+            /**
+             * Initialisation
+             */
             function loadError() {
                 $scope.loadError = true;
             }
@@ -84,6 +87,9 @@
                 }, loadError);
             }
 
+            /**
+             * Activity deletion
+             */
             $scope.deleteActivity = function(activity) {
                 activity.$delete()
                 .then(function() {
@@ -99,6 +105,9 @@
                 }, function() {});
             };
 
+            /**
+             * Activity creation and editing
+             */
             function setActivityCreationListener() {
                 listeners.activityCreated = $rootScope.$on('activityCreated', function(event, activity) {
                     var found = false;
@@ -166,13 +175,17 @@
                 $http.get('/resend-validation-email').then(verificationEmailSent, verificationEmailSent);
             };
 
+            /**
+             * Graphs
+             */
             function parseGraphActivities() {
                 $scope.graphActivities = {
                     order: [],
                     activities: {},
                     options: {}
                 };
-                const activities = angular.copy($scope.activities);
+                const activities = $filter('usersFilters')($scope.activities, $scope.filters.values);
+
                 activities
                     .sort((a, b) => b.date - a.date)
                     .forEach(function(activity) {
@@ -227,10 +240,8 @@
                 };
             }
 
-            /**
-             * Watchers
-             */
             $scope.$watch("timeLine.mode", () => $timeout(parseGraphActivities, 0));
+            $scope.$watch("filters", () => $timeout(parseGraphActivities, 0), true);
 
             /**
              * Subscribe on events
@@ -240,10 +251,5 @@
                     listeners.activityCreated();
                 }
             });
-
-            /**
-             * Initializations
-             */
-
         });
 })(angular);
