@@ -231,7 +231,8 @@
                     axes: {
                         x: {
                             key: "x",
-                            type: "date"
+                            type: "date",
+                            tickFormat: (value) => moment(value).format($scope.currentUser.dateFormat || "D-M-YYYY")
                         },
                         y: {
                             tickFormat: (value) => activityHelper.getReadablePerformance(value, discipline)
