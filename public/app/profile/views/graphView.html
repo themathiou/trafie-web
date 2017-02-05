@@ -1,5 +1,5 @@
 <div class="panel mb30 panel-lined activity-panel" ng-repeat="discipline in graphActivities.order">
-    <div class="panel-heading"><i>{{discipline.toUpperCase() | translate}}</i></div>
+    <div class="panel-heading"><i>{{"DISCIPLINES." + discipline.toUpperCase() | translate}}</i></div>
     <div class="panel-body">
         <div class="activity-lead full-inline-block">
             <div class="chart-wrapper row">
@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="panel-footer todo-foot clearfix" id="todo-filters">
-        <div class="pull-left mt2 mr10">Filter {{discipline.toUpperCase() | translate}}:</div>
+        <div class="pull-left mt2 mr10">Filter {{"DISCIPLINES." + discipline.toUpperCase() | translate}}:</div>
         <div class="left">
             <button class="selected btn btn-xs btn-default" ng-class="{active: statusFilter == ''}" ng-click="someFunction()" btn-radio=" 'all' ">All</button>
             <button class="selected btn btn-xs btn-default" ng-class="{active: statusFilter == ''}" ng-click="someFunction()" btn-radio=" '2017' ">2017</button>

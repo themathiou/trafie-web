@@ -13,8 +13,8 @@
             });
         };
     })
-    .factory("Activity", function (ActivityResource, userService, imageService, DISCIPLINE_CATEGORIES) {
-        var currentUser = null;
+    .factory("Activity", function (ActivityResource, userService, imageService, DISCIPLINE_CATEGORIES, activityHelper) {
+        let currentUser = null;
         userService.loadCurrentUser().then(function(user) {
             currentUser = user;
         });
@@ -40,35 +40,35 @@
         Activity = angular.extend(Activity, ActivityResource);
         Activity.prototype = new ActivityResource();
 
-        Activity.prototype._getDisciplineCategory = function() {
-            if(DISCIPLINE_CATEGORIES.time.indexOf(this.discipline) >= 0) {
-                return 'time';
-            }
-            else if(DISCIPLINE_CATEGORIES.distance.indexOf(this.discipline) >= 0) {
-                return 'distance';
-            }
-            else {
-                return 'points';
-            }
-        };
-
         Activity.prototype.getPicture = function(size) {
             return imageService.resizeImage(this.picture, size);
         };
 
         Activity.prototype.getReadablePerformance = function() {
-            var performance = '';
-            switch(this._getDisciplineCategory()) {
+            return activityHelper.getReadablePerformance(this.performance, this.discipline);
+        };
+
+        return Activity;
+    })
+    .factory("activityHelper", function(userService, DISCIPLINE_CATEGORIES) {
+        let currentUser = null;
+        userService.loadCurrentUser().then(function(user) {
+            currentUser = user;
+        });
+
+        function getReadablePerformance(rawPerformance, discipline) {
+            let performance = '';
+            switch(getDisciplineCategory(discipline)) {
                 case 'time':
-                    var viewPerformance = [];
-                    viewPerformance.push(Math.floor(this.performance / 360000));
-                    var performanceNoHours = this.performance  - viewPerformance[0] * 360000;
+                    let viewPerformance = [];
+                    viewPerformance.push(Math.floor(rawPerformance / 360000));
+                    const performanceNoHours = rawPerformance  - viewPerformance[0] * 360000;
                     viewPerformance.push(Math.floor(performanceNoHours / 6000));
-                    var performanceNoMinutes = performanceNoHours - viewPerformance[1] * 6000;
+                    const performanceNoMinutes = performanceNoHours - viewPerformance[1] * 6000;
                     viewPerformance.push(Math.floor(performanceNoMinutes / 100));
                     viewPerformance.push(performanceNoMinutes - viewPerformance[2] * 100);
 
-                    var filtering = true;
+                    let filtering = true;
                     viewPerformance = viewPerformance
                         .filter(function(value, index) {
                             filtering = filtering && !value && index < 2;
@@ -77,17 +77,17 @@
                         .map(function(value, index) {
                             return index ? ('0' + value).substr(-2, 2) : value;
                         });
-                    var lastIndex = viewPerformance.length-1;
+                    const lastIndex = viewPerformance.length-1;
                     performance = (lastIndex ? viewPerformance.slice(0, lastIndex).join(':') : '0') + '.' + viewPerformance[lastIndex];
                     break;
                 case 'distance':
                     if(currentUser && currentUser.units.distance === 'feet') {
-                        var inches = this.performance * 0.0003937007874;
-                        var feet = Math.floor(inches / 12);
+                        let inches = rawPerformance * 0.0003937007874;
+                        const feet = Math.floor(inches / 12);
                         inches = inches - 12 * feet;
-                        var inchesInteger = Math.floor(inches);
-                        var inchesDecimal = inches - inchesInteger;
-                        var inchesFraction = '';
+                        let inchesInteger = Math.floor(inches);
+                        const inchesDecimal = inches - inchesInteger;
+                        let inchesFraction = '';
                         if(inchesDecimal >= 0.125 && inchesDecimal < 0.375) {
                             inchesFraction = '&frac14;';
                         }
@@ -103,19 +103,34 @@
 
                         performance = feet + "' " + inchesInteger + inchesFraction + '"';
                     } else {
-                        var meters = Math.floor(this.performance / 100000);
-                        var centimeters = Math.round((this.performance - meters * 100000) / 1000);
+                        const meters = Math.floor(rawPerformance / 100000);
+                        const centimeters = Math.round((rawPerformance - meters * 100000) / 1000);
 
                         performance = meters + '.' + ('0' + centimeters).substr(-2, 2);
                     }
                     break;
                 case 'points':
-                    performance = '' + this.performance;
+                    performance = '' + rawPerformance;
                     break;
             }
             return performance;
-        };
+        }
 
-        return Activity;
+        function getDisciplineCategory(discipline) {
+            if(DISCIPLINE_CATEGORIES.time.indexOf(discipline) >= 0) {
+                return 'time';
+            }
+            else if(DISCIPLINE_CATEGORIES.distance.indexOf(discipline) >= 0) {
+                return 'distance';
+            }
+            else {
+                return 'points';
+            }
+        }
+
+        return {
+            getReadablePerformance,
+            getDisciplineCategory
+        };
     });
 })(angular);

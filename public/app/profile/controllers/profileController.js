@@ -1,7 +1,8 @@
 (function(angular) {
     angular.module('trafie')
         .controller('ProfileController', function($rootScope, $scope, $routeParams, $window, $http, $location,
-                                                  $uibModal, $timeout, $filter, DISCIPLINES, Activity, User, userService, pageDataService) {
+                                                  $uibModal, $timeout, $filter, DISCIPLINES, Activity, User,
+                                                  userService, pageDataService, activityHelper) {
             $scope.profileFound = true;
             $scope.activitiesLoading = true;
             $scope.user = null;
@@ -183,7 +184,7 @@
                         $scope.graphActivities.activities[activity.discipline].push({
                             x: new Date(activity.date * 1000),
                             activity: activity,
-                            val_0: activity.getReadablePerformance()
+                            val_0: activity.performance
                         });
                     });
 
@@ -197,10 +198,10 @@
             function drawChart(discipline) {
                 $scope.graphActivities.options[discipline] = {
                     margin: {
-                    top: 20,
-                    right: 50,
-                    bottom: 50,
-                    left: 50
+                        top: 20,
+                        right: 50,
+                        bottom: 50,
+                        left: 50
                     },
                     series: [
                         {
@@ -220,9 +221,7 @@
                             type: "date"
                         },
                         y: {
-                            tickFormat: function(value, index) {
-                                return value;
-                            }
+                            tickFormat: (value) => activityHelper.getReadablePerformance(value, discipline)
                         }
                     }
                 };
