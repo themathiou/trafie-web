@@ -128,9 +128,19 @@
             }
         }
 
+        function fractionHtmlToSymbol(fraction) {
+            const fractionMap = {
+                "&frac14;": "¼",
+                "&frac12;": "½",
+                "&frac34;": "¾"
+            };
+            return fraction.replace(/&frac\d\d;/, (match) => fractionMap[match])
+        }
+
         return {
             getReadablePerformance,
-            getDisciplineCategory
+            getDisciplineCategory,
+            fractionHtmlToSymbol
         };
     });
 })(angular);

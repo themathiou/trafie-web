@@ -205,7 +205,9 @@
                     return $scope.graphActivities.activities[b].length - $scope.graphActivities.activities[a].length;
                 });
 
-                $scope.graphActivities.order.forEach(drawChart);
+                $scope.graphActivities.order
+                    .filter($scope.graphListFilter)
+                    .forEach(drawChart);
             }
 
             function drawChart(discipline) {
@@ -235,11 +237,15 @@
                             tickFormat: (value) => moment(value).format($scope.currentUser && $scope.currentUser.dateFormat || "D-M-YYYY")
                         },
                         y: {
-                            tickFormat: (value) => activityHelper.getReadablePerformance(value, discipline)
+                            tickFormat: (value) => activityHelper.fractionHtmlToSymbol(
+                                activityHelper.getReadablePerformance(value, discipline)
+                            )
                         }
                     }
                 };
             }
+
+            $scope.graphListFilter = (discipline) => $scope.graphActivities.activities[discipline].length > 1;
 
             $scope.$watch("timeLine.mode", () => $timeout(parseGraphActivities, 0));
             $scope.$watch("filters", () => $timeout(parseGraphActivities, 0), true);

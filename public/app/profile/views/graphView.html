@@ -1,4 +1,4 @@
-<div class="panel mb30 panel-lined activity-panel" ng-repeat="discipline in graphActivities.order">
+<div class="panel mb30 panel-lined activity-panel" ng-repeat="discipline in graphActivities.order | filter:graphListFilter">
     <div class="panel-heading"><i>{{"DISCIPLINES." + discipline.toUpperCase() | translate}}</i></div>
     <div class="panel-body">
         <div class="activity-lead full-inline-block">
