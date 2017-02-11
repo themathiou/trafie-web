@@ -11,7 +11,7 @@ nav.navbar.navbar-default.navbar-fixed-top.navbar-trafie
                     li(ng-if="App.user" ng-class="{'active': App.getCurrentPage() === 'profile'}")
                         a(href='/', ng-click="App.sidebarIsCollapsed = true; App.profileResult = '';")
                             i.fa.fa-user.nav-icon
-                            span(translate="COMMON.PROFILE")
+                            span(ng-bind="App.user.firstName")
                     li(ng-if="App.user" ng-class="{'active': App.getCurrentPage() === 'settings'}")
                         a(href='/settings', ng-click="App.sidebarIsCollapsed = true; App.profileResult = '';")
                             i.fa.fa-cog.nav-icon
