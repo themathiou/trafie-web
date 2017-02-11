@@ -31,6 +31,7 @@ angular.module('trafie')
             };
             scope.selectedFilters = {};
             scope.filterCategories = Object.keys(scope.filters);
+            scope.isCollapsed = true;
             scope.filterCategories.forEach(function(filterCategory) {
                 scope.selectedFilters[filterCategory] = [];
             });
@@ -91,12 +92,17 @@ angular.module('trafie')
                 activities: '='
             },
             link: link,
-            template:   '<div class="panel panel-default">' +
-                            '<div class="panel-heading" translate="PROFILE.FILTERS"></div>' +
+            template:   '<div class="panel panel-default panel-activity-filters">' +
+                            '<div class="panel-heading">' +
+                                '<span translate="PROFILE.FILTERS"></span>' +
+                                '<a href="javascript:;" class="pull-right hidden-md hidden-lg" ng-click="isCollapsed = !isCollapsed">' +
+                                    '<i class="fa text-muted" ng-class="{\'fa-chevron-up\': isCollapsed, \'fa-chevron-down\': !isCollapsed}"></i>' +
+                                '</a>' +
+                            '</div>' +
                             '<div class="panel-body" ng-if="!filterOptionsExist()">' +
                                 '<span translate="PROFILE.FILTERS_APPEAR_WHEN_THERE_ARE_ENOUGH_ACTIVITIES"></span>' +
                             '</div>' +
-                            '<ul class="list-group">' +
+                            '<ul class="list-group" uib-collapse="isCollapsed">' +
                                 '<li class="list-group-item" ng-repeat="filterCategory in filterCategories" ng-if="filters[filterCategory].options.length > 1">' +
                                     '<label ng-if="filters[filterCategory].label" translate="{{::filters[filterCategory].label}}"></label>' +
                                     '<div>' +
