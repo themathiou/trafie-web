@@ -1,11 +1,14 @@
-<div class="panel mb30 panel-lined activity-panel" ng-repeat="discipline in graphActivities.order | filter:graphListFilter">
+<div class="panel mb30 panel-lined activity-panel" ng-repeat="discipline in filteredGraphs = (graphActivities.order | filter:graphListFilter)">
     <div class="panel-heading"><i>{{"DISCIPLINES." + discipline.toUpperCase() | translate}}</i></div>
     <div class="panel-body">
         <div class="activity-lead full-inline-block">
             <div class="chart-wrapper row">
-                <linechart class="graph" data="graphActivities.activities" options="graphActivities.options[discipline]"></linechart>
+                <linechart data="graphActivities.activities" options="graphActivities.options[discipline]"></linechart>
             </div>
         </div>
     </div>
 </div>
 
+<div ng-show="!filteredGraphs.length && activities.length">
+    <h3 class="text-muted text-center" translate="PROFILE.THERE_ARENT_ENOUGH_ACTIVITIES_TO_GENERATE_GRAPHS"></h3>
+</div>

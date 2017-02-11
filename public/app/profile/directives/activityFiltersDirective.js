@@ -82,6 +82,10 @@ angular.module('trafie')
                     return scope.filters[filterCategory].options.length > 1;
                 });
             };
+
+            scope.hideEmpty = () => {
+                return !scope.filterOptionsExist() && ["hidden-xs", "hidden-sm"] || "";
+            };
         }
 
         return {
@@ -92,7 +96,7 @@ angular.module('trafie')
                 activities: '='
             },
             link: link,
-            template:   '<div class="panel panel-default panel-activity-filters">' +
+            template:   '<div class="panel panel-default panel-activity-filters" ng-class="hideEmpty()">' +
                             '<div class="panel-heading">' +
                                 '<span translate="PROFILE.FILTERS"></span>' +
                                 '<a href="javascript:;" class="pull-right hidden-md hidden-lg" ng-click="isCollapsed = !isCollapsed">' +

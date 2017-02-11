@@ -420,6 +420,10 @@
       "en": "There are no activities with the selected filters",
       "el": "Δεν υπάρχουν δραστηριότητες με τα επιλεγμένα φίλτρα"
     },
+    "THERE_ARENT_ENOUGH_ACTIVITIES_TO_GENERATE_GRAPHS": {
+      "en": "There aren't enough activities to generate graphs",
+      "el": "Δεν υπάρχουν αρκετές δραστηριότητες για να δημιουργηθούν διαγράμματα"
+    },
     "OOPS": {
       "en": "Oops!",
       "el": "Ουπς!"

@@ -196,7 +196,6 @@
 
                         $scope.graphActivities.activities[activity.discipline].push({
                             x: new Date(activity.date * 1000),
-                            activity: activity,
                             val_0: activity.performance
                         });
                     });
@@ -215,7 +214,6 @@
                     margin: {
                         top: 20,
                         right: 50,
-                        bottom: 50,
                         left: 50
                     },
                     series: [
@@ -225,18 +223,25 @@
                             key: "val_0",
                             label: $filter('translate')(`DISCIPLINES.${discipline.toUpperCase()}`),
                             color: "hsla(88, 48%, 48%, 1)",
-                            type: ["line", "area"],
-                            id: `mySeries${discipline}`,
-                            visible: true
+                            type: ["dot", "line", "area"],
+                            id: `mySeries${discipline}`
                         }
                     ],
                     axes: {
                         x: {
+                            padding: {
+                                min: 20,
+                                max: 20
+                            },
                             key: "x",
                             type: "date",
                             tickFormat: (value) => moment(value).format($scope.currentUser && $scope.currentUser.dateFormat || "D-M-YYYY")
                         },
                         y: {
+                            padding: {
+                                min: 20,
+                                max: 0
+                            },
                             tickFormat: (value) => activityHelper.fractionHtmlToSymbol(
                                 activityHelper.getReadablePerformance(value, discipline)
                             )
