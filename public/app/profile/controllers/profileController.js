@@ -8,11 +8,7 @@
             $scope.user = null;
             $scope.loadError = false;
             $scope.activities = [];
-            $scope.graphActivities = {
-                order: [],
-                activities: {},
-                options: {}
-            };
+            $scope.newGraphActivities = {};
             $scope.ownProfile = false;
             $scope.currentUser = null;
             $scope.timeLine = {
@@ -179,81 +175,37 @@
              * Graphs
              */
             function parseGraphActivities() {
-                $scope.graphActivities = {
+                $scope.newGraphActivities = {
                     order: [],
                     activities: {},
                     options: {}
                 };
+
                 const activities = $filter('usersFilters')($scope.activities, $scope.filters.values);
 
                 activities
                     .sort((a, b) => b.date - a.date)
                     .forEach(function(activity) {
-                        if(!$scope.graphActivities.activities.hasOwnProperty(activity.discipline)) {
-                            $scope.graphActivities.activities[activity.discipline] = [];
-                            $scope.graphActivities.order.push(activity.discipline);
+
+                        if(!$scope.newGraphActivities.activities.hasOwnProperty(activity.discipline)) {
+                            $scope.newGraphActivities.activities[activity.discipline] = {};
+                            $scope.newGraphActivities.activities[activity.discipline].data = [[]];
+                            $scope.newGraphActivities.activities[activity.discipline].labels = [];
+                            $scope.newGraphActivities.order.push(activity.discipline);
                         }
 
-                        $scope.graphActivities.activities[activity.discipline].push({
-                            x: new Date(activity.date * 1000),
-                            val_0: activity.performance
-                        });
+                        let _formattedPerformance = activityHelper.getReadablePerformance(activity.performance, activity.discipline);
+                        $scope.newGraphActivities.activities[activity.discipline].data[0].push(_formattedPerformance);
+                        let _formattedDate = moment(new Date(activity.date * 1000)).format($scope.currentUser && $scope.currentUser.dateFormat || "D-M-YYYY");
+                        $scope.newGraphActivities.activities[activity.discipline].labels.push(_formattedDate);
                     });
-
-                $scope.graphActivities.order.sort((a, b) => {
-                    return $scope.graphActivities.activities[b].length - $scope.graphActivities.activities[a].length;
-                });
-
-                $scope.graphActivities.order
-                    .filter($scope.graphListFilter)
-                    .forEach(drawChart);
             }
 
-            function drawChart(discipline) {
-                $scope.graphActivities.options[discipline] = {
-                    margin: {
-                        top: 20,
-                        right: 50,
-                        left: 50
-                    },
-                    series: [
-                        {
-                            axis: "y",
-                            dataset: discipline,
-                            key: "val_0",
-                            label: $filter('translate')(`DISCIPLINES.${discipline.toUpperCase()}`),
-                            color: "hsla(88, 48%, 48%, 1)",
-                            type: ["dot", "line", "area"],
-                            id: `mySeries${discipline}`
-                        }
-                    ],
-                    axes: {
-                        x: {
-                            padding: {
-                                min: 20,
-                                max: 20
-                            },
-                            key: "x",
-                            type: "date",
-                            tickFormat: (value) => moment(value).format($scope.currentUser && $scope.currentUser.dateFormat || "D-M-YYYY")
-                        },
-                        y: {
-                            padding: {
-                                min: 20,
-                                max: 0
-                            },
-                            tickFormat: (value) => activityHelper.fractionHtmlToSymbol(
-                                activityHelper.getReadablePerformance(value, discipline)
-                            )
-                        }
-                    }
-                };
-            }
-
-            $scope.graphListFilter = (discipline) => $scope.graphActivities.activities[discipline].length > 1;
+            $scope.graphListFilter = (discipline) => $scope.newGraphActivities.activities[discipline].data[0].length > 1;
 
             $scope.$watch("timeLine.mode", () => $timeout(parseGraphActivities, 0));
             $scope.$watch("filters", () => $timeout(parseGraphActivities, 0), true);
+
 
             /**
              * Subscribe on events

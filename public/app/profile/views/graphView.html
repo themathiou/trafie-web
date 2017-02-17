@@ -1,9 +1,11 @@
-<div class="panel mb30 panel-lined activity-panel" ng-repeat="discipline in filteredGraphs = (graphActivities.order | filter:graphListFilter)">
+<div class="panel mb30 panel-lined activity-panel" ng-repeat="discipline in filteredGraphs = (newGraphActivities.order | filter:graphListFilter)">
     <div class="panel-heading"><i>{{"DISCIPLINES." + discipline.toUpperCase() | translate}}</i></div>
     <div class="panel-body">
         <div class="activity-lead full-inline-block">
             <div class="chart-wrapper row">
-                <linechart data="graphActivities.activities" options="graphActivities.options[discipline]"></linechart>
+                <canvas id="line" class="chart chart-line" chart-data="newGraphActivities.activities[discipline].data"
+                chart-labels="newGraphActivities.activities[discipline].labels" chart-series="discipline">
+                </canvas>
             </div>
         </div>
     </div>
