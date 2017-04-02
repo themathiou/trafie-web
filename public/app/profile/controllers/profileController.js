@@ -2,7 +2,7 @@
     angular.module('trafie')
         .controller('ProfileController', function($rootScope, $scope, $routeParams, $window, $http, $location,
                                                   $uibModal, $timeout, $filter, DISCIPLINES, Activity, User,
-                                                  userService, pageDataService, activityHelper) {
+                                                  userService, pageDataService, activityHelper, DEFAULT_DATE_FORMAT) {
             $scope.profileFound = true;
             $scope.activitiesLoading = true;
             $scope.user = null;
@@ -178,26 +178,60 @@
                 $scope.newGraphActivities = {
                     order: [],
                     activities: {},
-                    options: {}
                 };
 
                 const activities = $filter('usersFilters')($scope.activities, $scope.filters.values);
 
                 activities
-                    .sort((a, b) => b.date - a.date)
+                    .sort((a, b) => a.date - b.date)
                     .forEach(function(activity) {
-
                         if(!$scope.newGraphActivities.activities.hasOwnProperty(activity.discipline)) {
                             $scope.newGraphActivities.activities[activity.discipline] = {};
                             $scope.newGraphActivities.activities[activity.discipline].data = [[]];
                             $scope.newGraphActivities.activities[activity.discipline].labels = [];
+                            $scope.newGraphActivities.activities[activity.discipline].activities = [];
+                            $scope.newGraphActivities.activities[activity.discipline].options = {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            callback: (value, index, values) => activityHelper.fractionHtmlToSymbol(
+                                                activityHelper.getReadablePerformance(value, activity.discipline)
+                                            )
+                                        }
+                                    }]
+                                },
+                                tooltips: {
+                                    displayColors: false,
+                                    callbacks: {
+                                        label: (tooltipItem) => {
+                                            const competition = $scope.newGraphActivities.activities[activity.discipline].activities[
+                                                tooltipItem.index
+                                            ].competition;
+
+                                            const performance = activityHelper.fractionHtmlToSymbol(
+                                                activityHelper.getReadablePerformance(tooltipItem.yLabel, activity.discipline)
+                                            );
+                                            return [
+                                                `${$filter('translate')('PROFILE.COMPETITION')}: ${competition}`,
+                                                `${$filter('translate')('PROFILE.PERFORMANCE')}: ${performance}`
+                                            ];
+                                        }
+                                    }
+                                },
+                                elements: {
+                                    point: {
+                                        radius: 4
+                                    }
+                                }
+                            };
                             $scope.newGraphActivities.order.push(activity.discipline);
                         }
 
-                        let _formattedPerformance = activityHelper.getReadablePerformance(activity.performance, activity.discipline);
-                        $scope.newGraphActivities.activities[activity.discipline].data[0].push(_formattedPerformance);
-                        let _formattedDate = moment(new Date(activity.date * 1000)).format($scope.currentUser && $scope.currentUser.dateFormat || "D-M-YYYY");
-                        $scope.newGraphActivities.activities[activity.discipline].labels.push(_formattedDate);
+                        $scope.newGraphActivities.activities[activity.discipline].data[0].push(activity.performance);
+                        const formattedDate = moment(new Date(activity.date * 1000))
+                            .format($scope.currentUser && $scope.currentUser.dateFormat || DEFAULT_DATE_FORMAT);
+                        $scope.newGraphActivities.activities[activity.discipline].labels.push(formattedDate);
+                        $scope.newGraphActivities.activities[activity.discipline].activities.push(activity);
                     });
             }
 
