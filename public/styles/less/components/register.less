@@ -106,6 +106,27 @@
     }
   }
 
+  #register {
+    .form-control {
+      border: 1px solid #aaa;
+      color: #555;
+      &::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+        color:    #aaa;
+      }
+      &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+        color:    #aaa;
+        opacity:  1;
+      }
+      &::-moz-placeholder { /* Mozilla Firefox 19+ */
+        color:    #aaa;
+        opacity:  1;
+      }
+      &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+        color:    #aaa;
+      }
+    }
+  }
+
   @media (max-width: 767px) {
     footer,
     footer .text-right {
