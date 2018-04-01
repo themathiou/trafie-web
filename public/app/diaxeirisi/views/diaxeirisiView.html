@@ -1,0 +1,49 @@
+<div class="container diaxeirisi-page">
+    <table class="table table-striped" ng-if="users.length">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Country
+                </th>
+                <th>
+                    Discipline
+                </th>
+                <th>
+                    Activities
+                </th>
+                <th>
+                    Last Active
+                </th>
+                <th>
+                    Delete
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="user in users">
+                <td ng-if="!user.isPrivate"><a ng-href="/{{user._id}}" target="_blank">{{user.firstName + " " + user.lastName}}</a></td>
+                <td ng-if="user.isPrivate">{{user.firstName + " " + user.lastName}}</td>
+                <td>{{user._id}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.country && ('COUNTRIES.' + user.country.toUpperCase() | translate)}}</td>
+                <td>{{user.discipline && ('DISCIPLINES.' + user.discipline.toUpperCase() | translate)}}</td>
+                <td>{{user.activities.length}}</td>
+                <td>{{user.lastActive}}</td>
+                <td>
+                    <button ng-show="deleteState.indexOf(user._id) < 0" ng-click="requestDeletion(user._id)">Delete</button>
+                    <button ng-show="deleteState.indexOf(user._id) >= 0" ng-click="cancelDeletion(user._id)">Cancel</button>
+                    <button ng-show="deleteState.indexOf(user._id) >= 0" ng-click="delete(user._id)">Ok</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

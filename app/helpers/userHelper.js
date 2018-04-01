@@ -1,12 +1,18 @@
 'use strict';
 // Loading models
-const User = require('../models/userModel');
+const s3Helper = require("./s3Helper");
+const imageUploaderHelper = require("./imageUploadHelper");
 
-var crypto = require('crypto'),
-    q = require('q');
+const User = require('../models/userModel');
+const Profile = require('../models/profileModel');
+const Activity = require('../models/activityModel');
+const UserHash = require('../models/userHashesModel');
+
+const crypto = require('crypto');
+const q = require('q');
 const config = require('../config/constantConfig');
 
-var userHelper = require('../helpers/userHelper');
+const userHelper = {};
 
 
 /**
@@ -14,7 +20,7 @@ var userHelper = require('../helpers/userHelper');
  * @param String password
  */
 userHelper.encryptPassword = function(password) {
-    var sha512Hash = crypto.createHash('sha512');
+    const sha512Hash = crypto.createHash('sha512');
     sha512Hash.update((process.env.USER_PASSWORD_SALT || 'userPasswordSalt') + password);
     // Return the encrypted password
     return sha512Hash.digest('hex');
@@ -44,7 +50,7 @@ userHelper.validatePassword = function(password) {
  * @param string userId
  */
 userHelper.validateUser = function(userId) {
-    var d = q.defer();
+    const d = q.defer();
     User.findByIdAndUpdate(userId, {
         isVerified: true
     }, '', function(err, user) {
@@ -54,5 +60,12 @@ userHelper.validateUser = function(userId) {
     return d.promise;
 };
 
+userHelper.deleteUser = (userId) => {
+    imageUploaderHelper.s3DeleteFilesInPath(s3Helper.getUserS3Folder(userId));
+    User.remove({_id: userId}, function(err, deleted){});
+    Profile.remove({_id: userId}, function(err, deleted){});
+    Activity.remove({userId: userId.toString()}, function(err, deleted){});
+    UserHash.remove({userId: userId.toString()}, function(err, deleted){});
+};
 
 module.exports = userHelper;

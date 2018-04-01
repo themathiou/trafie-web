@@ -16,6 +16,10 @@
             templateUrl: '/app/settings/views/settingsView.html',
             controller: 'SettingsController',
             reloadOnSearch: false
+        }).when('/diaxeirisi', {
+            templateUrl: '/app/diaxeirisi/views/diaxeirisiView.html',
+            controller: 'DiaxeirisiController',
+            reloadOnSearch: false
         }).when('/:userIdentifier?', {
             templateUrl: '/app/profile/views/profileView.html',
             controller: 'ProfileController',

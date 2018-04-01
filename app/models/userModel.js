@@ -13,6 +13,7 @@ var userSchema = mongoose.Schema({
     email       : { type: String, required: true, unique: true, index: true },
     password    : { type: String, required: true },
     isVerified  : { type: Boolean, required: true, default: false},
+    isAdmin     : { type: Boolean, required: true, default: false},
     lastIp      : { type: String },
     lastActive  : { type: Date },
     dateCreated : { type: Date },
@@ -27,6 +28,34 @@ userSchema.pre('save', function(next){
     }
     next();
 });
+
+/**
+ * Find user by element
+ * @param json where({email:someone@trafie.com})
+ * @param String select
+ */
+userSchema.find = function( where, select, limit, skip, sort ) {
+    var d = q.defer();
+    if( typeof limit === "undefined" ) { limit = 0; }
+    if( typeof skip === "undefined" ) { skip = 0; }
+    if( typeof sort === "undefined" ) { sort = {}; }
+
+    User.find( where, select,
+        // Other parameters
+        {
+            'limit': limit,
+            'skip': skip,
+            'sort': sort
+            /* Sort example
+            {
+                // -1 = descending
+                date: sort
+            } */
+        }, function ( err, user ) {
+            d.resolve( user );
+        });
+    return d.promise;
+};
 
 /**
 * Find user by element

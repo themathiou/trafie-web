@@ -36,6 +36,35 @@ activitySchema.pre('save', function(next){
     next();
 });
 
+
+/**
+ * Find activity by element
+ * @param json where({email:someone@trafie.com})
+ * @param String select
+ */
+activitySchema.find = function( where, select, limit, skip, sort ) {
+    var d = q.defer();
+    if( typeof limit === "undefined" ) { limit = 0; }
+    if( typeof skip === "undefined" ) { skip = 0; }
+    if( typeof sort === "undefined" ) { sort = {}; }
+
+    Activity.find( where, select,
+        // Other parameters
+        {
+            'limit': limit,
+            'skip': skip,
+            'sort': sort
+            /* Sort example
+            {
+                // -1 = descending
+                date: sort
+            } */
+        }, function ( err, profile ) {
+            d.resolve( profile );
+        });
+    return d.promise;
+};
+
 /**
  * Find activity by element
  * @param json where( { _id: id } )

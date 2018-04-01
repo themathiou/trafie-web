@@ -1,14 +1,15 @@
 'use strict';
 
-var moment = require('moment');
+const moment = require('moment');
 
 // Loading models
-var Activity = require('../models/activityModel');
+const Activity = require('../models/activityModel');
 
 // Loading helpers
-var accessHelper = require('../helpers/accessHelper'),
-    activityHelper = require('../helpers/activityHelper'),
-    imageUploadHelper = require('../helpers/imageUploadHelper');
+const accessHelper = require('../helpers/accessHelper');
+const imageUploadHelper = require('../helpers/imageUploadHelper');
+
+const s3Helper = require('../helpers/s3Helper');
 
 const activityPictureOptions = {
     acceptedTypes: ['image/jpeg', 'image/png'],
@@ -335,7 +336,7 @@ exports.delete = function(req, res) {
 function uploadImageAndSave(req, res, activity, userId, method) {
     if (typeof req.body.picture !== 'undefined' || (typeof req.files !== 'undefined' && typeof req.files.picture !== 'undefined')) {
         let bodyFile = typeof req.files !== 'undefined' && typeof req.files.picture !== 'undefined' ? req.files.picture : undefined,
-            s3Folder = 'users/' + userId + '/activities/' + activity._id;
+            s3Folder = s3Helper.getActivityS3Folder(userId, activity._id);
 
         imageUploadHelper.uploadImage(s3Folder, bodyFile, req.body.picture, activity._id, activityPictureOptions)
         .then(function(imageUrl) {

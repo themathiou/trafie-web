@@ -1,14 +1,16 @@
 'use strict';
 
 // Loading models
-let Profile = require('../models/profileModel'),
-    User = require('../models/userModel');
+const Profile = require('../models/profileModel');
+const User = require('../models/userModel');
 
 // Loading helpers
-let accessHelper = require('../helpers/accessHelper'),
-    profileHelper = require('../helpers/profileHelper'),
-    userHelper = require('../helpers/userHelper'),
-    imageUploadHelper = require('../helpers/imageUploadHelper');
+const accessHelper = require('../helpers/accessHelper');
+const profileHelper = require('../helpers/profileHelper');
+const userHelper = require('../helpers/userHelper');
+const imageUploadHelper = require('../helpers/imageUploadHelper');
+
+const s3Helper = require("../helpers/s3Helper");
 
 // Get the config file
 const config = require('../config/constantConfig');
@@ -62,9 +64,6 @@ function generateSearchQuery(req) {
         let requestedKeywordsString = searchQuery.keywords.trim(),
             requestedKeywords = requestedKeywordsString.split(' '),
             requestedKeywordsLength = requestedKeywords.length;
-        if (!requestedKeywordsString) {
-            res.json([]);
-        }
 
         requestedKeywords.forEach(function(requestedKeyword, i) {
             requestedKeyword = requestedKeyword.toLowerCase();
@@ -452,7 +451,7 @@ exports.post = function(req, res) {
                             ]
                         },
                         bodyFile = typeof req.files !== 'undefined' && typeof req.files.picture !== 'undefined' ? req.files.picture : undefined,
-                        s3Folder = 'users/' + userId + '/profile';
+                        s3Folder = s3Helper.getProfileS3Folder(userId);
                     imageUploadHelper.uploadImage(s3Folder, bodyFile, req.body.picture, userId, pictureOptions)
                     .then(function(imageUrl) {
                         if (typeof imageUrl === "string") {

@@ -57,6 +57,7 @@ var index = require('./app/controllers/index'),
     resetPassword = require('./app/controllers/resetPasswordController'),
     deactivate = require('./app/controllers/deactivateAccountController'),
     feedback = require('./app/controllers/feedbackController'),
+    admin = require('./app/controllers/adminController'),
     auth = require('./app/controllers/authController'),
     oAuth = require('./app/controllers/oAuthController');
 
@@ -263,11 +264,11 @@ trafie.get('/logout', logout.get);
 
 
 /*******************************************************************************************************************************
- * LOGOUT                                                                                                                      *
+ * DEACTIVATE                                                                                                                  *
  ******************************************************************************************************************************/
 
 /**
- * Logout - GET
+ * Deactivate - POST
  */
 trafie.post('/deactivate-account', deactivate.post);
 
@@ -277,6 +278,14 @@ trafie.post('/deactivate-account', deactivate.post);
  ******************************************************************************************************************************/
 
 trafie.post('/feedback', feedback.post);
+
+
+/*******************************************************************************************************************************
+ * ADMIN                                                                                                                       *
+ ******************************************************************************************************************************/
+
+trafie.get('/admin/users', admin.getUsers);
+trafie.delete('/admin/users/:userId', admin.deleteUser);
 
 
 /*******************************************************************************************************************************

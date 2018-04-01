@@ -14,7 +14,7 @@ let fs = require('fs'),
         region: process.env.S3_BUCKET_REGION
     });
 
-function _s3DeleteFilesInPath(path, excludePaths = []) {
+function s3DeleteFilesInPath(path, excludePaths = []) {
     s3.list({prefix: path}, function(err, data){
         if(!err && data.Contents) {
             let filesToDelete = [];
@@ -82,7 +82,7 @@ function uploadImage(s3Folder, pictureFile, bodyPicturePath, resourceId, picture
             acceptedFormats = pictureOptions.acceptedTypes.map((type) => type.split('/').pop());
 
         if(!bodyPicturePath && typeof pictureFile === 'undefined') {
-            _s3DeleteFilesInPath(s3Folder);
+            s3DeleteFilesInPath(s3Folder);
             resolve(pictureUrl);
         }
         else if(bodyPicturePath && typeof pictureFile === 'undefined') {
@@ -113,7 +113,7 @@ function uploadImage(s3Folder, pictureFile, bodyPicturePath, resourceId, picture
                         });
 
                         fs.unlink(pictureFile.path);
-                        _s3DeleteFilesInPath(s3Folder, s3ImagePrefixes);
+                        s3DeleteFilesInPath(s3Folder, s3ImagePrefixes);
                         resolve(pictureUrl);
                     }, function(error) {
                         fs.unlink(pictureFile.path);
@@ -128,5 +128,6 @@ function uploadImage(s3Folder, pictureFile, bodyPicturePath, resourceId, picture
 }
 
 module.exports = {
-    uploadImage
+    uploadImage,
+    s3DeleteFilesInPath
 };
