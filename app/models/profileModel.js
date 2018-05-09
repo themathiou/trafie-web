@@ -18,7 +18,7 @@ var profileSchema = mongoose.Schema({
     picture     : { type: String,   required: false,    default: '' },
     dateFormat  : { type: String,   required: false,    default: 'D-M-YYYY' },
     language    : { type: String,   required: false,    default: 'en' },
-    isPrivate   : { type: Boolean,  required: false,    default: true },
+    isPrivate   : { type: Boolean,  required: false,    default: false },
     role        : { type: String,   required: false,    default: 'athlete'},
     usernameChangesCount: { type: Number, required: false, default: 0 },
     units: {
