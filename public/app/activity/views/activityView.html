@@ -1,0 +1,32 @@
+<div ng-if="pageFound && !loadError" class="activity-page">
+    <div class="container">
+        <div class="activity-panel panel panel-default">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-12 activity-owner">
+                        <a ng-href="/{{user.username || user._id}}" class="link-plain">
+                            <img class="avatar avatar-sm avatar-with-padding activity-owner-avatar m-right-5" ng-src="{{user.getPicture('md')}}">
+                            <h5 class="activity-owner-name">
+                                {{user.firstName + ' ' + user.lastName}}
+                            </h5>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <activity-panel is-embedded></activity-panel>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-if="!pageFound || loadError">
+    <div class="container">
+        <div class="col-xs-12">
+            <h5 class="text-center text-muted text-light h1 text-ultra-big" translate="PROFILE.OOPS"></h5>
+            <h5 class="text-center h4" translate="PROFILE.THE_PAGE_YOU_ARE_LOOKING_FOR_DOES_NOT_EXIST"></h5>
+            <div class="text-center" ng-if="App.user">
+                <a href="/" translate="PROFILE.BACK_TO_MY_PROFILE"></a>
+            </div>
+        </div>
+    </div>
+</div>

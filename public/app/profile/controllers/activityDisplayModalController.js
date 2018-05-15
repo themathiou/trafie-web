@@ -2,7 +2,6 @@ angular.module('trafie')
     .controller('ActivityDisplayModalController', function ($scope, $uibModalInstance, $filter, activityToDisplay,
                                                             $location) {
         $scope.activity = activityToDisplay;
-        $scope.ownProfile = false;
         $scope.activityUrl = '';
 
         let args = $location.search();
@@ -10,7 +9,7 @@ angular.module('trafie')
             args.activityId = $scope.activity._id;
             $location.search(args);
         }
-        $scope.activityUrl = $location.absUrl();
+        $scope.activityUrl = $location.absUrl().replace("?activityId=", "/");
 
         $scope.close = function () {
             $uibModalInstance.dismiss('close');
