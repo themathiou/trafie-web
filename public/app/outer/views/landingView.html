@@ -50,6 +50,13 @@
                         </div><!--End Button Row-->
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
+                        <div class="row">
+                            <available-on-badges />
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -185,7 +192,7 @@
                     </div>
                     <div class="row">
                         <div class="form-group form-group-lg col-lg-6" ng-class="{'has-error': fieldsWithErrors.firstName}">
-                            <input id="first-name" placeholder="First name" class="form-control" name="firstName" type="text" ng-model="formData.firstName" ng-change="fieldsWithErrors.firstName = false" autofocus required>
+                            <input id="first-name" placeholder="First name" class="form-control" name="firstName" type="text" ng-model="formData.firstName" ng-change="fieldsWithErrors.firstName = false" required>
                         </div>
 
                         <div class="form-group form-group-lg col-lg-6" ng-class="{'has-error': fieldsWithErrors.lastName}">
