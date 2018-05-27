@@ -343,14 +343,7 @@ exports.post = function(req, res) {
             // Validating privacy
             if (typeof req.body.isPrivate !== 'undefined') {
                 promises.push(new Promise(function(resolve, reject) {
-                    if(!req.user.isVerified && profile.isPrivate !== req.body.isPrivate) {
-                        reject([403, {
-                            resource: 'user',
-                            field: 'isPrivate',
-                            code: 'unverified_user'
-                        }]);
-                    }
-                    else if (profileHelper.validatePrivacy(req.body.isPrivate)) {
+                    if (profileHelper.validatePrivacy(req.body.isPrivate)) {
                         profileData.isPrivate = req.body.isPrivate;
                         resolve(profileData.isPrivate);
                     }
