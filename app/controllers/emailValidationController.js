@@ -6,7 +6,7 @@ const User = require('../models/userModel'),
     UserHashes = require('../models/userHashesModel');
 
 // Loading helpers
-const userHelper = require('../helpers/userHelper'),
+const accountHelper = require('../helpers/accountHelper'),
     emailHelper = require('../helpers/emailHelper');
 
 /**
@@ -20,7 +20,7 @@ exports.validate = function(req, res) {
     .then(function(response) {
         if (response) {
             // Validate the user
-            return userHelper.validateUser(response.userId);
+            return accountHelper.validateUser(response.userId);
         } else {
             return false;
         }

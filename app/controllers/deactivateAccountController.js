@@ -1,6 +1,7 @@
 'use strict';
 let Token = require('../models/tokenModel'),
     User = require('../models/userModel'),
+    accountHelper = require('../helpers/accountHelper'),
     userHelper = require('../helpers/userHelper');
 
 exports.post = function(req, res) {
@@ -16,7 +17,7 @@ exports.post = function(req, res) {
     User.schema.findOne({_id: req.user._id, password: userHelper.encryptPassword(req.body.password)}, 'email')
     .then(function(user) {
         if(user && user.email) {
-            userHelper.deleteUser(req.user._id);
+            accountHelper.deleteUser(req.user._id);
             if(req.headers.hasOwnProperty('authorization')) {
                 const token = req.headers.authorization.split(' ').pop();
                 Token.get(Token.hashToken(token), function(err, tokenObj) {

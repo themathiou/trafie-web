@@ -4,7 +4,7 @@ const Profile = require('../models/profileModel'),
     Activity = require('../models/activityModel'),
     User = require('../models/userModel');
 
-const userHelper = require('../helpers/userHelper');
+const accountHelper = require('../helpers/accountHelper');
 
 exports.getUsers = (req, res) => {
     if (!req.user || !req.user.isAdmin) {
@@ -61,6 +61,6 @@ exports.deleteUser = function(req, res) {
     if (!req.user || !req.user.isAdmin || !req.params.userId || req.user._id.toString() === req.params.userId.toString()) {
         return res.status(403).json({});
     }
-    userHelper.deleteUser(req.params.userId);
+    accountHelper.deleteUser(req.params.userId);
     return exports.getUsers(req, res);
 };
