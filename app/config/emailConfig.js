@@ -2,8 +2,8 @@
 
 const email = {
     direct: false,
-    port: 25,
-    host: 'mail.name.com',
+    port: 587,
+    host: 'mail.trafie.com',
     auth: {
         user: 'support@trafie.com',
         pass: 'tr@f!etr@f!e'
