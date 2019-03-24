@@ -1,7 +1,7 @@
 const imageUploaderHelper = require("./imageUploadHelper");
 const User = require('../models/userModel');
 const Profile = require('../models/profileModel');
-const Activity = require('../models/activityModel');
+const Competition = require('../models/competitionModel');
 const UserHash = require('../models/userHashesModel');
 const s3Helper = require("./s3Helper");
 
@@ -27,7 +27,7 @@ accountHelper.deleteUser = (userId) => {
     imageUploaderHelper.s3DeleteFilesInPath(s3Helper.getUserS3Folder(userId));
     User.remove({_id: userId}, function(err, deleted){});
     Profile.remove({_id: userId}, function(err, deleted){});
-    Activity.remove({userId: userId.toString()}, function(err, deleted){});
+    Competition.remove({userId: userId.toString()}, function(err, deleted){});
     UserHash.remove({userId: userId.toString()}, function(err, deleted){});
 };
 

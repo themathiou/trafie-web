@@ -31,7 +31,7 @@ userHelper.validateEmail = function(email) {
  */
 userHelper.validatePassword = function(password) {
     // The password should have at least 6 characters
-    return config.validations.password.test(password);
+    return config.passwordRegex.test(password);
 };
 
 module.exports = userHelper;

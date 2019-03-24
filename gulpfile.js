@@ -6,6 +6,7 @@ const rename = require("gulp-rename");
 const concat = require("gulp-concat");
 const uglify = require("gulp-uglify");
 const babel = require("gulp-babel");
+const stream = require("stream");
 const es = require("event-stream");
 const _ = require("lodash");
 const ngAnnotate = require("gulp-ng-annotate");
@@ -36,7 +37,7 @@ gulp.task("compile-jade", function() {
         envInstance: "production"
     };
 
-    gulp.src("./app/views/*.jade")
+    return gulp.src("./app/views/*.jade")
         .pipe(jade({locals}))
         .pipe(gulp.dest("./app/views/dist/"))
 });
@@ -58,8 +59,8 @@ function generateProductionScripts(scriptName, appScriptsPath, packageScriptsPat
 gulp.task("production-scripts", function() {
     let trafieScripts = fetchScripts("./app/views/partials/scripts.jade"),
         packageScripts = fetchScripts("./app/views/partials/scripts-packages.jade"),
-        scriptName = "trafie.min.js";
-    generateProductionScripts(scriptName, trafieScripts, packageScripts);
+        scriptName = "trafie.min.js";    
+    return generateProductionScripts(scriptName, trafieScripts, packageScripts);
 
 });
 
@@ -67,7 +68,7 @@ gulp.task("production-outer-scripts", function() {
     let outerScripts = fetchScripts("./app/views/partials/scripts-outer.jade"),
         outerPackageScripts = fetchScripts("./app/views/partials/scripts-packages-outer.jade"),
         scriptName = "trafieOuter.min.js";
-    generateProductionScripts(scriptName, outerScripts, outerPackageScripts);
+    return generateProductionScripts(scriptName, outerScripts, outerPackageScripts);
 });
 
 gulp.task("app-less", function () {
@@ -84,14 +85,15 @@ gulp.task("outer-less", function () {
         .pipe(gulp.dest("./public/styles/styles-outer.css"));
 });
 
-gulp.task("split-translations", function() {
+gulp.task("split-translations", function(cb) {
     _.each(translations.LANGUAGE.SHORT_NAME, function(language) {
         var json = _.mapValues(translations, function(category) {
             return _.mapValues(category, language);
         });
         fs.writeFileSync("./public/languages/" + language + ".json", JSON.stringify(json));
     });
+    cb();
 });
 
-gulp.task("default-dev", ["app-less", "outer-less", "split-translations"]);
-gulp.task("default", ["production-scripts", "production-outer-scripts", "app-less", "outer-less", "split-translations"]);
+gulp.task("default-dev", gulp.series("app-less", "outer-less", "split-translations"));
+gulp.task("default", gulp.series("production-scripts", "production-outer-scripts", "app-less", "outer-less", "split-translations"));

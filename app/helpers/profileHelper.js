@@ -1,8 +1,5 @@
-'use strict';
-
-// Get the config file
-const config = require('../config/constantConfig'),
-    moment = require('moment');
+const config = require('../config/constantConfig');
+const moment = require('moment');
 
 
 var profileHelper = {};
@@ -12,7 +9,7 @@ var profileHelper = {};
  * @param string name
  */
 profileHelper.validateName = function(name) {
-    return config.validations.name.test(name);
+    return config.nameRegex.test(name);
 };
 
 /**
@@ -20,7 +17,7 @@ profileHelper.validateName = function(name) {
  * @param string name
  */
 profileHelper.validateUsername = function(username) {
-    return config.validations.username.test(username) && config.validations.forbiddenUsernames.indexOf(username) < 0;
+    return config.usernameRegex.test(username) && config.forbiddenUsernames.indexOf(username) < 0;
 };
 
 /**
@@ -31,8 +28,8 @@ profileHelper.validateUsername = function(username) {
 profileHelper.validateBirthday = function(birthday) {
     if(typeof birthday === "string" && !birthday) return true;
     else if(typeof birthday !== "string") return false;
-    else if(!config.validations.birthday.regex.test(birthday)) return false;
-    let birthdayObj = moment(birthday, config.validations.birthday.format);
+    else if(!config.birthdayValidation.regex.test(birthday)) return false;
+    let birthdayObj = moment(birthday, config.birthdayValidation.format);
 
     return birthdayObj.isValid() && birthdayObj.year() < moment().subtract(10, 'years').year();
 };
@@ -80,7 +77,7 @@ profileHelper.validateDiscipline = function(discipline, allowEmptyString) {
  * @return boolean
  */
 profileHelper.validateAbout = function(about) {
-    return config.validations.about.test(about);
+    return config.aboutRegex.test(about);
 };
 
 /**
@@ -89,7 +86,7 @@ profileHelper.validateAbout = function(about) {
  * @return boolean
  */
 profileHelper.validateDateFormat = function(dateFormat) {
-    return config.validations.dateFormat.test(dateFormat);
+    return config.dateFormatRegex.test(dateFormat);
 };
 
 /**
@@ -105,7 +102,7 @@ profileHelper.validateUnits = function(units) {
     if(typeof units !== 'object') return false;
     let isValid = true;
     for(let i in units) {
-        if(!units.hasOwnProperty(i) || !config.validations.units.hasOwnProperty(i) || !config.validations.units[i].test(units[i])) {
+        if(i !== "distance" || !config.unitsRegex.test(units[i])) {
             isValid = false;
         }
     }

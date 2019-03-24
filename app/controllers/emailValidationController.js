@@ -1,5 +1,3 @@
-'use strict';
-
 // Loading models
 const User = require('../models/userModel'),
     Profile = require('../models/profileModel'),

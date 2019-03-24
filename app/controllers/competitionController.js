@@ -1,9 +1,7 @@
-'use strict';
-
 const moment = require('moment');
 
 // Loading models
-const Activity = require('../models/activityModel');
+const Competition = require('../models/competitionModel');
 
 // Loading helpers
 const accessHelper = require('../helpers/accessHelper');
@@ -11,7 +9,7 @@ const imageUploadHelper = require('../helpers/imageUploadHelper');
 
 const s3Helper = require('../helpers/s3Helper');
 
-const activityPictureOptions = {
+const competitonPictureOptions = {
     acceptedTypes: ['image/jpeg', 'image/png'],
     acceptedSize: 6 * 1024 * 1024,
     maxAcceptedWidth: 4320,
@@ -24,9 +22,9 @@ const activityPictureOptions = {
         {size: 'md', pixels: 800},
         {size: 'sm', pixels: 400}
     ]
-},
-    activityFields = ['_id', 'userId', 'discipline', 'performance', 'date', 'rank', 'location', 'competition', 'comments', 'isPrivate', 'type', 'isOutdoor', 'isDeleted', 'picture'],
-    ownActivityFields = activityFields.concat('notes');
+};
+const competitionFields = ['_id', 'userId', 'discipline', 'performance', 'date', 'rank', 'location', 'competition', 'comments', 'isPrivate', 'type', 'isOutdoor', 'isDeleted', 'picture'];
+const ownCompetitionFields = competitionFields.concat('notes');
 
 /**
  * Activities - GET
@@ -36,22 +34,21 @@ exports.get = function(req, res) {
         userId = req.user && req.user._id || null;
 
     if (typeof req.params.userId === 'undefined') {
-        res.status(404).json({message: 'Resource not found', errors: [{
+        return res.status(404).json({message: 'Resource not found', errors: [{
             resource: 'user',
             code: 'not_found'
         }]});
-        return;
     }
     accessHelper.validateAccess(req.user, profileId)
     .then(function(response) {
         // If the user has a valid session and they are not visiting a private profile
         if (response.success) {
             let where = {};
-            let select = activityFields.join(' ');
+            let select = competitionFields.join(' ');
             // If the activity id was specified, try to find the activity
             if (typeof req.params.activityId !== 'undefined') {
                 if(userId && profileId && userId.toString() === profileId.toString()) {
-                    select = ownActivityFields.join(' ');
+                    select = ownCompetitionFields.join(' ');
                     where = {
                         $and: [{
                             _id: req.params.activityId
@@ -73,7 +70,7 @@ exports.get = function(req, res) {
                 }
 
                 // Find the activity and return it
-                Activity.schema.findOne(where, select).then(function(activity) {
+                Competition.findOne(where, select).then(function(activity) {
                     if(activity) {
                         res.status(200).json(activity);
                     } else {
@@ -147,9 +144,9 @@ exports.get = function(req, res) {
                     select += ' notes';
                 }
                 
-                Activity.schema.getActivitiesOfUser(where, select, -1)
-                .then(function(activities) {
-                    res.json(activities);
+                Competition.find(where, select, { sort: { date: -1 } })
+                .then(function(competitions) {
+                    res.json(competitions);
                 })
                 .catch(function(error) {
                     res.status(500).json({message: 'Server error'});
@@ -162,7 +159,7 @@ exports.get = function(req, res) {
             } else {
                 // If the user doesn't have access to the data, or the data don't exist, do not send anything
                 res.status(404).json({message: 'Resource not found', errors: [{
-                    resource: 'activity',
+                    resource: 'competition',
                     code: 'not_found'
                 }]});
             }
@@ -184,24 +181,24 @@ exports.post = function(req, res) {
         res.status(403).json({message: 'Forbidden'});
     }
     else {
-        Activity.count({userId: userId, isDeleted: false}, function(err, activitiesCount) {
+        Competition.count({userId: userId, isDeleted: false}, function(err, activitiesCount) {
             if(activitiesCount >= 500) {
                 res.status(403).json({message: 'Forbidden', errors: [{
-                    resource: 'activity',
-                    code: 'user_activity_limit'
+                    resource: 'competition',
+                    code: 'user_competition_limit'
                 }]});
                 return;
             }
             else if(!req.user.isVerified && activitiesCount >= 5) {
                 res.status(403).json({message: 'Forbidden', errors: [{
-                    resource: 'activity',
-                    code: 'non_verified_user_activity_limit'
+                    resource: 'competition',
+                    code: 'non_verified_user_competition_limit'
                 }]});
                 return;
             }
 
             // Create the record that will be inserted in the db
-            var activityData = {
+            var competitionData = {
                 userId: userId,
                 discipline: req.body.discipline || null,
                 performance: typeof req.body.performance !== 'undefined' ? req.body.performance : null,
@@ -215,20 +212,17 @@ exports.post = function(req, res) {
                 isPrivate: typeof req.body.isPrivate !== 'undefined' ? req.body.isPrivate : false,
                 isOutdoor: typeof req.body.isOutdoor !== 'undefined' ? req.body.isOutdoor : false
             };
-            var activity = new Activity(activityData),
-                errors = activity.checkValid();
+            var competition = new Competition(competitionData),
+                errors = competition.checkValid();
 
             if(!errors) {
-                // Save the activity
-                activity.save()
+                competition.save()
                 .then(function(activityRes) {
-                    uploadImageAndSave(req, res, activity, userId, "POST");
+                    uploadImageAndSave(req, res, competition, userId, "POST");
                 }, function(err) {
-                    // activity.save failed, db error
                     res.status(500).json({message: 'Server error'});
                 });
             } else {
-                // If there are errors in the activity object, send the error messages to the client
                 res.status(422).json({message: 'Invalid data', errors: errors});
             }
         });
@@ -236,49 +230,49 @@ exports.post = function(req, res) {
 };
 
 /**
- * Activities - PUT
+ * Competition - PUT
  */
 exports.put = function(req, res) {
     // Get the user id from the session
     var userId = req.user && req.user._id.toString() || null;
-    // Get the activity id from the url
-    var activityId = typeof req.params.activityId !== 'undefined' ? req.params.activityId : null;
+    // Get the competition id from the url
+    var competitionId = typeof req.params.competitionId !== 'undefined' ? req.params.competitionId : null;
 
     if (!userId) {
         res.status(401).json({message: 'Unauthorized'});
     }
-    else if (!activityId) {
+    else if (!competitionId) {
         res.status(400).json({message: 'Bad Request'});
     }
     else if(userId.toString() !== req.params.userId) {
         res.status(403).json({message: 'Forbidden'});
     }
     else {
-        Activity.schema.findOne({_id: activityId, userId: userId, isDeleted: false}, '')
-        .then(function(activity) {
-            if (!activity || typeof activity._id === 'undefined') res.status(404).json({message: 'Resource not found', errors: [{
+        Competition.findOne({_id: competitionId, userId: userId, isDeleted: false}, '')
+        .then(function(competition) {
+            if (!competition || typeof competition._id === 'undefined') res.status(404).json({message: 'Resource not found', errors: [{
                 resource: 'activity',
                 code: 'not_found'
             }]});
 
             // Create the record that will be inserted in the db
-            activity.discipline = typeof req.body.discipline !== 'undefined' ? req.body.discipline : activity.discipline;
-            activity.performance = typeof req.body.performance !== 'undefined' ? req.body.performance : activity.performance;
-            activity.date = typeof req.body.date !== 'undefined' ? req.body.date : activity.date;
-            activity.rank = typeof req.body.rank !== 'undefined' ? req.body.rank : activity.rank;
-            activity.location = typeof req.body.location !== 'undefined' ? req.body.location : activity.location;
-            activity.competition = typeof req.body.competition !== 'undefined' ? req.body.competition : activity.competition;
-            activity.notes = typeof req.body.notes !== 'undefined' ? req.body.notes : activity.notes;
-            activity.comments = typeof req.body.comments !== 'undefined' ? req.body.comments : activity.comments;
-            activity.picture = typeof req.body.picture !== 'undefined' ? req.body.picture : activity.picture;
-            activity.isPrivate = typeof req.body.isPrivate !== 'undefined' ? req.body.isPrivate : activity.isPrivate;
-            activity.isOutdoor = typeof req.body.isOutdoor !== 'undefined' ? req.body.isOutdoor : activity.isOutdoor;
+            competition.discipline = typeof req.body.discipline !== 'undefined' ? req.body.discipline : competition.discipline;
+            competition.performance = typeof req.body.performance !== 'undefined' ? req.body.performance : competition.performance;
+            competition.date = typeof req.body.date !== 'undefined' ? req.body.date : competition.date;
+            competition.rank = typeof req.body.rank !== 'undefined' ? req.body.rank : competition.rank;
+            competition.location = typeof req.body.location !== 'undefined' ? req.body.location : competition.location;
+            competition.competition = typeof req.body.competition !== 'undefined' ? req.body.competition : competition.competition;
+            competition.notes = typeof req.body.notes !== 'undefined' ? req.body.notes : competition.notes;
+            competition.comments = typeof req.body.comments !== 'undefined' ? req.body.comments : competition.comments;
+            competition.picture = typeof req.body.picture !== 'undefined' ? req.body.picture : competition.picture;
+            competition.isPrivate = typeof req.body.isPrivate !== 'undefined' ? req.body.isPrivate : competition.isPrivate;
+            competition.isOutdoor = typeof req.body.isOutdoor !== 'undefined' ? req.body.isOutdoor : competition.isOutdoor;
 
-            var errors = activity.checkValid();
+            var errors = competition.checkValid();
 
             // If there are no errors
             if (!errors) {
-                uploadImageAndSave(req, res, activity, userId, "PUT");
+                uploadImageAndSave(req, res, competition, userId, "PUT");
             } else {
                 // If there are errors, send the error messages to the client
                 res.status(422).json({message: 'Invalid data', errors: errors});
@@ -291,38 +285,38 @@ exports.put = function(req, res) {
 };
 
 /**
- * Activites - DELETE
+ * Competitions - DELETE
  */
 exports.delete = function(req, res) {
     // Get the user id from the session
     var userId = req.user && req.user._id.toString();
     // Get the activity id from the url
-    var activityId = req.params.activityId;
+    var competitionId = req.params.competitionId;
 
     if (!userId) {
         res.status(401).json({message: 'Unauthorized'});
     }
-    else if (!activityId) {
+    else if (!competitionId) {
         res.status(400).json({message: 'Bad Request'});
     }
     else if(userId.toString() !== req.params.userId) {
         res.status(403).json({message: 'Forbidden'});
     }
     else {
-        Activity.schema.findOne({_id: activityId, userId: userId}, '')
-        .then(function(activity) {
-            if(!activity) {
+        Competition.findOne({_id: competitionId, userId: userId}, '')
+        .then(function(competition) {
+            if(!competition) {
                 res.status(404).json({message: 'Resource not found', errors: [{
-                    resource: 'activity',
+                    resource: 'competition',
                     code: 'not_found'
                 }]});
             } else {
-                activity.isDeleted = true;
-                activity.save(function(err, activity) {
+                competition.isDeleted = true;
+                competition.save(function(err, competitionRes) {
                     if(err) {
                         res.status(500).json({message: 'Server error'});
                     } else {
-                        res.status(200).json(activity);
+                        res.status(200).json(competitionRes);
                     }
                 });
             }
@@ -333,23 +327,23 @@ exports.delete = function(req, res) {
     }
 };
 
-function uploadImageAndSave(req, res, activity, userId, method) {
+function uploadImageAndSave(req, res, competition, userId, method) {
     if (typeof req.body.picture !== 'undefined' || (typeof req.files !== 'undefined' && typeof req.files.picture !== 'undefined')) {
         let bodyFile = typeof req.files !== 'undefined' && typeof req.files.picture !== 'undefined' ? req.files.picture : undefined,
-            s3Folder = s3Helper.getActivityS3Folder(userId, activity._id);
+            s3Folder = s3Helper.getCompetitionS3Folder(userId, competition._id);
 
-        imageUploadHelper.uploadImage(s3Folder, bodyFile, req.body.picture, activity._id, activityPictureOptions)
+        imageUploadHelper.uploadImage(s3Folder, bodyFile, req.body.picture, competition._id, competitonPictureOptions)
         .then(function(imageUrl) {
             if (typeof imageUrl === "string") {
-                activity.picture = imageUrl;
+                competition.picture = imageUrl;
             }
-            activity.save()
+            competition.save()
             .then(function() {
-                var activityRes = {};
-                ownActivityFields.forEach(field => {
-                    activityRes[field] = activity[field];
+                var competitionRes = {};
+                ownCompetitionFields.forEach(field => {
+                    competitionRes[field] = competition[field];
                 });
-                res.status(201).json(activityRes);
+                res.status(201).json(competitionRes);
             }, function(err) {
                 res.status(500).json({message: 'Server error'});
             });
@@ -368,14 +362,14 @@ function uploadImageAndSave(req, res, activity, userId, method) {
         });
     } else {
         if(method === "PUT") {
-            activity.save()
+            competition.save()
                 .then(function() {
-                    res.status(201).json(activity);
+                    res.status(201).json(competition);
                 }, function(err) {
                     res.status(500).json({message: 'Server error'});
                 });
         } else {
-            res.status(201).json(activity);
+            res.status(201).json(competition);
         }
     }
 }

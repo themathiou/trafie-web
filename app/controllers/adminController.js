@@ -1,7 +1,7 @@
 
 // Loading models
 const Profile = require('../models/profileModel'),
-    Activity = require('../models/activityModel'),
+    Competition = require('../models/competitionModel'),
     User = require('../models/userModel');
 
 const accountHelper = require('../helpers/accountHelper');
@@ -15,7 +15,7 @@ exports.getUsers = (req, res) => {
     Profile.schema.find({}, '')
         .then((results) => {
             profiles = results;
-            return Activity.schema.find({}, '');
+            return Competition.schema.find({}, '');
         })
         .then((results) => {
             activities = results;
@@ -39,7 +39,7 @@ exports.getUsers = (req, res) => {
                     .filter(activity => activity.userId.toString() === user._id.toString())
                     .map(activity => {
                         const formattedActivity = {};
-                        Object.keys(Activity.schema.paths).forEach(key => {
+                        Object.keys(Competition.schema.paths).forEach(key => {
                             if (key !== '__v') {
                                 formattedActivity[key] = activity[key];
                             }
@@ -52,7 +52,6 @@ exports.getUsers = (req, res) => {
             return res.status(200).json(users);
         })
         .catch(function(error) {
-            console.log(error);
             res.status(500).json({message: 'Server error'});
         });
 };

@@ -522,7 +522,7 @@ exports.post = function(req, res) {
                     .catch(function(statusCode, error) {
                         res.status(statusCode).json({message: 'Server error'});
                     });
-            }, function(error) {
+            }, (error) => {
                 // If there are errors, do not update the profile
                 if(error[0] === 500) {
                     res.status(error[0]).json({message: 'Server error'});
