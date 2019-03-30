@@ -27,7 +27,8 @@ export const commentsRegex = /^.{0,1000}$/;
 export const locationRegex = /^.{0,100}$/;
 export const competitionRankRegex = /^\d+$/;
 export const competitionNameRegex = /^.{2,100}$/;
-export const trainingKeyAndValueRegex = /^.{1,64}$/;
+export const trainingKeyRegex = /^.{1,64}$/;
+export const trainingValueRegex = /^.{1,200}$/;
 export const performanceValidation = {
     timeMaxValue: 8640000,
     distanceMaxValue: 12000000,

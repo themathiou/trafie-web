@@ -1,7 +1,7 @@
 import { ApiErrors } from "../types/apiTypes";
 import { Training, Drill } from "../types/trainingTypes";
 import { isTimestampValid, isNotesValid, isLocationValid } from "./validationHelper";
-import { trainingKeyAndValueRegex } from '../config/constantConfig';
+import { trainingKeyRegex, trainingValueRegex } from '../config/constantConfig';
 
 export function getTrainingValidationErrors(training: Training): ApiErrors {
     const errors: ApiErrors = [];
@@ -56,8 +56,8 @@ function isValidDrill(drill: Drill): boolean {
     return drillKeys.length === 2
         && drillKeys.indexOf("name") >= 0
         && typeof drill.name === "string"
-        && trainingKeyAndValueRegex.test(drill.name)
+        && trainingKeyRegex.test(drill.name)
         && drillKeys.indexOf("value") >= 0
         && typeof drill.value === "string"
-        && trainingKeyAndValueRegex.test(drill.value);
+        && trainingValueRegex.test(drill.value);
 }
