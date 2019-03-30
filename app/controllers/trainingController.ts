@@ -140,7 +140,7 @@ export function trainingsDelete(req: Request, res: Response) {
         }
         training.remove()
             .then(() => {
-                return res.status(200);
+                return res.status(200).json({});
             })
             .catch(() => {
                 return res.status(500).json({ message: "Server error" });
