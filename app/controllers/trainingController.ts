@@ -150,12 +150,3 @@ export function trainingsDelete(req: Request, res: Response) {
         return res.status(500).json({ message: "Server error" });
     });
 }
-
-// $.post("/users/5abd501f271249fd0e01511a/trainings", ).then(activities => console.log(activities));
-/*
-$.post("/users/5abd501f271249fd0e01511a/trainings", {
-	"date": Math.floor(Date.now() / 1000),
-	"location": "here",
-	"drills": [{name: "Drill01", value: "5"}]
-}).then(activities => console.log(activities));
-*/
