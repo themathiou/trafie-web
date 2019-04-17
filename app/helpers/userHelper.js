@@ -21,7 +21,7 @@ userHelper.encryptPassword = function(password) {
  * @return boolean
  */
 userHelper.validateEmail = function(email) {
-    return config.validations.email.test(email);
+    return config.emailRegex.test(email);
 };
 
 /**
