@@ -22,13 +22,13 @@ export const passwordRegex = /^.{6,}$/;
 export const emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,})?$/;
 export const roleRegex = /^(athlete|coach)$/;
 export const unitsRegex = /^(meters|feet)$/;
-export const notesRegex = /^.{0,1000}$/;
+export const notesRegex = /[\d\D]{0,1000}/;
 export const commentsRegex = /^.{0,1000}$/;
 export const locationRegex = /^.{0,100}$/;
 export const competitionRankRegex = /^\d+$/;
 export const competitionNameRegex = /^.{2,100}$/;
 export const trainingKeyRegex = /^.{1,64}$/;
-export const trainingValueRegex = /^.{1,200}$/;
+export const trainingValueRegex = /[\d\D]{1,200}/;
 export const performanceValidation = {
     timeMaxValue: 8640000,
     distanceMaxValue: 12000000,
