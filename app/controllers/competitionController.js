@@ -1,4 +1,5 @@
 const moment = require('moment');
+const isCompetitionValid = require("../helpers/competitionHelper").isCompetitionValid;
 
 // Loading models
 const Competition = require('../models/competitionModel');
@@ -212,10 +213,10 @@ exports.post = function(req, res) {
                 isPrivate: typeof req.body.isPrivate !== 'undefined' ? req.body.isPrivate : false,
                 isOutdoor: typeof req.body.isOutdoor !== 'undefined' ? req.body.isOutdoor : false
             };
-            var competition = new Competition(competitionData),
-                errors = competition.checkValid();
+            const errors = isCompetitionValid(competitionData);
 
             if(!errors) {
+                const competition = new Competition(competitionData);
                 competition.save()
                 .then(function(activityRes) {
                     uploadImageAndSave(req, res, competition, userId, "POST");
@@ -254,24 +255,26 @@ exports.put = function(req, res) {
                 resource: 'activity',
                 code: 'not_found'
             }]});
-
-            // Create the record that will be inserted in the db
-            competition.discipline = typeof req.body.discipline !== 'undefined' ? req.body.discipline : competition.discipline;
-            competition.performance = typeof req.body.performance !== 'undefined' ? req.body.performance : competition.performance;
-            competition.date = typeof req.body.date !== 'undefined' ? req.body.date : competition.date;
-            competition.rank = typeof req.body.rank !== 'undefined' ? req.body.rank : competition.rank;
-            competition.location = typeof req.body.location !== 'undefined' ? req.body.location : competition.location;
-            competition.competition = typeof req.body.competition !== 'undefined' ? req.body.competition : competition.competition;
-            competition.notes = typeof req.body.notes !== 'undefined' ? req.body.notes : competition.notes;
-            competition.comments = typeof req.body.comments !== 'undefined' ? req.body.comments : competition.comments;
-            competition.picture = typeof req.body.picture !== 'undefined' ? req.body.picture : competition.picture;
-            competition.isPrivate = typeof req.body.isPrivate !== 'undefined' ? req.body.isPrivate : competition.isPrivate;
-            competition.isOutdoor = typeof req.body.isOutdoor !== 'undefined' ? req.body.isOutdoor : competition.isOutdoor;
-
-            var errors = competition.checkValid();
-
+            
+            const competitionData = {
+                discipline: typeof req.body.discipline !== 'undefined' ? req.body.discipline : competition.discipline,
+                performance: typeof req.body.performance !== 'undefined' ? req.body.performance : competition.performance,
+                date: typeof req.body.date !== 'undefined' ? req.body.date : competition.date,
+                rank: typeof req.body.rank !== 'undefined' ? req.body.rank : competition.rank,
+                location: typeof req.body.location !== 'undefined' ? req.body.location : competition.location,
+                competition: typeof req.body.competition !== 'undefined' ? req.body.competition : competition.competition,
+                notes: typeof req.body.notes !== 'undefined' ? req.body.notes : competition.notes,
+                comments: typeof req.body.comments !== 'undefined' ? req.body.comments : competition.comments,
+                picture: typeof req.body.picture !== 'undefined' ? req.body.picture : competition.picture,
+                isPrivate: typeof req.body.isPrivate !== 'undefined' ? req.body.isPrivate : competition.isPrivate,
+                isOutdoor: typeof req.body.isOutdoor !== 'undefined' ? req.body.isOutdoor : competition.isOutdoor
+            }
+            const errors = isCompetitionValid(competitionData);
             // If there are no errors
             if (!errors) {
+                Object.keys(competitionData).forEach((key) => {
+                    competition[key] = competitionData[key];
+                });
                 uploadImageAndSave(req, res, competition, userId, "PUT");
             } else {
                 // If there are errors, send the error messages to the client
