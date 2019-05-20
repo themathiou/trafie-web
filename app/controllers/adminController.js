@@ -15,7 +15,7 @@ exports.getUsers = (req, res) => {
     Profile.schema.find({}, '')
         .then((results) => {
             profiles = results;
-            return Competition.schema.find({}, '');
+            return Competition.find({}, '');
         })
         .then((results) => {
             activities = results;
