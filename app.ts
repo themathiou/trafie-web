@@ -24,11 +24,10 @@
  * EXPRESS                                                                                                                     *
  ******************************************************************************************************************************/
 
-'use strict';
-require('dotenv').config({silent: true});
+require('dotenv').config({ silent: true });
 process.env.TZ = 'UTC';
 
-var express = require('express'),
+const express = require('express'),
     router = express.Router(),
     path = require('path'),
     mongoose = require('mongoose'),
@@ -43,11 +42,11 @@ var express = require('express'),
     formidable = require('formidable');
 
 // Initialize express
-var trafie = express();
+const trafie = express();
 
-var passportSessions = require('./app/config/sessionsConfig');
+const passportSessions = require('./app/config/sessionsConfig');
 // Initialize the routes
-var index = require('./app/controllers/index'),
+const index = require('./app/controllers/index'),
     login = require('./app/controllers/loginController'),
     logout = require('./app/controllers/logoutController'),
     register = require('./app/controllers/registerController'),
@@ -55,15 +54,15 @@ var index = require('./app/controllers/index'),
     competitions = require('./app/controllers/competitionController'),
     emailValidation = require('./app/controllers/emailValidationController'),
     resetPassword = require('./app/controllers/resetPasswordController'),
-    deactivate = require('./app/controllers/deactivateAccountController'),
     feedback = require('./app/controllers/feedbackController'),
     admin = require('./app/controllers/adminController'),
     auth = require('./app/controllers/authController'),
     oAuth = require('./app/controllers/oAuthController');
- import { trainingsDelete, trainingsGet, trainingsPost, trainingsPut } from "./app/controllers/trainingController";
+import { trainingsDelete, trainingsGet, trainingsPost, trainingsPut } from "./app/controllers/trainingController";
+import { deleteAccountPost } from "./app/controllers/deleteAccountController";
 
-    const db = require('./app/config/dbConfig'),
-        redisClient = require('./app/config/redisClientConfig');
+const db = require('./app/config/dbConfig');
+const redisClient = require('./app/config/redisClientConfig');
 
 
 /*******************************************************************************************************************************
@@ -79,7 +78,7 @@ mongoose.connect(db[process.env.NODE_ENV].mongo.url, { useNewUrlParser: true }, 
     if (err) {console.log(err);} else {console.log('mongo connected');}
 });
 
-var sessionObj = session({
+const sessionObj = session({
     store: new redisStore({
         host: db[process.env.NODE_ENV].redis.host,
         port: db[process.env.NODE_ENV].redis.port,
@@ -103,7 +102,7 @@ trafie.set('view engine', 'jade');
 trafie.set('view cache', true);
 trafie.use(methodOverride());
 trafie.use(function(req, res, next) {
-    var routesWithoutSessions = ['/authorize'];
+    const routesWithoutSessions = ['/authorize'];
     if(req.url.startsWith('/api/') || (req.url === '/logout' && req.headers.hasOwnProperty('authorization')) || routesWithoutSessions.indexOf(req.url) >= 0) {
         next();
     }
@@ -136,7 +135,7 @@ function requireHTTPS(req, res, next) {
 }
 
 function filesParserMiddleware(req, res, next) {
-    if(req.get('Content-Type').startsWith('multipart/form-data;')) {
+    if (req.get('Content-Type').startsWith('multipart/form-data;')) {
         var form = new formidable.IncomingForm();
         form.encoding = 'utf-8';
         form.keepExtensions = true;
@@ -301,7 +300,8 @@ trafie.get('/logout', logout.get);
 /**
  * Deactivate - POST
  */
-trafie.post('/deactivate-account', deactivate.post);
+trafie.post('/delete-account', deleteAccountPost);
+trafie.post('/api/delete-account', passport.authenticate('bearer', { session: false }), deleteAccountPost);
 
 
 /*******************************************************************************************************************************

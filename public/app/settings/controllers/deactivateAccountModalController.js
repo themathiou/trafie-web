@@ -6,7 +6,7 @@ angular.module('trafie')
         };
 
         $scope.submit = function () {
-            $http.post('/deactivate-account', $scope.formData)
+            $http.post('/delete-account', $scope.formData)
                 .then(function(res) {
                     if(res.status === 200) {
                         $window.location.href = 'register';

@@ -18,11 +18,11 @@ export function trainingsGet(req: Request, res: Response) {
     if (req.params.trainingId) {
         TrainingModel.findById(req.params.trainingId)
         .then((training) => res.status(200).json(training))
-        .catch(() => res.status(500).json({message: "Server error"}));
+        .catch(() => res.status(500).json({ message: "Server error" }));
     } else {
         TrainingModel.find({ userId: userId })
         .then((trainings) => res.status(200).json(trainings))
-        .catch(() => res.status(500).json({message: "Server error"}));
+        .catch(() => res.status(500).json({ message: "Server error" }));
     }
 }
 
@@ -44,7 +44,7 @@ export function trainingsPost(req: Request, res: Response) {
     };
     const validationErrors = getTrainingValidationErrors(trainingData);
     if (validationErrors.length) {
-        return res.status(422).json({message: "Invalid data", errors: validationErrors});
+        return res.status(422).json({ message: "Invalid data", errors: validationErrors });
     }
     
     const training = new TrainingModel(trainingData);
@@ -53,7 +53,7 @@ export function trainingsPost(req: Request, res: Response) {
             return res.status(201).send(training);
         })
         .catch(() => {
-            return res.status(500).json({message: "Server error"});
+            return res.status(500).json({ message: "Server error" });
         });
     
 }
