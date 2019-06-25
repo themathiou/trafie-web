@@ -6,6 +6,8 @@
         self.user = null;
         self.getTitle = pageDataService.getTitle;
         self.getDescription = pageDataService.getDescription;
+        self.searchValue = "";
+        self.searchResults = [];
 
         userService.loadCurrentUser().then(function(user) {
             self.user = user;
@@ -15,19 +17,22 @@
 
         // @TODO: Different page for search results, triggered by the magnifying glass
         self.searchUsers = function(val) {
-            return $http.get('/users', {
-                params: {
-                    keywords: val
-                }
-            }).then(function(response) {
-                return response.data;
-            });
+            if (val) {
+                $http.get('/users', {
+                    params: {
+                        keywords: val
+                    }
+                }).then(function(response) {
+                    response.data;
+                    self.searchResults = response.data;
+                });
+            } else {
+                self.searchResults = [];
+            }
         };
 
-        self.goToUser = function() {
-            if(self.profileResult && angular.isObject(self.profileResult)) {
-                $location.path('/' + (self.profileResult.username || self.profileResult._id));
-            }
+        self.getUserUrl = function(user) {
+            $location.path('/' + (user.username || user._id));
         };
 
         self.getCurrentPage = function() {
@@ -62,5 +67,10 @@
         $scope.$watch(function() {
             return self.profileResult;
         }, self.goToUser);
+
+
+        $scope.$watch(function() {
+            return self.searchValue;
+        }, self.searchUsers);
     });
 })(angular);

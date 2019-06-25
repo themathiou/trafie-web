@@ -1,31 +1,62 @@
-nav.navbar.navbar-default.navbar-fixed-top.navbar-trafie
-    div.container
-        div.container-fluid(ng-init="App.sidebarIsCollapsed = true")
-            div.navbar-header
-                button.navbar-left(type="button", class="navbar-toggle collapsed", aria-expanded="false", ng-click="App.sidebarIsCollapsed = !App.sidebarIsCollapsed")
-                    i.fa.fa-navicon
-                    span(class="sr-only") Toggle navigation
-                a.navbar-brand(href="/") trafie
-            div.navbar-collapse.collapse.navbar-left.row(uib-collapse="App.sidebarIsCollapsed", ng-cloak)
-                ul.nav.navbar-nav
-                    li(ng-if="App.user" ng-class="{'active': App.getCurrentPage() === 'profile'}")
-                        a(href='/', ng-click="App.sidebarIsCollapsed = true; App.profileResult = '';")
-                            i.fa.fa-user.nav-icon
-                            span(ng-bind="App.user.firstName")
-                    li(ng-if="App.user" ng-class="{'active': App.getCurrentPage() === 'settings'}")
-                        a(href='/settings', ng-click="App.sidebarIsCollapsed = true; App.profileResult = '';")
-                            i.fa.fa-cog.nav-icon
-                            span(translate="COMMON.SETTINGS")
-                    li(ng-if="!App.user")
-                        a(href='/register' ng-click="App.forceRedirect('register')")
-                            span(translate="COMMON.REGISTER")
-                    li(ng-if="!App.user")
-                        a(href='/login' ng-click="App.forceRedirect('login')")
-                            span(translate="COMMON.LOGIN")
-            div.navbar-collapse.collapse.navbar-right
-                form.navbar-form.navbar-right-form(role="search")
-                    .input-group(ng-cloak)
-                        input.form-control(type="text" placeholder="{{'COMMON.SEARCH' | translate}}" ng-model="App.profileResult" uib-typeahead="user as (user.firstName + ' ' + user.lastName) for user in App.searchUsers($viewValue)")
-                        span.input-group-btn
-                            button.btn.btn-default(type="submit" ng-click="App.goToUser()")
-                                i.fa.fa-search
+nav.navbar.navbar-main.navbar-expand-lg.navbar-dark.bg-trafie
+    div.container.px-lg-0
+        a.navbar-brand.mr-lg-5(href="/") trafie
+        button.navbar-toggler.pr-0(type="button" data-toggle="collapse" data-target="#navbar-main-collapse" aria-controls="navbar-main-collapse" aria-expanded="false" aria-label="Toggle navigation")
+            span.navbar-toggler-icon
+        div#navbar-main-collapse.navbar-collapse.collapse
+            ul.navbar-nav.align-items-lg-center
+                li.nav-item(ng-if="App.user" ng-class="{'active': App.getCurrentPage() === 'profile'}")
+                    a.nav-link(href='/')
+                        i.fa.fa-user.nav-icon
+                        span(ng-bind="App.user.firstName")
+                li.nav-item(ng-if="App.user" class="nav-item" ng-class="{'active': App.getCurrentPage() === 'settings'}")
+                    a.nav-link(href='/settings')
+                        i.fa.fa-cog.nav-icon
+                        span(translate="COMMON.SETTINGS")
+                li.nav-item(ng-if="!App.user")
+                    a.nav-link(href='/register' ng-click="App.forceRedirect('register')")
+                        span(translate="COMMON.REGISTER")
+                li.nav-item(ng-if="!App.user")
+                    a.nav-link(href='/login' ng-click="App.forceRedirect('login')")
+                        span(translate="COMMON.LOGIN")
+            ul.navbar-nav.align-items-lg-center.ml-lg-auto
+                li.nav-item
+                    a.nav-link(href="#" data-action="omnisearch-open" data-target="#omnisearch")
+                        i.fas.fa-search
+
+//- nav.navbar.navbar-default.navbar-main.navbar-expand-lg.navbar-fixed-top.navbar-trafie
+//-     div.container
+//-         div.container-fluid
+//-             div.navbar-header
+//-                 button.navbar-left(type="button" data-toggle="collapse" data-target="#navbar-main-collapse" aria-controls="navbar-main-collapse" aria-expanded="false" aria-label="Toggle navigation")
+//-                     i.fa.fa-navicon
+//-                     span(class="sr-only") Toggle navigation
+//-                 a.navbar-brand(href="/") trafie
+//-             div#navbar-main-collapse.navbar-collapse.collapse.navbar-left
+//-                 ul.nav.navbar-nav
+//-                     li(ng-if="App.user" ng-class="{'active': App.getCurrentPage() === 'profile'}")
+//-                         a(href='/')
+//-                             i.fa.fa-user.nav-icon
+//-                             span(ng-bind="App.user.firstName")
+//-                     li(ng-if="App.user" class="nav-item" ng-class="{'active': App.getCurrentPage() === 'settings'}")
+//-                         a(href='/settings')
+//-                             i.fa.fa-cog.nav-icon
+//-                             span(translate="COMMON.SETTINGS")
+//-                     li(ng-if="!App.user")
+//-                         a(href='/register' ng-click="App.forceRedirect('register')")
+//-                             span(translate="COMMON.REGISTER")
+//-                     li(ng-if="!App.user")
+//-                         a(href='/login' ng-click="App.forceRedirect('login')")
+//-                             span(translate="COMMON.LOGIN")
+//-             div.navbar-collapse.collapse.navbar-right
+
+//-               li.nav-item
+//-                 a.nav-link(href="#" data-action="omnisearch-open" data-target="#omnisearch")
+//-                     i.fas.fa-search
+
+//-                 form.navbar-form.navbar-right-form(role="search")
+//-                     .input-group(ng-cloak)
+//-                         input.form-control(type="text" placeholder="{{'COMMON.SEARCH' | translate}}" ng-model="App.profileResult" uib-typeahead="user as (user.firstName + ' ' + user.lastName) for user in App.searchUsers($viewValue)")
+//-                         span.input-group-btn
+//-                             button.btn.btn-default(type="submit" ng-click="App.goToUser()")
+//-                                 i.fa.fa-search

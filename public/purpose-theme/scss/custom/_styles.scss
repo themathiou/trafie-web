@@ -1,0 +1,37 @@
+// User styles
+//
+// This is the place where you should place all additional styles and imports.
+// This will allow you to take advantage of future updates with lower time consumed on the upgrade process.
+
+.bg-trafie {
+    background-color: $trafie-color;
+}
+
+.header-account-page {
+    height: 4.5rem;
+}
+
+.avatar-profile-wrapper {
+    display: inline-block;
+    height: 146px;
+    position: relative;
+    width: 146px;
+}
+
+.avatar-upload-prompt {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    color: #fff;
+    display: inline-block;
+    font-size: 20px;
+    height: 100%;
+    left: 0;
+    line-height: 1.2;
+    padding: 30px 0;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}

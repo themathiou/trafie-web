@@ -1,5 +1,5 @@
 const gulp = require("gulp");
-const less = require("gulp-less");
+const sass = require("gulp-sass");
 const path = require("path");
 const gutil = require("gulp-util");
 const rename = require("gulp-rename");
@@ -14,6 +14,16 @@ const fs = require("fs");
 const jade = require("gulp-jade");
 const translations = require("./public/languages/translations.json");
 const scriptsDest = "public/app";
+const watch = gulp.watch;
+
+sass.compiler = require('node-sass');
+
+const jadePath = "./app/views/**/*.jade";
+const themePath = "./public/purpose-theme/scss/custom/**/*.scss";
+const stylesPath = "./public/styles/scss/styles.scss";
+const stylesWatch = [stylesPath, themePath];
+const outerStylesPath = "./public/styles/scss/styles-outer.scss";
+const outerStylesWatch = [outerStylesPath, themePath]
 
 function handleError(err) {
     gutil.log(err.toString());
@@ -31,16 +41,21 @@ function fetchScripts(filename) {
         .filter((value) => !!value);
 }
 
-gulp.task("compile-jade", function() {
+const compileJade = (cb) => {
     const locals = {
         env: "production",
         envInstance: "production"
     };
 
-    return gulp.src("./app/views/*.jade")
-        .pipe(jade({locals}))
-        .pipe(gulp.dest("./app/views/dist/"))
-});
+    gulp.src(jadePath)
+        .pipe(jade({ locals }))
+        .pipe(gulp.dest("./app/views/dist/"));
+
+    if (cb) {
+        cb();
+    }
+}
+gulp.task("compile-jade", compileJade);
 
 function generateProductionScripts(scriptName, appScriptsPath, packageScriptsPath) {
     return es.merge(
@@ -71,18 +86,36 @@ gulp.task("production-outer-scripts", function() {
     return generateProductionScripts(scriptName, outerScripts, outerPackageScripts);
 });
 
-gulp.task("app-less", function () {
-    return gulp.src("./public/styles/less/styles.less")
-        .pipe(less().on("error", handleError))
+const appScss = (cb) => {
+    gulp.src(stylesPath)
+        .pipe(sass().on("error", handleError))
         .pipe(rename("./"))
         .pipe(gulp.dest("./public/styles/styles.css"));
-});
 
-gulp.task("outer-less", function () {
-    return gulp.src("./public/styles/less/styles-outer.less")
-        .pipe(less().on("error", handleError))
+    if (cb) {
+        cb();
+    }
+}
+gulp.task("app-scss", appScss);
+
+const outerScss = (cb) => {
+    gulp.src(outerStylesPath)
+        .pipe(sass().on("error", handleError))
         .pipe(rename("./"))
         .pipe(gulp.dest("./public/styles/styles-outer.css"));
+
+    if (cb) {
+        cb();
+    }
+}
+gulp.task("outer-scss", outerScss);
+
+gulp.task("watch", () => {
+    watch(jadePath, compileJade);
+    watch(stylesPath, appScss);
+    watch(outerStylesPath, outerScss);
+    watch(themePath, appScss);
+    watch(themePath, outerScss);
 });
 
 gulp.task("split-translations", function(cb) {
@@ -95,5 +128,5 @@ gulp.task("split-translations", function(cb) {
     cb();
 });
 
-gulp.task("default-dev", gulp.series("app-less", "outer-less", "split-translations"));
-gulp.task("default", gulp.series("production-scripts", "production-outer-scripts", "app-less", "outer-less", "split-translations"));
+gulp.task("default-dev", gulp.series("app-scss", "outer-scss", "split-translations"));
+gulp.task("default", gulp.series("production-scripts", "production-outer-scripts", "app-scss", "outer-scss", "split-translations"));

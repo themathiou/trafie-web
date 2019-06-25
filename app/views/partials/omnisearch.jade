@@ -1,0 +1,16 @@
+div#omnisearch.omnisearch
+    div.container
+        form.omnisearch-form
+            div.form-group
+                div.input-group.input-group-merge.input-group-flush
+                    div.input-group-prepend
+                        span.input-group-text
+                            i.fas.fa-search
+                    input.form-control(type="text" ng-model="App.searchValue" placeholder="{{'COMMON.SEARCH' | translate}}")
+        div.omnisearch-suggestions
+            div.row
+                div.col-sm-6
+                    ul.list-unstyled.mb-0
+                        li(ng-repeat="user in App.searchResults")
+                            a.list-link(href="{{App.getUserUrl(user)}}")
+                                span {{user.firstName + ' ' + user.lastName}}
