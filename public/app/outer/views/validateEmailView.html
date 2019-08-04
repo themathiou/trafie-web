@@ -1,28 +1,41 @@
-<div class="main-container clearfix screen-height">
-    <div class="content-container screen-height">
-        <div class="page page-auth clearfix">
-            <div class="auth-container">
-                <div class="panel panel-default panel-form-outer">
-                    <h3 class="text-center" ng-if="validated === null">
-                        Validating...
-                    </h3>
-                    <div ng-if="validated === true" class="text-center">
-                        <span>
-                            <i class="fa fa-check text-success outer-success-mark"></i>
-                        </span>
-                        <h4>
-                            Your email has been successfully verified!
-                        </h4>
-                        <p>
-                            <a class="text-center" href="/login" ng-click="goToProfile()">Go to your profile</a>
-                        </p>
-                    </div>
-                    <h3 class="text-center" ng-if="validated === false">
-                        The hash you provided is not valid.
-                    </h3>
+<section class="slice slice-lg vh-100 bg-gradient-primary overflow-hidden" data-offset-top="#header-main">
+    <div class="bg-absolute-cover bg-absolute-cover-trafie vh-100 overflow-hidden"></div>
+    <div class="container h-100 d-flex align-items-center position-relative zindex-100">
+        <div class="col">
+            <div class="row justify-content-center">
+                <div class="col-lg-7 text-center" ng-if="validated === null">
+                    <a href="/">
+                        <img class="logo-badge logo-badge-sm mb-2" src="/images/logo.svg"></img>
+                    </a>
+                    <h6 class="h1 mb-5 mt-5 font-weight-400 text-white">Validating...</h6>
+                </div>
+                <div class="col-lg-7 text-center" ng-if="validated === true">
+                    <a href="/">
+                        <img class="logo-badge logo-badge-sm mb-2" src="/images/logo.svg"></img>
+                    </a>
+                    <h6 class="h1 mb-5 mt-5 font-weight-400 text-white">Your email has been successfully verified!</h6>
+                    <a href="/login" ng-click="goToProfile()" class="btn btn-white btn-icon rounded-pill hover-translate-y-n3">
+                        <span class="btn-inner--icon"><i class="fas fa-home"></i></span>
+                        <span class="btn-inner--text">Go to your profile</span>
+                    </a>
+                </div>
+                <div class="col-lg-7 text-center" ng-if="validated === false">
+                    <a href="/">
+                        <img class="logo-badge logo-badge-sm mb-2" src="/images/logo.svg"></img>
+                    </a>
+                    <h6 class="h1 mb-5 mt-5 font-weight-400 text-white">This url is not valid anymore.</h6>
+                    <a href="/login" ng-click="goToProfile()" class="btn btn-white btn-icon rounded-pill hover-translate-y-n3">
+                        <span class="btn-inner--icon"><i class="fas fa-home"></i></span>
+                        <span class="btn-inner--text">Return home?</span>
+                    </a>
                 </div>
             </div>
         </div>
-        <span class="photo-credits" ng-include="'/app/outer/views/partial/photoCreditsView.html'"></span>
     </div>
-</div>
+    <div class="position-absolute bottom-0 right-4 overflow-hidden">
+        <figure class="w-50">
+            <img alt="Image placeholder" src="../../assets/img/svg/illustrations/design-thinking.svg"
+                class="svg-inject opacity-2">
+        </figure>
+    </div>
+</section>

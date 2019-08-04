@@ -25,7 +25,8 @@
                     animation: false,
                     templateUrl: 'app/settings/views/uploadImageModalView.html',
                     controller: 'UploadImageModalController',
-                    size: 'md',
+                    size: 'lg',
+                    backdropClass: 'show',
                     resolve: {
                         currentPicture: function() {
                             return ngModel.$modelValue;
@@ -54,10 +55,12 @@
             replace: true,
             scope: {},
             template:
-                '<span class="avatar-setting-wrapper" ng-mouseenter="uploadPromptShown = true"' +
+                '<span class="avatar avatar-lg rounded-circle mr-3" ng-mouseenter="uploadPromptShown = true"' +
                     'ng-mouseleave="uploadPromptShown = false" ng-click="showImageUploaderModal()">' +
-                    '<span class="avatar-upload-prompt" ng-show="uploadPromptShown" translate="COMMON.CHANGE_PICTURE"></span>' +
-                    '<img ng-src="{{picture}}" class="avatar avatar-sm">' +
+                    '<span class="avatar-upload-prompt" ng-show="uploadPromptShown">' +
+                        '<span class="avatar-upload-prompt-text" translate="COMMON.CHANGE_PICTURE"></span>' +
+                    '</span>' +
+                    '<img ng-src="{{picture}}">' +
                 '</span>',
             link: link
         }

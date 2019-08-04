@@ -129,7 +129,8 @@
                     animation: false,
                     templateUrl: 'app/profile/views/activityEditorModalView.html',
                     controller: 'ActivityEditorModalController',
-                    size: 'md',
+                    size: 'lg',
+                    backdropClass: 'show',
                     resolve: {
                         activityToEdit: function () {
                             return activity || null;
@@ -147,7 +148,8 @@
                     animation: false,
                     templateUrl: 'app/profile/views/activityDisplayModalView.html',
                     controller: 'ActivityDisplayModalController',
-                    size: 'md',
+                    size: 'lg',
+                    backdropClass: 'show',
                     resolve: {
                         activityToDisplay: function () {
                             return activity;
@@ -236,6 +238,105 @@
             }
 
             $scope.graphListFilter = (discipline) => $scope.newGraphActivities.activities[discipline].data[0].length > 1;
+
+            /*
+             * Filters
+             */
+
+            $scope.filterOptions = {
+                outdoor: {
+                    property: 'isOutdoor',
+                    inputType: 'toggle',
+                    options: [],
+                    label: 'PROFILE.COMPETITION_TYPE',
+                    valueLabels: {
+                        'true': 'PROFILE.OUTDOOR',
+                        'false': 'PROFILE.INDOOR'
+                    }
+                },
+                years: {
+                    property: 'year',
+                    inputType: 'multiSelect',
+                    options: [],
+                    label: 'PROFILE.YEAR',
+                    placeholder: 'PROFILE.SELECT_YEARS_TO_FILTER',
+                    translationPrefix: ''
+                },
+                disciplines: {
+                    property: 'discipline',
+                    inputType: 'multiSelect',
+                    options: [],
+                    label: 'COMMON.DISCIPLINE',
+                    placeholder: 'PROFILE.SELECT_DISCIPLINES_TO_FILTER',
+                    translationPrefix: 'DISCIPLINES.'
+                }
+            };
+            $scope.selectedFilters = {};
+
+
+            $scope.$watchCollection('activities', function() {
+                var selected = {};
+                Object.keys($scope.filterOptions).forEach(function(filterCategory) {
+                    selected[filterCategory] = [];
+                    $scope.filterOptions[filterCategory].options = [];
+                });
+                angular.copy($scope.activities).forEach(function(activity) {
+                    activity.year = moment.unix(activity.date).format('YYYY');
+                    Object.keys($scope.filterOptions).forEach(function(filterCategory) {
+                        var filterProperty = $scope.filterOptions[filterCategory].property;
+                        if(selected[filterCategory].indexOf(activity[filterProperty]) < 0) {
+                            selected[filterCategory].push(activity[filterProperty]);
+                            var text = activity[filterProperty];
+                            if($scope.filterOptions[filterCategory].translationPrefix) {
+                                text = $scope.filterOptions[filterCategory].translationPrefix + activity[filterProperty].toUpperCase();
+                            }
+                            $scope.filterOptions[filterCategory].options.push({
+                                text: text,
+                                value: activity[filterProperty]
+                            });
+                        }
+                    });
+                });
+            });
+
+            $scope.filterOptionsExist = function() {
+                return Object.keys($scope.filterOptions).some(function(filterCategory) {
+                    return $scope.filterOptions[filterCategory].options.length > 1;
+                });
+            };
+
+
+            $scope.openActivityFiltersModal = function() {
+                var modalInstance = $uibModal.open({
+                    animation: false,
+                    templateUrl: 'app/profile/views/activityFiltersModalView.html',
+                    controller: 'ActivityFiltersModalController',
+                    size: 'lg',
+                    backdropClass: 'show',
+                    resolve: {
+                        activities: function() {
+                            return $scope.activities;
+                        },
+                        filterOptions: function() {
+                            return $scope.filterOptions;
+                        },
+                        selectedFilters: function() {
+                            return $scope.selectedFilters;
+                        },
+                        filters: function() {
+                            return $scope.filters;
+                        }
+                    }
+                });
+
+                modalInstance.result.then(function(result) {
+                    $scope.filters = result.filters;
+                    $scope.selectedFilters = result.selectedFilters;
+                }, function() {
+
+                });
+
+            };
 
             $scope.$watch("timeLine.mode", () => $timeout(parseGraphActivities, 0));
             $scope.$watch("filters", () => $timeout(parseGraphActivities, 0), true);

@@ -1,64 +1,68 @@
-<div ng-class="{'panel panel-default' : !isEmbedded}" class="activity-panel">
-    <div ng-class="{'panel-body' : !isEmbedded}">
-        <div class="activity-lead full-inline-block">
-            <div class="row">
-                <div class="col-sm-9 p-right-45">
-                    <strong class="lead" ng-bind-html="activity.getReadablePerformance()"></strong>
-                    <strong class="lead">&bull; {{activity.competition}}</strong>
-                    <span>
-                        <small class="text-muted" translate="{{'DISCIPLINES.' + activity.discipline.toUpperCase()}}"></small>
-                        <small class="text-muted" translate="{{activity.isOutdoor ? 'PROFILE.OUTDOOR' : 'PROFILE.INDOOR'}}"></small>
-                    </span>
-                </div>
-                <div class="col-sm-3">
-                    <span class="pull-sm-right" ng-class="{'m-right-20': ownProfile}">
-                        {{formatUnixTimestamp(activity.date)}}
-                    </span>
-                </div>
-            </div>
-            <span uib-dropdown class="activity-options" ng-if="ownProfile">
-                <a href uib-dropdown-toggle>
+<div ng-class="{'card mt-4' : !isEmbedded}">
+    <div ng-class="{'card-header' : !isEmbedded}" class="d-flex justify-content-between align-items-center">
+        <div>
+            <strong class="h6 lead" ng-bind-html="activity.getReadablePerformance()"></strong>
+            <strong class="h6 lead">&bull; {{activity.competition}}</strong>
+            <span class="ml-1">
+                <small class="text-muted" translate="{{'DISCIPLINES.' + activity.discipline.toUpperCase()}}"></small>
+                <small class="text-muted" translate="{{activity.isOutdoor ? 'PROFILE.OUTDOOR' : 'PROFILE.INDOOR'}}"></small>
+            </span>
+        </div>
+        <div>
+            <span ng-class="{'m-right-20': ownProfile}">
+                {{formatUnixTimestamp(activity.date)}}
+            </span>
+            <span uib-dropdown class="ml-1" ng-class="{'show': isDropdownOpen}" ng-if="ownProfile" is-open="isDropdownOpen">
+                <a href uib-dropdown-toggle class="no-handle pl-2 pr-2">
                     <i class="fa fa-ellipsis-v text-muted"></i>
                 </a>
-                <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu>
-                    <li ng-show="isPubliclyVisible()">
+                <ul class="dropdown-menu dropdown-menu-right" ng-class="{'show': isDropdownOpen}" uib-dropdown-menu>
+                    <li class="dropdown-item" ng-show="isPubliclyVisible()">
                         <a href="javascript:;" ng-click="openActivityDisplayModal(activity)">
-                            <i class="fa fa-external-link text-primary"></i>&nbsp;
+                            <i class="fa fa-share-square"></i>&nbsp;
                             {{'COMMON.SHARE' | translate}}
                         </a>
                     </li>
-                    <li>
+                    <li class="dropdown-item">
                         <a href="javascript:;" ng-click="openActivityEditorModal(activity)">
-                            <i class="fa fa-edit text-warning"></i>&nbsp;
+                            <i class="fa fa-edit"></i>&nbsp;
                             {{'COMMON.EDIT' | translate}}
                         </a>
                     </li>
-                    <li>
-                        <a href="javascript:;" ng-click="deleteActivity(activity)" confirm="{{'PROFILE.ARE_YOU_SURE_YOU_WANT_TO_DELETE_THIS_ACTIVITY' | translate}}" confirm-title="{{'PROFILE.DELETE_ACTIVITY' | translate}}" confirm-ok="{{'COMMON.YES' | translate}}" confirm-cancel="{{'COMMON.CANCEL' | translate}}" confirm-settings="{size: 'sm'}">
-                            <i class="fa fa-remove text-danger"></i>&nbsp;
+                    <li class="dropdown-item">
+                        <a href="javascript:;" class="text-danger" ng-click="deleteActivity(activity)" confirm="{{'PROFILE.ARE_YOU_SURE_YOU_WANT_TO_DELETE_THIS_ACTIVITY' | translate}}" confirm-title="{{'PROFILE.DELETE_ACTIVITY' | translate}}" confirm-ok="{{'COMMON.YES' | translate}}" confirm-cancel="{{'COMMON.CANCEL' | translate}}" confirm-settings="{size: 'm', animation: false, backdropClass: 'show'}">
+                            <i class="fa fa-trash-alt "></i>&nbsp;
                             {{"COMMON.DELETE" | translate}}
                         </a>
                     </li>
                 </ul>
             </span>
         </div>
-        <div class="activity-picture-wrapper" ng-if="activity.picture">
-            <img ng-src="{{activity.getPicture('md')}}">
+    </div>
+    <div ng-class="{'card-body' : !isEmbedded}" ng-if="hasAdditionalInformation()">
+        <div class="mb-2" ng-if="activity.picture">
+            <a data-fancybox="activity-picture" ng-href="{{activity.getPicture('md')}}">
+                <img class="card-img-top" ng-src="{{activity.getPicture('md')}}">
+            </a>
         </div>
         <div>
             <div ng-if="activity.location">
+                <i class="fa fa-globe"></i>
                 <b translate="PROFILE.LOCATION"></b>:
                 <span>{{activity.location}}</span>
             </div>
             <div ng-if="activity.rank">
+                <i class="fa fa-medal"></i>
                 <b translate="PROFILE.RANK"></b>:
                 <span>{{activity.rank}}</span>
             </div>
             <div ng-if="activity.comments">
+                <i class="fa fa-comment"></i>
                 <b translate="PROFILE.COMMENTS"></b>:
                 <span>{{activity.comments}}</span>
             </div>
             <div ng-if="activity.notes">
+                <i class="fa fa-sticky-note"></i>
                 <b translate="PROFILE.NOTES"></b>:
                 <span>{{activity.notes}}</span>
             </div>

@@ -12,5 +12,5 @@ div#omnisearch.omnisearch
                 div.col-sm-6
                     ul.list-unstyled.mb-0
                         li(ng-repeat="user in App.searchResults")
-                            a.list-link(href="{{App.getUserUrl(user)}}")
+                            a.list-link(ng-href="{{App.getUserUrl(user)}}" ng-click="App.closeOmnisearch()")
                                 span {{user.firstName + ' ' + user.lastName}}

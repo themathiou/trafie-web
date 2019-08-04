@@ -64,7 +64,8 @@
     "build": "tsc -p .",
     "build:live": "nodemon --ext html --watch 'app/**/*.ts' --watch 'app/views/dist/*.html' --watch 'app.ts' --exec 'ts-node' app.ts",
     "postinstall": "cd public && bower install && npm install && cd .. && gulp",
-    "watch": "gulp watch"
+    "watch": "gulp watch",
+    "split-translations": "gulp split-translations"
   },
   "babel": {
     "presets": [

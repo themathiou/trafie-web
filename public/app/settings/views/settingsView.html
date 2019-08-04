@@ -1,31 +1,37 @@
-<div class="container settings-page">
-    <div class="col-md-3">
-        <div class="list-group" ng-cloak>
-            <a href="/settings/profile" class="list-group-item" ng-class="{'active': tab === 'profile'}" ng-cloak>
-                {{'COMMON.PROFILE' | translate}}
-                <i class="fa fa-chevron-right pull-right"></i>
-            </a>
-            <a href="/settings/account" class="list-group-item" ng-class="{'active': tab === 'account'}">
-                {{'SETTINGS.ACCOUNT' | translate}}
-                <i class="fa fa-chevron-right pull-right"></i>
-            </a>
-            <a href="/settings/password" class="list-group-item" ng-class="{'active': tab === 'password'}">
-                {{'SETTINGS.PASSWORD' | translate}}
-                <i class="fa fa-chevron-right pull-right"></i>
-            </a>
-            <a href="javascript:;" class="list-group-item list-group-item-warning" ng-click="logout()" translate="COMMON.LOGOUT"></a>
+<div class="slice">
+    <div class="container settings-page">
+        <div class="row row-grid">
+            <div class="col-lg-9 order-lg-2" id="settings-panel-wrapper">
+                <form method="POST" name="profileForm" ng-show="tab === 'profile'" novalidate>
+                    <div ng-include="'/app/settings/views/profileSettingsFormView.html'"></div>
+                </form>
+                <form method="POST" name="accountForm" ng-show="tab === 'account'" novalidate>
+                    <div ng-include="'/app/settings/views/accountSettingsFormView.html'"></div>
+                </form>
+                <form method="POST" name="passwordForm" ng-show="tab === 'password'" novalidate>
+                    <div ng-include="'/app/settings/views/passwordSettingsFormView.html'"></div>
+                </form>
+            </div>
+            <div class="col-lg-3 order-lg-1">
+                <div class="card" ng-cloak>
+                    <div class="list-group list-group-sm list-group-flush">
+                        <a href="/settings/profile" class="list-group-item list-group-item-action d-flex justify-content-between" ng-class="{'active': tab === 'profile'}" ng-cloak>
+                            {{'COMMON.PROFILE' | translate}}
+                            <div><i class="fa fa-angle-right"></i></div>
+                        </a>
+                        <a href="/settings/account" class="list-group-item list-group-item-action d-flex justify-content-between" ng-class="{'active': tab === 'account'}">
+                            {{'SETTINGS.ACCOUNT' | translate}}
+                            <div><i class="fa fa-angle-right"></i></div>
+                        </a>
+                        <a href="/settings/password" class="list-group-item list-group-item-action d-flex justify-content-between" ng-class="{'active': tab === 'password'}">
+                            {{'SETTINGS.PASSWORD' | translate}}
+                            <div><i class="fa fa-angle-right"></i></div>
+                        </a>
+                        <a href="javascript:;" class="list-group-item list-group-item-warning" ng-click="logout()" translate="COMMON.LOGOUT"></a>
+                    </div>
+                </div>
+                <div ng-include="'/app/common/views/footerLinksView.html'"></div>
+            </div>
         </div>
-        <div ng-include="'/app/common/views/footerLinksView.html'"></div>
-    </div>
-    <div class="col-md-9" id="settings-panel-wrapper">
-        <form method="POST" name="profileForm" ng-show="tab === 'profile'" novalidate>
-            <div ng-include="'/app/settings/views/profileSettingsFormView.html'"></div>
-        </form>
-        <form method="POST" name="accountForm" ng-show="tab === 'account'" novalidate>
-            <div ng-include="'/app/settings/views/accountSettingsFormView.html'"></div>
-        </form>
-        <form method="POST" name="passwordForm" ng-show="tab === 'password'" novalidate>
-            <div ng-include="'/app/settings/views/passwordSettingsFormView.html'"></div>
-        </form>
     </div>
 </div>

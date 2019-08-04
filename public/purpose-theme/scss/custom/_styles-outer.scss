@@ -1,0 +1,77 @@
+.bg-img-holder-login {
+    background-image: url("/images/outer/Moscow-2013--chicherova-Jeffcohenphoto-081713-5754-web.jpg");
+    background-position: right center;
+    background-size: cover;
+    opacity: 1;
+    height: 100%;
+}
+
+.bg-img-holder-register {
+    background-image: url("/images/outer/racetrack-lg.jpeg");
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    height: 100%;
+}
+
+.photo-credits {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    color: white;
+}
+
+.form-group.has-error {
+    input, .input-group-text {
+        border-color: $danger;
+    }
+}
+
+.bg-absolute-cover-trafie {
+    background-image: url("/images/outer/racetrack-lg.jpeg");
+    background-position: center center;
+    background-size: cover;
+}
+
+.logo-badge {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 2rem;
+
+    &.logo-badge-sm {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 1rem;
+    }
+}
+
+.available-on-badges-container {
+    display: flex;
+  
+    .available-on-badge-link {
+      flex-grow: 1;
+      flex-basis: 0;
+    }
+    .available-on-badge-image {
+      width: 100%;
+    }
+    .available-on-badge-image-ios {
+       padding: 6.6%;
+    }
+}
+
+.landing-main-header {
+    background-image: url("/images/outer/racetrack-lg.jpeg");
+    background-position: center center;
+    background-size: cover;
+
+    &::after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        content: " ";
+        background-color: rgba(0, 0, 0, 0.4);
+        width: 100%;
+        height: 100%;
+    }
+}

@@ -23,7 +23,7 @@
                                     ng-model="timeLine.mode" uib-btn-radio="'graph'">
                                     <span class="btn-inner--icon"><i class="fas fa-chart-line"></i></span>
                                     <span class="btn-inner--text d-none d-sm-inline-block"
-                                        translate="PROFILE.GRAPH"></span>
+                                        translate="PROFILE.GRAPHS"></span>
                                 </button>
                             </div>
                         </div>
@@ -32,7 +32,7 @@
             </div>
         </div>
     </section>
-    <section class="pt-5 pt-lg-0">
+    <section class="pt-8 pt-lg-0">
         <div class="container">
             <div class="row">
                 <div class="col-lg-4">
@@ -41,7 +41,9 @@
                             <div class="avatar-profile-wrapper mx-auto ng-cloak card-profile-image avatar rounded-circle shadow hover-shadow-lg" ng-mouseenter="uploadPromptShown = true"
                             ng-mouseleave="uploadPromptShown = false">
                                 <a href="/settings?showImageUploadModal=true" class="avatar-upload-prompt text-white" ng-if="ownProfile"
-                                ng-show="uploadPromptShown" translate="COMMON.CHANGE_PICTURE"></a>
+                                ng-show="uploadPromptShown">
+                                    <span class="avatar-upload-prompt-text" translate="COMMON.CHANGE_PICTURE"></span>
+                                </a>
                                 <img alt="{{user.firstName + ' ' + user.lastName}}" ng-class="{'upload-prompt-visible': ownProfile && uploadPromptShown}" ng-src="{{user.getPicture('md')}}"
                                     class="">
                             </div>
@@ -53,6 +55,7 @@
                                     <span ng-if="user.country">{{'COUNTRIES.' + user.country.toUpperCase() | translate}}</span>
                                 </span>
                             </div>
+                            <div ng-include="'/app/common/views/footerLinksView.html'"></div>
                         </div>
                     </div>
                 </div>
@@ -60,26 +63,6 @@
             </div>
         </div>
     </section>
-
-    <!-- <div class="col-lg-8">
-            <div class="d-flex">
-
-            </div>
-            <div class="avatar-profile-wrapper ng-cloak" ng-mouseenter="uploadPromptShown = true"
-                ng-mouseleave="uploadPromptShown = false">
-                <a href="/settings?showImageUploadModal=true" class="avatar-upload-prompt" ng-if="ownProfile"
-                    ng-show="uploadPromptShown" translate="COMMON.CHANGE_PICTURE"></a>
-                <img class="avatar avatar-md avatar-with-padding" ng-src="{{user.getPicture('md')}}"
-                    ng-class="{'upload-prompt-visible': ownProfile && uploadPromptShown}">
-            </div>
-        </div>
-        <h2 class="text-center">{{user.firstName + ' ' + user.lastName}}</h2>
-        <h4 class="text-center" ng-if="user.discipline || user.country">
-            <span ng-if="user.discipline">{{'DISCIPLINES.' + user.discipline.toUpperCase() | translate}}</span>
-            <span ng-if="user.discipline && user.country">&bull;</span>
-            <span ng-if="user.country">{{'COUNTRIES.' + user.country.toUpperCase() | translate}}</span>
-        </h4>
-    </div> -->
 </div>
 <div ng-if="!profileFound">
     <div class="container">

@@ -1,0 +1,17 @@
+<div class="modal-header" ng-cloak>
+    <h3 class="modal-title" translate="PROFILE.FILTERS"></h3>
+    <button type="button" class="close" ng-click="close()" aria-label="{{'COMMON.CLOSE' | translate}}" title="{{'COMMON.CLOSE' | translate}}">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body" ng-cloak>
+    <activity-filters
+        activities="activities"
+        filter-options="filterOptions"
+        selected-filters="selectedFilters"
+        ng-model="filters.values"></activity-filters>
+</div>
+<div class="modal-footer" ng-cloak>
+    <button class="btn btn-secondary" type="button" ng-click="cancel()">{{'COMMON.CANCEL' | translate}}</button>
+    <button class="btn btn-primary btn-has-progress" type="button" ng-click="apply()" translate="COMMON.APPLY"></button>
+</div>

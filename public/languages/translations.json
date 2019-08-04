@@ -310,6 +310,10 @@
       "en": "Save changes",
       "el": "Αποθήκευση αλλαγών"
     },
+    "APPLY": {
+      "en": "Apply",
+      "el": "Εφαρμογή"
+    },
     "CANCEL": {
       "en": "Cancel",
       "el": "Ακύρωση"
@@ -398,11 +402,15 @@
     },
     "TIMELINE": {
       "en": "Timeline",
-      "el": "Χρονοδιάγραμμα"
+      "el": "Χρονολόγιο"
     },
     "GRAPH": {
       "en": "Graph",
       "el": "Γράφημα"
+    },
+    "GRAPHS": {
+      "en": "Graphs",
+      "el": "Γραφήματα"
     },
     "ADD_YOUR_FIRST_ACTIVITY_ACTIVITY": {
       "en": "Add your first activity",

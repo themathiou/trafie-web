@@ -13,30 +13,28 @@
     </div>
 </div>
 <span class="spinner block-spinner" ng-show="activitiesLoading"></span>
-<div class="col-md-3" ng-if="!activitiesLoading">
-    <activity-filters activities="activities" ng-model="filters.values"></activity-filters>
-    <div ng-include="'/app/common/views/footerLinksView.html'"></div>
-</div>
-<div class="text-center col-md-6" ng-if="!activitiesLoading && !activities.length && ownProfile" ng-cloak>
+<div class="text-center col-md-6 mt-5" ng-if="!activitiesLoading && !activities.length && ownProfile" ng-cloak>
     <h3 class="text-muted text-center" translate="PROFILE.WELCOME_FIRST_NAME_LETS_ADD_SOME_ACTIVITIES" translate-values="{first_name: user.firstName}"></h3>
-    <br>
-    <button class="btn btn-primary btn-lg" ng-click="openActivityEditorModal()" ng-if="ownProfile" ng-disabled="!currentUser.isVerified && activities.length >= 5">
-        <i class="fa fa-plus"></i>
-        {{'PROFILE.ADD_YOUR_FIRST_ACTIVITY_ACTIVITY' | translate}}
+</div>
+<div class="clearfix col" ng-if="filterOptionsExist()">
+    <button type="button" class="float-right d-block btn btn-secondary btn-icon-only" ng-click="openActivityFiltersModal()">
+        <span class="btn-inner--icon">
+            <i class="fa fa-filter text-muted"></i>
+        </span>
     </button>
 </div>
-<div class="text-center col-md-6" ng-if="!activitiesLoading && !activities.length && !ownProfile" ng-cloak>
+<div class="text-center" ng-if="!activitiesLoading && !activities.length && !ownProfile" ng-cloak>
     <h3 class="text-muted text-center" translate="PROFILE.THIS_USER_HASNT_CREATED_ANY_ACTIVITIES_YET"></h3>
 </div>
-<div class="text-center col-md-6" ng-if="!activitiesLoading && activities.length && !filteredActivities.length" ng-cloak>
+<div class="text-center" ng-if="!activitiesLoading && activities.length && !filteredActivities.length" ng-cloak>
     <h3 class="text-muted text-center" translate="PROFILE.THERE_ARE_NO_ACTIVITIES_WITH_THESE_FILTERED_VALUES"></h3>
 </div>
 <div class="col-md-3" ng-if="!activitiesLoading && !activities.length && ownProfile" ng-cloak>
     &nbsp;
 </div>
-<div class="col-md-9" ng-show="timeLine.mode === 'timeline'">
+<div ng-show="timeLine.mode === 'timeline'">
     <activity-panel ng-repeat="activity in filteredActivities = (activities | orderBy:'-date' | usersFilters:filters.values)"></activity-panel>
 </div>
-<div class="col-md-9" ng-show="timeLine.mode === 'graph'">
+<div ng-show="timeLine.mode === 'graph'">
     <div ng-include="'/app/profile/views/graphView.html'"></div>
 </div>

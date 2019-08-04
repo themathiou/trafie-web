@@ -1,22 +1,24 @@
-<div class="modal-header">
+<div class="modal-header" ng-cloak>
+    <h3 class="modal-title" translate="COMMON.CHANGE_PICTURE"></h3>
     <button type="button" class="close" ng-click="cancel()" aria-label="{{'COMMON.CLOSE' | translate}}" title="{{'COMMON.CLOSE' | translate}}">
         <span aria-hidden="true">&times;</span>
     </button>
-    <h3 class="modal-title" translate="COMMON.CHANGE_PICTURE"></h3>
 </div>
-<div class="modal-body">
+<div class="modal-body" ng-cloak>
     <form name="form" method="POST">
         <div class="form-group text-center">
             <button ngf-select ng-model="pictureFile" accept="image/*" class="btn btn-primary">{{"COMMON.CHOOSE_A_PICTURE" | translate}}</button>
         </div>
         <div class="form-group" ng-show="pictureFile">
             <div ngf-drop ng-model="pictureFile" ngf-pattern="image/*" class="crop-area">
-                <img-crop image="pictureFile  | ngfDataUrl" result-image="croppedDataUrl" result-image-size="600">
-                </img-crop>
+                <img-crop image="pictureFile  | ngfDataUrl" result-image="croppedDataUrl" result-image-size="600"></img-crop>
             </div>
         </div>
         <div class="form-group text-center" ng-show="pictureFile">
-            <img ng-src="{{croppedDataUrl}}" class="avatar avatar-md" />
+            <img ng-src="{{croppedDataUrl}}" class="avatar avatar-lg rounded-circle" />
+        </div>
+        <div class="form-group text-center" ng-show="!pictureFile">
+            <img ng-src="{{currentPicture}}" class="avatar avatar-lg rounded-circle" />
         </div>
     </form>
 </div>

@@ -3,6 +3,7 @@ angular.module('trafie')
         var baseUrl = $location.protocol() + '://' + $location.host() + ($location.port() ? ':' + $location.port() : '');
         $scope.croppedDataUrl = '';
         $scope.pictureFile = null;
+        $scope.currentPicture = currentPicture;
         $scope.userHasDefaultPicture = currentPicture === baseUrl + DEFAULT_PICTURE;
 
         $scope.removeCurrent = function() {

@@ -1,11 +1,13 @@
-<div class="panel panel-default">
-    <div class="panel-heading" translate="SETTINGS.PROFILE_SETTINGS"></div>
-    <div class="panel-body">
+<div>
+    <div class="actions-toolbar py-2 mb-4">
+        <h5 class="mb-1" translate="SETTINGS.PROFILE_SETTINGS"></h5>
+    </div>
+    <div>
         <uib-alert type="{{alerts.profileForm.type}}" ng-show="alerts.profileForm.message" close="closeAlert('profileForm')">
             <span ng-bind-html="alerts.profileForm.message"></span>
         </uib-alert>
         <div class="form-group clearfix">
-            <label translate="SETTINGS.PROFILE_PICTURE"></label>
+            <label class="form-control-label" translate="SETTINGS.PROFILE_PICTURE"></label>
             <div>
                 <span class="col-avatar-image">
                     <profile-picture ng-model="user.picture"></profile-picture>
@@ -17,51 +19,50 @@
             </div>
         </div>
         <div class="form-group" ng-class="{'has-error': fieldErrors.profileForm.firstName.hasError}">
-            <label for="firstName" translate="COMMON.FIRST_NAME"></label>
+            <label class="form-control-label" for="firstName" translate="COMMON.FIRST_NAME"></label>
             <input type="text" class="form-control" name="firstName" id="firstName" ng-model="user.firstName" ng-change="fieldErrors.profileForm.firstName.hasError = false" ng-pattern="validations.name" required>
         </div>
         <div class="form-group" ng-class="{'has-error': fieldErrors.profileForm.lastName.hasError}">
-            <label for="lastName" translate="COMMON.LAST_NAME"></label>
+            <label class="form-control-label" for="lastName" translate="COMMON.LAST_NAME"></label>
             <input type="text" class="form-control" name="lastName" id="lastName" ng-model="user.lastName" ng-change="fieldErrors.profileForm.lastName.hasError = false" ng-pattern="validations.name" required>
         </div>
         <div class="form-group">
-            <label for="discipline" translate="COMMON.MAIN_DISCIPLINE"></label>
-            <select class="form-control" id="discipline" name="discipline" ng-model="user.discipline" ng-options="discipline as (discipline && 'DISCIPLINES.' + discipline.toUpperCase() || 'SETTINGS.CHOOSE_YOUR_DISCIPLINE' | translate) for discipline in disciplines"></select>
+            <label class="form-control-label" for="discipline" translate="COMMON.MAIN_DISCIPLINE"></label>
+            <select class="form-control custom-select" id="discipline" name="discipline" ng-model="user.discipline" ng-options="discipline as (discipline && 'DISCIPLINES.' + discipline.toUpperCase() || 'SETTINGS.CHOOSE_YOUR_DISCIPLINE' | translate) for discipline in disciplines"></select>
         </div>
         <div class="form-group">
-            <label for="country" translate="COMMON.COUNTRY"></label>
-            <select class="form-control" id="country" name="country" ng-model="user.country" ng-options="country as (country && 'COUNTRIES.' + country.toUpperCase() || 'SETTINGS.CHOOSE_YOUR_COUNTRY' | translate) for country in countries"></select>
+            <label class="form-control-label" for="country" translate="COMMON.COUNTRY"></label>
+            <select class="form-control custom-select" id="country" name="country" ng-model="user.country" ng-options="country as (country && 'COUNTRIES.' + country.toUpperCase() || 'SETTINGS.CHOOSE_YOUR_COUNTRY' | translate) for country in countries"></select>
         </div>
         <div class="form-group" ng-class="{'has-error': fieldErrors.profileForm.birthday.hasError}" ng-cloak>
-            <label for="birthday">{{'COMMON.BIRTHDAY' | translate}} ({{'SETTINGS.' + dateFormatsMap[user.dateFormat] | translate}})</label>
+            <label class="form-control-label" for="birthday">{{'COMMON.BIRTHDAY' | translate}} ({{'SETTINGS.' + dateFormatsMap[user.dateFormat] | translate}})</label>
             <input type="text" id="birthday" name="birthday" class="form-control" ng-change="fieldErrors.profileForm.birthday.hasError = false" ng-model="setting.birthday">
         </div>
         <div class="form-group" ng-class="{'has-error': fieldErrors.profileForm.about.hasError}">
-            <label for="aboutMe" translate="COMMON.ABOUT_ME"></label>
+            <label class="form-control-label" for="aboutMe" translate="COMMON.ABOUT_ME"></label>
             <textarea class="form-control vertical-resize" name="about" id="aboutMe" ng-model="user.about" ng-change="fieldErrors.profileForm.about.hasError = false" ng-maxlength="400"></textarea>
         </div>
         <div class="form-group">
-            <label translate="COMMON.GENDER"></label>
+            <label class="form-control-label" translate="COMMON.GENDER"></label>
             <div>
-                <div class="btn-group">
-                    <label class="btn btn-default" ng-model="setting.isMale" uib-btn-radio="'true'" translate="COMMON.MALE"></label>
-                    <label class="btn btn-default" ng-model="setting.isMale" uib-btn-radio="'false'" translate="COMMON.FEMALE"></label>
+                <div class="btn-group btn-group-toggle">
+                    <label class="btn btn-secondary" ng-model="setting.isMale" uib-btn-radio="'true'" translate="COMMON.MALE"></label>
+                    <label class="btn btn-secondary" ng-model="setting.isMale" uib-btn-radio="'false'" translate="COMMON.FEMALE"></label>
                 </div>
             </div>
         </div>
         <div class="form-group">
-            <label translate="SETTINGS.PROFILE_PRIVACY"></label>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" name="isPrivate" ng-model="user.isPrivate"> {{'SETTINGS.HIDE_MY_PROFILE_FROM_EVERYONE' | translate}}
-                </label>
+            <label class="form-control-label" translate="SETTINGS.PROFILE_PRIVACY"></label>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="isPrivateCheckbox" name="isPrivate" ng-model="user.isPrivate">
+                <label class="custom-control-label" for="isPrivateCheckbox">{{'SETTINGS.HIDE_MY_PROFILE_FROM_EVERYONE' | translate}}</label>
             </div>
         </div>
-    </div>
-    <div class="panel-footer clearfix">
-        <button class="btn btn-primary pull-right btn-has-progress" ng-disabled="saving" ng-click="saveSettings('profileForm')">
-            <span class="btn-progress" ng-show="progress && progress != 100" ng-style="{width: progress + '%'}"></span>
-            {{(saving ? (progress && progress != 100 ? 'COMMON.UPLOADING' : 'COMMON.SAVING') : 'COMMON.SAVE_CHANGES') | translate}}
-        </button>
+        <div class="pt-5 mt-5 delimiter-top text-right">
+            <button class="btn btn-primary pull-right btn-has-progress" ng-disabled="saving" ng-click="saveSettings('profileForm')">
+                <span class="btn-progress" ng-show="progress && progress != 100" ng-style="{width: progress + '%'}"></span>
+                {{(saving ? (progress && progress != 100 ? 'COMMON.UPLOADING' : 'COMMON.SAVING') : 'COMMON.SAVE_CHANGES') | translate}}
+            </button>
+        </div>
     </div>
 </div>

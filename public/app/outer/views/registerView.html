@@ -1,56 +1,88 @@
-<div class="main-container clearfix screen-height">
-    <div class="content-container screen-height">
-        <div class="page page-auth clearfix">
-            <div class="auth-container">
-                <div class="panel panel-default panel-form-outer">
-                    <logo></logo>
-                    <div class="form-container">
-                        <form class="form-horizontal" method="post" role="form">
-                            <div class="alert alert-danger" role="alert" ng-if="errorMessages.length" ng-bind-html="errorMessages.join('<br>')">
+<div class="main-content">
+    <section class="min-vh-100 d-flex align-items-center">
+        <div class="bg-img-holder-register bg-img-holder top-0 right-0 col-lg-6 col-xl-8 zindex-100 d-none d-lg-block" data-bg-size="cover"
+            data-bg-position="center">
+            <img alt="Image placeholder" src="/images/outer/racetrack-lg.jpeg">
+        </div>
+        <div class="container-fluid py-5">
+            <div class="row align-items-center">
+                <div class="col-sm-7 col-lg-6 col-xl-4 mx-auto ml-lg-0">
+                    <div class="px-4 px-lg-6">
+                        <div>
+                            <div class="mb-5 text-center">
+                                <a href="/">
+                                    <img class="logo-badge logo-badge-sm mb-2" src="/images/logo.svg"></img>
+                                </a>
+                                <h6 class="h3">Create account</h6>
+                                <p class="text-muted mb-0">Trafie - The professional tool for managing, analyzing and sharing your personal track and field profile.</p>
                             </div>
-                            <div class="row">
-                                <div class="form-group form-group-lg col-lg-6" ng-class="{'has-error': fieldsWithErrors.firstName}">
-                                    <input id="first-name" placeholder="First name" class="form-control" name="firstName" type="text" ng-model="formData.firstName" ng-change="fieldsWithErrors.firstName = false" autofocus required>
+                            <span class="clearfix"></span>
+                            <form role="form">
+                                <div class="alert alert-danger" role="alert" ng-if="errorMessages.server">{{errorMessages.server}}</div>
+                                <div class="form-group">
+                                    <label class="form-control-label">First name</label>
+                                    <input id="first-name" placeholder="John" class="form-control" name="firstName" type="text"
+                                    ng-model="formData.firstName" ng-change="errorMessages.firstName = ''" autofocus required
+                                    ng-class="{'is-invalid': errorMessages.firstName}">
+                                    <div class="invalid-feedback" ng-if="errorMessages.firstName">{{errorMessages.firstName}}</div>
                                 </div>
 
-                                <div class="form-group form-group-lg col-lg-6" ng-class="{'has-error': fieldsWithErrors.lastName}">
-                                    <input id="last-name" placeholder="Last name" class="form-control" name="lastName" type="text" ng-model="formData.lastName" ng-change="fieldsWithErrors.lastName = false" required>
+                                <div class="form-group">
+                                    <label class="form-control-label">Last name</label>
+                                    <input id="last-name" placeholder="Doe" class="form-control" name="lastName" type="text"
+                                    ng-model="formData.lastName" ng-change="errorMessages.lastName = ''" required
+                                    ng-class="{'is-invalid': errorMessages.lastName}">
+                                    <div class="invalid-feedback" ng-if="errorMessages.lastName">{{errorMessages.lastName}}</div>
                                 </div>
-                            </div>
-
-
-                            <div class="form-group form-group-lg" ng-class="{'has-error': fieldsWithErrors.email}">
-                                <input id="email" placeholder="Email" class="form-control" name="email" type="email" ng-model="formData.email" ng-change="fieldsWithErrors.email = false" required>
-                            </div>
-
-                            <div class="form-group form-group-lg" ng-class="{'has-error': fieldsWithErrors.password}">
-                                <input id="password" placeholder="Password" class="form-control" name="password" type="password" ng-model="formData.password" ng-change="fieldsWithErrors.password = false" required>
-                            </div>
-
-                            <div class="ui-checkbox ui-checkbox-primary">
-                                <label>
-                                    <input type="checkbox" checked="" ng-model="formData.termsCheckbox">
-                                    <span>I agree to the <a href="/terms-of-service" target="_blank">Terms of Service</a></span>
-                                </label>
-                            </div>
-
-                            <div class="form-group">
-                                <input class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" ng-click="register()" value="Register" ng-disabled="!formData.termsCheckbox || loading">
-                            </div>
-
-                            <div class="form-group">
-                                Already a member?&nbsp;
-                                <a href="/login">Login</a>
-
-                                <a class="pull-right" target="_blank" href="/about">What is Trafie?</a>
-                            </div>
-                        </form>
+                                <div class="form-group" ng-class="{'focused': emailFocused}">
+                                    <label class="form-control-label">Email address</label>
+                                    <div class="input-group input-group-merge">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        </div>
+                                        <input type="email" class="form-control" id="input-email" ng-class="{'is-invalid': errorMessages.email}"
+                                            placeholder="name@example.com" ng-model="formData.email" ng-change="errorMessages.email = ''" required
+                                            ng-focus="emailFocused = true" ng-blur="emailFocused = false">
+                                            <div class="invalid-feedback" ng-if="errorMessages.email">{{errorMessages.email}}</div>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-4" ng-class="{'focused': passwordFocused}">
+                                    <label class="form-control-label">Password</label>
+                                    <div class="input-group input-group-merge">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                        </div>
+                                        <input type="password" class="form-control" id="input-password" ng-class="{'is-invalid': errorMessages.password}"
+                                            placeholder="********" ng-model="formData.password" ng-change="errorMessages.password = ''" required
+                                            ng-focus="passwordFocused = true" ng-blur="passwordFocused = false"
+                                        >
+                                        <div class="invalid-feedback" ng-if="errorMessages.password">{{errorMessages.password}}</div>
+                                    </div>
+                                </div>
+                                <div class="my-4">
+                                    <div class="custom-control custom-checkbox mb-3">
+                                        <input type="checkbox" class="custom-control-input" id="check-terms" checked="" ng-model="formData.termsCheckbox">
+                                        <label class="custom-control-label" for="check-terms">I agree to the <a
+                                                href="/terms-of-service" target="_blank">terms and conditions</a></label>
+                                    </div>
+                                    <!--<div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="check-privacy">
+                                        <label class="custom-control-label" for="check-privacy">I agree to the <a
+                                                href="#">privacy policy</a></label>
+                                    </div>-->
+                                </div>
+                                <div class="mt-4">
+                                    <button type="button" class="btn btn-block btn-primary" ng-click="register()" value="Register" ng-disabled="!formData.termsCheckbox || loading">
+                                        Create my account
+                                    </button>
+                                </div>
+                            </form>
+                            <div class="mt-4 text-center"><small>Already have an account?</small>
+                                <a href="/login" class="small font-weight-bold">Sign in</a></div>
+                        </div>
                     </div>
-                    <div class="panel-footer text-muted" ng-include="'/app/outer/views/partial/outerPanelFooterView.html'"></div>
-                    <available-on-badges />
                 </div>
             </div>
         </div>
-        <span class="photo-credits" ng-include="'/app/outer/views/partial/photoCreditsView.html'"></span>
-    </div>
+    </section>
 </div>

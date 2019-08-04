@@ -32,8 +32,18 @@
         };
 
         self.getUserUrl = function(user) {
-            $location.path('/' + (user.username || user._id));
+            return '/' + (user.username || user._id);
         };
+
+        self.goToUser = function() {
+            if(self.profileResult && angular.isObject(self.profileResult)) {
+                $location.path('/' + (self.profileResult.username || self.profileResult._id));
+            }
+        };
+
+        self.closeOmnisearch = function() {
+            $('[data-action="omnisearch-close"]').click();
+        }
 
         self.getCurrentPage = function() {
             if($location.path().substr(0, 9) === '/settings') {
@@ -52,7 +62,9 @@
                 animation: false,
                 templateUrl: 'app/feedback/views/feedbackModalView.html',
                 controller: 'FeedbackModalController',
-                size: 'md'
+                size: 'lg',
+                backdropClass: 'show'
+
             });
 
             modalInstance.result.then(function () {
