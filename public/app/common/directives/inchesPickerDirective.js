@@ -42,9 +42,13 @@ angular.module('trafie')
             replace: true,
             scope: {},
             template:
-                '<div>' +
-                    '<input type="number" ng-model="inputs[0]" class="form-control inches-picker-inches" maxlength="2" ng-pattern="/^[0-9][0-1]?$/" min="0" max="99">' +
-                    '<select class="form-control inches-picker-fraction" ng-model="inputs[1]" ng-options="fraction.value as fraction.text for fraction in fractions"></select>' +
+                '<div class="row">' +
+                    '<div class="col-6 col-lg-8">' +
+                        '<input type="number" ng-model="inputs[0]" class="form-control inches-picker-inches" maxlength="2" ng-pattern="/^[0-9][0-1]?$/" min="0" max="99">' +
+                    '</div>'+
+                    '<div class="col-6 col-lg-4">' +
+                        '<select class="form-control inches-picker-fraction" ng-model="inputs[1]" ng-options="fraction.value as fraction.text for fraction in fractions"></select>' +
+                    '</div>'+
                 '</div>',
             link: link
         }

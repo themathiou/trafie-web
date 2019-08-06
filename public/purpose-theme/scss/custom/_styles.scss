@@ -123,3 +123,9 @@ img-crop {
 .ui-select-multiple.ui-select-bootstrap .ui-select-match .close {
     line-height: 1;
 }
+
+.form-group .uib-time {
+    &.hours .form-control, &.minutes .form-control {
+        width: 60px !important;
+    }
+}

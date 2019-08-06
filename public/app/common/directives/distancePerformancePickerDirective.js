@@ -73,25 +73,29 @@ angular.module('trafie')
             require: 'ngModel',
             replace: true,
             scope: true,
-            template:   '<div class="row" ng-switch="unit">' +
+            template:   '<div ng-switch="unit">' +
                             '<div ng-switch-when="meters" ng-show="unitLoaded">' +
-                                '<div class="col-xs-6">' +
-                                    '<input type="number" ng-model="inputs[0]" class="form-control" maxlength="2" ng-pattern="/^[0-9]{1,2}$/" min="0" max="99">' +
-                                    '<p class="help-block pull-right" translate="MEASUREMENTS.METERS"></p>' +
-                                '</div>' +
-                                '<div class="col-xs-6">' +
-                                    '<input type="number" ng-model="inputs[1]" class="form-control" maxlength="2" ng-pattern="/^[0-9]{0,2}$/" min="0" max="99">' +
-                                    '<p class="help-block pull-right" translate="MEASUREMENTS.CENTIMETERS"></p>' +
+                                '<div class="row">' +
+                                    '<div class="col-6">' +
+                                        '<input type="number" ng-model="inputs[0]" class="form-control" maxlength="2" ng-pattern="/^[0-9]{1,2}$/" min="0" max="99">' +
+                                        '<p class="help-block pull-right" translate="MEASUREMENTS.METERS"></p>' +
+                                    '</div>' +
+                                    '<div class="col-6">' +
+                                        '<input type="number" ng-model="inputs[1]" class="form-control" maxlength="2" ng-pattern="/^[0-9]{0,2}$/" min="0" max="99">' +
+                                        '<p class="help-block pull-right" translate="MEASUREMENTS.CENTIMETERS"></p>' +
+                                    '</div>' +
                                 '</div>' +
                             '</div>' +
                             '<div ng-switch-when="feet" ng-show="unitLoaded">' +
-                                '<div class="col-xs-6">' +
-                                    '<input type="number" ng-model="inputs[0]" class="form-control" maxlength="2" ng-pattern="/^[0-9]{1,2}$/" min="0" max="99">' +
-                                    '<p class="help-block pull-right" translate="MEASUREMENTS.FEET"></p>' +
-                                '</div>' +
-                                '<div class="col-xs-6">' +
-                                    '<inches-picker ng-model="inputs[1]"></inches-picker>' +
-                                    '<p class="help-block pull-right" translate="PROFILE.FRACTION"></p>' +
+                                '<div class="row">' +
+                                    '<div class="col-6">' +
+                                        '<input type="number" ng-model="inputs[0]" class="form-control" maxlength="2" ng-pattern="/^[0-9]{1,2}$/" min="0" max="99">' +
+                                        '<p class="help-block pull-right" translate="MEASUREMENTS.FEET"></p>' +
+                                    '</div>' +
+                                    '<div class="col-6">' +
+                                        '<inches-picker ng-model="inputs[1]"></inches-picker>' +
+                                        '<p class="help-block pull-right" translate="MEASUREMENTS.INCHES"></p>' +
+                                    '</div>' +
                                 '</div>' +
                             '</div>' +
                         '</div>',

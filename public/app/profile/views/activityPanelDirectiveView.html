@@ -1,5 +1,5 @@
 <div ng-class="{'card mt-4' : !isEmbedded}">
-    <div ng-class="{'card-header' : !isEmbedded}" class="d-flex justify-content-between align-items-center">
+    <div ng-class="{'card-header' : !isEmbedded, 'mb-4': isEmbedded}" class="d-flex justify-content-between align-items-center">
         <div>
             <strong class="h6 lead" ng-bind-html="activity.getReadablePerformance()"></strong>
             <strong class="h6 lead">&bull; {{activity.competition}}</strong>

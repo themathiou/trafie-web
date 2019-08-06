@@ -25,12 +25,12 @@
                 <div class="col align-self-start">
                     <div class="input-group">
                         <input type="text" id="date" class="form-control" uib-datepicker-popup="{{datepicker.activityDateFormat}}" ng-model="datepicker.activityDate" is-open="datepicker.popup.opened" max-date="datepicker.maxDate" datepicker-options="datepicker.dateOptions" ng-required="true" close-text="{{'COMMON.CANCEL' | translate}}" ng-change="fieldErrors.date.hasError = false" />
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="datepicker.popup.opened = true"><i class="fa fa-calendar"></i></button>
-                    </span>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="datepicker.popup.opened = true"><i class="fa fa-calendar"></i></button>
+                        </span>
                     </div>
                 </div>
-                <div class="col col-sm-auto align-self-end">
+                <div class="col col-auto align-self-end">
                     <div class="form-group">
                         <uib-timepicker id="time" class="pull-right" ng-model="datepicker.activityDate" hour-step="1" minute-step="1" show-meridian="false" ng-required="true" show-spinners="false" ng-change="fieldErrors.date.hasError = false"></uib-timepicker>
                     </div>
