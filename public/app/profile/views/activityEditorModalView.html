@@ -22,7 +22,7 @@
         <div class="form-group" ng-class="{'has-error': fieldErrors.date.hasError}">
             <label for="date" class="form-control-label" translate="COMMON.DATE"></label>
             <div class="row">
-                <div class="col align-self-start">
+                <div class="col align-self-start pr-0">
                     <div class="input-group">
                         <input type="text" id="date" class="form-control" uib-datepicker-popup="{{datepicker.activityDateFormat}}" ng-model="datepicker.activityDate" is-open="datepicker.popup.opened" max-date="datepicker.maxDate" datepicker-options="datepicker.dateOptions" ng-required="true" close-text="{{'COMMON.CANCEL' | translate}}" ng-change="fieldErrors.date.hasError = false" />
                         <span class="input-group-btn">
@@ -30,7 +30,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="col col-auto align-self-end">
+                <div class="col col-auto align-self-end pl-0">
                     <div class="form-group">
                         <uib-timepicker id="time" class="pull-right" ng-model="datepicker.activityDate" hour-step="1" minute-step="1" show-meridian="false" ng-required="true" show-spinners="false" ng-change="fieldErrors.date.hasError = false"></uib-timepicker>
                     </div>

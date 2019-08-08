@@ -13,9 +13,13 @@ angular.module('trafie')
                 return !scope.currentUser.isPrivate && !scope.activity.isPrivate;
             };
 
-            scope.formatUnixTimestamp = function(timestamp) {
-                var format = (scope.localUser ? scope.localUser.dateFormat : 'D-M-YYYY') + ' HH:mm';
+            scope.formatUnixTimestampToDate = function(timestamp) {
+                var format = (scope.localUser ? scope.localUser.dateFormat : 'D-M-YYYY');
                 return moment.unix(timestamp).format(format);
+            };
+
+            scope.formatUnixTimestampToTime = function(timestamp) {
+                return moment.unix(timestamp).format('HH:mm');
             };
 
             scope.hasAdditionalInformation = function() {

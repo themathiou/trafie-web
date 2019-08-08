@@ -1,16 +1,19 @@
 <div ng-class="{'card mt-4' : !isEmbedded}">
     <div ng-class="{'card-header' : !isEmbedded, 'mb-4': isEmbedded}" class="d-flex justify-content-between align-items-center">
-        <div>
-            <strong class="h6 lead" ng-bind-html="activity.getReadablePerformance()"></strong>
-            <strong class="h6 lead">&bull; {{activity.competition}}</strong>
-            <span class="ml-1">
+        <div class="mr-2 ml-0 row">
+            <span class="col-md pl-0 pr-1">
+                <strong class="h6 lead" ng-bind-html="activity.getReadablePerformance()"></strong>
+                <strong class="h6 lead">&bull; {{activity.competition}}</strong>
+            </span>
+            <span class="ml-1 text-nowrap col-md pl-0 pr-0">
                 <small class="text-muted" translate="{{'DISCIPLINES.' + activity.discipline.toUpperCase()}}"></small>
                 <small class="text-muted" translate="{{activity.isOutdoor ? 'PROFILE.OUTDOOR' : 'PROFILE.INDOOR'}}"></small>
             </span>
         </div>
-        <div>
+        <div class="text-nowrap">
             <span ng-class="{'m-right-20': ownProfile}">
-                {{formatUnixTimestamp(activity.date)}}
+                <span>{{formatUnixTimestampToDate(activity.date)}}</span>
+                <span class="d-none d-md-inline">&nbsp;{{formatUnixTimestampToTime(activity.date)}}</span>
             </span>
             <span uib-dropdown class="ml-1" ng-class="{'show': isDropdownOpen}" ng-if="ownProfile" is-open="isDropdownOpen">
                 <a href uib-dropdown-toggle class="no-handle pl-2 pr-2">
