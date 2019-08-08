@@ -11,8 +11,9 @@
     height: 4.5rem;
 
 	@include media-breakpoint-down(md) {
-		padding-top: 4.5rem;
-	}
+        height: 2.5rem;
+		padding-top: 2.5rem;
+    }
 }
 
 .search-label {
@@ -128,4 +129,8 @@ img-crop {
     &.hours .form-control, &.minutes .form-control {
         width: 60px !important;
     }
+}
+
+.modal {
+    -webkit-overflow-scrolling: touch;
 }
