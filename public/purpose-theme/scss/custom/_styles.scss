@@ -3,8 +3,22 @@
 // This is the place where you should place all additional styles and imports.
 // This will allow you to take advantage of future updates with lower time consumed on the upgrade process.
 
+html {
+    @include media-breakpoint-down(sm) {
+        font-size: 14px;
+    }
+}
+
+
 .bg-trafie {
     background-color: $trafie-color;
+}
+
+.trafie-mini-logo {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 1rem;
+    vertical-align: middle;
 }
 
 .header-account-page {

@@ -1,6 +1,6 @@
 <div ng-class="{'card mt-4' : !isEmbedded}">
     <div ng-class="{'card-header' : !isEmbedded, 'mb-4': isEmbedded}" class="row ml-0 mr-0 d-flex justify-content-between align-items-center">
-        <div class="ml-0 row col col-9 pl-0 pr-2 justify-content-start">
+        <div class="ml-0 mr-0 row col col-8 pl-0 pr-2 justify-content-start">
             <span class="text-nowrap pl-0 mr-2 mw-75 text-truncate">
                 <strong class="h6 lead" ng-bind-html="activity.getReadablePerformance()"></strong>
                 <strong class="h6 lead">&bull; {{activity.competition}}</strong>
@@ -10,7 +10,7 @@
                 <small class="text-muted" translate="{{activity.isOutdoor ? 'PROFILE.OUTDOOR' : 'PROFILE.INDOOR'}}"></small>
             </span>
         </div>
-        <div class="text-nowrap col col-3 pl-0 pr-0 text-right">
+        <div class="text-nowrap col col-4 pl-0 pr-0 row mr-0 ml-0 justify-content-end">
             <span ng-class="{'m-right-20': ownProfile}">
                 <span>{{formatUnixTimestampToDate(activity.date)}}</span>
                 <span class="d-none d-md-inline">&nbsp;{{formatUnixTimestampToTime(activity.date)}}</span>
