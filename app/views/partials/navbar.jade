@@ -3,16 +3,16 @@ nav.navbar.navbar-main.navbar-expand-lg.navbar-dark.bg-trafie
         a.navbar-brand.mr-lg-5(href="/")
             img.trafie-mini-logo.mr-2.mb-2(src="/images/logo.svg")
             | trafie
-        button.navbar-toggler.pr-0(type="button" data-toggle="collapse" data-target="#navbar-main-collapse" aria-controls="navbar-main-collapse" aria-expanded="false" aria-label="Toggle navigation")
+        button.navbar-toggler#navbar-toggler.pr-0(type="button" data-toggle="collapse" data-target="#navbar-main-collapse" aria-controls="navbar-main-collapse" aria-expanded="false" aria-label="Toggle navigation")
             span.navbar-toggler-icon
         div#navbar-main-collapse.navbar-collapse.collapse
             ul.navbar-nav.align-items-lg-center
                 li.nav-item(ng-if="App.user" ng-class="{'active': App.getCurrentPage() === 'profile'}")
-                    a.nav-link(href='/')
+                    a.nav-link(href='/' ng-click="App.closeMenu()")
                         i.fa.fa-user.nav-icon
                         span(ng-bind="App.user.firstName")
                 li.nav-item(ng-if="App.user" class="nav-item" ng-class="{'active': App.getCurrentPage() === 'settings'}")
-                    a.nav-link(href='/settings')
+                    a.nav-link(href='/settings' ng-click="App.closeMenu()")
                         i.fa.fa-cog.nav-icon
                         span(translate="COMMON.SETTINGS")
                 li.nav-item(ng-if="!App.user")
@@ -23,6 +23,6 @@ nav.navbar.navbar-main.navbar-expand-lg.navbar-dark.bg-trafie
                         span(translate="COMMON.LOGIN")
             ul.navbar-nav.align-items-lg-center.ml-lg-auto
                 li.nav-item.mr-0
-                    a.nav-link(href="#" data-action="omnisearch-open" data-target="#omnisearch")
+                    a.nav-link(href="#" data-action="omnisearch-open" data-target="#omnisearch"  ng-click="App.closeMenu()")
                         i.fas.fa-search.mr-0
                         span.ml-2.search-label(translate="COMMON.SEARCH")

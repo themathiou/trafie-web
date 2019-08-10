@@ -45,6 +45,13 @@
             $('[data-action="omnisearch-close"]').click();
         }
 
+        self.closeMenu = function() {
+            var navbarButton = $("#navbar-toggler");
+            if (navbarButton.is(":visible")) {
+                navbarButton.click();
+            }
+        }
+
         self.getCurrentPage = function() {
             if($location.path().substr(0, 9) === '/settings') {
                 return 'settings'
