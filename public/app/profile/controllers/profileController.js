@@ -58,7 +58,7 @@
                 }
                 $scope.user = user;
                 pageDataService.setUserInTitle(user);
-                Activity.get({userId: $scope.user._id, isDeleted: false}, function(activities) {
+                Activity.get({ userId: $scope.user._id, isDeleted: false, isUpcoming: false }, function(activities) {
                     $scope.activitiesLoading = false;
                     $scope.activities = [];
                     activities.forEach(function(activity) {
@@ -304,7 +304,6 @@
                     return $scope.filterOptions[filterCategory].options.length > 1;
                 });
             };
-
 
             $scope.openActivityFiltersModal = function() {
                 var modalInstance = $uibModal.open({

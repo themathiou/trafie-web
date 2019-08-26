@@ -8,6 +8,10 @@ export function isTimestampValid(timestamp: number): boolean {
     return isPositiveInteger(timestamp) && timestamp <= Math.floor(Date.now() / 1000);
 };
 
+export function isUpcomingTimestampValid(timestamp: number): boolean {
+    return isPositiveInteger(timestamp) && timestamp >= Math.floor(Date.now() / 1000);
+};
+
 export function isNotesValid(notes: string): boolean {
     return notesRegex.test(notes);
 };

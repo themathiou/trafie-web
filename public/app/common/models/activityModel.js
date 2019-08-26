@@ -35,6 +35,7 @@
             this.type = angular.isDefined(activityData.type) ? activityData.type : 'competition';
             this.isOutdoor = angular.isDefined(activityData.isOutdoor) ? activityData.isOutdoor : true;
             this.picture = angular.isDefined(activityData.picture) ? activityData.picture : '';
+            this.isUpcoming = angular.isDefined(activityData.isUpcoming) ? activityData.isUpcoming : false;
         }
 
         Activity = angular.extend(Activity, ActivityResource);

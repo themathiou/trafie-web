@@ -15,20 +15,30 @@ let fs = require('fs'),
     });
 
 function s3DeleteFilesInPath(path, excludePaths = []) {
-    s3.list({prefix: path}, function(err, data){
-        if(!err && data.Contents) {
-            let filesToDelete = [];
-            if(excludePaths.length) {
-                data.Contents.forEach((s3Object) => {
-                    if(excludePaths.indexOf(s3Object.Key) < 0) {
-                        filesToDelete.push(s3Object.Key);
+    return new Promise((resolve, reject) => {
+        s3.list({ prefix: path }, (err, data) => {
+            if(!err && data.Contents) {
+                let filesToDelete = [];
+                if(excludePaths.length) {
+                    data.Contents.forEach((s3Object) => {
+                        if(excludePaths.indexOf(s3Object.Key) < 0) {
+                            filesToDelete.push(s3Object.Key);
+                        }
+                    });
+                } else {
+                    filesToDelete = data.Contents.map((s3Object) => s3Object.Key);
+                }
+                s3.deleteMultiple(filesToDelete, (err, res) => {
+                    if (!err) {
+                        resolve();
+                    } else {
+                        reject();
                     }
                 });
             } else {
-                filesToDelete = data.Contents.map((s3Object) => s3Object.Key);
+                reject();
             }
-            s3.deleteMultiple(filesToDelete, function(err, res) {});
-        }
+        });
     });
 }
 

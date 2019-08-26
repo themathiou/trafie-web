@@ -1,14 +1,5 @@
 const q = require("q");
 import { model, Schema, SchemaTypeOpts } from "mongoose";
-import {
-    isPerformanceDistanceValid,
-    getDisciplineDataType,
-    isPerformanceTimeValid,
-    isPerformancePointsValid,
-    isCompetitionNameValid,
-    isRankValid,
-    isValidBoolean,
-} from "../helpers/competitionHelper";
 import { Competition } from '../types/competitionTypes';
 
 // TODO: Remove "type" from db
@@ -23,9 +14,9 @@ const competitionSchemaDefinition: { [key in keyof Competition]: SchemaTypeOpts<
     notes       : { type: String,   required: false,    default: "" },
     comments    : { type: String,   required: false,    default: "" },
     isPrivate   : { type: Boolean,  required: false,    default: false },
-    isDeleted   : { type: Boolean,  required: false,    default: false },
     isOutdoor   : { type: Boolean,  required: false,    default: true },
     picture     : { type: String,   required: false,    default: "" },
+    isUpcoming  : { type: Boolean,  required: false,    default: false },
     dateCreated : { type: Date },
     dateUpdated : { type: Date }
 };
@@ -41,5 +32,4 @@ competitionSchema.pre("save", (next) => {
     next();
 });
 
-const Competition = model("Competition", competitionSchema);
-module.exports = Competition;
+export const CompetitionModel = model("Competition", competitionSchema);

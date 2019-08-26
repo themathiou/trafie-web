@@ -1,6 +1,13 @@
 import { DisciplineDataType, Discipline } from '../types/disciplineTypes';
 import { Competition } from '../types/competitionTypes';
-import { isPositiveInteger, isTimestampValid, isLocationValid, isNotesValid, isCommentsValid } from './validationHelper';
+import {
+    isPositiveInteger,
+    isTimestampValid,
+    isUpcomingTimestampValid,
+    isLocationValid,
+    isNotesValid,
+    isCommentsValid,
+} from './validationHelper';
 import { performanceValidation, competitionNameRegex } from '../config/constantConfig';
 import * as moment from "moment";
 import { ApiError } from '../types/apiTypes';
@@ -88,62 +95,101 @@ export function isValidBoolean(booleanValue: boolean): boolean {
     return booleanValue === true || booleanValue === false;
 };
 
-export function isCompetitionValid(competition: Competition): ApiError[] | undefined {
+export function isCompetitionValid(
+    competitionEvent: Omit<Competition, "userId" | "dateCreated" | "dateUpdated">,
+    previousCompetitionData?: Competition,
+): ApiError[] | undefined {
     const errors = [];
+    const {
+        discipline,
+        performance,
+        date,
+        rank,
+        location,
+        notes,
+        comments,
+        competition,
+        isPrivate,
+        isOutdoor,
+        isUpcoming,
+    } = competitionEvent;
+
+    // Validating isUpcoming
+    if (
+        !isValidBoolean(isUpcoming)
+        || (previousCompetitionData && !previousCompetitionData.isUpcoming && isUpcoming)
+    ) {
+        errors.push({
+            resource: "competition",
+            field: "upcoming",
+            code: "invalid"
+        });
+        return errors;
+    }
+
     let disciplineType = "";
-    if(!competition.discipline) {
+    if (!discipline) {
         errors.push({
             resource: "competition",
             field: "discipline",
-            code: "missing"
+            code: "missing",
         });
     } else {
-        disciplineType = getDisciplineDataType(competition.discipline);
+        disciplineType = getDisciplineDataType(discipline);
         if(!disciplineType) {
             errors.push({
                 resource: "competition",
                 field: "discipline",
+                code: "invalid",
+            });
+        }
+    }
+
+
+    if (isUpcoming && performance != 0) {
+        errors.push({
+            resource: "competition",
+            field: "performance",
+            code: "invalid",
+        });
+    } else if (!isUpcoming) {
+        if (performance === null) {
+            errors.push({
+                resource: "competition",
+                field: "performance",
+                code: "missing",
+            });
+        }
+        let isPerformanceValid = false;
+        switch (disciplineType) {
+            case DisciplineDataType.Time:
+                isPerformanceValid = isPerformanceTimeValid(performance);
+                break;
+            case DisciplineDataType.Distance:
+                isPerformanceValid = isPerformanceDistanceValid(performance);
+                break;
+            case DisciplineDataType.Points:
+                isPerformanceValid = isPerformancePointsValid(performance);
+                break;
+        }
+        if (!isPerformanceValid) {
+            errors.push({
+                resource: "competition",
+                field: "performance",
                 code: "invalid"
             });
         }
     }
 
-    if(!competition.hasOwnProperty("performance")) {
-        errors.push({
-            resource: "competition",
-            field: "performance",
-            code: "missing"
-        });
-    }
-    let isPerformanceValid = false;
-    switch (disciplineType) {
-        case DisciplineDataType.Time:
-            isPerformanceValid = isPerformanceTimeValid(competition.performance);
-            break;
-        case DisciplineDataType.Distance:
-            isPerformanceValid = isPerformanceDistanceValid(competition.performance);
-            break;
-        case DisciplineDataType.Points:
-            isPerformanceValid = isPerformancePointsValid(competition.performance);
-            break;
-    }
-    if(!isPerformanceValid) {
-        errors.push({
-            resource: "competition",
-            field: "performance",
-            code: "invalid"
-        });
-    }
-
     // Validating date (required field)
-    if(!competition.date) {
+    if (!date) {
         errors.push({
             resource: "competition",
             field: "date",
             code: "missing"
         });
     } else {
-        if(!isTimestampValid(competition.date)) {
+        if ((!isUpcoming && !isTimestampValid(date)) || (isUpcoming && !isUpcomingTimestampValid(date))) {
             errors.push({
                 resource: "competition",
                 field: "date",
@@ -153,13 +199,13 @@ export function isCompetitionValid(competition: Competition): ApiError[] | undef
     }
 
     // Validating competition
-    if(!competition.competition) {
+    if (!competition) {
         errors.push({
             resource: "competition",
             field: "competition",
             code: "missing"
         });
-    } else if (!isCompetitionNameValid(competition.competition)) {
+    } else if (!isCompetitionNameValid(competition)) {
         errors.push({
             resource: "competition",
             field: "competition",
@@ -168,7 +214,7 @@ export function isCompetitionValid(competition: Competition): ApiError[] | undef
     }
 
     // Validating location
-    if (competition.location && !isLocationValid(competition.location)) {
+    if (location && !isLocationValid(location)) {
         errors.push({
             resource: "competition",
             field: "location",
@@ -177,7 +223,7 @@ export function isCompetitionValid(competition: Competition): ApiError[] | undef
     }
 
     // Validating rank
-    if (competition.rank && !isRankValid(competition.rank)) {
+    if ((isUpcoming && rank !== null) || (!isUpcoming && rank && !isRankValid(rank))) {
         errors.push({
             resource: "competition",
             field: "rank",
@@ -186,7 +232,7 @@ export function isCompetitionValid(competition: Competition): ApiError[] | undef
     }
 
     // Validating notes
-    if (competition.notes && !isNotesValid(competition.notes)) {
+    if (notes && !isNotesValid(notes)) {
         errors.push({
             resource: "competition",
             field: "notes",
@@ -195,7 +241,7 @@ export function isCompetitionValid(competition: Competition): ApiError[] | undef
     }
 
     // Validating comments
-    if (competition.comments && !isCommentsValid(competition.comments)) {
+    if (comments && !isCommentsValid(comments)) {
         errors.push({
             resource: "competition",
             field: "comments",
@@ -204,7 +250,7 @@ export function isCompetitionValid(competition: Competition): ApiError[] | undef
     }
 
     // Validating privacy (required field)
-    if (!competition.hasOwnProperty("isPrivate") || (competition.hasOwnProperty("isPrivate") && !isValidBoolean(competition.isPrivate))) {
+    if (!isValidBoolean(isPrivate)) {
         errors.push({
             resource: "competition",
             field: "isPrivate",
@@ -213,12 +259,13 @@ export function isCompetitionValid(competition: Competition): ApiError[] | undef
     }
 
     // Validating the outdoor flag (required field)
-    if (!competition.hasOwnProperty("isOutdoor") || (competition.hasOwnProperty("isOutdoor") && !isValidBoolean(competition.isOutdoor))) {
+    if (!isValidBoolean(isOutdoor)) {
         errors.push({
             resource: "competition",
             field: "isOutdoor",
             code: "invalid"
         });
     }
+
     return errors.length ? errors: null;
 };

@@ -87,6 +87,7 @@ angular.module('trafie')
         $scope.save = function () {
             if(!validateForm()) return;
             $scope.activity.date = moment($scope.datepicker.activityDate).seconds(0).unix();
+            $scope.activity.isUpcoming = false;
             $scope.saving = true;
 
             if($scope.activity.picture && !angular.isString($scope.activity.picture)) {

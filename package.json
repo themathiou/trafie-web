@@ -56,8 +56,8 @@
     "nodemon": "^1.18.9",
     "request": "^2.88.0",
     "ts-node": "^7.0.1",
-    "tslint": "^5.12.1",
-    "typescript": "^3.2.2"
+    "tslint": "^5.19.0",
+    "typescript": "^3.5.3"
   },
   "scripts": {
     "start": "npm run build:live",

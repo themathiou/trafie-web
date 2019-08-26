@@ -11,9 +11,9 @@ export interface Competition {
     notes: string,
     comments: string,
     isPrivate: boolean,
-    isDeleted: boolean,
     isOutdoor: boolean,
     picture: string,
+    isUpcoming: boolean,
     dateCreated?: string,
     dateUpdated?: string,
 }
