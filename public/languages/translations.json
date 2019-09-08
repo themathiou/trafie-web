@@ -400,6 +400,10 @@
       "en": "Edit activity",
       "el": "Επεξεργασία δραστηριότητας"
     },
+    "UPCOMING_EVENT": {
+      "en": "Upcoming event",
+      "el": "Επερχόμενος αγώνας"
+    },
     "TIMELINE": {
       "en": "Timeline",
       "el": "Χρονολόγιο"
@@ -423,6 +427,10 @@
     "THIS_USER_HASNT_CREATED_ANY_ACTIVITIES_YET": {
       "en": "This user hasn't created any activities yet.",
       "el": "Αυτός ο χρήστης δεν έχει δημιουργήσει δραστηριότητες ακόμα."
+    },
+    "THIS_USER_DOESNT_HAVE_ANY_PUBLIC_ACTIVITIES": {
+      "en": "This user does not have any public activities",
+      "el": "Αυτός ο χρήστης δεν έχει δημόσιες δραστηριότητες."
     },
     "THERE_ARE_NO_ACTIVITIES_WITH_THESE_FILTERED_VALUES": {
       "en": "There are no activities with the selected filters",

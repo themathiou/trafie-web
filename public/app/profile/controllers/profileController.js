@@ -58,7 +58,7 @@
                 }
                 $scope.user = user;
                 pageDataService.setUserInTitle(user);
-                Activity.get({ userId: $scope.user._id, isDeleted: false, isUpcoming: false }, function(activities) {
+                Activity.get({ userId: $scope.user._id, isDeleted: false }, function(activities) {
                     $scope.activitiesLoading = false;
                     $scope.activities = [];
                     activities.forEach(function(activity) {
@@ -185,7 +185,8 @@
                 const activities = $filter('usersFilters')($scope.activities, $scope.filters.values);
 
                 activities
-                    .sort((a, b) => a.date - b.date)
+                    .sort(function(a, b) { return a.date - b.date })
+                    .filter(function (activity) { return !activity.isUpcoming })
                     .forEach(function(activity) {
                         if(!$scope.newGraphActivities.activities.hasOwnProperty(activity.discipline)) {
                             $scope.newGraphActivities.activities[activity.discipline] = {};

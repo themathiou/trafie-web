@@ -21,7 +21,7 @@
             $scope.loading = true;
             $http.post('/login', $scope.formData)
             .then(function(res) {
-                if(res.status === 200 && res.data._id) {
+                if (res.status === 200 && res.data._id) {
                     $window.location.href = '/';
                 }
             }, function(res) {

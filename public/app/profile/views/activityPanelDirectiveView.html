@@ -1,9 +1,10 @@
-<div ng-class="{'card mt-4' : !isEmbedded}">
+<div ng-class="{'card mt-4' : !isEmbedded, 'bg-gradient-secondary': !isEmbedded && activity.isPrivate }">
+    <div class="upcoming-ribbon" ng-if="activity.isUpcoming" translate="PROFILE.UPCOMING_EVENT"></div>
     <div ng-class="{'card-header' : !isEmbedded, 'mb-4': isEmbedded}" class="row ml-0 mr-0 d-flex justify-content-between align-items-center">
         <div class="ml-0 mr-0 row col col-8 pl-0 pr-2 justify-content-start">
             <span class="text-nowrap pl-0 mr-2 mw-75 text-truncate">
-                <strong class="h6 lead" ng-bind-html="activity.getReadablePerformance()"></strong>
-                <strong class="h6 lead">&bull; {{activity.competition}}</strong>
+                <strong class="h6 lead" ng-bind-html="activity.getReadablePerformance()" ng-if="!activity.isUpcoming"></strong>
+                <strong class="h6 lead"><span ng-if="!activity.isUpcoming">&bull;</span> {{activity.competition}}</strong>
             </span>
             <span class="text-nowrap col-md pl-0 pr-0">
                 <small class="text-muted" translate="{{'DISCIPLINES.' + activity.discipline.toUpperCase()}}"></small>
