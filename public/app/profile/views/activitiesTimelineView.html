@@ -4,36 +4,48 @@
             <div ng-if="ownProfile && !currentUser.isVerified && activities.length >= 5">
                 <br>
                 <i class="fa fa-info-circle text-warning"></i>
-                <span class="text-warning" translate="PROFILE.PLEASE_VERIFY_YOUR_EMAIL_EMAIL_IN_ORDER_TO_ADD_MORE_ACTIVITIES" translate-values="{email: currentUser.email}"></span>
+                <span class="text-warning"
+                    translate="PROFILE.PLEASE_VERIFY_YOUR_EMAIL_EMAIL_IN_ORDER_TO_ADD_MORE_ACTIVITIES"
+                    translate-values="{email: currentUser.email}"></span>
                 <br>
-                <a href="" ng-show="!verificationEmailSent" ng-click="resendVerificationEmail()" translate="COMMON.RESEND_VERIFICATION_EMAIL"></a>
-                <span class="text-success" ng-show="verificationEmailSent" translate="{{'SETTINGS.AN_EMAIL_HAS_BEEN_SENT_TO_EMAIL_ADDRESS'}}" translate-values="{email: currentUser.email}" translate-compile></span>
+                <a href="" ng-show="!verificationEmailSent" ng-click="resendVerificationEmail()"
+                    translate="COMMON.RESEND_VERIFICATION_EMAIL"></a>
+                <span class="text-success" ng-show="verificationEmailSent"
+                    translate="{{'SETTINGS.AN_EMAIL_HAS_BEEN_SENT_TO_EMAIL_ADDRESS'}}"
+                    translate-values="{email: currentUser.email}" translate-compile></span>
             </div>
         </div>
     </div>
 </div>
 <span class="spinner block-spinner" ng-show="activitiesLoading"></span>
-<div class="text-center col-md-6 mt-5" ng-if="!activitiesLoading && !activities.length && ownProfile" ng-cloak>
-    <h3 class="text-muted text-center" translate="PROFILE.WELCOME_FIRST_NAME_LETS_ADD_SOME_ACTIVITIES" translate-values="{first_name: user.firstName}"></h3>
+<div class="text-center col-md-12 mt-5" ng-if="!activitiesLoading && !activities.length && ownProfile" ng-cloak>
+    <img class="col-md-12" src="/images/activities/empty_state_podium.png">
+    <h3 class="text-muted text-center" translate="PROFILE.WELCOME_FIRST_NAME_LETS_ADD_SOME_ACTIVITIES"
+        translate-values="{first_name: user.firstName}"></h3>
 </div>
 <div class="clearfix col" ng-if="filterOptionsExist()">
-    <button type="button" class="float-right d-block btn btn-secondary btn-icon-only" ng-click="openActivityFiltersModal()">
+    <button type="button" class="float-right d-block btn btn-secondary btn-icon-only"
+        ng-click="openActivityFiltersModal()">
         <span class="btn-inner--icon">
             <i class="fa fa-filter text-muted"></i>
         </span>
     </button>
 </div>
 <div class="text-center" ng-if="!activitiesLoading && !activities.length && !ownProfile" ng-cloak>
+    <img class="col-md-12" src="/images/activities/empty_state_podium.png">
     <h3 class="text-muted text-center" translate="PROFILE.THIS_USER_DOESNT_HAVE_ANY_PUBLIC_ACTIVITIES"></h3>
 </div>
 <div class="text-center" ng-if="!activitiesLoading && activities.length && !filteredActivities.length" ng-cloak>
+    <img class="col-md-12" src="/images/activities/empty_state_podium.png">
     <h3 class="text-muted text-center" translate="PROFILE.THERE_ARE_NO_ACTIVITIES_WITH_THESE_FILTERED_VALUES"></h3>
 </div>
 <div class="col-md-3" ng-if="!activitiesLoading && !activities.length && ownProfile" ng-cloak>
     &nbsp;
 </div>
 <div ng-show="timeLine.mode === 'timeline'">
-    <activity-panel ng-repeat="activity in filteredActivities = (activities | orderBy:'-date' | usersFilters:filters.values)"></activity-panel>
+    <activity-panel
+        ng-repeat="activity in filteredActivities = (activities | orderBy:'-date' | usersFilters:filters.values)">
+    </activity-panel>
 </div>
 <div ng-show="timeLine.mode === 'graph'">
     <div ng-include="'/app/profile/views/graphView.html'"></div>
