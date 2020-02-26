@@ -30,3 +30,5 @@ public/styles/styles.css
 public/styles/styles-outer.css
 
 *.rdb
+
+.vscode
